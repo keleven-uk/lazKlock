@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils, UoptionUtils;
+  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils,
+  UoptionUtils, Process;
 
 type
 
@@ -24,10 +25,19 @@ type
     btnSoundTest: TButton;
     btnReminderClear: TButton;
     btnTimerSplit: TButton;
+    btnCountdownShutdownAbort: TButton;
+    btnCountdownLoadCommand: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
+    chckBxCountdownEvent: TCheckBox;
+    chckBxCountdownReminder: TCheckBox;
+    chckBxCountdownCommand: TCheckBox;
     CmbBxTime: TComboBox;
+    CmbBxCountdownAction: TComboBox;
+    CmbBxCountdownEvent: TComboBox;
     DtEdtReminder: TDateEdit;
+    EdtCountdownCommand: TEdit;
+    EdtCountdownReminder: TEdit;
     EdtCountdownSound: TEdit;
     lblSplitLap: TLabel;
     lblfuzzy: TLabel;
@@ -72,7 +82,9 @@ type
     CountdownTimer: TTimer;
     ReminderTimer: TTimer;
     timerTimer: TTimer;
+    procedure btnCountdownLoadCommandClick(Sender: TObject);
     procedure btnCountdownLoadSoundClick(Sender: TObject);
+    procedure btnCountdownShutdownAbortClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
     procedure btnReminderClearClick(Sender: TObject);
@@ -82,15 +94,18 @@ type
     procedure btnTimerStartClick(Sender: TObject);
     procedure btnTimerStopClick(Sender: TObject);
     procedure btnTimerSplitClick(Sender: TObject);
+    procedure chckBxCountdownCommandChange(Sender: TObject);
+    procedure chckBxCountdownEventChange(Sender: TObject);
+    procedure chckBxCountdownReminderChange(Sender: TObject);
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CmbBxTimeChange(Sender: TObject);
+    procedure CmbBxCountdownActionChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
     procedure LblCountdownTimeClick(Sender: TObject);
-    procedure lblfuzzyClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
@@ -109,6 +124,8 @@ type
     procedure StopCountDown;
     procedure SetDefaults;
     procedure resetReminder;
+    procedure doSystemEvent;
+    procedure doCommandEvent;
   public
     countdownTicks     : integer;
     countdownSoundName : String;
@@ -136,10 +153,7 @@ begin
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
 
   ft := FuzzyTime.Create;
-  ft.displayFuzzy := 0;         //  start on fuzzy time
 
-  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
-                                                                     + ' time' ;
   DtEdtReminder.Date := now;
   SpnEdtMins.Value   := MinuteOf(time);
   SpnEdtHour.Value   := HourOf(time);
@@ -177,14 +191,22 @@ begin
   lblReminder.Font.Size      := 18;
 
   PageControl1.TabIndex := OptionsRec.DefaultTab;
+  CmbBxTime.ItemIndex   := OptionsRec.DefaultTime;
 
+  ft.displayFuzzy := OptionsRec.DefaultTime;
+  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time' ;
   frmMain.Left := OptionsRec.ScreenLeft;
   frmMain.Top  := OptionsRec.ScreenTop;
+
+  if OptionsRec.NetTimeSeconds then
+    mainTimer.Interval := 1
+  else
+    mainTimer.Interval := 1000;
+
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
-{  display a message as a popup message
-   TODO : if popup already visable, add new message to popup   }
+{  display a message as a popup message.                                       }
 begin
   if PopupNotifier1.Visible = false then begin
     PopupNotifier1.ShowAtPos(100,100) ;
@@ -289,7 +311,52 @@ begin
 
 end;
 
+
 // *********************************************************** Countdown *******
+procedure TfrmMain.CmbBxCountdownActionChange(Sender: TObject);
+begin
+  if CmbBxCountdownAction.ItemIndex = 0 then begin  //  Sound chosen
+    chckBxCountdownSound.Visible  := true;
+    EdtCountdownSound.Visible     := true;
+    btnCountdownLoadSound.Visible := true;
+    btnSoundTest.Visible          := true;
+  end
+  else begin
+    chckBxCountdownSound.Visible  := false;
+    EdtCountdownSound.Visible     := false;
+    btnCountdownLoadSound.Visible := false;
+    btnSoundTest.Visible          := false;
+  end;
+
+  if CmbBxCountdownAction.ItemIndex = 1 then begin  //  System event chosen
+    chckBxCountdownReminder.Visible := true;
+    EdtCountdownReminder.Visible    := true;
+  end
+  else begin
+    chckBxCountdownReminder.Visible := false;
+    EdtCountdownReminder.Visible    := false;
+  end;
+
+  if CmbBxCountdownAction.ItemIndex = 2 then begin  //  reminder chosen
+    chckBxCountdownEvent.Visible := true;
+    CmbBxCountdownEvent.Visible  := true;
+  end
+  else begin
+    chckBxCountdownEvent.Visible := false;
+    CmbBxCountdownEvent.Visible  := false;
+  end;
+
+  if CmbBxCountdownAction.ItemIndex = 3 then begin  //  command chosen
+    chckBxCountdownCommand.Visible  := true;
+    btnCountdownLoadCommand.Visible := true;
+    EdtCountdownCommand.Visible     := true;
+  end
+  else begin
+    chckBxCountdownCommand.Visible  := false;
+    btnCountdownLoadCommand.Visible := false;
+    EdtCountdownCommand.Visible     := false;
+  end;
+end;
 
 procedure TfrmMain.btnCountdownStartClick(Sender: TObject);
 { called when start button is clicked, can have three modes
@@ -342,6 +409,26 @@ begin
     Free;
   end;
 end;
+
+procedure TfrmMain.btnCountdownLoadCommandClick(Sender: TObject);
+{  if the comand box is clicked, allow the command file to be loaded.                            }
+begin
+
+  with TOpenDialog.Create(Self) do
+  begin
+    Filter := '*.*';
+    InitialDir:= getCurrentDir;
+    Title := 'Choose a executable' ;
+    if Execute then begin
+      countdownSoundName       := FileName;
+//      EdtCountdownCommand.Text := ExtractFileName(FileName);
+      EdtCountdownCommand.Text := (FileName);
+      stsBrInfo.Panels.Items[3].Text := Filename + ' Chosen'
+    end;    //  if Exectute
+    Free;
+  end;
+end;
+
 
 procedure TfrmMain.btnCountdownStopClick(Sender: TObject);
 {  Called when the countdown stop button is clicked                }
@@ -410,12 +497,104 @@ begin
   frmMain.Caption      := 'Countdown';
   application.Title    := 'Countdown';
 
-  DisplayMessage('CountDown', 'Finished counting, now!');
+  if chckBxCountdownReminder.Checked then      //  only display reminder if checked
+    DisplayMessage('CountDown', EdtCountdownReminder.Text);
+
+  if chckBxCountdownEvent.Checked then
+    doSystemEvent;
+
+  if chckBxCountdownCommand.Checked then
+    doCommandEvent;
 
   //  reset the noOfTicks, so we start the timer again without changing the time.
-  //  should be okay, already validated [if time is changes will be re-validated]
+  //  should be okay, already validated [if time is changed will be re-validated]
   countdownTicks := SpnEdtCountdown.Value * 60;
 
+end;
+
+procedure TfrmMain.doSystemEvent;
+{  If events is checked, when count down if finished - do the event.
+         0 = shut down PC
+         1 = reboot PC
+         2 = Hibernate PC
+         3 = log off current user
+
+    NB :: if cross platform, shutdown cammand would need changing.                                }
+var
+  AProcess: TProcess;
+begin
+  AProcess := TProcess.Create(nil);
+
+  if CmbBxCountdownEvent.ItemIndex = 0 then begin
+    DisplayMessage('CountDown', 'Sutting Down PC');
+    AProcess.CommandLine := 'shutdown.exe -s -t 10 -c "Shuting Down PC in 10 Seconds by Klock"';
+    btnCountdownShutdownAbort.Visible := true;
+  end;
+  if CmbBxCountdownEvent.ItemIndex = 1 then begin
+    DisplayMessage('CountDown', 'Rebooting PC');
+    AProcess.CommandLine := 'shutdown.exe -r -t 10 -c "Restarting PC in 10 Seconds by Klock"';
+    btnCountdownShutdownAbort.Visible := true;
+  end;
+  if CmbBxCountdownEvent.ItemIndex = 2 then begin
+    DisplayMessage('CountDown', 'Hibernate PC');
+    AProcess.CommandLine := 'shutdown.exe -h -t 10 -c "Hibernate PC in 10 Seconds by Klock"';
+    btnCountdownShutdownAbort.Visible := true;
+  end;
+  if CmbBxCountdownEvent.ItemIndex = 3 then begin
+    DisplayMessage('CountDown', 'Log off current user');
+    AProcess.CommandLine := 'shutdown.exe -l -t 10 -c "Logging off user in 10 Seconds by Klock"';
+    btnCountdownShutdownAbort.Visible := true;
+  end;
+
+  AProcess.Execute;
+  AProcess.Free;                                // dow we get here, do it anyways!!
+
+  PopupNotifier1.Visible := false ;
+
+  btnCountdownShutdownAbort.Visible := false;
+  CmbBxCountdownEvent.Visible       := false;
+  chckBxCountdownEvent.Checked      := false;
+end;
+
+procedure TfrmMain.doCommandEvent;
+{  If command is checked, try to execute external command.                                        }
+var
+  AProcess: TProcess;
+begin
+  // Now we will create the TProcess object, and assign it to the var AProcess.
+  AProcess := TProcess.Create(nil);
+
+  // Tell the new AProcess what the command to execute is.
+  AProcess.CommandLine := EdtCountdownCommand.Text;
+
+  DisplayMessage('CountDown', 'Klock will run ' + EdtCountdownCommand.Text);
+  // Now that AProcess knows what the commandline is we will run it.
+  AProcess.Execute;
+
+  // This is not reached until ppc386 stops running.
+  AProcess.Free;
+
+  chckBxCountdownCommand.Checked  := false;
+  EdtCountdownCommand.Visible     := false;
+  btnCountdownLoadCommand.Visible := false;
+end;
+
+procedure TfrmMain.btnCountdownShutdownAbortClick(Sender: TObject);
+{  button only visbale during delay prior to a system shutdown/reboot.
+   Allows user to abort action.
+   Also tidies up application = a bit messy i'm afraid.                        }
+var
+  AProcess: TProcess;
+begin
+  AProcess := TProcess.Create(nil);
+  AProcess.CommandLine :='shutdown.exe -a';
+  AProcess.Execute;
+  AProcess.Free;
+  PopupNotifier1.Visible := false ;
+
+  btnCountdownShutdownAbort.Visible := false;
+  CmbBxCountdownEvent.Visible       := false;
+  chckBxCountdownEvent.Checked      := false;
 end;
 
 procedure TfrmMain.CountdownTimerTimer(Sender: TObject);
@@ -444,6 +623,20 @@ begin
 end;
 
 
+procedure TfrmMain.btnSoundTestClick(Sender: TObject);
+{  Called to test the sound file                                }
+VAR
+  PCharSoundName : PChar;    // PlaySound needs to be passed PChar and not a string
+begin
+  PCharSoundname := @countdownSoundName[1];  //  convert to PCHAR - a pointer to first character
+
+  try                                        //  in case sound file is not found.
+    PlaySound(PCharSoundname, 0, SND_ASYNC);
+  except
+    on EInOutError do beep ;
+  end;
+end;
+
 Procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
 {  Called to enable/disable the sound - from a check box           }
 begin
@@ -461,18 +654,31 @@ begin
   end;
 end;
 
-
-procedure TfrmMain.btnSoundTestClick(Sender: TObject);
-{  Called to test the sound file                                }
-VAR
-  PCharSoundName : PChar;    // PlaySound needs to be passed PChar and not a string
+procedure TfrmMain.chckBxCountdownReminderChange(Sender: TObject);
 begin
-  PCharSoundname := @countdownSoundName[1];  //  convert to PCHAR - a pointer to first character
+  if chckBxCountdownReminder.Checked then
+    EdtCountdownReminder.Enabled := true
+  else
+    EdtCountdownReminder.Enabled := false;
+end;
 
-  try                                        //  in case sound file is not found.
-    PlaySound(PCharSoundname, 0, SND_ASYNC);
-  except
-    on EInOutError do beep ;
+procedure TfrmMain.chckBxCountdownEventChange(Sender: TObject);
+begin
+  if chckBxCountdownEvent.Checked then
+    CmbBxCountdownEvent.Enabled := true
+  else
+    CmbBxCountdownEvent.Enabled := false;
+end;
+
+procedure TfrmMain.chckBxCountdownCommandChange(Sender: TObject);
+begin
+  if chckBxCountdownCommand.Checked then begin
+    btnCountdownLoadCommand.Enabled := true;
+    EdtCountdownCommand.Enabled     := true;
+  end
+  else begin
+    btnCountdownLoadCommand.Enabled := false;
+    EdtCountdownCommand.Enabled     := false;
   end;
 end;
 
@@ -694,10 +900,6 @@ end;
 
  end;
 
- procedure TfrmMain.lblfuzzyClick(Sender: TObject);
- begin
-
- end;
 
 // *****************************************************************************
 

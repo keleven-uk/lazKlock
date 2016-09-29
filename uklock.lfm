@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 419
+  Left = 645
   Height = 242
-  Top = 305
+  Top = 615
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2196,10 +2196,10 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 10
               Width = 76
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Fuzzy'
@@ -2233,22 +2233,21 @@ object frmMain: TfrmMain
               Font.Height = -24
               ParentColor = False
               ParentFont = False
-              OnClick = lblfuzzyClick
             end
           end
         end
       end
       object TbShtCountdown: TTabSheet
         Caption = 'Countdown'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel3: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2293,7 +2292,7 @@ object frmMain: TfrmMain
             TabOrder = 1
             object SpnEdtCountdown: TSpinEdit
               Left = 8
-              Height = 29
+              Height = 27
               Top = 8
               Width = 62
               Font.Height = -16
@@ -2304,9 +2303,9 @@ object frmMain: TfrmMain
             end
             object LblCountdownTime: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 85
+              Width = 89
               Caption = '00:00'
               Font.Height = -35
               ParentColor = False
@@ -2319,47 +2318,154 @@ object frmMain: TfrmMain
             Height = 40
             Top = 56
             Width = 444
-            Caption = '...'
             ClientHeight = 40
             ClientWidth = 444
             TabOrder = 2
-            object ChckBxCountdownSound: TCheckBox
-              Left = 16
-              Height = 19
+            object chckBxCountdownSound: TCheckBox
+              Left = 104
+              Height = 17
               Top = 8
-              Width = 54
+              Width = 48
               Caption = 'Sound'
-              Checked = True
-              OnChange = ChckBxCountdownSoundChange
-              State = cbChecked
+              OnChange = chckBxCountdownSoundChange
               TabOrder = 0
             end
             object EdtCountdownSound: TEdit
-              Left = 96
-              Height = 23
+              Left = 168
+              Height = 21
               Top = 8
-              Width = 176
+              Width = 150
+              Enabled = False
               ReadOnly = True
               TabOrder = 1
               Text = '...'
             end
             object btnCountdownLoadSound: TButton
-              Left = 288
-              Height = 24
+              Left = 328
+              Height = 21
               Top = 8
-              Width = 75
+              Width = 50
               Caption = '...'
+              Enabled = False
               OnClick = btnCountdownLoadSoundClick
               TabOrder = 2
             end
             object btnSoundTest: TButton
-              Left = 376
-              Height = 24
+              Left = 384
+              Height = 21
               Top = 8
               Width = 50
               Caption = 'Test'
+              Enabled = False
               OnClick = btnSoundTestClick
               TabOrder = 3
+            end
+            object CmbBxCountdownAction: TComboBox
+              Left = 8
+              Height = 21
+              Top = 8
+              Width = 80
+              ItemHeight = 13
+              ItemIndex = 0
+              Items.Strings = (
+                'Sound'
+                'Reminder'
+                'System'
+                'Command'
+              )
+              OnChange = CmbBxCountdownActionChange
+              Style = csDropDownList
+              TabOrder = 4
+              Text = 'Sound'
+            end
+            object chckBxCountdownEvent: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 8
+              Width = 53
+              Caption = 'System'
+              OnChange = chckBxCountdownEventChange
+              TabOrder = 5
+              Visible = False
+            end
+            object chckBxCountdownReminder: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 8
+              Width = 63
+              Caption = 'Reminder'
+              Checked = True
+              OnChange = chckBxCountdownReminderChange
+              State = cbChecked
+              TabOrder = 6
+              Visible = False
+            end
+            object EdtCountdownReminder: TEdit
+              Left = 176
+              Height = 21
+              Top = 8
+              Width = 256
+              TabOrder = 7
+              Text = 'Finished counting, now Sir !!'
+              Visible = False
+            end
+            object CmbBxCountdownEvent: TComboBox
+              Left = 168
+              Height = 21
+              Top = 9
+              Width = 150
+              Enabled = False
+              ItemHeight = 13
+              Items.Strings = (
+                'Shut Down PC'
+                'Restart PC'
+                'Hibernate PC'
+                'log off current user'
+              )
+              Style = csDropDownList
+              TabOrder = 8
+              Visible = False
+            end
+            object btnCountdownShutdownAbort: TButton
+              Left = 384
+              Height = 24
+              Top = 8
+              Width = 50
+              Caption = 'Abort'
+              OnClick = btnCountdownShutdownAbortClick
+              TabOrder = 9
+              Visible = False
+            end
+            object chckBxCountdownCommand: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 9
+              Width = 65
+              Caption = 'Command'
+              OnChange = chckBxCountdownCommandChange
+              TabOrder = 10
+              Visible = False
+            end
+            object EdtCountdownCommand: TEdit
+              Left = 170
+              Height = 21
+              Top = 8
+              Width = 200
+              Enabled = False
+              TabOrder = 11
+              Text = '...'
+              Visible = False
+            end
+            object btnCountdownLoadCommand: TButton
+              Left = 384
+              Height = 21
+              Top = 8
+              Width = 50
+              Caption = '...'
+              Enabled = False
+              OnClick = btnCountdownLoadCommandClick
+              TabOrder = 12
+              Visible = False
             end
           end
         end

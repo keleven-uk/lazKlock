@@ -14,6 +14,7 @@ type
 
   TfrmAbout = class(TForm)
     btnAboutExit: TButton;
+    Label1: TLabel;
     lblDiskSize: TLabel;
     lblVersion: TLabel;
     lblProgrammer: TLabel;

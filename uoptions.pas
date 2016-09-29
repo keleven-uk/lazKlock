@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, ButtonPanel, EditBtn, Buttons, INIFiles, UoptionUtils;
+  StdCtrls, ButtonPanel, EditBtn, Buttons, CheckLst, INIFiles, UoptionUtils;
 
 type
 
@@ -19,14 +19,20 @@ type
     btnTimerFont: TButton;
     btnReminderFont: TButton;
     ButtonPanel1: TButtonPanel;
-    ChckBxTimerMilli: TCheckBox;
     ChckBxScreenSave: TCheckBox;
+    ChckBxTimerMilli: TCheckBox;
+    ChckBxNetTimeSeconds: TCheckBox;
+    ChckBxSwatchCentibeats: TCheckBox;
+    CmbBxDefTime: TComboBox;
+    CmbBxDefTab: TComboBox;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
     Label1: TLabel;
     lblGlobalText: TLabel;
     lblFuzzyTime: TLabel;
@@ -37,7 +43,8 @@ type
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
-    RdGrpDefault: TRadioGroup;
+    Panel5: TPanel;
+    Panel6: TPanel;
     SpdBtnDefault: TSpeedButton;
     procedure btnCountdownFontClick(Sender: TObject);
     procedure btnFuzzyFontClick(Sender: TObject);
@@ -45,10 +52,11 @@ type
     procedure btnReminderFontClick(Sender: TObject);
     procedure btnTimerFontClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure ChckBxNetTimeSecondsChange(Sender: TObject);
     procedure ChckBxScreenSaveChange(Sender: TObject);
+    procedure ChckBxSwatchCentibeatsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
-    procedure RdGrpDefaultClick(Sender: TObject);
     procedure SpdBtnDefaultClick(Sender: TObject);
 
   private
@@ -72,17 +80,20 @@ type
   Private
 
   Public
-    DefaultTab          : Integer;                //  which tab opens by default
-    Version             : string;                 //  application version
-    GlobalTextFont      : TFont;                  //  Global font of all main labels
-    FuzzyTextFont       : TFont;                  //  Global font of all main labels
-    CountDownTextFont   : TFont;                  //  Global font of all main labels
-    TimerTextFont       : TFont;                  //  Global font of all main labels
-    TimerMilliSeconds   : Boolean;                //  timer to show milli seconds
-    ReminderTextFont    : TFont;                  //  Global font of all main labels
-    ScreenSave          : Boolean;
-    ScreenTop           : Integer;
-    ScreenLeft          : Integer;
+    DefaultTab        : Integer;                //  which tab opens by default
+    DefaultTime       : Integer;                //  which time opens by default
+    Version           : string;                 //  application version
+    GlobalTextFont    : TFont;                  //  Global font of all main labels
+    FuzzyTextFont     : TFont;                  //  Global font of all main labels
+    CountDownTextFont : TFont;                  //  Global font of all main labels
+    TimerTextFont     : TFont;                  //  Global font of all main labels
+    TimerMilliSeconds : Boolean;                //  timer to show milli seconds
+    ReminderTextFont  : TFont;                  //  Global font of all main labels
+    ScreenSave        : Boolean;
+    ScreenTop         : Integer;
+    ScreenLeft        : Integer;
+    NetTimeSeconds    : Boolean;
+    SwatchCentibeats  : Boolean;
 
     Constructor init ;
     procedure setGlobalTextFont(f : TFont);       //  used to set global text font
@@ -92,9 +103,12 @@ type
     procedure setTimerMilliSeconds(b : Boolean);  //  used to set timer to show milli seconds
     procedure setReminderTextFont(f : TFont);       //  used to set global text font
     procedure setDefaultTab(i : Integer);
+    procedure setDefaultTime(i : Integer);
     procedure setScreenSave(b : Boolean);
     procedure setScreenTop(i : Integer);
     procedure setScreenLeft(i : Integer);
+    procedure setNetTimeSeconds(b : Boolean);
+    procedure setSwatchCentibeats(b : Boolean);
   end;
 
 {                                               ** End of Options Class  **                        }
@@ -116,18 +130,21 @@ implementation
 
 Constructor OptionsRecord.init;
 begin
-  self.DefaultTab := 0;
-  self.Version    := '23';
+  self.DefaultTab  := 0;
+  self.DefaultTime := 0;
+  self.Version     := '24';
 
-  self.GlobalTextFont      := frmOptions.Font;
-  self.FuzzyTextFont       := frmOptions.Font;
-  self.CountDownTextFont   := frmOptions.Font;
-  self.TimerTextFont       := frmOptions.Font;
-  self.TimerMilliSeconds   := false;
-  self.ReminderTextFont    := frmOptions.Font;
-  ScreenSave               := False;
-  self.ScreenTop           := 100;
-  self.ScreenLeft          := 100;
+  self.GlobalTextFont    := frmOptions.Font;
+  self.FuzzyTextFont     := frmOptions.Font;
+  self.CountDownTextFont := frmOptions.Font;
+  self.TimerTextFont     := frmOptions.Font;
+  self.TimerMilliSeconds := false;
+  self.ReminderTextFont  := frmOptions.Font;
+  ScreenSave             := False;
+  self.ScreenTop         := 100;
+  self.ScreenLeft        := 100;
+  self.NetTimeSeconds    := false;
+  self.SwatchCentibeats  := false;
 
 end;
 
@@ -168,9 +185,15 @@ begin
 end;
 
 procedure OptionsRecord.setDefaultTab(i : Integer);
-{  used to set textColour [global colour of all main labels]   }
+{  used to set the default tab displayed   }
 begin
   self.DefaultTab := i;
+end;
+
+procedure OptionsRecord.setDefaultTime(i : Integer);
+{  used to set the default time displayed   }
+begin
+  self.DefaultTime := i;
 end;
 
 procedure OptionsRecord.setScreenSave(b : Boolean);
@@ -191,6 +214,18 @@ begin
   self.ScreenLeft := i;
 end;
 
+procedure OptionsRecord.setNetTimeSeconds(b : Boolean);
+{  used to set if net Time will display net seconds, default if 15 seconds.   }
+begin
+  self.NetTimeSeconds := b;
+end;
+
+procedure OptionsRecord.setSwatchCentibeats(b : Boolean);
+{  used to set if net Time will display net seconds, default if 15 seconds.   }
+begin
+  self.SwatchCentibeats := b;
+end;
+
 
 
 {                      *************************** End of Options Class methods **                 }
@@ -208,13 +243,6 @@ begin
 
   resetForm;
 end;
-
-
-procedure TfrmOptions.RdGrpDefaultClick(Sender: TObject);
-begin
-  OptionsRec.setDefaultTab(RdGrpDefault.ItemIndex);
-end;
-
 
 
 procedure TfrmOptions.btnGlobalFontClick(Sender: TObject);
@@ -267,8 +295,10 @@ begin
   OptionsRec.setCountDownTextFont(lblCountDown.Font);
   OptionsRec.setTimerTextFont(lblTimerText.Font);
   OptionsRec.setReminderTextFont(lblReminderText.Font);
-  OptionsRec.setDefaultTab(RdGrpDefault.ItemIndex);
+  OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
+  OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
+  OptionsRec.setNetTimeSeconds(ChckBxNetTimeSeconds.Checked);
 
   writeIniFile;
 end;
@@ -287,6 +317,22 @@ begin
     OptionsRec.setScreenSave(False)
 end;
 
+procedure TfrmOptions.ChckBxSwatchCentibeatsChange(Sender: TObject);
+begin
+  if ChckBxSwatchCentibeats.Checked then
+    OptionsRec.setSwatchCentibeats(True)
+  else
+    OptionsRec.setSwatchCentibeats(False)
+end;
+
+procedure TfrmOptions.ChckBxNetTimeSecondsChange(Sender: TObject);
+begin
+  if ChckBxNetTimeSeconds.Checked then
+    OptionsRec.setNetTimeSeconds(True)
+  else
+    OptionsRec.setNetTimeSeconds(False)
+end;
+
 
 procedure TfrmOptions.SpdBtnDefaultClick(Sender: TObject);
 {  reset all text colour back to colour of glocal text.                                            }
@@ -296,6 +342,10 @@ begin
   OptionsRec.CountDownTextFont   := frmOptions.Font;
   OptionsRec.TimerTextFont       := frmOptions.Font;
   OptionsRec.ReminderTextFont    := frmOptions.Font;
+  OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
+  OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
+  OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
+  OptionsRec.setNetTimeSeconds(ChckBxNetTimeSeconds.Checked);
   resetForm;
 end;
 
@@ -303,14 +353,20 @@ procedure TfrmOptions.resetForm;
 {  reset form to options record, used on form create, reset of default colour
    and if the cancel button is clicked.                                                            }
 begin
-  lblGlobalText.Font := OptionsRec.GlobalTextFont ;
-  lblFuzzyTime.Font  := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
-  lblCountDown.Font  := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
-  lblTimerText.Font      := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
-  lblReminderText.Font   := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
+  lblGlobalText.Font   := OptionsRec.GlobalTextFont ;
+  lblFuzzyTime.Font    := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
+  lblCountDown.Font    := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
+  lblTimerText.Font    := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
+  lblReminderText.Font := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
 
-  ChckBxTimerMilli.Checked := OptionsRec.TimerMilliSeconds;
-  ChckBxScreenSave.Checked := OptionsRec.ScreenSave;
+  ChckBxTimerMilli.Checked       := OptionsRec.TimerMilliSeconds;
+  ChckBxScreenSave.Checked       := OptionsRec.ScreenSave;
+  ChckBxNetTimeSeconds.Checked   := OptionsRec.NetTimeSeconds;
+  ChckBxSwatchCentibeats.Checked := OptionsRec.SwatchCentibeats;
+//  CmbBxDefTab.ItemIndex          := OptionsRec.setDefaultTab;
+//  CmbBxDefTime.ItemIndex         := OptionsRec.setDefaultTime;
+//  ChckBxTimerMilli.Checked       := OptionsRec.setTimerMilliSeconds;
+//  ChckBxNetTimeSeconds.Checked   := OptionsRec.setNetTimeSeconds;
 end;
 
 
@@ -327,22 +383,25 @@ begin
   IniFile := TINIFile.Create(iniName);
 
   if (FileExists(iniName)) then begin  // read ini files and populate options record.
-    val(iniFile.ReadString('klock', 'defaultTab', '0'), OptionsRec.DefaultTab, code);
-    val(iniFile.ReadString('klock', 'ScreenTop',  '0'), OptionsRec.ScreenTop,  code);
-    val(iniFile.ReadString('klock', 'ScreenLeft', '0'), OptionsRec.ScreenLeft, code);
+    val(iniFile.ReadString('klock', 'defaultTab', '0'),  OptionsRec.DefaultTab,  code);
+    val(iniFile.ReadString('klock', 'defaultTime', '0'), OptionsRec.DefaultTime, code);
+    val(iniFile.ReadString('klock', 'ScreenTop',  '0'),  OptionsRec.ScreenTop,   code);
+    val(iniFile.ReadString('klock', 'ScreenLeft', '0'),  OptionsRec.ScreenLeft,  code);
 
-    OptionsRec.ScreenSave          := StrtoBool(iniFile.ReadString('klock', 'ScreenSave', 'False'));
+    OptionsRec.ScreenSave        := StrtoBool(iniFile.ReadString('klock', 'ScreenSave', 'False'));
 
-    OptionsRec.GlobalTextFont      := StringtoFont(iniFile.ReadString('labels', 'Font', defFnt));
+    OptionsRec.GlobalTextFont    := StringtoFont(iniFile.ReadString('labels', 'Font', defFnt));
 
-    OptionsRec.FuzzyTextFont       := StringtoFont(iniFile.ReadString('Fuzzy', 'Font', defFnt));
+    OptionsRec.FuzzyTextFont     := StringtoFont(iniFile.ReadString('Fuzzy', 'Font', defFnt));
+    OptionsRec.NetTimeSeconds    := StrToBool(iniFile.ReadString('Fuzzy', 'Net Time Seconds', 'False'));
+    OptionsRec.SwatchCentibeats  := StrToBool(iniFile.ReadString('Fuzzy', 'Swatch Centibeats', 'False'));
 
-    OptionsRec.CountDownTextFont   := StringtoFont(iniFile.ReadString('CountDown', 'Font', defFnt));
+    OptionsRec.CountDownTextFont := StringtoFont(iniFile.ReadString('CountDown', 'Font', defFnt));
 
-    OptionsRec.TimerTextFont       := StringtoFont(iniFile.ReadString('Timer', 'Font', defFnt));
-    OptionsRec.TimerMilliSeconds   := StrToBool(iniFile.ReadString('Timer', 'Milli', 'False'));
+    OptionsRec.TimerTextFont     := StringtoFont(iniFile.ReadString('Timer', 'Font', defFnt));
+    OptionsRec.TimerMilliSeconds := StrToBool(iniFile.ReadString('Timer', 'Milli', 'False'));
 
-    OptionsRec.ReminderTextFont    := StringtoFont(iniFile.ReadString('Reminder', 'Font', defFnt));
+    OptionsRec.ReminderTextFont  := StringtoFont(iniFile.ReadString('Reminder', 'Font', defFnt));
   end
   else begin  //  ini file does not exist, create it.
       writeIniValues
@@ -364,15 +423,18 @@ end;
 procedure TfrmOptions.writeIniValues;
 {  actually perform the writing of the ini values.                                                 }
 begin
-  IniFile.WriteString('klock', 'Version', OptionsRec.Version);
-  IniFile.WriteString('klock', 'defaultTab', IntToStr(OptionsRec.DefaultTab));
-  IniFile.WriteString('klock', 'ScreenSave', BoolToStr(OptionsRec.ScreenSave));
-  IniFile.WriteString('klock', 'ScreenTop',  IntToStr(OptionsRec.ScreenTop ));
-  IniFile.WriteString('klock', 'ScreenLeft', IntToStr(OptionsRec.ScreenLeft));
+  IniFile.WriteString('klock', 'Version',     OptionsRec.Version);
+  IniFile.WriteString('klock', 'defaultTab',  IntToStr(OptionsRec.DefaultTab));
+  IniFile.WriteString('klock', 'defaultTime', IntToStr(OptionsRec.DefaultTime));
+  IniFile.WriteString('klock', 'ScreenSave',  BoolToStr(OptionsRec.ScreenSave));
+  IniFile.WriteString('klock', 'ScreenTop',   IntToStr(OptionsRec.ScreenTop ));
+  IniFile.WriteString('klock', 'ScreenLeft',  IntToStr(OptionsRec.ScreenLeft));
 
   IniFile.Writestring('Labels', 'Font', FontToString(OptionsRec.GlobalTextFont));
 
   IniFile.Writestring('Fuzzy', 'Font', FontToString(OptionsRec.FuzzyTextFont));
+  IniFile.Writestring('Fuzzy', 'Net Time Seconds', BoolToStr(OptionsRec.NetTimeSeconds));
+  IniFile.Writestring('Fuzzy', 'Swatch Centibeats', BoolToStr(OptionsRec.SwatchCentibeats));
 
   IniFile.Writestring('CountDown', 'Font', FontToString(OptionsRec.CountDownTextFont));
 

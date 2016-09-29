@@ -14,7 +14,7 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows;
+  Classes, SysUtils, DateUtils, Windows, UOptions;
 
 type
   FuzzyTime = class
@@ -37,7 +37,7 @@ implementation
 
 Constructor FuzzyTime.init;
 begin
-  self.displayFuzzy := 0;
+  self.displayFuzzy := OptionsRec.DefaultTime;
 end;
 
 Function FuzzyTime.fTime : String ;
@@ -154,11 +154,19 @@ VAR
   deg : Integer;
   min : Integer;
   sec : Integer;
-
+ msec : LongWord;
 begin
-  deg := SecondOfTheDay(Time) div 240;
-  min := (SecondOfTheDay(Time) - (deg * 240)) div 4;
-  sec := (SecondOfTheDay(Time) - (deg * 240) - (min * 4)) * 15;
+
+  if OptionsRec.NetTimeSeconds then begin
+    deg := (MilliSecondOfTheDay(Time) div 240000);
+    min := (MilliSecondOfTheDay(Time) - (deg * 240000)) div 4000;
+    sec := (MilliSecondOfTheDay(Time) - (deg * 240000) - (min * 4000)) div 100;
+  end
+  else begin
+    deg := (SecondOfTheDay(Time) div 240);
+    min := (SecondOfTheDay(Time) - (deg * 240)) div 4;
+    sec := (SecondOfTheDay(Time) - (deg * 240) - (min * 4)) * 15;
+  end;
 
   netTime := format('%d deg %d min %d sec', [deg, min, sec]);
 end;
@@ -198,9 +206,13 @@ begin
 //  if noOfSeconds > 86400 then
 //    noOfSeconds := noOfSeconds - 86400;  //  rolled past midnight
 
-  noOfBeats := int(noOfSeconds * 0.01157);    // 1000 beats per day
+  noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
-  swatchTime := format('@ %3.f BMT', [noOfBeats]);
+  if OptionsRec.SwatchCentibeats then
+    swatchTime := format('@ %3.2f BMT', [noOfBeats])
+  else
+    swatchTime := format('@ %3.f BMT', [noOfBeats]);
+
 end;
 Function FuzzyTime.getDblTime : Double ;
 {  returns current time as a float, in the format hh.mm.

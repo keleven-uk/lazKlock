@@ -57,6 +57,7 @@ begin
 
   mmoLicence.Append('');
   mmoLicence.Append('Kevin Scott (c) - 2012.');
+  mmoLicence.Append('klock<at>keleven<dot>co<dot>uk');
   mmoLicence.Append(format('Klock Version :: %s', [OptionsRec.Version]));
 end;
 
