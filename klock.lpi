@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <MainUnit Value="0"/>
+      <Title Value="klock"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <BuildNr Value="3"/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="7">
+      <Unit0>
+        <Filename Value="klock.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="21"/>
+        <UsageCount Value="43"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="uklock.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Uklock"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="254"/>
+        <CursorPos X="37" Y="291"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="info.txt"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="23" Y="3"/>
+        <UsageCount Value="41"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="uabout.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAbout"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="UAbout"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="20"/>
+        <CursorPos X="59" Y="57"/>
+        <UsageCount Value="41"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="uhelp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmHelp"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Uhelp"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="26"/>
+        <CursorPos X="42" Y="59"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="uoptions.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmOptions"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="UOptions"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="54" Y="6"/>
+        <UsageCount Value="34"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\lazarus\lcl\comctrls.pp"/>
+        <UnitName Value="ComCtrls"/>
+        <TopLine Value="790"/>
+        <CursorPos X="3" Y="559"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+    </Units>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="67" Column="28" TopLine="27"/>
+      </Position1>
+      <Position2>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="66" Column="28" TopLine="26"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="67" Column="28" TopLine="27"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="68" Column="28" TopLine="28"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="69" Column="28" TopLine="29"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="70" Column="28" TopLine="30"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="119" Column="20" TopLine="76"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="54" Column="5" TopLine="38"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="92" Column="27" TopLine="72"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="99" Column="45" TopLine="79"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="120" Column="54" TopLine="100"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="97" TopLine="97"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="99" Column="33" TopLine="78"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="204" Column="19" TopLine="171"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="181" Column="23" TopLine="161"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="200" TopLine="167"/>
+      </Position16>
+      <Position17>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="180" Column="30" TopLine="100"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="181" Column="30" TopLine="141"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="182" Column="30" TopLine="142"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="181" Column="30" TopLine="141"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="187" Column="30" TopLine="147"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="151" Column="16" TopLine="135"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="121" Column="37" TopLine="100"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="202" Column="33" TopLine="168"/>
+      </Position24>
+      <Position25>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="122" Column="37" TopLine="122"/>
+      </Position25>
+      <Position26>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="219" Column="21" TopLine="190"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="233" Column="36" TopLine="202"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="240" Column="36" TopLine="204"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="108" Column="5" TopLine="79"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="klock"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
