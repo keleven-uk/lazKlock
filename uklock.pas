@@ -23,11 +23,13 @@ type
     btnReminderSet: TButton;
     btnSoundTest: TButton;
     btnReminderClear: TButton;
+    btnTimerSplit: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     CmbBxTime: TComboBox;
     DtEdtReminder: TDateEdit;
     EdtCountdownSound: TEdit;
+    lblSplitLap: TLabel;
     lblfuzzy: TLabel;
     lblReminder: TLabel;
     lblTimer: TLabel;
@@ -79,12 +81,14 @@ type
     procedure btnTimerClearClick(Sender: TObject);
     procedure btnTimerStartClick(Sender: TObject);
     procedure btnTimerStopClick(Sender: TObject);
+    procedure btnTimerSplitClick(Sender: TObject);
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
+    procedure LblCountdownTimeClick(Sender: TObject);
     procedure lblfuzzyClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
@@ -100,7 +104,6 @@ type
     procedure SpnEdtMinsChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
   private
-    function ItoS(i : Integer) : String ;
     procedure DisplayMessage(title : string ; message : string);
     procedure StopCountDown;
     procedure SetDefaults;
@@ -124,14 +127,6 @@ implementation
 
 { TfrmMain }
 
-function TfrmMain.ItoS(i : Integer) : String;
-{  Converts an integer to a two character string          }
-begin
-  if i < 10 then
-    ItoS := '0' + IntToStr(i)
-  else
-    iToS := IntToStr(i);
-end;
 // *********************************************************** Global **********
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound file     }
@@ -169,6 +164,8 @@ begin
   SpnEdtCountdown.Font.Size   := 12;
   lblTimer.Font.Color         := OptionsRec.textColour;
   lblTimer.Font.Size          := 26;
+  lblSplitLap.Font.Color      := OptionsRec.textColour;
+  lblSplitLap.Font.Size       := 26;
   lblReminder.Font.Color      := OptionsRec.textColour;
   lblReminder.Font.Size       := 18;
 end;
@@ -200,8 +197,7 @@ begin
     stsBrInfo.Panels.Items[3].Text := '';
     stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
                                                                        + ' time' ;
-  end;
-
+  end;    //  if PageControl1.TabIndex = 0
 
   if PageControl1.TabIndex = 1 then begin                     //  countdown page
     if chckBxCountdownSound.Checked then begin
@@ -214,10 +210,9 @@ begin
     if CountdownTimer.Enabled = false then
       stsBrInfo.Panels.Items[3].Text := ''
     else
-      stsBrInfo.Panels.Items[3].Text := ' Counting down from ' +
-                            ItoS(SpnEdtCountdown.Value) + ' minute[s]';
+      stsBrInfo.Panels.Items[3].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
 
-  end;
+  end;    //  if PageControl1.TabIndex = 1
 
   if PageControl1.TabIndex = 2 then begin                     //  timer page
       stsBrInfo.Panels.Items[2].Text := '';
@@ -231,7 +226,7 @@ begin
     else
       stsBrInfo.Panels.Items[3].Text := 'Timer Running';
 
-  end;
+  end;    //  if PageControl1.TabIndex = 2
 
   if PageControl1.TabIndex = 3 then begin                    //  reminder page
     stsBrInfo.Panels.Items[2].Text := '';
@@ -246,7 +241,7 @@ begin
            [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
     end;  //  if btnReminderSet.Enabled
 
-  end;    //  if PageControl1.TabIndex
+  end;    //  if PageControl1.TabIndex = 3
 end;
 
 procedure TfrmMain.mainTimerTimer(Sender: TObject);
@@ -289,7 +284,7 @@ begin
     CountdownTimer.Enabled    := True;
     SpnEdtCountdown.Enabled   := false;
     VAL := CountdownTicks div 60;           //  in case the satus message has changed
-    stsBrInfo.Panels.Items[3].Text := ' Counting down from ' + ItoS(val) + ' minute[s]';
+    stsBrInfo.Panels.Items[3].Text := format(' Counting down from %d minute[s]', [val]);
 
     btnCountdownStart.Caption := 'Pause'
   end
@@ -350,11 +345,11 @@ begin
   val := SpnEdtCountdown.Value;
 
   if (val > 0) and (val <= 90) then begin
-    LblCountdownTime.Caption  := ItoS(val) + ':00';
+    LblCountdownTime.Caption  := format('%2.2d:00', [val]);
     btnCountdownStart.Enabled := true;
     countdownTicks            := val * 60;
 
-    stsBrInfo.Panels.Items[3].Text := ' Counting down from ' + ItoS(val) + ' minute[s]';
+    stsBrInfo.Panels.Items[3].Text := format(' Counting down from %d minute[s]', [val]);
   end
   else begin
     LblCountdownTime.Caption  := '00:00';
@@ -415,11 +410,11 @@ begin
   if countdownTicks = 0 then StopCountDown;
 
   if countdownTicks < 60 then
-    message:= '00:' + ItoS(countdownTicks)
+    message:= format('00:%2.2d', [countdownTicks])
   else begin
     minutes := countdownTicks div 60;
     seconds := countdownTicks mod 60;
-    message := ItoS(minutes) + ':' + ItoS(seconds);
+    message := format('%2.2d:%2.2d', [minutes, seconds]);
   end;
 
   LblCountdownTime.Caption := message;
@@ -433,10 +428,14 @@ begin
   if chckBxCountdownSound.Checked then begin
     stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
     EdtCountdownSound.Enabled      := true;
+    btnCountdownLoadSound.Enabled  := true;
+    btnSoundTest.Enabled           := true;
   end
   else begin
     stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
     EdtCountdownSound.Enabled      := false;
+    btnCountdownLoadSound.Enabled  := false;
+    btnSoundTest.Enabled           := false;
   end;
 end;
 
@@ -480,6 +479,9 @@ begin
     timerTimer.Enabled    := true;
     btnTimerClear.Enabled := false;
     btnTimerStart.Caption := 'Pause';
+    btnTimerSplit.Enabled := true;
+    lblSplitLap.Enabled   := true;
+    lblSplitLap.Caption   := '00:00:00';
     frmMain.Caption       := 'Timer :: Started';
     stsBrInfo.Panels.Items[3].Text := 'Timer Running';
   end
@@ -487,6 +489,8 @@ begin
     timerPaused := timerPaused + (time - timerStart);
     btnTimerStart.Caption := 'Resume';
     timerTimer.Enabled    := false;
+    btnTimerSplit.Enabled := false;
+    lblSplitLap.Enabled   := false;
     frmMain.Caption       := 'Timer :: Paused';
     stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
   end
@@ -494,6 +498,8 @@ begin
     timerStart  := time;
     btnTimerStart.Caption := 'Pause';
     timerTimer.Enabled    := true;
+    btnTimerSplit.Enabled := true;
+    lblSplitLap.Enabled   := true;
     frmMain.Caption       := 'Timer :: Started';
     stsBrInfo.Panels.Items[3].Text := 'Timer Running';
   end
@@ -503,16 +509,27 @@ procedure TfrmMain.btnTimerStopClick(Sender: TObject);
 begin
   btnTimerStop.Enabled  := false;
   timerTimer.Enabled    := false;
+  btnTimerSplit.Enabled := false;
+  lblSplitLap.Enabled   := false;
   btnTimerClear.Enabled := true;
   btnTimerStart.Caption := 'Start';
   frmMain.Caption       := 'Timer :: Stoped';
   stsBrInfo.Panels.Items[3].Text := 'Timer :: Stoped';
 end;
 
+procedure TfrmMain.btnTimerSplitClick(Sender: TObject);
+begin
+  lblSplitLap.Caption := lblTimer.Caption;
+end;
+
 procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 begin
     lblTimer.Caption := '00:00:00';
-    stsBrInfo.Panels.Items[3].Text := ''
+    stsBrInfo.Panels.Items[3].Text := '';
+
+    btnTimerSplit.Enabled := false;
+    lblSplitLap.Enabled   := false;
+    lblSplitLap.Caption   := '00:00:00';
 end;
 
 // *********************************************************** Reminder ********
@@ -615,6 +632,11 @@ end;
 begin
   frmHelp.ShowModal;
 end;
+
+ procedure TfrmMain.LblCountdownTimeClick(Sender: TObject);
+ begin
+
+ end;
 
  procedure TfrmMain.lblfuzzyClick(Sender: TObject);
  begin

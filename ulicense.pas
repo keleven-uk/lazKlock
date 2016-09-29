@@ -47,7 +47,7 @@ begin
   mmoLicence.Lines.LoadFromFile('GNU GENERAL PUBLIC LICENSE.txt');
   mmoLicence.Append('');
   mmoLicence.Append('Kevin Scott (c) - 2012.');
-  mmoLicence.Append('Klock Version :: 13');
+  mmoLicence.Append('Klock Version :: 14');
 end;
 
 end.

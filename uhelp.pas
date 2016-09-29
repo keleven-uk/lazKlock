@@ -45,7 +45,7 @@ begin
   mmoHelp.Append('');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Klock Version :: 13');
+  mmoHelp.Append('Klock Version :: 14');
 
 end;
 
