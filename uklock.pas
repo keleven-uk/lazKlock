@@ -25,9 +25,9 @@ type
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     CmbBxTime: TComboBox;
-    EdtReminderHour: TEdit;
-    EdtReminderMinute: TEdit;
+    DtEdtReminder: TDateEdit;
     EdtCountdownSound: TEdit;
+    FltSpnEdtReminder: TFloatSpinEdit;
     lblfuzzy: TLabel;
     lblReminder: TLabel;
     lblTimer: TLabel;
@@ -67,8 +67,6 @@ type
     CountdownTimer: TTimer;
     ReminderTimer: TTimer;
     timerTimer: TTimer;
-    UpDwnReminderHour: TUpDown;
-    UpDownReminderMinute: TUpDown;
     procedure btnCountdownLoadSoundClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
@@ -80,6 +78,7 @@ type
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
+    procedure FltSpnEdtReminderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
@@ -96,8 +95,6 @@ type
     procedure StopCountDown;
     procedure SetDefaults;
     procedure timerTimerTimer(Sender: TObject);
-    procedure UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType);
-    procedure UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
   private
     { private declarations }
   public
@@ -139,7 +136,8 @@ begin
   ft := FuzzyTime.Create;
   ft.displayFuzzy := 0;         //  start on fuzzy time
 
-//  SetDefaults;
+  DtEdtReminder.Date := now;
+  FltSpnEdtReminder.Value := time;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -179,8 +177,6 @@ end;
 
 
 procedure TfrmMain.PageControl1Change(Sender: TObject);
-VAR
-  hh, mm, ss, ms : word;
 begin
   if PageControl1.TabIndex = 0 then begin                     //  fuzzy page
     stsBrInfo.Panels.Items[2].Text := '';
@@ -221,17 +217,10 @@ begin
   if PageControl1.TabIndex = 3 then begin                    //  reminder page
     stsBrInfo.Panels.Items[2].Text := '';
     stsBrInfo.Panels.Items[3].Text := '';
-    if ReminderTimer.Enabled = false then begin  // only setdisplay to surrent time
-      DecodeTime(Time, hh, mm, ss, ms);           // if reminder not set
-      EdtReminderMinute.Text := intToStr(mm);
-      EdtReminderHour.Text   := intToStr(hh);
-      UpDownReminderMinute.Position := mm;
-      UpDwnReminderHour.Position    := hh;
+    if ReminderTimer.Enabled = false then begin   // only set display to current
+      FltSpnEdtReminder.Value := ft.getDblTime  ; // time if reminder not set
     end
     else begin
-      stsBrInfo.Panels.Items[3].Text := 'Reminder set for ' + EdtReminderHour.Text
-                                                            + ':'
-                                                            + EdtReminderMinute.Text;
     end;  //  if btnReminderSet.Enabled
 
   end;    //  if PageControl1.TabIndex
@@ -428,7 +417,7 @@ begin
   frmMain.Caption    := 'Countdown :: ' + message;
 end;
 
-procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
+Procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
 {  Called to enable/disable the sound - from a check box           }
 begin
   if chckBxCountdownSound.Checked then begin
@@ -519,26 +508,40 @@ begin
 end;
 
 // *********************************************************** Reminder ********
-procedure TfrmMain.UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType
-  );
+procedure TfrmMain.FltSpnEdtReminderChange(Sender: TObject);
+{  reads the floating value spiner and extracts the hours and minutes.
+   checks to see if eitehr the minutes or hours have rolled over.              }
+VAR
+  pos  : double;
+  hour : double;
+  min  : double;
 begin
-  EdtReminderMinute.Text := intToStr(UpDownReminderMinute.Position);
   btnReminderSet.Enabled := true;
-end;
 
-procedure TfrmMain.UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
-begin
-     EdtReminderHour.Text   := intToStr(UpDwnReminderHour.Position);
-     btnReminderSet.Enabled := true;
-end;
+  pos  := FltSpnEdtReminder.Value;
+  min  := frac(pos);                   //  extract the minutes
+  hour := pos - min;                   //  extract the hours
 
+  if (min > 0.59) then begin           //  minutes have rolled over
+    min  := min - 0.6;
+    hour := hour + 1;
+  end
+  else if (min = 0) then begin
+    min  := 0.59;
+    hour := hour - 1;
+  end;
+
+  if (hour > 23) then                  //  hours have rolled over.
+    hour := 0
+  else if (hour < 0) then
+    hour := 23;
+
+  FltSpnEdtReminder.Value := hour + min; //  re-create the double version of time
+end;
 procedure TfrmMain.btnReminderSetClick(Sender: TObject);
 begin
-  lblReminder.Caption := 'Reminder set for ' + EdtReminderHour.Text + ':'
-                                             + EdtReminderMinute.Text;
-  stsBrInfo.Panels.Items[3].Text := 'Reminder set for ' + EdtReminderHour.Text + ':'
-                                                        + EdtReminderMinute.Text;
-  ReminderTimer.Enabled := true;
+  ReminderTimer.Enabled  := true;
+  btnReminderSet.Enabled := false;
 end;
 
 procedure TfrmMain.ReminderTimerTimer(Sender: TObject);
@@ -546,14 +549,10 @@ VAR
   RmndTm : TDateTime;
   rmndrM : String;
 begin
-  RmndTm := EncodeTime( UpDwnReminderHour.Position, UpDownReminderMinute.Position, 0, 0);
-
   if Time > RmndTm then begin
     ReminderTimer.Enabled  := false;
     btnReminderSet.Enabled := false;
 
-    rmndrM := 'Reminding you it is now ' + EdtReminderHour.Text + ':'
-                                         + EdtReminderMinute.Text + ', Sir!';
     DisplayMessage('Reminder', rmndrM);
     stsBrInfo.Panels.Items[3].Text := '';
   end;

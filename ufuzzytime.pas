@@ -29,7 +29,7 @@ Public
   displayFuzzy : Integer ;
   Constructor init ;
   Function getTime : string ;
-
+  Function getDblTime : Double;
 end;
 
 
@@ -201,6 +201,25 @@ begin
 
   swatchTime := format('@ %3.f BMT', [noOfBeats]);
 end;
+Function FuzzyTime.getDblTime : Double ;
+{  returns current time as a float, in the format hh.mm.
+   a bit klunky - needs a rewrite, when i know how                             }
+VAR
+  hour : word;
+  min  : word;
+  sec  : word;
+  msec : word;
+  fhour : double;
+  fmin : double;
+begin
+  DecodeTime(time, hour, min, sec, msec);
+
+  fhour := hour;
+  fmin  := min / 100;
+
+  getDBlTime := fhour + fmin ;
+end;
+
 Function FuzzyTime.getTime : String;
 begin
   if self.displayFuzzy = 0 then                   //  normal time
