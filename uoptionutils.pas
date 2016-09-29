@@ -10,7 +10,6 @@ uses
 
 Function FontToString(f : TFont): String;
 Function StringToFont(s : String): TFont;
-function getTextColour(t1 : TColor ; t2 : TColor): TColor;
 function getTextFont(f1 : TFont ; f2 : TFont): TFont;
 
 implementation
@@ -139,19 +138,9 @@ begin
 end;
 
 
-function getTextColour(t1 : TColor ; t2 : TColor): TColor;
-{  takes two colors, global[t2] and local[t1] and returns on acording the the rule.
-   If the local in not default [clNone], return the local or else return the global               }
-begin
-  if t1 = clNone then
-    getTextColour := t2  //  use local colour
-  else
-    getTextColour := t1  //  use global colour
-end;
-
 function getTextFont(f1 : TFont ; f2 : TFont): TFont;
-{  takes two colors, global[t2] and local[t1] and returns on acording the the rule.
-   If the local in not default [clNone], return the local or else return the global               }
+{  takes two fonts, global[f2] and local[f1] and returns one acording the the rule.
+   If the local is default return the local, else return the global.           }
 begin
   if f1.IsDefault then
     getTextFont := f2  //  use local colour

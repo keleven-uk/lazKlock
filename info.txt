@@ -1,16 +1,18 @@
 projext   :: Klock
-Version   :: 20
+Version   :: 23
 Date      :: Friday 25 january 2012
 Author    :: Kevin Scott
 
 Copyright 2012 :: Kevin Scott ::  countdown<at>keleven<dot>co<dot>uk
 
-Date     of last SVN commit :: $Date:: 2012-03-26 16:16:06 +0100 (Mon, 26 Mar 2012)                                      $
-Revision of last SVN commit :: $Revision:: 20                                                                            $
-Author   of last SVN commit :: $Author:: scottk2                                                                         $
+Date     of last SVN commit :: $Date:: 2012-04-09 20:55:38 +0100 (Mon, 09 Apr 2012)                                      $
+Revision of last SVN commit :: $Revision:: 23                                                                            $
+Author   of last SVN commit :: $Author:: Kevin                                                                           $
 Full URL  in SVN repository :: $HeadURL:: file:///D:/My/shed/tmp/pascal/klock/info.txt                                   $
 
 A clock with a K.
 
 
-
+Removed colour buttons, duplicated in font dialog screen.
+Finished font stuff.
+Will save screen position if desired.

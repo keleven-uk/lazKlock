@@ -1,23 +1,23 @@
 object frmOptions: TfrmOptions
-  Left = 1291
-  Height = 362
-  Top = 521
-  Width = 609
+  Left = 1315
+  Height = 355
+  Top = 350
+  Width = 556
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
-  ClientHeight = 362
-  ClientWidth = 609
+  ClientHeight = 355
+  ClientWidth = 556
   Constraints.MinWidth = 320
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '0.9.30.4'
   object Panel1: TPanel
     Left = 8
-    Height = 304
+    Height = 296
     Top = 8
-    Width = 360
-    ClientHeight = 304
-    ClientWidth = 360
+    Width = 320
+    ClientHeight = 296
+    ClientWidth = 320
     Font.Height = -16
     ParentFont = False
     TabOrder = 0
@@ -25,22 +25,12 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 4
-      Width = 336
+      Width = 296
       ClientHeight = 34
-      ClientWidth = 332
+      ClientWidth = 292
       TabOrder = 0
-      object ClrBtnGlobal: TColorButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 33
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnGlobalColorChanged
-      end
       object btnGlobalFont: TButton
-        Left = 158
+        Left = 110
         Height = 25
         Top = 4
         Width = 75
@@ -63,22 +53,12 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 62
-      Width = 336
+      Width = 296
       ClientHeight = 34
-      ClientWidth = 332
+      ClientWidth = 292
       TabOrder = 1
-      object ClrBtnFuzzy: TColorButton
-        Left = 110
-        Height = 25
-        Top = 2
-        Width = 33
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnFuzzyColorChanged
-      end
       object btnFuzzyFont: TButton
-        Left = 158
+        Left = 110
         Height = 25
         Top = 4
         Width = 75
@@ -101,24 +81,14 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 118
-      Width = 336
+      Width = 296
       ClientHeight = 34
-      ClientWidth = 332
+      ClientWidth = 292
       Font.Height = -16
       ParentFont = False
       TabOrder = 2
-      object ClrBtnCountdown: TColorButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 33
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnCountdownColorChanged
-      end
       object btnCountdownFont: TButton
-        Left = 158
+        Left = 110
         Height = 25
         Top = 4
         Width = 75
@@ -139,22 +109,12 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 174
-      Width = 336
+      Width = 296
       ClientHeight = 34
-      ClientWidth = 332
+      ClientWidth = 292
       TabOrder = 3
-      object ClrBtnTimer: TColorButton
-        Left = 110
-        Height = 25
-        Top = 3
-        Width = 33
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnTimerColorChanged
-      end
       object btnTimerFont: TButton
-        Left = 158
+        Left = 110
         Height = 25
         Top = 4
         Width = 75
@@ -171,7 +131,7 @@ object frmOptions: TfrmOptions
         ParentColor = False
       end
       object ChckBxTimerMilli: TCheckBox
-        Left = 248
+        Left = 206
         Height = 25
         Top = 4
         Width = 74
@@ -181,24 +141,14 @@ object frmOptions: TfrmOptions
     end
     object GroupBox5: TGroupBox
       Left = 8
-      Height = 57
+      Height = 52
       Top = 230
-      Width = 336
-      ClientHeight = 39
-      ClientWidth = 332
+      Width = 296
+      ClientHeight = 34
+      ClientWidth = 292
       TabOrder = 4
-      object ClrBtnReminder: TColorButton
-        Left = 110
-        Height = 25
-        Top = 3
-        Width = 33
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnReminderColorChanged
-      end
       object btnReminderFont: TButton
-        Left = 158
+        Left = 110
         Height = 25
         Top = 3
         Width = 75
@@ -219,8 +169,8 @@ object frmOptions: TfrmOptions
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 322
-    Width = 597
+    Top = 315
+    Width = 544
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&OK'
     OKButton.OnClick = OKButtonClick
@@ -236,18 +186,18 @@ object frmOptions: TfrmOptions
     ShowButtons = [pbOK, pbCancel, pbHelp]
   end
   object Panel2: TPanel
-    Left = 376
-    Height = 112
+    Left = 336
+    Height = 96
     Top = 8
-    Width = 222
-    ClientHeight = 112
-    ClientWidth = 222
+    Width = 208
+    ClientHeight = 96
+    ClientWidth = 208
     TabOrder = 2
     object RdGrpDefault: TRadioGroup
       Left = 8
       Height = 73
       Top = 8
-      Width = 200
+      Width = 191
       AutoFill = True
       Caption = 'Default'
       ChildSizing.LeftRightSpacing = 6
@@ -259,7 +209,7 @@ object frmOptions: TfrmOptions
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 55
-      ClientWidth = 196
+      ClientWidth = 187
       Columns = 2
       ItemIndex = 0
       Items.Strings = (
@@ -273,15 +223,15 @@ object frmOptions: TfrmOptions
     end
   end
   object Panel3: TPanel
-    Left = 376
+    Left = 336
     Height = 40
-    Top = 272
-    Width = 224
+    Top = 264
+    Width = 208
     ClientHeight = 40
-    ClientWidth = 224
+    ClientWidth = 208
     TabOrder = 3
     object SpdBtnDefault: TSpeedButton
-      Left = 192
+      Left = 176
       Height = 22
       Top = 8
       Width = 23
@@ -289,14 +239,36 @@ object frmOptions: TfrmOptions
       OnClick = SpdBtnDefaultClick
     end
     object Label1: TLabel
-      Left = 8
+      Left = 16
       Height = 22
-      Top = 10
-      Width = 167
-      Caption = 'Reset Colours to default'
+      Top = 8
+      Width = 151
+      Caption = 'Reset Fonts to default'
       Font.Height = -16
       ParentColor = False
       ParentFont = False
+    end
+  end
+  object Panel4: TPanel
+    Left = 337
+    Height = 40
+    Top = 216
+    Width = 208
+    ClientHeight = 40
+    ClientWidth = 208
+    TabOrder = 4
+    object ChckBxScreenSave: TCheckBox
+      Left = 15
+      Height = 25
+      Top = 8
+      Width = 164
+      BidiMode = bdRightToLeft
+      Caption = 'Save Screen Position'
+      Font.Height = -16
+      OnChange = ChckBxScreenSaveChange
+      ParentFont = False
+      ParentBidiMode = False
+      TabOrder = 0
     end
   end
   object FontDialog1: TFontDialog
