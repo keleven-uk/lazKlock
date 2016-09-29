@@ -134,8 +134,6 @@ begin
   countdownSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
 
-  PageControl1.TabIndex := 0;   //  start on fuzzy time
-
   ft := FuzzyTime.Create;
   ft.displayFuzzy := 0;         //  start on fuzzy time
 
@@ -168,6 +166,9 @@ begin
   lblSplitLap.Font.Size       := 26;
   lblReminder.Font.Color      := OptionsRec.GlobaltextColour;
   lblReminder.Font.Size       := 18;
+
+  PageControl1.TabIndex := OptionsRec.DefaultTab;
+  stsBrInfo.Panels.Items[2].Text := format('tab = %d', [OptionsRec.DefaultTab]);
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
@@ -438,6 +439,7 @@ begin
     btnSoundTest.Enabled           := false;
   end;
 end;
+
 
 procedure TfrmMain.btnSoundTestClick(Sender: TObject);
 {  Called to test the sound file                                }

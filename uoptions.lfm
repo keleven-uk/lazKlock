@@ -1,220 +1,216 @@
 object frmOptions: TfrmOptions
-  Left = 570
-  Height = 397
-  Top = 283
-  Width = 320
+  Left = 874
+  Height = 362
+  Top = 636
+  Width = 609
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
-  ClientHeight = 397
-  ClientWidth = 320
+  ClientHeight = 362
+  ClientWidth = 609
   Constraints.MinWidth = 320
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '0.9.30.4'
   object Panel1: TPanel
-    Left = 24
-    Height = 336
+    Left = 8
+    Height = 304
     Top = 8
-    Width = 274
-    ClientHeight = 336
-    ClientWidth = 274
+    Width = 360
+    ClientHeight = 304
+    ClientWidth = 360
+    Font.Height = -16
+    ParentFont = False
     TabOrder = 0
     object GroupBox1: TGroupBox
       Left = 8
-      Height = 57
-      Top = 8
-      Width = 248
-      Caption = 'Main Labels'
-      ClientHeight = 39
-      ClientWidth = 244
+      Height = 52
+      Top = 4
+      Width = 336
+      ClientHeight = 34
+      ClientWidth = 332
       TabOrder = 0
-      object ClrBtnLabel: TColorButton
-        Left = 14
+      object ClrBtnGlobal: TColorButton
+        Left = 110
         Height = 25
-        Top = 3
+        Top = 4
         Width = 33
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
-        OnColorChanged = ClrBtnLabelColorChanged
       end
-      object Button1: TButton
-        Left = 62
+      object btnGlobalFont: TButton
+        Left = 158
         Height = 25
-        Top = 3
+        Top = 4
         Width = 75
         Caption = 'Font'
         TabOrder = 0
       end
-      object RadioButton1: TRadioButton
-        Left = 158
-        Height = 23
-        Top = 3
-        Width = 59
-        Caption = 'Prime'
+      object lblGlobalText: TLabel
+        Left = 8
+        Height = 22
+        Top = 4
+        Width = 46
+        Caption = 'Global'
         Font.Height = -16
+        ParentColor = False
         ParentFont = False
-        TabOrder = 1
       end
     end
     object GroupBox2: TGroupBox
       Left = 8
-      Height = 57
-      Top = 63
-      Width = 248
-      Caption = 'Fuzzy time'
-      ClientHeight = 39
-      ClientWidth = 244
+      Height = 52
+      Top = 62
+      Width = 336
+      ClientHeight = 34
+      ClientWidth = 332
       TabOrder = 1
-      object ClrBtnLabel1: TColorButton
-        Left = 14
+      object ClrBtnFuzzy: TColorButton
+        Left = 110
         Height = 25
-        Top = 3
+        Top = 2
         Width = 33
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
-        OnColorChanged = ClrBtnLabelColorChanged
       end
-      object Button2: TButton
-        Left = 62
+      object btnFuzzyFont: TButton
+        Left = 158
         Height = 25
-        Top = 3
+        Top = 4
         Width = 75
         Caption = 'Font'
         TabOrder = 0
       end
-      object RadioButton2: TRadioButton
-        Left = 158
-        Height = 23
-        Top = 3
-        Width = 59
-        Caption = 'Prime'
+      object lblFuzzyTime: TLabel
+        Left = 8
+        Height = 22
+        Top = 4
+        Width = 78
+        Caption = 'Fuzzy Time'
         Font.Height = -16
+        ParentColor = False
         ParentFont = False
-        TabOrder = 1
       end
     end
     object GroupBox3: TGroupBox
       Left = 8
-      Height = 57
-      Top = 128
-      Width = 248
-      Caption = 'Countdown'
-      ClientHeight = 39
-      ClientWidth = 244
+      Height = 52
+      Top = 118
+      Width = 336
+      ClientHeight = 34
+      ClientWidth = 332
+      Font.Height = -16
+      ParentFont = False
       TabOrder = 2
-      object ClrBtnLabel2: TColorButton
-        Left = 14
+      object ClrBtnCountdown: TColorButton
+        Left = 110
         Height = 25
-        Top = 3
+        Top = 4
         Width = 33
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
-        OnColorChanged = ClrBtnLabelColorChanged
       end
-      object Button3: TButton
-        Left = 62
+      object btnCountdownFont: TButton
+        Left = 158
         Height = 25
-        Top = 3
+        Top = 4
         Width = 75
         Caption = 'Font'
         TabOrder = 0
       end
-      object RadioButton3: TRadioButton
-        Left = 158
-        Height = 23
-        Top = 3
-        Width = 59
-        Caption = 'Prime'
-        Font.Height = -16
-        ParentFont = False
-        TabOrder = 1
+      object lblCountDown: TLabel
+        Left = 8
+        Height = 22
+        Top = 4
+        Width = 82
+        Caption = 'Countdown'
+        ParentColor = False
       end
     end
     object GroupBox4: TGroupBox
       Left = 8
-      Height = 57
-      Top = 200
-      Width = 248
-      Caption = 'Timer'
-      ClientHeight = 39
-      ClientWidth = 244
+      Height = 52
+      Top = 174
+      Width = 336
+      ClientHeight = 34
+      ClientWidth = 332
       TabOrder = 3
-      object ClrBtnLabel3: TColorButton
-        Left = 14
+      object ClrBtnTimer: TColorButton
+        Left = 110
         Height = 25
         Top = 3
         Width = 33
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
-        OnColorChanged = ClrBtnLabelColorChanged
       end
-      object Button4: TButton
-        Left = 62
+      object btnTimerFont: TButton
+        Left = 158
         Height = 25
-        Top = 3
+        Top = 4
         Width = 75
         Caption = 'Font'
         TabOrder = 0
       end
-      object RadioButton4: TRadioButton
-        Left = 158
-        Height = 23
-        Top = 3
-        Width = 59
-        Caption = 'Prime'
-        Font.Height = -16
-        ParentFont = False
+      object lblTimer: TLabel
+        Left = 8
+        Height = 22
+        Top = 4
+        Width = 41
+        Caption = 'Timer'
+        ParentColor = False
+      end
+      object ChckBxTimerMili: TCheckBox
+        Left = 248
+        Height = 25
+        Top = 4
+        Width = 74
+        Caption = 'Mill Sec'
         TabOrder = 1
       end
     end
     object GroupBox5: TGroupBox
       Left = 8
       Height = 57
-      Top = 264
-      Width = 248
-      Caption = 'Reminder'
+      Top = 230
+      Width = 336
       ClientHeight = 39
-      ClientWidth = 244
+      ClientWidth = 332
       TabOrder = 4
-      object ClrBtnLabel4: TColorButton
-        Left = 14
+      object ClrBtnReminder: TColorButton
+        Left = 110
         Height = 25
         Top = 3
         Width = 33
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
-        OnColorChanged = ClrBtnLabelColorChanged
       end
-      object Button5: TButton
-        Left = 62
+      object btnReminderFont: TButton
+        Left = 158
         Height = 25
         Top = 3
         Width = 75
         Caption = 'Font'
         TabOrder = 0
       end
-      object RadioButton5: TRadioButton
-        Left = 158
-        Height = 23
-        Top = 3
-        Width = 59
-        Caption = 'Prime'
-        Font.Height = -16
-        ParentFont = False
-        TabOrder = 1
+      object lblReminder: TLabel
+        Left = 8
+        Height = 22
+        Top = 2
+        Width = 69
+        Caption = 'Reminder'
+        ParentColor = False
       end
     end
   end
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 357
-    Width = 308
+    Top = 322
+    Width = 597
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&OK'
     OKButton.OnClick = OKButtonClick
@@ -228,6 +224,43 @@ object frmOptions: TfrmOptions
     CancelButton.OnClick = CancelButtonClick
     TabOrder = 1
     ShowButtons = [pbOK, pbCancel, pbHelp]
+  end
+  object Panel2: TPanel
+    Left = 376
+    Height = 112
+    Top = 8
+    Width = 222
+    ClientHeight = 112
+    ClientWidth = 222
+    TabOrder = 2
+    object RdGrpDefault: TRadioGroup
+      Left = 8
+      Height = 73
+      Top = 8
+      Width = 200
+      AutoFill = True
+      Caption = 'Default'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.TopBottomSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 55
+      ClientWidth = 196
+      Columns = 2
+      ItemIndex = 0
+      Items.Strings = (
+        'Fuzzy Time'
+        'Countdown'
+        'Timer'
+        'Reminder'
+      )
+      OnClick = RdGrpDefaultClick
+      TabOrder = 0
+    end
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0

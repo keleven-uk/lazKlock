@@ -6,41 +6,44 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, ButtonPanel, EditBtn, Buttons, Calendar, INIFiles;
+  StdCtrls, ButtonPanel, EditBtn, Buttons, INIFiles;
 
 type
 
   { TfrmOptions }
 
   TfrmOptions = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
+    btnGlobalFont: TButton;
+    btnFuzzyFont: TButton;
+    btnCountdownFont: TButton;
+    btnTimerFont: TButton;
+    btnReminderFont: TButton;
     ButtonPanel1: TButtonPanel;
-    ClrBtnLabel: TColorButton;
-    ClrBtnLabel1: TColorButton;
-    ClrBtnLabel2: TColorButton;
-    ClrBtnLabel3: TColorButton;
-    ClrBtnLabel4: TColorButton;
+    ChckBxTimerMili: TCheckBox;
+    ClrBtnGlobal: TColorButton;
+    ClrBtnFuzzy: TColorButton;
+    ClrBtnCountdown: TColorButton;
+    ClrBtnTimer: TColorButton;
+    ClrBtnReminder: TColorButton;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
+    lblGlobalText: TLabel;
+    lblFuzzyTime: TLabel;
+    lblCountDown: TLabel;
+    lblTimer: TLabel;
+    lblReminder: TLabel;
     Panel1: TPanel;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
-    RadioButton3: TRadioButton;
-    RadioButton4: TRadioButton;
-    RadioButton5: TRadioButton;
+    Panel2: TPanel;
+    RdGrpDefault: TRadioGroup;
     procedure btnExitClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
-    procedure ClrBtnLabelColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
+    procedure RdGrpDefaultClick(Sender: TObject);
   private
     procedure checkIniFile;
     procedure writeIniFile;
@@ -66,12 +69,14 @@ type
     CountDownTextColour : TColor;                 //  colour of countdown text.
     TimertextColour     : TColor;                 //  colour of timer text.
     ReminderTextColour  : TColor;                 //  colour of Reminder text.
+    DefaultTab          : Integer;                //  which tab opens by default
     Constructor init ;
     procedure setGlobalTextColour(c : TColor);    //  used to set global textColour
     procedure setFuzzyTextColour(c : TColor);     //  used to set fuzzy textColour
     procedure setCountDownTextColour(c : TColor); //  used to set countdown textColour
     procedure setTimerTextColour(c : TColor);     //  used to set timer textColour
     procedure setReminderTextColour(c : TColor);  //  used to set reminder textColour
+    procedure setDefaultTab(i : Integer);
   end;
 
 {                                               ** End of Options Class  **                        }
@@ -97,6 +102,8 @@ begin
   self.CountDownTextColour := clBlack;
   self.TimertextColour     := clBlack;
   self.ReminderTextColour  := clBlack;
+
+  self.DefaultTab := 0;
 end;
 
 procedure OptionsRecord.setGlobalTextColour(c : TColor);
@@ -129,6 +136,12 @@ begin
   self.GlobaltextColour := c;
 end;
 
+procedure OptionsRecord.setDefaultTab(i : Integer);
+{  used to set textColour [global colour of all main labels]   }
+begin
+  self.DefaultTab := i;
+end;
+
 
 {                      *************************** End of Options Class methods **                 }
 
@@ -140,13 +153,22 @@ begin
 
   checkIniFile;                        //  check for ini file, if not there - create
 
-  ClrBtnLabel.ButtonColor   := OptionsRec.GlobaltextColour ;  // in case different
+  ClrBtnGlobal.ButtonColor   := OptionsRec.GlobaltextColour ;  // in case different
 end;
 
+{                                                 form procedures              }
+
+procedure TfrmOptions.RdGrpDefaultClick(Sender: TObject);
+begin
+  OptionsRec.setDefaultTab(RdGrpDefault.ItemIndex);
+end;
+
+{                                                 button pannel                }
 procedure TfrmOptions.OKButtonClick(Sender: TObject);
 { if ok clicked, change options record  }
 begin
-  OptionsRec.setGlobalTextColour(ClrBtnLabel.ButtonColor);
+  OptionsRec.setGlobalTextColour(ClrBtnGlobal.ButtonColor);
+  OptionsRec.setDefaultTab(RdGrpDefault.ItemIndex);
   writeIniFile;
 end;
 
@@ -158,14 +180,9 @@ end;
 procedure TfrmOptions.CancelButtonClick(Sender: TObject);
 {  if cancel clicked, revert to previous options record.  }
 begin
-  ClrBtnLabel.ButtonColor   := OptionsRec.GlobaltextColour ;
+  ClrBtnGlobal.ButtonColor   := OptionsRec.GlobaltextColour ;
 end;
 
-
-procedure TfrmOptions.ClrBtnLabelColorChanged(Sender: TObject);
-begin
-
-end;
 
 {  ********************************************************************************** ini file **  }
 
@@ -186,9 +203,11 @@ begin
 
     OptionsRec.ReminderTextColour  := StringToColor(iniFile.ReadString('Reminder', 'Colour', 'clBlack'));
 
+    OptionsRec.DefaultTab := Integer(iniFile.ReadString('klock', 'defaultTab', '0'));
   end
   else begin
     IniFile.WriteString('klock', 'version', '17');
+    IniFile.WriteString('klock', 'defaultTab', '0');
 
     IniFile.Writestring('Labels', 'Colour', ColorToString(OptionsRec.GlobaltextColour));
     IniFile.Writestring('Fuzzy', 'Colour', ColorToString(OptionsRec.FuzzyTextColour));
@@ -212,6 +231,7 @@ begin
   IniFile := TINIFile.Create(iniName);
 
   IniFile.WriteString('klock', 'version', '17');
+  IniFile.WriteString('klock', 'defaultTab', IntToStr(OptionsRec.DefaultTab));
   IniFile.Writestring('Labels', 'Colour', ColorToString(OptionsRec.GlobalTextColour));
   IniFile.Writestring('Fuzzy', 'Colour', ColorToString(OptionsRec.FuzzyTextColour));
   IniFile.Writestring('Fuzzy', 'Prime', 'True');
