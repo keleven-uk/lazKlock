@@ -57,7 +57,7 @@ begin
   mmoHelp.Append('along with this program.  If not, see <http://www.gnu.org/licenses/>.');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Klock Version :: 10');
+  mmoHelp.Append('Klock Version :: 11');
 
 end;
 

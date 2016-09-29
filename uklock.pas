@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime;
+  UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime, dateutils;
 
 type
 
@@ -22,12 +22,12 @@ type
     btnTimerClear: TButton;
     btnReminderSet: TButton;
     btnSoundTest: TButton;
+    btnReminderClear: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     CmbBxTime: TComboBox;
     DtEdtReminder: TDateEdit;
     EdtCountdownSound: TEdit;
-    FltSpnEdtReminder: TFloatSpinEdit;
     lblfuzzy: TLabel;
     lblReminder: TLabel;
     lblTimer: TLabel;
@@ -57,6 +57,8 @@ type
     Panel8: TPanel;
     Panel9: TPanel;
     PopupNotifier1: TPopupNotifier;
+    SpnEdtHour: TSpinEdit;
+    SpnEdtMins: TSpinEdit;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
     TbShtFuzzy: TTabSheet;
@@ -70,6 +72,7 @@ type
     procedure btnCountdownLoadSoundClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
+    procedure btnReminderClearClick(Sender: TObject);
     procedure btnReminderSetClick(Sender: TObject);
     procedure btnSoundTestClick(Sender: TObject);
     procedure btnTimerClearClick(Sender: TObject);
@@ -78,7 +81,6 @@ type
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
-    procedure FltSpnEdtReminderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
@@ -88,15 +90,17 @@ type
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
-    function ItoS(i : Integer) : String ;
-    procedure DisplayMessage(title : string ; message : string);
     procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
-    procedure StopCountDown;
-    procedure SetDefaults;
+    procedure SpnEdtHourChange(Sender: TObject);
+    procedure SpnEdtMinsChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
   private
-    { private declarations }
+    function ItoS(i : Integer) : String ;
+    procedure DisplayMessage(title : string ; message : string);
+    procedure StopCountDown;
+    procedure SetDefaults;
+    procedure resetReminder;
   public
     countdownTicks     : integer;
     countdownSoundName : String;
@@ -136,8 +140,11 @@ begin
   ft := FuzzyTime.Create;
   ft.displayFuzzy := 0;         //  start on fuzzy time
 
+  stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
+
   DtEdtReminder.Date := now;
-  FltSpnEdtReminder.Value := time;
+  SpnEdtMins.Value   := MinuteOf(time);
+  SpnEdtHour.Value   := HourOf(time);
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -151,9 +158,13 @@ procedure TfrmMain.SetDefaults;
    to the values in the options screen.                             }
 begin
   lblfuzzy.Font.Color         := OptionsRec.textColour;
+  lblfuzzy.Font.Size          := 18;
   LblCountdownTime.Font.Color := OptionsRec.textColour;
+  LblCountdownTime.Font.Size  := 18;
   lblTimer.Font.Color         := OptionsRec.textColour;
+  lblTimer.Font.Size          := 18;
   lblReminder.Font.Color      := OptionsRec.textColour;
+  lblReminder.Font.Size       := 18;
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
@@ -218,9 +229,13 @@ begin
     stsBrInfo.Panels.Items[2].Text := '';
     stsBrInfo.Panels.Items[3].Text := '';
     if ReminderTimer.Enabled = false then begin   // only set display to current
-      FltSpnEdtReminder.Value := ft.getDblTime  ; // time if reminder not set
+      DtEdtReminder.Date := now;
+      SpnEdtMins.Value   := MinuteOf(time);
+      SpnEdtHour.Value   := HourOf(time);
     end
     else begin
+      stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
+           [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
     end;  //  if btnReminderSet.Enabled
 
   end;    //  if PageControl1.TabIndex
@@ -237,29 +252,35 @@ end;
 // *********************************************************** Fuzzy Time ******
 procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
 begin
-  if CmbBxTime.ItemIndex = 0 then begin            //  normal time
+  if CmbBxTime.ItemIndex = 0 then begin            //  fuzzy time
     ft.displayFuzzy     := 0;
     lblfuzzy.Caption    := ft.getTime;
+    stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
   end
-  else if CmbBxTime.ItemIndex = 1 then begin       //  fuzzy time
+  else if CmbBxTime.ItemIndex = 1 then begin       //  local time
     ft.displayFuzzy     := 1;
     lblfuzzy.Caption    := ft.getTime;
+    stsBrInfo.Panels.Items[2].Text := 'Local Time';
   end
   else if CmbBxTime.ItemIndex = 2 then begin       //  net time
     ft.displayFuzzy     := 2;
     lblfuzzy.Caption    := ft.getTime;
+    stsBrInfo.Panels.Items[2].Text := 'NET Time';
   end
   else if CmbBxTime.ItemIndex = 3 then begin       //  unix time
     ft.displayFuzzy     := 3;
     lblfuzzy.Caption    := ft.getTime;
+     stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
   end
-  else if CmbBxTime.ItemIndex = 4 then begin       //  unix time
+  else if CmbBxTime.ItemIndex = 4 then begin       //  UTC time
     ft.displayFuzzy     := 4;
     lblfuzzy.Caption    := ft.getTime;
+    stsBrInfo.Panels.Items[2].Text := 'Unix Time';
   end
   else if CmbBxTime.ItemIndex = 5 then begin       //  swatch time
     ft.displayFuzzy     := 5;
     lblfuzzy.Caption    := ft.getTime;
+    stsBrInfo.Panels.Items[2].Text := 'Swatch Time';
   end;
 end;
 
@@ -499,8 +520,6 @@ begin
   stsBrInfo.Panels.Items[3].Text := 'Timer :: Stoped';
 end;
 
-
-
 procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 begin
     lblTimer.Caption := '00:00:00';
@@ -508,54 +527,72 @@ begin
 end;
 
 // *********************************************************** Reminder ********
-procedure TfrmMain.FltSpnEdtReminderChange(Sender: TObject);
-{  reads the floating value spiner and extracts the hours and minutes.
-   checks to see if eitehr the minutes or hours have rolled over.              }
-VAR
-  pos  : double;
-  hour : double;
-  min  : double;
+procedure TfrmMain.SpnEdtHourChange(Sender: TObject);
 begin
   btnReminderSet.Enabled := true;
-
-  pos  := FltSpnEdtReminder.Value;
-  min  := frac(pos);                   //  extract the minutes
-  hour := pos - min;                   //  extract the hours
-
-  if (min > 0.59) then begin           //  minutes have rolled over
-    min  := min - 0.6;
-    hour := hour + 1;
-  end
-  else if (min = 0) then begin
-    min  := 0.59;
-    hour := hour - 1;
-  end;
-
-  if (hour > 23) then                  //  hours have rolled over.
-    hour := 0
-  else if (hour < 0) then
-    hour := 23;
-
-  FltSpnEdtReminder.Value := hour + min; //  re-create the double version of time
 end;
+
+procedure TfrmMain.SpnEdtMinsChange(Sender: TObject);
+begin
+  btnReminderSet.Enabled := true;
+end;
+
 procedure TfrmMain.btnReminderSetClick(Sender: TObject);
 begin
-  ReminderTimer.Enabled  := true;
-  btnReminderSet.Enabled := false;
+  lblReminder.Caption := format('Reminder set for %.2d:%.2d - %s',
+           [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
+  stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
+           [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
+  ReminderTimer.Enabled    := true;
+  btnReminderSet.Enabled   := false;
+  DtEdtReminder.Enabled    := false;
+  spnEdtHour.Enabled       := false;
+  spnEdtMins.Enabled       := false;
+  btnReminderClear.Enabled := true;
+end;
+
+procedure TfrmMain.btnReminderClearClick(Sender: TObject);
+begin
+  resetReminder;
 end;
 
 procedure TfrmMain.ReminderTimerTimer(Sender: TObject);
 VAR
-  RmndTm : TDateTime;
+  RmndDt : TDateTime;
   rmndrM : String;
 begin
-  if Time > RmndTm then begin
+  RmndDt := EncodeDateTime(YearOf(DtEdtReminder.Date),
+                           MonthOf(DtEdtReminder.Date),
+                           DayOf(DtEdtReminder.Date),
+                           SpnEdtHour.Value,
+                           SpnEdtMins.Value,
+                           0,
+                           0);
+  if Now > RmndDt then begin
     ReminderTimer.Enabled  := false;
     btnReminderSet.Enabled := false;
 
     DisplayMessage('Reminder', rmndrM);
-    stsBrInfo.Panels.Items[3].Text := '';
+
+    resetReminder;
   end;
+end;
+
+procedure TfrmMain.resetReminder;
+begin
+  lblReminder.Caption := 'Reminder not set';
+  stsBrInfo.Panels.Items[3].Text := '';
+
+  ReminderTimer.Enabled    := false;
+  btnReminderSet.Enabled   := true;
+  DtEdtReminder.Enabled    := true;
+  spnEdtHour.Enabled       := true;
+  spnEdtMins.Enabled       := true;
+  btnReminderClear.Enabled := false;
+
+  DtEdtReminder.Date := now;
+  SpnEdtMins.Value   := MinuteOf(time);
+  SpnEdtHour.Value   := HourOf(time);
 end;
 
 // *********************************************************** Menu procs ******

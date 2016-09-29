@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 246
+  Left = 657
   Height = 280
-  Top = 214
+  Top = 493
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2168,8 +2168,8 @@ object frmMain: TfrmMain
       Height = 168
       Top = 8
       Width = 580
-      ActivePage = TbShtRimder
-      TabIndex = 3
+      ActivePage = TbShtFuzzy
+      TabIndex = 0
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2238,15 +2238,15 @@ object frmMain: TfrmMain
       end
       object TbShtCountdown: TTabSheet
         Caption = 'Countdown'
-        ClientHeight = 140
+        ClientHeight = 142
         ClientWidth = 572
         object Panel3: TPanel
           Left = 0
-          Height = 140
+          Height = 142
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 140
+          ClientHeight = 142
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2290,7 +2290,7 @@ object frmMain: TfrmMain
             TabOrder = 1
             object SpnEdtCountdown: TSpinEdit
               Left = 8
-              Height = 45
+              Height = 41
               Top = 8
               Width = 62
               Font.Height = -27
@@ -2300,9 +2300,9 @@ object frmMain: TfrmMain
             end
             object LblCountdownTime: TLabel
               Left = 96
-              Height = 62
+              Height = 55
               Top = 0
-              Width = 107
+              Width = 117
               Caption = '00:00'
               Font.Height = -45
               ParentColor = False
@@ -2320,9 +2320,9 @@ object frmMain: TfrmMain
             TabOrder = 2
             object ChckBxCountdownSound: TCheckBox
               Left = 16
-              Height = 19
+              Height = 17
               Top = 16
-              Width = 54
+              Width = 48
               Caption = 'Sound'
               Checked = True
               OnChange = ChckBxCountdownSoundChange
@@ -2331,7 +2331,7 @@ object frmMain: TfrmMain
             end
             object EdtCountdownSound: TEdit
               Left = 96
-              Height = 23
+              Height = 21
               Top = 16
               Width = 176
               TabOrder = 1
@@ -2360,16 +2360,16 @@ object frmMain: TfrmMain
       end
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
-        ClientHeight = 140
+        ClientHeight = 142
         ClientWidth = 572
         object Panel1: TPanel
           Left = 0
-          Height = 140
+          Height = 142
           Top = 0
           Width = 572
           Align = alClient
           AutoSize = True
-          ClientHeight = 140
+          ClientHeight = 142
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2377,7 +2377,7 @@ object frmMain: TfrmMain
           object Panel9: TPanel
             Left = 12
             Height = 122
-            Top = 8
+            Top = 9
             Width = 96
             Anchors = []
             ClientHeight = 122
@@ -2416,7 +2416,7 @@ object frmMain: TfrmMain
           object Panel10: TPanel
             Left = 116
             Height = 66
-            Top = 8
+            Top = 9
             Width = 444
             Anchors = []
             ClientHeight = 66
@@ -2424,9 +2424,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblTimer: TLabel
               Left = 96
-              Height = 62
+              Height = 55
               Top = 0
-              Width = 165
+              Width = 183
               Caption = '00:00:00'
               Font.Height = -45
               ParentColor = False
@@ -2436,7 +2436,7 @@ object frmMain: TfrmMain
           object Panel16: TPanel
             Left = 116
             Height = 50
-            Top = 80
+            Top = 82
             Width = 444
             Anchors = []
             TabOrder = 2
@@ -2469,12 +2469,22 @@ object frmMain: TfrmMain
             object btnReminderSet: TButton
               Left = 8
               Height = 25
-              Top = 40
+              Top = 19
               Width = 75
               Caption = 'Set'
               Enabled = False
               OnClick = btnReminderSetClick
               TabOrder = 0
+            end
+            object btnReminderClear: TButton
+              Left = 8
+              Height = 25
+              Top = 74
+              Width = 75
+              Caption = 'Clear'
+              Enabled = False
+              OnClick = btnReminderClearClick
+              TabOrder = 1
             end
           end
           object Panel12: TPanel
@@ -2486,12 +2496,12 @@ object frmMain: TfrmMain
             ClientWidth = 444
             TabOrder = 1
             object lblReminder: TLabel
-              Left = 24
-              Height = 36
+              Left = 16
+              Height = 30
               Top = 8
-              Width = 220
+              Width = 184
               Caption = 'Reminder not set'
-              Font.Height = -29
+              Font.Height = -24
               ParentColor = False
               ParentFont = False
             end
@@ -2504,22 +2514,8 @@ object frmMain: TfrmMain
             ClientHeight = 50
             ClientWidth = 444
             TabOrder = 2
-            object FltSpnEdtReminder: TFloatSpinEdit
-              Left = 24
-              Height = 24
-              Top = 10
-              Width = 64
-              Font.Height = -13
-              Increment = 0.01
-              MaxValue = 24
-              MinValue = 0
-              OnChange = FltSpnEdtReminderChange
-              ParentFont = False
-              TabOrder = 0
-              Value = 0
-            end
             object DtEdtReminder: TDateEdit
-              Left = 144
+              Left = 164
               Height = 24
               Top = 10
               Width = 80
@@ -2569,7 +2565,25 @@ object frmMain: TfrmMain
               Font.Height = -13
               MaxLength = 0
               ParentFont = False
+              TabOrder = 0
+            end
+            object SpnEdtHour: TSpinEdit
+              Left = 24
+              Height = 21
+              Top = 10
+              Width = 50
+              MaxValue = 23
+              OnChange = SpnEdtHourChange
               TabOrder = 1
+            end
+            object SpnEdtMins: TSpinEdit
+              Left = 88
+              Height = 21
+              Top = 10
+              Width = 50
+              MaxValue = 59
+              OnChange = SpnEdtMinsChange
+              TabOrder = 2
             end
           end
         end
