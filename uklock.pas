@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, UAbout, Uhelp,
-  UOptions, MMSystem;
+  ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, PopupNotifier, UAbout,
+  Uhelp, UOptions, MMSystem;
 
 type
 
@@ -17,9 +17,12 @@ type
     btnCountdownStart: TButton;
     btnCountdownStop: TButton;
     btnCountdownLoadSound: TButton;
+    btnTimerStart: TButton;
+    btnTimerStop: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     EdtCountdownSound: TEdit;
+    lblTimer: TLabel;
     LblCountdownTime: TLabel;
     mnuItmOptions: TMenuItem;
     mnuItmHelp: TMenuItem;
@@ -30,6 +33,7 @@ type
     mnuMain: TMainMenu;
     PageControl1: TPageControl;
     Panel1: TPanel;
+    Panel10: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
@@ -37,6 +41,8 @@ type
     Panel6: TPanel;
     Panel7: TPanel;
     Panel8: TPanel;
+    Panel9: TPanel;
+    PopupNotifier1: TPopupNotifier;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
     TbShtFuzzy: TTabSheet;
@@ -45,9 +51,12 @@ type
     TbShtRimder: TTabSheet;
     mainTimer: TTimer;
     CountdownTimer: TTimer;
+    timerTimer: TTimer;
     procedure btnCountdownLoadSoundClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
+    procedure btnTimerStartClick(Sender: TObject);
+    procedure btnTimerStopClick(Sender: TObject);
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -57,14 +66,19 @@ type
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
-    function ItoS(Var i : Integer) : String ;
+    function ItoS(i : Integer) : String ;
+    procedure DisplayMessage(title : string ; message : string);
+    procedure Panel9Click(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
+    procedure timerTimerTimer(Sender: TObject);
   private
     { private declarations }
   public
     countdownTicks     : integer;
     countdownSoundName : String;
+    timerStart         : TDateTime;
+    timerPaused        : TdateTime;
   end; 
 
 var
@@ -76,7 +90,7 @@ implementation
 
 { TfrmMain }
 
-function TfrmMain.ItoS(Var i : Integer) : String;
+function TfrmMain.ItoS(i : Integer) : String;
 {  Converts an integer to a two character string          }
 begin
   if i < 10 then
@@ -84,6 +98,21 @@ begin
   else
     iToS := IntToStr(i);
 end;
+
+ procedure TfrmMain.DisplayMessage(title : string ; message : string);
+ {  display a message as a popup message
+    TODO : if popup already visable, add new message to popup   }
+ begin
+   PopupNotifier1.ShowAtPos(100,100) ;
+   PopupNotifier1.Title   := title;
+   PopupNotifier1.Text    := message;
+   PopupNotifier1.Visible := true ;
+ end;
+
+ procedure TfrmMain.Panel9Click(Sender: TObject);
+ begin
+
+ end;
 
 procedure TfrmMain.SpnEdtCountdownChange(Sender: TObject);
 {    called when the time is entered - only allow 1 - 90 minutes  }
@@ -138,13 +167,16 @@ begin
   stsBrInfo.Panels.Items[3].Text := ' Finished counting, now!';
   frmMain.Caption      := 'Countdown';
   application.Title    := 'Countdown';
-  ShowMessage ('Finished counting, now!');
+
+  DisplayMessage('CountDown', 'Finished counting, now!');
 
   //  reset the noOfTicks, so we start the timer again without changing the time.
   //  should be okay, already validated [if time is changes will be re-validated]
   countdownTicks := SpnEdtCountdown.Value * 60;
 
 end;
+
+
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up default sound file     }
@@ -179,11 +211,21 @@ begin
   frmMain.Caption    := 'Countdown :: ' + message;
 end;
 
+procedure TfrmMain.timerTimerTimer(Sender: TObject);
+VAR
+  hh, mm, ss, ms : word;
+  timerInterval  : TDateTime;
+begin
+  timerInterval := timerPaused + (time - timerStart);
+  DecodeTime(timerInterval, hh, mm, ss, ms);
+  lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
+end;
+
 procedure TfrmMain.btnCountdownStartClick(Sender: TObject);
-{ callsed when start button is clicked, can have three modes
-      Start  :: Start timer
-      Pause  :: Pause timer
-      Resume :: Resume a paused timer.                            }
+{ called when start button is clicked, can have three modes
+      Start  :: Start countdown
+      Pause  :: Pause countdown
+      Resume :: Resume a paused countdown.                            }
 VAR
   val : integer;
 
@@ -243,6 +285,38 @@ begin
   frmMain.Caption   := 'Countdown';
   application.Title := 'Countdown';
   LblCountdownTime.Caption := '00:00';
+end;
+
+procedure TfrmMain.btnTimerStartClick(Sender: TObject);
+{ called when start button is clicked, can have three modes
+      Start  :: Start timer
+      Pause  :: Pause timer
+      Resume :: Resume a paused timer.                            }
+begin
+  if btnTimerStart.Caption = 'Start' then begin
+    timerStart  := time;
+    timerPaused := 0;
+    btnTimerStop.Enabled  := true;
+    timerTimer.Enabled    := true;
+    btnTimerStart.Caption := 'Pause'
+  end
+  else if btnTimerStart.Caption = 'Pause' then begin
+    timerPaused := timerStart - time;
+    btnTimerStart.Caption := 'Resume';
+    timerTimer.Enabled    := false;
+  end
+  else if btnTimerStart.Caption = 'Resume' then begin
+    timerStart  := time;
+    btnTimerStart.Caption := 'Pause';
+    timerTimer.Enabled    := true;
+  end
+end;
+
+procedure TfrmMain.btnTimerStopClick(Sender: TObject);
+begin
+  btnTimerStop.Enabled  := false;
+  timerTimer.Enabled    := false;
+  lblTimer.Caption      := '00:00:00'
 end;
 
 procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);

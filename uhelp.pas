@@ -56,7 +56,7 @@ begin
   mmoHelp.Append('along with this program.  If not, see <http://www.gnu.org/licenses/>.');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Stub Version :: 0.0.0.1.');
+  mmoHelp.Append('Stub Version :: 0.0.0.2.');
 end;
 
 procedure TfrmHelp.btnhelpExitClick(Sender: TObject);
