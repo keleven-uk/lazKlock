@@ -57,7 +57,7 @@ begin
 
   mmoLicence.Append('');
   mmoLicence.Append('Kevin Scott (c) - 2012.');
-  mmoLicence.Append('Klock Version :: 15');
+  mmoLicence.Append('Klock Version :: 16');
 end;
 
 end.

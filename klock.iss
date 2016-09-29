@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Klock"
-#define MyAppVersion "Build 7"
+#define MyAppVersion "15"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "klock.exe"
@@ -19,12 +19,12 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={pf}\keleven\klock_15
 DefaultGroupName={#MyAppName}
 LicenseFile=C:\usr\shed\projects\pascal\klock\GNU GENERAL PUBLIC LICENSE.txt
 InfoAfterFile=C:\usr\shed\projects\pascal\klock\history.txt
-OutputDir=C:\usr\shed
-OutputBaseFilename=klock_7
+OutputDir=C:\usr\shed\projects\pascal
+OutputBaseFilename=klock_15
 SetupIconFile=C:\usr\shed\projects\pascal\klock\klock.ico
 Compression=lzma
 SolidCompression=yes

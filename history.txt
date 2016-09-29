@@ -1,4 +1,16 @@
 ------------------------------------------------------------------------
+r15 | scottk2 | 2012-03-15 16:46:26 +0000 (Thu, 15 Mar 2012) | 3 lines
+
+Added try..except clause to all file operations.
+
+Another attempt to fix noon bug in fuzzytime.
+------------------------------------------------------------------------
+r14 | Kevin | 2012-03-08 21:33:35 +0000 (Thu, 08 Mar 2012) | 3 lines
+
+Added split time button to timer page.
+
+Removed function ItoS, which converted integer to 2 digit strings and use internal format function instead.
+------------------------------------------------------------------------
 r13 | Kevin | 2012-03-07 21:42:38 +0000 (Wed, 07 Mar 2012) | 4 lines
 
 Reduced the height of most components, to make the overall application more sleek - I think it looks better.

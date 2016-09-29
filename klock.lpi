@@ -16,9 +16,9 @@
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <BuildNr Value="15"/>
+      <BuildNr Value="16"/>
       <Language Value="0809"/>
-      <StringTable CompanyName="www.keleven.co.uk" FileDescription="A timing thingy" InternalName="klock" OriginalFilename="klock.exe" ProductName="klock" ProductVersion="15"/>
+      <StringTable CompanyName="www.keleven.co.uk" FileDescription="A timing thingy" InternalName="klock" OriginalFilename="klock.exe" ProductName="klock" ProductVersion="16"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -90,7 +90,7 @@
         <UnitName Value="UAbout"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="25"/>
+        <TopLine Value="17"/>
         <CursorPos X="52" Y="57"/>
         <UsageCount Value="92"/>
         <Loaded Value="True"/>
@@ -118,7 +118,7 @@
         <UnitName Value="UOptions"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="73"/>
+        <TopLine Value="65"/>
         <CursorPos X="54" Y="89"/>
         <UsageCount Value="85"/>
         <Loaded Value="True"/>
@@ -175,7 +175,7 @@
         <UnitName Value="uLicense"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="24"/>
+        <TopLine Value="19"/>
         <CursorPos X="41" Y="60"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
