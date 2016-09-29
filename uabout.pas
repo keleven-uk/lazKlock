@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  LCLVersion, ExtCtrls;
+  LCLVersion, ExtCtrls, UOptions;
 
 type
 
@@ -54,7 +54,7 @@ begin
   dskSize := FloatToStrF(DiskSize(0) / 1073741824, ffFixed, 3, 2);
 
   lblLazarusVersion.Caption := format('Built with Lazarus Version :: %s', [lcl_version]);
-  lblVersion.Caption        := 'Klock Version :: 17';
+  lblVersion.Caption        := format('Klock Version :: %s', [OptionsRec.Version]);
   lblDiskSize.Caption       := format(' Disk Free / Size :: %s / %s Gbytes', [dskFree, dskSize]);
 end;
 

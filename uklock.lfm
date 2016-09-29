@@ -2166,8 +2166,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 580
-      ActivePage = TbShtCountdown
-      TabIndex = 1
+      ActivePage = TbShtTimer
+      TabIndex = 2
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2195,10 +2195,10 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 10
               Width = 76
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Fuzzy'
@@ -2239,15 +2239,15 @@ object frmMain: TfrmMain
       end
       object TbShtCountdown: TTabSheet
         Caption = 'Countdown'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel3: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2292,7 +2292,7 @@ object frmMain: TfrmMain
             TabOrder = 1
             object SpnEdtCountdown: TSpinEdit
               Left = 8
-              Height = 29
+              Height = 27
               Top = 8
               Width = 62
               Font.Height = -16
@@ -2303,9 +2303,9 @@ object frmMain: TfrmMain
             end
             object LblCountdownTime: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 85
+              Width = 89
               Caption = '00:00'
               Font.Height = -35
               ParentColor = False
@@ -2324,9 +2324,9 @@ object frmMain: TfrmMain
             TabOrder = 2
             object ChckBxCountdownSound: TCheckBox
               Left = 16
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 54
+              Width = 48
               Caption = 'Sound'
               Checked = True
               OnChange = ChckBxCountdownSoundChange
@@ -2335,7 +2335,7 @@ object frmMain: TfrmMain
             end
             object EdtCountdownSound: TEdit
               Left = 96
-              Height = 23
+              Height = 21
               Top = 8
               Width = 176
               ReadOnly = True
@@ -2365,16 +2365,16 @@ object frmMain: TfrmMain
       end
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel1: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
           AutoSize = True
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2382,7 +2382,7 @@ object frmMain: TfrmMain
           object Panel9: TPanel
             Left = 12
             Height = 88
-            Top = 7
+            Top = 8
             Width = 96
             Anchors = []
             ClientHeight = 88
@@ -2421,7 +2421,7 @@ object frmMain: TfrmMain
           object Panel10: TPanel
             Left = 116
             Height = 43
-            Top = 7
+            Top = 8
             Width = 444
             Anchors = []
             ClientHeight = 43
@@ -2429,9 +2429,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblTimer: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 131
+              Width = 139
               Caption = '00:00:00'
               Font.Height = -35
               ParentColor = False
@@ -2441,7 +2441,7 @@ object frmMain: TfrmMain
           object Panel16: TPanel
             Left = 116
             Height = 40
-            Top = 55
+            Top = 56
             Width = 444
             Anchors = []
             ClientHeight = 40
@@ -2459,9 +2459,9 @@ object frmMain: TfrmMain
             end
             object lblSplitLap: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 131
+              Width = 139
               Caption = '00:00:00'
               Enabled = False
               Font.Height = -35

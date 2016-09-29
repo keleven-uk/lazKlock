@@ -168,7 +168,7 @@ begin
   lblReminder.Font.Size       := 18;
 
   PageControl1.TabIndex := OptionsRec.DefaultTab;
-  stsBrInfo.Panels.Items[2].Text := format('tab = %d', [OptionsRec.DefaultTab]);
+
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
@@ -219,15 +219,24 @@ begin
       stsBrInfo.Panels.Items[2].Text := '';
       stsBrInfo.Panels.Items[3].Text := '';
 
-    if timerTimer.Enabled = false then
-      if btnTimerStart.Caption = 'Resume' then
-        stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused'
-      else
-        stsBrInfo.Panels.Items[2].Text := ''
-    else
-      stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+    if timerTimer.Enabled = false then begin
 
-  end;    //  if PageControl1.TabIndex = 2
+      if btnTimerStart.Caption = 'Resume' then
+        stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
+
+     if btnTimerStart.Caption = 'Start' then begin
+        stsBrInfo.Panels.Items[2].Text := '';
+        if OptionsRec.TimerMilliSeconds then begin
+          lblTimer.Caption    := '00:00:00:00';
+          lblSplitLap.Caption := '00:00:00:00';
+        end
+        else begin
+          lblTimer.Caption    := '00:00:00';
+          lblSplitLap.Caption := '00:00:00';
+        end;  //  if OptionsRec.TimerMilliSeconds
+      end;    //  btnTimerStart.Caption = 'Start'
+    end;      //  if timerTimer.Enabled = false
+  end;        //  if PageControl1.TabIndex = 2
 
   if PageControl1.TabIndex = 3 then begin                    //  reminder page
     stsBrInfo.Panels.Items[2].Text := '';
@@ -463,7 +472,10 @@ VAR
 begin
   timerInterval := timerPaused + (time - timerStart);
   DecodeTime(timerInterval, hh, mm, ss, ms);
-  lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
+  if OptionsRec.TimerMilliSeconds then
+    lblTimer.Caption := format('%.2d:%.2d:%.2d:%.2d',[hh, mm, ss, ms])
+  else
+    lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
 end;
 
 
@@ -475,6 +487,9 @@ procedure TfrmMain.btnTimerStartClick(Sender: TObject);
       Resume :: Resume a paused timer.                            }
 begin
   if btnTimerStart.Caption = 'Start' then begin
+
+    if OptionsRec.TimerMilliSeconds then
+      timerTimer.Interval := 100;
     timerStart  := time;
     timerPaused := 0;
     btnTimerStop.Enabled  := true;
@@ -483,7 +498,6 @@ begin
     btnTimerStart.Caption := 'Pause';
     btnTimerSplit.Enabled := true;
     lblSplitLap.Enabled   := true;
-    lblSplitLap.Caption   := '00:00:00';
     frmMain.Caption       := 'Timer :: Started';
     stsBrInfo.Panels.Items[3].Text := 'Timer Running';
   end
@@ -526,12 +540,19 @@ end;
 
 procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 begin
-    lblTimer.Caption := '00:00:00';
+  if OptionsRec.TimerMilliSeconds then begin
+    lblTimer.Caption    := '00:00:00:00';
+    lblSplitLap.Caption := '00:00:00:00';
+  end
+  else begin
+    lblTimer.Caption    := '00:00:00';
+    lblSplitLap.Caption := '00:00:00';
+  end;  //  if OptionsRec.TimerMilliSeconds
+
     stsBrInfo.Panels.Items[3].Text := '';
 
     btnTimerSplit.Enabled := false;
     lblSplitLap.Enabled   := false;
-    lblSplitLap.Caption   := '00:00:00';
 end;
 
 // *********************************************************** Reminder ********
