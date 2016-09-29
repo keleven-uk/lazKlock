@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, PopupNotifier, ExtDlgs,
-  UAbout, Uhelp, UOptions, MMSystem;
+  Calendar, EditBtn, UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime;
 
 type
 
@@ -21,9 +21,11 @@ type
     btnTimerStop: TButton;
     btnTimerClear: TButton;
     btnReminderSet: TButton;
-    ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
+    lblReminderHour: TEdit;
+    EdtReminderMinute: TEdit;
     EdtCountdownSound: TEdit;
+    lblfuzzy: TLabel;
     lblReminder: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
@@ -39,6 +41,10 @@ type
     Panel10: TPanel;
     Panel11: TPanel;
     Panel12: TPanel;
+    Panel13: TPanel;
+    Panel14: TPanel;
+    Panel15: TPanel;
+    Panel16: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
@@ -57,6 +63,9 @@ type
     mainTimer: TTimer;
     CountdownTimer: TTimer;
     timerTimer: TTimer;
+    TgleBxFuzzy: TToggleBox;
+    UpDwnReminderHour: TUpDown;
+    UpDownReminderMinute: TUpDown;
     procedure btnCountdownLoadSoundClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
@@ -79,7 +88,10 @@ type
     procedure Panel9Click(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
+    procedure TgleBxFuzzyChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
+    procedure UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType);
+    procedure UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
   private
     { private declarations }
   public
@@ -87,6 +99,8 @@ type
     countdownSoundName : String;
     timerStart         : TDateTime;
     timerPaused        : TdateTime;
+
+    ft : FuzzyTime;
   end; 
 
 var
@@ -184,15 +198,33 @@ begin
 
 end;
 
+procedure TfrmMain.TgleBxFuzzyChange(Sender: TObject);
+begin
+  if TgleBxFuzzy.Checked then begin
+    TgleBxFuzzy.Caption := 'normal';
+    ft.displayFuzzy     := true;
+    lblfuzzy.Caption    := ft.getTime;
+  end
+  else begin
+    TgleBxFuzzy.Caption := 'fuzzy';
+    ft.displayFuzzy     := false;
+    lblfuzzy.Caption    := ft.getTime;
+  end;
+end;
+
 
 
 procedure TfrmMain.FormCreate(Sender: TObject);
-{  Called at start - sets up default sound file     }
+{  Called at start - sets up fuzzy time and default sound file     }
 begin
   countdownSoundName     := getCurrentDir + '\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName); //  in current working directory.
   stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
-  PageControl1.TabIndex := 1;
+
+  PageControl1.TabIndex := 0;   // start on fuzzy time
+
+  ft := FuzzyTime.Create;
+  ft.displayFuzzy := true;
 end;
 
 procedure TfrmMain.CountdownTimerTimer(Sender: TObject);
@@ -228,6 +260,17 @@ begin
   timerInterval := timerPaused + (time - timerStart);
   DecodeTime(timerInterval, hh, mm, ss, ms);
   lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
+end;
+
+procedure TfrmMain.UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType
+  );
+begin
+  EdtReminderMinute.Text := intToStr(UpDownReminderMinute.Position);
+end;
+
+procedure TfrmMain.UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
+begin
+     lblReminderHour.Text := intToStr(UpDwnReminderHour.Position);
 end;
 
 procedure TfrmMain.btnCountdownStartClick(Sender: TObject);
@@ -298,14 +341,7 @@ end;
 
 procedure TfrmMain.btnReminderSetClick(Sender: TObject);
 begin
-  with TCalendarDialog.Create(Self) do
-  begin
-    Title := 'Choose a sound file [.wav]' ;
-    if Execute then begin
 
-    end;    //  if Exectute
-    Free;
-  end;
 end;
 
 procedure TfrmMain.btnTimerStartClick(Sender: TObject);
@@ -387,6 +423,9 @@ end;
 
 procedure TfrmMain.PageControl1Change(Sender: TObject);
 begin
+  if PageControl1.TabIndex = 0 then
+    stsBrInfo.Panels.Items[2].Text := '';
+
   if PageControl1.TabIndex = 1 then begin
     if chckBxCountdownSound.Checked then begin
       stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
@@ -413,7 +452,10 @@ procedure TfrmMain.mainTimerTimer(Sender: TObject);
 begin
   stsBrInfo.Panels.Items[0].Text := TimeToStr(Time);
   stsBrInfo.Panels.Items[1].Text := DateToStr(Date);
+
+  lblfuzzy.Caption := ft.getTime;
 end;
+
 
 End.
 
