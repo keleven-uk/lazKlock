@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 613
+  Left = 345
   Height = 362
-  Top = 32
+  Top = 239
   Width = 609
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
@@ -37,6 +37,7 @@ object frmOptions: TfrmOptions
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
+        OnColorChanged = ClrBtnGlobalColorChanged
       end
       object btnGlobalFont: TButton
         Left = 158
@@ -74,6 +75,7 @@ object frmOptions: TfrmOptions
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
+        OnColorChanged = ClrBtnFuzzyColorChanged
       end
       object btnFuzzyFont: TButton
         Left = 158
@@ -112,6 +114,7 @@ object frmOptions: TfrmOptions
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
+        OnColorChanged = ClrBtnCountdownColorChanged
       end
       object btnCountdownFont: TButton
         Left = 158
@@ -146,6 +149,7 @@ object frmOptions: TfrmOptions
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
+        OnColorChanged = ClrBtnTimerColorChanged
       end
       object btnTimerFont: TButton
         Left = 158
@@ -188,6 +192,7 @@ object frmOptions: TfrmOptions
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
+        OnColorChanged = ClrBtnReminderColorChanged
       end
       object btnReminderFont: TButton
         Left = 158
@@ -200,7 +205,7 @@ object frmOptions: TfrmOptions
       object lblReminder: TLabel
         Left = 8
         Height = 20
-        Top = 2
+        Top = 3
         Width = 69
         Caption = 'Reminder'
         ParentColor = False
@@ -261,6 +266,33 @@ object frmOptions: TfrmOptions
       )
       OnClick = RdGrpDefaultClick
       TabOrder = 0
+    end
+  end
+  object Panel3: TPanel
+    Left = 376
+    Height = 40
+    Top = 272
+    Width = 224
+    ClientHeight = 40
+    ClientWidth = 224
+    TabOrder = 3
+    object SpdBtnDefault: TSpeedButton
+      Left = 192
+      Height = 22
+      Top = 8
+      Width = 23
+      NumGlyphs = 0
+      OnClick = SpdBtnDefaultClick
+    end
+    object Label1: TLabel
+      Left = 8
+      Height = 20
+      Top = 10
+      Width = 170
+      Caption = 'Reset Colours to default'
+      Font.Height = -16
+      ParentColor = False
+      ParentFont = False
     end
   end
   object FontDialog1: TFontDialog

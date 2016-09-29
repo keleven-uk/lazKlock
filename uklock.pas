@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils;
+  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils, UoptionUtils;
 
 type
 
@@ -104,6 +104,7 @@ type
     procedure SpnEdtMinsChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
   private
+    function getTextColour(t1 : TColor ; t2 : TColor): TColor;
     procedure DisplayMessage(title : string ; message : string);
     procedure StopCountDown;
     procedure SetDefaults;
@@ -151,24 +152,38 @@ end;
 
 procedure TfrmMain.SetDefaults;
 {  called to set defaults on startup.
-   Set things that can be changed in the options screen,
-   to the values in the options screen.                             }
+   Set things that can be changed in the options screen, to the values in the options screen.      }
 begin
-  lblfuzzy.Font.Color         := OptionsRec.GlobaltextColour;
+  lblFuzzy.Font               := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
+  lblfuzzy.Font.Color         := getTextColour(OptionsRec.FuzzyTextColour, OptionsRec.GlobalTextColour);
   lblfuzzy.Font.Size          := 18;
   SpnEdtCountdown.Font.Size   := 8;
-  LblCountdownTime.Font.Color := OptionsRec.GlobaltextColour;
+  lblCountDownTime.Font       := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
+  LblCountdownTime.Font.Color := getTextColour(OptionsRec.CountDownTextColour, OptionsRec.GlobalTextColour);
   LblCountdownTime.Font.Size  := 26;
   SpnEdtCountdown.Font.Size   := 12;
-  lblTimer.Font.Color         := OptionsRec.GlobaltextColour;
+  lblTimer.Font               := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
+  lblTimer.Font.Color         := getTextColour(OptionsRec.TimerTextColour, OptionsRec.GlobalTextColour);
   lblTimer.Font.Size          := 26;
-  lblSplitLap.Font.Color      := OptionsRec.GlobaltextColour;
+  lblSplitLap.Font            := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
+  lblSplitLap.Font.Color      := getTextColour(OptionsRec.TimerTextColour, OptionsRec.GlobalTextColour);
   lblSplitLap.Font.Size       := 26;
-  lblReminder.Font.Color      := OptionsRec.GlobaltextColour;
+  lblReminder.Font            := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
+  lblReminder.Font.Color      := getTextColour(OptionsRec.ReminderTextColour, OptionsRec.GlobalTextColour);
   lblReminder.Font.Size       := 18;
 
   PageControl1.TabIndex := OptionsRec.DefaultTab;
 
+end;
+
+function TfrmMain.getTextColour(t1 : TColor ; t2 : TColor): TColor;
+{  takes two colors, global[t2] and local[t1] and returns on acording the the rule.
+   If the local in not default [clNone], return the local or else return the global               }
+begin
+  if t1 = clNone then
+    getTextColour := t2  //  use local colour
+  else
+    getTextColour := t1  //  use global colour
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
