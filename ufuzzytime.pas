@@ -68,7 +68,7 @@ begin
   hourTxt[9]  := 'nine';
   hourTxt[10] := 'ten';
   hourTxt[11] := 'eleven';
-
+  hourTxt[12] := 'twelve';
 
   t := Time;
   DecodeTime(t, hour, mins, secs, mscs);
@@ -124,16 +124,17 @@ begin
     sRtn := 'five to ';
     hour := hour + 1;
   end
-  else if nrms = 60 then begin
+  else if nrms = 60 then begin   //  does this ever happen.
     sRtn := '';
     hour := hour + 1;
   end;
 
+  if (hour = 12) and (nrms = 0) then   //  fix for noon.
+    ampm := ' noon';
+
   if ampm = 'pm' then begin
     hour := hour - 12;
-    if (hour = 0) and (nrms = 0) then         // 12 o'clock : noon
-      ampm := 'noon'
-    else if hour >= 5 then
+  if hour >= 5 then
       ampm := ' in the evening'
     else
       ampm := ' in the afternoon';

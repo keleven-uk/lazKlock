@@ -1,11 +1,39 @@
 Klock - a clock with a k.
 
-A multifunction timing thingy, where some [but not necessary all] of the functions are usefull.
+A multifunction timing thingy, where some [but not necessary all] of the functions are useful.
+
+The multifunction timing thingy is split into four pages - Fuzzy Time, Countdown, Tmer and Reminder.
+
+Fuzzy Time
+
+Allows the current time to be displayed in a number of different formats.
+
+
+Countdown
+
+Implements a simple countdown timer [between 1 and 90 minutes].
+The time for the countdown can be either entered directly of the up/down controls can be used.
+The timer can be paused during countdown and stopped before the end is reached.
+A sound can be played at the end of the countdown, this sound can be user selected [a .wav file].
+
+
+Timer
+
+Implements  a simple timer, with split time function.
+The timer can be stopped, paused and resumed.
+A split function allows for given time to be remembered.
+
+
+Reminder
+
+Implements a reminder option.
+When a given time is reached a reminder is displayed on screen.
+Today's date is default, but a future date can also be selected.
 
 
 
 
-Histroy
+History
 -------
 
 ------------------------------------------------------------------------

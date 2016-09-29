@@ -40,12 +40,22 @@ begin
   mmoHelp.Append('Klock.');
   mmoHelp.Append('');
   mmoHelp.Append('');
-  mmoHelp.Lines.LoadFromFile('help.txt');
+
+  try
+    mmoHelp.Lines.LoadFromFile('help.txt');
+  except
+    on Exception do begin
+      mmoHelp.Append(' help file not found.');
+      mmoHelp.Append('');
+      mmoHelp.Append(' This file should include full and detailed help intructions.');
+    end;
+  end;
+
   mmoHelp.Append('');
   mmoHelp.Append('');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Klock Version :: 14');
+  mmoHelp.Append('Klock Version :: 15');
 
 end;
 

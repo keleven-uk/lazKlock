@@ -1,12 +1,12 @@
 object frmMain: TfrmMain
-  Left = 42
-  Height = 273
-  Top = -298
+  Left = 286
+  Height = 242
+  Top = 276
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 273
+  ClientHeight = 222
   ClientWidth = 620
   Constraints.MaxWidth = 620
   Constraints.MinWidth = 620
@@ -2131,11 +2131,11 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '0.9.30.2'
+  LCLVersion = '0.9.30'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
-    Top = 250
+    Top = 199
     Width = 620
     Panels = <    
       item
@@ -2620,12 +2620,13 @@ object frmMain: TfrmMain
   object ButtonPanel1: TButtonPanel
     Left = 360
     Height = 26
-    Top = 203
+    Top = 163
     Width = 168
     Align = alNone
     Anchors = []
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&OK'
+    OKButton.Enabled = False
     HelpButton.Name = 'HelpButton'
     HelpButton.Caption = '&Help'
     HelpButton.OnClick = HelpButtonClick
@@ -2633,6 +2634,7 @@ object frmMain: TfrmMain
     CloseButton.Caption = '&Close'
     CancelButton.Name = 'CancelButton'
     CancelButton.Caption = 'Cancel'
+    CancelButton.Enabled = False
     TabOrder = 2
     ShowButtons = [pbClose, pbHelp]
     ShowBevel = False

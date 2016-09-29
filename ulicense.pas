@@ -44,10 +44,20 @@ begin
   mmoLicence.Append('Klock.');
   mmoLicence.Append('');
   mmoLicence.Append('');
-  mmoLicence.Lines.LoadFromFile('GNU GENERAL PUBLIC LICENSE.txt');
+
+  try
+    mmoLicence.Lines.LoadFromFile('GNU GENERAL PUBLIC LICENSE.txt');
+  except
+    on Exception do begin
+      mmoLicence.Append(' help License not found.');
+      mmoLicence.Append('');
+      mmoLicence.Append(' The application is issued under the GNU GENERAL PUBLIC LICENSE.');
+    end;
+  end;
+
   mmoLicence.Append('');
   mmoLicence.Append('Kevin Scott (c) - 2012.');
-  mmoLicence.Append('Klock Version :: 14');
+  mmoLicence.Append('Klock Version :: 15');
 end;
 
 end.
