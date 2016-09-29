@@ -1,0 +1,37 @@
+------------------------------------------------------------------------
+r1 | Kevin | 2012-01-28 20:39:07 +0000 (Sat, 28 Jan 2012) | 5 lines
+
+Initial Import.
+
+Most of GUI structure complete.
+
+Countdown page complete [mainly from countdown projector].
+------------------------------------------------------------------------
+r2 | Kevin | 2012-01-28 23:34:06 +0000 (Sat, 28 Jan 2012) | 5 lines
+
+Nearly completed timer page - just an issue with pause/resume.
+
+Changed icon to clock.ico.
+
+Changed message to popup notification.
+------------------------------------------------------------------------
+r3 | Kevin | 2012-01-29 22:35:52 +0000 (Sun, 29 Jan 2012) | 3 lines
+
+Timer page completed.
+
+Reminder page started.
+------------------------------------------------------------------------
+r4 | Kevin | 2012-01-30 22:24:45 +0000 (Mon, 30 Jan 2012) | 3 lines
+
+Fuzzy time page completed.
+
+Still working on reminder page.
+------------------------------------------------------------------------
+r5 | Kevin | 2012-02-05 21:19:15 +0000 (Sun, 05 Feb 2012) | 5 lines
+
+All four pages [fuzzy, countdown, time & reminder] are finished.
+
+Added logic to change status bar on page change.
+
+Tidied up code.
+------------------------------------------------------------------------

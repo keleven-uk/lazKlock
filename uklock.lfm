@@ -1,16 +1,16 @@
 object frmMain: TfrmMain
-  Left = 1348
-  Height = 300
-  Top = 330
+  Left = 1251
+  Height = 280
+  Top = 77
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 280
+  ClientHeight = 260
   ClientWidth = 620
-  Constraints.MaxHeight = 300
+  Constraints.MaxHeight = 280
   Constraints.MaxWidth = 620
-  Constraints.MinHeight = 300
+  Constraints.MinHeight = 280
   Constraints.MinWidth = 620
   Icon.Data = {
     3E08010000000100010080800000010020002808010016000000280000008000
@@ -2131,12 +2131,13 @@ object frmMain: TfrmMain
   }
   Menu = mnuMain
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '0.9.30.2'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
-    Top = 257
+    Top = 237
     Width = 620
     Panels = <    
       item
@@ -2157,7 +2158,7 @@ object frmMain: TfrmMain
   object Panel2: TPanel
     Left = 8
     Height = 186
-    Top = 24
+    Top = 8
     Width = 606
     ClientHeight = 186
     ClientWidth = 606
@@ -2167,8 +2168,8 @@ object frmMain: TfrmMain
       Height = 168
       Top = 8
       Width = 580
-      ActivePage = TbShtTimer
-      TabIndex = 2
+      ActivePage = TbShtFuzzy
+      TabIndex = 0
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2543,9 +2544,28 @@ object frmMain: TfrmMain
       end
     end
   end
+  object ButtonPanel1: TButtonPanel
+    Left = 362
+    Height = 26
+    Top = 204
+    Width = 168
+    Align = alNone
+    Anchors = []
+    OKButton.Name = 'OKButton'
+    OKButton.Caption = '&OK'
+    HelpButton.Name = 'HelpButton'
+    HelpButton.Caption = '&Help'
+    HelpButton.OnClick = HelpButtonClick
+    CloseButton.Name = 'CloseButton'
+    CloseButton.Caption = '&Close'
+    CancelButton.Name = 'CancelButton'
+    CancelButton.Caption = 'Cancel'
+    TabOrder = 2
+    ShowButtons = [pbClose, pbHelp]
+    ShowBevel = False
+  end
   object mnuMain: TMainMenu
-    left = 408
-    top = 232
+    left = 400
     object mnuFile: TMenuItem
       Caption = 'File'
       object mnuItmOptions: TMenuItem
@@ -2571,14 +2591,12 @@ object frmMain: TfrmMain
   end
   object mainTimer: TTimer
     OnTimer = mainTimerTimer
-    left = 584
-    top = 232
+    left = 568
   end
   object CountdownTimer: TTimer
     Enabled = False
     OnTimer = CountdownTimerTimer
-    left = 544
-    top = 232
+    left = 520
   end
   object PopupNotifier1: TPopupNotifier
     Color = clYellow
@@ -2590,19 +2608,16 @@ object frmMain: TfrmMain
     Text = 'Text'
     Title = 'Caption'
     Visible = False
-    left = 328
-    top = 232
+    left = 352
   end
   object timerTimer: TTimer
     Enabled = False
     OnTimer = timerTimerTimer
-    left = 504
-    top = 232
+    left = 480
   end
   object ReminderTimer: TTimer
     Enabled = False
     OnTimer = ReminderTimerTimer
-    left = 464
-    top = 232
+    left = 440
   end
 end

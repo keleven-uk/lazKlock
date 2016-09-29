@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1427
+  Left = 1318
   Height = 233
-  Top = 836
+  Top = 692
   Width = 320
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
@@ -19,24 +19,57 @@ object frmOptions: TfrmOptions
     Height = 160
     Top = 8
     Width = 306
-    TabOrder = 0
-  end
-  object Panel2: TPanel
-    Left = 8
-    Height = 42
-    Top = 176
-    Width = 306
-    ClientHeight = 42
+    ClientHeight = 160
     ClientWidth = 306
-    TabOrder = 1
-    object btnExit: TButton
-      Left = 224
-      Height = 25
-      Top = 8
-      Width = 75
-      Caption = 'Exit'
-      OnClick = btnExitClick
-      TabOrder = 0
+    TabOrder = 0
+    OnClick = Panel1Click
+    object lblLabelColour: TLabel
+      Left = 16
+      Height = 22
+      Top = 16
+      Width = 48
+      Caption = 'Colour'
+      Font.Height = -16
+      ParentColor = False
+      ParentFont = False
     end
+    object GroupBox1: TGroupBox
+      Left = 8
+      Height = 57
+      Top = 0
+      Width = 121
+      Caption = 'Main Labels'
+      ClientHeight = 39
+      ClientWidth = 117
+      TabOrder = 0
+      object ClrBtnLabel: TColorButton
+        Left = 70
+        Height = 25
+        Top = 0
+        Width = 33
+        BorderWidth = 2
+        ButtonColorSize = 16
+        ButtonColor = clBlack
+        OnColorChanged = ClrBtnLabelColorChanged
+      end
+    end
+  end
+  object ButtonPanel1: TButtonPanel
+    Left = 6
+    Height = 34
+    Top = 193
+    Width = 308
+    OKButton.Name = 'OKButton'
+    OKButton.Caption = '&OK'
+    OKButton.OnClick = OKButtonClick
+    HelpButton.Name = 'HelpButton'
+    HelpButton.Caption = '&Help'
+    CloseButton.Name = 'CloseButton'
+    CloseButton.Caption = '&Close'
+    CancelButton.Name = 'CancelButton'
+    CancelButton.Caption = 'Cancel'
+    CancelButton.OnClick = CancelButtonClick
+    TabOrder = 1
+    ShowButtons = [pbOK, pbCancel, pbHelp]
   end
 end

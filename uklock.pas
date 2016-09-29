@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, UAbout,
-  Uhelp, UOptions, MMSystem, UFuzzyTime;
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
+  UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime;
 
 type
 
@@ -22,6 +22,7 @@ type
     btnTimerClear: TButton;
     btnReminderSet: TButton;
     btnSoundTest: TButton;
+    ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     EdtReminderHour: TEdit;
     EdtReminderMinute: TEdit;
@@ -79,6 +80,8 @@ type
     procedure ChckBxCountdownSoundChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure HelpButtonClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
@@ -90,6 +93,7 @@ type
     procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
+    procedure SetDefaults;
     procedure TgleBxFuzzyChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
     procedure UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType);
@@ -103,6 +107,7 @@ type
     timerPaused        : TdateTime;
 
     ft : FuzzyTime;
+
   end; 
 
 var
@@ -134,6 +139,24 @@ begin
 
   ft := FuzzyTime.Create;
   ft.displayFuzzy := true;
+
+//  SetDefaults;
+end;
+
+procedure TfrmMain.FormShow(Sender: TObject);
+begin
+  SetDefaults;
+end;
+
+procedure TfrmMain.SetDefaults;
+{  called to set defaults on startup.
+   Set things that can be changed in the options screen,
+   to the values in the options screen.                             }
+begin
+  lblfuzzy.Font.Color         := OptionsRec.textColour;
+  LblCountdownTime.Font.Color := OptionsRec.textColour;
+  lblTimer.Font.Color         := OptionsRec.textColour;
+  lblReminder.Font.Color      := OptionsRec.textColour;
 end;
 
 procedure TfrmMain.DisplayMessage(title : string ; message : string);
@@ -177,6 +200,7 @@ begin
     else
       stsBrInfo.Panels.Items[3].Text := ' Counting down from ' +
                             ItoS(SpnEdtCountdown.Value) + ' minute[s]';
+
   end;
 
   if PageControl1.TabIndex = 2 then begin                     //  timer page
@@ -190,6 +214,7 @@ begin
         stsBrInfo.Panels.Items[2].Text := ''
     else
       stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+
   end;
 
   if PageControl1.TabIndex = 3 then begin                    //  reminder page
@@ -207,6 +232,7 @@ begin
                                                             + ':'
                                                             + EdtReminderMinute.Text;
     end;  //  if btnReminderSet.Enabled
+
   end;    //  if PageControl1.TabIndex
 end;
 
@@ -469,6 +495,8 @@ begin
   stsBrInfo.Panels.Items[3].Text := 'Timer :: Stoped';
 end;
 
+
+
 procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 begin
     lblTimer.Caption := '00:00:00';
@@ -536,8 +564,12 @@ end;
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 begin
   frmOptions.ShowModal;
+  SetDefaults;
 end;
-
+ procedure TfrmMain.HelpButtonClick(Sender: TObject);
+begin
+  frmHelp.ShowModal;
+end;
 // *****************************************************************************
 
 End.
