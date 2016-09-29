@@ -1,12 +1,12 @@
 projext   :: Klock
-Version   :: 7
+Version   :: 9
 Date      :: Friday 25 january 2012
 Author    :: Kevin Scott
 
 Copyright 2012 :: Kevin Scott ::  countdown<at>keleven<dot>co<dot>uk
 
-Date     of last SVN commit :: $Date:: 2012-02-13 22:18:43 +0000 (Mon, 13 Feb 2012)                                      $
-Revision of last SVN commit :: $Revision:: 7                                                                             $
+Date     of last SVN commit :: $Date:: 2012-02-19 10:23:06 +0000 (Sun, 19 Feb 2012)                                      $
+Revision of last SVN commit :: $Revision:: 9                                                                             $
 Author   of last SVN commit :: $Author:: Kevin                                                                           $
 Full URL  in SVN repository :: $HeadURL:: file:///D:/My/shed/tmp/pascal/klock/info.txt                                   $
 

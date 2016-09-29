@@ -24,6 +24,7 @@ type
     btnSoundTest: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
+    CmbBxTime: TComboBox;
     EdtReminderHour: TEdit;
     EdtReminderMinute: TEdit;
     EdtCountdownSound: TEdit;
@@ -56,7 +57,6 @@ type
     Panel8: TPanel;
     Panel9: TPanel;
     PopupNotifier1: TPopupNotifier;
-    RdGrpTime: TRadioGroup;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
     TbShtFuzzy: TTabSheet;
@@ -78,6 +78,7 @@ type
     procedure btnTimerStartClick(Sender: TObject);
     procedure btnTimerStopClick(Sender: TObject);
     procedure ChckBxCountdownSoundChange(Sender: TObject);
+    procedure CmbBxTimeChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -90,7 +91,6 @@ type
     procedure mainTimerTimer(Sender: TObject);
     function ItoS(i : Integer) : String ;
     procedure DisplayMessage(title : string ; message : string);
-    procedure RdGrpTimeClick(Sender: TObject);
     procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
@@ -137,7 +137,7 @@ begin
   PageControl1.TabIndex := 0;   //  start on fuzzy time
 
   ft := FuzzyTime.Create;
-  ft.displayFuzzy := 1;         //  start on fuzzy time
+  ft.displayFuzzy := 0;         //  start on fuzzy time
 
 //  SetDefaults;
 end;
@@ -246,26 +246,30 @@ begin
 end;
 
 // *********************************************************** Fuzzy Time ******
-procedure TfrmMain.RdGrpTimeClick(Sender: TObject);
+procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
 begin
-  if RdGrpTime.ItemIndex = 0 then begin            //  normal time
+  if CmbBxTime.ItemIndex = 0 then begin            //  normal time
     ft.displayFuzzy     := 0;
     lblfuzzy.Caption    := ft.getTime;
   end
-  else if RdGrpTime.ItemIndex = 1 then begin       //  fuzzy time
+  else if CmbBxTime.ItemIndex = 1 then begin       //  fuzzy time
     ft.displayFuzzy     := 1;
     lblfuzzy.Caption    := ft.getTime;
   end
-  else if RdGrpTime.ItemIndex = 2 then begin       //  net time
+  else if CmbBxTime.ItemIndex = 2 then begin       //  net time
     ft.displayFuzzy     := 2;
     lblfuzzy.Caption    := ft.getTime;
   end
-  else if RdGrpTime.ItemIndex = 3 then begin       //  unix time
+  else if CmbBxTime.ItemIndex = 3 then begin       //  unix time
     ft.displayFuzzy     := 3;
     lblfuzzy.Caption    := ft.getTime;
   end
-  else if RdGrpTime.ItemIndex = 4 then begin       //  unix time
+  else if CmbBxTime.ItemIndex = 4 then begin       //  unix time
     ft.displayFuzzy     := 4;
+    lblfuzzy.Caption    := ft.getTime;
+  end
+  else if CmbBxTime.ItemIndex = 5 then begin       //  swatch time
+    ft.displayFuzzy     := 5;
     lblfuzzy.Caption    := ft.getTime;
   end;
 end;

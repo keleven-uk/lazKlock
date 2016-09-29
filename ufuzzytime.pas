@@ -20,10 +20,11 @@ type
   FuzzyTime = class
 
 Private
-  Function fTime    : String;
-  Function netTime  : string;
-  Function unixTime : string;
-  Function utcTime  : string;
+  Function fTime      : String;
+  Function netTime    : string;
+  Function unixTime   : string;
+  Function utcTime    : string;
+  Function swatchTime : string;
 Public
   displayFuzzy : Integer ;
   Constructor init ;
@@ -36,7 +37,7 @@ implementation
 
 Constructor FuzzyTime.init;
 begin
-  self.displayFuzzy := 1;
+  self.displayFuzzy := 0;
 end;
 
 Function FuzzyTime.fTime : String ;
@@ -167,7 +168,7 @@ VAR
   unix : integer;
 
 begin
-  unix := DateTimeToUnix(Time);
+  unix := DateTimeToUnix(Now);
 
   unixTime := format('%d', [unix]);
 end;
@@ -180,19 +181,40 @@ begin
   GetSystemTime(utc);              //  Get current time in UTC
   utcTime := TimeToStr(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
 end;
+Function FuzzyTime.swatchTime : string;
+{  returns Swatch Time - will only work in windows.
+   Swatch time is made up of 1000 beats per day i.e. 1 beat = 0.1157 seconds.
+   This is then encoded into a string.                                         }
+VAR
+  utc         : TSystemTime;
+  noOfSeconds : double;
+  noOfBeats   : double;
+begin
+  GetSystemTime(utc);                    //  Get current time in UTC
+  noOfSeconds := SecondOfTheDay(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
 
+//  noOfSeconds := NoOfSeconds + 3600;    //  swatch time is utc + 1
+//  if noOfSeconds > 86400 then
+//    noOfSeconds := noOfSeconds - 86400;  //  rolled past midnight
+
+  noOfBeats := int(noOfSeconds * 0.01157);    // 1000 beats per day
+
+  swatchTime := format('@ %3.f BMT', [noOfBeats]);
+end;
 Function FuzzyTime.getTime : String;
 begin
   if self.displayFuzzy = 0 then                   //  normal time
-    getTime := TimeToStr(Time)
-  else if self.displayFuzzy = 1 then              //  fuzzy time
     getTime := self.fTime
+  else if self.displayFuzzy = 1 then              //  fuzzy time
+    getTime := TimeToStr(Time)
   else if self.displayFuzzy = 2 then              //  net time
     getTime := self.netTime
-  else if self.displayFuzzy = 3 then              // unix time
+  else if self.displayFuzzy = 3 then              //  unix time
     getTime := self.unixTime
-  else if self.displayFuzzy = 4 then              // unix time
+  else if self.displayFuzzy = 4 then              //  unix time
     getTime := utcTime
+  else if self.displayFuzzy = 5 then              //  swatch time
+    getTime := swatchTime
 end ;
 
 
