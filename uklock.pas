@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime, dateutils;
+  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils;
 
 type
 
@@ -32,6 +32,7 @@ type
     lblReminder: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmLicense: TMenuItem;
     mnuItmOptions: TMenuItem;
     mnuItmHelp: TMenuItem;
     mnuItmAbout: TMenuItem;
@@ -84,12 +85,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
+    procedure lblfuzzyClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
+    procedure mnuItmLicenseClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
+    procedure Panel14Click(Sender: TObject);
     procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure SpnEdtHourChange(Sender: TObject);
@@ -251,6 +255,11 @@ begin
   stsBrInfo.Panels.Items[1].Text:= FormatDateTime('DD MMM YYYY', Now);
 
   lblfuzzy.Caption := ft.getTime;
+end;
+
+procedure TfrmMain.Panel14Click(Sender: TObject);
+begin
+
 end;
 
 // *********************************************************** Fuzzy Time ******
@@ -592,6 +601,11 @@ begin
   frmHelp.ShowModal;
 end;
 
+procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
+begin
+  frmLicense.ShowModal;
+end;
+
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 begin
   frmOptions.ShowModal;
@@ -601,6 +615,12 @@ end;
 begin
   frmHelp.ShowModal;
 end;
+
+ procedure TfrmMain.lblfuzzyClick(Sender: TObject);
+ begin
+
+ end;
+
 // *****************************************************************************
 
 End.

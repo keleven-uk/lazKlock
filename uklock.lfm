@@ -1,16 +1,14 @@
 object frmMain: TfrmMain
-  Left = 657
-  Height = 280
-  Top = 493
+  Left = 12
+  Height = 239
+  Top = -800
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 260
+  ClientHeight = 219
   ClientWidth = 620
-  Constraints.MaxHeight = 280
   Constraints.MaxWidth = 620
-  Constraints.MinHeight = 280
   Constraints.MinWidth = 620
   Icon.Data = {
     3E08010000000100010080800000010020002808010016000000280000008000
@@ -2137,7 +2135,7 @@ object frmMain: TfrmMain
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
-    Top = 237
+    Top = 196
     Width = 620
     Panels = <    
       item
@@ -2157,48 +2155,48 @@ object frmMain: TfrmMain
   end
   object Panel2: TPanel
     Left = 8
-    Height = 186
+    Height = 148
     Top = 8
     Width = 606
-    ClientHeight = 186
+    ClientHeight = 148
     ClientWidth = 606
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 16
-      Height = 168
+      Height = 130
       Top = 8
       Width = 580
-      ActivePage = TbShtFuzzy
-      TabIndex = 0
+      ActivePage = TbShtRimder
+      TabIndex = 3
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
         Caption = 'Fuzzy Time'
-        ClientHeight = 142
+        ClientHeight = 104
         ClientWidth = 572
         object Panel4: TPanel
           Left = 0
-          Height = 142
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 142
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
           TabOrder = 0
           object Panel13: TPanel
             Left = 12
-            Height = 66
+            Height = 43
             Top = 8
             Width = 96
-            ClientHeight = 66
+            ClientHeight = 43
             ClientWidth = 96
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
               Height = 21
-              Top = 16
+              Top = 10
               Width = 76
               ItemHeight = 13
               ItemIndex = 0
@@ -2217,52 +2215,54 @@ object frmMain: TfrmMain
           end
           object Panel14: TPanel
             Left = 116
-            Height = 66
+            Height = 43
             Top = 8
             Width = 444
-            ClientHeight = 66
+            ClientHeight = 43
             ClientWidth = 444
             TabOrder = 1
+            OnClick = Panel14Click
             object lblfuzzy: TLabel
               Left = 8
-              Height = 34
-              Top = 8
-              Width = 424
+              Height = 30
+              Top = 4
+              Width = 384
               Caption = 'twenty-five to twelve in the evening'
-              Font.Height = -27
+              Font.Height = -24
               ParentColor = False
               ParentFont = False
+              OnClick = lblfuzzyClick
             end
           end
         end
       end
       object TbShtCountdown: TTabSheet
         Caption = 'Countdown'
-        ClientHeight = 142
+        ClientHeight = 104
         ClientWidth = 572
         object Panel3: TPanel
           Left = 0
-          Height = 142
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 142
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
           TabOrder = 0
           object Panel6: TPanel
             Left = 12
-            Height = 122
+            Height = 88
             Top = 8
             Width = 96
-            ClientHeight = 122
+            ClientHeight = 88
             ClientWidth = 96
             TabOrder = 0
             object btnCountdownStart: TButton
               Left = 8
               Height = 25
-              Top = 24
+              Top = 10
               Width = 75
               Caption = 'Start'
               Enabled = False
@@ -2272,7 +2272,7 @@ object frmMain: TfrmMain
             object btnCountdownStop: TButton
               Left = 8
               Height = 25
-              Top = 72
+              Top = 50
               Width = 75
               Caption = 'Stop'
               Enabled = False
@@ -2282,46 +2282,47 @@ object frmMain: TfrmMain
           end
           object Panel7: TPanel
             Left = 116
-            Height = 66
+            Height = 43
             Top = 8
             Width = 444
-            ClientHeight = 66
+            ClientHeight = 43
             ClientWidth = 444
+            DragMode = dmAutomatic
             TabOrder = 1
             object SpnEdtCountdown: TSpinEdit
               Left = 8
-              Height = 41
+              Height = 27
               Top = 8
               Width = 62
-              Font.Height = -27
+              Font.Height = -16
               MaxValue = 90
               ParentFont = False
               TabOrder = 0
             end
             object LblCountdownTime: TLabel
               Left = 96
-              Height = 55
+              Height = 43
               Top = 0
-              Width = 117
+              Width = 89
               Caption = '00:00'
-              Font.Height = -45
+              Font.Height = -35
               ParentColor = False
               ParentFont = False
             end
           end
           object Panel8: TPanel
             Left = 116
-            Height = 50
-            Top = 80
+            Height = 40
+            Top = 56
             Width = 444
             Caption = '...'
-            ClientHeight = 50
+            ClientHeight = 40
             ClientWidth = 444
             TabOrder = 2
             object ChckBxCountdownSound: TCheckBox
               Left = 16
               Height = 17
-              Top = 16
+              Top = 8
               Width = 48
               Caption = 'Sound'
               Checked = True
@@ -2332,15 +2333,15 @@ object frmMain: TfrmMain
             object EdtCountdownSound: TEdit
               Left = 96
               Height = 21
-              Top = 16
+              Top = 8
               Width = 176
               TabOrder = 1
               Text = '...'
             end
             object btnCountdownLoadSound: TButton
               Left = 288
-              Height = 23
-              Top = 14
+              Height = 24
+              Top = 8
               Width = 75
               Caption = '...'
               OnClick = btnCountdownLoadSoundClick
@@ -2348,8 +2349,8 @@ object frmMain: TfrmMain
             end
             object btnSoundTest: TButton
               Left = 376
-              Height = 25
-              Top = 14
+              Height = 24
+              Top = 8
               Width = 50
               Caption = 'Test'
               OnClick = btnSoundTestClick
@@ -2360,33 +2361,33 @@ object frmMain: TfrmMain
       end
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
-        ClientHeight = 142
+        ClientHeight = 104
         ClientWidth = 572
         object Panel1: TPanel
           Left = 0
-          Height = 142
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
           AutoSize = True
-          ClientHeight = 142
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
           TabOrder = 0
           object Panel9: TPanel
             Left = 12
-            Height = 122
-            Top = 9
+            Height = 88
+            Top = 8
             Width = 96
             Anchors = []
-            ClientHeight = 122
+            ClientHeight = 88
             ClientWidth = 96
             TabOrder = 0
             object btnTimerStart: TButton
               Left = 8
-              Height = 25
-              Top = 8
+              Height = 20
+              Top = 9
               Width = 75
               Caption = 'Start'
               OnClick = btnTimerStartClick
@@ -2394,8 +2395,8 @@ object frmMain: TfrmMain
             end
             object btnTimerStop: TButton
               Left = 8
-              Height = 25
-              Top = 48
+              Height = 20
+              Top = 33
               Width = 75
               Caption = 'Stop'
               Enabled = False
@@ -2404,8 +2405,8 @@ object frmMain: TfrmMain
             end
             object btnTimerClear: TButton
               Left = 8
-              Height = 25
-              Top = 88
+              Height = 20
+              Top = 58
               Width = 75
               Caption = 'Clear'
               Enabled = False
@@ -2415,28 +2416,28 @@ object frmMain: TfrmMain
           end
           object Panel10: TPanel
             Left = 116
-            Height = 66
-            Top = 9
+            Height = 43
+            Top = 8
             Width = 444
             Anchors = []
-            ClientHeight = 66
+            ClientHeight = 43
             ClientWidth = 444
             TabOrder = 1
             object lblTimer: TLabel
               Left = 96
-              Height = 55
+              Height = 43
               Top = 0
-              Width = 183
+              Width = 139
               Caption = '00:00:00'
-              Font.Height = -45
+              Font.Height = -35
               ParentColor = False
               ParentFont = False
             end
           end
           object Panel16: TPanel
             Left = 116
-            Height = 50
-            Top = 82
+            Height = 40
+            Top = 56
             Width = 444
             Anchors = []
             TabOrder = 2
@@ -2445,31 +2446,31 @@ object frmMain: TfrmMain
       end
       object TbShtRimder: TTabSheet
         Caption = 'Reminder'
-        ClientHeight = 142
+        ClientHeight = 104
         ClientWidth = 572
         object Panel5: TPanel
           Left = 0
-          Height = 142
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 142
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
           TabOrder = 0
           object Panel11: TPanel
             Left = 12
-            Height = 122
+            Height = 88
             Top = 8
             Width = 96
-            ClientHeight = 122
+            ClientHeight = 88
             ClientWidth = 96
             TabOrder = 0
             object btnReminderSet: TButton
               Left = 8
               Height = 25
-              Top = 19
+              Top = 10
               Width = 75
               Caption = 'Set'
               Enabled = False
@@ -2479,7 +2480,7 @@ object frmMain: TfrmMain
             object btnReminderClear: TButton
               Left = 8
               Height = 25
-              Top = 74
+              Top = 50
               Width = 75
               Caption = 'Clear'
               Enabled = False
@@ -2489,16 +2490,16 @@ object frmMain: TfrmMain
           end
           object Panel12: TPanel
             Left = 116
-            Height = 66
+            Height = 43
             Top = 8
             Width = 444
-            ClientHeight = 66
+            ClientHeight = 43
             ClientWidth = 444
             TabOrder = 1
             object lblReminder: TLabel
               Left = 16
               Height = 30
-              Top = 8
+              Top = 4
               Width = 184
               Caption = 'Reminder not set'
               Font.Height = -24
@@ -2508,16 +2509,16 @@ object frmMain: TfrmMain
           end
           object Panel15: TPanel
             Left = 116
-            Height = 50
-            Top = 80
+            Height = 40
+            Top = 56
             Width = 444
-            ClientHeight = 50
+            ClientHeight = 40
             ClientWidth = 444
             TabOrder = 2
             object DtEdtReminder: TDateEdit
               Left = 164
               Height = 24
-              Top = 10
+              Top = 8
               Width = 80
               CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
               OKCaption = 'OK'
@@ -2570,7 +2571,7 @@ object frmMain: TfrmMain
             object SpnEdtHour: TSpinEdit
               Left = 24
               Height = 21
-              Top = 10
+              Top = 8
               Width = 50
               MaxValue = 23
               OnChange = SpnEdtHourChange
@@ -2579,7 +2580,7 @@ object frmMain: TfrmMain
             object SpnEdtMins: TSpinEdit
               Left = 88
               Height = 21
-              Top = 10
+              Top = 8
               Width = 50
               MaxValue = 59
               OnChange = SpnEdtMinsChange
@@ -2591,9 +2592,9 @@ object frmMain: TfrmMain
     end
   end
   object ButtonPanel1: TButtonPanel
-    Left = 362
+    Left = 360
     Height = 26
-    Top = 204
+    Top = 160
     Width = 168
     Align = alNone
     Anchors = []
@@ -2628,6 +2629,10 @@ object frmMain: TfrmMain
       object mnuItmHelp: TMenuItem
         Caption = 'Help'
         OnClick = mnuItmHelpClick
+      end
+      object mnuItmLicense: TMenuItem
+        Caption = 'License'
+        OnClick = mnuItmLicenseClick
       end
       object mnuItmAbout: TMenuItem
         Caption = 'About'
