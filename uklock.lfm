@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1217
+  Left = 1348
   Height = 300
-  Top = 686
+  Top = 330
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2167,8 +2167,8 @@ object frmMain: TfrmMain
       Height = 168
       Top = 8
       Width = 580
-      ActivePage = TbShtFuzzy
-      TabIndex = 0
+      ActivePage = TbShtTimer
+      TabIndex = 2
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2328,13 +2328,22 @@ object frmMain: TfrmMain
               Text = '...'
             end
             object btnCountdownLoadSound: TButton
-              Left = 304
+              Left = 288
               Height = 23
               Top = 14
               Width = 75
               Caption = '...'
               OnClick = btnCountdownLoadSoundClick
               TabOrder = 2
+            end
+            object btnSoundTest: TButton
+              Left = 376
+              Height = 25
+              Top = 14
+              Width = 50
+              Caption = 'Test'
+              OnClick = btnSoundTestClick
+              TabOrder = 3
             end
           end
         end
@@ -2509,7 +2518,7 @@ object frmMain: TfrmMain
               Wrap = False
               OnClick = UpDownReminderMinuteClick
             end
-            object lblReminderHour: TEdit
+            object EdtReminderHour: TEdit
               Left = 8
               Height = 33
               Top = 8
@@ -2535,8 +2544,8 @@ object frmMain: TfrmMain
     end
   end
   object mnuMain: TMainMenu
-    left = 456
-    top = 240
+    left = 408
+    top = 232
     object mnuFile: TMenuItem
       Caption = 'File'
       object mnuItmOptions: TMenuItem
@@ -2563,13 +2572,13 @@ object frmMain: TfrmMain
   object mainTimer: TTimer
     OnTimer = mainTimerTimer
     left = 584
-    top = 248
+    top = 232
   end
   object CountdownTimer: TTimer
     Enabled = False
     OnTimer = CountdownTimerTimer
     left = 544
-    top = 248
+    top = 232
   end
   object PopupNotifier1: TPopupNotifier
     Color = clYellow
@@ -2581,13 +2590,19 @@ object frmMain: TfrmMain
     Text = 'Text'
     Title = 'Caption'
     Visible = False
-    left = 8
-    top = 240
+    left = 328
+    top = 232
   end
   object timerTimer: TTimer
     Enabled = False
     OnTimer = timerTimerTimer
     left = 504
-    top = 248
+    top = 232
+  end
+  object ReminderTimer: TTimer
+    Enabled = False
+    OnTimer = ReminderTimerTimer
+    left = 464
+    top = 232
   end
 end

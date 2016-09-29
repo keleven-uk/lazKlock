@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, PopupNotifier, ExtDlgs,
-  Calendar, EditBtn, UAbout, Uhelp, UOptions, MMSystem, UFuzzyTime;
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, UAbout,
+  Uhelp, UOptions, MMSystem, UFuzzyTime;
 
 type
 
@@ -21,8 +21,9 @@ type
     btnTimerStop: TButton;
     btnTimerClear: TButton;
     btnReminderSet: TButton;
+    btnSoundTest: TButton;
     ChckBxCountdownSound: TCheckBox;
-    lblReminderHour: TEdit;
+    EdtReminderHour: TEdit;
     EdtReminderMinute: TEdit;
     EdtCountdownSound: TEdit;
     lblfuzzy: TLabel;
@@ -62,6 +63,7 @@ type
     TbShtRimder: TTabSheet;
     mainTimer: TTimer;
     CountdownTimer: TTimer;
+    ReminderTimer: TTimer;
     timerTimer: TTimer;
     TgleBxFuzzy: TToggleBox;
     UpDwnReminderHour: TUpDown;
@@ -70,6 +72,7 @@ type
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
     procedure btnReminderSetClick(Sender: TObject);
+    procedure btnSoundTestClick(Sender: TObject);
     procedure btnTimerClearClick(Sender: TObject);
     procedure btnTimerStartClick(Sender: TObject);
     procedure btnTimerStopClick(Sender: TObject);
@@ -81,11 +84,10 @@ type
     procedure mnuItmHelpClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     function ItoS(i : Integer) : String ;
     procedure DisplayMessage(title : string ; message : string);
-    procedure Panel9Click(Sender: TObject);
+    procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
     procedure TgleBxFuzzyChange(Sender: TObject);
@@ -120,84 +122,103 @@ begin
   else
     iToS := IntToStr(i);
 end;
-
- procedure TfrmMain.DisplayMessage(title : string ; message : string);
- {  display a message as a popup message
-    TODO : if popup already visable, add new message to popup   }
- begin
-   PopupNotifier1.ShowAtPos(100,100) ;
-   PopupNotifier1.Title   := title;
-   PopupNotifier1.Text    := message;
-   PopupNotifier1.Visible := true ;
- end;
-
- procedure TfrmMain.Panel9Click(Sender: TObject);
- begin
-
- end;
-
-procedure TfrmMain.SpnEdtCountdownChange(Sender: TObject);
-{    called when the time is entered - only allow 1 - 90 minutes  }
-var
-  val : integer;                 //  used to hold value from spin edit
-                                 //  can't pass this to the function directly
+// *********************************************************** Global **********
+procedure TfrmMain.FormCreate(Sender: TObject);
+{  Called at start - sets up fuzzy time and default sound file     }
 begin
-  val := SpnEdtCountdown.Value;
+  countdownSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
+  EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
+  stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
 
-  if (val > 0) and (val <= 90) then begin
-    LblCountdownTime.Caption  := ItoS(val) + ':00';
-    btnCountdownStart.Enabled := true;
-    countdownTicks            := val * 60;
+  PageControl1.TabIndex := 0;   // start on fuzzy time
 
-    stsBrInfo.Panels.Items[3].Text := ' Counting down from ' + ItoS(val) + ' minute[s]';
+  ft := FuzzyTime.Create;
+  ft.displayFuzzy := true;
+end;
+
+procedure TfrmMain.DisplayMessage(title : string ; message : string);
+{  display a message as a popup message
+   TODO : if popup already visable, add new message to popup   }
+begin
+  if PopupNotifier1.Visible = false then begin
+    PopupNotifier1.ShowAtPos(100,100) ;
+    PopupNotifier1.Title   := title;
+    PopupNotifier1.Text    := message;
+    PopupNotifier1.Visible := true ;
   end
   else begin
-    LblCountdownTime.Caption  := '00:00';
-    btnCountdownStart.Enabled := false;
-    countdownTicks            := 0;
-
-    stsBrInfo.Panels.Items[3].Text := ' Only allow 1 - 90 minutes';
+    PopupNotifier1.Visible := false ;
+    PopupNotifier1.Title   := PopupNotifier1.Title + ' :: ' + title;
+    PopupNotifier1.Text    := PopupNotifier1.Text  + LineEnding + message;
+    PopupNotifier1.Visible := true ;
   end;
-
 end;
 
-procedure TfrmMain.StopCountDown;
-{    Called when the timer has finished.  }
+procedure TfrmMain.PageControl1Change(Sender: TObject);
 VAR
-  PCharSoundName : PChar;    // PlaySound needs to be passed PChar and not a string
+  hh, mm, ss, ms : word;
 begin
-
-  LblCountdownTime.Caption:= '00:00';
-
-  btnCountdownStart.Enabled := true;       //  reset buttons
-  btnCountdownStart.Caption := 'Start' ;
-  btnCountdownStop.Enabled  := false;
-  SpnEdtCountdown.Enabled   := true;
-  CountdownTimer.Enabled    := false;
-
-  if chckBxCountdownSound.Checked then begin
-    PCharSoundname := @countdownSoundName[1];  //  convert to PCHAR - a pointer to first character
-                                      //  of the string - i think.
-
-    try                               //  in case sound file is not found.
-      PlaySound(PCharSoundname, 0, SND_ASYNC);
-    except
-      on EInOutError do beep ;
-    end;
+  if PageControl1.TabIndex = 0 then begin                     //  fuzzy page
+    stsBrInfo.Panels.Items[2].Text := '';
+    stsBrInfo.Panels.Items[3].Text := '';
   end;
 
-  stsBrInfo.Panels.Items[3].Text := ' Finished counting, now!';
-  frmMain.Caption      := 'Countdown';
-  application.Title    := 'Countdown';
 
-  DisplayMessage('CountDown', 'Finished counting, now!');
+  if PageControl1.TabIndex = 1 then begin                     //  countdown page
+    if chckBxCountdownSound.Checked then begin
+      stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
+    end
+    else begin
+      stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
+    end;
 
-  //  reset the noOfTicks, so we start the timer again without changing the time.
-  //  should be okay, already validated [if time is changes will be re-validated]
-  countdownTicks := SpnEdtCountdown.Value * 60;
+    if CountdownTimer.Enabled = false then
+      stsBrInfo.Panels.Items[3].Text := ''
+    else
+      stsBrInfo.Panels.Items[3].Text := ' Counting down from ' +
+                            ItoS(SpnEdtCountdown.Value) + ' minute[s]';
+  end;
 
+  if PageControl1.TabIndex = 2 then begin                     //  timer page
+      stsBrInfo.Panels.Items[2].Text := '';
+      stsBrInfo.Panels.Items[3].Text := '';
+
+    if timerTimer.Enabled = false then
+      if btnTimerStart.Caption = 'Resume' then
+        stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused'
+      else
+        stsBrInfo.Panels.Items[2].Text := ''
+    else
+      stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+  end;
+
+  if PageControl1.TabIndex = 3 then begin                    //  reminder page
+    stsBrInfo.Panels.Items[2].Text := '';
+    stsBrInfo.Panels.Items[3].Text := '';
+    if ReminderTimer.Enabled = false then begin  // only setdisplay to surrent time
+      DecodeTime(Time, hh, mm, ss, ms);           // if reminder not set
+      EdtReminderMinute.Text := intToStr(mm);
+      EdtReminderHour.Text   := intToStr(hh);
+      UpDownReminderMinute.Position := mm;
+      UpDwnReminderHour.Position    := hh;
+    end
+    else begin
+      stsBrInfo.Panels.Items[3].Text := 'Reminder set for ' + EdtReminderHour.Text
+                                                            + ':'
+                                                            + EdtReminderMinute.Text;
+    end;  //  if btnReminderSet.Enabled
+  end;    //  if PageControl1.TabIndex
 end;
 
+procedure TfrmMain.mainTimerTimer(Sender: TObject);
+begin
+  stsBrInfo.Panels.Items[0].Text := TimeToStr(Time);
+  stsBrInfo.Panels.Items[1].Text := DateToStr(Date);
+
+  lblfuzzy.Caption := ft.getTime;
+end;
+
+// *********************************************************** Fuzzy Time ******
 procedure TfrmMain.TgleBxFuzzyChange(Sender: TObject);
 begin
   if TgleBxFuzzy.Checked then begin
@@ -212,66 +233,7 @@ begin
   end;
 end;
 
-
-
-procedure TfrmMain.FormCreate(Sender: TObject);
-{  Called at start - sets up fuzzy time and default sound file     }
-begin
-  countdownSoundName     := getCurrentDir + '\alarm-fatal.wav';  // default to sound file
-  EdtCountdownSound.Text := ExtractFileName(countdownSoundName); //  in current working directory.
-  stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
-
-  PageControl1.TabIndex := 0;   // start on fuzzy time
-
-  ft := FuzzyTime.Create;
-  ft.displayFuzzy := true;
-end;
-
-procedure TfrmMain.CountdownTimerTimer(Sender: TObject);
-{ tick of countdown timer - called every 1 second        }
-var
-  minutes : integer;
-  seconds : integer;
-  message : string ;
-
-begin
-  countdownTicks := countdownTicks - 1;
-
-  if countdownTicks = 0 then StopCountDown;
-
-  if countdownTicks < 60 then
-    message:= '00:' + ItoS(countdownTicks)
-  else begin
-    minutes := countdownTicks div 60;
-    seconds := countdownTicks mod 60;
-    message := ItoS(minutes) + ':' + ItoS(seconds);
-  end;
-
-  LblCountdownTime.Caption := message;
-  application.Title  := message;
-  frmMain.Caption    := 'Countdown :: ' + message;
-end;
-
-procedure TfrmMain.timerTimerTimer(Sender: TObject);
-VAR
-  hh, mm, ss, ms : word;
-  timerInterval  : TDateTime;
-begin
-  timerInterval := timerPaused + (time - timerStart);
-  DecodeTime(timerInterval, hh, mm, ss, ms);
-  lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
-end;
-
-procedure TfrmMain.UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType
-  );
-begin
-  EdtReminderMinute.Text := intToStr(UpDownReminderMinute.Position);
-end;
-
-procedure TfrmMain.UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
-begin
-     lblReminderHour.Text := intToStr(UpDwnReminderHour.Position);
-end;
+// *********************************************************** Countdown *******
 
 procedure TfrmMain.btnCountdownStartClick(Sender: TObject);
 { called when start button is clicked, can have three modes
@@ -339,52 +301,90 @@ begin
   LblCountdownTime.Caption := '00:00';
 end;
 
-procedure TfrmMain.btnReminderSetClick(Sender: TObject);
+procedure TfrmMain.SpnEdtCountdownChange(Sender: TObject);
+{    called when the time is entered - only allow 1 - 90 minutes  }
+var
+  val : integer;                 //  used to hold value from spin edit
+                                 //  can't pass this to the function directly
 begin
+  val := SpnEdtCountdown.Value;
+
+  if (val > 0) and (val <= 90) then begin
+    LblCountdownTime.Caption  := ItoS(val) + ':00';
+    btnCountdownStart.Enabled := true;
+    countdownTicks            := val * 60;
+
+    stsBrInfo.Panels.Items[3].Text := ' Counting down from ' + ItoS(val) + ' minute[s]';
+  end
+  else begin
+    LblCountdownTime.Caption  := '00:00';
+    btnCountdownStart.Enabled := false;
+    countdownTicks            := 0;
+
+    stsBrInfo.Panels.Items[3].Text := ' Only allow 1 - 90 minutes';
+  end;
+end;
+
+procedure TfrmMain.StopCountDown;
+{    Called when the timer has finished.  }
+VAR
+  PCharSoundName : PChar;    // PlaySound needs to be passed PChar and not a string
+begin
+
+  LblCountdownTime.Caption:= '00:00';
+
+  btnCountdownStart.Enabled := true;       //  reset buttons
+  btnCountdownStart.Caption := 'Start' ;
+  btnCountdownStop.Enabled  := false;
+  SpnEdtCountdown.Enabled   := true;
+  CountdownTimer.Enabled    := false;
+
+  if chckBxCountdownSound.Checked then begin
+    PCharSoundname := @countdownSoundName[1];  //  convert to PCHAR - a pointer to first character
+                                               //  of the string - i think.
+
+    try                                        //  in case sound file is not found.
+      PlaySound(PCharSoundname, 0, SND_ASYNC);
+    except
+      on EInOutError do beep ;
+    end;
+  end;
+
+  stsBrInfo.Panels.Items[3].Text := ' Finished counting, now!';
+  frmMain.Caption      := 'Countdown';
+  application.Title    := 'Countdown';
+
+  DisplayMessage('CountDown', 'Finished counting, now!');
+
+  //  reset the noOfTicks, so we start the timer again without changing the time.
+  //  should be okay, already validated [if time is changes will be re-validated]
+  countdownTicks := SpnEdtCountdown.Value * 60;
 
 end;
 
-procedure TfrmMain.btnTimerStartClick(Sender: TObject);
-{ called when start button is clicked, can have three modes
-      Start  :: Start timer
-      Pause  :: Pause timer
-      Resume :: Resume a paused timer.                            }
-begin
-  if btnTimerStart.Caption = 'Start' then begin
-    timerStart  := time;
-    timerPaused := 0;
-    btnTimerStop.Enabled  := true;
-    timerTimer.Enabled    := true;
-    btnTimerClear.Enabled := false;
-    btnTimerStart.Caption := 'Pause';
-    frmMain.Caption       := 'Timer :: Started';
-  end
-  else if btnTimerStart.Caption = 'Pause' then begin
-    timerPaused := timerPaused + (time - timerStart);
-    btnTimerStart.Caption := 'Resume';
-    timerTimer.Enabled    := false;
-    frmMain.Caption       := 'Timer :: Paused';
-  end
-  else if btnTimerStart.Caption = 'Resume' then begin
-    timerStart  := time;
-    btnTimerStart.Caption := 'Pause';
-    timerTimer.Enabled    := true;
-    frmMain.Caption       := 'Timer :: Started';
-  end
-end;
+procedure TfrmMain.CountdownTimerTimer(Sender: TObject);
+{ tick of countdown timer - called every 1 second        }
+var
+  minutes : integer;
+  seconds : integer;
+  message : string ;
 
-procedure TfrmMain.btnTimerStopClick(Sender: TObject);
 begin
-  btnTimerStop.Enabled  := false;
-  timerTimer.Enabled    := false;
-  btnTimerClear.Enabled := true;
-  btnTimerStart.Caption := 'Start';
-  frmMain.Caption       := 'Timer :: Stoped';
-end;
+  countdownTicks := countdownTicks - 1;
 
-procedure TfrmMain.btnTimerClearClick(Sender: TObject);
-begin
-    lblTimer.Caption := '00:00:00';
+  if countdownTicks = 0 then StopCountDown;
+
+  if countdownTicks < 60 then
+    message:= '00:' + ItoS(countdownTicks)
+  else begin
+    minutes := countdownTicks div 60;
+    seconds := countdownTicks mod 60;
+    message := ItoS(minutes) + ':' + ItoS(seconds);
+  end;
+
+  LblCountdownTime.Caption := message;
+  application.Title  := message;
+  frmMain.Caption    := 'Countdown :: ' + message;
 end;
 
 procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
@@ -400,6 +400,123 @@ begin
   end;
 end;
 
+procedure TfrmMain.btnSoundTestClick(Sender: TObject);
+{  Called to test the sound file                                }
+VAR
+  PCharSoundName : PChar;    // PlaySound needs to be passed PChar and not a string
+begin
+  PCharSoundname := @countdownSoundName[1];  //  convert to PCHAR - a pointer to first character
+
+  try                                        //  in case sound file is not found.
+    PlaySound(PCharSoundname, 0, SND_ASYNC);
+  except
+    on EInOutError do beep ;
+  end;
+end;
+
+// *********************************************************** Timer ***********
+procedure TfrmMain.timerTimerTimer(Sender: TObject);
+VAR
+  hh, mm, ss, ms : word;
+  timerInterval  : TDateTime;
+begin
+  timerInterval := timerPaused + (time - timerStart);
+  DecodeTime(timerInterval, hh, mm, ss, ms);
+  lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
+end;
+
+
+
+procedure TfrmMain.btnTimerStartClick(Sender: TObject);
+{ called when start button is clicked, can have three modes
+      Start  :: Start timer
+      Pause  :: Pause timer
+      Resume :: Resume a paused timer.                            }
+begin
+  if btnTimerStart.Caption = 'Start' then begin
+    timerStart  := time;
+    timerPaused := 0;
+    btnTimerStop.Enabled  := true;
+    timerTimer.Enabled    := true;
+    btnTimerClear.Enabled := false;
+    btnTimerStart.Caption := 'Pause';
+    frmMain.Caption       := 'Timer :: Started';
+    stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+  end
+  else if btnTimerStart.Caption = 'Pause' then begin
+    timerPaused := timerPaused + (time - timerStart);
+    btnTimerStart.Caption := 'Resume';
+    timerTimer.Enabled    := false;
+    frmMain.Caption       := 'Timer :: Paused';
+    stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
+  end
+  else if btnTimerStart.Caption = 'Resume' then begin
+    timerStart  := time;
+    btnTimerStart.Caption := 'Pause';
+    timerTimer.Enabled    := true;
+    frmMain.Caption       := 'Timer :: Started';
+    stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+  end
+end;
+
+procedure TfrmMain.btnTimerStopClick(Sender: TObject);
+begin
+  btnTimerStop.Enabled  := false;
+  timerTimer.Enabled    := false;
+  btnTimerClear.Enabled := true;
+  btnTimerStart.Caption := 'Start';
+  frmMain.Caption       := 'Timer :: Stoped';
+  stsBrInfo.Panels.Items[3].Text := 'Timer :: Stoped';
+end;
+
+procedure TfrmMain.btnTimerClearClick(Sender: TObject);
+begin
+    lblTimer.Caption := '00:00:00';
+    stsBrInfo.Panels.Items[3].Text := ''
+end;
+
+// *********************************************************** Reminder ********
+procedure TfrmMain.UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType
+  );
+begin
+  EdtReminderMinute.Text := intToStr(UpDownReminderMinute.Position);
+  btnReminderSet.Enabled := true;
+end;
+
+procedure TfrmMain.UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
+begin
+     EdtReminderHour.Text   := intToStr(UpDwnReminderHour.Position);
+     btnReminderSet.Enabled := true;
+end;
+
+procedure TfrmMain.btnReminderSetClick(Sender: TObject);
+begin
+  lblReminder.Caption := 'Reminder set for ' + EdtReminderHour.Text + ':'
+                                             + EdtReminderMinute.Text;
+  stsBrInfo.Panels.Items[3].Text := 'Reminder set for ' + EdtReminderHour.Text + ':'
+                                                        + EdtReminderMinute.Text;
+  ReminderTimer.Enabled := true;
+end;
+
+procedure TfrmMain.ReminderTimerTimer(Sender: TObject);
+VAR
+  RmndTm : TDateTime;
+  rmndrM : String;
+begin
+  RmndTm := EncodeTime( UpDwnReminderHour.Position, UpDownReminderMinute.Position, 0, 0);
+
+  if Time > RmndTm then begin
+    ReminderTimer.Enabled  := false;
+    btnReminderSet.Enabled := false;
+
+    rmndrM := 'Reminding you it is now ' + EdtReminderHour.Text + ':'
+                                         + EdtReminderMinute.Text + ', Sir!';
+    DisplayMessage('Reminder', rmndrM);
+    stsBrInfo.Panels.Items[3].Text := '';
+  end;
+end;
+
+// *********************************************************** Menu procs ******
 
 procedure TfrmMain.mnuItmAboutClick(Sender: TObject);
 begin
@@ -421,41 +538,7 @@ begin
   frmOptions.ShowModal;
 end;
 
-procedure TfrmMain.PageControl1Change(Sender: TObject);
-begin
-  if PageControl1.TabIndex = 0 then
-    stsBrInfo.Panels.Items[2].Text := '';
-
-  if PageControl1.TabIndex = 1 then begin
-    if chckBxCountdownSound.Checked then begin
-      stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
-    end
-    else begin
-      stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
-    end;
-  end;
-
-  if PageControl1.TabIndex = 2 then
-    stsBrInfo.Panels.Items[2].Text := '';
-
-  if PageControl1.TabIndex = 3 then
-    stsBrInfo.Panels.Items[2].Text := '';
-end;
-
-procedure TfrmMain.Panel1Click(Sender: TObject);
-begin
-
-end;
-
-
-procedure TfrmMain.mainTimerTimer(Sender: TObject);
-begin
-  stsBrInfo.Panels.Items[0].Text := TimeToStr(Time);
-  stsBrInfo.Panels.Items[1].Text := DateToStr(Date);
-
-  lblfuzzy.Caption := ft.getTime;
-end;
-
+// *****************************************************************************
 
 End.
 

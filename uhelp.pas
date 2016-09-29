@@ -19,6 +19,7 @@ type
     Panel2: TPanel;
     procedure btnhelpExitClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure mmoHelpChange(Sender: TObject);
   private
     { private declarations }
   public
@@ -56,7 +57,12 @@ begin
   mmoHelp.Append('along with this program.  If not, see <http://www.gnu.org/licenses/>.');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Stub Version :: 0.0.0.2.');
+  mmoHelp.Append('Klock Version :: 0.0.0.5.');
+end;
+
+procedure TfrmHelp.mmoHelpChange(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmHelp.btnhelpExitClick(Sender: TObject);

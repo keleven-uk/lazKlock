@@ -1,11 +1,11 @@
 object frmAbout: TfrmAbout
-  Left = 613
+  Left = 1408
   Height = 233
-  Top = 145
+  Top = 522
   Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'About Stub'
+  Caption = 'About Klock'
   ClientHeight = 233
   ClientWidth = 320
   Constraints.MaxHeight = 233
@@ -170,8 +170,8 @@ object frmAbout: TfrmAbout
       Left = 8
       Height = 16
       Top = 117
-      Width = 76
-      Caption = 'Stub Version ::'
+      Width = 81
+      Caption = 'Klock Version ::'
       ParentColor = False
     end
   end

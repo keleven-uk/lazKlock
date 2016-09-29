@@ -1,11 +1,11 @@
 object frmHelp: TfrmHelp
-  Left = 558
+  Left = 1413
   Height = 233
-  Top = 423
+  Top = 795
   Width = 420
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Stub Help'
+  Caption = 'Klock Help'
   ClientHeight = 233
   ClientWidth = 420
   Constraints.MaxHeight = 233
@@ -133,6 +133,9 @@ object frmHelp: TfrmHelp
       Height = 144
       Top = 8
       Width = 388
+      Font.Height = -11
+      OnChange = mmoHelpChange
+      ParentFont = False
       ReadOnly = True
       ScrollBars = ssAutoVertical
       TabOrder = 0
