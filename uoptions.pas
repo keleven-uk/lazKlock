@@ -107,7 +107,7 @@ implementation
 Constructor OptionsRecord.init;
 begin
   self.DefaultTab := 0;
-  self.Version    := '19';
+  self.Version    := '20';
 
   self.GlobalTextColour    := clBlack;
   self.GlobalTextFont      := frmOptions.Font;
@@ -175,13 +175,15 @@ procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
   iniName := 'klock.ini';
 
-  OptionsRec := OptionsRecord.Create;  //  create options record,
-                                       //  can then be used in main form
+  OptionsRec := OptionsRecord.Create;    //  create options record,
+                                         //  can then be used in main form
+  OptionsRec.init;                       //  does not seem to be called automatically.
 
-  checkIniFile;                        //  check for ini file, if not there - create
+  checkIniFile;                         //  check for ini file, if not there - create
 
   ClrBtnGlobal.ButtonColor := OptionsRec.GlobaltextColour ;  // in case different
   ChckBxTimerMilli.Checked := OptionsRec.TimerMilliSeconds;
+
 end;
 
 
@@ -232,7 +234,6 @@ begin
   IniFile := TINIFile.Create(iniName);
 
   if (FileExists(iniName)) then begin  // read ini files and populate options record.
-    OptionsRec.version := (iniFile.ReadString('klock', 'Version', '0'));
     val(iniFile.ReadString('klock', 'defaultTab', '0'), OptionsRec.DefaultTab, code);
 
     OptionsRec.GlobaltextColour    := StringToColor(iniFile.ReadString('Labels', 'Colour', 'clBlack'));

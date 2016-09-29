@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls;
+  ExtCtrls, UOptions;
 
 type
 
@@ -55,7 +55,7 @@ begin
   mmoHelp.Append('');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Klock Version :: 19');
+  mmoHelp.Append(format('Klock Version :: %s', [OptionsRec.Version]));
 
 end;
 
