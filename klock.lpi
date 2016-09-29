@@ -16,7 +16,7 @@
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <BuildNr Value="5"/>
+      <BuildNr Value="7"/>
       <Language Value="0809"/>
       <StringTable CompanyName="www.keleven.co.uk" FileDescription="A timing thingy" InternalName="klock" OriginalFilename="klock.exe" ProductName="klock" ProductVersion="Klock"/>
     </VersionInfo>
@@ -33,22 +33,28 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="RunTimeTypeInfoControls"/>
+        <MinVersion Minor="1" Valid="True"/>
       </Item1>
+      <Item2>
+        <PackageName Value="SynEdit"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
     </RequiredPackages>
     <Units Count="11">
       <Unit0>
         <Filename Value="klock.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="klock"/>
-        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="53" Y="10"/>
-        <UsageCount Value="63"/>
-        <Loaded Value="True"/>
+        <CursorPos X="1" Y="21"/>
+        <UsageCount Value="69"/>
       </Unit0>
       <Unit1>
         <Filename Value="uklock.pas"/>
@@ -58,20 +64,20 @@
         <UnitName Value="Uklock"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="128"/>
-        <CursorPos X="55" Y="156"/>
-        <UsageCount Value="63"/>
+        <TopLine Value="1"/>
+        <CursorPos X="3" Y="10"/>
+        <UsageCount Value="69"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="info.txt"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="21" Y="2"/>
-        <UsageCount Value="61"/>
+        <CursorPos X="15" Y="2"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit2>
@@ -81,11 +87,11 @@
         <ComponentName Value="frmAbout"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UAbout"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="22"/>
-        <CursorPos X="59" Y="57"/>
-        <UsageCount Value="61"/>
+        <CursorPos X="53" Y="57"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
@@ -95,11 +101,12 @@
         <ComponentName Value="frmHelp"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Uhelp"/>
-        <EditorIndex Value="4"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="3" Y="40"/>
-        <UsageCount Value="57"/>
+        <CursorPos X="20" Y="9"/>
+        <UsageCount Value="63"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit4>
@@ -109,12 +116,11 @@
         <ComponentName Value="frmOptions"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UOptions"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="1" Y="98"/>
-        <UsageCount Value="54"/>
+        <CursorPos X="76" Y="98"/>
+        <UsageCount Value="60"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
@@ -148,9 +154,9 @@
         <UnitName Value="UFuzzyTime"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="37"/>
-        <CursorPos X="59" Y="29"/>
-        <UsageCount Value="34"/>
+        <TopLine Value="133"/>
+        <CursorPos X="38" Y="157"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
@@ -165,123 +171,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uoptions.pas"/>
-        <Caret Line="44" Column="35" TopLine="8"/>
+        <Caret Line="76" Column="14" TopLine="62"/>
       </Position1>
       <Position2>
         <Filename Value="uoptions.pas"/>
-        <Caret Line="45" Column="3" TopLine="24"/>
+        <Caret Line="94" Column="32" TopLine="74"/>
       </Position2>
       <Position3>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="44" Column="9" TopLine="24"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="155" Column="55" TopLine="155"/>
       </Position3>
       <Position4>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="62" Column="61" TopLine="39"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="259" Column="58" TopLine="228"/>
       </Position4>
       <Position5>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="44" Column="1" TopLine="24"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="261" Column="1" TopLine="237"/>
       </Position5>
       <Position6>
-        <Filename Value="uhelp.pas"/>
-        <Caret Line="67" Column="63" TopLine="34"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="147" Column="44" TopLine="110"/>
       </Position6>
       <Position7>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="62" Column="49" TopLine="49"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="36" Column="25" TopLine="16"/>
       </Position7>
       <Position8>
-        <Filename Value="uklock.pas"/>
-        <Caret Line="550" Column="26" TopLine="519"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="147" Column="8" TopLine="113"/>
       </Position8>
       <Position9>
         <Filename Value="uklock.pas"/>
-        <Caret Line="545" Column="20" TopLine="519"/>
+        <Caret Line="259" Column="1" TopLine="228"/>
       </Position9>
       <Position10>
         <Filename Value="uklock.pas"/>
-        <Caret Line="550" Column="27" TopLine="519"/>
+        <Caret Line="138" Column="37" TopLine="121"/>
       </Position10>
       <Position11>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="76" Column="28" TopLine="39"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="149" Column="11" TopLine="117"/>
       </Position11>
       <Position12>
-        <Filename Value="uklock.pas"/>
-        <Caret Line="147" Column="40" TopLine="123"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="17" Column="22" TopLine="3"/>
       </Position12>
       <Position13>
-        <Filename Value="uklock.pas"/>
-        <Caret Line="95" Column="27" TopLine="76"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="152" Column="25" TopLine="125"/>
       </Position13>
       <Position14>
-        <Filename Value="uklock.pas"/>
-        <Caret Line="145" Column="19" TopLine="125"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="153" Column="35" TopLine="127"/>
       </Position14>
       <Position15>
-        <Filename Value="uklock.pas"/>
-        <Caret Line="142" Column="3" TopLine="125"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="148" Column="20" TopLine="128"/>
       </Position15>
       <Position16>
         <Filename Value="uklock.pas"/>
-        <Caret Line="143" Column="3" TopLine="126"/>
+        <Caret Line="3" Column="1" TopLine="1"/>
       </Position16>
       <Position17>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="66" Column="40" TopLine="45"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="166" Column="32" TopLine="143"/>
       </Position17>
       <Position18>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="65" Column="40" TopLine="44"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="23" Column="20" TopLine="6"/>
       </Position18>
       <Position19>
         <Filename Value="uoptions.pas"/>
-        <Caret Line="64" Column="40" TopLine="43"/>
+        <Caret Line="98" Column="1" TopLine="1"/>
       </Position19>
       <Position20>
         <Filename Value="uoptions.pas"/>
-        <Caret Line="66" Column="40" TopLine="48"/>
+        <Caret Line="99" Column="1" TopLine="59"/>
       </Position20>
       <Position21>
         <Filename Value="uoptions.pas"/>
-        <Caret Line="89" Column="1" TopLine="53"/>
+        <Caret Line="98" Column="1" TopLine="58"/>
       </Position21>
       <Position22>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="83" Column="53" TopLine="53"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="153" Column="53" TopLine="133"/>
       </Position22>
       <Position23>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="69" Column="29" TopLine="55"/>
+        <Filename Value="uhelp.pas"/>
+        <Caret Line="40" Column="6" TopLine="35"/>
       </Position23>
       <Position24>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="71" Column="29" TopLine="68"/>
+        <Filename Value="uhelp.pas"/>
+        <Caret Line="39" Column="6" TopLine="34"/>
       </Position24>
       <Position25>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="100" Column="3" TopLine="71"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="149" Column="79" TopLine="133"/>
       </Position25>
       <Position26>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="99" Column="3" TopLine="70"/>
+        <Filename Value="uhelp.pas"/>
+        <Caret Line="41" Column="1" TopLine="35"/>
       </Position26>
       <Position27>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="22" Column="1" TopLine="13"/>
+        <Filename Value="uhelp.pas"/>
+        <Caret Line="40" Column="1" TopLine="34"/>
       </Position27>
       <Position28>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="74" Column="14" TopLine="60"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="136" Column="1" TopLine="1"/>
       </Position28>
       <Position29>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="76" Column="14" TopLine="62"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="137" Column="1" TopLine="97"/>
       </Position29>
       <Position30>
-        <Filename Value="uoptions.pas"/>
-        <Caret Line="94" Column="32" TopLine="74"/>
+        <Filename Value="uklock.pas"/>
+        <Caret Line="136" Column="1" TopLine="96"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

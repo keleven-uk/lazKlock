@@ -56,6 +56,7 @@ type
     Panel8: TPanel;
     Panel9: TPanel;
     PopupNotifier1: TPopupNotifier;
+    RdGrpTime: TRadioGroup;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
     TbShtFuzzy: TTabSheet;
@@ -66,7 +67,6 @@ type
     CountdownTimer: TTimer;
     ReminderTimer: TTimer;
     timerTimer: TTimer;
-    TgleBxFuzzy: TToggleBox;
     UpDwnReminderHour: TUpDown;
     UpDownReminderMinute: TUpDown;
     procedure btnCountdownLoadSoundClick(Sender: TObject);
@@ -90,11 +90,11 @@ type
     procedure mainTimerTimer(Sender: TObject);
     function ItoS(i : Integer) : String ;
     procedure DisplayMessage(title : string ; message : string);
+    procedure RdGrpTimeClick(Sender: TObject);
     procedure ReminderTimerTimer(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure StopCountDown;
     procedure SetDefaults;
-    procedure TgleBxFuzzyChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
     procedure UpDownReminderMinuteClick(Sender: TObject; Button: TUDBtnType);
     procedure UpDwnReminderHourClick(Sender: TObject; Button: TUDBtnType);
@@ -133,12 +133,11 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   countdownSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
-  stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
 
-  PageControl1.TabIndex := 0;   // start on fuzzy time
+  PageControl1.TabIndex := 0;   //  start on fuzzy time
 
   ft := FuzzyTime.Create;
-  ft.displayFuzzy := true;
+  ft.displayFuzzy := 1;         //  start on fuzzy time
 
 //  SetDefaults;
 end;
@@ -176,6 +175,8 @@ begin
     PopupNotifier1.Visible := true ;
   end;
 end;
+
+
 
 procedure TfrmMain.PageControl1Change(Sender: TObject);
 VAR
@@ -238,23 +239,29 @@ end;
 
 procedure TfrmMain.mainTimerTimer(Sender: TObject);
 begin
-  stsBrInfo.Panels.Items[0].Text := TimeToStr(Time);
-  stsBrInfo.Panels.Items[1].Text := DateToStr(Date);
+  stsBrInfo.Panels.Items[0].Text:= TimeToStr(Time) ;
+  stsBrInfo.Panels.Items[1].Text:= FormatDateTime('DD MMM YYYY', Now);
 
   lblfuzzy.Caption := ft.getTime;
 end;
 
 // *********************************************************** Fuzzy Time ******
-procedure TfrmMain.TgleBxFuzzyChange(Sender: TObject);
+procedure TfrmMain.RdGrpTimeClick(Sender: TObject);
 begin
-  if TgleBxFuzzy.Checked then begin
-    TgleBxFuzzy.Caption := 'normal';
-    ft.displayFuzzy     := true;
+  if RdGrpTime.ItemIndex = 0 then begin            //  normal time
+    ft.displayFuzzy     := 0;
     lblfuzzy.Caption    := ft.getTime;
   end
-  else begin
-    TgleBxFuzzy.Caption := 'fuzzy';
-    ft.displayFuzzy     := false;
+  else if RdGrpTime.ItemIndex = 1 then begin       //  fuzzy time
+    ft.displayFuzzy     := 1;
+    lblfuzzy.Caption    := ft.getTime;
+  end
+  else if RdGrpTime.ItemIndex = 2 then begin       //  net time
+    ft.displayFuzzy     := 2;
+    lblfuzzy.Caption    := ft.getTime;
+  end
+  else if RdGrpTime.ItemIndex = 3 then begin       //  unix time
+    ft.displayFuzzy     := 3;
     lblfuzzy.Caption    := ft.getTime;
   end;
 end;

@@ -14,15 +14,17 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, DateUtils;
 
 type
   FuzzyTime = class
 
 Private
-  Function fTime : String ;
+  Function fTime    : String ;
+  Function netTime  : string;
+  Function unixTime : string;
 Public
-  displayFuzzy : Boolean ;
+  displayFuzzy : Integer ;
   Constructor init ;
   Function getTime : string ;
 
@@ -33,12 +35,12 @@ implementation
 
 Constructor FuzzyTime.init;
 begin
-  self.displayFuzzy := True;
+  self.displayFuzzy := 1;
 end;
 
 Function FuzzyTime.fTime : String ;
 Type
-  Hours = Array [1..12] of String;
+  Hours = Array [0..11] of String;
 VAR
   t     : TDateTime;
   hour  : word;
@@ -52,6 +54,7 @@ VAR
 
   hourTxt : Hours;
 begin
+  hourTxt[0] := 'twelve';     //  same as 12 o'clock
   hourTxt[1]  := 'one';
   hourTxt[2]  := 'two';
   hourTxt[3]  := 'three';
@@ -63,15 +66,15 @@ begin
   hourTxt[9]  := 'nine';
   hourTxt[10] := 'ten';
   hourTxt[11] := 'eleven';
-  hourTxt[12] := 'twelve';
+
 
   t     := Time;
   DecodeTime(t, hour, mins, secs, mscs);
 
-  if hour >= 12 then
-    ampm := 'pm'
+  if hour < 12 then
+    ampm := ' in the morning'
   else
-    ampm := ' in the morning';
+    ampm := 'pm';
 
   nrms := mins - (mins mod 5);       //  gets nearest five mins
 
@@ -124,12 +127,11 @@ begin
     hour := hour + 1;
   end;
 
-  if hour < 1 then              //  fix for noon/midnight
-    hour := hour + 1;
-
   if ampm = 'pm' then begin
     hour := hour - 12;
-    if hour >= 5 then
+    if (hour = 0) and (nrms = 0) then         // 12 o'clock : noon
+      ampm := 'noon'
+    else if hour >= 5 then
       ampm := ' in the evening'
     else
       ampm := ' in the afternoon';
@@ -140,12 +142,44 @@ begin
   ftime := sRtn + dummy + ampm;
 end ;
 
+Function FuzzyTime.netTime : string;
+{  New Earth Time [or NET] splits the day into 260 degrees. each degree is
+   further split into 60 minutes and further into 60 seconds.
+
+   Only returns NET time in NET 15 second intervals [equals 1 normal second]  }
+VAR
+  deg : Integer;
+  min : Integer;
+  sec : Integer;
+
+begin
+  deg := SecondOfTheDay(Time) div 240;
+  min := (SecondOfTheDay(Time) - (deg * 240)) div 4;
+  sec := (SecondOfTheDay(Time) - (deg * 240) - (min * 4)) * 15;
+
+  netTime := format('%d deg %d min %d sec', [deg, min, sec]);
+end;
+
+Function FuzzyTime.unixTime : string;
+VAR
+  unix : integer;
+
+begin
+  unix := DateTimeToUnix(Time);
+
+  unixTime := format('%d', [unix]);
+end;
+
 Function FuzzyTime.getTime : String;
 begin
-  if self.displayFuzzy then
+  if self.displayFuzzy = 0 then                   //  normal time
+    getTime := TimeToStr(Time)
+  else if self.displayFuzzy = 1 then              //  fuzzy time
     getTime := self.fTime
-  else
-    getTime := TimeToStr(Time);
+  else if self.displayFuzzy = 2 then              //  net time
+    getTime := self.netTime
+  else if self.displayFuzzy = 3 then              // unix time
+    getTime := self.unixTime
 end ;
 
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls;
+  ExtCtrls, SynMemo;
 
 type
 
@@ -57,7 +57,8 @@ begin
   mmoHelp.Append('along with this program.  If not, see <http://www.gnu.org/licenses/>.');
   mmoHelp.Append('');
   mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('Klock Version :: 0.0.0.5.');
+  mmoHelp.Append('Klock Version :: 7');
+
 end;
 
 procedure TfrmHelp.mmoHelpChange(Sender: TObject);
