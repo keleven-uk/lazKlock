@@ -140,8 +140,8 @@ begin
   ft := FuzzyTime.Create;
   ft.displayFuzzy := 0;         //  start on fuzzy time
 
-  stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
-
+  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
+                                                                     + ' time' ;
   DtEdtReminder.Date := now;
   SpnEdtMins.Value   := MinuteOf(time);
   SpnEdtHour.Value   := HourOf(time);
@@ -159,10 +159,12 @@ procedure TfrmMain.SetDefaults;
 begin
   lblfuzzy.Font.Color         := OptionsRec.textColour;
   lblfuzzy.Font.Size          := 18;
+  SpnEdtCountdown.Font.Size   := 8;
   LblCountdownTime.Font.Color := OptionsRec.textColour;
-  LblCountdownTime.Font.Size  := 18;
+  LblCountdownTime.Font.Size  := 26;
+  SpnEdtCountdown.Font.Size   := 12;
   lblTimer.Font.Color         := OptionsRec.textColour;
-  lblTimer.Font.Size          := 18;
+  lblTimer.Font.Size          := 26;
   lblReminder.Font.Color      := OptionsRec.textColour;
   lblReminder.Font.Size       := 18;
 end;
@@ -192,6 +194,8 @@ begin
   if PageControl1.TabIndex = 0 then begin                     //  fuzzy page
     stsBrInfo.Panels.Items[2].Text := '';
     stsBrInfo.Panels.Items[3].Text := '';
+    stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
+                                                                       + ' time' ;
   end;
 
 
@@ -252,36 +256,12 @@ end;
 // *********************************************************** Fuzzy Time ******
 procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
 begin
-  if CmbBxTime.ItemIndex = 0 then begin            //  fuzzy time
-    ft.displayFuzzy     := 0;
-    lblfuzzy.Caption    := ft.getTime;
-    stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
-  end
-  else if CmbBxTime.ItemIndex = 1 then begin       //  local time
-    ft.displayFuzzy     := 1;
-    lblfuzzy.Caption    := ft.getTime;
-    stsBrInfo.Panels.Items[2].Text := 'Local Time';
-  end
-  else if CmbBxTime.ItemIndex = 2 then begin       //  net time
-    ft.displayFuzzy     := 2;
-    lblfuzzy.Caption    := ft.getTime;
-    stsBrInfo.Panels.Items[2].Text := 'NET Time';
-  end
-  else if CmbBxTime.ItemIndex = 3 then begin       //  unix time
-    ft.displayFuzzy     := 3;
-    lblfuzzy.Caption    := ft.getTime;
-     stsBrInfo.Panels.Items[2].Text := 'Fuzzy Time';
-  end
-  else if CmbBxTime.ItemIndex = 4 then begin       //  UTC time
-    ft.displayFuzzy     := 4;
-    lblfuzzy.Caption    := ft.getTime;
-    stsBrInfo.Panels.Items[2].Text := 'Unix Time';
-  end
-  else if CmbBxTime.ItemIndex = 5 then begin       //  swatch time
-    ft.displayFuzzy     := 5;
-    lblfuzzy.Caption    := ft.getTime;
-    stsBrInfo.Panels.Items[2].Text := 'Swatch Time';
-  end;
+
+  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
+                                                                     + ' time' ;
+  ft.displayFuzzy     := CmbBxTime.ItemIndex;
+  lblfuzzy.Caption    := ft.getTime;
+
 end;
 
 // *********************************************************** Countdown *******

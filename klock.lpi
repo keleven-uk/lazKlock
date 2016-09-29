@@ -54,7 +54,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="21"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="85"/>
       </Unit0>
       <Unit1>
         <Filename Value="uklock.pas"/>
@@ -65,9 +65,9 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="125"/>
+        <TopLine Value="246"/>
         <CursorPos X="22" Y="147"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -78,7 +78,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="16" Y="2"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit2>
@@ -92,7 +92,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="32"/>
         <CursorPos X="54" Y="57"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
@@ -106,7 +106,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="45"/>
         <CursorPos X="38" Y="60"/>
-        <UsageCount Value="76"/>
+        <UsageCount Value="79"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit4>
@@ -118,9 +118,9 @@
         <UnitName Value="UOptions"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="37"/>
-        <CursorPos X="41" Y="85"/>
-        <UsageCount Value="73"/>
+        <TopLine Value="75"/>
+        <CursorPos X="54" Y="89"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
@@ -156,7 +156,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="208"/>
         <CursorPos X="20" Y="193"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="56"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
