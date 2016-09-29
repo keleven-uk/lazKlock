@@ -35,14 +35,18 @@ type
     lblGlobalText: TLabel;
     lblFuzzyTime: TLabel;
     lblCountDown: TLabel;
-    lblTimer: TLabel;
-    lblReminder: TLabel;
+    lblTimerText: TLabel;
+    lblReminderText: TLabel;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     RdGrpDefault: TRadioGroup;
     SpdBtnDefault: TSpeedButton;
+    procedure btnCountdownFontClick(Sender: TObject);
+    procedure btnFuzzyFontClick(Sender: TObject);
     procedure btnGlobalFontClick(Sender: TObject);
+    procedure btnReminderFontClick(Sender: TObject);
+    procedure btnTimerFontClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
     procedure ClrBtnCountdownColorChanged(Sender: TObject);
     procedure ClrBtnFuzzyColorChanged(Sender: TObject);
@@ -245,6 +249,39 @@ begin
  end;
 end;
 
+procedure TfrmOptions.btnTimerFontClick(Sender: TObject);
+begin
+ if FontDialog1.Execute then begin
+   lblTimerText.Font := FontDialog1.Font;
+   OptionsRec.setTimerTextFont(FontDialog1.Font);
+ end;
+end;
+
+procedure TfrmOptions.btnFuzzyFontClick(Sender: TObject);
+begin
+ if FontDialog1.Execute then begin
+   lblFuzzyTime.Font := FontDialog1.Font;
+   OptionsRec.setFuzzyTextFont(FontDialog1.Font);
+ end;
+end;
+
+procedure TfrmOptions.btnCountdownFontClick(Sender: TObject);
+begin
+ if FontDialog1.Execute then begin
+   lblCountDown.Font := FontDialog1.Font;
+   OptionsRec.setCountdownTextFont(FontDialog1.Font);
+ end;
+end;
+
+procedure TfrmOptions.btnReminderFontClick(Sender: TObject);
+begin
+ if FontDialog1.Execute then begin
+   btnReminderFont.Font := FontDialog1.Font;
+   OptionsRec.setReminderTextFont(FontDialog1.Font);
+ end;
+end;
+
+
 procedure TfrmOptions.ClrBtnGlobalColorChanged(Sender: TObject);
 {  set global label colour after selection, not saved until the okay button is clicked.            }
 begin
@@ -266,13 +303,13 @@ end;
 procedure TfrmOptions.ClrBtnTimerColorChanged(Sender: TObject);
 {  set timer label colour after selection, not saved until the okay button is clicked.            }
 begin
-  lblTimer.Font.Color := ClrBtnTimer.ButtonColor;
+  lblTimerText.Font.Color := ClrBtnTimer.ButtonColor;
 end;
 
 procedure TfrmOptions.ClrBtnReminderColorChanged(Sender: TObject);
 {  set reminder label colour after selection, not saved until the okay button is clicked.            }
 begin
-  lblReminder.Font.Color := ClrBtnReminder.ButtonColor;
+  lblReminderText.Font.Color := ClrBtnReminder.ButtonColor;
 end;
 
 
@@ -288,9 +325,9 @@ begin
   OptionsRec.setCountDownTextColour(ClrBtnCountdown.ButtonColor);
   OptionsRec.setCountDownTextFont(lblCountDown.Font);
   OptionsRec.setTimerTextColour(ClrBtnTimer.ButtonColor);
-  OptionsRec.setTimerTextFont(lblTimer.Font);
+  OptionsRec.setTimerTextFont(lblTimerText.Font);
   OptionsRec.setReminderTextColour(ClrBtnReminder.ButtonColor);
-  OptionsRec.setReminderTextFont(lblReminder.Font);
+  OptionsRec.setReminderTextFont(lblReminderText.Font);
   OptionsRec.setDefaultTab(RdGrpDefault.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
 
@@ -332,14 +369,14 @@ begin
   lblGlobalText.Font := OptionsRec.GlobalTextFont ;
   lblFuzzyTime.Font  := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
   lblCountDown.Font  := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
-  lblTimer.Font      := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
-  lblReminder.Font   := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
+  lblTimerText.Font      := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
+  lblReminderText.Font   := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
 
   lblGlobalText.Font.Color := OptionsRec.GlobalTextColour;
   lblFuzzyTime.Font.Color  := getTextColour(OptionsRec.FuzzyTextColour, OptionsRec.GlobalTextColour);
   lblCountDown.Font.Color  := getTextColour(OptionsRec.CountDownTextColour, OptionsRec.GlobalTextColour);
-  lblTimer.Font.Color      := getTextColour(OptionsRec.TimerTextColour, OptionsRec.GlobalTextColour);
-  lblReminder.Font.Color   := getTextColour(OptionsRec.ReminderTextColour, OptionsRec.GlobalTextColour);
+  lblTimerText.Font.Color      := getTextColour(OptionsRec.TimerTextColour, OptionsRec.GlobalTextColour);
+  lblReminderText.Font.Color   := getTextColour(OptionsRec.ReminderTextColour, OptionsRec.GlobalTextColour);
 
   ChckBxTimerMilli.Checked := OptionsRec.TimerMilliSeconds;
 end;
