@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1251
+  Left = 1244
   Height = 280
-  Top = 77
+  Top = 50
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2197,8 +2197,8 @@ object frmMain: TfrmMain
             TabOrder = 0
             object RdGrpTime: TRadioGroup
               Left = 8
-              Height = 97
-              Top = 8
+              Height = 114
+              Top = 4
               Width = 80
               AutoFill = True
               Caption = 'Time'
@@ -2210,7 +2210,7 @@ object frmMain: TfrmMain
               ChildSizing.ShrinkVertical = crsScaleChilds
               ChildSizing.Layout = cclLeftToRightThenTopToBottom
               ChildSizing.ControlsPerLine = 1
-              ClientHeight = 79
+              ClientHeight = 96
               ClientWidth = 76
               ItemIndex = 1
               Items.Strings = (
@@ -2218,6 +2218,7 @@ object frmMain: TfrmMain
                 'Fuzzy'
                 'NET'
                 'UNIX'
+                'UTC'
               )
               OnClick = RdGrpTimeClick
               TabOrder = 0

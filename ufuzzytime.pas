@@ -14,15 +14,16 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils;
+  Classes, SysUtils, DateUtils, Windows;
 
 type
   FuzzyTime = class
 
 Private
-  Function fTime    : String ;
+  Function fTime    : String;
   Function netTime  : string;
   Function unixTime : string;
+  Function utcTime  : string;
 Public
   displayFuzzy : Integer ;
   Constructor init ;
@@ -68,7 +69,7 @@ begin
   hourTxt[11] := 'eleven';
 
 
-  t     := Time;
+  t := Time;
   DecodeTime(t, hour, mins, secs, mscs);
 
   if hour < 12 then
@@ -161,6 +162,7 @@ begin
 end;
 
 Function FuzzyTime.unixTime : string;
+{  return UNUX epoch time                                                      }
 VAR
   unix : integer;
 
@@ -168,6 +170,15 @@ begin
   unix := DateTimeToUnix(Time);
 
   unixTime := format('%d', [unix]);
+end;
+Function FuzzyTime.utcTime : string;
+{  returns UTC, Coordinated Universal Time - will only work in windows.
+   This is then encoded into a string.                                         }
+VAR
+  utc : TSystemTime;
+begin
+  GetSystemTime(utc);              //  Get current time in UTC
+  utcTime := TimeToStr(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
 end;
 
 Function FuzzyTime.getTime : String;
@@ -180,6 +191,8 @@ begin
     getTime := self.netTime
   else if self.displayFuzzy = 3 then              // unix time
     getTime := self.unixTime
+  else if self.displayFuzzy = 4 then              // unix time
+    getTime := utcTime
 end ;
 
 

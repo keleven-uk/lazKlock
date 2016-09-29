@@ -263,6 +263,10 @@ begin
   else if RdGrpTime.ItemIndex = 3 then begin       //  unix time
     ft.displayFuzzy     := 3;
     lblfuzzy.Caption    := ft.getTime;
+  end
+  else if RdGrpTime.ItemIndex = 4 then begin       //  unix time
+    ft.displayFuzzy     := 4;
+    lblfuzzy.Caption    := ft.getTime;
   end;
 end;
 
