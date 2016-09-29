@@ -2167,9 +2167,10 @@ object frmMain: TfrmMain
       Height = 168
       Top = 8
       Width = 580
-      ActivePage = TbShtTomer
-      TabIndex = 2
+      ActivePage = TbShtRimder
+      TabIndex = 3
       TabOrder = 0
+      OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
         Caption = 'Fuzzy Time'
         ClientHeight = 140
@@ -2299,7 +2300,7 @@ object frmMain: TfrmMain
           end
         end
       end
-      object TbShtTomer: TTabSheet
+      object TbShtTimer: TTabSheet
         Caption = 'Timer'
         ClientHeight = 140
         ClientWidth = 572
@@ -2316,7 +2317,7 @@ object frmMain: TfrmMain
           ParentColor = False
           TabOrder = 0
           object Panel9: TPanel
-            Left = 13
+            Left = 12
             Height = 122
             Top = 8
             Width = 96
@@ -2327,21 +2328,31 @@ object frmMain: TfrmMain
             object btnTimerStart: TButton
               Left = 8
               Height = 25
-              Top = 24
+              Top = 8
               Width = 75
               Caption = 'Start'
               OnClick = btnTimerStartClick
               TabOrder = 0
             end
             object btnTimerStop: TButton
-              Left = 7
+              Left = 8
               Height = 25
-              Top = 72
+              Top = 48
               Width = 75
               Caption = 'Stop'
               Enabled = False
               OnClick = btnTimerStopClick
               TabOrder = 1
+            end
+            object btnTimerClear: TButton
+              Left = 8
+              Height = 25
+              Top = 88
+              Width = 75
+              Caption = 'Clear'
+              Enabled = False
+              OnClick = btnTimerClearClick
+              TabOrder = 2
             end
           end
           object Panel10: TPanel
@@ -2376,9 +2387,48 @@ object frmMain: TfrmMain
           Top = 0
           Width = 572
           Align = alClient
+          ClientHeight = 140
+          ClientWidth = 572
           Color = clForm
           ParentColor = False
           TabOrder = 0
+          object Panel11: TPanel
+            Left = 12
+            Height = 122
+            Top = 8
+            Width = 96
+            ClientHeight = 122
+            ClientWidth = 96
+            TabOrder = 0
+            object btnReminderSet: TButton
+              Left = 8
+              Height = 25
+              Top = 48
+              Width = 75
+              Caption = 'Set'
+              OnClick = btnReminderSetClick
+              TabOrder = 0
+            end
+          end
+          object Panel12: TPanel
+            Left = 116
+            Height = 66
+            Top = 8
+            Width = 432
+            ClientHeight = 66
+            ClientWidth = 432
+            TabOrder = 1
+            object lblReminder: TLabel
+              Left = 60
+              Height = 62
+              Top = 0
+              Width = 342
+              Caption = 'Reminder not set'
+              Font.Height = -45
+              ParentColor = False
+              ParentFont = False
+            end
+          end
         end
       end
     end
@@ -2401,7 +2451,7 @@ object frmMain: TfrmMain
   end
   object mnuMain: TMainMenu
     left = 456
-    top = 248
+    top = 240
     object mnuFile: TMenuItem
       Caption = 'File'
       object mnuItmOptions: TMenuItem

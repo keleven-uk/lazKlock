@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, PopupNotifier, UAbout,
-  Uhelp, UOptions, MMSystem;
+  ComCtrls, Menus, Buttons, ButtonPanel, StdCtrls, Spin, PopupNotifier, ExtDlgs,
+  UAbout, Uhelp, UOptions, MMSystem;
 
 type
 
@@ -19,9 +19,12 @@ type
     btnCountdownLoadSound: TButton;
     btnTimerStart: TButton;
     btnTimerStop: TButton;
+    btnTimerClear: TButton;
+    btnReminderSet: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     EdtCountdownSound: TEdit;
+    lblReminder: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
     mnuItmOptions: TMenuItem;
@@ -34,6 +37,8 @@ type
     PageControl1: TPageControl;
     Panel1: TPanel;
     Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
@@ -47,7 +52,7 @@ type
     stsBrInfo: TStatusBar;
     TbShtFuzzy: TTabSheet;
     TbShtCountdown: TTabSheet;
-    TbShtTomer: TTabSheet;
+    TbShtTimer: TTabSheet;
     TbShtRimder: TTabSheet;
     mainTimer: TTimer;
     CountdownTimer: TTimer;
@@ -55,6 +60,8 @@ type
     procedure btnCountdownLoadSoundClick(Sender: TObject);
     procedure btnCountdownStartClick(Sender: TObject);
     procedure btnCountdownStopClick(Sender: TObject);
+    procedure btnReminderSetClick(Sender: TObject);
+    procedure btnTimerClearClick(Sender: TObject);
     procedure btnTimerStartClick(Sender: TObject);
     procedure btnTimerStopClick(Sender: TObject);
     procedure ChckBxCountdownSoundChange(Sender: TObject);
@@ -64,6 +71,7 @@ type
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     function ItoS(i : Integer) : String ;
@@ -184,6 +192,7 @@ begin
   countdownSoundName     := getCurrentDir + '\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName); //  in current working directory.
   stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
+  PageControl1.TabIndex := 1;
 end;
 
 procedure TfrmMain.CountdownTimerTimer(Sender: TObject);
@@ -287,6 +296,18 @@ begin
   LblCountdownTime.Caption := '00:00';
 end;
 
+procedure TfrmMain.btnReminderSetClick(Sender: TObject);
+begin
+  with TCalendarDialog.Create(Self) do
+  begin
+    Title := 'Choose a sound file [.wav]' ;
+    if Execute then begin
+
+    end;    //  if Exectute
+    Free;
+  end;
+end;
+
 procedure TfrmMain.btnTimerStartClick(Sender: TObject);
 { called when start button is clicked, can have three modes
       Start  :: Start timer
@@ -298,17 +319,21 @@ begin
     timerPaused := 0;
     btnTimerStop.Enabled  := true;
     timerTimer.Enabled    := true;
-    btnTimerStart.Caption := 'Pause'
+    btnTimerClear.Enabled := false;
+    btnTimerStart.Caption := 'Pause';
+    frmMain.Caption       := 'Timer :: Started';
   end
   else if btnTimerStart.Caption = 'Pause' then begin
-    timerPaused := timerStart - time;
+    timerPaused := timerPaused + (time - timerStart);
     btnTimerStart.Caption := 'Resume';
     timerTimer.Enabled    := false;
+    frmMain.Caption       := 'Timer :: Paused';
   end
   else if btnTimerStart.Caption = 'Resume' then begin
     timerStart  := time;
     btnTimerStart.Caption := 'Pause';
     timerTimer.Enabled    := true;
+    frmMain.Caption       := 'Timer :: Started';
   end
 end;
 
@@ -316,7 +341,14 @@ procedure TfrmMain.btnTimerStopClick(Sender: TObject);
 begin
   btnTimerStop.Enabled  := false;
   timerTimer.Enabled    := false;
-  lblTimer.Caption      := '00:00:00'
+  btnTimerClear.Enabled := true;
+  btnTimerStart.Caption := 'Start';
+  frmMain.Caption       := 'Timer :: Stoped';
+end;
+
+procedure TfrmMain.btnTimerClearClick(Sender: TObject);
+begin
+    lblTimer.Caption := '00:00:00';
 end;
 
 procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
@@ -351,6 +383,24 @@ end;
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 begin
   frmOptions.ShowModal;
+end;
+
+procedure TfrmMain.PageControl1Change(Sender: TObject);
+begin
+  if PageControl1.TabIndex = 1 then begin
+    if chckBxCountdownSound.Checked then begin
+      stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
+    end
+    else begin
+      stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
+    end;
+  end;
+
+  if PageControl1.TabIndex = 2 then
+    stsBrInfo.Panels.Items[2].Text := '';
+
+  if PageControl1.TabIndex = 3 then
+    stsBrInfo.Panels.Items[2].Text := '';
 end;
 
 procedure TfrmMain.Panel1Click(Sender: TObject);
