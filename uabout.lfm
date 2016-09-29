@@ -130,17 +130,17 @@ object frmAbout: TfrmAbout
     TabOrder = 0
     object lblLazarusVersion: TLabel
       Left = 8
-      Height = 16
+      Height = 14
       Top = 136
-      Width = 146
+      Width = 135
       Caption = 'Built With Lazarus Version ::'
       ParentColor = False
     end
     object lblProgramName: TLabel
       Left = 104
-      Height = 29
+      Height = 25
       Top = 16
-      Width = 49
+      Width = 48
       Caption = 'Klock'
       Font.Height = -20
       ParentColor = False
@@ -148,9 +148,9 @@ object frmAbout: TfrmAbout
     end
     object lblProgramDescription: TLabel
       Left = 80
-      Height = 22
+      Height = 20
       Top = 48
-      Width = 115
+      Width = 122
       Caption = 'A Clock with a K.'
       Font.Height = -16
       ParentColor = False
@@ -158,9 +158,9 @@ object frmAbout: TfrmAbout
     end
     object lblProgrammer: TLabel
       Left = 80
-      Height = 22
+      Height = 20
       Top = 80
-      Width = 143
+      Width = 149
       Caption = 'Kevin Scott  (c) 2012'
       Font.Height = -16
       ParentColor = False
@@ -168,9 +168,9 @@ object frmAbout: TfrmAbout
     end
     object lblVersion: TLabel
       Left = 8
-      Height = 16
+      Height = 14
       Top = 117
-      Width = 81
+      Width = 74
       Caption = 'Klock Version ::'
       ParentColor = False
     end
@@ -194,9 +194,9 @@ object frmAbout: TfrmAbout
     end
     object lblDiskSize: TLabel
       Left = 8
-      Height = 16
+      Height = 14
       Top = 8
-      Width = 10
+      Width = 13
       Caption = '...'
       ParentColor = False
     end

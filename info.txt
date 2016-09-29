@@ -1,15 +1,16 @@
 projext   :: Klock
-Version   :: 16
+Version   :: 17
 Date      :: Friday 25 january 2012
 Author    :: Kevin Scott
 
 Copyright 2012 :: Kevin Scott ::  countdown<at>keleven<dot>co<dot>uk
 
-Date     of last SVN commit :: $Date:: 2012-03-17 23:34:52 +0000 (Sat, 17 Mar 2012)                                      $
-Revision of last SVN commit :: $Revision:: 16                                                                            $
-Author   of last SVN commit :: $Author:: Kevin                                                                           $
+Date     of last SVN commit :: $Date:: 2012-03-21 16:06:06 +0000 (Wed, 21 Mar 2012)                                      $
+Revision of last SVN commit :: $Revision:: 17                                                                            $
+Author   of last SVN commit :: $Author:: scottk2                                                                         $
 Full URL  in SVN repository :: $HeadURL:: file:///D:/My/shed/tmp/pascal/klock/info.txt                                   $
 
 A clock with a K.
+
 
 

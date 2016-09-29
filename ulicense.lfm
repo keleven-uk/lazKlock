@@ -28,6 +28,7 @@ object frmLicense: TfrmLicense
       Height = 144
       Top = 8
       Width = 388
+      ReadOnly = True
       ScrollBars = ssAutoVertical
       TabOrder = 0
     end

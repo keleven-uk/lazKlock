@@ -156,17 +156,17 @@ procedure TfrmMain.SetDefaults;
    Set things that can be changed in the options screen,
    to the values in the options screen.                             }
 begin
-  lblfuzzy.Font.Color         := OptionsRec.textColour;
+  lblfuzzy.Font.Color         := OptionsRec.GlobaltextColour;
   lblfuzzy.Font.Size          := 18;
   SpnEdtCountdown.Font.Size   := 8;
-  LblCountdownTime.Font.Color := OptionsRec.textColour;
+  LblCountdownTime.Font.Color := OptionsRec.GlobaltextColour;
   LblCountdownTime.Font.Size  := 26;
   SpnEdtCountdown.Font.Size   := 12;
-  lblTimer.Font.Color         := OptionsRec.textColour;
+  lblTimer.Font.Color         := OptionsRec.GlobaltextColour;
   lblTimer.Font.Size          := 26;
-  lblSplitLap.Font.Color      := OptionsRec.textColour;
+  lblSplitLap.Font.Color      := OptionsRec.GlobaltextColour;
   lblSplitLap.Font.Size       := 26;
-  lblReminder.Font.Color      := OptionsRec.textColour;
+  lblReminder.Font.Color      := OptionsRec.GlobaltextColour;
   lblReminder.Font.Size       := 18;
 end;
 
@@ -544,17 +544,37 @@ begin
 end;
 
 procedure TfrmMain.btnReminderSetClick(Sender: TObject);
+VAR
+  RmndDt : TDateTime;
 begin
-  lblReminder.Caption := format('Reminder set for %.2d:%.2d - %s',
-           [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
-  stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
-           [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
-  ReminderTimer.Enabled    := true;
-  btnReminderSet.Enabled   := false;
-  DtEdtReminder.Enabled    := false;
-  spnEdtHour.Enabled       := false;
-  spnEdtMins.Enabled       := false;
+  RmndDt := EncodeDateTime(YearOf(DtEdtReminder.Date),
+                           MonthOf(DtEdtReminder.Date),
+                           DayOf(DtEdtReminder.Date),
+                           SpnEdtHour.Value,
+                           SpnEdtMins.Value,
+                           0,
+                           0);
+
+  if RmndDt > Now then begin  // so reminder's can not be set in the past.
+    lblReminder.Caption := format('Reminder set for %.2d:%.2d - %s',
+         [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
+    stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
+         [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
+
+    ReminderTimer.Enabled := true;
+    DtEdtReminder.Enabled := false;
+    spnEdtHour.Enabled    := false;
+    spnEdtMins.Enabled    := false;
+  end
+  else begin
+    lblReminder.Caption := 'Cannot set reminder in the past';
+    DtEdtReminder.Date  := now;
+    SpnEdtMins.Value    := MinuteOf(time);
+    SpnEdtHour.Value    := HourOf(time);
+  end;
+
   btnReminderClear.Enabled := true;
+  btnReminderSet.Enabled   := false;
 end;
 
 procedure TfrmMain.btnReminderClearClick(Sender: TObject);
@@ -574,6 +594,7 @@ begin
                            SpnEdtMins.Value,
                            0,
                            0);
+
   if Now > RmndDt then begin
     ReminderTimer.Enabled  := false;
     btnReminderSet.Enabled := false;
