@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Klock"
-#define MyAppVersion "23"
+#define MyAppVersion "26"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "klock.exe"
@@ -19,12 +19,12 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\keleven\klock_23
+DefaultDirName={pf}\keleven\klock_26
 DefaultGroupName={#MyAppName}
 LicenseFile=C:\usr\shed\projects\pascal\klock\GNU GENERAL PUBLIC LICENSE.txt
 InfoAfterFile=C:\usr\shed\projects\pascal\klock\history.txt
 OutputDir=C:\usr\shed\projects\pascal
-OutputBaseFilename=klock_23
+OutputBaseFilename=klock_26
 SetupIconFile=C:\usr\shed\projects\pascal\klock\klock.ico
 Compression=lzma
 SolidCompression=yes
@@ -38,6 +38,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "C:\usr\shed\projects\pascal\klock\klock.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\usr\shed\projects\pascal\klock\klock.ini"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\usr\shed\projects\pascal\klock\sounds\*"; DestDir: "{app}\sounds"; Flags: ignoreversion
 Source: "C:\usr\shed\projects\pascal\klock\help.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\usr\shed\projects\pascal\klock\history.txt"; DestDir: "{app}"; Flags: ignoreversion

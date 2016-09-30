@@ -129,7 +129,7 @@ Constructor OptionsRecord.init;
 begin
   self.DefaultTab  := 0;
   self.DefaultTime := 0;
-  self.Version     := '26';
+  self.Version     := '27';
 
   self.GlobalTextFont    := frmOptions.Font;
   self.FuzzyTextFont     := frmOptions.Font;
@@ -229,8 +229,12 @@ end;
 
 {                                               ** form procedures  **                             }
 procedure TfrmOptions.FormCreate(Sender: TObject);
+VAR
+  appData : String;
 begin
-  iniName := 'klock.ini';
+  appData := GetAppConfigDir(False);    //  retrieve the correct place to store .ini file
+  CreateDir(appData);                   //  create said place
+  iniName := appData + 'klock.ini';     //  create .ini file path
 
   OptionsRec := OptionsRecord.Create;    //  create options record,
                                          //  can then be used in main form

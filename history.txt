@@ -1,4 +1,97 @@
 ------------------------------------------------------------------------
+r26 | Kevin | 2012-04-22 19:27:11 +0100 (Sun, 22 Apr 2012) | 4 lines
+
+Corrected Julian Time.
+Added Decimal Time.
+Added Hexadecimal Time.
+Added Binary Time.
+------------------------------------------------------------------------
+r25 | scottk2 | 2012-04-20 14:46:45 +0100 (Fri, 20 Apr 2012) | 18 lines
+
+Over 1000 lines of meaningless code :o)
+
+Renamed UOptionUtils.pas to UKlockUtils.pas - a more general utils unit. Moved doSystemEvent & do Command procedures into this unit.
+
+Corrected several bugs with the countdown event procedures.
+
+Change AProcess.CommandLine [depreciated] to AProcess.Executable & AProcess.Parameters.
+
+BUG : screen would reset to saved screen co-ordinates, even though screen saved not clicked in options.
+      Now checks options when resets main form.
+
+Options : changed options for NET time & Swatch time to be a common checkbox list, instead of two check boxes.
+
+Finally got around the learning the case statement, converted most nested if statements.
+
+Added GUI elements, so reminder can trigger the same events as countdown.
+
+Added julian Time - needs checking.
+------------------------------------------------------------------------
+r24 | scottk2 | 2012-04-13 15:21:31 +0100 (Fri, 13 Apr 2012) | 10 lines
+
+Added option for Net time to count is 1 or 15 second increments.
+      [15 seconds net time = 1 second real time]
+Added option for Swatch time to display Centibeats.
+
+Added option for default time display.
+Changed both default time & tab to be drop down lists.
+
+Added option for countdown to trigger sound, event command, or pop up message.
+      event is a system event i.e. PC shut down or reboot.
+      command is the ability to run an external executable application.
+------------------------------------------------------------------------
+r23 | Kevin | 2012-04-09 20:55:38 +0100 (Mon, 09 Apr 2012) | 7 lines
+
+Removed colour buttons, duplicated in font dialogue screen.
+
+Finished font stuff.
+
+Will save screen position if desired.
+
+
+------------------------------------------------------------------------
+r22 | Kevin | 2012-04-04 17:43:55 +0100 (Wed, 04 Apr 2012) | 3 lines
+
+Further work on font options.
+
+Save before removal of colour buttons in the options screen. The colour can be changed in the font page, so making this button redundant.
+------------------------------------------------------------------------
+r21 | scottk2 | 2012-03-30 15:25:19 +0100 (Fri, 30 Mar 2012) | 3 lines
+
+Added unit uOptionsUtils, which contain the functions StringToFont & FontToString - enables font information to be saved to ini files.
+
+Added code to save and load fonts from ini file - to be tested.
+------------------------------------------------------------------------
+r20 | scottk2 | 2012-03-26 16:16:06 +0100 (Mon, 26 Mar 2012) | 1 line
+
+All modules now load version info from options record.
+------------------------------------------------------------------------
+r19 | scottk2 | 2012-03-23 15:32:23 +0000 (Fri, 23 Mar 2012) | 6 lines
+
+Further work on ini file stuff.
+
+Timer can now run either seconds / milli seconds.
+Default page control can now be set.
+Both saved to ini file.
+
+------------------------------------------------------------------------
+r18 | Kevin | 2012-03-22 22:09:28 +0000 (Thu, 22 Mar 2012) | 2 lines
+
+Further work completed on ini file.
+Extended the GUI on the options screen.
+------------------------------------------------------------------------
+r17 | scottk2 | 2012-03-21 16:06:06 +0000 (Wed, 21 Mar 2012) | 4 lines
+
+Licence window made read only - thanks zach.
+Reminders can now be set in the past - thanks zach.
+
+Start of code for saving options in a .ini file.
+------------------------------------------------------------------------
+r16 | Kevin | 2012-03-17 23:34:52 +0000 (Sat, 17 Mar 2012) | 2 lines
+
+Recompiled to check for Lazarus 0.9.30.4.
+
+------------------------------------------------------------------------
 r15 | scottk2 | 2012-03-15 16:46:26 +0000 (Thu, 15 Mar 2012) | 3 lines
 
 Added try..except clause to all file operations.
