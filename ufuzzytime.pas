@@ -14,7 +14,7 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows, UOptions, strutils;
+  Classes, SysUtils, DateUtils, Windows, UOptions, strutils, Dialogs;
 
 type
   FuzzyTime = class
@@ -28,9 +28,10 @@ Private
   Function julianTime  : string;
   Function decimalTime : string;
   Function hexTime     : string;
-  Function binaryTime  : string;
+  Function radixTime   : string;
 Public
   displayFuzzy : Integer ;
+  FuzzyBase    : Integer ;
   Constructor init ;
   Function getTime : string ;
   Function getDblTime : Double;
@@ -42,6 +43,7 @@ implementation
 Constructor FuzzyTime.init;
 begin
   self.displayFuzzy := OptionsRec.DefaultTime;
+  self.FuzzyBase    := 2;
 end;
 
 Function FuzzyTime.fTime : String ;
@@ -258,7 +260,7 @@ begin
   hexTime := format('%s_%s_%s', [shrs, smin, ssec])
 end;
 
-Function FuzzyTime.binaryTime : string ;
+Function FuzzyTime.radixTime : string ;
 VAR
   t     : TDateTime;
   hrs  : word;
@@ -273,11 +275,11 @@ begin
   t := Time;
   DecodeTime(t, hrs, min, sec, msc);
 
-  shrs := Dec2Numb(hrs, 5, 2);
-  smin := Dec2Numb(min, 6, 2);
-  ssec := Dec2Numb(sec, 6, 2);
+  shrs := Dec2Numb(hrs, 5, self.FuzzyBase);
+  smin := Dec2Numb(min, 6, self.FuzzyBase);
+  ssec := Dec2Numb(sec, 6, self.FuzzyBase);
 
-  binaryTime := format('%s %s %s', [shrs, smin, ssec])
+  radixTime := format('%s %s %s', [shrs, smin, ssec])
 end;
 
 Function FuzzyTime.getDblTime : Double ;
@@ -312,7 +314,7 @@ begin
     6 : getTime := julianTime;
     7 : getTime := decimalTime;
     8 : getTime := hexTime;
-    9 : getTime := binaryTime;
+    9 : getTime := radixTime;
   end;
 
 end ;

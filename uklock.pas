@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, uLicense, MMSystem, UFuzzyTime, dateutils,
+  UAbout, Uhelp, UOptions, uLicense, UFuzzyTime, dateutils,
   UKlockUtils;
 
 type
@@ -52,6 +52,7 @@ type
     EdtCountdownCommand: TEdit;
     EdtCountdownReminder: TEdit;
     EdtCountdownSound: TEdit;
+    lblRadix: TLabel;
     lblSplitLap: TLabel;
     lblfuzzy: TLabel;
     lblReminder: TLabel;
@@ -83,6 +84,7 @@ type
     Panel8: TPanel;
     Panel9: TPanel;
     PopupNotifier1: TPopupNotifier;
+    SpnEdtTimeBase: TSpinEdit;
     SpnEdtHour: TSpinEdit;
     SpnEdtMins: TSpinEdit;
     SpnEdtCountdown: TSpinEdit;
@@ -139,6 +141,7 @@ type
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure SpnEdtHourChange(Sender: TObject);
     procedure SpnEdtMinsChange(Sender: TObject);
+    procedure SpnEdtTimeBaseChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
   private
     procedure DisplayMessage(title : string ; message : string);
@@ -219,6 +222,8 @@ begin
 
   ft.displayFuzzy := OptionsRec.DefaultTime;
   stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time' ;
+
+  ft.FuzzyBase := 2;
 
   if OptionsRec.ScreenSave then begin
     frmMain.Left := OptionsRec.ScreenLeft;
@@ -323,6 +328,21 @@ begin
   ft.displayFuzzy     := CmbBxTime.ItemIndex;
   lblfuzzy.Caption    := ft.getTime;
 
+  if CmbBxTime.ItemIndex = 9 then begin
+    SpnEdtTimeBase.Visible := true;
+    lblRadix.Visible       := true;
+    ft.FuzzyBase := SpnEdtTimeBase.Value;
+  end
+  else begin
+    SpnEdtTimeBase.Visible := false;
+    lblRadix.Visible       := false;
+  end;
+
+end;
+
+procedure TfrmMain.SpnEdtTimeBaseChange(Sender: TObject);
+begin
+  ft.FuzzyBase := SpnEdtTimeBase.Value;
 end;
 
 
@@ -1066,6 +1086,9 @@ end;
 
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 begin
+  OptionsRec.ScreenLeft := frmMain.Left;   //  return to same place, after option screen.
+  OptionsRec.ScreenTop  := frmMain.Top;
+
   frmOptions.ShowModal;
   SetDefaults;
 end;

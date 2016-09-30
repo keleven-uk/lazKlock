@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 575
+  Left = 583
   Height = 242
-  Top = 699
+  Top = 487
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2173,15 +2173,15 @@ object frmMain: TfrmMain
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
         Caption = 'Fuzzy Time'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel4: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2196,10 +2196,10 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 10
               Width = 80
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Fuzzy'
@@ -2210,8 +2210,8 @@ object frmMain: TfrmMain
                 'Swatch'
                 'Julian'
                 'Decimal'
-                'Hexadecimal'
-                'Binary'
+                'Hex [True]'
+                'Radix'
               )
               OnChange = CmbBxTimeChange
               Style = csDropDownList
@@ -2229,13 +2229,36 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblfuzzy: TLabel
               Left = 8
-              Height = 33
-              Top = 4
-              Width = 389
+              Height = 30
+              Top = 2
+              Width = 384
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False
               ParentFont = False
+            end
+            object SpnEdtTimeBase: TSpinEdit
+              Left = 384
+              Height = 21
+              Top = 10
+              Width = 50
+              MaxValue = 32
+              MinValue = 2
+              OnChange = SpnEdtTimeBaseChange
+              TabOrder = 0
+              Value = 2
+              Visible = False
+            end
+            object lblRadix: TLabel
+              Left = 336
+              Height = 20
+              Top = 11
+              Width = 40
+              Caption = 'Radix'
+              Font.Height = -16
+              ParentColor = False
+              ParentFont = False
+              Visible = False
             end
           end
         end
@@ -2365,10 +2388,10 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownAction: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 8
               Width = 80
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Sound'
@@ -2414,11 +2437,11 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownEvent: TComboBox
               Left = 168
-              Height = 23
+              Height = 21
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 15
+              ItemHeight = 13
               Items.Strings = (
                 'Shut Down PC'
                 'Restart PC'
@@ -2474,16 +2497,16 @@ object frmMain: TfrmMain
       end
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel1: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
           AutoSize = True
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2491,7 +2514,7 @@ object frmMain: TfrmMain
           object Panel9: TPanel
             Left = 12
             Height = 88
-            Top = 7
+            Top = 8
             Width = 96
             Anchors = []
             ClientHeight = 88
@@ -2530,7 +2553,7 @@ object frmMain: TfrmMain
           object Panel10: TPanel
             Left = 116
             Height = 43
-            Top = 7
+            Top = 8
             Width = 444
             Anchors = []
             ClientHeight = 43
@@ -2538,9 +2561,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblTimer: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 131
+              Width = 139
               Caption = '00:00:00'
               Font.Height = -35
               ParentColor = False
@@ -2550,7 +2573,7 @@ object frmMain: TfrmMain
           object Panel16: TPanel
             Left = 116
             Height = 40
-            Top = 55
+            Top = 56
             Width = 444
             Anchors = []
             ClientHeight = 40
@@ -2568,9 +2591,9 @@ object frmMain: TfrmMain
             end
             object lblSplitLap: TLabel
               Left = 96
-              Height = 48
+              Height = 43
               Top = 0
-              Width = 131
+              Width = 139
               Caption = '00:00:00'
               Enabled = False
               Font.Height = -35
@@ -2724,10 +2747,10 @@ object frmMain: TfrmMain
             TabOrder = 2
             object CmbBxReminderAction: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 8
               Width = 80
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Sound'
@@ -2810,11 +2833,11 @@ object frmMain: TfrmMain
             end
             object CmbBxReminderSystem: TComboBox
               Left = 168
-              Height = 23
+              Height = 21
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 15
+              ItemHeight = 13
               Items.Strings = (
                 'Shutdown PC'
                 'Restart PC'

@@ -40,7 +40,7 @@ object frmOptions: TfrmOptions
       end
       object lblGlobalText: TLabel
         Left = 8
-        Height = 22
+        Height = 20
         Top = 4
         Width = 46
         Caption = 'Global'
@@ -68,9 +68,9 @@ object frmOptions: TfrmOptions
       end
       object lblFuzzyTime: TLabel
         Left = 8
-        Height = 22
+        Height = 20
         Top = 4
-        Width = 78
+        Width = 81
         Caption = 'Fuzzy Time'
         Font.Height = -16
         ParentColor = False
@@ -85,7 +85,7 @@ object frmOptions: TfrmOptions
           'Net Time - Seconds'
           'Swatch - Centibeats'
         )
-        ItemHeight = 21
+        ItemHeight = 19
         TabOrder = 1
         Data = {
           020000000000
@@ -113,7 +113,7 @@ object frmOptions: TfrmOptions
       end
       object lblCountDown: TLabel
         Left = 8
-        Height = 22
+        Height = 20
         Top = 4
         Width = 82
         Caption = 'Countdown'
@@ -139,17 +139,17 @@ object frmOptions: TfrmOptions
       end
       object lblTimerText: TLabel
         Left = 8
-        Height = 22
+        Height = 20
         Top = 4
-        Width = 41
+        Width = 43
         Caption = 'Timer'
         ParentColor = False
       end
       object ChckBxTimerMilli: TCheckBox
         Left = 206
-        Height = 25
+        Height = 23
         Top = 4
-        Width = 166
+        Width = 167
         Caption = 'Timer - Milli Seconds'
         TabOrder = 1
       end
@@ -173,7 +173,7 @@ object frmOptions: TfrmOptions
       end
       object lblReminderText: TLabel
         Left = 8
-        Height = 22
+        Height = 20
         Top = 3
         Width = 69
         Caption = 'Reminder'
@@ -219,10 +219,10 @@ object frmOptions: TfrmOptions
       TabOrder = 0
       object CmbBxDefTime: TComboBox
         Left = 43
-        Height = 23
+        Height = 21
         Top = 4
         Width = 100
-        ItemHeight = 15
+        ItemHeight = 13
         ItemIndex = 0
         Items.Strings = (
           'Fuzzy'
@@ -234,7 +234,7 @@ object frmOptions: TfrmOptions
           'Julian'
           'Decimal'
           'Hexadecimal'
-          'Binary'
+          'Radix'
         )
         Style = csDropDownList
         TabOrder = 0
@@ -252,10 +252,10 @@ object frmOptions: TfrmOptions
       TabOrder = 1
       object CmbBxDefTab: TComboBox
         Left = 43
-        Height = 23
+        Height = 21
         Top = 4
         Width = 100
-        ItemHeight = 15
+        ItemHeight = 13
         ItemIndex = 0
         Items.Strings = (
           'Fuzzy Time'
@@ -287,9 +287,9 @@ object frmOptions: TfrmOptions
     end
     object Label1: TLabel
       Left = 16
-      Height = 22
+      Height = 20
       Top = 8
-      Width = 151
+      Width = 154
       Caption = 'Reset Fonts to default'
       Font.Height = -16
       ParentColor = False
@@ -306,7 +306,7 @@ object frmOptions: TfrmOptions
     TabOrder = 4
     object ChckBxScreenSave: TCheckBox
       Left = 16
-      Height = 25
+      Height = 23
       Top = 8
       Width = 164
       BidiMode = bdRightToLeft

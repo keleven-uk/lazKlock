@@ -1,15 +1,17 @@
 projext   :: Klock
-Version   :: 27
+Version   :: 28
 Date      :: Friday 25 january 2012
 Author    :: Kevin Scott
 
 Copyright 2012 :: Kevin Scott ::  klock<at>keleven<dot>co<dot>uk
 
-Date     of last SVN commit :: $Date:: 2012-04-22 21:40:56 +0100 (Sun, 22 Apr 2012)                                      $
-Revision of last SVN commit :: $Revision:: 27                                                                            $
-Author   of last SVN commit :: $Author:: Kevin                                                                           $
+Date     of last SVN commit :: $Date:: 2012-04-27 14:16:27 +0100 (Fri, 27 Apr 2012)                                      $
+Revision of last SVN commit :: $Revision:: 28                                                                            $
+Author   of last SVN commit :: $Author:: scottk2                                                                         $
 Full URL  in SVN repository :: $HeadURL:: file:///D:/My/shed/tmp/pascal/klock/info.txt                                   $
 
 A clock with a K.
 
+Removed local Klock.ini, not now needed - will create on start up.
 
+Problem, with screen position of main form after options screen closed - Corrected [thanks Zach].
