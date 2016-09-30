@@ -1,17 +1,17 @@
 object frmHelp: TfrmHelp
-  Left = 387
+  Left = 607
   Height = 233
-  Top = 279
-  Width = 420
+  Top = 406
+  Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Klock Help'
   ClientHeight = 233
-  ClientWidth = 420
+  ClientWidth = 620
   Constraints.MaxHeight = 233
-  Constraints.MaxWidth = 420
+  Constraints.MaxWidth = 620
   Constraints.MinHeight = 233
-  Constraints.MinWidth = 420
+  Constraints.MinWidth = 620
   Icon.Data = {
     BE0C00000000010001002020000001001800A80C000016000000280000002000
     0000400000000100180000000000000000000000000000000000000000000000
@@ -119,20 +119,20 @@ object frmHelp: TfrmHelp
   }
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '0.9.30.4'
+  LCLVersion = '0.9.31'
   object Panel1: TPanel
     Left = 8
     Height = 160
     Top = 8
-    Width = 406
+    Width = 606
     ClientHeight = 160
-    ClientWidth = 406
+    ClientWidth = 606
     TabOrder = 0
     object mmoHelp: TMemo
       Left = 8
       Height = 144
       Top = 8
-      Width = 388
+      Width = 588
       Font.Height = -11
       OnChange = mmoHelpChange
       ParentFont = False
@@ -145,12 +145,12 @@ object frmHelp: TfrmHelp
     Left = 8
     Height = 42
     Top = 176
-    Width = 406
+    Width = 606
     ClientHeight = 42
-    ClientWidth = 406
+    ClientWidth = 606
     TabOrder = 1
     object btnhelpExit: TButton
-      Left = 316
+      Left = 516
       Height = 25
       Top = 8
       Width = 75

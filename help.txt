@@ -2,7 +2,8 @@ Klock - a clock with a k.
 
 A multifunction timing thingy, where some [but not necessary all] of the functions are useful.
 
-The multifunction timing thingy is split into four pages - Fuzzy Time, Countdown, Tmer and Reminder.
+The multifunction timing thingy is split into four pages - Fuzzy Time, Countdown, Timer and Reminder.
+
 
 Fuzzy Time
 
@@ -31,95 +32,33 @@ When a given time is reached a reminder is displayed on screen.
 Today's date is default, but a future date can also be selected.
 
 
+
+The button bar contains three buttons -
+help  - will display a simple help screen, depending upon the tab being currently viewed.
+Close - Quits the application.
+Hide  - Switches the application to the system area.
+
+
+
+When the program is running in the system area, the following options are available.
+If hovered over, the current time will be displayed.
+Right clicked on the icon will display a pop up menu.
+This will allow the application to be restored,
+The application can be exited or the current time to be displayed in a minimum window.
+
+If the application is in the task bar, any display messages
+[i.e. a reminder becoming due] will  be displayed in the minimum window.
+
+
+The status bar contains [after the the time & date] the legend cns.
+The c represents caps lock.
+The n represents Num Lock.
+The S represents Scroll Lock.
+The letter will be upper case if the key is activated, otherwise lower case.
+
+The application contains a options screen [file / Options] which allows various coloursand fonts to be changed.
+
+
+
+
 Program tested on Windows XP & Windows 7 [both 32 & 64 bit].
-
-History
--------
-
-------------------------------------------------------------------------
-r13 | Kevin | 2012-03-07 21:42:38 +0000 (Wed, 07 Mar 2012) | 4 lines
-
-Reduced the height of most components, to make the overall application more sleek - I think it looks better.
-
-Added a new form for the license [same as help form], hung off the help menu.
-Help & Licence form, now load their text from text files.
-------------------------------------------------------------------------
-r12 | Kevin | 2012-03-01 21:55:53 +0000 (Thu, 01 Mar 2012) | 2 lines
-
-Tidied up the code for the radio group - select time.
-
-------------------------------------------------------------------------
-r11 | Kevin | 2012-02-27 22:16:10 +0000 (Mon, 27 Feb 2012) | 5 lines
-
-More work on the reminder page.
-Finally decided to use two normal spin edits for the hours and mins. Not too pretty, but simple and works. Also added a date picker and added the date into the reminder logic.
-
-Added clear button to reminder page, to cancel the running reminder.
-
-------------------------------------------------------------------------
-r10 | Kevin | 2012-02-21 21:40:47 +0000 (Tue, 21 Feb 2012) | 3 lines
-
-Changed the data input on the reminder from spin edits [one for hours and one for minutes] to a floating spin edit to handle both hours and minutes. Still working on the logic to make it work in 24 hours and 60 minutes.
-
-Also added a date picker to the reminder screen.
-------------------------------------------------------------------------
-r9 | Kevin | 2012-02-19 10:23:06 +0000 (Sun, 19 Feb 2012) | 3 lines
-
-Changed the way to select time from a radio group to a combo box.
-
-Added Swatch time.
-------------------------------------------------------------------------
-r8 | Kevin | 2012-02-15 22:31:17 +0000 (Wed, 15 Feb 2012) | 4 lines
-
-Corrected bugs in fuzzytime & net time.
-Added UTC time.
-
-
-------------------------------------------------------------------------
-r7 | Kevin | 2012-02-13 22:18:43 +0000 (Mon, 13 Feb 2012) | 1 line
-
-Added NET & UNIX time to fuzzytime page. Added extra buttons to the radio group.
-------------------------------------------------------------------------
-r6 | Kevin | 2012-02-10 21:13:03 +0000 (Fri, 10 Feb 2012) | 4 lines
-
-All four pages now work - maybe an issue with reminders.
-
-Added option record, that is passed between options form and the main form.
-Added first option - colour of main labels.
-------------------------------------------------------------------------
-r5 | Kevin | 2012-02-05 21:19:15 +0000 (Sun, 05 Feb 2012) | 5 lines
-
-All four pages [fuzzy, countdown, time & reminder] are finished.
-
-Added logic to change status bar on page change.
-
-Tidied up code.
-------------------------------------------------------------------------
-r4 | Kevin | 2012-01-30 22:24:45 +0000 (Mon, 30 Jan 2012) | 3 lines
-
-Fuzzy time page completed.
-
-Still working on reminder page.
-------------------------------------------------------------------------
-r3 | Kevin | 2012-01-29 22:35:52 +0000 (Sun, 29 Jan 2012) | 3 lines
-
-Timer page completed.
-
-Reminder page started.
-------------------------------------------------------------------------
-r2 | Kevin | 2012-01-28 23:34:06 +0000 (Sat, 28 Jan 2012) | 5 lines
-
-Nearly completed timer page - just an issue with pause/resume.
-
-Changed icon to clock.ico.
-
-Changed message to popup notification.
-------------------------------------------------------------------------
-r1 | Kevin | 2012-01-28 20:39:07 +0000 (Sat, 28 Jan 2012) | 5 lines
-
-Initial Import.
-
-Most of GUI structure complete.
-
-Countdown page complete [mainly from countdown projector].
-------------------------------------------------------------------------

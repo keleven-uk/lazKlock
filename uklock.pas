@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, uLicense, UFuzzyTime, dateutils,
+  UAbout, Uhelp, UOptions, uLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   UKlockUtils;
 
 type
@@ -160,6 +160,7 @@ type
     procedure SetDefaults;
     procedure resetReminder;
     procedure ReminderTimerStop(Sender: TObject);
+    procedure ReminderValid;
   public
     countdownTicks     : integer;
     countdownSoundName : String;
@@ -239,7 +240,6 @@ begin
   CmbBxTime.ItemIndex   := OptionsRec.DefaultTime;
 
   ft.displayFuzzy := OptionsRec.DefaultTime;
-  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time' ;
 
   ft.FuzzyBase := 2;
 
@@ -282,7 +282,7 @@ begin
   PopupNotifier1.Title := title;
   PopupNotifier1.Text  := message;
 
-  if (PopupNotifier1.Visible = false) then  // if nos currently shown, show
+  if (PopupNotifier1.Visible = false) then  // if not currently shown, show
     PopupNotifier1.Visible := true ;
 
   if (message = '') then    //  empty message array, close popup notifier
@@ -304,9 +304,7 @@ begin
 
   case PageControl1.TabIndex of
     0 : begin                     //  fuzzy page
-      stsBrInfo.Panels.Items[2].Text := '';
       stsBrInfo.Panels.Items[3].Text := '';
-      stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time' ;
     end;
     1 : begin                     //  countdown page
       if CountdownTimer.Enabled = false then
@@ -315,7 +313,6 @@ begin
         stsBrInfo.Panels.Items[3].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
     end;
     2 : begin                     //  timer page
-      stsBrInfo.Panels.Items[2].Text := '';
       stsBrInfo.Panels.Items[3].Text := '';
 
       if timerTimer.Enabled = false then begin
@@ -324,7 +321,6 @@ begin
         stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
 
         if btnTimerStart.Caption = 'Start' then begin
-          stsBrInfo.Panels.Items[2].Text := '';
           if OptionsRec.TimerMilliSeconds then begin
             lblTimer.Caption    := '00:00:00:00';
             lblSplitLap.Caption := '00:00:00:00';
@@ -337,7 +333,6 @@ begin
       end;      //  if timerTimer.Enabled = false
     end;
     3 : begin                    //  reminder page
-      stsBrInfo.Panels.Items[2].Text := '';
       stsBrInfo.Panels.Items[3].Text := '';
       if ReminderTimer.Enabled = false then begin   // only set display to current
         DtEdtReminder.Date     := now;
@@ -360,7 +355,8 @@ procedure TfrmMain.mainTimerTimer(Sender: TObject);
       update desired time to either to main program, trayicon hint or popup notifier.
 }
 VAR
-  strTime : String;
+  strTime   : String;
+  keyResult : String;
 begin
   stsBrInfo.Panels.Items[0].Text:= TimeToStr(Time) ;
   stsBrInfo.Panels.Items[1].Text:= FormatDateTime('DD MMM YYYY', Now);
@@ -378,6 +374,12 @@ begin
   else
     lblfuzzy.Caption := ft.getTime;
 
+    keyResult := ' cns ';
+    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
+    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
+    if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
+
+    stsBrInfo.Panels.Items[2].Text := keyResult ;
 
 end;
 
@@ -389,8 +391,6 @@ procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
 }
 begin
 
-  stsBrInfo.Panels.Items[2].Text := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex]
-                                                                     + ' time' ;
   ft.displayFuzzy     := CmbBxTime.ItemIndex;
   lblfuzzy.Caption    := ft.getTime;
 
@@ -685,7 +685,7 @@ Procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
 }
 begin
   if chckBxCountdownSound.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
+    stsBrInfo.Panels.Items[3].Text := 'Sound Enabled';
     EdtCountdownSound.Visible      := true;
     EdtCountdownSound.Enabled      := true;
     btnCountdownLoadSound.Visible  := true;
@@ -694,7 +694,7 @@ begin
     btnSoundTest.Enabled           := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
+    stsBrInfo.Panels.Items[3].Text := 'Sound Disabled';
     EdtCountdownSound.Visible      := false;
     EdtCountdownSound.Enabled      := false;
     btnCountdownLoadSound.Visible  := false;
@@ -709,12 +709,12 @@ procedure TfrmMain.chckBxCountdownReminderChange(Sender: TObject);
 }
 begin
   if chckBxCountdownReminder.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Reminder Enabled';
+    stsBrInfo.Panels.Items[3].Text := 'Reminder Enabled';
     EdtCountdownReminder.Visible := true;
     EdtCountdownReminder.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Reminder Disabled';
+    stsBrInfo.Panels.Items[3].Text := 'Reminder Disabled';
     EdtCountdownReminder.Visible := false;
     EdtCountdownReminder.Enabled := false;
   end;
@@ -725,12 +725,12 @@ procedure TfrmMain.chckBxCountdownEventChange(Sender: TObject);
 }
 begin
   if chckBxCountdownEvent.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'System Event Enabled';
+    stsBrInfo.Panels.Items[3].Text := 'System Event Enabled';
     CmbBxCountdownEvent.Visible := true;
     CmbBxCountdownEvent.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'System Event Disabled';
+    stsBrInfo.Panels.Items[3].Text := 'System Event Disabled';
     CmbBxCountdownEvent.Visible := false;
     CmbBxCountdownEvent.Enabled := true;
   end;
@@ -741,14 +741,14 @@ procedure TfrmMain.chckBxCountdownCommandChange(Sender: TObject);
 }
 begin
   if chckBxCountdownCommand.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Command Enabled';
+    stsBrInfo.Panels.Items[3].Text := 'Command Enabled';
     btnCountdownLoadCommand.Visible := true;
     btnCountdownLoadCommand.Enabled := true;
     EdtCountdownCommand.Visible     := true;
     EdtCountdownCommand.Enabled     := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Command Disabled';
+    stsBrInfo.Panels.Items[3].Text := 'Command Disabled';
     btnCountdownLoadCommand.Visible := false;
     btnCountdownLoadCommand.Enabled := false;
     EdtCountdownCommand.Visible     := false;
@@ -855,29 +855,26 @@ end;
 // *********************************************************** Reminder ********
 procedure TfrmMain.SpnEdtHourChange(Sender: TObject);
 begin
-  btnReminderSet.Enabled := true;
+  ReminderValid
 end;
 
 procedure TfrmMain.SpnEdtMinsChange(Sender: TObject);
 begin
-  btnReminderSet.Enabled := true;
+  ReminderValid
 end;
 
 procedure TfrmMain.DtEdtReminderChange(Sender: TObject);
 begin
-  btnReminderSet.Enabled := true;
+  ReminderValid
 end;
 
-procedure TfrmMain.btnReminderSetClick(Sender: TObject);
-{  Set the reminder.
+procedure TfrmMain.ReminderValid;
+{  only allow the reminder set button to be enabled, if the reminder
+   date is in the future.
 }
 VAR
   RmndDt : TDateTime;
 begin
-  SpnEdtMins.Visible    := false;
-  SpnEdtHour.Visible    := false;
-  DtEdtReminder.Visible := false;
-
   RmndDt := EncodeDateTime(YearOf(DtEdtReminder.Date),
                            MonthOf(DtEdtReminder.Date),
                            DayOf(DtEdtReminder.Date),
@@ -886,27 +883,29 @@ begin
                            0,
                            0);
 
-  if RmndDt > Now then begin  // so reminder's can not be set in the past.
-    lblReminder.Caption := format('Reminder set for %.2d:%.2d - %s',
+  if (RmndDt > Now) then
+    btnReminderSet.Enabled := true
+  else
+    btnReminderSet.Enabled := false;
+
+end;
+procedure TfrmMain.btnReminderSetClick(Sender: TObject);
+{  Set the reminder.
+}
+begin
+  lblReminder.Caption := format('Reminder set for %.2d:%.2d - %s',
          [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
-    stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
+  stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
          [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtReminder.Date)]);
 
-    ReminderTimer.Enabled := true;
-    DtEdtReminder.Enabled := false;
-    spnEdtHour.Enabled    := false;
-    spnEdtMins.Enabled    := false;
-
-  end
-  else begin
-    lblReminder.Caption := 'Cannot set reminder in the past';
-    DtEdtReminder.Date  := now;
-    SpnEdtMins.Value    := MinuteOf(time);
-    SpnEdtHour.Value    := HourOf(time);
-  end;
+  SpnEdtMins.Visible    := false;
+  SpnEdtHour.Visible    := false;
+  DtEdtReminder.Visible := false;
 
   btnReminderClear.Enabled := true;
   btnReminderSet.Enabled   := false;
+
+  ReminderTimer.Enabled  := true;
 end;
 
 procedure TfrmMain.btnReminderClearClick(Sender: TObject);
@@ -940,31 +939,36 @@ begin
   ReminderTimer.Enabled  := false;
   btnReminderSet.Enabled := false;
 
-  if ChckBxReminderSound.Checked then begin    //  only play sound if checked
+  if ChckBxReminderSound.Checked then begin       //  only play sound if checked
    doPlaySound(ReminderSoundName);
    ChckBxReminderSound.Checked := false;
    ChckBxReminderSoundChange(Sender);
   end;
 
-  if ChckBxReminderReminder.Checked then begin
+  if ChckBxReminderReminder.Checked then begin    //  only display reminder if checked
     popupTitle[3]    := 'Reminder';
     popupMessages[3] := EdtReminderText.Text;
     DisplayMessage;
     ChckBxReminderReminderChange(Sender);
   end;
 
-  if ChckBxReminderCommand.Checked then begin
+  if ChckBxReminderCommand.Checked then begin     //  only execute command if checked
     doCommandEvent(EdtReminderCommand.Text);
     ChckBxReminderCommand.Checked  := false;
     ChckBxReminderCommandChange(Sender);
   end;
 
-  if ChckBxReminderSystem.Checked then begin
+  if ChckBxReminderSystem.Checked then begin      //  only do system event if checked
     btnReminderAbort.Visible := true;
     doSystemEvent(CmbBxReminderSystem.ItemIndex);
     ChckBxReminderSystem.Checked := false;
     ChckBxReminderSystemChange(Sender);
-  end;
+
+    if TrayIcon.Visible then begin               //  if running in the system tray,
+      PageControl1.TabIndex := 3;                //  select the reminder tab and
+      ppMnItmShowClick(Sender)                   //  display main application so
+    end;                                         //  the abort button can be used.
+  end;  //  if ChckBxReminderSystem.Checked then begin
 
   resetReminder;
 end;
@@ -972,17 +976,25 @@ end;
 procedure TfrmMain.btnReminderAbortClick(Sender: TObject);
 {  button only visbale during delay prior to a system shutdown/reboot.
    Allows user to abort action.
-   Also tidies up application = a bit messy i'm afraid.
+   Also tidies up application - a bit messy i'm afraid.
 }
+VAR
+  f : Integer;
 begin
 
   abortSystemEvent;
 
-  PopupNotifier1.Visible := false ;
+  for f := 1 to 3 do begin      //  clear the message array, but leave time.
+    popupTitle[f]    := '';
+    popupMessages[f] := '';
+  end;
+
+  DisplayMessage;               //  will clear popup if currently displayed.
 
   btnCountdownShutdownAbort.Visible := false;
   CmbBxReminderSystem.Visible       := false;
   ChckBxReminderSystem.Checked      := false;
+  btnReminderAbort.Visible          := false;
 
   resetReminder;
 end;
@@ -995,19 +1007,20 @@ begin
   stsBrInfo.Panels.Items[3].Text := '';
 
   ReminderTimer.Enabled    := false;
-  btnReminderSet.Enabled   := true;
+  btnReminderClear.Enabled := false;
+
+  DtEdtReminder.Date := now;
+  SpnEdtMins.Value   := MinuteOf(time);
+  SpnEdtHour.Value   := HourOf(time);
+
   DtEdtReminder.Enabled    := true;
   spnEdtHour.Enabled       := true;
   spnEdtMins.Enabled       := true;
-  btnReminderClear.Enabled := false;
 
   SpnEdtMins.Visible    := true;
   SpnEdtHour.Visible    := true;
   DtEdtReminder.Visible := true;
 
-  DtEdtReminder.Date := now;
-  SpnEdtMins.Value   := MinuteOf(time);
-  SpnEdtHour.Value   := HourOf(time);
 end;
 
 procedure TfrmMain.CmbBxReminderActionChange(Sender: TObject);
@@ -1024,7 +1037,6 @@ begin
     btnReminderLoadSound.Visible := false;
     btnReminderTestSound.Visible := false;
   end;
-
 
   if CmbBxReminderAction.ItemIndex = 1 then begin  //  Reminder chosen
     ChckBxReminderReminder.Visible := true;
@@ -1061,21 +1073,15 @@ end;
 procedure TfrmMain.ChckBxReminderSoundChange(Sender: TObject);
 begin
   if ChckBxReminderSound.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Sound Enabled';
-    EdtReminderSound.Visible     := true;
+    stsBrInfo.Panels.Items[3].Text := 'Sound Enabled';
     EdtReminderSound.Enabled     := true;
-    btnReminderLoadSound.Visible := true;
     btnReminderLoadSound.Enabled := true;
-    btnReminderTestSound.Visible := true;
     btnReminderTestSound.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Sound Disabled';
-    EdtReminderSound.Visible     := false;
+    stsBrInfo.Panels.Items[3].Text := 'Sound Disabled';
     EdtReminderSound.Enabled     := false;
-    btnReminderLoadSound.Visible := false;
     btnReminderLoadSound.Enabled := false;
-    btnReminderTestSound.Visible := false;
     btnReminderTestSound.Enabled := false;
   end;
 end;
@@ -1083,13 +1089,11 @@ end;
 procedure TfrmMain.ChckBxReminderReminderChange(Sender: TObject);
 begin
   if ChckBxReminderReminder.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Reminder Enabled';
-    EdtReminderText.Visible := true;
+    stsBrInfo.Panels.Items[3].Text := 'Reminder Enabled';
     EdtReminderText.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Reminder Disabled';
-    EdtReminderText.Visible := false;
+    stsBrInfo.Panels.Items[3].Text := 'Reminder Disabled';
     EdtReminderText.Enabled := false;
   end;
 end;
@@ -1097,31 +1101,25 @@ end;
 procedure TfrmMain.ChckBxReminderSystemChange(Sender: TObject);
 begin
   if ChckBxReminderSystem.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'System Events Enabled';
-    CmbBxReminderSystem.Visible := true;
+    stsBrInfo.Panels.Items[3].Text := 'System Events Enabled';
     CmbBxReminderSystem.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'System Events Disabled';
-    CmbBxReminderSystem.Visible := false;
-    CmbBxReminderSystem.Enabled := true;
+    stsBrInfo.Panels.Items[3].Text := 'System Events Disabled';
+    CmbBxReminderSystem.Enabled := false;
   end;
 end;
 
 procedure TfrmMain.ChckBxReminderCommandChange(Sender: TObject);
 begin
   if ChckBxReminderCommand.Checked then begin
-    stsBrInfo.Panels.Items[2].Text := 'Command Enabled';
-    EdtReminderCommand.Visible     := true;
+    stsBrInfo.Panels.Items[3].Text := 'Command Enabled';
     EdtReminderCommand.Enabled     := true;
-    btnReminderLoadCommand.Visible := true;
     btnReminderLoadCommand.Enabled := true;
   end
   else begin
-    stsBrInfo.Panels.Items[2].Text := 'Command Disabled';
-    EdtReminderCommand.Visible     := false;
+    stsBrInfo.Panels.Items[3].Text := 'Command Disabled';
     EdtReminderCommand.Enabled     := false;
-    btnReminderLoadCommand.Visible := false;
     btnReminderLoadCommand.Enabled := false;
   end;
 end;

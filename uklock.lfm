@@ -1,12 +1,12 @@
 object frmMain: TfrmMain
-  Left = 370
-  Height = 247
-  Top = 260
+  Left = 407
+  Height = 260
+  Top = 231
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 227
+  ClientHeight = 240
   ClientWidth = 620
   Constraints.MaxWidth = 620
   Constraints.MinWidth = 620
@@ -2132,11 +2132,11 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '0.9.30.4'
+  LCLVersion = '0.9.31'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
-    Top = 204
+    Top = 217
     Width = 620
     Panels = <    
       item
@@ -2147,7 +2147,7 @@ object frmMain: TfrmMain
         Width = 75
       end    
       item
-        Width = 100
+        Width = 35
       end    
       item
         Width = 50
@@ -2496,16 +2496,16 @@ object frmMain: TfrmMain
       end
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
-        ClientHeight = 104
+        ClientHeight = 102
         ClientWidth = 572
         object Panel1: TPanel
           Left = 0
-          Height = 104
+          Height = 102
           Top = 0
           Width = 572
           Align = alClient
           AutoSize = True
-          ClientHeight = 104
+          ClientHeight = 102
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2513,7 +2513,7 @@ object frmMain: TfrmMain
           object Panel9: TPanel
             Left = 12
             Height = 88
-            Top = 8
+            Top = 7
             Width = 96
             Anchors = []
             ClientHeight = 88
@@ -2552,7 +2552,7 @@ object frmMain: TfrmMain
           object Panel10: TPanel
             Left = 116
             Height = 43
-            Top = 8
+            Top = 7
             Width = 444
             Anchors = []
             ClientHeight = 43
@@ -2560,9 +2560,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblTimer: TLabel
               Left = 96
-              Height = 43
+              Height = 48
               Top = 0
-              Width = 139
+              Width = 131
               Caption = '00:00:00'
               Font.Height = -35
               ParentColor = False
@@ -2572,7 +2572,7 @@ object frmMain: TfrmMain
           object Panel16: TPanel
             Left = 116
             Height = 40
-            Top = 56
+            Top = 55
             Width = 444
             Anchors = []
             ClientHeight = 40
@@ -2590,9 +2590,9 @@ object frmMain: TfrmMain
             end
             object lblSplitLap: TLabel
               Left = 96
-              Height = 43
+              Height = 48
               Top = 0
-              Width = 139
+              Width = 131
               Caption = '00:00:00'
               Enabled = False
               Font.Height = -35
@@ -2806,9 +2806,7 @@ object frmMain: TfrmMain
               Top = 8
               Width = 71
               Caption = 'Reminder'
-              Checked = True
               OnChange = ChckBxReminderReminderChange
-              State = cbChecked
               TabOrder = 5
               Visible = False
             end
@@ -2817,6 +2815,7 @@ object frmMain: TfrmMain
               Height = 23
               Top = 9
               Width = 256
+              Enabled = False
               TabOrder = 6
               Text = 'Reminding you now, Sir!'
               Visible = False
@@ -2894,22 +2893,23 @@ object frmMain: TfrmMain
     end
   end
   object ButtonPanel1: TButtonPanel
-    Left = 320
+    Left = 326
     Height = 26
-    Top = 167
-    Width = 249
+    Top = 177
+    Width = 237
     Align = alNone
     Anchors = []
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&Hide'
+    OKButton.DefaultCaption = False
     OKButton.OnClick = OKButtonClick
     HelpButton.Name = 'HelpButton'
-    HelpButton.Caption = '&Help'
+    HelpButton.DefaultCaption = True
     HelpButton.OnClick = HelpButtonClick
     CloseButton.Name = 'CloseButton'
-    CloseButton.Caption = '&Close'
+    CloseButton.DefaultCaption = True
     CancelButton.Name = 'CancelButton'
-    CancelButton.Caption = 'Cancel'
+    CancelButton.DefaultCaption = True
     CancelButton.Enabled = False
     TabOrder = 2
     ShowButtons = [pbOK, pbClose, pbHelp]
