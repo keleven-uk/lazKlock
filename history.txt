@@ -1,192 +1,789 @@
-------------------------------------------------------------------------
-r26 | Kevin | 2012-04-22 19:27:11 +0100 (Sun, 22 Apr 2012) | 4 lines
-
-Corrected Julian Time.
-Added Decimal Time.
-Added Hexadecimal Time.
-Added Binary Time.
-------------------------------------------------------------------------
-r25 | scottk2 | 2012-04-20 14:46:45 +0100 (Fri, 20 Apr 2012) | 18 lines
-
-Over 1000 lines of meaningless code :o)
-
-Renamed UOptionUtils.pas to UKlockUtils.pas - a more general utils unit. Moved doSystemEvent & do Command procedures into this unit.
-
-Corrected several bugs with the countdown event procedures.
-
-Change AProcess.CommandLine [depreciated] to AProcess.Executable & AProcess.Parameters.
-
-BUG : screen would reset to saved screen co-ordinates, even though screen saved not clicked in options.
-      Now checks options when resets main form.
-
-Options : changed options for NET time & Swatch time to be a common checkbox list, instead of two check boxes.
-
-Finally got around the learning the case statement, converted most nested if statements.
-
-Added GUI elements, so reminder can trigger the same events as countdown.
-
-Added julian Time - needs checking.
-------------------------------------------------------------------------
-r24 | scottk2 | 2012-04-13 15:21:31 +0100 (Fri, 13 Apr 2012) | 10 lines
-
-Added option for Net time to count is 1 or 15 second increments.
-      [15 seconds net time = 1 second real time]
-Added option for Swatch time to display Centibeats.
-
-Added option for default time display.
-Changed both default time & tab to be drop down lists.
-
-Added option for countdown to trigger sound, event command, or pop up message.
-      event is a system event i.e. PC shut down or reboot.
-      command is the ability to run an external executable application.
-------------------------------------------------------------------------
-r23 | Kevin | 2012-04-09 20:55:38 +0100 (Mon, 09 Apr 2012) | 7 lines
-
-Removed colour buttons, duplicated in font dialogue screen.
-
-Finished font stuff.
-
-Will save screen position if desired.
-
-
-------------------------------------------------------------------------
-r22 | Kevin | 2012-04-04 17:43:55 +0100 (Wed, 04 Apr 2012) | 3 lines
-
-Further work on font options.
-
-Save before removal of colour buttons in the options screen. The colour can be changed in the font page, so making this button redundant.
-------------------------------------------------------------------------
-r21 | scottk2 | 2012-03-30 15:25:19 +0100 (Fri, 30 Mar 2012) | 3 lines
-
-Added unit uOptionsUtils, which contain the functions StringToFont & FontToString - enables font information to be saved to ini files.
-
-Added code to save and load fonts from ini file - to be tested.
-------------------------------------------------------------------------
-r20 | scottk2 | 2012-03-26 16:16:06 +0100 (Mon, 26 Mar 2012) | 1 line
-
-All modules now load version info from options record.
-------------------------------------------------------------------------
-r19 | scottk2 | 2012-03-23 15:32:23 +0000 (Fri, 23 Mar 2012) | 6 lines
-
-Further work on ini file stuff.
-
-Timer can now run either seconds / milli seconds.
-Default page control can now be set.
-Both saved to ini file.
-
-------------------------------------------------------------------------
-r18 | Kevin | 2012-03-22 22:09:28 +0000 (Thu, 22 Mar 2012) | 2 lines
-
-Further work completed on ini file.
-Extended the GUI on the options screen.
-------------------------------------------------------------------------
-r17 | scottk2 | 2012-03-21 16:06:06 +0000 (Wed, 21 Mar 2012) | 4 lines
-
-Licence window made read only - thanks zach.
-Reminders can now be set in the past - thanks zach.
-
-Start of code for saving options in a .ini file.
-------------------------------------------------------------------------
-r16 | Kevin | 2012-03-17 23:34:52 +0000 (Sat, 17 Mar 2012) | 2 lines
-
-Recompiled to check for Lazarus 0.9.30.4.
-
-------------------------------------------------------------------------
-r15 | scottk2 | 2012-03-15 16:46:26 +0000 (Thu, 15 Mar 2012) | 3 lines
-
-Added try..except clause to all file operations.
-
-Another attempt to fix noon bug in fuzzytime.
-------------------------------------------------------------------------
-r14 | Kevin | 2012-03-08 21:33:35 +0000 (Thu, 08 Mar 2012) | 3 lines
-
-Added split time button to timer page.
-
-Removed function ItoS, which converted integer to 2 digit strings and use internal format function instead.
-------------------------------------------------------------------------
-r13 | Kevin | 2012-03-07 21:42:38 +0000 (Wed, 07 Mar 2012) | 4 lines
-
-Reduced the height of most components, to make the overall application more sleek - I think it looks better.
-
-Added a new form for the license [same as help form], hung off the help menu.
-Help & Licence form, now load their text from text files.
-------------------------------------------------------------------------
-r12 | Kevin | 2012-03-01 21:55:53 +0000 (Thu, 01 Mar 2012) | 2 lines
-
-Tidied up the code for the radio group - select time.
-
-------------------------------------------------------------------------
-r11 | Kevin | 2012-02-27 22:16:10 +0000 (Mon, 27 Feb 2012) | 5 lines
-
-More work on the reminder page.
-Finally decided to use two normal spin edits for the hours and mins. Not too pretty, but simple and works. Also added a date picker and added the date into the reminder logic.
-
-Added clear button to reminder page, to cancel the running reminder.
-
-------------------------------------------------------------------------
-r10 | Kevin | 2012-02-21 21:40:47 +0000 (Tue, 21 Feb 2012) | 3 lines
-
-Changed the data input on the reminder from spin edits [one for hours and one for minutes] to a floating spin edit to handle both hours and minutes. Still working on the logic to make it work in 24 hours and 60 minutes.
-
-Also added a date picker to the reminder screen.
-------------------------------------------------------------------------
-r9 | Kevin | 2012-02-19 10:23:06 +0000 (Sun, 19 Feb 2012) | 3 lines
-
-Changed the way to select time from a radio group to a combo box.
-
-Added Swatch time.
-------------------------------------------------------------------------
-r8 | Kevin | 2012-02-15 22:31:17 +0000 (Wed, 15 Feb 2012) | 4 lines
-
-Corrected bugs in fuzzytime & net time.
-Added UTC time.
-
-
-------------------------------------------------------------------------
-r7 | Kevin | 2012-02-13 22:18:43 +0000 (Mon, 13 Feb 2012) | 1 line
-
-Added NET & UNIX time to fuzzytime page. Added extra buttons to the radio group.
-------------------------------------------------------------------------
-r6 | Kevin | 2012-02-10 21:13:03 +0000 (Fri, 10 Feb 2012) | 4 lines
-
-All four pages now work - maybe an issue with reminders.
-
-Added option record, that is passed between options form and the main form.
-Added first option - colour of main labels.
-------------------------------------------------------------------------
-r5 | Kevin | 2012-02-05 21:19:15 +0000 (Sun, 05 Feb 2012) | 5 lines
-
-All four pages [fuzzy, countdown, time & reminder] are finished.
-
-Added logic to change status bar on page change.
-
-Tidied up code.
-------------------------------------------------------------------------
-r4 | Kevin | 2012-01-30 22:24:45 +0000 (Mon, 30 Jan 2012) | 3 lines
-
-Fuzzy time page completed.
-
-Still working on reminder page.
-------------------------------------------------------------------------
-r3 | Kevin | 2012-01-29 22:35:52 +0000 (Sun, 29 Jan 2012) | 3 lines
-
-Timer page completed.
-
-Reminder page started.
-------------------------------------------------------------------------
-r2 | Kevin | 2012-01-28 23:34:06 +0000 (Sat, 28 Jan 2012) | 5 lines
-
-Nearly completed timer page - just an issue with pause/resume.
-
-Changed icon to clock.ico.
-
-Changed message to popup notification.
-------------------------------------------------------------------------
-r1 | Kevin | 2012-01-28 20:39:07 +0000 (Sat, 28 Jan 2012) | 5 lines
-
-Initial Import.
-
-Most of GUI structure complete.
-
-Countdown page complete [mainly from countdown projector].
-------------------------------------------------------------------------
+commit 03c22837daa680df290ed247314cca7b33ce18a3
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 22:22:17 2016 +0100
+
+    Ran source through a spell checker - many changes.
+    
+    Changed reminder tab to event tab.
+    Changed all existinf referances of reminder to event.
+    This is to allow a new reminder tab, which will remind on birthdays,
+    anniversaries etc.
+    
+    Added new reminder tab.
+    Added new form to add reminders.
+    Added logic to save reminders to csv file.
+    Added logic to load csv file and display date on reminder tab.
+    
+    There is a bug with lcl, the pop-up notifier timeout does not seem to
+    work.
+    Added a timer, that will kill the notifier after ten seconds.
+
+ kReminder.txt      |  16 ++
+ klock.lpi          | 201 ++++++++++---------
+ klock.lpr          |   3 +-
+ ufuzzytime.pas     |   2 +-
+ uhelp.lfm          |   6 +-
+ uhelp.pas          |   2 +-
+ uklock.lfm         | 227 +++++++++++++++-------
+ uklock.pas         | 557 +++++++++++++++++++++++++++++++----------------------
+ uklockutils.pas    | 252 ++++++++++++++++--------
+ ulicense.lfm       |   6 +-
+ uoptions.lfm       |  55 +++---
+ uoptions.pas       | 115 ++++++-----
+ ureminderinput.lfm | 193 +++++++++++++++++++
+ ureminderinput.pas | 175 +++++++++++++++++
+ 14 files changed, 1256 insertions(+), 554 deletions(-)
+
+commit f73c566840d177dadc0dc09013bab2422c7ab883
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 22:17:23 2016 +0100
+
+    Recompiled to check for Lazarus 1.0 RC2 [now showing 1.0.1.2 in about
+    box].
+    
+    Tidied up the logic that checks tah a reminder has been set in the futire
+    date.
+    
+    If a system shut down is chosen in reminder or countfdown and the
+    application is being displayed in the system tray, swith to mornam mode -
+    allows the abore button to be selected.
+    
+    Added a display to the status bar that indicates the status of the cap,
+    numlock & scroll lock [in real time].
+
+ help.txt     | 101 ++++++++------------------------------
+ info.txt     |  15 ------
+ klock.lpi    | 144 ++++++++++++++++++++++++++++--------------------------
+ uhelp.lfm    |  26 +++++-----
+ uklock.lfm   |  50 +++++++++----------
+ uklock.pas   | 156 +++++++++++++++++++++++++++++------------------------------
+ ulicense.lfm |   6 +--
+ uoptions.lfm |  36 +++++++-------
+ uoptions.pas |   2 +-
+ 9 files changed, 232 insertions(+), 304 deletions(-)
+
+commit 1d6bf1d7c014e3575f62223afeb9729d5bcfbeb8
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 22:14:03 2016 +0100
+
+    Recompiled to check for lazarus 1.0 RC1 [although showing 0.9.31 in about
+    box].
+    
+    Also turned off generate debuging info GDN in linking options.
+    This creates a lot smaller executables.
+
+ klock.lpi    | 18 +++++++++++++-----
+ uoptions.lfm | 46 +++++++++++++++++++++++-----------------------
+ uoptions.pas |  2 +-
+ 3 files changed, 37 insertions(+), 29 deletions(-)
+
+commit 0e1fc4257b6bdde90a8282545b24531a7e3ea83a
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 22:08:30 2016 +0100
+
+    Added tray icon to klock.
+    Added button, that hides the main form to a tray icon.
+    Added pop-up menu to tray icon, that gives the followinf options -
+            1 - Showm main form.
+            2 - Shw current selecte time as a pop-up notification.
+            3 - Exit Klock.
+    
+    Changed the way the pop-up notification is called.  Now uses a global
+    array to hold different messages from time, countdown and reminder.
+    
+    Added some new comments to procedures [which where the all the time ;o)]
+
+ klock.iss    |   46 +-
+ klock.lpi    |  116 +--
+ uklock.lfm   | 2226 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ uklock.pas   |  276 ++++++--
+ uoptions.lfm |   75 +-
+ uoptions.pas |   29 +-
+ 6 files changed, 2580 insertions(+), 188 deletions(-)
+
+commit 8453f000a73e627323eef4c51971a9cce65e09d3
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 22:03:36 2016 +0100
+
+    Corrected bug; Setting the date on the reminder did not enable the set
+    button - the time needed changing as well - [thanks Zach].
+
+ info.txt     |   8 ++---
+ klock.lpi    | 108 +++++++++++++++++++++++++++++------------------------------
+ uklock.lfm   |   6 ++--
+ uklock.pas   |  26 +++++++-------
+ uoptions.pas |   2 +-
+ 5 files changed, 75 insertions(+), 75 deletions(-)
+
+commit 1c4daa3d9c873b3bf2feea83630b46e4e9ef2ee3
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 21:58:57 2016 +0100
+
+    Removed local Klock.ini, not now needed - will create on start up.
+    
+    Promlem with the screen position of main form after options screen closed
+    - Corrected [thanks Zach].
+
+ info.txt       |  10 ++--
+ klock.ini      |  25 ----------
+ klock.lpi      | 146 ++++++++++++++++++++++++++++-----------------------------
+ ufuzzytime.pas |  18 +++----
+ uklock.lfm     |  83 ++++++++++++++++++++------------
+ uklock.pas     |  25 +++++++++-
+ uoptions.lfm   |  36 +++++++-------
+ uoptions.pas   |   2 +-
+ 8 files changed, 185 insertions(+), 160 deletions(-)
+
+commit 82242ff21bab25c4919463bdde34d3f8c335f4d2
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 21:55:00 2016 +0100
+
+    Bug with the ini file, could not create in Windows 7.
+    Not enough permissions, I think.
+    Use GetAppConfigDir, it retrives the correct place to store the ini file.
+    Store in something like c:\Users\user\AppData\local\kloc\ in Wondows 7.
+    and c:\D&S\usr\Local Settings\Application Data|Klock\ on Windows XP.
+
+ history.txt  | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ info.txt     |  6 ++--
+ klock.ini    |  4 +--
+ klock.iss    |  7 +++--
+ klock.lpi    | 32 ++++++++++++---------
+ uoptions.pas |  8 ++++--
+ 6 files changed, 126 insertions(+), 24 deletions(-)
+
+commit 730fffd5076edbf3267f54ae52616ca06a94a043
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 21:50:20 2016 +0100
+
+    Added Julian time.
+    Added Decimal Time.
+    Added Hexadecimal Time.
+    Added Binary Time.
+
+ info.txt       |   9 ++--
+ klock.lpi      | 143 ++++++++++++++++++++++++++++-----------------------------
+ ufuzzytime.pas | 116 ++++++++++++++++++++++++++++++++++++++++------
+ uklock.lfm     |  41 +++++++++--------
+ uoptions.lfm   |  42 +++++++++--------
+ uoptions.pas   |   2 +-
+ 6 files changed, 222 insertions(+), 131 deletions(-)
+
+commit 35b26cb97e749407f6b120ca4c0bcc4c853e4a2e
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Fri Sep 30 21:34:21 2016 +0100
+
+    Over 1000 lines of meaningless code :0)
+    
+    Renamed UOptionsUtils.pas to UKlockUtils.pas - a more general utils unit.
+    Moved doSystemEvent * doComand procedures into this unit.
+    
+    Corrected several bugs with the countdown event procedires.
+    
+    Change AProcess.CommandLine [depreciated] to AProcess.Executable &
+    Aprocess.Parameters.
+    
+    Corrected bug; screen would reset to saved screen co-ordinates, even
+    though the screen saved not clicked in options.  Now checks option when
+    resets main form.
+    
+    Options; changed around the NET time and Swatch time to be a common
+    checkbox list, instead of two check boxes.
+    
+    Finally got around to the the CASe statement, converted most nested IF
+    statements.
+    
+    Added Julian Time - needs checking.
+
+ help.txt                            |   2 +-
+ info.txt                            |   8 +-
+ klock.ini                           |  10 +-
+ klock.lpi                           | 141 ++++-----
+ klock.lpr                           |   2 +-
+ ufuzzytime.pas                      | 108 +++----
+ uklock.lfm                          | 228 ++++++++++++---
+ uklock.pas                          | 551 ++++++++++++++++++++++++------------
+ uoptionutils.pas => uklockutils.pas | 101 ++++++-
+ uoptions.lfm                        | 128 +++------
+ uoptions.pas                        |  39 ++-
+ 11 files changed, 842 insertions(+), 476 deletions(-)
+
+commit 0d76e07735779d51ae2e12853badf8d9ca57a8d5
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 23:04:34 2016 +0100
+
+    Added option for net time to count in 1 or 15 seconds.
+            [15 seconds net time = i second real time]
+    Added option for Swatch time to display centibeats.
+    
+    Added option fro default time display.
+    Changed both default time & tab to be drop down lists.
+    
+    Added option for countdown to trigger sound, event command or pop up
+    message.
+            event is a system event i.e. PC shut down or reboot.
+            command is the ability to run an external application.
+
+ info.txt       |  14 ++--
+ klock.ini      |  11 ++-
+ klock.lpi      | 146 +++++++++++++++++-----------------
+ uabout.lfm     |  35 +++++---
+ uabout.pas     |   1 +
+ ufuzzytime.pas |  28 +++++--
+ uhelp.pas      |   1 +
+ uklock.lfm     | 160 ++++++++++++++++++++++++++++++-------
+ uklock.pas     | 246 +++++++++++++++++++++++++++++++++++++++++++++++++++------
+ ulicense.pas   |   1 +
+ uoptions.lfm   | 213 +++++++++++++++++++++++++++++++++----------------
+ uoptions.pas   | 180 +++++++++++++++++++++++++++--------------
+ 12 files changed, 757 insertions(+), 279 deletions(-)
+
+commit 2f4a695fc917e80fa463ee1726e62eb95c253ac0
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 23:01:23 2016 +0100
+
+    Removed colout buttons, duplicated in font dialogue screen.
+    
+    Finished font stuff.
+    
+    Will save screen position if desired.
+
+ info.txt         |  12 ++--
+ klock.ini        |  22 ++++---
+ klock.iss        |   7 ++-
+ klock.lpi        | 117 ++++++++++++++++++------------------
+ uhelp.lfm        |   4 +-
+ uklock.lfm       |  47 ++++++++-------
+ uklock.pas       |  53 ++++++++--------
+ uoptions.lfm     | 164 +++++++++++++++++++++-----------------------------
+ uoptions.pas     | 179 +++++++++++++++++--------------------------------------
+ uoptionutils.pas |  15 +----
+ 10 files changed, 255 insertions(+), 365 deletions(-)
+
+commit d74e9710c48371a8e92a440c372b15ae673e6119
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:50:15 2016 +0100
+
+    Further work on font options.
+    
+    Removal of colour buttons in the options screen.  Ther colour can be
+    changed in the font page, so making these buttons redundant.
+
+ klock.ini    |  22 ++++++------
+ klock.lpi    | 115 +++++++++++++++++++++++++++++------------------------------
+ uoptions.lfm |  34 ++++++++++--------
+ uoptions.pas |  57 +++++++++++++++++++++++------
+ 4 files changed, 134 insertions(+), 94 deletions(-)
+
+commit 9f04e9dd7a8ad1106d10310a6f9933d40b297faa
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:46:44 2016 +0100
+
+    Added unit uOptionsUtils.pas, which contains the functions StringToFone &
+    FontToString - enables fone information to be saved to the ini file.
+    
+    Added code to save and load fonts from the ini file - to be tested.
+
+ klock.ini        |   7 ++-
+ klock.lpi        | 153 +++++++++++++++++++++++++----------------------
+ klock.lpr        |   2 +-
+ uklock.pas       |  31 +++++++---
+ uoptions.lfm     |  38 +++++++++++-
+ uoptions.pas     | 177 ++++++++++++++++++++++++++++++++++++++++++++++++-------
+ uoptionutils.pas | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 466 insertions(+), 106 deletions(-)
+
+commit d6208a7f77b04de861eac0154dc886be990c34b4
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:43:24 2016 +0100
+
+    All modules now load version info from options record.
+
+ info.txt     |   6 +--
+ klock.lpi    | 120 +++++++++++++++++++++++++++++------------------------------
+ uhelp.pas    |   4 +-
+ ulicense.pas |   4 +-
+ uoptions.pas |  11 +++---
+ 5 files changed, 73 insertions(+), 72 deletions(-)
+
+commit 6258d4478adef926ad45e166503e3a9e47b46bb4
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:41:08 2016 +0100
+
+    Further work on the ini file stuff.
+    
+    Timer can now run either second / milli seconds.
+    Default page control can now be set.
+    Both saved to ini file.
+
+ info.txt     |   6 +--
+ klock.ini    |  11 ++---
+ klock.lpi    | 140 +++++++++++++++++++++++++++++------------------------------
+ uabout.pas   |   4 +-
+ uhelp.pas    |   2 +-
+ uklock.lfm   |  46 ++++++++++----------
+ uklock.pas   |  47 ++++++++++++++------
+ ulicense.pas |   2 +-
+ uoptions.lfm |  25 ++++++-----
+ uoptions.pas | 127 ++++++++++++++++++++++++++++++++++-------------------
+ 10 files changed, 232 insertions(+), 178 deletions(-)
+
+commit eb8bb66d933973ec2915c68f5be9a78ac921a6c1
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:38:52 2016 +0100
+
+    Further work completed on the .ini file
+    
+    Extended the GUI on the options screen.
+
+ klock.ini    |   3 +-
+ klock.lpi    |  94 +++++++++++-----------
+ uklock.lfm   |  72 ++++++++---------
+ uklock.pas   |   6 +-
+ uoptions.lfm | 259 +++++++++++++++++++++++++++++++++--------------------------
+ uoptions.pas |  70 ++++++++++------
+ 6 files changed, 280 insertions(+), 224 deletions(-)
+
+commit 7d528975e17fb50a1b14fc38e5a585c25bcd2a38
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:28:56 2016 +0100
+
+    Licence window made read only - thanks Zach.
+    Reminders can now not be set in the past - thanks Zach.
+    
+    Start of code for saving options in a .ini file.
+
+ info.txt     |   9 +--
+ klock.ini    |  21 ++++++
+ klock.lpi    | 172 +++++++++++++++++++++++----------------------
+ uabout.lfm   |  24 +++----
+ uabout.pas   |   2 +-
+ uhelp.pas    |   2 +-
+ uklock.lfm   |  11 +--
+ uklock.pas   |  49 +++++++++----
+ ulicense.lfm |   1 +
+ ulicense.pas |   2 +-
+ uoptions.lfm | 222 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ uoptions.pas | 153 +++++++++++++++++++++++++++++++++++-----
+ 12 files changed, 500 insertions(+), 168 deletions(-)
+
+commit b2a0dc26bb2192179201688d36afd76500aedb9f
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:27:24 2016 +0100
+
+    Recompiled to check for Lazarus 0.9.30.4
+
+ history.txt  | 12 ++++++++++++
+ info.txt     |  8 ++++----
+ klock.iss    |  8 ++++----
+ klock.lpi    | 10 +++++-----
+ uabout.lfm   | 26 +++++++++++++-------------
+ uabout.pas   |  2 +-
+ uhelp.lfm    |  2 +-
+ uhelp.pas    |  2 +-
+ ulicense.lfm |  2 +-
+ ulicense.pas |  2 +-
+ 10 files changed, 43 insertions(+), 31 deletions(-)
+
+commit f69334f878d9b7451b21fb5811aaa45203ea1a8d
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:25:08 2016 +0100
+
+    Added try..except clause to all file operations.
+    
+    Another attempt to fix noon bug in fuzzytime.
+
+ help.txt       | 32 +++++++++++++++++--
+ info.txt       |  8 ++---
+ klock.lpi      | 97 ++++++++++++++++++++++++++++------------------------------
+ uabout.lfm     |  6 ++--
+ uabout.pas     |  2 +-
+ ufuzzytime.pas | 11 ++++---
+ uhelp.lfm      |  6 ++--
+ uhelp.pas      | 14 +++++++--
+ uklock.lfm     | 16 +++++-----
+ ulicense.lfm   |  6 ++--
+ ulicense.pas   | 14 +++++++--
+ uoptions.lfm   |  9 +++---
+ 12 files changed, 134 insertions(+), 87 deletions(-)
+
+commit daaa17da01956208064528a5eaad527547f31994
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:06:24 2016 +0100
+
+    Added split time button to time page.
+    
+    Removed the function ItoS, which converted integer to two digit strings
+    and use internal format functions instead.
+
+ help.txt     |  38 ++++++++++++++++----
+ history.txt  |  38 ++++++++++++++++----
+ info.txt     |   6 ++--
+ klock.lpi    | 113 ++++++++++++++++++++++++++++++-----------------------------
+ uabout.lfm   |   6 ++--
+ uabout.pas   |   6 ++--
+ uhelp.pas    |   2 +-
+ uklock.lfm   |  44 ++++++++++++++++++-----
+ uklock.pas   |  66 ++++++++++++++++++++++------------
+ ulicense.pas |   2 +-
+ 10 files changed, 211 insertions(+), 110 deletions(-)
+
+commit 9cdc03d6cb236ae91a3b997d203371a6849910a6
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 22:02:36 2016 +0100
+
+    Reduced the height of most of the components, to make the overall
+    application more sleek - I think it looks better.
+    
+    Added a new form for the license [same as the help form], nahgs off the
+    help menu.
+    Help & Licence forms now load their text from text files.
+
+ help.txt     |  71 ++++++++++++++++++++++++
+ info.txt     |   6 +-
+ klock.lpi    | 126 ++++++++++++++++++++++++------------------
+ klock.lpr    |   4 +-
+ uabout.pas   |   2 +-
+ uhelp.lfm    |   4 +-
+ uhelp.pas    |  18 +-----
+ uklock.lfm   | 175 ++++++++++++++++++++++++++++++-----------------------------
+ uklock.pas   |  22 +++++++-
+ ulicense.lfm |  53 ++++++++++++++++++
+ ulicense.pas |  54 ++++++++++++++++++
+ 11 files changed, 373 insertions(+), 162 deletions(-)
+
+commit 00b786ab517dc5c7833ace39a7cb35187d9fa811
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:59:53 2016 +0100
+
+    Tidied up the code for the radio group - select time.
+
+ info.txt   |  6 +++---
+ klock.lpi  | 20 ++++++++++----------
+ uabout.pas |  2 +-
+ uhelp.pas  |  2 +-
+ uklock.pas | 48 ++++++++++++++----------------------------------
+ 5 files changed, 29 insertions(+), 49 deletions(-)
+
+commit e1da1e2a4a2bdb103668b2bab9a084b2bb8df54d
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:42:20 2016 +0100
+
+    More work done on the reminder page.
+    Finnaly decided to use two normal spin edits for the hours and mins.
+    Not too pretty, but simple and it works.
+    Also added a date picker and added the date into the reminder logic.
+    
+    Added a clear button to the reminder page, to cancel the running reminder.
+
+ info.txt   |   6 +--
+ klock.lpi  | 120 +++++++++++++++++++++++++++-----------------------------
+ uabout.pas |   2 +-
+ uhelp.pas  |   2 +-
+ uklock.lfm |  96 +++++++++++++++++++++++++--------------------
+ uklock.pas | 129 +++++++++++++++++++++++++++++++++++++++----------------------
+ 6 files changed, 201 insertions(+), 154 deletions(-)
+
+commit 53193a6c8825b941b4b2d9648e40eb1552d8a87b
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:38:26 2016 +0100
+
+    Changed the data input on the reminder page from spin edits [one for hours
+    and one for minutes] to a floating spin edit to handle both hours and
+    minutes.  Still working on the logic to make it work in 24 hours and 60
+    minutes.
+    
+    Also added a date picker to the reminder page.
+
+ info.txt       |   6 +--
+ klock.lpi      | 126 ++++++++++++++++++++++++++---------------------------
+ uabout.lfm     |  28 ++++++------
+ uabout.pas     |   2 +-
+ ufuzzytime.pas |  21 ++++++++-
+ uhelp.lfm      |   4 +-
+ uhelp.pas      |   2 +-
+ uklock.lfm     | 134 +++++++++++++++++++++++++++++++++------------------------
+ uklock.pas     |  73 ++++++++++++++++---------------
+ 9 files changed, 218 insertions(+), 178 deletions(-)
+
+commit 2aad4c41fb6f0410f6ff7f69c952e660a5c96f2d
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:35:59 2016 +0100
+
+    Changed the way to select the time format from a radio group to a combo
+    box.
+    
+    Added Swatch time.
+
+ history.txt    |  54 +++++++++++++++++++--------
+ info.txt       |   6 +--
+ klock.lpi      | 116 ++++++++++++++++++++++++++++-----------------------------
+ uabout.pas     |   2 +-
+ ufuzzytime.pas |  42 ++++++++++++++++-----
+ uhelp.pas      |   2 +-
+ uklock.lfm     |  37 +++++++-----------
+ uklock.pas     |  22 ++++++-----
+ uoptions.lfm   |   4 +-
+ uoptions.pas   |   2 +-
+ 10 files changed, 164 insertions(+), 123 deletions(-)
+
+commit fd88525ca99a09df732c03859b5e963c91c4679f
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:32:24 2016 +0100
+
+    Corrected bugs in fuzzytime & net time.
+    
+    Added UTC time.
+
+ klock.iss      |   4 +-
+ klock.lpi      | 140 ++++++++++++++++++++++++++++-----------------------------
+ uabout.lfm     |   4 +-
+ ufuzzytime.pas |  19 ++++++--
+ uhelp.lfm      |   4 +-
+ uklock.lfm     |  11 ++---
+ uklock.pas     |   4 ++
+ uoptions.lfm   |   4 +-
+ 8 files changed, 104 insertions(+), 86 deletions(-)
+
+commit 3a979b66d0e3fad03dfb79aef2b207025db3784f
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:29:35 2016 +0100
+
+    Added NTE & UNIX time to fuzzypage.
+    Added extra buttone to the radio group.
+
+ info.txt       |   6 +--
+ klock.lpi      | 160 ++++++++++++++++++++++++++++++---------------------------
+ klock.lpr      |   2 +-
+ uabout.pas     |   2 +-
+ ufuzzytime.pas |  66 ++++++++++++++++++------
+ uhelp.lfm      |   4 +-
+ uhelp.pas      |   5 +-
+ uklock.lfm     |  30 ++++++++---
+ uklock.pas     |  35 ++++++++-----
+ uoptions.lfm   |   4 +-
+ uoptions.pas   |   2 +-
+ 11 files changed, 191 insertions(+), 125 deletions(-)
+
+commit 04bbd3f4d9c7fbff3d493f570177b9c422f8fbbd
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:26:21 2016 +0100
+
+    All four pages now work - maybe an issue with reminders.
+    
+    Added option record, that is passed between option form and the main form.
+    Added first option - colour of the main labels.
+
+ history.txt        |  37 +++++++++++++
+ klock.iss          |  54 +++++++++++++++++++
+ klock.lpi          | 152 ++++++++++++++++++++++++++++-------------------------
+ klock.lpr          |   2 +-
+ uabout.lfm         |   4 +-
+ uhelp.lfm          |   4 +-
+ uklock.lfm         |  59 +++++++++++++--------
+ uklock.pas         |  38 ++++++++++++--
+ uoptions.lfm       |  69 +++++++++++++++++-------
+ uoptions.pas       |  71 +++++++++++++++++++++++--
+ uoptionsrecord.pas |  32 +++++++++++
+ 11 files changed, 399 insertions(+), 123 deletions(-)
+
+commit 012c8dcaa5ef6569b178c9263e8553b0208f46aa
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:22:06 2016 +0100
+
+    All four pages [fuzzy, countdown, time & reminder] are all complete.
+    
+    Added logic to change status bar on page change.
+    
+    Tidied up code.
+
+ info.txt     |   6 +-
+ klock.lpi    |  99 +++++++-------
+ uabout.lfm   |  10 +-
+ uabout.pas   |   2 +-
+ uhelp.lfm    |   9 +-
+ uhelp.pas    |   8 +-
+ uklock.lfm   |  41 ++++--
+ uklock.pas   | 417 +++++++++++++++++++++++++++++++++++------------------------
+ uoptions.lfm |   4 +-
+ 9 files changed, 352 insertions(+), 244 deletions(-)
+
+commit 2bb295ab57abacd842d99879a21a46feeec62d8c
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:15:59 2016 +0100
+
+    Fuzzy time page completed.
+    
+    Still working on reminder page.
+
+ klock.lpi      | 100 +++++++++++++++++++----------------
+ klock.lpr      |   2 +-
+ ufuzzytime.pas | 153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ uklock.lfm     | 161 +++++++++++++++++++++++++++++++++++++++++++--------------
+ uklock.pas     |  64 +++++++++++++++++++----
+ 5 files changed, 386 insertions(+), 94 deletions(-)
+
+commit d16134c3bd9b03fee717a13f51b75ca79be2ed4d
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 21:12:48 2016 +0100
+
+    Timer page completed.
+    
+    Reminder page started.
+
+ klock.lpi  | 91 +++++++++++++++++++++++++++++++++-----------------------------
+ uklock.lfm | 66 +++++++++++++++++++++++++++++++++++++++------
+ uklock.pas | 62 +++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 163 insertions(+), 56 deletions(-)
+
+commit dc39233aeaa2191988890a6964d7d721e78d3bf0
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 20:56:56 2016 +0100
+
+    Nearly completed timer page - just an issue with the pause/resume.
+    
+    Changed icon to clock.ico
+    
+    Changed message to popup notification.
+
+ blue-letters/!.ico        |  Bin 119149 -> 0 bytes
+ blue-letters/A.ico        |  Bin 133106 -> 0 bytes
+ blue-letters/B.ico        |  Bin 130770 -> 0 bytes
+ blue-letters/C.ico        |  Bin 136698 -> 0 bytes
+ blue-letters/D.ico        |  Bin 129097 -> 0 bytes
+ blue-letters/Dot.ico      |  Bin 118524 -> 0 bytes
+ blue-letters/E.ico        |  Bin 124688 -> 0 bytes
+ blue-letters/F.ico        |  Bin 124147 -> 0 bytes
+ blue-letters/G.ico        |  Bin 135767 -> 0 bytes
+ blue-letters/H.ico        |  Bin 126025 -> 0 bytes
+ blue-letters/I.ico        |  Bin 120077 -> 0 bytes
+ blue-letters/J.ico        |  Bin 126758 -> 0 bytes
+ blue-letters/K.ico        |  Bin 132202 -> 0 bytes
+ blue-letters/L.ico        |  Bin 123843 -> 0 bytes
+ blue-letters/M.ico        |  Bin 132420 -> 0 bytes
+ blue-letters/N.ico        |  Bin 128936 -> 0 bytes
+ blue-letters/O.ico        |  Bin 135070 -> 0 bytes
+ blue-letters/P.ico        |  Bin 127568 -> 0 bytes
+ blue-letters/Q.ico        |  Bin 138504 -> 0 bytes
+ blue-letters/Question.ico |  Bin 122752 -> 0 bytes
+ blue-letters/R.ico        |  Bin 131815 -> 0 bytes
+ blue-letters/S.ico        |  Bin 138950 -> 0 bytes
+ blue-letters/T.ico        |  Bin 123861 -> 0 bytes
+ blue-letters/U.ico        |  Bin 126431 -> 0 bytes
+ blue-letters/V.ico        |  Bin 133394 -> 0 bytes
+ blue-letters/W.ico        |  Bin 137393 -> 0 bytes
+ blue-letters/X.ico        |  Bin 133641 -> 0 bytes
+ blue-letters/Y.ico        |  Bin 130920 -> 0 bytes
+ blue-letters/Z.ico        |  Bin 129292 -> 0 bytes
+ blue-letters/readme.txt   |   26 -
+ blue-letters/sA.ico       |  Bin 894 -> 0 bytes
+ blue-letters/sB.ico       |  Bin 894 -> 0 bytes
+ blue-letters/sC.ico       |  Bin 894 -> 0 bytes
+ blue-letters/sD.ico       |  Bin 894 -> 0 bytes
+ clock.ico                 |  Bin 0 -> 67646 bytes
+ info.txt                  |   10 +-
+ klock.ico                 |  Bin 3262 -> 67646 bytes
+ klock.lpi                 |  129 ++-
+ random/random1.ico        |  Bin 151787 -> 0 bytes
+ random/random10.ico       |  Bin 161228 -> 0 bytes
+ random/random11.ico       |  Bin 179933 -> 0 bytes
+ random/random12.ico       |  Bin 173332 -> 0 bytes
+ random/random2.ico        |  Bin 161370 -> 0 bytes
+ random/random3.ico        |  Bin 154710 -> 0 bytes
+ random/random4.ico        |  Bin 176679 -> 0 bytes
+ random/random5.ico        |  Bin 132648 -> 0 bytes
+ random/random6.ico        |  Bin 149826 -> 0 bytes
+ random/random7.ico        |  Bin 155776 -> 0 bytes
+ random/random8.ico        |  Bin 156516 -> 0 bytes
+ random/random9.ico        |  Bin 151106 -> 0 bytes
+ random/readme.txt         |   17 -
+ uabout.lfm                |   30 +-
+ uabout.pas                |    2 +-
+ uhelp.lfm                 |    6 +-
+ uhelp.pas                 |    2 +-
+ uklock.lfm                | 2268 +++++++++++++++++++++++++++++++++++++++++++--
+ uklock.pas                |   92 +-
+ 57 files changed, 2361 insertions(+), 221 deletions(-)
+
+commit a3539dd01031498d3c25c9a5ca3a454e18748aa6
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Sep 29 20:50:37 2016 +0100
+
+    Initial Import.
+    
+    Most of the GUI structure is complete.
+    
+    Countdown page complete.
+
+ .gitignore                     |  33 ++
+ GNU GENERAL PUBLIC LICENSE.txt | 674 +++++++++++++++++++++++++++++++++++++++++
+ blue-letters/!.ico             | Bin 0 -> 119149 bytes
+ blue-letters/A.ico             | Bin 0 -> 133106 bytes
+ blue-letters/B.ico             | Bin 0 -> 130770 bytes
+ blue-letters/C.ico             | Bin 0 -> 136698 bytes
+ blue-letters/D.ico             | Bin 0 -> 129097 bytes
+ blue-letters/Dot.ico           | Bin 0 -> 118524 bytes
+ blue-letters/E.ico             | Bin 0 -> 124688 bytes
+ blue-letters/F.ico             | Bin 0 -> 124147 bytes
+ blue-letters/G.ico             | Bin 0 -> 135767 bytes
+ blue-letters/H.ico             | Bin 0 -> 126025 bytes
+ blue-letters/I.ico             | Bin 0 -> 120077 bytes
+ blue-letters/J.ico             | Bin 0 -> 126758 bytes
+ blue-letters/K.ico             | Bin 0 -> 132202 bytes
+ blue-letters/L.ico             | Bin 0 -> 123843 bytes
+ blue-letters/M.ico             | Bin 0 -> 132420 bytes
+ blue-letters/N.ico             | Bin 0 -> 128936 bytes
+ blue-letters/O.ico             | Bin 0 -> 135070 bytes
+ blue-letters/P.ico             | Bin 0 -> 127568 bytes
+ blue-letters/Q.ico             | Bin 0 -> 138504 bytes
+ blue-letters/Question.ico      | Bin 0 -> 122752 bytes
+ blue-letters/R.ico             | Bin 0 -> 131815 bytes
+ blue-letters/S.ico             | Bin 0 -> 138950 bytes
+ blue-letters/T.ico             | Bin 0 -> 123861 bytes
+ blue-letters/U.ico             | Bin 0 -> 126431 bytes
+ blue-letters/V.ico             | Bin 0 -> 133394 bytes
+ blue-letters/W.ico             | Bin 0 -> 137393 bytes
+ blue-letters/X.ico             | Bin 0 -> 133641 bytes
+ blue-letters/Y.ico             | Bin 0 -> 130920 bytes
+ blue-letters/Z.ico             | Bin 0 -> 129292 bytes
+ blue-letters/readme.txt        |  26 ++
+ blue-letters/sA.ico            | Bin 0 -> 894 bytes
+ blue-letters/sB.ico            | Bin 0 -> 894 bytes
+ blue-letters/sC.ico            | Bin 0 -> 894 bytes
+ blue-letters/sD.ico            | Bin 0 -> 894 bytes
+ info.txt                       |  15 +
+ klock.ico                      | Bin 0 -> 3262 bytes
+ klock.lpi                      | 268 ++++++++++++++++
+ klock.lpr                      |  22 ++
+ random/random1.ico             | Bin 0 -> 151787 bytes
+ random/random10.ico            | Bin 0 -> 161228 bytes
+ random/random11.ico            | Bin 0 -> 179933 bytes
+ random/random12.ico            | Bin 0 -> 173332 bytes
+ random/random2.ico             | Bin 0 -> 161370 bytes
+ random/random3.ico             | Bin 0 -> 154710 bytes
+ random/random4.ico             | Bin 0 -> 176679 bytes
+ random/random5.ico             | Bin 0 -> 132648 bytes
+ random/random6.ico             | Bin 0 -> 149826 bytes
+ random/random7.ico             | Bin 0 -> 155776 bytes
+ random/random8.ico             | Bin 0 -> 156516 bytes
+ random/random9.ico             | Bin 0 -> 151106 bytes
+ random/readme.txt              |  17 ++
+ sounds/alarm-fatal.wav         | Bin 0 -> 1359604 bytes
+ sounds/chimes.wav              | Bin 0 -> 55776 bytes
+ sounds/chord.wav               | Bin 0 -> 97016 bytes
+ sounds/ding.wav                | Bin 0 -> 80856 bytes
+ sounds/notify.wav              | Bin 0 -> 119384 bytes
+ sounds/recycle.wav             | Bin 0 -> 25434 bytes
+ sounds/ringin.wav              | Bin 0 -> 10026 bytes
+ sounds/ringout.wav             | Bin 0 -> 5212 bytes
+ sounds/start.wav               | Bin 0 -> 1192 bytes
+ sounds/tada.wav                | Bin 0 -> 171100 bytes
+ uabout.lfm                     | 204 +++++++++++++
+ uabout.pas                     |  62 ++++
+ uhelp.lfm                      | 159 ++++++++++
+ uhelp.pas                      |  68 +++++
+ uklock.lfm                     | 376 +++++++++++++++++++++++
+ uklock.pas                     | 295 ++++++++++++++++++
+ uoptions.lfm                   |  42 +++
+ uoptions.pas                   |  47 +++
+ 71 files changed, 2308 insertions(+)
