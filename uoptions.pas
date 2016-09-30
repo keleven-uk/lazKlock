@@ -129,7 +129,7 @@ Constructor OptionsRecord.init;
 begin
   self.DefaultTab  := 0;
   self.DefaultTime := 0;
-  self.Version     := '25';
+  self.Version     := '26';
 
   self.GlobalTextFont    := frmOptions.Font;
   self.FuzzyTextFont     := frmOptions.Font;

@@ -14,18 +14,21 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows, UOptions;
+  Classes, SysUtils, DateUtils, Windows, UOptions, strutils;
 
 type
   FuzzyTime = class
 
 Private
-  Function fTime      : String;
-  Function netTime    : string;
-  Function unixTime   : string;
-  Function utcTime    : string;
-  Function swatchTime : string;
-  Function julianTime : string ;
+  Function fTime       : String;
+  Function netTime     : string;
+  Function unixTime    : string;
+  Function utcTime     : string;
+  Function swatchTime  : string;
+  Function julianTime  : string;
+  Function decimalTime : string;
+  Function hexTime     : string;
+  Function binaryTime  : string;
 Public
   displayFuzzy : Integer ;
   Constructor init ;
@@ -185,24 +188,108 @@ begin
 end;
 
 Function FuzzyTime.julianTime : string ;
+{  returns Julian Date Time - will only work in windows.
+   Formulae pinched from http://en.wikipedia.org/wiki/Julian_day               }
 VAR
+  a, y, m : double;
   jt : double;
+  utc         : TSystemTime;
 begin
 
-  jt := DateTimeToJulianDate(Now);
+  GetSystemTime(utc);                    //  Get current time in UTC
+
+  a := (14 - utc.month) / 12;
+  y := utc.year + 4800 - a;
+  m := utc.month + (12 * a) - 3;
+
+  jt := utc.day + ((153 * m +2) / 5) + (365 * y) + (y/4) - (y/100) + (y/400) - 32045;
+  jt := jt + ((utc.Hour - 12) / 24) + (utc.Minute / 1440) + (utc.Second / 86400);
+
   julianTime := format('%7.7f', [jt]);
+end;
+
+Function FuzzyTime.decimalTime : string ;
+{  returns the current time in decimal notation.
+   The day is divided into 10 hours, each hour is then split into 100 minutes
+   of 100 seconds.                                                             }
+VAR
+  noOfSeconds : LongWord;
+  noOfDecSecs : integer;
+
+  secs : integer;
+  mins : integer;
+  hrs  : integer;
+begin
+  noOfSeconds := SecondOfTheDay(Time);
+  noOfDecSecs := round(noOfSeconds * ( 100000 / 84600));  // a decimal second is
+                                                          // smaller then a normal second
+  hrs  := noOfDecSecs div 10000;
+  mins := (noOfDecSecs - hrs * 10000) div 100;
+  secs := noOfDecSecs mod 100;
+
+
+  decimalTime := format('%2.d:%2.d:%2.d',[hrs, mins, secs]);
+end;
+
+Function FuzzyTime.hexTime : string ;
+VAR
+  noOfSeconds : LongWord;
+  noOfHexSecs : integer;
+
+  sec : integer;
+  min : integer;
+  hrs : integer;
+
+  ssec : String;
+  smin : String;
+  shrs : String;
+begin
+  noOfSeconds := SecondOfTheDay(Time);
+  noOfHexSecs := round(noOfSeconds * ( 65536 / 84600));  // a Hexadecimal second is
+                                                         // larger then a normal second
+  hrs := noOfHexSecs div 4096;
+  min := (noOfHexSecs - hrs * 4096) div 16;
+  sec := noOfHexSecs mod 16;
+
+  shrs := Dec2Numb(hrs, 1, 16);
+  smin := Dec2Numb(min, 2, 16);
+  ssec := Dec2Numb(sec, 1, 16);
+
+  hexTime := format('%s_%s_%s', [shrs, smin, ssec])
+end;
+
+Function FuzzyTime.binaryTime : string ;
+VAR
+  t     : TDateTime;
+  hrs  : word;
+  min  : word;
+  sec  : word;
+  msc  : word;
+
+  ssec : String;
+  smin : String;
+  shrs : String;
+begin
+  t := Time;
+  DecodeTime(t, hrs, min, sec, msc);
+
+  shrs := Dec2Numb(hrs, 5, 2);
+  smin := Dec2Numb(min, 6, 2);
+  ssec := Dec2Numb(sec, 6, 2);
+
+  binaryTime := format('%s %s %s', [shrs, smin, ssec])
 end;
 
 Function FuzzyTime.getDblTime : Double ;
 {  returns current time as a float, in the format hh.mm.
    a bit klunky - needs a rewrite, when i know how                             }
 VAR
-  hour : word;
-  min  : word;
-  sec  : word;
-  msec : word;
+  hour  : word;
+  min   : word;
+  sec   : word;
+  msec  : word;
   fhour : double;
-  fmin : double;
+  fmin  : double;
 begin
   DecodeTime(time, hour, min, sec, msec);
 
@@ -223,6 +310,9 @@ begin
     4 : getTime := utcTime;
     5 : getTime := swatchTime;
     6 : getTime := julianTime;
+    7 : getTime := decimalTime;
+    8 : getTime := hexTime;
+    9 : getTime := binaryTime;
   end;
 
 end ;

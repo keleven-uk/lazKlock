@@ -2173,15 +2173,15 @@ object frmMain: TfrmMain
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
         Caption = 'Fuzzy Time'
-        ClientHeight = 104
+        ClientHeight = 102
         ClientWidth = 572
         object Panel4: TPanel
           Left = 0
-          Height = 104
+          Height = 102
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 104
+          ClientHeight = 102
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2196,10 +2196,10 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
-              Height = 21
+              Height = 23
               Top = 10
-              Width = 76
-              ItemHeight = 13
+              Width = 80
+              ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
                 'Fuzzy'
@@ -2209,6 +2209,9 @@ object frmMain: TfrmMain
                 'UTC'
                 'Swatch'
                 'Julian'
+                'Decimal'
+                'Hexadecimal'
+                'Binary'
               )
               OnChange = CmbBxTimeChange
               Style = csDropDownList
@@ -2226,9 +2229,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblfuzzy: TLabel
               Left = 8
-              Height = 30
+              Height = 33
               Top = 4
-              Width = 384
+              Width = 389
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False
@@ -2362,10 +2365,10 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownAction: TComboBox
               Left = 8
-              Height = 21
+              Height = 23
               Top = 8
               Width = 80
-              ItemHeight = 13
+              ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
                 'Sound'
@@ -2411,11 +2414,11 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownEvent: TComboBox
               Left = 168
-              Height = 21
+              Height = 23
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 13
+              ItemHeight = 15
               Items.Strings = (
                 'Shut Down PC'
                 'Restart PC'
@@ -2721,10 +2724,11 @@ object frmMain: TfrmMain
             TabOrder = 2
             object CmbBxReminderAction: TComboBox
               Left = 8
-              Height = 21
+              Height = 23
               Top = 8
               Width = 80
-              ItemHeight = 13
+              ItemHeight = 15
+              ItemIndex = 0
               Items.Strings = (
                 'Sound'
                 'Reminder'
@@ -2734,6 +2738,7 @@ object frmMain: TfrmMain
               OnChange = CmbBxReminderActionChange
               Style = csDropDownList
               TabOrder = 0
+              Text = 'Sound'
             end
             object ChckBxReminderSound: TCheckBox
               Left = 104
@@ -2743,7 +2748,6 @@ object frmMain: TfrmMain
               Caption = 'Sound'
               OnChange = ChckBxReminderSoundChange
               TabOrder = 1
-              Visible = False
             end
             object EdtReminderSound: TEdit
               Left = 168
@@ -2752,7 +2756,6 @@ object frmMain: TfrmMain
               Width = 150
               Enabled = False
               TabOrder = 2
-              Visible = False
             end
             object btnReminderLoadSound: TButton
               Left = 328
@@ -2763,7 +2766,6 @@ object frmMain: TfrmMain
               Enabled = False
               OnClick = btnReminderLoadSoundClick
               TabOrder = 3
-              Visible = False
             end
             object btnReminderTestSound: TButton
               Left = 384
@@ -2774,7 +2776,6 @@ object frmMain: TfrmMain
               Enabled = False
               OnClick = btnReminderTestSoundClick
               TabOrder = 4
-              Visible = False
             end
             object ChckBxReminderReminder: TCheckBox
               Left = 104
@@ -2809,11 +2810,11 @@ object frmMain: TfrmMain
             end
             object CmbBxReminderSystem: TComboBox
               Left = 168
-              Height = 21
+              Height = 23
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 13
+              ItemHeight = 15
               Items.Strings = (
                 'Shutdown PC'
                 'Restart PC'
