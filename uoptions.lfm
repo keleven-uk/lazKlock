@@ -1,11 +1,11 @@
 object frmOptions: TfrmOptions
-  Left = 346
-  Height = 355
-  Top = 537
+  Left = 307
+  Height = 404
+  Top = 240
   Width = 660
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
-  ClientHeight = 355
+  ClientHeight = 404
   ClientWidth = 660
   Constraints.MinWidth = 320
   OnCreate = FormCreate
@@ -13,10 +13,10 @@ object frmOptions: TfrmOptions
   LCLVersion = '0.9.30.4'
   object Panel1: TPanel
     Left = 8
-    Height = 296
+    Height = 344
     Top = 8
     Width = 640
-    ClientHeight = 296
+    ClientHeight = 344
     ClientWidth = 640
     Font.Height = -16
     ParentFont = False
@@ -40,7 +40,7 @@ object frmOptions: TfrmOptions
       end
       object lblGlobalText: TLabel
         Left = 8
-        Height = 20
+        Height = 22
         Top = 4
         Width = 46
         Caption = 'Global'
@@ -68,9 +68,9 @@ object frmOptions: TfrmOptions
       end
       object lblFuzzyTime: TLabel
         Left = 8
-        Height = 20
+        Height = 22
         Top = 4
-        Width = 81
+        Width = 78
         Caption = 'Fuzzy Time'
         Font.Height = -16
         ParentColor = False
@@ -85,7 +85,7 @@ object frmOptions: TfrmOptions
           'Net Time - Seconds'
           'Swatch - Centibeats'
         )
-        ItemHeight = 19
+        ItemHeight = 21
         TabOrder = 1
         Data = {
           020000000000
@@ -113,7 +113,7 @@ object frmOptions: TfrmOptions
       end
       object lblCountDown: TLabel
         Left = 8
-        Height = 20
+        Height = 22
         Top = 4
         Width = 82
         Caption = 'Countdown'
@@ -139,17 +139,17 @@ object frmOptions: TfrmOptions
       end
       object lblTimerText: TLabel
         Left = 8
-        Height = 20
+        Height = 22
         Top = 4
-        Width = 43
+        Width = 41
         Caption = 'Timer'
         ParentColor = False
       end
       object ChckBxTimerMilli: TCheckBox
         Left = 206
-        Height = 23
+        Height = 25
         Top = 4
-        Width = 167
+        Width = 166
         Caption = 'Timer - Milli Seconds'
         TabOrder = 1
       end
@@ -173,18 +173,45 @@ object frmOptions: TfrmOptions
       end
       object lblReminderText: TLabel
         Left = 8
-        Height = 20
+        Height = 22
         Top = 3
         Width = 69
         Caption = 'Reminder'
         ParentColor = False
       end
     end
+    object GroupBox8: TGroupBox
+      Left = 8
+      Height = 52
+      Top = 284
+      Width = 408
+      ClientHeight = 34
+      ClientWidth = 404
+      TabOrder = 5
+      object lblPopupText: TLabel
+        Left = 8
+        Height = 22
+        Top = 3
+        Width = 46
+        Caption = 'Popup'
+        ParentColor = False
+      end
+      object ClrBtnPopup: TColorButton
+        Left = 110
+        Height = 25
+        Top = 3
+        Width = 75
+        BorderWidth = 2
+        ButtonColorSize = 16
+        ButtonColor = clBlack
+        OnColorChanged = ClrBtnPopupColorChanged
+      end
+    end
   end
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 315
+    Top = 364
     Width = 648
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&OK'
@@ -219,10 +246,10 @@ object frmOptions: TfrmOptions
       TabOrder = 0
       object CmbBxDefTime: TComboBox
         Left = 43
-        Height = 21
+        Height = 23
         Top = 4
         Width = 100
-        ItemHeight = 13
+        ItemHeight = 15
         ItemIndex = 0
         Items.Strings = (
           'Fuzzy'
@@ -252,10 +279,10 @@ object frmOptions: TfrmOptions
       TabOrder = 1
       object CmbBxDefTab: TComboBox
         Left = 43
-        Height = 21
+        Height = 23
         Top = 4
         Width = 100
-        ItemHeight = 13
+        ItemHeight = 15
         ItemIndex = 0
         Items.Strings = (
           'Fuzzy Time'
@@ -287,9 +314,9 @@ object frmOptions: TfrmOptions
     end
     object Label1: TLabel
       Left = 16
-      Height = 20
+      Height = 22
       Top = 8
-      Width = 154
+      Width = 151
       Caption = 'Reset Fonts to default'
       Font.Height = -16
       ParentColor = False
@@ -306,7 +333,7 @@ object frmOptions: TfrmOptions
     TabOrder = 4
     object ChckBxScreenSave: TCheckBox
       Left = 16
-      Height = 23
+      Height = 25
       Top = 8
       Width = 164
       BidiMode = bdRightToLeft

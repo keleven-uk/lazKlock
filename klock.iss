@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Klock"
-#define MyAppVersion "26"
+#define MyAppVersion "30"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "klock.exe"
@@ -19,13 +19,17 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\keleven\klock_26
+
+;  all source files here
+SourceDir=C:\usr\shed\projects\pascal\klock
+
+DefaultDirName={pf}\keleven\klock
 DefaultGroupName={#MyAppName}
-LicenseFile=C:\usr\shed\projects\pascal\klock\GNU GENERAL PUBLIC LICENSE.txt
-InfoAfterFile=C:\usr\shed\projects\pascal\klock\history.txt
+LicenseFile=GNU GENERAL PUBLIC LICENSE.txt
+InfoAfterFile=history.txt
 OutputDir=C:\usr\shed\projects\pascal
-OutputBaseFilename=klock_26
-SetupIconFile=C:\usr\shed\projects\pascal\klock\klock.ico
+OutputBaseFilename=klock
+SetupIconFile=klock.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -36,19 +40,31 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
+[Types]
+Name: full; Description: "Klock Program + source"
+Name: prog; Description: "Klock program only"
+
+[Components]
+Name: all; Description: fKlock Program + source; Types: full
+Name: exe; Description: exe's only; Types: full prog
+
 [Files]
-Source: "C:\usr\shed\projects\pascal\klock\klock.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\klock\klock.ini"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\klock\sounds\*"; DestDir: "{app}\sounds"; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\klock\help.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\klock\history.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\klock\GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "klock.exe"                     ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
+Source: "sounds\*"                      ; DestDir: "{app}\sounds"; Components : exe; Flags: ignoreversion
+Source: "help.txt"                      ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
+Source: "history.txt"                   ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
+Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
+
+;  incluse source if directed :: NB needs a clean checkout
+Source: "C:\usr\shed\projects\pascal\clean_klock\*"               ; DestDir: "{app}\source"               ; Components : all; Flags: ignoreversion
+Source: "C:\usr\shed\projects\pascal\clean_klock\lib\i386-win32\*"; DestDir: "{app}\source\lib\i386-win32"; Components : all; Flags: ignoreversion
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}"                                               ; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"                         ; Filename: "{uninstallexe}"
+Name: "{commondesktop}\{#MyAppName}"                                       ; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Run]

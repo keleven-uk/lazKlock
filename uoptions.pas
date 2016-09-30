@@ -24,6 +24,7 @@ type
     ChckLstBxFuzzyOptions: TCheckListBox;
     CmbBxDefTime: TComboBox;
     CmbBxDefTab: TComboBox;
+    ClrBtnPopup: TColorButton;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
@@ -32,7 +33,9 @@ type
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
     GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
     Label1: TLabel;
+    lblPopupText: TLabel;
     lblGlobalText: TLabel;
     lblFuzzyTime: TLabel;
     lblCountDown: TLabel;
@@ -52,6 +55,7 @@ type
     procedure ChckBxNetTimeSecondsChange(Sender: TObject);
     procedure ChckBxScreenSaveChange(Sender: TObject);
     procedure ChckBxSwatchCentibeatsChange(Sender: TObject);
+    procedure ClrBtnPopupColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure SpdBtnDefaultClick(Sender: TObject);
@@ -91,6 +95,7 @@ type
     ScreenLeft        : Integer;
     NetTimeSeconds    : Boolean;
     SwatchCentibeats  : Boolean;
+    popupColour       : TColor;
 
     Constructor init ;
     procedure setGlobalTextFont(f : TFont);       //  used to set global text font
@@ -106,6 +111,7 @@ type
     procedure setScreenLeft(i : Integer);
     procedure setNetTimeSeconds(b : Boolean);
     procedure setSwatchCentibeats(b : Boolean);
+    procedure setPopupColour(c : TColor);
   end;
 
 {                                               ** End of Options Class  **                        }
@@ -129,7 +135,7 @@ Constructor OptionsRecord.init;
 begin
   self.DefaultTab  := 0;
   self.DefaultTime := 0;
-  self.Version     := '29';
+  self.Version     := '30';
 
   self.GlobalTextFont    := frmOptions.Font;
   self.FuzzyTextFont     := frmOptions.Font;
@@ -142,6 +148,7 @@ begin
   self.ScreenLeft        := 100;
   self.NetTimeSeconds    := false;
   self.SwatchCentibeats  := false;
+  self.popupColour       := clSilver;
 
 end;
 
@@ -223,7 +230,11 @@ begin
   self.SwatchCentibeats := b;
 end;
 
-
+procedure OptionsRecord.setPopupColour(c : TColor);
+{  used to set the coloour of the popup notifier, defaule is clSilver.   }
+begin
+  self.popupColour := c;
+end;
 
 {                      *************************** End of Options Class methods **                 }
 
@@ -335,6 +346,11 @@ begin
     OptionsRec.setNetTimeSeconds(False)
 end;
 
+procedure TfrmOptions.ClrBtnPopupColorChanged(Sender: TObject);
+begin
+  lblPopupText.Font.Color := clrBtnPopup.ButtonColor;
+  OptionsRec.setPopupColour(clrBtnPopup.ButtonColor);
+end;
 
 procedure TfrmOptions.SpdBtnDefaultClick(Sender: TObject);
 {  reset all text colour back to colour of glocal text.                                            }
@@ -349,6 +365,9 @@ begin
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
   OptionsRec.setNetTimeSeconds(ChckLstBxFuzzyOptions.Checked[0]);
   OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[1]);
+
+  OptionsRec.setPopupColour(clSilver);
+
   resetForm;
 end;
 
@@ -370,6 +389,8 @@ begin
   CmbBxDefTab.ItemIndex          := OptionsRec.DefaultTab;
   CmbBxDefTime.ItemIndex         := OptionsRec.DefaultTime;
 
+  lblPopupText.Font.Color := OptionsRec.popupColour;
+  clrBtnPopup.ButtonColor := Optionsrec.popupColour;
 end;
 
 
@@ -405,6 +426,8 @@ begin
     OptionsRec.TimerMilliSeconds := StrToBool(iniFile.ReadString('Timer', 'Milli', 'False'));
 
     OptionsRec.ReminderTextFont  := StringtoFont(iniFile.ReadString('Reminder', 'Font', defFnt));
+
+    OptionsRec.popupColour       := StringToColor(iniFile.ReadString('Popup', 'Colour', 'clSilver'));
   end
   else begin  //  ini file does not exist, create it.
       writeIniValues
@@ -445,6 +468,8 @@ begin
   IniFile.Writestring('Timer', 'Milli',   BoolToStr(OptionsRec.TimerMilliSeconds));
 
   IniFile.Writestring('Reminder', 'Font', FontToString(OptionsRec.ReminderTextFont));
+
+  IniFile.WriteString('Popup', 'Colour', ColorToString(Optionsrec.popupColour));
 end;
 
 end.
