@@ -16,9 +16,9 @@
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <BuildNr Value="29"/>
+      <BuildNr Value="31"/>
       <Language Value="0809"/>
-      <StringTable CompanyName="www.keleven.co.uk" FileDescription="A timing thingy" InternalName="klock" OriginalFilename="klock.exe" ProductName="klock" ProductVersion="29"/>
+      <StringTable CompanyName="www.keleven.co.uk" FileDescription="A timing thingy" InternalName="klock" OriginalFilename="klock.exe" ProductName="klock" ProductVersion="31"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -60,9 +60,9 @@
         <Filename Value="uklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmMain"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Uklock"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1237"/>
@@ -86,6 +86,7 @@
         <Filename Value="uabout.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmAbout"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UAbout"/>
         <EditorIndex Value="6"/>
@@ -100,6 +101,7 @@
         <Filename Value="uhelp.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmHelp"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Uhelp"/>
         <EditorIndex Value="4"/>
@@ -114,12 +116,14 @@
         <Filename Value="uoptions.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmOptions"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UOptions"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="121"/>
-        <CursorPos X="3" Y="370"/>
+        <CursorPos X="26" Y="138"/>
         <UsageCount Value="177"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -171,6 +175,7 @@
         <Filename Value="ulicense.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmLicense"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLicense"/>
         <EditorIndex Value="5"/>
@@ -317,7 +322,7 @@
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
       <Filename Value="klock"/>
@@ -327,6 +332,9 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
