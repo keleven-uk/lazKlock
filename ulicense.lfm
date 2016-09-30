@@ -1,7 +1,7 @@
 object frmLicense: TfrmLicense
-  Left = 499
+  Left = 481
   Height = 240
-  Top = 175
+  Top = 145
   Width = 420
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -14,7 +14,7 @@ object frmLicense: TfrmLicense
   Constraints.MinWidth = 420
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.0.1.3'
   object Panel1: TPanel
     Left = 8
     Height = 160

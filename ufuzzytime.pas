@@ -150,7 +150,7 @@ begin
 end;
 
 Function FuzzyTime.unixTime : string;
-{  return UNUX epoch time                                                      }
+{  return UNIX epoch time                                                      }
 VAR
   unix : integer;
 

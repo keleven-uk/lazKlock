@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, Uklock, UAbout, Uhelp, UOptions, uFuzzyTime,
-  uLicense, UKlockUtils;
+  uLicense, UKlockUtils, uReminderinput;
 
 {$R *.res}
 
@@ -19,6 +19,7 @@ begin
   Application.CreateForm(TfrmAbout, frmAbout);
   Application.CreateForm(TfrmHelp, frmHelp);
   Application.CreateForm(TfrmLicense, frmLicense);
+  Application.CreateForm(TfrmReminderInput, frmReminderInput);
   Application.Run;
 end.
 

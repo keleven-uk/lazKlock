@@ -17,7 +17,7 @@ type
     btnFuzzyFont: TButton;
     btnCountdownFont: TButton;
     btnTimerFont: TButton;
-    btnReminderFont: TButton;
+    btnEventFont: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxScreenSave: TCheckBox;
     ChckBxTimerMilli: TCheckBox;
@@ -40,7 +40,7 @@ type
     lblFuzzyTime: TLabel;
     lblCountDown: TLabel;
     lblTimerText: TLabel;
-    lblReminderText: TLabel;
+    lblEventText: TLabel;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
@@ -49,9 +49,10 @@ type
     procedure btnCountdownFontClick(Sender: TObject);
     procedure btnFuzzyFontClick(Sender: TObject);
     procedure btnGlobalFontClick(Sender: TObject);
-    procedure btnReminderFontClick(Sender: TObject);
+    procedure btnEventFontClick(Sender: TObject);
     procedure btnTimerFontClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure ChckBxFuzzyTimeBalloon(Sender: TObject);
     procedure ChckBxNetTimeSecondsChange(Sender: TObject);
     procedure ChckBxScreenSaveChange(Sender: TObject);
     procedure ChckBxSwatchCentibeatsChange(Sender: TObject);
@@ -70,7 +71,7 @@ type
 
 
   {  create a options objects, that when created, will be used by main
-     form. This will enable to change certain options i.e colout and font.
+     form. This will enable to change certain options i.e colour and font.
 
      TODO :: save to file i.e. xml                                          }
 
@@ -89,21 +90,22 @@ type
     CountDownTextFont : TFont;                  //  Global font of all main labels
     TimerTextFont     : TFont;                  //  Global font of all main labels
     TimerMilliSeconds : Boolean;                //  timer to show milli seconds
-    ReminderTextFont  : TFont;                  //  Global font of all main labels
+    EventTextFont     : TFont;                  //  Global font of all main labels
     ScreenSave        : Boolean;
     ScreenTop         : Integer;
     ScreenLeft        : Integer;
     NetTimeSeconds    : Boolean;
     SwatchCentibeats  : Boolean;
+    FuzzyTimeBalloon  : Boolean;
     popupColour       : TColor;
 
     Constructor init ;
     procedure setGlobalTextFont(f : TFont);       //  used to set global text font
-    procedure setFuzzyTextFont(f : TFont);       //  used to set global text font
-    procedure setCountDownTextFont(f : TFont);       //  used to set global text font
-    procedure setTimerTextFont(f : TFont);       //  used to set global text font
+    procedure setFuzzyTextFont(f : TFont);        //  used to set global text font
+    procedure setCountDownTextFont(f : TFont);    //  used to set global text font
+    procedure setTimerTextFont(f : TFont);        //  used to set global text font
     procedure setTimerMilliSeconds(b : Boolean);  //  used to set timer to show milli seconds
-    procedure setReminderTextFont(f : TFont);       //  used to set global text font
+    procedure setEventTextFont(f : TFont);        //  used to set global text font
     procedure setDefaultTab(i : Integer);
     procedure setDefaultTime(i : Integer);
     procedure setScreenSave(b : Boolean);
@@ -111,6 +113,7 @@ type
     procedure setScreenLeft(i : Integer);
     procedure setNetTimeSeconds(b : Boolean);
     procedure setSwatchCentibeats(b : Boolean);
+    procedure setFuzzyTimeBalloon(b : Boolean);
     procedure setPopupColour(c : TColor);
   end;
 
@@ -135,19 +138,20 @@ Constructor OptionsRecord.init;
 begin
   self.DefaultTab  := 0;
   self.DefaultTime := 0;
-  self.Version     := '32';
+  self.Version     := '33';
 
   self.GlobalTextFont    := frmOptions.Font;
   self.FuzzyTextFont     := frmOptions.Font;
   self.CountDownTextFont := frmOptions.Font;
   self.TimerTextFont     := frmOptions.Font;
   self.TimerMilliSeconds := false;
-  self.ReminderTextFont  := frmOptions.Font;
+  self.EventTextFont     := frmOptions.Font;
   ScreenSave             := False;
   self.ScreenTop         := 100;
   self.ScreenLeft        := 100;
   self.NetTimeSeconds    := false;
   self.SwatchCentibeats  := false;
+  self.FuzzyTimeBalloon  := false;
   self.popupColour       := clSilver;
 
 end;
@@ -182,10 +186,10 @@ begin
   self.TimerMilliSeconds := b;
 end;
 
-procedure OptionsRecord.setReminderTextFont(f : TFont);
+procedure OptionsRecord.setEventTextFont(f : TFont);
 {  used to set text font [global font of all main labels]   }
 begin
-  self.ReminderTextFont := f;
+  self.EventTextFont := f;
 end;
 
 procedure OptionsRecord.setDefaultTab(i : Integer);
@@ -230,8 +234,15 @@ begin
   self.SwatchCentibeats := b;
 end;
 
+procedure OptionsRecord.setFuzzyTimeBalloon(b : Boolean);
+{  used to set if fuzzy time will be displayed in a ballons,
+   if the application is being currently displayed in the system tray.
+}
+begin
+  self.FuzzyTimeBalloon := b;
+end;
 procedure OptionsRecord.setPopupColour(c : TColor);
-{  used to set the coloour of the popup notifier, defaule is clSilver.   }
+{  used to set the colour of the pop-up notifier, defaule is clSilver.   }
 begin
   self.popupColour := c;
 end;
@@ -244,6 +255,8 @@ VAR
   appData : String;
 begin
   appData := GetAppConfigDir(False);    //  retrieve the correct place to store .ini file
+                                        //  calling with False - for current user only
+                                        //  calling with True   = for all users
   CreateDir(appData);                   //  create said place
   iniName := appData + 'klock.ini';     //  create .ini file path
 
@@ -289,11 +302,11 @@ begin
  end;
 end;
 
-procedure TfrmOptions.btnReminderFontClick(Sender: TObject);
+procedure TfrmOptions.btnEventFontClick(Sender: TObject);
 begin
  if FontDialog1.Execute then begin
-   btnReminderFont.Font := FontDialog1.Font;
-   OptionsRec.setReminderTextFont(FontDialog1.Font);
+   btnEventFont.Font := FontDialog1.Font;
+   OptionsRec.setEventTextFont(FontDialog1.Font);
  end;
 end;
 
@@ -306,12 +319,13 @@ begin
   OptionsRec.setFuzzyTextFont(lblFuzzyTime.Font);
   OptionsRec.setCountDownTextFont(lblCountDown.Font);
   OptionsRec.setTimerTextFont(lblTimerText.Font);
-  OptionsRec.setReminderTextFont(lblReminderText.Font);
+  OptionsRec.setEventTextFont(lblEventText.Font);
   OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
   OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
-  OptionsRec.setNetTimeSeconds(ChckLstBxFuzzyOptions.Checked[0]);
-  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[1]);
+  OptionsRec.setFuzzyTimeBalloon(ChckLstBxFuzzyOptions.Checked[0]);
+  OptionsRec.setNetTimeSeconds  (ChckLstBxFuzzyOptions.Checked[1]);
+  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[2]);
 
   writeIniFile;
 end;
@@ -330,9 +344,17 @@ begin
     OptionsRec.setScreenSave(False)
 end;
 
+procedure TfrmOptions.ChckBxFuzzyTimeBalloon(Sender: TObject);
+begin
+  if ChckLstBxFuzzyOptions.Checked[0] then
+    OptionsRec.setFuzzyTimeBalloon(True)
+  else
+    OptionsRec.setFuzzyTimeBalloon(False)
+end;
+
 procedure TfrmOptions.ChckBxSwatchCentibeatsChange(Sender: TObject);
 begin
-  if ChckLstBxFuzzyOptions.Checked[1] then
+  if ChckLstBxFuzzyOptions.Checked[2] then
     OptionsRec.setSwatchCentibeats(True)
   else
     OptionsRec.setSwatchCentibeats(False)
@@ -340,7 +362,7 @@ end;
 
 procedure TfrmOptions.ChckBxNetTimeSecondsChange(Sender: TObject);
 begin
-  if ChckLstBxFuzzyOptions.Checked[0] then
+  if ChckLstBxFuzzyOptions.Checked[1] then
     OptionsRec.setNetTimeSeconds(True)
   else
     OptionsRec.setNetTimeSeconds(False)
@@ -353,18 +375,19 @@ begin
 end;
 
 procedure TfrmOptions.SpdBtnDefaultClick(Sender: TObject);
-{  reset all text colour back to colour of glocal text.                                            }
+{  reset all text colour back to colour of global text.                                            }
 begin
-  OptionsRec.GlobalTextFont      := frmOptions.Font;
-  OptionsRec.FuzzyTextFont       := frmOptions.Font;
-  OptionsRec.CountDownTextFont   := frmOptions.Font;
-  OptionsRec.TimerTextFont       := frmOptions.Font;
-  OptionsRec.ReminderTextFont    := frmOptions.Font;
+  OptionsRec.GlobalTextFont    := frmOptions.Font;
+  OptionsRec.FuzzyTextFont     := frmOptions.Font;
+  OptionsRec.CountDownTextFont := frmOptions.Font;
+  OptionsRec.TimerTextFont     := frmOptions.Font;
+  OptionsRec.EventTextFont     := frmOptions.Font;
   OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
   OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
-  OptionsRec.setNetTimeSeconds(ChckLstBxFuzzyOptions.Checked[0]);
-  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[1]);
+  OptionsRec.setFuzzyTimeBalloon(ChckLstBxFuzzyOptions.Checked[0]);
+  OptionsRec.setNetTimeSeconds  (ChckLstBxFuzzyOptions.Checked[1]);
+  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[2]);
 
   OptionsRec.setPopupColour(clSilver);
 
@@ -375,19 +398,21 @@ procedure TfrmOptions.resetForm;
 {  reset form to options record, used on form create, reset of default colour
    and if the cancel button is clicked.                                                            }
 begin
-  lblGlobalText.Font   := OptionsRec.GlobalTextFont ;
-  lblFuzzyTime.Font    := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
-  lblCountDown.Font    := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
-  lblTimerText.Font    := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
-  lblReminderText.Font := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
+  lblGlobalText.Font := OptionsRec.GlobalTextFont ;
+  lblFuzzyTime.Font  := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
+  lblCountDown.Font  := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
+  lblTimerText.Font  := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
+  lblEventText.Font  := getTextFont(OptionsRec.EventTextFont, OptionsRec.GlobalTextFont);
 
   ChckBxTimerMilli.Checked         := OptionsRec.TimerMilliSeconds;
   ChckBxScreenSave.Checked         := OptionsRec.ScreenSave;
-  ChckLstBxFuzzyOptions.Checked[0] := OptionsRec.NetTimeSeconds;
-  ChckLstBxFuzzyOptions.Checked[1] := OptionsRec.SwatchCentibeats;
 
-  CmbBxDefTab.ItemIndex          := OptionsRec.DefaultTab;
-  CmbBxDefTime.ItemIndex         := OptionsRec.DefaultTime;
+  ChckLstBxFuzzyOptions.Checked[0] := OptionsRec.FuzzyTimeBalloon;
+  ChckLstBxFuzzyOptions.Checked[1] := OptionsRec.NetTimeSeconds;
+  ChckLstBxFuzzyOptions.Checked[2] := OptionsRec.SwatchCentibeats;
+
+  CmbBxDefTab.ItemIndex            := OptionsRec.DefaultTab;
+  CmbBxDefTime.ItemIndex           := OptionsRec.DefaultTime;
 
   lblPopupText.Font.Color := OptionsRec.popupColour;
   clrBtnPopup.ButtonColor := Optionsrec.popupColour;
@@ -417,6 +442,7 @@ begin
     OptionsRec.GlobalTextFont    := StringtoFont(iniFile.ReadString('labels', 'Font', defFnt));
 
     OptionsRec.FuzzyTextFont     := StringtoFont(iniFile.ReadString('Fuzzy', 'Font', defFnt));
+    OptionsRec.FuzzyTimeBalloon  := StrToBool(iniFile.ReadString('Fuzzy', 'Fuzzy Time Ballon', 'False'));
     OptionsRec.NetTimeSeconds    := StrToBool(iniFile.ReadString('Fuzzy', 'Net Time Seconds', 'False'));
     OptionsRec.SwatchCentibeats  := StrToBool(iniFile.ReadString('Fuzzy', 'Swatch Centibeats', 'False'));
 
@@ -425,7 +451,7 @@ begin
     OptionsRec.TimerTextFont     := StringtoFont(iniFile.ReadString('Timer', 'Font', defFnt));
     OptionsRec.TimerMilliSeconds := StrToBool(iniFile.ReadString('Timer', 'Milli', 'False'));
 
-    OptionsRec.ReminderTextFont  := StringtoFont(iniFile.ReadString('Reminder', 'Font', defFnt));
+    OptionsRec.EventTextFont     := StringtoFont(iniFile.ReadString('Event', 'Font', defFnt));
 
     OptionsRec.popupColour       := StringToColor(iniFile.ReadString('Popup', 'Colour', 'clSilver'));
   end
@@ -437,7 +463,7 @@ begin
 end;
 
 procedure TfrmOptions.writeIniFile;
-{  write optione record to ini file.                                                               }
+{  write option record to ini file.                                                               }
 begin
   IniFile := TINIFile.Create(iniName);
 
@@ -459,15 +485,16 @@ begin
   IniFile.Writestring('Labels', 'Font', FontToString(OptionsRec.GlobalTextFont));
 
   IniFile.Writestring('Fuzzy', 'Font', FontToString(OptionsRec.FuzzyTextFont));
+  IniFile.Writestring('Fuzzy', 'Fuzzy Time Ballon', BoolToStr(OptionsRec.FuzzyTimeBalloon));
   IniFile.Writestring('Fuzzy', 'Net Time Seconds', BoolToStr(OptionsRec.NetTimeSeconds));
   IniFile.Writestring('Fuzzy', 'Swatch Centibeats', BoolToStr(OptionsRec.SwatchCentibeats));
 
   IniFile.Writestring('CountDown', 'Font', FontToString(OptionsRec.CountDownTextFont));
 
-  IniFile.Writestring('Timer', 'Font', FontToString(OptionsRec.TimerTextFont));
-  IniFile.Writestring('Timer', 'Milli',   BoolToStr(OptionsRec.TimerMilliSeconds));
+  IniFile.Writestring('Timer', 'Font',  FontToString(OptionsRec.TimerTextFont));
+  IniFile.Writestring('Timer', 'Milli', BoolToStr(OptionsRec.TimerMilliSeconds));
 
-  IniFile.Writestring('Reminder', 'Font', FontToString(OptionsRec.ReminderTextFont));
+  IniFile.Writestring('Event', 'Font', FontToString(OptionsRec.EventTextFont));
 
   IniFile.WriteString('Popup', 'Colour', ColorToString(Optionsrec.popupColour));
 end;

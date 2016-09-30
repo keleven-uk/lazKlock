@@ -1,7 +1,7 @@
 object frmHelp: TfrmHelp
-  Left = 607
+  Left = 360
   Height = 233
-  Top = 406
+  Top = 409
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -119,7 +119,7 @@ object frmHelp: TfrmHelp
   }
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.0.1.3'
   object Panel1: TPanel
     Left = 8
     Height = 160

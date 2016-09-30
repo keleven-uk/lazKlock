@@ -47,7 +47,7 @@ begin
     on Exception do begin
       mmoHelp.Append(' help file not found.');
       mmoHelp.Append('');
-      mmoHelp.Append(' This file should include full and detailed help intructions.');
+      mmoHelp.Append(' This file should include full and detailed help instructions.');
     end;
   end;
 

@@ -5,36 +5,48 @@ unit UKlockUtils;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process, MMSystem;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
+  MMSystem, dateutils;
 
+type                    //  used to hole the parsed data for a reminder.
+  reminderData = record
+    message: string;     //  the formatted message for the reminder.
+    orDate : TDateTime;  //  date of original event.
+    rmDate : TDateTime;  //  date of next reminder due.
+    period : Integer;    //  period of reminder in months.
+    toGo   : Double ;    //  days to go for reminder.
+    active : boolean;
+  end;
 
-Function FontToString(f : TFont): String;
-Function StringToFont(s : String): TFont;
-function getTextFont(f1 : TFont ; f2 : TFont): TFont;
-procedure doSystemEvent(event : Integer);
+function FontToString(f: TFont): string;
+function StringToFont(s: string): TFont;
+function getTextFont(f1: TFont; f2: TFont): TFont;
+function parseReminder(a: string): reminderData;
+procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
-procedure doCommandEvent(command : String);
-procedure doPlaySound(sound : String);
+procedure doCommandEvent(command: string);
+procedure doPlaySound(sound: string);
+
 
 implementation
 
-Function FontToString(f : TFont): String;
+function FontToString(f: TFont): string;
 {  Produces a string representation of a given font.
-   All the font attributes are convered to strings and packed together.
+   All the font attributes are converted to strings and packed together.
 
    Does not yet handle errors - will there be any ;o)                                              }
-VAR
-  rtnStr : string;
+var
+  rtnStr: string;
 begin
   rtnStr := '';
-  rtnStr := rtnStr + intToStr(f.Charset) + ':';
+  rtnStr := rtnStr + IntToStr(f.Charset) + ':';
   rtnStr := rtnStr + ColorToString(f.Color) + ':';
   rtnStr := rtnStr + IntToStr(f.Height) + ':';
   rtnStr := rtnStr + (f.Name) + ':';
   rtnStr := rtnStr + IntToStr(f.Orientation) + ':';
   rtnStr := rtnStr + IntToStr(f.size) + ':';
-  rtnStr := rtnStr + IntToStr(ord(f.Pitch)) + ':';
-  rtnStr := rtnStr + IntToStr(ord(f.Quality)) + ':';
+  rtnStr := rtnStr + IntToStr(Ord(f.Pitch)) + ':';
+  rtnStr := rtnStr + IntToStr(Ord(f.Quality)) + ':';
 
   //                             TFontStyles is a set and scanned differently.
   if fsBold in f.Style then
@@ -61,124 +73,132 @@ begin
   FontToString := rtnStr;
 end;
 
-Function StringToFont(s : String): TFont;
-{  Produces a fon from a given string representation [produced by FonttoString.
-   The string is read a bit at at time [upto the next :] and this is conversted
-   to the fiven font attribute.
+function StringToFont(s: string): TFont;
+{  Produces a font from a given string representation [produced by FonttoString.
+   The string is read a bit at at time [upto the next :] and this is converted
+   to the given font attribute.
 
    NB :: pos starts from position 1, where copy start at position 1.
          TFontStyles is a set and scanned differently.
 
    Does not yet handle errors - will there be any ;o)                                              }
-VAR
-  p    : integer;
-  err  : integer;
-  chrs : integer;
-  clr  : TColor;
-  Hght : integer;
-  nme  : String;
-  Ortn : Integer;
-  sze  : Integer;
-  ptch : Integer;
-  qlty : integer;
+var
+  p: integer;
+  err: integer;
+  chrs: integer;
+  clr: TColor;
+  Hght: integer;
+  nme: string;
+  Ortn: integer;
+  sze: integer;
+  ptch: integer;
+  qlty: integer;
 
-  fnt  : TFont;
-  fstyles : TFontStyles;
+  fnt: TFont;
+  fstyles: TFontStyles;
 begin
   fnt := TFont.Create;
   fstyles := [];             //  empty set ??
 
-  p := Pos(':', s);                                   //  Characterset of font
+  p := Pos(':', s);                                   //  Character set of font
   val(copy(s, 0, p - 1), chrs, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                   //  colour of font
   clr := StringToColor(copy(s, 0, p - 1));
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  height of font
   val(copy(s, 0, p - 1), Hght, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  name of font
   nme := copy(s, 0, p - 1);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  orientation of font
   val(copy(s, 0, p - 1), Ortn, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  size of font
   val(copy(s, 0, p - 1), sze, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  pitch of font
   val(copy(s, 0, p - 1), ptch, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
   p := Pos(':', s);                                 //  quality of font
   val(copy(s, 0, p - 1), qlty, err);
-  delete(s, 1, p);
+  Delete(s, 1, p);
 
-  if Pos('B', s) <> 0 then include(fstyles, fsBold);
-  if Pos('I', s) <> 0 then include(fstyles, fsItalic);
-  if Pos('S', s) <> 0 then include(fstyles, fsStrikeOut);
-  if Pos('U', s) <> 0 then include(fstyles, fsUnderline);
+  if Pos('B', s) <> 0 then
+    include(fstyles, fsBold);
+  if Pos('I', s) <> 0 then
+    include(fstyles, fsItalic);
+  if Pos('S', s) <> 0 then
+    include(fstyles, fsStrikeOut);
+  if Pos('U', s) <> 0 then
+    include(fstyles, fsUnderline);
 
-  fnt.Charset     := chrs;                      //  Characterset of font
-  fnt.Color       := clr;                       //  colour of font
-  fnt.Height      := Hght;                      //  height of font
-  fnt.Name        := nme;                       //  name of font
-  fnt.Orientation := Ortn;                      //  orientation of font
-  fnt.Size        := sze;                       //  size of font
-  fnt.Pitch       := TFontPitch(ptch);          //  pitch of font
-  fnt.Quality     := TFontQuality(qlty);        //  quality of font
-  fnt.Style       := fstyles;
+  fnt.Charset := chrs;                     //  Character set of font
+  fnt.Color := clr;                        //  colour of font
+  fnt.Height := Hght;                      //  height of font
+  fnt.Name := nme;                         //  name of font
+  fnt.Orientation := Ortn;                 //  orientation of font
+  fnt.Size := sze;                         //  size of font
+  fnt.Pitch := TFontPitch(ptch);           //  pitch of font
+  fnt.Quality := TFontQuality(qlty);       //  quality of font
+  fnt.Style := fstyles;
 
   StringToFont := fnt;
 end;
 
 
-function getTextFont(f1 : TFont ; f2 : TFont): TFont;
-{  takes two fonts, global[f2] and local[f1] and returns one acording the the rule.
+function getTextFont(f1: TFont; f2: TFont): TFont;
+{  takes two fonts, global[f2] and local[f1] and returns one according the the rule.
    If the local is default return the local, else return the global.           }
 begin
   if f1.IsDefault then
     getTextFont := f2  //  use local colour
   else
-    getTextFont := f1  //  use global colour
+    getTextFont := f1;  //  use global colour
 end;
 
-procedure doSystemEvent(event : Integer);
+procedure doSystemEvent(event: integer);
 {  called to do a system event.
          0 = shut down PC
          1 = reboot PC
          2 = Hibernate PC
          3 = log off current user
 
-    NB :: if cross platform, shutdown cammand would need changing.                                }
-VAR
+    NB :: if cross platform, shutdown command would need changing.                                }
+var
   AProcess: TProcess;
 begin
   AProcess := TProcess.Create(nil);
 
   case event of
-    0 : begin
+    0:
+    begin
       AProcess.Parameters.Add('-s');
       AProcess.Parameters.Add('"-t 10"');
-      AProcess.Parameters.Add('"-c "Shuting Down PC in 10 Seconds by Klock');
+      AProcess.Parameters.Add('"-c "Shutting Down PC in 10 Seconds by Klock');
     end;
-    1 : begin
+    1:
+    begin
       AProcess.Parameters.Add('-r');
       AProcess.Parameters.Add('"-t 10"');
-      AProcess.Parameters.Add('"-c "Restarting PC in 10 Seconds by Klock')
+      AProcess.Parameters.Add('"-c "Restarting PC in 10 Seconds by Klock');
     end;
-    2 : begin
+    2:
+    begin
       AProcess.Parameters.Add('-h');
       AProcess.Parameters.Add('"-t 10"');
       AProcess.Parameters.Add('"-c "Hibernate PC in 10 Seconds by Klock');
     end;
-    3 : begin
+    3:
+    begin
       AProcess.Parameters.Add('-l');
       AProcess.Parameters.Add('"-t 10"');
       AProcess.Parameters.Add('"-c "Logging off user in 10 Seconds by Klock');
@@ -194,6 +214,7 @@ begin
   end;
 
 end;
+
 procedure abortSystemEvent;
 {  tries to abort a system event - i.e. shutdown                               }
 begin
@@ -204,41 +225,112 @@ begin
       Execute;
     finally
       Free;
-  end;    //  with TProcess.Create(nil)
+    end;    //  with TProcess.Create(nil)
 
 end;
 
-procedure doCommandEvent(command : String);
+procedure doCommandEvent(command: string);
 {  called to execute a command, which hopefully is in command.
    NB  :: does not check if the command is really executable.                                     }
 begin
-  if command <> '' then begin
+  if command <> '' then
+  begin
     with TProcess.Create(nil) do
       try
         Executable := Command;
         Execute;
       finally
         Free;
-    end;    //  with TProcess.Create(nil)
-  end       //  if comand <> ''
+      end;    //  with TProcess.Create(nil)
+  end       //  if command <> ''
   else
     ShowMessage('Even Klock cant run with nowt!!');
 
 end;
 
-procedure doPlaySound(sound : String);
-VAR
-  PCharSoundName : PChar;       // PlaySound needs to be passed PChar and not a string
+procedure doPlaySound(sound: string);
+var
+  PCharSoundName: PChar;       // PlaySound needs to be passed PChar and not a string
 begin
   PCharSoundname := @sound[1];  //  convert to PCHAR - a pointer to first character
-                                             //  of the string - i think.
+  //  of the string - i think.
   try                                        //  in case sound file is not found.
     PlaySound(PCharSoundname, 0, SND_ASYNC);
   except
-    on EInOutError do beep ;
+    on EInOutError do
+      beep;
   end;
 end;
 
+function parseReminder(a: string): reminderData;
+{  a is a string containing the Reminder, comma delimited.
+   pos 0 = name
+       1 = date
+       2 = period [Yearly/Monthly]
+       3 = type[Wedding/Birthday/Motor/One Off/Other
+       4 = active[-1/0]
+}
+var
+  rmndrData : reminderData;
+
+  name  : string;
+  date  : string;
+  period: string;
+  Rtype : string;
+  active: String;
+
+  p : integer;
+  y : integer;
+begin
+  p := Pos(',', a);                                  //  name of reminder
+  name := copy(a, 0, p - 1);
+  Delete(a, 1, p);
+
+  p := Pos(',', a);                                  //  date of reminder
+  date := copy(a, 0, p - 1);
+  Delete(a, 1, p);
+  rmndrData.orDate  := StrToDate(date);
+
+  p := Pos(',', a);                                  //  period of reminder
+  period := copy(a, 0, p - 1);
+  Delete(a, 1, p);
+  if period = ' Yearly' then
+    rmndrData.period:= 12
+  else
+    rmndrData.period:= 1;
+
+  p := Pos(',', a);                                  //  type of reminder
+  Rtype := copy(a, 0, p - 1);
+  Delete(a, 1, p);
+
+  active := a;                                      //  is reminder active
+  Delete(a, 1, p);
+  rmndrData.active  := StrToBool(active);
+
+
+  y := YearOf(Now);                                  //  check if reminder passed
+  if MonthOf(rmndrData.orDate) < MonthOf(Now) then   //  for this year, if it has
+    y += 1;                                          //  then increment year.
+
+  if (MonthOf(rmndrData.orDate) = MonthOf(Now)) and  //  if this month, check the
+     (Dayof(rmndrData.orDate) < Dayof(Now)) then     //  if the day has passed
+       y += 1;
+
+  rmndrData.rmDate  := EncodeDateTime(y,
+                           MonthOf(rmndrData.orDate),
+                           DayOf(rmndrData.orDate),
+                           0, 0, 0, 0);
+
+
+  rmndrData.toGo := DaySpan(Now, rmndrData.rmDate);
+
+  case Rtype of
+    ' Wedding'  : rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
+    ' Birthday' : rmndrData.message := format('%s has a Birthday, in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
+    ' Motor'    : rmndrData.message := format('%s , in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
+  end;
+
+  parseReminder := rmndrData;
+end;
+
 end.
-
-
