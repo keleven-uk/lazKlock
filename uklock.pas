@@ -125,11 +125,11 @@ type
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CmbBxCountdownActionChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
+    procedure DtEdtReminderChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
-    procedure LblCountdownTimeClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
@@ -181,9 +181,10 @@ begin
 
   ft := FuzzyTime.Create;
 
-  DtEdtReminder.Date := now;
-  SpnEdtMins.Value   := MinuteOf(time);
-  SpnEdtHour.Value   := HourOf(time);
+  DtEdtReminder.Date     := now;
+  SpnEdtMins.Value       := MinuteOf(time);
+  SpnEdtHour.Value       := HourOf(time);
+  btnReminderSet.Enabled := false;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -297,9 +298,10 @@ begin
       stsBrInfo.Panels.Items[2].Text := '';
       stsBrInfo.Panels.Items[3].Text := '';
       if ReminderTimer.Enabled = false then begin   // only set display to current
-        DtEdtReminder.Date := now;
-        SpnEdtMins.Value   := MinuteOf(time);
-        SpnEdtHour.Value   := HourOf(time);
+        DtEdtReminder.Date     := now;
+        SpnEdtMins.Value       := MinuteOf(time);
+        SpnEdtHour.Value       := HourOf(time);
+        btnReminderSet.Enabled := false;
       end
       else begin
         stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s',
@@ -771,6 +773,11 @@ begin
   btnReminderSet.Enabled := true;
 end;
 
+procedure TfrmMain.DtEdtReminderChange(Sender: TObject);
+begin
+  btnReminderSet.Enabled := true;
+end;
+
 procedure TfrmMain.btnReminderSetClick(Sender: TObject);
 VAR
   RmndDt : TDateTime;
@@ -1106,11 +1113,6 @@ begin
 
   ShowMessage(helpText);
 end;
-
- procedure TfrmMain.LblCountdownTimeClick(Sender: TObject);
- begin
-
- end;
 
 
 // *****************************************************************************

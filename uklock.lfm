@@ -2167,8 +2167,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 580
-      ActivePage = TbShtFuzzy
-      TabIndex = 0
+      ActivePage = TbShtRimder
+      TabIndex = 3
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2336,7 +2336,6 @@ object frmMain: TfrmMain
               Font.Height = -35
               ParentColor = False
               ParentFont = False
-              OnClick = LblCountdownTimeClick
             end
           end
           object Panel8: TPanel
@@ -2724,6 +2723,7 @@ object frmMain: TfrmMain
               NumGlyphs = 0
               Font.Height = -13
               MaxLength = 0
+              OnChange = DtEdtReminderChange
               ParentFont = False
               TabOrder = 1
             end
