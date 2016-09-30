@@ -25,6 +25,7 @@ Private
   Function unixTime   : string;
   Function utcTime    : string;
   Function swatchTime : string;
+  Function julianTime : string ;
 Public
   displayFuzzy : Integer ;
   Constructor init ;
@@ -42,7 +43,7 @@ end;
 
 Function FuzzyTime.fTime : String ;
 Type
-  Hours = Array [0..11] of String;
+  Hours = Array [0..12] of String;
 VAR
   t     : TDateTime;
   hour  : word;
@@ -83,51 +84,24 @@ begin
   if (mins mod 5) > 2 then           // closer to next five minutes, go next
     nrms := nrms + 5;
 
-  if nrms = 0 then begin
-    sRtn := '';
-  end
-  else if nrms = 5 then begin
-    sRtn := 'five past ';
-  end
-  else if nrms = 10 then begin
-    sRtn := 'ten past ';
-  end
-  else if nrms = 15 then begin
-    sRtn := 'quarter past ';
-  end
-  else if nrms = 20 then begin
-    sRtn := 'twenty past ';
-  end
-  else if nrms = 25 then begin
-    sRtn := 'twenty-five past ';
-  end
-  else if nrms = 30 then begin
-    sRtn := 'half past ';
-  end
-  else if nrms = 35 then begin
-    sRtn := 'twenty-five to ';
-    hour := hour + 1;
-  end
-  else if nrms = 40 then begin
-    sRtn := 'twenty to ';
-    hour := hour + 1;
-  end
-  else if nrms = 45 then begin
-    sRtn := 'quarter to ';
-    hour := hour + 1;
-  end
-  else if nrms = 50 then begin
-    sRtn := 'ten to ';
-    hour := hour + 1;
-  end
-  else if nrms = 55 then begin
-    sRtn := 'five to ';
-    hour := hour + 1;
-  end
-  else if nrms = 60 then begin   //  does this ever happen.
-    sRtn := '';
-    hour := hour + 1;
+  case nrms of
+     0 : sRtn := '';
+     5 : sRtn := 'five past ';
+    10 : sRtn := 'ten past ';
+    15 : sRtn := 'quarter past ';
+    20 : sRtn := 'twenty past ';
+    25 : sRtn := 'twenty-five past ';
+    30 : sRtn := 'half past ';
+    35 : sRtn := 'twenty-five to ';
+    40 : sRtn := 'twenty to ';
+    45 : sRtn := 'quarter to ';
+    50 : sRtn := 'ten to ';
+    55 : sRtn := 'five to ';
+    60 : sRtn := '';
   end;
+
+  if nrms >30 then
+    hour := hour + 1;
 
   if (hour = 12) and (nrms = 0) then   //  fix for noon.
     ampm := ' noon';
@@ -151,10 +125,9 @@ Function FuzzyTime.netTime : string;
 
    Only returns NET time in NET 15 second intervals [equals 1 normal second]  }
 VAR
-  deg : Integer;
-  min : Integer;
-  sec : Integer;
- msec : LongWord;
+  deg : Int64;
+  min : Int64;
+  sec : Int64;
 begin
 
   if OptionsRec.NetTimeSeconds then begin
@@ -202,10 +175,6 @@ begin
   GetSystemTime(utc);                    //  Get current time in UTC
   noOfSeconds := SecondOfTheDay(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
 
-//  noOfSeconds := NoOfSeconds + 3600;    //  swatch time is utc + 1
-//  if noOfSeconds > 86400 then
-//    noOfSeconds := noOfSeconds - 86400;  //  rolled past midnight
-
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
   if OptionsRec.SwatchCentibeats then
@@ -214,6 +183,16 @@ begin
     swatchTime := format('@ %3.f BMT', [noOfBeats]);
 
 end;
+
+Function FuzzyTime.julianTime : string ;
+VAR
+  jt : double;
+begin
+
+  jt := DateTimeToJulianDate(Now);
+  julianTime := format('%7.7f', [jt]);
+end;
+
 Function FuzzyTime.getDblTime : Double ;
 {  returns current time as a float, in the format hh.mm.
    a bit klunky - needs a rewrite, when i know how                             }
@@ -235,18 +214,17 @@ end;
 
 Function FuzzyTime.getTime : String;
 begin
-  if self.displayFuzzy = 0 then                   //  normal time
-    getTime := self.fTime
-  else if self.displayFuzzy = 1 then              //  fuzzy time
-    getTime := TimeToStr(Time)
-  else if self.displayFuzzy = 2 then              //  net time
-    getTime := self.netTime
-  else if self.displayFuzzy = 3 then              //  unix time
-    getTime := self.unixTime
-  else if self.displayFuzzy = 4 then              //  unix time
-    getTime := utcTime
-  else if self.displayFuzzy = 5 then              //  swatch time
-    getTime := swatchTime
+
+  case self.displayFuzzy of
+    0 : getTime := self.fTime;
+    1 : getTime := TimeToStr(Time);
+    2 : getTime := self.netTime;
+    3 : getTime := self.unixTime;
+    4 : getTime := utcTime;
+    5 : getTime := swatchTime;
+    6 : getTime := julianTime;
+  end;
+
 end ;
 
 

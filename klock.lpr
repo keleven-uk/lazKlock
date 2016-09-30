@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, Uklock, UAbout, Uhelp, UOptions, uFuzzyTime,
-  uLicense, UoptionUtils;
+  uLicense, UKlockUtils;
 
 {$R *.res}
 

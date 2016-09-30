@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, ButtonPanel, EditBtn, Buttons, CheckLst, INIFiles, UoptionUtils;
+  StdCtrls, ButtonPanel, EditBtn, Buttons, CheckLst, INIFiles, UKlockUtils;
 
 type
 
@@ -21,8 +21,7 @@ type
     ButtonPanel1: TButtonPanel;
     ChckBxScreenSave: TCheckBox;
     ChckBxTimerMilli: TCheckBox;
-    ChckBxNetTimeSeconds: TCheckBox;
-    ChckBxSwatchCentibeats: TCheckBox;
+    ChckLstBxFuzzyOptions: TCheckListBox;
     CmbBxDefTime: TComboBox;
     CmbBxDefTab: TComboBox;
     FontDialog1: TFontDialog;
@@ -43,8 +42,6 @@ type
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
-    Panel5: TPanel;
-    Panel6: TPanel;
     SpdBtnDefault: TSpeedButton;
     procedure btnCountdownFontClick(Sender: TObject);
     procedure btnFuzzyFontClick(Sender: TObject);
@@ -132,7 +129,7 @@ Constructor OptionsRecord.init;
 begin
   self.DefaultTab  := 0;
   self.DefaultTime := 0;
-  self.Version     := '24';
+  self.Version     := '25';
 
   self.GlobalTextFont    := frmOptions.Font;
   self.FuzzyTextFont     := frmOptions.Font;
@@ -239,7 +236,7 @@ begin
                                          //  can then be used in main form
   OptionsRec.init;                       //  does not seem to be called automatically.
 
-  checkIniFile;                         //  check for ini file, if not there - create
+  checkIniFile;                          //  check for ini file, if not there - create
 
   resetForm;
 end;
@@ -298,7 +295,8 @@ begin
   OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
   OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
-  OptionsRec.setNetTimeSeconds(ChckBxNetTimeSeconds.Checked);
+  OptionsRec.setNetTimeSeconds(ChckLstBxFuzzyOptions.Checked[0]);
+  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[1]);
 
   writeIniFile;
 end;
@@ -319,7 +317,7 @@ end;
 
 procedure TfrmOptions.ChckBxSwatchCentibeatsChange(Sender: TObject);
 begin
-  if ChckBxSwatchCentibeats.Checked then
+  if ChckLstBxFuzzyOptions.Checked[1] then
     OptionsRec.setSwatchCentibeats(True)
   else
     OptionsRec.setSwatchCentibeats(False)
@@ -327,7 +325,7 @@ end;
 
 procedure TfrmOptions.ChckBxNetTimeSecondsChange(Sender: TObject);
 begin
-  if ChckBxNetTimeSeconds.Checked then
+  if ChckLstBxFuzzyOptions.Checked[0] then
     OptionsRec.setNetTimeSeconds(True)
   else
     OptionsRec.setNetTimeSeconds(False)
@@ -345,7 +343,8 @@ begin
   OptionsRec.setDefaultTab(CmbBxDefTab.ItemIndex);
   OptionsRec.setDefaultTime(CmbBxDefTime.ItemIndex);
   OptionsRec.setTimerMilliSeconds(ChckBxTimerMilli.Checked);
-  OptionsRec.setNetTimeSeconds(ChckBxNetTimeSeconds.Checked);
+  OptionsRec.setNetTimeSeconds(ChckLstBxFuzzyOptions.Checked[0]);
+  OptionsRec.setSwatchCentibeats(ChckLstBxFuzzyOptions.Checked[1]);
   resetForm;
 end;
 
@@ -359,14 +358,14 @@ begin
   lblTimerText.Font    := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
   lblReminderText.Font := getTextFont(OptionsRec.ReminderTextFont, OptionsRec.GlobalTextFont);
 
-  ChckBxTimerMilli.Checked       := OptionsRec.TimerMilliSeconds;
-  ChckBxScreenSave.Checked       := OptionsRec.ScreenSave;
-  ChckBxNetTimeSeconds.Checked   := OptionsRec.NetTimeSeconds;
-  ChckBxSwatchCentibeats.Checked := OptionsRec.SwatchCentibeats;
-//  CmbBxDefTab.ItemIndex          := OptionsRec.setDefaultTab;
-//  CmbBxDefTime.ItemIndex         := OptionsRec.setDefaultTime;
-//  ChckBxTimerMilli.Checked       := OptionsRec.setTimerMilliSeconds;
-//  ChckBxNetTimeSeconds.Checked   := OptionsRec.setNetTimeSeconds;
+  ChckBxTimerMilli.Checked         := OptionsRec.TimerMilliSeconds;
+  ChckBxScreenSave.Checked         := OptionsRec.ScreenSave;
+  ChckLstBxFuzzyOptions.Checked[0] := OptionsRec.NetTimeSeconds;
+  ChckLstBxFuzzyOptions.Checked[1] := OptionsRec.SwatchCentibeats;
+
+  CmbBxDefTab.ItemIndex          := OptionsRec.DefaultTab;
+  CmbBxDefTime.ItemIndex         := OptionsRec.DefaultTime;
+
 end;
 
 
@@ -374,7 +373,7 @@ end;
 {  ********************************************************************************** ini file **  }
 
 procedure TfrmOptions.checkIniFile;
-{  if ini file exist - reads the options. if the file does not exost, create it.                   }
+{  if ini file exist - reads the options. if the file does not exist, create it.                   }
 VAR
   code   : integer;
   defFnt : String;

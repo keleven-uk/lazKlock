@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 645
+  Left = 575
   Height = 242
-  Top = 615
+  Top = 699
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2167,21 +2167,21 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 580
-      ActivePage = TbShtCountdown
-      TabIndex = 1
+      ActivePage = TbShtFuzzy
+      TabIndex = 0
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
         Caption = 'Fuzzy Time'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel4: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2208,6 +2208,7 @@ object frmMain: TfrmMain
                 'Unix'
                 'UTC'
                 'Swatch'
+                'Julian'
               )
               OnChange = CmbBxTimeChange
               Style = csDropDownList
@@ -2223,12 +2224,11 @@ object frmMain: TfrmMain
             ClientHeight = 43
             ClientWidth = 444
             TabOrder = 1
-            OnClick = Panel14Click
             object lblfuzzy: TLabel
               Left = 8
-              Height = 33
+              Height = 30
               Top = 4
-              Width = 389
+              Width = 384
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False
@@ -2437,7 +2437,7 @@ object frmMain: TfrmMain
               Visible = False
             end
             object chckBxCountdownCommand: TCheckBox
-              Left = 104
+              Left = 100
               Height = 17
               Top = 9
               Width = 65
@@ -2447,13 +2447,12 @@ object frmMain: TfrmMain
               Visible = False
             end
             object EdtCountdownCommand: TEdit
-              Left = 170
+              Left = 176
               Height = 21
               Top = 8
               Width = 200
               Enabled = False
               TabOrder = 11
-              Text = '...'
               Visible = False
             end
             object btnCountdownLoadCommand: TButton
@@ -2580,15 +2579,15 @@ object frmMain: TfrmMain
       end
       object TbShtRimder: TTabSheet
         Caption = 'Reminder'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 572
         object Panel5: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 572
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 572
           Color = clForm
           ParentColor = False
@@ -2625,34 +2624,34 @@ object frmMain: TfrmMain
           object Panel12: TPanel
             Left = 116
             Height = 43
-            Top = 8
+            Top = 10
             Width = 444
             ClientHeight = 43
             ClientWidth = 444
             TabOrder = 1
             object lblReminder: TLabel
               Left = 16
-              Height = 33
+              Height = 30
               Top = 4
-              Width = 185
+              Width = 184
               Caption = 'Reminder not set'
               Font.Height = -24
               ParentColor = False
               ParentFont = False
             end
-          end
-          object Panel15: TPanel
-            Left = 116
-            Height = 40
-            Top = 56
-            Width = 444
-            ClientHeight = 40
-            ClientWidth = 444
-            TabOrder = 2
+            object SpnEdtMins: TSpinEdit
+              Left = 280
+              Height = 21
+              Top = 10
+              Width = 50
+              MaxValue = 59
+              OnChange = SpnEdtMinsChange
+              TabOrder = 0
+            end
             object DtEdtReminder: TDateEdit
-              Left = 164
-              Height = 25
-              Top = 8
+              Left = 336
+              Height = 24
+              Top = 10
               Width = 80
               CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
               OKCaption = 'OK'
@@ -2700,25 +2699,170 @@ object frmMain: TfrmMain
               Font.Height = -13
               MaxLength = 0
               ParentFont = False
-              TabOrder = 0
+              TabOrder = 1
             end
             object SpnEdtHour: TSpinEdit
-              Left = 24
-              Height = 23
-              Top = 8
+              Left = 224
+              Height = 21
+              Top = 10
               Width = 50
               MaxValue = 23
               OnChange = SpnEdtHourChange
-              TabOrder = 1
+              TabOrder = 2
             end
-            object SpnEdtMins: TSpinEdit
-              Left = 88
-              Height = 23
+          end
+          object Panel15: TPanel
+            Left = 116
+            Height = 40
+            Top = 56
+            Width = 444
+            ClientHeight = 40
+            ClientWidth = 444
+            TabOrder = 2
+            object CmbBxReminderAction: TComboBox
+              Left = 8
+              Height = 21
+              Top = 8
+              Width = 80
+              ItemHeight = 13
+              Items.Strings = (
+                'Sound'
+                'Reminder'
+                'System'
+                'Command'
+              )
+              OnChange = CmbBxReminderActionChange
+              Style = csDropDownList
+              TabOrder = 0
+            end
+            object ChckBxReminderSound: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 8
+              Width = 48
+              Caption = 'Sound'
+              OnChange = ChckBxReminderSoundChange
+              TabOrder = 1
+              Visible = False
+            end
+            object EdtReminderSound: TEdit
+              Left = 168
+              Height = 21
+              Top = 8
+              Width = 150
+              Enabled = False
+              TabOrder = 2
+              Visible = False
+            end
+            object btnReminderLoadSound: TButton
+              Left = 328
+              Height = 24
               Top = 8
               Width = 50
-              MaxValue = 59
-              OnChange = SpnEdtMinsChange
-              TabOrder = 2
+              Caption = '...'
+              Enabled = False
+              OnClick = btnReminderLoadSoundClick
+              TabOrder = 3
+              Visible = False
+            end
+            object btnReminderTestSound: TButton
+              Left = 384
+              Height = 24
+              Top = 8
+              Width = 50
+              Caption = 'Test'
+              Enabled = False
+              OnClick = btnReminderTestSoundClick
+              TabOrder = 4
+              Visible = False
+            end
+            object ChckBxReminderReminder: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 8
+              Width = 63
+              Caption = 'Reminder'
+              Checked = True
+              OnChange = ChckBxReminderReminderChange
+              State = cbChecked
+              TabOrder = 5
+              Visible = False
+            end
+            object EdtReminderText: TEdit
+              Left = 176
+              Height = 21
+              Top = 9
+              Width = 256
+              TabOrder = 6
+              Text = 'Reminding you now, Sir!'
+              Visible = False
+            end
+            object ChckBxReminderSystem: TCheckBox
+              Left = 104
+              Height = 17
+              Top = 9
+              Width = 53
+              Caption = 'System'
+              OnChange = ChckBxReminderSystemChange
+              TabOrder = 7
+              Visible = False
+            end
+            object CmbBxReminderSystem: TComboBox
+              Left = 168
+              Height = 21
+              Top = 9
+              Width = 150
+              Enabled = False
+              ItemHeight = 13
+              Items.Strings = (
+                'Shutdown PC'
+                'Restart PC'
+                'Hibernate PC'
+                'Log of current user.'
+              )
+              Style = csDropDownList
+              TabOrder = 8
+              Visible = False
+            end
+            object ChckBxReminderCommand: TCheckBox
+              Left = 100
+              Height = 17
+              Top = 8
+              Width = 65
+              Caption = 'Command'
+              OnChange = ChckBxReminderCommandChange
+              TabOrder = 9
+              Visible = False
+            end
+            object EdtReminderCommand: TEdit
+              Left = 176
+              Height = 21
+              Top = 8
+              Width = 200
+              Enabled = False
+              TabOrder = 10
+              Visible = False
+            end
+            object btnReminderLoadCommand: TButton
+              Left = 384
+              Height = 24
+              Top = 7
+              Width = 50
+              Caption = '...'
+              Enabled = False
+              OnClick = btnReminderLoadCommandClick
+              TabOrder = 11
+              Visible = False
+            end
+            object btnReminderAbort: TButton
+              Left = 384
+              Height = 24
+              Top = 8
+              Width = 50
+              Caption = 'Abort'
+              OnClick = btnReminderAbortClick
+              TabOrder = 12
+              Visible = False
             end
           end
         end
@@ -2786,7 +2930,7 @@ object frmMain: TfrmMain
     left = 520
   end
   object PopupNotifier1: TPopupNotifier
-    Color = clYellow
+    Color = clSilver
     Icon.Data = {
       07544269746D617036000000424D360000000000000036000000280000000000
       0000000000000100180000000000000000006400000064000000000000000000

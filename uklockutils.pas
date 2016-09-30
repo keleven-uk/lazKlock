@@ -1,16 +1,20 @@
-unit UoptionUtils;
+unit UKlockUtils;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process, MMSystem;
 
 
 Function FontToString(f : TFont): String;
 Function StringToFont(s : String): TFont;
 function getTextFont(f1 : TFont ; f2 : TFont): TFont;
+procedure doSystemEvent(event : Integer);
+procedure abortSystemEvent;
+procedure doCommandEvent(command : String);
+procedure doPlaySound(sound : String);
 
 implementation
 
@@ -19,8 +23,6 @@ Function FontToString(f : TFont): String;
    All the font attributes are convered to strings and packed together.
 
    Does not yet handle errors - will there be any ;o)                                              }
-
-
 VAR
   rtnStr : string;
 begin
@@ -68,7 +70,6 @@ Function StringToFont(s : String): TFont;
          TFontStyles is a set and scanned differently.
 
    Does not yet handle errors - will there be any ;o)                                              }
-
 VAR
   p    : integer;
   err  : integer;
@@ -146,6 +147,96 @@ begin
     getTextFont := f2  //  use local colour
   else
     getTextFont := f1  //  use global colour
+end;
+
+procedure doSystemEvent(event : Integer);
+{  called to do a system event.
+         0 = shut down PC
+         1 = reboot PC
+         2 = Hibernate PC
+         3 = log off current user
+
+    NB :: if cross platform, shutdown cammand would need changing.                                }
+VAR
+  AProcess: TProcess;
+begin
+  AProcess := TProcess.Create(nil);
+
+  case event of
+    0 : begin
+      AProcess.Parameters.Add('-s');
+      AProcess.Parameters.Add('"-t 10"');
+      AProcess.Parameters.Add('"-c "Shuting Down PC in 10 Seconds by Klock');
+    end;
+    1 : begin
+      AProcess.Parameters.Add('-r');
+      AProcess.Parameters.Add('"-t 10"');
+      AProcess.Parameters.Add('"-c "Restarting PC in 10 Seconds by Klock')
+    end;
+    2 : begin
+      AProcess.Parameters.Add('-h');
+      AProcess.Parameters.Add('"-t 10"');
+      AProcess.Parameters.Add('"-c "Hibernate PC in 10 Seconds by Klock');
+    end;
+    3 : begin
+      AProcess.Parameters.Add('-l');
+      AProcess.Parameters.Add('"-t 10"');
+      AProcess.Parameters.Add('"-c "Logging off user in 10 Seconds by Klock');
+    end;
+  end;
+
+  try
+    AProcess.Options := [poWaitOnExit];
+    AProcess.Executable := 'shutdown';
+    AProcess.Execute;
+  finally
+    AProcess.Free;
+  end;
+
+end;
+procedure abortSystemEvent;
+{  tries to abort a system event - i.e. shutdown                               }
+begin
+  with TProcess.Create(nil) do
+    try
+      Executable := 'shutdown.exe';
+      Parameters.Add('-a');
+      Execute;
+    finally
+      Free;
+  end;    //  with TProcess.Create(nil)
+
+end;
+
+procedure doCommandEvent(command : String);
+{  called to execute a command, which hopefully is in command.
+   NB  :: does not check if the command is really executable.                                     }
+begin
+  if command <> '' then begin
+    with TProcess.Create(nil) do
+      try
+        Executable := Command;
+        Execute;
+      finally
+        Free;
+    end;    //  with TProcess.Create(nil)
+  end       //  if comand <> ''
+  else
+    ShowMessage('Even Klock cant run with nowt!!');
+
+end;
+
+procedure doPlaySound(sound : String);
+VAR
+  PCharSoundName : PChar;       // PlaySound needs to be passed PChar and not a string
+begin
+  PCharSoundname := @sound[1];  //  convert to PCHAR - a pointer to first character
+                                             //  of the string - i think.
+  try                                        //  in case sound file is not found.
+    PlaySound(PCharSoundname, 0, SND_ASYNC);
+  except
+    on EInOutError do beep ;
+  end;
 end;
 
 end.

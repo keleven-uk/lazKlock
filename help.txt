@@ -31,7 +31,7 @@ When a given time is reached a reminder is displayed on screen.
 Today's date is default, but a future date can also be selected.
 
 
-
+Program tested on Windows XP & Windows 7 [both 32 & 64 bit].
 
 History
 -------

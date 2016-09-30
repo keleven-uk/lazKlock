@@ -1,12 +1,12 @@
 object frmOptions: TfrmOptions
-  Left = 600
+  Left = 302
   Height = 355
-  Top = 626
-  Width = 640
+  Top = 577
+  Width = 660
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
   ClientHeight = 355
-  ClientWidth = 640
+  ClientWidth = 660
   Constraints.MinWidth = 320
   OnCreate = FormCreate
   Position = poMainFormCenter
@@ -15,9 +15,9 @@ object frmOptions: TfrmOptions
     Left = 8
     Height = 296
     Top = 8
-    Width = 216
+    Width = 640
     ClientHeight = 296
-    ClientWidth = 216
+    ClientWidth = 640
     Font.Height = -16
     ParentFont = False
     TabOrder = 0
@@ -25,9 +25,9 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 4
-      Width = 200
+      Width = 408
       ClientHeight = 34
-      ClientWidth = 196
+      ClientWidth = 404
       TabOrder = 0
       object btnGlobalFont: TButton
         Left = 110
@@ -53,9 +53,9 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 62
-      Width = 200
+      Width = 408
       ClientHeight = 34
-      ClientWidth = 196
+      ClientWidth = 404
       TabOrder = 1
       object btnFuzzyFont: TButton
         Left = 110
@@ -76,14 +76,29 @@ object frmOptions: TfrmOptions
         ParentColor = False
         ParentFont = False
       end
+      object ChckLstBxFuzzyOptions: TCheckListBox
+        Left = 198
+        Height = 24
+        Top = 2
+        Width = 192
+        Items.Strings = (
+          'Net Time - Seconds'
+          'Swatch - Centibeats'
+        )
+        ItemHeight = 19
+        TabOrder = 1
+        Data = {
+          020000000000
+        }
+      end
     end
     object GroupBox3: TGroupBox
       Left = 8
       Height = 52
       Top = 118
-      Width = 200
+      Width = 408
       ClientHeight = 34
-      ClientWidth = 196
+      ClientWidth = 404
       Font.Height = -16
       ParentFont = False
       TabOrder = 2
@@ -109,9 +124,9 @@ object frmOptions: TfrmOptions
       Left = 8
       Height = 52
       Top = 174
-      Width = 200
+      Width = 408
       ClientHeight = 34
-      ClientWidth = 196
+      ClientWidth = 404
       TabOrder = 3
       object btnTimerFont: TButton
         Left = 110
@@ -130,14 +145,22 @@ object frmOptions: TfrmOptions
         Caption = 'Timer'
         ParentColor = False
       end
+      object ChckBxTimerMilli: TCheckBox
+        Left = 206
+        Height = 23
+        Top = 4
+        Width = 167
+        Caption = 'Timer - Milli Seconds'
+        TabOrder = 1
+      end
     end
     object GroupBox5: TGroupBox
       Left = 8
       Height = 52
       Top = 230
-      Width = 200
+      Width = 408
       ClientHeight = 34
-      ClientWidth = 196
+      ClientWidth = 404
       TabOrder = 4
       object btnReminderFont: TButton
         Left = 110
@@ -162,7 +185,7 @@ object frmOptions: TfrmOptions
     Left = 6
     Height = 34
     Top = 315
-    Width = 628
+    Width = 648
     OKButton.Name = 'OKButton'
     OKButton.Caption = '&OK'
     OKButton.OnClick = OKButtonClick
@@ -178,9 +201,9 @@ object frmOptions: TfrmOptions
     ShowButtons = [pbOK, pbCancel, pbHelp]
   end
   object Panel2: TPanel
-    Left = 424
+    Left = 432
     Height = 152
-    Top = 8
+    Top = 24
     Width = 208
     ClientHeight = 152
     ClientWidth = 208
@@ -243,9 +266,9 @@ object frmOptions: TfrmOptions
     end
   end
   object Panel3: TPanel
-    Left = 424
+    Left = 432
     Height = 40
-    Top = 264
+    Top = 248
     Width = 208
     ClientHeight = 40
     ClientWidth = 208
@@ -270,15 +293,15 @@ object frmOptions: TfrmOptions
     end
   end
   object Panel4: TPanel
-    Left = 424
+    Left = 432
     Height = 40
-    Top = 200
+    Top = 192
     Width = 208
     ClientHeight = 40
     ClientWidth = 208
     TabOrder = 4
     object ChckBxScreenSave: TCheckBox
-      Left = 32
+      Left = 16
       Height = 23
       Top = 8
       Width = 164
@@ -289,63 +312,6 @@ object frmOptions: TfrmOptions
       ParentFont = False
       ParentBidiMode = False
       TabOrder = 0
-    end
-  end
-  object Panel5: TPanel
-    Left = 232
-    Height = 40
-    Top = 200
-    Width = 184
-    ClientHeight = 40
-    ClientWidth = 184
-    TabOrder = 5
-    object ChckBxTimerMilli: TCheckBox
-      Left = 8
-      Height = 23
-      Top = 8
-      Width = 167
-      BidiMode = bdRightToLeft
-      Caption = 'Timer - Milli Seconds'
-      Font.Height = -16
-      OnChange = ChckBxNetTimeSecondsChange
-      ParentFont = False
-      ParentBidiMode = False
-      TabOrder = 0
-    end
-  end
-  object Panel6: TPanel
-    Left = 232
-    Height = 64
-    Top = 72
-    Width = 184
-    ClientHeight = 64
-    ClientWidth = 184
-    TabOrder = 6
-    object ChckBxNetTimeSeconds: TCheckBox
-      Left = 16
-      Height = 23
-      Top = 8
-      Width = 157
-      BidiMode = bdRightToLeft
-      Caption = 'Net Time - Seconds'
-      Font.Height = -16
-      OnChange = ChckBxNetTimeSecondsChange
-      ParentFont = False
-      ParentBidiMode = False
-      TabOrder = 0
-    end
-    object ChckBxSwatchCentibeats: TCheckBox
-      Left = 16
-      Height = 23
-      Top = 32
-      Width = 157
-      BidiMode = bdRightToLeft
-      Caption = 'Swatch - Centibeats'
-      Font.Height = -16
-      OnChange = ChckBxSwatchCentibeatsChange
-      ParentFont = False
-      ParentBidiMode = False
-      TabOrder = 1
     end
   end
   object FontDialog1: TFontDialog
