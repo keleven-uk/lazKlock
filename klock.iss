@@ -21,23 +21,33 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 
 ;  all source files here
-SourceDir=C:\usr\shed\projects\pascal\klock
+SourceDir=D:\My\shed\Projects\pascal\lazklock
 
 DefaultDirName={pf}\keleven\klock
 DefaultGroupName={#MyAppName}
 LicenseFile=GNU GENERAL PUBLIC LICENSE.txt
 InfoAfterFile=history.txt
-OutputDir=C:\usr\shed\projects\pascal
+OutputDir=D:\My\shed\Projects\pascal
 OutputBaseFilename=klock
 SetupIconFile=klock.ico
 Compression=lzma
 SolidCompression=yes
+DisableStartupPrompt=False
+UsePreviousAppDir=False
+SetupLogging=True
+
+; "ArchitecturesInstallIn64BitMode=x64" requests that the install be done in "64-bit mode" 
+; on x64, meaning it should use the native 64-bit Program Files directory and the 64-bit 
+; view of the registry. On all other architectures it will install in "32-bit mode".
+ArchitecturesInstallIn64BitMode=x64
+; Note: We don't set ProcessorsAllowed because we want this installation to run on 
+; all architectures (including Itanium,since it's capable of running 32-bit code too)
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"    ; Description: "{cm:CreateDesktopIcon}"    ; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Types]
@@ -48,18 +58,18 @@ Name: prog; Description: "Klock program only"
 Name: all; Description: fKlock Program + source; Types: full
 Name: exe; Description: exe's only; Types: full prog
 
+; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+; installs either klock_x64 or klock_x86 - but names them klock.exe
 [Files]
-Source: "klock.exe"                     ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
-Source: "sounds\*"                      ; DestDir: "{app}\sounds"; Components : exe; Flags: ignoreversion
+Source: "klock_32.exe"                  ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
+Source: "klock_64.exe"                  ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
 Source: "help.txt"                      ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "history.txt"                   ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
+Source: "sounds\*"                      ; DestDir: "{app}\sounds"; Components : exe; Flags: ignoreversion
 
-;  incluse source if directed :: NB needs a clean checkout
-Source: "C:\usr\shed\projects\pascal\clean_klock\*"               ; DestDir: "{app}\source"               ; Components : all; Flags: ignoreversion
-Source: "C:\usr\shed\projects\pascal\clean_klock\lib\i386-win32\*"; DestDir: "{app}\source\lib\i386-win32"; Components : all; Flags: ignoreversion
-
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+;  include source :: NB needs a clean checkout
+Source: "D:\My\shed\Projects\pascal\clean_klock\*"; DestDir: "{app}\source"; Components : all; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"                                               ; Filename: "{app}\{#MyAppExeName}"
