@@ -1,4 +1,4 @@
-unit Uhelp;
+unit formHelp;
 
 {$mode objfpc}{$H+}
 
@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, UOptions;
+  ExtCtrls, formOptions;
 
 type
 

@@ -1,4 +1,4 @@
-unit UOptions;
+unit formOptions;
 
 {$mode objfpc}{$H+}
 

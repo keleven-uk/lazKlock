@@ -1,17 +1,17 @@
-object frmHelp: TfrmHelp
-  Left = 360
+object frmAbout: TfrmAbout
+  Left = 800
   Height = 233
-  Top = 409
-  Width = 620
+  Top = 423
+  Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Klock Help'
+  Caption = 'About Klock'
   ClientHeight = 233
-  ClientWidth = 620
+  ClientWidth = 320
   Constraints.MaxHeight = 233
-  Constraints.MaxWidth = 620
+  Constraints.MaxWidth = 320
   Constraints.MinHeight = 233
-  Constraints.MinWidth = 620
+  Constraints.MinWidth = 320
   Icon.Data = {
     BE0C00000000010001002020000001001800A80C000016000000280000002000
     0000400000000100180000000000000000000000000000000000000000000000
@@ -119,44 +119,101 @@ object frmHelp: TfrmHelp
   }
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.0.1.3'
+  LCLVersion = '1.8.0.4'
   object Panel1: TPanel
     Left = 8
     Height = 160
     Top = 8
-    Width = 606
+    Width = 306
     ClientHeight = 160
-    ClientWidth = 606
+    ClientWidth = 306
     TabOrder = 0
-    object mmoHelp: TMemo
+    object lblLazarusVersion: TLabel
       Left = 8
-      Height = 144
+      Height = 15
+      Top = 136
+      Width = 144
+      Caption = 'Built With Lazarus Version ::'
+      ParentColor = False
+    end
+    object lblProgramName: TLabel
+      Left = 127
+      Height = 32
       Top = 8
-      Width = 588
-      Font.Height = -11
-      OnChange = mmoHelpChange
+      Width = 67
+      Caption = 'Klock'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -27
+      Font.Name = 'Old English Text MT'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      ParentColor = False
       ParentFont = False
-      ReadOnly = True
-      ScrollBars = ssAutoVertical
-      TabOrder = 0
+    end
+    object lblProgramDescription: TLabel
+      Left = 103
+      Height = 21
+      Top = 40
+      Width = 114
+      Caption = 'A Clock with a K.'
+      Font.Height = -16
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblProgrammer: TLabel
+      Left = 64
+      Height = 21
+      Top = 64
+      Width = 192
+      Caption = 'Kevin Scott  (c) 2012 - 2017'
+      Font.Height = -16
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblVersion: TLabel
+      Left = 8
+      Height = 15
+      Top = 117
+      Width = 79
+      Caption = 'Klock Version ::'
+      ParentColor = False
+    end
+    object Label1: TLabel
+      Left = 96
+      Height = 17
+      Top = 90
+      Width = 117
+      Caption = 'klock@keleven.co.uk'
+      Font.Height = -13
+      ParentColor = False
+      ParentFont = False
     end
   end
   object Panel2: TPanel
     Left = 8
     Height = 42
     Top = 176
-    Width = 606
+    Width = 306
     ClientHeight = 42
-    ClientWidth = 606
+    ClientWidth = 306
     TabOrder = 1
-    object btnhelpExit: TButton
-      Left = 516
+    object btnAboutExit: TButton
+      Left = 224
       Height = 25
       Top = 8
       Width = 75
       Caption = 'Exit'
-      OnClick = btnhelpExitClick
+      OnClick = btnAboutExitClick
       TabOrder = 0
+    end
+    object lblDiskSize: TLabel
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 9
+      Caption = '...'
+      ParentColor = False
     end
   end
 end

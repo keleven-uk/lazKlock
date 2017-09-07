@@ -1,4 +1,4 @@
-unit Uklock;
+unit formklock;
 
 {$mode objfpc}{$H+}
 
@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
-  UAbout, Uhelp, UOptions, uLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, uReminderinput, AvgLvlTree;
+  formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree;
 
 type
 
@@ -154,8 +154,7 @@ type
     procedure OKButtonClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
-    procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction
-      );
+    procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
     procedure ppMnItmShowClick(Sender: TObject);
     procedure ppMnItmTimeClick(Sender: TObject);
     procedure EventTimerTimer(Sender: TObject);
@@ -211,8 +210,8 @@ begin
   ft := FuzzyTime.Create;
 
   DtEdtEvent.Date     := now;
-  SpnEdtMins.Value       := MinuteOf(time);
-  SpnEdtHour.Value       := HourOf(time);
+  SpnEdtMins.Value    := MinuteOf(time);
+  SpnEdtHour.Value    := HourOf(time);
   btnEventSet.Enabled := false;
 
   noReminder := 0;
@@ -235,6 +234,8 @@ begin
     OptionsRec.setScreenLeft(frmMain.Left);
     frmOptions.writeIniFile;
   end;
+
+  CloseAction := caFree;
 end;
 
 procedure TfrmMain.SetDefaults;
@@ -1380,9 +1381,12 @@ procedure TfrmMain.PopupNotifier1Close(Sender: TObject;var CloseAction: TCloseAc
 VAR
   f : Integer;
 begin
-    for f := 1 to 3 do
+    for f := 1 to 3 do begin
       popupTitle[f]    := '';
       popupMessages[f] := '';
+    end;
+
+    CloseAction := caFree;
 end;
 
 

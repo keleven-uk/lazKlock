@@ -1,4 +1,4 @@
-unit uReminderinput;
+unit formReminderInput;
 
 {$mode objfpc}{$H+}
 

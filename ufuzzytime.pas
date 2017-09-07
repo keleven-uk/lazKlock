@@ -14,7 +14,7 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows, UOptions, strutils, Dialogs;
+  Classes, SysUtils, DateUtils, Windows, formOptions, strutils, Dialogs;
 
 type
   FuzzyTime = class

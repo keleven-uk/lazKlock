@@ -7,8 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, runtimetypeinfocontrols, Uklock, UAbout, Uhelp, UOptions, uFuzzyTime,
-  uLicense, UKlockUtils, uReminderinput;
+  Forms, runtimetypeinfocontrols, formklock, formAbout, formHelp, formOptions, uFuzzyTime,
+  formLicense, UKlockUtils, formReminderInput;
 
 {$R *.res}
 

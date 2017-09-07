@@ -1,4 +1,4 @@
-unit UAbout;
+unit formAbout;
 
 {$mode objfpc}{$H+}
 
@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  LCLVersion, ExtCtrls, UOptions;
+  LCLVersion, ExtCtrls, formOptions;
 
 type
 

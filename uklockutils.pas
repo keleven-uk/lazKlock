@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
   MMSystem, dateutils;
 
-type                    //  used to hole the parsed data for a reminder.
+type                    //  used to hold the parsed data for a reminder.
   reminderData = record
     message: string;     //  the formatted message for the reminder.
     orDate : TDateTime;  //  date of original event.
