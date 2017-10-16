@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree;
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions;
 
 type
 
@@ -189,6 +189,7 @@ type
 var
   frmMain : TfrmMain;
   rmndrStore : TAvgLvlTree;
+  userOptions: Options;
 
 implementation
 
@@ -217,7 +218,7 @@ begin
   noReminder := 0;
 
   rmndrStore := TAvgLvlTree.Create;
-
+  userOptions := Options.Create;  // create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -229,12 +230,12 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
 begin
-  if OptionsRec.ScreenSave then begin
-    OptionsRec.setScreenTop(frmMain.Top);
-    OptionsRec.setScreenLeft(frmMain.Left);
-    frmOptions.writeIniFile;
+  if userOptions.screenSave ='True' then begin
+    userOptions.formTop := IntToStr(frmMain.Top);
+    userOptions.formLeft := IntToStr(frmMain.Left);
   end;
 
+  userOptions.writeCurrentOptions ;
   CloseAction := caFree;
 end;
 
@@ -256,19 +257,19 @@ begin
   lblEvent.Font              := getTextFont(OptionsRec.EventTextFont, OptionsRec.GlobalTextFont);
   lblEvent.Font.Size         := 18;
 
-  PageControl1.TabIndex := OptionsRec.DefaultTab;
-  CmbBxTime.ItemIndex   := OptionsRec.DefaultTime;
+  PageControl1.TabIndex := StrToInt(userOptions.defaultTab);
+  CmbBxTime.ItemIndex   := StrToInt(userOptions.defaultTime);
 
-  ft.displayFuzzy := OptionsRec.DefaultTime;
+  ft.displayFuzzy := StrToInt(userOptions.defaultTime);
 
   ft.FuzzyBase := 2;
 
-  if OptionsRec.ScreenSave then begin
-    frmMain.Left := OptionsRec.ScreenLeft;
-    frmMain.Top  := OptionsRec.ScreenTop;
+  if userOptions.screenSave = 'True' then begin
+    frmMain.Top := StrToInt(userOptions.formTop);
+    frmMain.Left := StrToInt(userOptions.formLeft);
   end;
 
-  if OptionsRec.NetTimeSeconds then
+  if userOptions.netTimeSeconds = 'True' then
     mainTimer.Interval := 1
   else
     mainTimer.Interval := 1000;
@@ -345,7 +346,7 @@ begin
         stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
 
         if btnTimerStart.Caption = 'Start' then begin
-          if OptionsRec.TimerMilliSeconds then begin
+          if OptionsRec.timerMilliSeconds then begin
             lblTimer.Caption    := '00:00:00:00';
             lblSplitLap.Caption := '00:00:00:00';
           end
@@ -390,7 +391,7 @@ begin
     strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
     TrayIcon.Hint := strTime;
 
-    if OptionsRec.FuzzyTimeBalloon then begin
+    if userOptions.fuzzyTimeBalloon = 'True' then begin
       if (SecondOfTheDay(now) mod 300 = 0) then begin  //  only display on the five minutes.
          TrayIcon.BalloonHint:= strTime;
          trayIcon.ShowBalloonHint;
@@ -802,7 +803,7 @@ VAR
 begin
   timerInterval := timerPaused + (time - timerStart);
   DecodeTime(timerInterval, hh, mm, ss, ms);
-  if OptionsRec.TimerMilliSeconds then
+  if userOptions.timerMilliSeconds = 'True' then
     lblTimer.Caption := format('%.2d:%.2d:%.2d:%.2d',[hh, mm, ss, ms])
   else
     lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
@@ -817,7 +818,7 @@ procedure TfrmMain.btnTimerStartClick(Sender: TObject);
 begin
   if btnTimerStart.Caption = 'Start' then begin
 
-    if OptionsRec.TimerMilliSeconds then
+    if userOptions.timerMilliSeconds = 'True' then
       timerTimer.Interval := 100;
     timerStart  := time;
     timerPaused := 0;
@@ -873,14 +874,14 @@ procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 {  Reset [clear] the timer.
 }
 begin
-  if OptionsRec.TimerMilliSeconds then begin
+  if userOptions.timerMilliSeconds = 'True' then  begin
     lblTimer.Caption    := '00:00:00:00';
     lblSplitLap.Caption := '00:00:00:00';
   end
   else begin
     lblTimer.Caption    := '00:00:00';
     lblSplitLap.Caption := '00:00:00';
-  end;  //  if OptionsRec.TimerMilliSeconds
+  end;  //  if userOptions.timerMilliSeconds = 'True' then
 
     stsBrInfo.Panels.Items[3].Text := '';
 
@@ -1265,12 +1266,26 @@ end;
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 {  if clicked, call the option screen, reapply options after.
 }
+VAR
+  frmTop: integer;
+  frmLeft:integer;
 begin
-  OptionsRec.ScreenLeft := frmMain.Left;   //  return to same place, after option screen.
-  OptionsRec.ScreenTop  := frmMain.Top;
+  if userOptions.screenSave = 'True' then begin
+    userOptions.formTop := IntToStr(frmMain.Top);
+    userOptions.formLeft := IntToStr(frmMain.Left);
+  end
+  else begin
+    frmTop := frmMain.Top;   //  return to same place, after option screen.
+    frmLeft := frmMain.Left;
+  end;
 
   frmOptions.ShowModal;
   SetDefaults;
+
+  if userOptions.screenSave <> 'True' then begin  //  not done in SetDefaults
+    frmMain.Top := frmTop;
+    frmMain.Left := frmLeft;
+  end;
 end;
 
 procedure TfrmMain.mnuItmExitClick(Sender: TObject);

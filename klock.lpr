@@ -8,11 +8,12 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, formklock, formAbout, formHelp, formOptions, uFuzzyTime,
-  formLicense, UKlockUtils, formReminderInput;
+  formLicense, UKlockUtils, formReminderInput, uOptions;
 
 {$R *.res}
 
 begin
+  Application.Title:='lazKlock';
   Application.Initialize;
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmOptions, frmOptions);

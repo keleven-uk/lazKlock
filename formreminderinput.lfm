@@ -1,14 +1,14 @@
 object frmReminderInput: TfrmReminderInput
-  Left = 313
+  Left = 1532
   Height = 275
-  Top = 419
+  Top = 444
   Width = 420
   Caption = 'Reminder Input'
   ClientHeight = 275
   ClientWidth = 420
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.8.0.4'
+  LCLVersion = '1.8.0.5'
   object Panel1: TPanel
     Left = 8
     Height = 42
