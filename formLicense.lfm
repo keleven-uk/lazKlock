@@ -1,33 +1,33 @@
 object frmLicense: TfrmLicense
-  Left = 481
-  Height = 240
-  Top = 145
-  Width = 420
+  Left = 1257
+  Height = 267
+  Top = 403
+  Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Klock License'
-  ClientHeight = 240
-  ClientWidth = 420
-  Constraints.MaxHeight = 240
-  Constraints.MaxWidth = 420
-  Constraints.MinHeight = 240
-  Constraints.MinWidth = 420
+  ClientHeight = 267
+  ClientWidth = 620
+  Constraints.MaxHeight = 267
+  Constraints.MaxWidth = 620
+  Constraints.MinHeight = 267
+  Constraints.MinWidth = 620
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.8.0.4'
+  LCLVersion = '1.8.0.5'
   object Panel1: TPanel
     Left = 8
     Height = 160
     Top = 8
-    Width = 406
+    Width = 606
     ClientHeight = 160
-    ClientWidth = 406
+    ClientWidth = 606
     TabOrder = 0
     object mmoLicence: TMemo
       Left = 8
       Height = 144
       Top = 8
-      Width = 388
+      Width = 588
       ReadOnly = True
       ScrollBars = ssAutoVertical
       TabOrder = 0
@@ -35,20 +35,44 @@ object frmLicense: TfrmLicense
   end
   object Panel2: TPanel
     Left = 8
-    Height = 42
+    Height = 80
     Top = 176
-    Width = 406
-    ClientHeight = 42
-    ClientWidth = 406
+    Width = 606
+    ClientHeight = 80
+    ClientWidth = 606
     TabOrder = 1
     object btnLicense: TButton
-      Left = 316
+      Left = 512
       Height = 25
-      Top = 8
+      Top = 22
       Width = 75
       Caption = 'Exit'
       OnClick = btnLicenseClick
       TabOrder = 0
+    end
+    object lblComments: TLabel
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 72
+      Caption = 'lblComments'
+      ParentColor = False
+    end
+    object lblCopyRight: TLabel
+      Left = 8
+      Height = 15
+      Top = 32
+      Width = 69
+      Caption = 'lblCopyRight'
+      ParentColor = False
+    end
+    object lblVersion: TLabel
+      Left = 8
+      Height = 15
+      Top = 56
+      Width = 51
+      Caption = 'lblVersion'
+      ParentColor = False
     end
   end
 end

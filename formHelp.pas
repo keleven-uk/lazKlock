@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, formOptions;
+  ExtCtrls;
 
 type
 
@@ -14,12 +14,14 @@ type
 
   TfrmHelp = class(TForm)
     btnhelpExit: TButton;
+    lblComments: TLabel;
+    lblCopyRight: TLabel;
+    lblVersion: TLabel;
     mmoHelp: TMemo;
     Panel1: TPanel;
     Panel2: TPanel;
     procedure btnhelpExitClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure mmoHelpChange(Sender: TObject);
   private
     { private declarations }
   public
@@ -32,6 +34,9 @@ var
 implementation
 
 {$R *.lfm}
+
+uses
+  formklock;
 
 { TfrmHelp }
 
@@ -51,18 +56,9 @@ begin
     end;
   end;
 
-  mmoHelp.Append('');
-  mmoHelp.Append('');
-  mmoHelp.Append('');
-  mmoHelp.Append('Kevin Scott (c) - 2012.');
-  mmoHelp.Append('klock<at>keleven<dot>co<dot>uk');
-  mmoHelp.Append(format('Klock Version :: %s', [OptionsRec.Version]));
-
-end;
-
-procedure TfrmHelp.mmoHelpChange(Sender: TObject);
-begin
-
+  lblComments.Caption:= format('%s :: %s', [userOptions.productName,userOptions.fileDescription]);
+  lblCopyRight.Caption:= userOptions.legalCopyright;
+  lblVersion.Caption:= format('%s Version :: %s', [userOptions.productName, userOptions.fileVersion]);
 end;
 
 procedure TfrmHelp.btnhelpExitClick(Sender: TObject);

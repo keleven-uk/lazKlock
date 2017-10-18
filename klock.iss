@@ -61,8 +61,8 @@ Name: exe; Description: exe's only; Types: full prog
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 ; installs either klock_x64 or klock_x86 - but names them lazKlock.exe
 [Files]
-Source: "klock_32.exe"                  ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
-Source: "klock_64.exe"                  ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
+Source: "lazKlock_32.exe"               ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
+Source: "lazKlock_64.exe"               ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
 Source: "help.txt"                      ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "history.txt"                   ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion

@@ -911,5 +911,38 @@ Date:   Thu Sep 7 22:36:38 2017 +0100
 
 ***************************************************** Version 2 ************
 
+Build 37 [2.0.0.37]
+
+commit 3d7a9e43522baac7af8adea345307b107d33a228
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Mon Oct 16 22:15:32 2017 +0100
+
     Added config file for SourceMonitor.
-t
+
+    Added uOptions.pas, a options record that uses XML files.  Hopefully
+    this will replace the existing .ini file based options.
+    
+    Amended all referances in formKlock.pas that used the old .ini options
+    to use the new .xml options record.
+    
+    NOTE :: formOptions has not been touched yet and still point to the old
+    style options records - this will be stripped out next.
+
+    Currently
+    3450 lines of source code.
+    1802 statements
+    15.5% comments
+
+ formKlock.lfm          |    6 +-
+ formKlock.pas          |   57 +-
+ formOptions.lfm        |    2 +-
+ formreminderinput.lfm  |    6 +-
+ history.txt            | 1364 +++++++++++++++++++++++++-----------------------
+ klock.iss              |    8 +-
+ klock.lpi              |  141 +++--
+ klock.lpr              |    3 +-
+ lazKlock.smproj        |  Bin 0 -> 10684 bytes
+ powered_by_lazarus.png |  Bin 0 -> 15189 bytes
+ uoptions.pas           |  467 +++++++++++++++++
+ 11 files changed, 1310 insertions(+), 744 deletions(-)
+

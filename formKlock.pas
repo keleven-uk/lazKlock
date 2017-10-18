@@ -1,4 +1,21 @@
 unit formklock;
+{
+Klock :: A Clock with a K.
+Copyright (C) 2012 - 2017 :: Kevin Scott
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+}
 
 {$mode objfpc}{$H+}
 
@@ -8,7 +25,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions;
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows;
 
 type
 
@@ -173,23 +190,23 @@ type
     procedure EventValid;
     procedure readReminderFile;
   public
-    countdownTicks     : integer;
-    countdownSoundName : String;
-    EventSoundName     : String;
-    timerStart         : TDateTime;
-    timerPaused        : TdateTime;
-    popupMessages      : Array [0..3] of string;
-    popupTitle         : Array [0..3] of String;
-    noReminder         : Integer;
-
-    ft : FuzzyTime;
 
   end; 
 
 var
   frmMain : TfrmMain;
-  rmndrStore : TAvgLvlTree;
-  userOptions: Options;
+  rmndrStore : TAvgLvlTree;      //  to store all the reminders.
+  userOptions: Options;          //  holds all the user options.
+  ft : FuzzyTime;                //  the object to give the different times.
+  appStartTime: Int64;           //  used by formAbout to determine how long the app has been running.
+  countdownTicks: integer;
+  countdownSoundName: String;
+  EventSoundName: String;
+  timerStart: TDateTime;
+  timerPaused: TdateTime;
+  popupMessages: Array [0..3] of string;
+  popupTitle: Array [0..3] of String;
+  noReminder: Integer;
 
 implementation
 
@@ -216,6 +233,7 @@ begin
   btnEventSet.Enabled := false;
 
   noReminder := 0;
+  appStartTime := GetTickCount64;  //  tick count when application starts.
 
   rmndrStore := TAvgLvlTree.Create;
   userOptions := Options.Create;  // create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml

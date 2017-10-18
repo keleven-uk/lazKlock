@@ -14,6 +14,9 @@ type
 
   TfrmLicense = class(TForm)
     btnLicense: TButton;
+    lblComments: TLabel;
+    lblCopyRight: TLabel;
+    lblVersion: TLabel;
     mmoLicence: TMemo;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -31,6 +34,9 @@ var
 implementation
 
 {$R *.lfm}
+
+uses
+  formklock;
 
 { TfrmLicense }
 
@@ -55,10 +61,9 @@ begin
     end;
   end;
 
-  mmoLicence.Append('');
-  mmoLicence.Append('Kevin Scott (c) - 2012.');
-  mmoLicence.Append('klock<at>keleven<dot>co<dot>uk');
-  mmoLicence.Append(format('Klock Version :: %s', [OptionsRec.Version]));
+  lblComments.Caption:= format('%s :: %s', [userOptions.productName,userOptions.fileDescription]);
+  lblCopyRight.Caption:= userOptions.legalCopyright;
+  lblVersion.Caption:= format('%s Version :: %s', [userOptions.productName, userOptions.fileVersion]);
 end;
 
 end.
