@@ -1,14 +1,13 @@
 object frmOptions: TfrmOptions
-  Left = 1240
+  Left = 1251
   Height = 404
-  Top = 6
+  Top = 9
   Width = 660
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
   ClientHeight = 404
   ClientWidth = 660
   Constraints.MinWidth = 320
-  OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.8.0.5'
   object Panel1: TPanel
@@ -16,198 +15,9 @@ object frmOptions: TfrmOptions
     Height = 344
     Top = 8
     Width = 640
-    ClientHeight = 344
-    ClientWidth = 640
     Font.Height = -16
     ParentFont = False
     TabOrder = 0
-    object GroupBox1: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 4
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      TabOrder = 0
-      object btnGlobalFont: TButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 75
-        Caption = 'Font'
-        OnClick = btnGlobalFontClick
-        TabOrder = 0
-      end
-      object lblGlobalText: TLabel
-        Left = 8
-        Height = 21
-        Top = 4
-        Width = 45
-        Caption = 'Global'
-        Font.Height = -16
-        ParentColor = False
-        ParentFont = False
-      end
-    end
-    object GroupBox2: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 62
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      TabOrder = 1
-      object btnFuzzyFont: TButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 75
-        Caption = 'Font'
-        OnClick = btnFuzzyFontClick
-        TabOrder = 0
-      end
-      object lblFuzzyTime: TLabel
-        Left = 8
-        Height = 21
-        Top = 4
-        Width = 77
-        Caption = 'Fuzzy Time'
-        Font.Height = -16
-        ParentColor = False
-        ParentFont = False
-      end
-      object ChckLstBxFuzzyOptions: TCheckListBox
-        Left = 198
-        Height = 24
-        Top = 2
-        Width = 192
-        Items.Strings = (
-          'Fuzzy Time - Balloon'
-          'Net Time - Seconds'
-          'Swatch - Centibeats'
-        )
-        ItemHeight = 21
-        TabOrder = 1
-        Data = {
-          03000000000000
-        }
-      end
-    end
-    object GroupBox3: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 118
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      Font.Height = -16
-      ParentFont = False
-      TabOrder = 2
-      object btnCountdownFont: TButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 75
-        Caption = 'Font'
-        OnClick = btnCountdownFontClick
-        TabOrder = 0
-      end
-      object lblCountDown: TLabel
-        Left = 8
-        Height = 21
-        Top = 4
-        Width = 81
-        Caption = 'Countdown'
-        ParentColor = False
-      end
-    end
-    object GroupBox4: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 174
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      TabOrder = 3
-      object btnTimerFont: TButton
-        Left = 110
-        Height = 25
-        Top = 4
-        Width = 75
-        Caption = 'Font'
-        OnClick = btnTimerFontClick
-        TabOrder = 0
-      end
-      object lblTimerText: TLabel
-        Left = 8
-        Height = 21
-        Top = 4
-        Width = 40
-        Caption = 'Timer'
-        ParentColor = False
-      end
-      object ChckBxTimerMilli: TCheckBox
-        Left = 206
-        Height = 25
-        Top = 4
-        Width = 166
-        Caption = 'Timer - Milli Seconds'
-        TabOrder = 1
-      end
-    end
-    object GroupBox5: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 230
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      TabOrder = 4
-      object btnEventFont: TButton
-        Left = 110
-        Height = 25
-        Top = 3
-        Width = 75
-        Caption = 'Font'
-        OnClick = btnEventFontClick
-        TabOrder = 0
-      end
-      object lblEventText: TLabel
-        Left = 8
-        Height = 21
-        Top = 3
-        Width = 38
-        Caption = 'Event'
-        ParentColor = False
-      end
-    end
-    object GroupBox8: TGroupBox
-      Left = 8
-      Height = 52
-      Top = 284
-      Width = 408
-      ClientHeight = 26
-      ClientWidth = 404
-      TabOrder = 5
-      object lblPopupText: TLabel
-        Left = 8
-        Height = 21
-        Top = 3
-        Width = 44
-        Caption = 'Popup'
-        ParentColor = False
-      end
-      object ClrBtnPopup: TColorButton
-        Left = 110
-        Height = 25
-        Top = 3
-        Width = 75
-        BorderWidth = 2
-        ButtonColorSize = 16
-        ButtonColor = clBlack
-        OnColorChanged = ClrBtnPopupColorChanged
-      end
-    end
   end
   object ButtonPanel1: TButtonPanel
     Left = 6
@@ -216,7 +26,6 @@ object frmOptions: TfrmOptions
     Width = 648
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
-    OKButton.OnClick = OKButtonClick
     HelpButton.Name = 'HelpButton'
     HelpButton.DefaultCaption = True
     CloseButton.Name = 'CloseButton'
@@ -224,131 +33,7 @@ object frmOptions: TfrmOptions
     CloseButton.Enabled = False
     CancelButton.Name = 'CancelButton'
     CancelButton.DefaultCaption = True
-    CancelButton.OnClick = CancelButtonClick
     TabOrder = 1
     ShowButtons = [pbOK, pbCancel, pbHelp]
-  end
-  object Panel2: TPanel
-    Left = 432
-    Height = 152
-    Top = 24
-    Width = 208
-    ClientHeight = 152
-    ClientWidth = 208
-    TabOrder = 2
-    object GroupBox6: TGroupBox
-      Left = 11
-      Height = 57
-      Top = 80
-      Width = 185
-      Caption = 'Default Time'
-      ClientHeight = 37
-      ClientWidth = 181
-      TabOrder = 0
-      object CmbBxDefTime: TComboBox
-        Left = 43
-        Height = 23
-        Top = 4
-        Width = 100
-        ItemHeight = 15
-        ItemIndex = 0
-        Items.Strings = (
-          'Fuzzy'
-          'Local'
-          'Net'
-          'Unix'
-          'UTC'
-          'Swatch'
-          'Julian'
-          'Decimal'
-          'Hexadecimal'
-          'Radix'
-        )
-        Style = csDropDownList
-        TabOrder = 0
-        Text = 'Fuzzy'
-      end
-    end
-    object GroupBox7: TGroupBox
-      Left = 11
-      Height = 57
-      Top = 9
-      Width = 185
-      Caption = 'Default tab'
-      ClientHeight = 37
-      ClientWidth = 181
-      TabOrder = 1
-      object CmbBxDefTab: TComboBox
-        Left = 43
-        Height = 23
-        Top = 4
-        Width = 100
-        ItemHeight = 15
-        ItemIndex = 0
-        Items.Strings = (
-          'Fuzzy Time'
-          'Countdown'
-          'Timer'
-          'Reminder'
-        )
-        Style = csDropDownList
-        TabOrder = 0
-        Text = 'Fuzzy Time'
-      end
-    end
-  end
-  object Panel3: TPanel
-    Left = 432
-    Height = 40
-    Top = 248
-    Width = 208
-    ClientHeight = 40
-    ClientWidth = 208
-    TabOrder = 3
-    object SpdBtnDefault: TSpeedButton
-      Left = 176
-      Height = 22
-      Top = 8
-      Width = 23
-      OnClick = SpdBtnDefaultClick
-    end
-    object Label1: TLabel
-      Left = 16
-      Height = 21
-      Top = 8
-      Width = 150
-      Caption = 'Reset Fonts to default'
-      Font.Height = -16
-      ParentColor = False
-      ParentFont = False
-    end
-  end
-  object Panel4: TPanel
-    Left = 432
-    Height = 40
-    Top = 192
-    Width = 208
-    ClientHeight = 40
-    ClientWidth = 208
-    TabOrder = 4
-    object ChckBxScreenSave: TCheckBox
-      Left = 16
-      Height = 25
-      Top = 8
-      Width = 164
-      BidiMode = bdRightToLeft
-      Caption = 'Save Screen Position'
-      Font.Height = -16
-      OnChange = ChckBxScreenSaveChange
-      ParentFont = False
-      ParentBidiMode = False
-      TabOrder = 0
-    end
-  end
-  object FontDialog1: TFontDialog
-    MinFontSize = 0
-    MaxFontSize = 0
-    left = 56
-    top = 416
   end
 end

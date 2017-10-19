@@ -946,3 +946,39 @@ Date:   Mon Oct 16 22:15:32 2017 +0100
  uoptions.pas           |  467 +++++++++++++++++
  11 files changed, 1310 insertions(+), 744 deletions(-)
 
+Build 38 [2.0.0.38]
+
+commit c35513fb5200d949b4d7a01cb63240000e00073b
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Wed Oct 18 22:18:09 2017 +0100
+
+    Amended formLicence, formHelp & formAbout to use new user Options.
+    
+    Added to formAbout disk size and free space for all disks on the system
+    Added to formAbout system and application up time.
+    Added to formAbout to display if compile to either 32 or 64 bit.
+    Added to formAboout powered by Lazarus logo.
+    Tidied up formAbout.
+    
+    Amended klock.iss to use lazKlock instead of Klock - should that be lazKlock.iss.
+
+    reloaded licence.txt from web site.
+
+    Currently
+    3567 lines of source code.
+    1856 statements
+    16.0% comment
+
+ GNU GENERAL PUBLIC LICENSE.txt | 880 ++++++++++-------------------------------
+ formAbout.lfm                  | 652 ++++++++++++++++++++++++++++--
+ formAbout.pas                  | 114 +++++-
+ formHelp.lfm                   |  47 ++-
+ formHelp.pas                   |  24 +-
+ formKlock.pas                  |  44 ++-
+ formLicense.lfm                |  64 ++-
+ formlicense.pas                |  13 +-
+ history.txt                    |  35 +-
+ klock.iss                      |   4 +-
+ klock.lpi                      | 160 ++++----
+ lazKlock.smproj                | Bin 10684 -> 21721 bytes
+ 12 files changed, 1166 insertions(+), 871 deletions(-)

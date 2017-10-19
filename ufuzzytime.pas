@@ -14,7 +14,7 @@ displayFuzzy set to False :: getTime returns time as 10:05:00.
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows, formOptions, strutils, Dialogs;
+  Classes, SysUtils, DateUtils, Windows, strutils, Dialogs;
 
 type
   FuzzyTime = class
@@ -40,9 +40,12 @@ end;
 
 implementation
 
+uses
+  formklock;
+
+
 Constructor FuzzyTime.init;
 begin
-  self.displayFuzzy := OptionsRec.DefaultTime;
   self.FuzzyBase    := 2;
 end;
 
@@ -135,7 +138,7 @@ VAR
   sec : Int64;
 begin
 
-  if OptionsRec.NetTimeSeconds then begin
+  if userOptions.netTimeSeconds ='True' then begin
     deg := (MilliSecondOfTheDay(Time) div 240000);
     min := (MilliSecondOfTheDay(Time) - (deg * 240000)) div 4000;
     sec := (MilliSecondOfTheDay(Time) - (deg * 240000) - (min * 4000)) div 100;
@@ -182,7 +185,8 @@ begin
 
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
-  if OptionsRec.SwatchCentibeats then
+  {****}
+  if userOptions.swatchCentibeats ='True' then
     swatchTime := format('@ %3.2f BMT', [noOfBeats])
   else
     swatchTime := format('@ %3.f BMT', [noOfBeats]);

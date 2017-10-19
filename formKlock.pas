@@ -222,8 +222,8 @@ begin
   countdownSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
 
-  EventSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
-  EdtEventSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
+  EventSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';      // default to sound file
+  EdtEventSound.Text := ExtractFileName(countdownSoundName);            //  in current working directory.
 
   ft := FuzzyTime.Create;
 
@@ -262,19 +262,6 @@ procedure TfrmMain.SetDefaults;
    Set things that can be changed in the options screen, to the values in the options screen.
 }
 begin
-  lblFuzzy.Font              := getTextFont(OptionsRec.FuzzyTextFont, OptionsRec.GlobalTextFont);
-  lblfuzzy.Font.Size         := 18;
-  SpnEdtCountdown.Font.Size  := 8;
-  lblCountDownTime.Font      := getTextFont(OptionsRec.CountDownTextFont, OptionsRec.GlobalTextFont);
-  LblCountdownTime.Font.Size := 26;
-  SpnEdtCountdown.Font.Size  := 12;
-  lblTimer.Font              := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
-  lblTimer.Font.Size         := 26;
-  lblSplitLap.Font           := getTextFont(OptionsRec.TimerTextFont, OptionsRec.GlobalTextFont);
-  lblSplitLap.Font.Size      := 26;
-  lblEvent.Font              := getTextFont(OptionsRec.EventTextFont, OptionsRec.GlobalTextFont);
-  lblEvent.Font.Size         := 18;
-
   PageControl1.TabIndex := StrToInt(userOptions.defaultTab);
   CmbBxTime.ItemIndex   := StrToInt(userOptions.defaultTime);
 
@@ -318,7 +305,7 @@ begin
   end;
 
   PopupNotifier1.ShowAtPos(100,100) ;
-  PopupNotifier1.Color := OptionsRec.popupColour;
+  PopupNotifier1.Color := clyellow;
   PopupNotifier1.Title := title;
   PopupNotifier1.Text  := message;
 
@@ -364,7 +351,7 @@ begin
         stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
 
         if btnTimerStart.Caption = 'Start' then begin
-          if OptionsRec.timerMilliSeconds then begin
+          if userOptions.timerMilliSeconds = 'True' then begin
             lblTimer.Caption    := '00:00:00:00';
             lblSplitLap.Caption := '00:00:00:00';
           end

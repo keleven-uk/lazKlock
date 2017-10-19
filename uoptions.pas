@@ -59,6 +59,7 @@ type
       //  Time
       _defaultTime: String;
       _netTimeSeconds: String;
+      _swatchCentibeats: String;
       _fuzzyTimeBalloon: String;
 
       //  Timer
@@ -87,6 +88,7 @@ type
       //  Time
       property defaultTime: String read _defaultTime write _defaultTime;
       property netTimeSeconds: String read _netTimeSeconds write _netTimeSeconds;
+      property swatchCentibeats: String read _swatchCentibeats write _swatchCentibeats;
       property fuzzyTimeBalloon: String read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
 
       //  Timer
@@ -240,6 +242,9 @@ implementation
       childNode := PassNode.FindNode('netTimeSeconds');
       netTimeSeconds := ansiString(childNode.TextContent);
 
+      childNode := PassNode.FindNode('swatchCentibeats');
+      swatchCentibeats := ansiString(childNode.TextContent);
+
       childNode := PassNode.FindNode('fuzzyTimeBalloon');
       fuzzyTimeBalloon := ansiString(childNode.TextContent);
 
@@ -286,6 +291,7 @@ implementation
     //  Time
     defaultTime :='0';
     netTimeSeconds:= 'True';
+    swatchCentibeats:= 'True';
     fuzzyTimeBalloon := 'True';
 
     //  Timer
@@ -393,6 +399,11 @@ implementation
 
       ItemNode:=Doc.CreateElement('netTimeSeconds');
       TextNode:=Doc.CreateTextNode(WideString(netTimeSeconds));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
+      ItemNode:=Doc.CreateElement('swatchCentibeats');
+      TextNode:=Doc.CreateTextNode(WideString(swatchCentibeats));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 

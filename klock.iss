@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "37"
+#define MyAppVersion "38"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -23,12 +23,12 @@ AppUpdatesURL={#MyAppURL}
 ;  all source files here
 SourceDir=D:\My\shed\Projects\pascal\lazklock
 
-DefaultDirName={pf}\keleven\klock
+DefaultDirName={pf}\keleven\{#MyAppName}
 DefaultGroupName={#MyAppName}
 LicenseFile=GNU GENERAL PUBLIC LICENSE.txt
-InfoAfterFile=history.txt
+InfoAfterFile=help.txt
 OutputDir=D:\My\shed\Projects\pascal
-OutputBaseFilename=klock
+OutputBaseFilename={#MyAppName}{#MyAppVersion}
 SetupIconFile=klock.ico
 Compression=lzma
 SolidCompression=yes
@@ -69,7 +69,7 @@ Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"       ; Components : 
 Source: "sounds\*"                      ; DestDir: "{app}\sounds"; Components : exe; Flags: ignoreversion
 
 ;  include source :: NB needs a clean checkout
-Source: "D:\My\shed\Projects\pascal\clean_klock\*"; DestDir: "{app}\source"; Components : all; Flags: ignoreversion
+Source: "D:\My\shed\Projects\pascal\clean_lazKlock\*"; DestDir: "{app}\source"; Components : all; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"                                               ; Filename: "{app}\{#MyAppExeName}"

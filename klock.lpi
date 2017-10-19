@@ -16,9 +16,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="2"/>
-      <BuildNr Value="38"/>
+      <BuildNr Value="39"/>
       <Language Value="0809"/>
-      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2017" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="38"/>
+      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2017" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="39"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -51,7 +51,7 @@
         <Filename Value="klock.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="56" Y="11"/>
+        <CursorPos Y="25"/>
         <UsageCount Value="202"/>
       </Unit0>
       <Unit1>
@@ -61,8 +61,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
-        <TopLine Value="185"/>
-        <CursorPos X="65" Y="199"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="220"/>
+        <CursorPos X="73" Y="226"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -79,9 +80,8 @@
         <ComponentName Value="frmAbout"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <CursorPos X="4" Y="127"/>
+        <CursorPos X="73" Y="25"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -106,8 +106,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="240"/>
-        <CursorPos X="3" Y="265"/>
+        <CursorPos X="59" Y="8"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -137,7 +136,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="UFuzzyTime"/>
         <EditorIndex Value="6"/>
-        <CursorPos X="71" Y="313"/>
+        <TopLine Value="165"/>
+        <CursorPos X="75" Y="189"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit9>
@@ -155,9 +155,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formLicense"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="35"/>
-        <CursorPos X="96" Y="64"/>
-        <UsageCount Value="173"/>
+        <CursorPos X="11" Y="9"/>
+        <UsageCount Value="175"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit11>
@@ -166,8 +165,9 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="UKlockUtils"/>
         <EditorIndex Value="7"/>
+        <TopLine Value="82"/>
         <CursorPos X="3" Y="87"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="149"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -184,7 +184,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formReminderInput"/>
         <EditorIndex Value="8"/>
-        <UsageCount Value="54"/>
+        <UsageCount Value="56"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit14>
@@ -193,131 +193,132 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uOptions"/>
         <EditorIndex Value="3"/>
-        <CursorPos X="81" Y="8"/>
-        <UsageCount Value="30"/>
+        <TopLine Value="428"/>
+        <CursorPos X="80" Y="410"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit15>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="16" Column="74"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="55" TopLine="34"/>
       </Position1>
       <Position2>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="15" Column="76"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="54" TopLine="33"/>
       </Position2>
       <Position3>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="103" Column="3" TopLine="68"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="53" TopLine="32"/>
       </Position3>
       <Position4>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="102" Column="3" TopLine="67"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="52" TopLine="31"/>
       </Position4>
       <Position5>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="90" Column="6" TopLine="67"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="51" TopLine="31"/>
       </Position5>
       <Position6>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="103" Column="66" TopLine="72"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="73" TopLine="55"/>
       </Position6>
       <Position7>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="95" Column="64" TopLine="74"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="76" TopLine="58"/>
       </Position7>
       <Position8>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="108" Column="2" TopLine="75"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="114" TopLine="98"/>
       </Position8>
       <Position9>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="35" Column="14" TopLine="9"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="128" TopLine="108"/>
       </Position9>
       <Position10>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="101" Column="32" TopLine="75"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="150" TopLine="119"/>
       </Position10>
       <Position11>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="113" Column="70" TopLine="84"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="25" TopLine="7"/>
       </Position11>
       <Position12>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="35" Column="30"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="30" TopLine="12"/>
       </Position12>
       <Position13>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="9" Column="56"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="104" TopLine="77"/>
       </Position13>
       <Position14>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="109" Column="25" TopLine="85"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="24" TopLine="4"/>
       </Position14>
       <Position15>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="119" Column="3" TopLine="89"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="26" TopLine="4"/>
       </Position15>
       <Position16>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="125" Column="68" TopLine="96"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="102" TopLine="84"/>
       </Position16>
       <Position17>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="114" Column="22" TopLine="96"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="9" Column="44"/>
       </Position17>
       <Position18>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="117" Column="82" TopLine="99"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="26"/>
       </Position18>
       <Position19>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="134" Column="26" TopLine="99"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="107" TopLine="82"/>
       </Position19>
       <Position20>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="129" Column="12" TopLine="105"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="28"/>
       </Position20>
       <Position21>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="99" Column="40" TopLine="79"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="94" TopLine="61"/>
       </Position21>
       <Position22>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="100" Column="40" TopLine="80"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="46" TopLine="16"/>
       </Position22>
       <Position23>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="101" Column="40" TopLine="81"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="45" TopLine="15"/>
       </Position23>
       <Position24>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="102" Column="40" TopLine="66"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="44" TopLine="14"/>
       </Position24>
       <Position25>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="104" Column="40" TopLine="69"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="43" TopLine="13"/>
       </Position25>
       <Position26>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="143" Column="59" TopLine="97"/>
+        <Filename Value="formlicense.pas"/>
+        <Caret Line="9" Column="11"/>
       </Position26>
       <Position27>
         <Filename Value="formAbout.pas"/>
-        <Caret Line="147" Column="19" TopLine="117"/>
+        <Caret Line="25" Column="73"/>
       </Position27>
       <Position28>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="120" Column="73" TopLine="93"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="9" Column="42"/>
       </Position28>
       <Position29>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="118" Column="30" TopLine="97"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="8" Column="59"/>
       </Position29>
       <Position30>
-        <Filename Value="formAbout.pas"/>
-        <Caret Line="119" Column="30" TopLine="98"/>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="189" Column="75" TopLine="165"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
