@@ -982,3 +982,34 @@ Date:   Wed Oct 18 22:18:09 2017 +0100
  klock.lpi                      | 160 ++++----
  lazKlock.smproj                | Bin 10684 -> 21721 bytes
  12 files changed, 1166 insertions(+), 871 deletions(-)
+
+Build 39 [2.0.0.39]
+
+commit b9e05ca031036a4a64abf128859f401e10fab5f2
+Author: Kevin Scott <lazKlock@keleven.co.uk>
+Date:   Thu Oct 19 21:21:15 2017 +0100
+
+    Removed all referances to the old .ini in formOptions, fromKlock & ufuzzyTime.
+    
+    Also removed all visual components from fromOptions.
+    
+    We now build the new options screen.
+
+    Currently
+    3112 lines of source code.
+    1615 statements
+    16.4% comment
+
+ clock.ico       | Bin 67646 -> 0 bytes
+ formAbout.pas   |   2 +-
+ formKlock.pas   |  21 +--
+ formOptions.lfm | 319 +-------------------------------------
+ formOptions.pas | 465 +-------------------------------------------------------
+ formlicense.pas |   2 +-
+ history.txt     |  36 +++++
+ klock.iss       |  10 +-
+ klock.lpi       | 153 ++++++++++---------
+ lazKlock.smproj | Bin 21721 -> 32884 bytes
+ ufuzzytime.pas  |  12 +-
+ uoptions.pas    |  11 ++
+ 12 files changed, 149 insertions(+), 882 deletions(-)

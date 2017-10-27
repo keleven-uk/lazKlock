@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
-  MMSystem, dateutils;
+  MMSystem, dateutils, registry;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -26,7 +26,7 @@ procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string);
 procedure doPlaySound(sound: string);
-
+procedure applyRunAtStartUp(flag: Boolean);
 
 implementation
 
@@ -331,6 +331,44 @@ begin
   end;
 
   parseReminder := rmndrData;
+end;
+procedure applyRunAtStartUp(flag: Boolean);
+
+CONST
+  rootPath = HKEY_CURRENT_USER;
+  regpath = '\Software\Microsoft\Windows\CurrentVersion\run';
+VAR
+  registry: TRegistry;
+  AppPath: String;
+  AppName: String;
+
+  openResult: boolean;
+begin
+  registry := TRegistry.Create;
+  registry.RootKey := rootpath;
+  registry.Access := KEY_WRITE;
+
+  AppPath := Application.ExeName;
+  AppName := ExtractFileName(AppPath);
+
+  try
+    openResult := registry.OpenKey(regpath, true);
+
+    if not openResult then
+      showMessage('Error in opening key')
+    else
+      begin
+        if flag then
+         registry.WriteString(AppNAme, AppPath)
+        else
+          registry.DeleteValue(AppNAme)
+      end;
+
+    registry.CloseKey ;
+  finally
+    registry.Free;
+  end;  //  try
+
 end;
 
 end.

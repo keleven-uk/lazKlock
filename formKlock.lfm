@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1250
+  Left = 1290
   Height = 260
-  Top = 534
+  Top = 511
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2167,8 +2167,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 580
-      ActivePage = TbShtCountdown
-      TabIndex = 1
+      ActivePage = TbShtFuzzy
+      TabIndex = 0
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -2229,9 +2229,9 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblfuzzy: TLabel
               Left = 8
-              Height = 33
+              Height = 32
               Top = 2
-              Width = 389
+              Width = 388
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False
@@ -2251,9 +2251,9 @@ object frmMain: TfrmMain
             end
             object lblRadix: TLabel
               Left = 336
-              Height = 22
+              Height = 21
               Top = 11
-              Width = 39
+              Width = 38
               Caption = 'Radix'
               Font.Height = -16
               ParentColor = False
@@ -3013,6 +3013,7 @@ object frmMain: TfrmMain
     end
   end
   object mainTimer: TTimer
+    Enabled = False
     OnTimer = mainTimerTimer
     left = 288
     top = 184

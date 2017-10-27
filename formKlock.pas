@@ -219,13 +219,13 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 begin
+  mainTimer.Enabled  := False;          //  disable main timer until all options and fuzzt time are set up.
+
   countdownSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';  // default to sound file
   EdtCountdownSound.Text := ExtractFileName(countdownSoundName);        //  in current working directory.
 
   EventSoundName     := getCurrentDir + '\sounds\alarm-fatal.wav';      // default to sound file
   EdtEventSound.Text := ExtractFileName(countdownSoundName);            //  in current working directory.
-
-  ft := FuzzyTime.Create;
 
   DtEdtEvent.Date     := now;
   SpnEdtMins.Value    := MinuteOf(time);
@@ -237,20 +237,22 @@ begin
 
   rmndrStore := TAvgLvlTree.Create;
   userOptions := Options.Create;  // create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
+  ft := FuzzyTime.Create;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
   SetDefaults;
+  mainTimer.Enabled := True;        //  Now safe to enable main timer.
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
 begin
-  if userOptions.screenSave ='True' then begin
-    userOptions.formTop := IntToStr(frmMain.Top);
-    userOptions.formLeft := IntToStr(frmMain.Left);
+  if userOptions.screenSave then begin
+    userOptions.formTop := frmMain.Top;
+    userOptions.formLeft := frmMain.Left;
   end;
 
   userOptions.writeCurrentOptions ;
@@ -262,19 +264,19 @@ procedure TfrmMain.SetDefaults;
    Set things that can be changed in the options screen, to the values in the options screen.
 }
 begin
-  PageControl1.TabIndex := StrToInt(userOptions.defaultTab);
-  CmbBxTime.ItemIndex   := StrToInt(userOptions.defaultTime);
+  PageControl1.TabIndex := userOptions.defaultTab;
+  CmbBxTime.ItemIndex   := userOptions.defaultTime;
 
-  ft.displayFuzzy := StrToInt(userOptions.defaultTime);
+  ft.displayFuzzy := userOptions.defaultTime;
 
-  ft.FuzzyBase := 2;
+  ft.fuzzyBase := 2;
 
-  if userOptions.screenSave = 'True' then begin
-    frmMain.Top := StrToInt(userOptions.formTop);
-    frmMain.Left := StrToInt(userOptions.formLeft);
+  if userOptions.screenSave then begin
+    frmMain.Top := userOptions.formTop;
+    frmMain.Left := userOptions.formLeft;
   end;
 
-  if userOptions.netTimeSeconds = 'True' then
+  if userOptions.netTimeSeconds then
     mainTimer.Interval := 1
   else
     mainTimer.Interval := 1000;
@@ -351,7 +353,7 @@ begin
         stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
 
         if btnTimerStart.Caption = 'Start' then begin
-          if userOptions.timerMilliSeconds = 'True' then begin
+          if userOptions.timerMilliSeconds then begin
             lblTimer.Caption    := '00:00:00:00';
             lblSplitLap.Caption := '00:00:00:00';
           end
@@ -396,7 +398,7 @@ begin
     strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
     TrayIcon.Hint := strTime;
 
-    if userOptions.fuzzyTimeBalloon = 'True' then begin
+    if userOptions.fuzzyTimeBalloon then begin
       if (SecondOfTheDay(now) mod 300 = 0) then begin  //  only display on the five minutes.
          TrayIcon.BalloonHint:= strTime;
          trayIcon.ShowBalloonHint;
@@ -411,7 +413,7 @@ begin
     end;      //  if ppMnItmTime.Checked then begin
   end         //  if TrayIcon.Visible then
   else begin  //  normal display i.e. nor trayicon
-    lblfuzzy.Caption := ft.getTime;
+    lblfuzzy.Caption    := ft.getTime;
 
     keyResult := ' cns ';
     if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
@@ -808,7 +810,7 @@ VAR
 begin
   timerInterval := timerPaused + (time - timerStart);
   DecodeTime(timerInterval, hh, mm, ss, ms);
-  if userOptions.timerMilliSeconds = 'True' then
+  if userOptions.timerMilliSeconds then
     lblTimer.Caption := format('%.2d:%.2d:%.2d:%.2d',[hh, mm, ss, ms])
   else
     lblTimer.Caption := format('%.2d:%.2d:%.2d',[hh, mm, ss])
@@ -823,7 +825,7 @@ procedure TfrmMain.btnTimerStartClick(Sender: TObject);
 begin
   if btnTimerStart.Caption = 'Start' then begin
 
-    if userOptions.timerMilliSeconds = 'True' then
+    if userOptions.timerMilliSeconds then
       timerTimer.Interval := 100;
     timerStart  := time;
     timerPaused := 0;
@@ -879,7 +881,7 @@ procedure TfrmMain.btnTimerClearClick(Sender: TObject);
 {  Reset [clear] the timer.
 }
 begin
-  if userOptions.timerMilliSeconds = 'True' then  begin
+  if userOptions.timerMilliSeconds then  begin
     lblTimer.Caption    := '00:00:00:00';
     lblSplitLap.Caption := '00:00:00:00';
   end
@@ -1274,20 +1276,23 @@ procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 VAR
   frmTop: integer;
   frmLeft:integer;
+  res: integer;         //  return value from option screen.
 begin
-  if userOptions.screenSave = 'True' then begin
-    userOptions.formTop := IntToStr(frmMain.Top);
-    userOptions.formLeft := IntToStr(frmMain.Left);
+  if userOptions.screenSave then begin
+    userOptions.formTop := frmMain.Top;
+    userOptions.formLeft := frmMain.Left;
   end
   else begin
-    frmTop := frmMain.Top;   //  return to same place, after option screen.
+    frmTop := frmMain.Top;    //  return to same place, after option screen.
     frmLeft := frmMain.Left;
   end;
 
-  frmOptions.ShowModal;
-  SetDefaults;
+  res := frmOptions.ShowModal;
 
-  if userOptions.screenSave <> 'True' then begin  //  not done in SetDefaults
+  if res = 1 then             //  1 = Ok button press, 2 = cancel button pressed.
+    SetDefaults;
+
+  if NOT userOptions.screenSave then begin  //  not done in SetDefaults
     frmMain.Top := frmTop;
     frmMain.Left := frmLeft;
   end;

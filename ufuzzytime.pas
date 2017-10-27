@@ -20,6 +20,10 @@ type
   FuzzyTime = class
 
 Private
+  _displayFuzzy : Integer ;
+  _fuzzyBase    : Integer ;
+  _fuzzyTypes   : TStringList;
+
   Function fTime       : String;
   Function netTime     : string;
   Function unixTime    : string;
@@ -30,9 +34,11 @@ Private
   Function hexTime     : string;
   Function radixTime   : string;
 Public
-  displayFuzzy : Integer ;
-  FuzzyBase    : Integer ;
-  Constructor init ;
+  property displayFuzzy: Integer read _displayFuzzy write _displayFuzzy;
+  property fuzzyBase: Integer read _fuzzyBase write _fuzzyBase;
+  property fuzzyTypes: TStringList read _fuzzyTypes write _fuzzyTypes;
+
+  constructor Create; overload;
   Function getTime : string ;
   Function getDblTime : Double;
 end;
@@ -44,9 +50,13 @@ uses
   formklock;
 
 
-Constructor FuzzyTime.init;
+Constructor FuzzyTime.Create; overload;
 begin
-  self.FuzzyBase    := 2;
+  fuzzyBase := 2;
+
+  fuzzyTypes := TStringList.Create;
+  fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
+                           '"Julian Time", "Decimal Time", "Hex Time", "Radix Time"');
 end;
 
 Function FuzzyTime.fTime : String ;
@@ -138,7 +148,7 @@ VAR
   sec : Int64;
 begin
 
-  if userOptions.netTimeSeconds ='True' then begin
+  if userOptions.netTimeSeconds then begin
     deg := (MilliSecondOfTheDay(Time) div 240000);
     min := (MilliSecondOfTheDay(Time) - (deg * 240000)) div 4000;
     sec := (MilliSecondOfTheDay(Time) - (deg * 240000) - (min * 4000)) div 100;
@@ -186,7 +196,7 @@ begin
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
   {****}
-  if userOptions.swatchCentibeats ='True' then
+  if userOptions.swatchCentibeats then
     swatchTime := format('@ %3.2f BMT', [noOfBeats])
   else
     swatchTime := format('@ %3.f BMT', [noOfBeats]);
@@ -279,9 +289,9 @@ begin
   t := Time;
   DecodeTime(t, hrs, min, sec, msc);
 
-  shrs := Dec2Numb(hrs, 5, self.FuzzyBase);
-  smin := Dec2Numb(min, 6, self.FuzzyBase);
-  ssec := Dec2Numb(sec, 6, self.FuzzyBase);
+  shrs := Dec2Numb(hrs, 5, fuzzyBase);
+  smin := Dec2Numb(min, 6, fuzzyBase);
+  ssec := Dec2Numb(sec, 6, fuzzyBase);
 
   radixTime := format('%s %s %s', [shrs, smin, ssec])
 end;
@@ -308,11 +318,11 @@ end;
 Function FuzzyTime.getTime : String;
 begin
 
-  case self.displayFuzzy of
-    0 : getTime := self.fTime;
+  case displayFuzzy of
+    0 : getTime := fTime;
     1 : getTime := TimeToStr(Time);
-    2 : getTime := self.netTime;
-    3 : getTime := self.unixTime;
+    2 : getTime := netTime;
+    3 : getTime := unixTime;
     4 : getTime := utcTime;
     5 : getTime := swatchTime;
     6 : getTime := julianTime;

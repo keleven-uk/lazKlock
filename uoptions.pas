@@ -8,6 +8,9 @@ uses
   Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs;
 
 type
+
+  { Options }
+
   Options = class
   {  Holds the current user options.  The options are hard coded in this class.
 
@@ -32,13 +35,12 @@ type
 
      NOTE :: If there is an error while either reading or writing the options file, the application is halted.
 
-     NOTE :: All values are string.  So, all will be returned as strings and all should returned as strings.
+     NOTE :: All XML values are string, so need to be casted before use - this is done in the read / write routines.
 
      TODO :: causes a read failure if an option has been added to the class which is not in the XML file.
              Needs some way to check.
   }
     private
-      _fileName: String;
       _dirName: String;
       //  Global
       _Comments: string;
@@ -51,20 +53,21 @@ type
       _productName: string;
       _productVersion: string;
 
-      _screenSave: String;           //  to we save from position or not.
-      _formTop: string;              //  the forms top left.
-      _formLeft: string;
-      _defaultTab: string;
+      _optionsName: String;           //  full path to the options file.
+      _runAtStartUp: Boolean;         //  run Klock at windows start up - Current user only.
+      _screenSave: Boolean;           //  to we save from position or not.
+      _formTop: Integer;              //  the forms top left.
+      _formLeft: Integer;
+      _defaultTab: Integer;
 
       //  Time
-      _defaultTime: String;
-      _netTimeSeconds: String;
-      _swatchCentibeats: String;
-      _fuzzyTimeBalloon: String;
+      _defaultTime: Integer;
+      _netTimeSeconds: Boolean;
+      _swatchCentibeats: Boolean;
+      _fuzzyTimeBalloon: Boolean;
 
       //  Timer
-      _timerMilliSeconds: string;
-
+      _timerMilliSeconds: Boolean;
 
       procedure checkDirectory;
     public
@@ -80,19 +83,21 @@ type
       property productVersion: String read _productVersion write _productVersion;
 
       //  Global - other stuff
-      property screenSave: String read _screenSave write _screenSave;
-      property formTop: String read _formTop write _formTop;
-      property formLeft: String read _formLeft write _formLeft;
-      property defaultTab: String read _defaultTab write _defaultTab;
+      property optionsName: String read _optionsName write _optionsName;
+      property runAtStartUp: Boolean read _runAtStartUp write _runAtStartUp;
+      property screenSave: Boolean read _screenSave write _screenSave;
+      property formTop: Integer read _formTop write _formTop;
+      property formLeft: Integer read _formLeft write _formLeft;
+      property defaultTab: Integer read _defaultTab write _defaultTab;
 
       //  Time
-      property defaultTime: String read _defaultTime write _defaultTime;
-      property netTimeSeconds: String read _netTimeSeconds write _netTimeSeconds;
-      property swatchCentibeats: String read _swatchCentibeats write _swatchCentibeats;
-      property fuzzyTimeBalloon: String read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
+      property defaultTime: Integer read _defaultTime write _defaultTime;
+      property netTimeSeconds: Boolean read _netTimeSeconds write _netTimeSeconds;
+      property swatchCentibeats: Boolean read _swatchCentibeats write _swatchCentibeats;
+      property fuzzyTimeBalloon: Boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
 
       //  Timer
-      property timerMilliSeconds: String read _timerMilliSeconds write _timerMilliSeconds;
+      property timerMilliSeconds: Boolean read _timerMilliSeconds write _timerMilliSeconds;
 
       constructor Create; overload;
       constructor Create(filename: String); overload;
@@ -100,7 +105,11 @@ type
       procedure readOptions;
       procedure writeCurrentOptions;
       procedure writeDefaultOptions;
+      procedure assign(o: Options);
+
   end;  //  class
+
+  { myFileVersionInfo }
 
   myFileVersionInfo = class
   {  Retrieves the current file info.
@@ -145,26 +154,24 @@ implementation
   constructor Options.Create; overload;
   {  creates the options class with a default filename.  }
   begin
-
     checkDirectory;
 
-    _filename := _dirName + 'Options.xml';
+    optionsName := _dirName + 'Options.xml';
 
-    If FileExists(_filename) Then
+    If FileExists(optionsName) Then
       readOptions
     else
       writeDefaultOptions;
-
   end;
 
-  constructor Options.Create(fileName: String); overload;
+  constructor Options.Create(filename: String);
   {  creates the options class with a specified filename.  }
   begin
     checkDirectory;
 
-    _filename := _dirName + fileName;
+    optionsName := _dirName + fileName;
 
-    If FileExists(_filename) Then
+    If FileExists(optionsName) Then
       readOptions
     else
       writeDefaultOptions;
@@ -182,6 +189,44 @@ implementation
     If NOT DirectoryExists(_dirName) Then
       If Not CreateDir (_dirName) Then
         ShowMessage('Failed to create directory !');
+  end;
+
+
+  procedure Options.assign(o: Options);
+  {  Copy all fields from one options object to another.
+     Because Options is derived from TObjects and not TPersistent, we dont get assigfn for free.
+
+     NOTE :: When a neew foeld of added to the Option classs, it HAS to be added here.
+             Must be a better way of doing this.
+  }
+  begin
+    //  Global - file stuff
+    Comments := o.Comments;
+    companyName := o.companyName;
+    fileDescription := o.fileDescription;
+    fileVersion := o.fileVersion;
+    InternalName := o.InternalName;
+    legalCopyright := o.legalCopyright;
+    originalFileName := o.originalFileName;
+    productName := o.productName;
+    productVersion := o.productVersion;
+
+    //  Global - other stuff
+    optionsName := o.optionsName;
+    runAtStartUp := o.runAtStartUp;
+    screenSave := o.screenSave;
+    formTop := o.formTop;
+    formLeft := o.formLeft;
+    defaultTab := o.defaultTab;
+
+    //  Time
+    defaultTime := o.defaultTime;
+    netTimeSeconds := o.netTimeSeconds;
+    swatchCentibeats := o.swatchCentibeats;
+    fuzzyTimeBalloon := o.fuzzyTimeBalloon;
+
+    //  Timer
+    timerMilliSeconds := o.timerMilliSeconds;
   end;
 
   procedure Options.readOptions;
@@ -211,7 +256,7 @@ implementation
 
       try
         // Read in xml file from disk
-        ReadXMLFile(Doc, _filename);
+        ReadXMLFile(Doc, optionsName);
       except
         on E: Exception do
         begin
@@ -225,33 +270,39 @@ implementation
       //  Global
       PassNode := Doc.DocumentElement.FindNode('Global');
       childNode := PassNode.FindNode('formPosition');
-      _formTop := ansiString(TDOMElement(childNode).GetAttribute('Top'));              //  the forms top left.
-      _formLeft := ansiString(TDOMElement(childNode).GetAttribute('Left'));
+      _formTop := StrToInt(TDOMElement(childNode).GetAttribute('Top'));              //  the forms top left.
+      _formLeft := StrToInt(TDOMElement(childNode).GetAttribute('Left'));
+
+      childNode := PassNode.FindNode('optionsName');
+      optionsName := ansiString(childNode.TextContent);
+
+      childNode := PassNode.FindNode('runAtStartUp');
+      runAtStartUp := StrToBool(childNode.TextContent);
 
       childNode := PassNode.FindNode('screenSave');
-      screenSave := ansiString(childNode.TextContent);
+      screenSave := StrToBool(childNode.TextContent);
 
       childNode := PassNode.FindNode('defaultTab');
-      defaultTab := ansiString(childNode.TextContent);
+      defaultTab := StrToInt(childNode.TextContent);
 
       //  Time
       PassNode := Doc.DocumentElement.FindNode('Time');
       childNode := PassNode.FindNode('defaultTime');
-      defaultTime := ansiString(childNode.TextContent);
+      defaultTime := StrToInt(childNode.TextContent);
 
       childNode := PassNode.FindNode('netTimeSeconds');
-      netTimeSeconds := ansiString(childNode.TextContent);
+      netTimeSeconds := StrToBool(childNode.TextContent);
 
       childNode := PassNode.FindNode('swatchCentibeats');
-      swatchCentibeats := ansiString(childNode.TextContent);
+      swatchCentibeats := StrToBool(childNode.TextContent);
 
       childNode := PassNode.FindNode('fuzzyTimeBalloon');
-      fuzzyTimeBalloon := ansiString(childNode.TextContent);
+      fuzzyTimeBalloon := StrToBool(childNode.TextContent);
 
       //  Timer
       PassNode := Doc.DocumentElement.FindNode('Timer');
       childNode := PassNode.FindNode('timerMilliSeconds');
-      timerMilliSeconds := ansiString(childNode.TextContent);
+      timerMilliSeconds := StrToBool(childNode.TextContent);
 
     finally
       // finally, free the document
@@ -283,19 +334,21 @@ implementation
     productName := fvi.fileProductName;
     productVersion := fvi.fileProductVersion;
 
-    screenSave := 'True';
-    formTop := '100';              //  the forms top left.
-    formLeft := '100';
-    defaultTab :='0';
+    optionsName := optionsName;
+    runAtStartUp := True;
+    screenSave := True;
+    formTop := 100;              //  the forms top left.
+    formLeft := 100;
+    defaultTab :=0;
 
     //  Time
-    defaultTime :='0';
-    netTimeSeconds:= 'True';
-    swatchCentibeats:= 'True';
-    fuzzyTimeBalloon := 'True';
+    defaultTime := 0;
+    netTimeSeconds:= True;
+    swatchCentibeats:= True;
+    fuzzyTimeBalloon := True;
 
     //  Timer
-    timerMilliSeconds := 'True';
+    timerMilliSeconds := True;
 
     writeCurrentOptions;
   end;
@@ -371,20 +424,30 @@ implementation
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
+      ItemNode:=Doc.CreateElement('optionsName');
+      TextNode:=Doc.CreateTextNode(WideString(optionsName));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
+      ItemNode:=Doc.CreateElement('runAtStartUp');
+      TextNode:=Doc.CreateTextNode(BoolToStr(runAtStartUp));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
       ItemNode:=Doc.CreateElement('screenSave');
-      TextNode:=Doc.CreateTextNode(WideString(screenSave));
+      TextNode:=Doc.CreateTextNode(BoolToStr(screenSave));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
       ItemNode:=Doc.CreateElement('formPosition');              //  the forms top left.
-      TDOMElement(ItemNode).SetAttribute('Top', WideString(formTop));
-      TDOMElement(ItemNode).SetAttribute('Left', WideString(formLeft));
+      TDOMElement(ItemNode).SetAttribute('Top', IntToStr(formTop));
+      TDOMElement(ItemNode).SetAttribute('Left', IntToStr(formLeft));
       TextNode:=Doc.CreateTextNode('');
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
       ItemNode:=Doc.CreateElement('defaultTab');
-      TextNode:=Doc.CreateTextNode(WideString(defaultTab));
+      TextNode:=Doc.CreateTextNode(IntToStr(defaultTab));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
@@ -393,22 +456,22 @@ implementation
       //  Time
       ElementNode:=Doc.CreateElement('Time');
       ItemNode:=Doc.CreateElement('defaultTime');
-      TextNode:=Doc.CreateTextNode(WideString(defaultTime));
+      TextNode:=Doc.CreateTextNode(IntToStr(defaultTime));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
       ItemNode:=Doc.CreateElement('netTimeSeconds');
-      TextNode:=Doc.CreateTextNode(WideString(netTimeSeconds));
+      TextNode:=Doc.CreateTextNode(BoolToStr(netTimeSeconds));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
       ItemNode:=Doc.CreateElement('swatchCentibeats');
-      TextNode:=Doc.CreateTextNode(WideString(swatchCentibeats));
+      TextNode:=Doc.CreateTextNode(BoolToStr(swatchCentibeats));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
       ItemNode:=Doc.CreateElement('fuzzyTimeBalloon');
-      TextNode:=Doc.CreateTextNode(WideString(fuzzyTimeBalloon));
+      TextNode:=Doc.CreateTextNode(BoolToStr(fuzzyTimeBalloon));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
@@ -417,7 +480,7 @@ implementation
       //  Timer
       ElementNode:=Doc.CreateElement('Timer');
       ItemNode:=Doc.CreateElement('timerMilliSeconds');
-      TextNode:=Doc.CreateTextNode(WideString(timerMilliSeconds));
+      TextNode:=Doc.CreateTextNode(BoolToStr(timerMilliSeconds));
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
@@ -425,7 +488,7 @@ implementation
 
       try
         // Save XML
-        WriteXMLFile(Doc, _filename);
+        WriteXMLFile(Doc, optionsName);
       except
         on E: Exception do
         begin
@@ -471,6 +534,7 @@ implementation
     end;
 
   end;
+
 
 end.
 
