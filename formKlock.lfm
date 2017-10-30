@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1290
+  Left = 1224
   Height = 260
-  Top = 511
+  Top = 361
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2996,6 +2996,13 @@ object frmMain: TfrmMain
         OnClick = mnuItmExitClick
       end
     end
+    object mnuTime: TMenuItem
+      Caption = 'Time'
+      object MenuItem2: TMenuItem
+        Caption = 'Analogue Klock'
+        OnClick = MenuItem2Click
+      end
+    end
     object mnuhelp: TMenuItem
       Caption = 'Help'
       object mnuItmHelp: TMenuItem
@@ -5199,5 +5206,13 @@ object frmMain: TfrmMain
     OnTimer = ballonTimerTimer
     left = 8
     top = 152
+  end
+  object mainIdleTimer: TIdleTimer
+    AutoEnabled = True
+    Enabled = False
+    OnTimer = mainIdleTimerTimer
+    OnStopTimer = mainIdleTimerStopTimer
+    left = 328
+    top = 184
   end
 end

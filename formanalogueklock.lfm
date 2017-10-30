@@ -1,0 +1,78 @@
+object frmAnalogueKlock: TfrmAnalogueKlock
+  Left = 1507
+  Height = 248
+  Top = 151
+  Width = 248
+  BorderIcons = [biHelp]
+  BorderStyle = bsNone
+  Caption = 'Analogue Klock'
+  ClientHeight = 248
+  ClientWidth = 248
+  Color = clBlack
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PopupMenu = popUpMenuAnalogueKlock
+  Position = poScreenCenter
+  LCLVersion = '1.8.0.5'
+  object DTThemedClock1: TDTThemedClock
+    Left = 0
+    Height = 240
+    Top = 8
+    Width = 240
+    SecondsPointerSettings.Color = 5329407
+    SecondsPointerSettings.Length = 80
+    SecondsPointerSettings.Thickness = 3
+    MinutesPointerSettings.Color = 11388871
+    MinutesPointerSettings.Length = 80
+    MinutesPointerSettings.Thickness = 3
+    HoursPointerSettings.Color = 11388871
+    HoursPointerSettings.Length = 60
+    HoursPointerSettings.Thickness = 5
+    PointerCapSettings.EdgeColor = 13425884
+    PointerCapSettings.FillColor = 4144959
+    PointerCapSettings.Radius = 10
+    PointerCapSettings.EdgeThickness = 1
+    ScaleSettings.TickColor = 8242399
+    ScaleSettings.TextColor = 13881484
+    ScaleSettings.TextSize = 15
+    ScaleSettings.TextFont = 'Calibri'
+    ScaleSettings.EnableMainTicks = True
+    ScaleSettings.EnableSubTicks = True
+    ScaleSettings.EnableScaleText = True
+    ScaleSettings.Maximum = 100
+    ScaleSettings.MainTickCount = 10
+    ScaleSettings.SubTickCount = 5
+    ScaleSettings.LengthMainTick = 15
+    ScaleSettings.LengthSubTick = 8
+    ScaleSettings.ThicknessMainTick = 3
+    ScaleSettings.ThicknessSubTick = 1
+    ScaleSettings.TextRadius = 72
+    ScaleSettings.Angle = 300
+    ScaleSettings.EnableRangeIndicator = True
+    Position = 0
+    Enabled = True
+  end
+  object Shape1: TShape
+    Left = 224
+    Height = 20
+    Top = 208
+    Width = 15
+    Brush.Color = clMoneyGreen
+    OnMouseDown = Shape1MouseDown
+    OnMouseMove = Shape1MouseMove
+    OnMouseUp = Shape1MouseUp
+    Shape = stTriangleRight
+  end
+  object popUpMenuAnalogueKlock: TPopupMenu
+    left = 24
+    top = 208
+    object MnItmExit: TMenuItem
+      Caption = 'Exit'
+      OnClick = MnItmExitClick
+    end
+    object MnItmAbout: TMenuItem
+      Caption = 'About'
+      OnClick = MnItmAboutClick
+    end
+  end
+end

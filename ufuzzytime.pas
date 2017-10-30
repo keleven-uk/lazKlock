@@ -33,10 +33,11 @@ Private
   Function decimalTime : string;
   Function hexTime     : string;
   Function radixTime   : string;
+  Function percentTime: string;
 Public
   property displayFuzzy: Integer read _displayFuzzy write _displayFuzzy;
   property fuzzyBase: Integer read _fuzzyBase write _fuzzyBase;
-  property fuzzyTypes: TStringList read _fuzzyTypes write _fuzzyTypes;
+  property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
 
   constructor Create; overload;
   Function getTime : string ;
@@ -54,9 +55,9 @@ Constructor FuzzyTime.Create; overload;
 begin
   fuzzyBase := 2;
 
-  fuzzyTypes := TStringList.Create;
-  fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
-                           '"Julian Time", "Decimal Time", "Hex Time", "Radix Time"');
+  _fuzzyTypes := TStringList.Create;
+  _fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
+                            '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time"');
 end;
 
 Function FuzzyTime.fTime : String ;
@@ -296,6 +297,17 @@ begin
   radixTime := format('%s %s %s', [shrs, smin, ssec])
 end;
 
+Function FuzzyTime.percentTime: string;
+var
+  noOfSeconds : LongWord;
+  percentSeconds : double;
+begin
+  noOfSeconds := SecondOfTheDay(Time);
+  percentSeconds := noOfSeconds / 86400;
+
+  percentTime := format('%0.4f % PMH', [percentSeconds * 100]);
+end;
+
 Function FuzzyTime.getDblTime : Double ;
 {  returns current time as a float, in the format hh.mm.
    a bit klunky - needs a rewrite, when i know how                             }
@@ -329,6 +341,7 @@ begin
     7 : getTime := decimalTime;
     8 : getTime := hexTime;
     9 : getTime := radixTime;
+    10 : getTime := percentTime;
   end;
 
 end ;

@@ -9,7 +9,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout, formHelp,
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
-  uOptions;
+  uOptions, formAnalogueKlock;
 
 {$R *.res}
 
@@ -22,6 +22,7 @@ begin
   Application.CreateForm(TfrmHelp, frmHelp);
   Application.CreateForm(TfrmLicense, frmLicense);
   Application.CreateForm(TfrmReminderInput, frmReminderInput);
+  Application.CreateForm(TfrmAnalogueKlock, frmAnalogueKlock);
   Application.Run;
 end.
 

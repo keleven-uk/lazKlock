@@ -37,7 +37,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 776
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 1
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -50,7 +50,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 293
+      Height = 0
       Top = 21
       Width = 776
       Caption = 'Global'
@@ -162,14 +162,14 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
+      Height = 293
       Top = 42
       Width = 776
       Caption = 'Time'
       Order = 1
       object ChckGrpTimeOptions: TCheckGroup
         Left = 0
-        Height = 105
+        Height = 137
         Top = 16
         Width = 232
         AutoFill = True
@@ -182,17 +182,18 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 85
+        ClientHeight = 117
         ClientWidth = 228
         Items.Strings = (
           'New Earth Time to display seconds'
           'SwatchTime to display Centibeats'
           'Display Time in balloon'
+          'Dispaly idle Time'
         )
         OnItemClick = ChckGrpTimeOptionsItemClick
         TabOrder = 0
         Data = {
-          03000000020202
+          0400000002020202
         }
       end
       object GroupBox2: TGroupBox

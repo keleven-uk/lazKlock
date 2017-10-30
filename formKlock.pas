@@ -25,7 +25,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows;
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock;
 
 type
 
@@ -73,12 +73,15 @@ type
     EdtCountdownCommand: TEdit;
     EdtCountdownReminder: TEdit;
     EdtCountdownSound: TEdit;
+    mainIdleTimer: TIdleTimer;
     lblRadix: TLabel;
     lblSplitLap: TLabel;
     lblfuzzy: TLabel;
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuTime: TMenuItem;
+    MenuItem2: TMenuItem;
     Panel17: TPanel;
     Panel18: TPanel;
     Panel19: TPanel;
@@ -163,6 +166,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
+    procedure mainIdleTimerStopTimer(Sender: TObject);
+    procedure mainIdleTimerTimer(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
@@ -207,7 +213,7 @@ var
   popupMessages: Array [0..3] of string;
   popupTitle: Array [0..3] of String;
   noReminder: Integer;
-
+  tick: integer=0;
 implementation
 
 {$R *.lfm}
@@ -236,8 +242,17 @@ begin
   appStartTime := GetTickCount64;  //  tick count when application starts.
 
   rmndrStore := TAvgLvlTree.Create;
-  userOptions := Options.Create;  // create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
+  userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
   ft := FuzzyTime.Create;
+
+  with mainIdleTimer do            //  set up the idle timer.
+  begin
+    AutoEnabled := True;
+    AutoStartEvent := itaOnIdle;
+    AutoEndEvent := itaOnUserInput;
+    Interval := 1000;
+    Enabled := False;
+  end;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -265,7 +280,9 @@ procedure TfrmMain.SetDefaults;
 }
 begin
   PageControl1.TabIndex := userOptions.defaultTab;
+  CmbBxTime.Items := ft.fuzzyTypes;
   CmbBxTime.ItemIndex   := userOptions.defaultTime;
+  mainIdleTimer.Enabled := userOptions.displayIdleTime;
 
   ft.displayFuzzy := userOptions.defaultTime;
 
@@ -412,7 +429,7 @@ begin
       DisplayMessage;
     end;      //  if ppMnItmTime.Checked then begin
   end         //  if TrayIcon.Visible then
-  else begin  //  normal display i.e. nor trayicon
+  else begin  //  normal display i.e. not trayicon
     lblfuzzy.Caption    := ft.getTime;
 
     keyResult := ' cns ';
@@ -423,7 +440,11 @@ begin
     stsBrInfo.Panels.Items[0].Text := TimeToStr(Time) ;
     stsBrInfo.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', Now);
     stsBrInfo.Panels.Items[2].Text := keyResult ;
-  end;  //  else if TrayIcon.Visible then
+    if userOptions.displayIdleTime then
+      stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
+    else
+      stsBrInfo.Panels.Items[3].Text := '';
+  end;  //  if TrayIcon.Visible then
 
 end;
 
@@ -437,6 +458,23 @@ begin
   TrayIcon.Visible    := false;
   TrayIcon.Visible    := True;
 end;
+
+procedure TfrmMain.mainIdleTimerTimer(Sender: TObject);
+
+begin
+  tick += 1;
+end;
+
+procedure TfrmMain.MenuItem2Click(Sender: TObject);
+begin
+  frmAnalogueKlock.Show;
+end;
+
+procedure TfrmMain.mainIdleTimerStopTimer(Sender: TObject);
+begin
+  tick := 0;
+end;
+
 
 // *********************************************************** Fuzzy Time ******
 procedure TfrmMain.CmbBxTimeChange(Sender: TObject);

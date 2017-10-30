@@ -989,9 +989,9 @@ commit b9e05ca031036a4a64abf128859f401e10fab5f2
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Oct 19 21:21:15 2017 +0100
 
-    Removed all referances to the old .ini in formOptions, fromKlock & ufuzzyTime.
+    Removed all references to the old .ini in formOptions, fromKlock & ufuzzyTime.
     
-    Also removed all visual components from fromOptions.
+    Also removed all non-visual components from formOptions.
     
     We now build the new options screen.
 
@@ -1013,3 +1013,44 @@ Date:   Thu Oct 19 21:21:15 2017 +0100
  ufuzzytime.pas  |  12 +-
  uoptions.pas    |  11 ++
  12 files changed, 149 insertions(+), 882 deletions(-)
+
+Build 40 [2.0.0.40]
+
+commit 98eeea8d6afdab62fc0bfc23bd0cc52fbc703883
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Oct 27 21:40:30 2017 +0100
+
+    Started building the new options screens - using an accordion.
+
+    Although all options are written to the xml file has strings, amended
+    the Options class so that all options are presen:ted to lazKlock  has
+    native type i..e. Integers and Booleans.  The conversions are not his
+    within the options class and not the main program.
+    
+    Changed the logic in formOptions, when the options form loads a backup
+    options record is created and this is amended, it is only copied to the
+    main options records if OK is clicked.  If cancel is click the
+    amendments are discarded.
+    
+    Added the logic to uKlockUtils to amend the registry for starting the app with windows.
+    
+    Removed self from variable references in uFuzztTime - not sure why they where there.
+
+    Currently
+    3338 lines of source code.
+    1738 statements
+    17.4% comment
+
+ formKlock.lfm      |  17 ++--
+ formKlock.pas      |  57 ++++++------
+ formOptions.lfm    | 258 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ formOptions.pas    | 167 +++++++++++++++++++++++++++++++---
+ history.txt        |  31 +++++++
+ klock.lpi          | 203 ++++++++++++++++++++++-------------------
+ klock.lpr          |   5 +-
+ lazKlock.smproj    | Bin 32884 -> 41764 bytes
+ ufuzzytime.pas     |  38 +++++---
+ uklockutils.pas    |  42 ++++++++-
+ uoptions.pas       | 178 ++++++++++++++++++++++++------------
+ uoptionsrecord.pas |  32 -------
+ 12 files changed, 762 insertions(+), 266 deletions(-)

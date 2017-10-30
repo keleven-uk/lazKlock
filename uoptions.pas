@@ -5,7 +5,7 @@ unit uOptions;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs;
+  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs, formAnalogueKlock;
 
 type
 
@@ -65,9 +65,15 @@ type
       _netTimeSeconds: Boolean;
       _swatchCentibeats: Boolean;
       _fuzzyTimeBalloon: Boolean;
+      _displayIdleTime: Boolean;
 
       //  Timer
       _timerMilliSeconds: Boolean;
+
+      //  Analogue Klock
+      _analogueScreenSave: Boolean;           //  to we save from position or not.
+      _analogueFormTop: Integer;              //  the forms top left.
+      _analogueFormLeft: Integer;
 
       procedure checkDirectory;
     public
@@ -95,9 +101,16 @@ type
       property netTimeSeconds: Boolean read _netTimeSeconds write _netTimeSeconds;
       property swatchCentibeats: Boolean read _swatchCentibeats write _swatchCentibeats;
       property fuzzyTimeBalloon: Boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
+      property displayIdleTime: Boolean read _displayIdleTime write _displayIdleTime;
 
       //  Timer
       property timerMilliSeconds: Boolean read _timerMilliSeconds write _timerMilliSeconds;
+
+      // Analogue Kock
+      property analogueScreenSave: Boolean read _analogueScreenSave write _analogueScreenSave;
+      property analogueFormTop: Integer read _analogueFormTop write _analogueFormTop;
+      property analogueFormLeft: Integer read _analogueFormLeft write _analogueFormLeft;
+
 
       constructor Create; overload;
       constructor Create(filename: String); overload;
@@ -224,9 +237,15 @@ implementation
     netTimeSeconds := o.netTimeSeconds;
     swatchCentibeats := o.swatchCentibeats;
     fuzzyTimeBalloon := o.fuzzyTimeBalloon;
+    displayIdleTime := o.displayIdleTime;
 
     //  Timer
     timerMilliSeconds := o.timerMilliSeconds;
+
+    //  Analogue Klock
+    analogueScreenSave := o.analogueScreenSave;
+    analogueFormTop := o.analogueFormTop;
+    analogueFormLeft := o.analogueFormLeft;
   end;
 
   procedure Options.readOptions;
@@ -299,11 +318,23 @@ implementation
       childNode := PassNode.FindNode('fuzzyTimeBalloon');
       fuzzyTimeBalloon := StrToBool(childNode.TextContent);
 
+      childNode := PassNode.FindNode('displayIdleTime');
+      displayIdleTime := StrToBool(childNode.TextContent);
+
       //  Timer
       PassNode := Doc.DocumentElement.FindNode('Timer');
       childNode := PassNode.FindNode('timerMilliSeconds');
       timerMilliSeconds := StrToBool(childNode.TextContent);
 
+      // Analogue Timer
+
+      PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
+      childNode := PassNode.FindNode('analogueForm');
+      _analogueFormTop := StrToInt(TDOMElement(childNode).GetAttribute('Top'));              //  the forms top left.
+      _analogueFormLeft := StrToInt(TDOMElement(childNode).GetAttribute('Left'));
+
+      childNode := PassNode.FindNode('analogueScreenSave');
+      analogueScreenSave := StrToBool(childNode.TextContent);
     finally
       // finally, free the document
       Doc.Free;
@@ -346,9 +377,15 @@ implementation
     netTimeSeconds:= True;
     swatchCentibeats:= True;
     fuzzyTimeBalloon := True;
+    displayIdleTime := True;
 
     //  Timer
     timerMilliSeconds := True;
+
+    //  Analogue Klock
+    analogueScreenSave := True;
+    analogueFormTop := 100;
+    analogueFormLeft := 100;
 
     writeCurrentOptions;
   end;
@@ -475,12 +512,34 @@ implementation
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
+      ItemNode:=Doc.CreateElement('displayIdleTime');
+      TextNode:=Doc.CreateTextNode(BoolToStr(displayIdleTime));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
       RootNode.AppendChild(ElementNode);
 
       //  Timer
       ElementNode:=Doc.CreateElement('Timer');
       ItemNode:=Doc.CreateElement('timerMilliSeconds');
       TextNode:=Doc.CreateTextNode(BoolToStr(timerMilliSeconds));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
+      RootNode.AppendChild(ElementNode);
+
+      // Analogue Klock
+      ElementNode:=Doc.CreateElement('AnalogueKlock');
+
+      ItemNode:=Doc.CreateElement('analogueScreenSave');
+      TextNode:=Doc.CreateTextNode(BoolToStr(analogueScreenSave));
+      ItemNode.AppendChild(TextNode);
+      ElementNode.AppendChild(ItemNode);
+
+      ItemNode:=Doc.CreateElement('analogueForm');              //  the forms top left.
+      TDOMElement(ItemNode).SetAttribute('Top', IntToStr(analogueFormTop));
+      TDOMElement(ItemNode).SetAttribute('Left', IntToStr(analogueFormLeft));
+      TextNode:=Doc.CreateTextNode('');
       ItemNode.AppendChild(TextNode);
       ElementNode.AppendChild(ItemNode);
 
