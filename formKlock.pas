@@ -522,7 +522,7 @@ begin
     btnSoundTest.Visible          := false;
   end;
 
-  if CmbBxCountdownAction.ItemIndex = 1 then begin  //  System event chosen
+  if CmbBxCountdownAction.ItemIndex = 1 then begin  //  Reminder chosen
     chckBxCountdownReminder.Visible := true;
     EdtCountdownReminder.Visible    := true;
   end
@@ -531,7 +531,7 @@ begin
     EdtCountdownReminder.Visible    := false;
   end;
 
-  if CmbBxCountdownAction.ItemIndex = 2 then begin  //  reminder chosen
+  if CmbBxCountdownAction.ItemIndex = 2 then begin  //  System event chosen
     chckBxCountdownEvent.Visible := true;
     CmbBxCountdownEvent.Visible  := true;
   end
@@ -690,7 +690,7 @@ begin
   if chckBxCountdownSound.Checked then begin      //  only play sound if checked
     doPlaySound(countdownSoundName);
     chckBxCountdownSound.Checked := false;
-    ChckBxCountdownSoundChange(Sender);           //  now box in unchecked, call change procedure
+    ChckBxCountdownSoundChange(Sender);           //  now box is unchecked, call change procedure
   end;
 
   if chckBxCountdownReminder.Checked then begin   //  only display reminder if checked
@@ -698,14 +698,14 @@ begin
     popupMessages[1] := EdtCountdownReminder.Text;
     DisplayMessage;
     chckBxCountdownReminder.Checked := false;
-    chckBxCountdownReminderChange(Sender);        //  now box in unchecked, call change procedure
+    chckBxCountdownReminderChange(Sender);        //  now box is unchecked, call change procedure
   end;
 
   if chckBxCountdownEvent.Checked then begin      //  only do event if checked
     btnCountdownShutdownAbort.Visible := true;
     doSystemEvent(CmbBxCountdownEvent.ItemIndex);
     chckBxCountdownEvent.Checked := false;
-    chckBxCountdownEventChange(Sender);          //  now box in unchecked, call change procedure
+    chckBxCountdownEventChange(Sender);          //  now box is unchecked, call change procedure
 
     if TrayIcon.Visible then begin               //  if running in the system tray,
       ppMnItmShowClick(Sender);                  //  select the reminder tab and
@@ -716,7 +716,7 @@ begin
   if chckBxCountdownCommand.Checked then begin   //  only do command if checked
     doCommandEvent(EdtCountdownCommand.Text);
     chckBxCountdownCommand.Checked := false;
-    chckBxCountdownCommandChange(Sender);        //  now box in unchecked, call change procedure
+    chckBxCountdownCommandChange(Sender);        //  now box is unchecked, call change procedure
   end;
 
   //  reset the noOfTicks, so we start the timer again without changing the time.
@@ -815,10 +815,11 @@ begin
   if chckBxCountdownEvent.Checked then begin
     stsBrInfo.Panels.Items[3].Text := 'System Event Enabled';
     CmbBxCountdownEvent.Enabled    := true;
+    CmbBxCountdownEvent.ItemIndex  := 0;
   end
   else begin
     stsBrInfo.Panels.Items[3].Text := 'System Event Disabled';
-    CmbBxCountdownEvent.Enabled    := true;
+    CmbBxCountdownEvent.Enabled    := false;
   end;
 end;
 
@@ -1188,6 +1189,7 @@ begin
   if ChckBxEventSystem.Checked then begin
     stsBrInfo.Panels.Items[3].Text := 'System Events Enabled';
     CmbBxEventSystem.Enabled := true;
+    CmbBxEventSystem.ItemIndex := 0;
   end
   else begin
     stsBrInfo.Panels.Items[3].Text := 'System Events Disabled';

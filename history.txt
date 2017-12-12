@@ -5,9 +5,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 20:50:37 2016 +0100
 
     Initial Import.
-    
+
     Most of the GUI structure is complete.
-    
+
     Countdown page complete.
 
  .gitignore                     |  33 ++
@@ -90,9 +90,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 20:56:56 2016 +0100
 
     Nearly completed timer page - just an issue with the pause/resume.
-    
+
     Changed icon to clock.ico
-    
+
     Changed message to popup notification.
 
  blue-letters/!.ico        |  Bin 119149 -> 0 bytes
@@ -161,7 +161,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:12:48 2016 +0100
 
     Timer page completed.
-    
+
     Reminder page started.
 
  klock.lpi  | 91 +++++++++++++++++++++++++++++++++-----------------------------
@@ -176,7 +176,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:15:59 2016 +0100
 
     Fuzzy time page completed.
-    
+
     Still working on reminder page.
 
  klock.lpi      | 100 +++++++++++++++++++----------------
@@ -193,9 +193,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:22:06 2016 +0100
 
     All four pages [fuzzy, countdown, time & reminder] are all complete.
-    
+
     Added logic to change status bar on page change.
-    
+
     Tidied up code.
 
  info.txt     |   6 +-
@@ -216,7 +216,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:26:21 2016 +0100
 
     All four pages now work - maybe an issue with reminders.
-    
+
     Added option record, that is passed between option form and the main form.
     Added first option - colour of the main labels.
 
@@ -262,7 +262,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:32:24 2016 +0100
 
     Corrected bugs in fuzzytime & net time.
-    
+
     Added UTC time.
 
  klock.iss      |   4 +-
@@ -282,7 +282,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:35:59 2016 +0100
 
     Changed the way to select the time format from a radio group to a combo box.
-    
+
     Added Swatch time.
 
  history.txt    |  54 +++++++++++++++++++--------
@@ -306,7 +306,7 @@ Date:   Thu Sep 29 21:38:26 2016 +0100
     Changed the data input on the reminder page from spin edits [one for hours
     and one for minutes] to a floating spin edit to handle both hours and
     minutes.  Still working on the logic to make it work in 24 hours and 60 minutes.
-    
+
     Also added a date picker to the reminder page.
 
  info.txt       |   6 +--
@@ -330,7 +330,7 @@ Date:   Thu Sep 29 21:42:20 2016 +0100
     Finally decided to use two normal spin edits for the hours and mins.
     Not too pretty, but simple and it works.
     Also added a date picker and added the date into the reminder logic.
-    
+
     Added a clear button to the reminder page, to cancel the running reminder.
 
  info.txt   |   6 +--
@@ -364,7 +364,7 @@ Date:   Thu Sep 29 22:02:36 2016 +0100
 
     Reduced the height of most of the components, to make the overall
     application more sleek - I think it looks better.
-    
+
     Added a new form for the license [same as the help form], hangs off the help menu.
     Help & Licence forms now load their text from text files.
 
@@ -389,7 +389,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:06:24 2016 +0100
 
     Added split time button to time page.
-    
+
     Removed the function ItoS, which converted integer to two digit strings
     and use internal format functions instead.
 
@@ -412,7 +412,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:25:08 2016 +0100
 
     Added try..except clause to all file operations.
-    
+
     Another attempt to fix noon bug in fuzzytime.
 
  help.txt       | 32 +++++++++++++++++--
@@ -457,7 +457,7 @@ Date:   Thu Sep 29 22:28:56 2016 +0100
 
     Licence window made read only - thanks Zach.
     Reminders can now not be set in the past - thanks Zach.
-    
+
     Start of code for saving options in a .ini file.
 
  info.txt     |   9 +--
@@ -481,7 +481,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:38:52 2016 +0100
 
     Further work completed on the .ini file
-    
+
     Extended the GUI on the options screen.
 
  klock.ini    |   3 +-
@@ -499,7 +499,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:41:08 2016 +0100
 
     Further work on the ini file stuff.
-    
+
     Timer can now run either second / milli seconds.
     Default page control can now be set.
     Both saved to ini file.
@@ -539,7 +539,7 @@ Date:   Thu Sep 29 22:46:44 2016 +0100
 
     Added unit uOptionsUtils.pas, which contains the functions StringToFont &
     FontToString - enables font information to be saved to the ini file.
-    
+
     Added code to save and load fonts from the ini file - to be tested.
 
  klock.ini        |   7 ++-
@@ -558,7 +558,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:50:15 2016 +0100
 
     Further work on font options.
-    
+
     Removal of colour buttons in the options screen.  The colour can be
     changed in the font page, so making these buttons redundant.
 
@@ -575,9 +575,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 23:01:23 2016 +0100
 
     Removed colour buttons, duplicated in font dialogue screen.
-    
+
     Finished font stuff.
-    
+
     Will save screen position if desired.
 
  info.txt         |  12 ++--
@@ -601,10 +601,10 @@ Date:   Thu Sep 29 23:04:34 2016 +0100
     Added option for net time to count in 1 or 15 seconds.
             [15 seconds net time = i second real time]
     Added option for Swatch time to display centibeats.
-    
+
     Added option for default time display.
     Changed both default time & tab to be drop down lists.
-    
+
     Added option for countdown to trigger sound, event command or pop up message.
             event is a system event i.e. PC shut down or reboot.
             command is the ability to run an external application.
@@ -631,22 +631,22 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:34:21 2016 +0100
 
     Over 1000 lines of meaningless code :0)
-    
+
     Renamed UOptionsUtils.pas to UKlockUtils.pas - a more general utils unit.
     Moved doSystemEvent & doComand procedures into this unit.
-    
-    Corrected several bugs with the countdown event procedires.
-    
+
+    Corrected several bugs with the countdown event procedures.
+
     Change AProcess.CommandLine [depreciated] to AProcess.Executable & Aprocess.Parameters.
-    
-    Corrected bug; screen would reset to saved screen co-ordinates, even though 
+
+    Corrected bug; screen would reset to saved screen co-ordinates, even though
     the screen saved not clicked in options.  Now checks option when resets main form.
-    
+
     Options; changed around the NET time and Swatch time to be a common
     checkbox list, instead of two check boxes.
-    
+
     Finally got around to the case statement, converted most nested IF statements.
-    
+
     Added Julian Time - needs checking.
 
  help.txt                            |   2 +-
@@ -708,7 +708,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:58:57 2016 +0100
 
     Removed local Klock.ini, not now needed - will create on start up.
-    
+
     Problem with the screen position of main form after options screen closed
     - Corrected [thanks Zach].
 
@@ -750,10 +750,10 @@ Date:   Fri Sep 30 22:08:30 2016 +0100
             1 - Show main form.
             2 - Show current selected time as a pop-up notification.
             3 - Exit Klock.
-    
+
     Changed the way the pop-up notification is called.  Now uses a global
     array to hold different messages from time, countdown and reminder.
-    
+
     Added some new comments to procedures [which where their all the time ;o)]
 
  klock.iss    |   46 +-
@@ -771,9 +771,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:14:03 2016 +0100
 
     Recompiled to check for lazarus 1.0 RC1 [although showing 0.9.31 in about box].
-    
+
     Also turned off generate debugging info GDN in linking options.
-    This creates a lot smaller executables.
+    This creates a lot smaller executable.
 
  klock.lpi    | 18 +++++++++++++-----
  uoptions.lfm | 46 +++++++++++++++++++++++-----------------------
@@ -787,13 +787,13 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:17:23 2016 +0100
 
     Recompiled to check for Lazarus 1.0 RC2 [now showing 1.0.1.2 in about box].
-    
+
     Tidied up the logic that checks that a reminder has been set in the future date.
-    
-    If a system shut down is chosen in reminder or countdown and the application 
-    is being displayed in the system tray, switch to normal mode - allows the 
+
+    If a system shut down is chosen in reminder or countdown and the application
+    is being displayed in the system tray, switch to normal mode - allows the
     abort button to be selected.
-    
+
     Added a display to the status bar that indicates the status of the cap,
     numlock & scroll lock [in real time].
 
@@ -815,16 +815,16 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:22:17 2016 +0100
 
     Ran source through a spell checker - many changes.
-    
+
     Changed reminder tab to event tab.
     Changed all existing references of reminder to event.
     This is to allow a new reminder tab, which will remind on birthdays, anniversaries etc.
-    
+
     Added new reminder tab.
     Added new form to add reminders.
     Added logic to save reminders to csv file.
     Added logic to load csv file and display date on reminder tab.
-    
+
     There is a bug with lcl, the pop-up notifier timeout does not seem to work.
     Added a timer, that will kill the notifier after ten seconds.
 
@@ -851,7 +851,7 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:57:59 2016 +0100
 
     Converted SVN repository to GIT.  Uploaded this to GitHub.
-    
+
     Recompiled to check for Lazarus 1.6 [showing 1.6.0.4 in about box].
 
  LICENSE     | 479 +++++++++++++++++++++++++++++
@@ -866,7 +866,7 @@ Build 35
     Added VI backup files to .gitignore.
 
     Amended klock.iss [inno setup script] to either install 32 or 64 bit
-    executables, depending on target machine.
+    executable, depending on target machine.
 
     Increased version number of 35 in uOptions.pas.
 
@@ -881,8 +881,8 @@ Date:   Thu Sep 7 22:36:38 2017 +0100
 
     Renamed all form files from uxxx.pas to formxxx.pas.
     i.e.  uKlock.pas -> formKlock.pas.
-    
-    So, all source files that contain GUI elemenys will start with form.
+
+    So, all source files that contain GUI elements will start with form.
     All none GUI source files will start with u - a unit file.
 
     Currently
@@ -921,10 +921,10 @@ Date:   Mon Oct 16 22:15:32 2017 +0100
 
     Added uOptions.pas, a options record that uses XML files.  Hopefully
     this will replace the existing .ini file based options.
-    
-    Amended all referances in formKlock.pas that used the old .ini options
+
+    Amended all references in formKlock.pas that used the old .ini options
     to use the new .xml options record.
-    
+
     NOTE :: formOptions has not been touched yet and still point to the old
     style options records - this will be stripped out next.
 
@@ -953,13 +953,13 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Wed Oct 18 22:18:09 2017 +0100
 
     Amended formLicence, formHelp & formAbout to use new user Options.
-    
+
     Added to formAbout disk size and free space for all disks on the system
     Added to formAbout system and application up time.
     Added to formAbout to display if compile to either 32 or 64 bit.
     Added to formAboout powered by Lazarus logo.
     Tidied up formAbout.
-    
+
     Amended klock.iss to use lazKlock instead of Klock - should that be lazKlock.iss.
 
     reloaded licence.txt from web site.
@@ -990,9 +990,9 @@ Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Oct 19 21:21:15 2017 +0100
 
     Removed all references to the old .ini in formOptions, fromKlock & ufuzzyTime.
-    
+
     Also removed all non-visual components from formOptions.
-    
+
     We now build the new options screen.
 
     Currently
@@ -1023,17 +1023,17 @@ Date:   Fri Oct 27 21:40:30 2017 +0100
     Started building the new options screens - using an accordion.
 
     Although all options are written to the xml file has strings, amended
-    the Options class so that all options are presen:ted to lazKlock  has
-    native type i..e. Integers and Booleans.  The conversions are not his
+    the Options class so that all options are presented to lazKlock  has
+    native type i..e. Integers and Boolean.  The conversions are not his
     within the options class and not the main program.
-    
+
     Changed the logic in formOptions, when the options form loads a backup
     options record is created and this is amended, it is only copied to the
     main options records if OK is clicked.  If cancel is click the
     amendments are discarded.
-    
+
     Added the logic to uKlockUtils to amend the registry for starting the app with windows.
-    
+
     Removed self from variable references in uFuzztTime - not sure why they where there.
 
     Currently
@@ -1054,3 +1054,278 @@ Date:   Fri Oct 27 21:40:30 2017 +0100
  uoptions.pas       | 178 ++++++++++++++++++++++++------------
  uoptionsrecord.pas |  32 -------
  12 files changed, 762 insertions(+), 266 deletions(-)
+
+Build 41 [2.0.0.41]
+
+commit 57332b6a2300cb489eee6d399318876c9519575e
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Oct 30 22:14:19 2017 +0000
+
+    Added a separate form to house an Analogue Klock - frmAnalogueKlock.pas.
+    Made this form transparent, just leaving the form.
+    Added logic to make this draggable, with just the Klock visible.
+    Added User Options to remember the Analogue Klock screen position.
+
+    Added to main Klock to display the idle time.
+
+    Added percent Time to FuzzyTime.
+
+ formKlock.lfm         |  19 ++++-
+ formKlock.pas         |  48 +++++++++--
+ formOptions.lfm       |  13 +--
+ formanalogueklock.lfm |  78 ++++++++++++++++++
+ formanalogueklock.pas | 162 +++++++++++++++++++++++++++++++++++++
+ history.txt           |  45 ++++++++++-
+ klock.lpi             | 216 ++++++++++++++++++++++++++++----------------------
+ klock.lpr             |   3 +-
+ lazKlock.smproj       | Bin 41764 -> 51298 bytes
+ ufuzzytime.pas        |  21 ++++-
+ uoptions.pas          |  61 +++++++++++++-
+ 11 files changed, 549 insertions(+), 117 deletions(-)
+
+Build 42 [2.0.0.42]
+
+commit 7b3781a898da3a2f69387a5eca5eae372c198112
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Nov 6 13:39:29 2017 +0000
+
+    The shutdown command seems to have changed in windows 10.
+    Parameters are now preceded with a / and not a -.
+    Also, having problems passing parameter's with spaces, removed for now.
+
+    Corrected bug where if no action was selected, an index out of bounds
+    could be created.
+
+ formAbout.pas   |   2 +-
+ formKlock.lfm   |  12 ++---
+ formKlock.pas   |  16 ++++---
+ history.txt     |  27 ++++++++++++
+ klock.lpi       | 134 ++++++++++++++++++++++++++++----------------------------
+ uklockutils.pas |  52 +++++++++++-----------
+ 6 files changed, 136 insertions(+), 107 deletions(-)
+
+Build 43 [2.0.0.43]
+
+commit 92d89f0d1125dd1f4aa33a102f38c94de928ef13
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Nov 6 15:03:59 2017 +0000
+
+    Passed all source files through a spell checker - mainly for comments.
+
+    Passed all source through JEDI source checker.
+
+    Bumped up a minor version point.
+
+    Currently
+    3693 lines of source code.
+    1874 statements
+    16.7% comment
+
+ formAbout.pas         |  53 ++-
+ formHelp.pas          |  12 +-
+ formKlock.pas         | 961 +++++++++++++++++++++++++++-----------------------
+ formOptions.lfm       |   2 +-
+ formOptions.pas       |  53 ++-
+ formanalogueklock.pas |  76 ++--
+ formlicense.pas       |  12 +-
+ formreminderinput.pas |  73 ++--
+ help.txt              |   6 +-
+ klock.lpi             | 139 ++++----
+ klock.lpr             |  25 +-
+ ufuzzytime.pas        | 333 ++++++++---------
+ uklockutils.pas       | 115 +++---
+ uoptions.pas          | 951 +++++++++++++++++++++++++------------------------
+ 14 files changed, 1451 insertions(+), 1360 deletions(-)
+
+Build 44 [2.0.1.44]
+
+commit d0ffe89eb2885a8226c87d2b274fe099ce0684cc
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Nov 10 20:15:11 2017 +0000
+
+    Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
+    Braille.  Theses are achieved my font substitution.
+
+    Added a new unit uFont.pas - to load custom fonts.
+
+    Added logic to formKlock to use new fonts when required.
+
+    Added two new directories fonts & sounds.
+
+    Added a number of mp3 files to play the hourly chimes and The pips.
+
+    Amended to procedure doPlaySound in uKlockUtils.pas to play all sound
+    files and not just .wav files.  Also, made this procedure more robust.
+    Also added to this unit to play the hourly chimes.
+
+    Added user options for sound volume, sound the pips on the hour or
+    hourly chimes.  Also added the option for the analogue klock to save
+    screen position.
+
+    Currently
+    4080 lines of source code.
+    2120 statements
+    16.4% comment
+
+ fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
+ fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
+ fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
+ fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
+ fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
+ formKlock.lfm                |  12 ++-
+ formKlock.pas                | 240 ++++++++++++++++++++++++++-----------------
+ formOptions.lfm              | 158 +++++++++++++++++++++++-----
+ formOptions.pas              | 116 ++++++++++++++++++---
+ formanalogueklock.pas        |   1 +
+ history.txt                  |  56 +++++++++-
+ klock.iss                    |   2 +-
+ klock.lpi                    | 229 ++++++++++++++++++++---------------------
+ klock.lpr                    |   2 +-
+ klock.xml                    |   4 -
+ lazKlock.smproj              | Bin 51298 -> 61875 bytes
+ sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
+ sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
+ sounds/chimes.wav            | Bin 55776 -> 0 bytes
+ sounds/chord.wav             | Bin 97016 -> 0 bytes
+ sounds/ding.wav              | Bin 80856 -> 0 bytes
+ sounds/eight.mp3             | Bin 0 -> 979530 bytes
+ sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
+ sounds/five.mp3              | Bin 0 -> 801223 bytes
+ sounds/four.mp3              | Bin 0 -> 739385 bytes
+ sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
+ sounds/nine.mp3              | Bin 0 -> 1040899 bytes
+ sounds/notify.wav            | Bin 119384 -> 0 bytes
+ sounds/one.mp3               | Bin 0 -> 559035 bytes
+ sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
+ sounds/recycle.wav           | Bin 25434 -> 0 bytes
+ sounds/ringin.wav            | Bin 10026 -> 0 bytes
+ sounds/ringout.wav           | Bin 5212 -> 0 bytes
+ sounds/seven.mp3             | Bin 0 -> 919940 bytes
+ sounds/six.mp3               | Bin 0 -> 862013 bytes
+ sounds/start.wav             | Bin 1192 -> 0 bytes
+ sounds/tada.wav              | Bin 171100 -> 0 bytes
+ sounds/ten.mp3               | Bin 0 -> 1101951 bytes
+ sounds/thepips.mp3           | Bin 0 -> 40874 bytes
+ sounds/three.mp3             | Bin 0 -> 679164 bytes
+ sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
+ sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
+ sounds/two.mp3               | Bin 0 -> 620614 bytes
+ ufonts.pas                   |  69 +++++++++++++
+ ufuzzytime.pas               |  43 +++-----
+ uklockutils.pas              | 130 +++++++++++++++++++++--
+ uoptions.pas                 |  84 +++++++++++++++
+ 47 files changed, 843 insertions(+), 303 deletions(-)
+
+Build 45 [2.0.1.45]
+
+commit a9296bca47a258c567d6d096bca416709e943c63
+
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Tue Nov 14 14:57:13 2017 +0000
+
+    Added the ability for Klock to write Info and Debug information to log
+    files.  Logging can be enabled / disabled bu a user options.  Also the
+    ability to delete log files older then a certain age.  This is also
+    specified by user options.
+
+    A extra tab was added to the options form for the logging options, the log
+    files are also displayed here.
+
+    Added a new unit, uLoggingUtils.  The unit contains the helper routines
+    to read and delete log files.
+
+    Started to sprinkle debug entries all over.
+
+    Cleaned up the calling process for the chimes.
+
+    Added doubleTime to uFuzzyTime.
+
+    Added a new unit, uOptionsUtils.  This unit contains helper routines to
+    read and write XML entries.
+
+    Changed the Klock icon.
+
+    Currently
+    4303 lines of source code.
+    2199 statements
+    16.7% comment
+
+ formKlock.lfm         | 5994 ++++++++++++++++---------------------------------
+ formKlock.pas         |   78 +-
+ formOptions.lfm       |  105 +-
+ formOptions.pas       |   58 +-
+ formanalogueklock.pas |    1 +
+ history.txt           |   82 +-
+ klock.ico             |  Bin 67646 -> 0 bytes
+ klock.lpi             |  212 +-
+ klock.lpr             |    9 +-
+ lazKlock.smproj       |  Bin 61875 -> 73456 bytes
+ time-13-128.ico       |  Bin 0 -> 67646 bytes
+ ufuzzytime.pas        |   41 +-
+ uklockutils.pas       |   44 +-
+ uloggerutils.pas      |   90 +
+ uoptions.pas          |  374 ++-
+ uoptionsutils.pas     |   99 +
+ 16 files changed, 2749 insertions(+), 4438 deletions(-)
+
+Build 46 [2.0.1.46]
+
+commit 2a0201bd0094f867199523c53545e03695adb89f
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Nov 20 14:11:16 2017 +0000
+
+    Added formCipboard and uformClipboardUtils which implements a clipboard manager.
+
+    Added various options for the clipboard manages to formOptions and uOptions.
+
+ README.md               |  18 ++--
+ formKlock.lfm           |   1 -
+ formKlock.pas           |  13 ++-
+ formOptions.lfm         |  50 +++++----
+ formOptions.pas         |  15 +++
+ formanalogueklock.lfm   |   8 +-
+ formanalogueklock.pas   |   3 +-
+ formclipboard.lfm       | 140 ++++++++++++++++++++++++
+ formclipboard.pas       | 241 +++++++++++++++++++++++++++++++++++++++++
+ help.txt                |  43 +++++---
+ history.txt             |  55 +++++++++-
+ klock.ico               | Bin 0 -> 67646 bytes
+ klock.iss               |   5 +-
+ klock.lpi               | 279 +++++++++++++++++++++++++++---------------------
+ klock.lpr               |   5 +-
+ lazKlock.smproj         | Bin 73456 -> 100949 bytes
+ uformclipboardutils.pas | 244 ++++++++++++++++++++++++++++++++++++++++++
+ uoptions.pas            |  26 ++++-
+ 18 files changed, 966 insertions(+), 180 deletions(-)
+
+/*******************************************************************************************************/
+
+Looks like i have messed up and corrupted the sources somewhere along the line.
+It would compile but would error when loading with Access Violation.
+What ever I did, I could not see what I had done wrong. The happened at both 32 & 64 bit.
+It did happen at the same time as I had tried a new couple of components, maybe i had
+mixed up the 32 and 64 bit things.  Or, more probably, trying to access a object
+that had not been initialised.  I gave up.
+
+Lazarus then released the final V1.8 - So I decided to try and fix it.
+
+The first build that would compile and run was build 41.  So branch V2.1 starts for there.
+
+I will try apply the changes gradually and see if i can spot the eror[s].
+
+/*******************************************************************************************************/
+
+Build 47 [2.1.1.47]
+
+    [This is a duplication of build 42]
+    The shutdown command seems to have changed in windows 10.
+    Parameters are now preceded with a / and not a -.
+    Also, having problems passing parameter's with spaces, removed for now.
+
+    Corrected bug where if no action was selected, an index out of bounds
+    could be created.
+
+    Currently
+    3611 lines of source code.
+    1851 statements
+    17.2% comment

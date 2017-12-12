@@ -69,7 +69,7 @@ procedure TfrmAbout.btnAboutMSinfoClick(Sender: TObject);
 }
 begin
    if ShellExecute(0,nil, PChar('"msinfo32.exe"'), nil, nil, 1) < 33 then
-     ShowMessage('ERROR : runnunbg MSinfo');
+     ShowMessage('ERROR : running MSinfo');
 end;
 
 procedure TfrmAbout.FormCreate(Sender: TObject);
