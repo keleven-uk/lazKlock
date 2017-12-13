@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "47"
+#define MyAppVersion "49"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -43,6 +43,9 @@ ArchitecturesInstallIn64BitMode=x64
 ; Note: We don't set ProcessorsAllowed because we want this installation to run on 
 ; all architectures (including Itanium,since it's capable of running 32-bit code too)
 
+[Messages]
+WelcomeLabel2=This will install [{#MyAppName} V2.1.2.49] on your computer.
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
@@ -67,6 +70,7 @@ Source: "help.txt"                      ; DestDir: "{app}"       ; Components : 
 Source: "history.txt"                   ; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"       ; Components : exe; Flags: ignoreversion
 Source: "sounds\*"                      ; DestDir: "{app}\sounds"; Components : exe; Flags: ignoreversion
+Source: "fonts\*"                       ; DestDir: "{app}\fonts" ; Components : exe; Flags: ignoreversion
 
 ;  include source :: NB needs a clean checkout
 Source: "D:\My\shed\Projects\pascal\clean_lazKlock\*"; DestDir: "{app}\source"; Components : all; Flags: ignoreversion

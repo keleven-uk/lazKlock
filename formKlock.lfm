@@ -2140,7 +2140,7 @@ object frmMain: TfrmMain
     Width = 620
     Panels = <    
       item
-        Width = 60
+        Width = 70
       end    
       item
         Bevel = pbRaised
@@ -2150,7 +2150,10 @@ object frmMain: TfrmMain
         Width = 35
       end    
       item
-        Width = 50
+        Width = 125
+      end    
+      item
+        Width = 100
       end>
     SimplePanel = False
   end

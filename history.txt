@@ -1342,5 +1342,56 @@ Date:   Tue Dec 12 21:22:21 2017 +0000
  uklockutils.pas |  29 ++--
  7 files changed, 388 insertions(+), 117 deletions(-)
 
- Build 48 [2.1.1.48]
+Build 48 [2.1.2.48]
 
+commit e6d03bec376307cbf63b324ea64f181d8a03867b
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Dec 13 10:00:24 2017 +0000
+
+    [This is a duplication of build 43]
+    Passed all source files through a spell checker - mainly for comments.
+
+    Passed all source through JEDI source checker.
+
+    Bumped up a minor version point.
+
+    Currently
+    3703 lines of source code.
+    1863 statements
+    16.7% comment
+
+ formAbout.pas   |   2 +-
+ formKlock.lfm   |   2 +-
+ formKlock.pas   |  16 ++-
+ history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
+ klock.iss       |   2 +-
+ klock.lpi       |  53 ++++----
+ uklockutils.pas |  29 ++--
+ 7 files changed, 388 insertions(+), 117 deletions(-)
+
+Build 49 [2.1.2.49]
+
+    [This is a NEARLY duplication of build 43]
+    Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
+    Braille.  Theses are achieved my font substitution.
+
+    Added a new unit uFont.pas - to load custom fonts.
+
+    Added logic to formKlock to use new fonts when required.
+
+    Added two new directories fonts & sounds.
+
+    Added a number of mp3 files to play the hourly chimes and The pips.
+
+    Amended to procedure doPlaySound in uKlockUtils.pas to play all sound
+    files and not just .wav files.  Also, made this procedure more robust.
+    Also added to this unit to play the hourly chimes.
+
+    Added user options for sound volume, sound the pips on the hour or
+    hourly chimes.  Also added the option for the analogue klock to save
+    screen position.
+
+    Currently
+    4080 lines of source code.
+    2120 statements
+    16.4% comment

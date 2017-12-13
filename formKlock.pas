@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock;
@@ -176,6 +176,7 @@ type
     procedure mnuItmLicenseClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
+    procedure CloseButtonClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
@@ -196,6 +197,8 @@ type
     procedure EventTimerStop(Sender: TObject);
     procedure EventValid;
     procedure readReminderFile;
+    procedure UpdateStatusBar(KTime: TDateTime);
+    procedure UpdateTime(KTime: TDateTime);
   public
 
   end;
@@ -205,10 +208,9 @@ var
   rmndrStore: TAvgLvlTree;      //  to store all the reminders.
   userOptions: Options;         //  holds all the user options.
   ft: FuzzyTime;                //  the object to give the different times.
+  fs: fontStore;                //  used to handle custom fonts i.e. load & remove
   appStartTime: int64;          //  used by formAbout to determine how long the app has been running.
   countdownTicks: integer;
-  countdownSoundName: string;
-  EventSoundName: string;
   timerStart: TDateTime;
   timerPaused: TdateTime;
   popupMessages: array [0..3] of string;
@@ -229,11 +231,8 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   mainTimer.Enabled := False;  //  disable main timer until all options and fuzzt time are set up.
 
-  countdownSoundName := getCurrentDir + '\sounds\alarm-fatal.wav'; // default to sound file
-  EdtCountdownSound.Text := ExtractFileName(countdownSoundName);   //  in current working directory.
-
-  EventSoundName := getCurrentDir + '\sounds\alarm-fatal.wav';     // default to sound file
-  EdtEventSound.Text := ExtractFileName(countdownSoundName);       //  in current working directory.
+  EdtCountdownSound.Text := 'alarm-fatal.mp3';
+  EdtEventSound.Text := 'alarm-fatal.mp3';
 
   DtEdtEvent.Date := now;
   SpnEdtMins.Value := MinuteOf(time);
@@ -246,6 +245,9 @@ begin
   rmndrStore := TAvgLvlTree.Create;
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
   ft := FuzzyTime.Create;
+  fs := fontStore.Create;
+
+  fs.addFonts(Handle);
 
   with mainIdleTimer do            //  set up the idle timer.
   begin
@@ -271,9 +273,11 @@ begin
   begin
     userOptions.formTop := frmMain.Top;
     userOptions.formLeft := frmMain.Left;
+    userOptions.writeCurrentOptions;
   end;
 
-  userOptions.writeCurrentOptions;
+  fs.removeFonts(Handle);
+
   CloseAction := caFree;
 end;
 
@@ -288,7 +292,7 @@ begin
   mainIdleTimer.Enabled := userOptions.displayIdleTime;
 
   ft.displayFuzzy := userOptions.defaultTime;
-
+  ft.display24Hour:= userOptions.display24Hour;
   ft.fuzzyBase := 2;
 
   if userOptions.screenSave then
@@ -330,19 +334,22 @@ begin
     end;
   end;
 
-  PopupNotifier1.ShowAtPos(100, 100);
-  PopupNotifier1.Color := clyellow;
-  PopupNotifier1.Title := title;
-  PopupNotifier1.Text := message;
+  with PopupNotifier1 do
+  begin
+    ShowAtPos(100, 100);
+    Color := clyellow;
+    Title := title;
+    Text := message;
 
-  if (PopupNotifier1.Visible = False) then  // if not currently shown, show
-    PopupNotifier1.Visible := True;
+    if (Visible = False) then  // if not currently shown, show
+      Visible := True;
 
-  if (message = '') then
-  begin    //  empty message array, close pop-up notifier
-    PopupNotifier1.Visible := False;
-    PopupNotifier1.Free;
-  end;
+    if (message = '') then
+    begin    //  empty message array, close pop-up notifier
+      Visible := False;
+      Free;
+    end;
+  end;  //  with PopupNotifier1 do
 
 end;
 
@@ -362,24 +369,24 @@ begin
   case PageControl1.TabIndex of
     0:
     begin                     //  fuzzy page
-      stsBrInfo.Panels.Items[3].Text := '';
+      stsBrInfo.Panels.Items[4].Text := '';
     end;
     1:
     begin                     //  countdown page
       if CountdownTimer.Enabled = False then
-        stsBrInfo.Panels.Items[3].Text := ''
+        stsBrInfo.Panels.Items[4].Text := ''
       else
-        stsBrInfo.Panels.Items[3].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
+        stsBrInfo.Panels.Items[4].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
     end;
     2:
     begin                     //  timer page
-      stsBrInfo.Panels.Items[3].Text := '';
+      stsBrInfo.Panels.Items[4].Text := '';
 
       if timerTimer.Enabled = False then
       begin
 
         if btnTimerStart.Caption = 'Resume' then
-          stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
+          stsBrInfo.Panels.Items[4].Text := 'Timer :: Paused';
 
         if btnTimerStart.Caption = 'Start' then
         begin
@@ -398,7 +405,7 @@ begin
     end;
     3:
     begin                    //  event page
-      stsBrInfo.Panels.Items[3].Text := '';
+      stsBrInfo.Panels.Items[4].Text := '';
       if EventTimer.Enabled = False then
       begin   // only set display to current
         DtEdtEvent.Date := now;
@@ -408,7 +415,7 @@ begin
       end
       else
       begin
-        stsBrInfo.Panels.Items[3].Text := format('Reminder set for %.2d:%.2d - %s', [SpnEdtHour.Value,
+        stsBrInfo.Panels.Items[4].Text := format('Reminder set for %.2d:%.2d - %s', [SpnEdtHour.Value,
           SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
       end;  //  if btnEventSet.Enabled
     end;
@@ -426,37 +433,91 @@ procedure TfrmMain.mainTimerTimer(Sender: TObject);
       Update desired time to either to main program, tray icon hint or pop-up notifier.
 }
 var
+  myNow: TdateTime;
+  mySecs: integer;
   strTime: string;
-  keyResult: string;
 begin
+  myNow := now;
+  mySecs := SecondOfTheDay(myNow);
+
+  if userOptions.HourPips and isHour(mySecs) then
+    playChime('pips')
+  else                                       //  only play chimes if pips turned off.
+  begin
+    if userOptions.HourChimes and isHour(mySecs) then playChime('hour');
+    if userOptions.HalfChimes and isHalfHour(mySecs) then playChime('half');
+    if userOptions.quarterChimes and isQuarterHour(mySecs) then playChime('quarter');
+    if userOptions.threeQuarterChimes and isThreeQuarterHour(mySecs) then playChime('threequarter');
+  end;
 
   if TrayIcon.Visible then
+   begin
+     strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
+     TrayIcon.Hint := strTime;
+
+     if userOptions.fuzzyTimeBalloon then
+     begin
+       if (mySecs mod 300 = 0) then
+       begin  //  only display on the five minutes.
+         TrayIcon.BalloonHint := strTime;
+         trayIcon.ShowBalloonHint;
+         ballonTimer.Enabled := True;                  //  balloon hint time-out bug - see below.
+       end;
+     end;  //  if OptionsRec.FuzzyTimeBalloon then
+
+     if ppMnItmTime.Checked then
+     begin
+       popupTitle[0] := 'Time';
+       popupMessages[0] := strTime;
+       DisplayMessage;
+     end;      //  if ppMnItmTime.Checked then begin
+   end         //  if TrayIcon.Visible then
+   else
+   begin  //  normal display i.e. not trayicon
+     UpdateTime(myNow);
+     UpdateStatusBar(myNow);
+   end;  //  if TrayIcon.Visible then
+
+end;
+
+procedure TfrmMain.UpdateTime(KTime: TDateTime);
+{  Updates the time in the correct font.    }
+begin
+  case CmbBxTime.Items[CmbBxTime.ItemIndex] of
+    'Bar Code Time':
+    begin
+      lblfuzzy.Font.Name := 'Bar Code 39';
+      lblfuzzy.Caption := TimeToStr(KTime);
+    end;
+    'Nancy Blackett Time':
+    begin
+      lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
+      lblfuzzy.Caption := TimeToStr(KTime);
+    end;
+  'Semaphore Time':
   begin
-    strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
-    TrayIcon.Hint := strTime;
+    lblfuzzy.Font.Name := 'Semaphore';
+    lblfuzzy.Caption := TimeToStr(KTime);
+  end;
+  'Braille Time':
+  begin
+    lblfuzzy.Font.Name := 'BrailleLatin';
+    lblfuzzy.Caption := TimeToStr(KTime);
+  end;
+    else
+      begin
+        lblfuzzy.Font.Name := 'default';
+        lblfuzzy.Caption := ft.getTime;
+      end
+  end;
+end;
 
-    if userOptions.fuzzyTimeBalloon then
-    begin
-      if (SecondOfTheDay(now) mod 300 = 0) then
-      begin  //  only display on the five minutes.
-        TrayIcon.BalloonHint := strTime;
-        trayIcon.ShowBalloonHint;
-        ballonTimer.Enabled := True;        //  balloon hint time-out bug - see below.
-      end;
-    end;  //  if OptionsRec.FuzzyTimeBalloon then
-
-    if ppMnItmTime.Checked then
-    begin
-      popupTitle[0] := 'Time';
-      popupMessages[0] := strTime;
-      DisplayMessage;
-    end;      //  if ppMnItmTime.Checked then begin
-  end         //  if TrayIcon.Visible then
-  else
-  begin  //  normal display i.e. not trayicon
-    lblfuzzy.Caption := ft.getTime;
-
-    keyResult := ' cns ';
+procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
+{  Updates the status bar.    }
+VAR
+  keyResult: string;
+begin
+  keyResult := ' cns ';
     if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
       keyResult[2] := 'C';
     if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
@@ -464,16 +525,18 @@ begin
     if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
       keyResult[4] := 'S';
 
-    stsBrInfo.Panels.Items[0].Text := TimeToStr(Time);
-    stsBrInfo.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', Now);
+    if userOptions.display24Hour then
+      stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
+    else
+      stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
+
+    stsBrInfo.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
     stsBrInfo.Panels.Items[2].Text := keyResult;
+
     if userOptions.displayIdleTime then
-      stsBrInfo.Panels.Items[3].Text :=
-        'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
+      stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
     else
       stsBrInfo.Panels.Items[3].Text := '';
-  end;  //  if TrayIcon.Visible then
-
 end;
 
 procedure TfrmMain.ballonTimerTimer(Sender: TObject);
@@ -606,7 +669,7 @@ begin
     CountdownTimer.Enabled := True;
     SpnEdtCountdown.Enabled := False;
     VAL := CountdownTicks div 60;           //  in case the status message has changed
-    stsBrInfo.Panels.Items[3].Text := format(' Counting down from %d minute[s]', [val]);
+    stsBrInfo.Panels.Items[4].Text := format(' Counting down from %d minute[s]', [val]);
 
     btnCountdownStart.Caption := 'Pause';
 
@@ -635,23 +698,18 @@ end;
 
 procedure TfrmMain.btnCountdownLoadSoundClick(Sender: TObject);
 {  if the text box is clicked, allow the sound file to be changed.
-      MUST BE A .wav FILE.
 }
 begin
 
   with TOpenDialog.Create(Self) do
   begin
-    Filter := '*.wav';
+    Filter := '*.wav; *.mp3';
     InitialDir := getCurrentDir + '\sounds';
-    Title := 'Choose a sound file [.wav]';
+    Title := 'Choose a sound file.';
     if Execute then
     begin
-      if ExtractFileExt(FileName) = '.wav' then
-      begin  //  only allow .wav
-        countdownSoundName := FileName;
-        EdtCountdownSound.Text := ExtractFileName(FileName);
-        stsBrInfo.Panels.Items[3].Text := Filename + ' Chosen';
-      end;  //  if ExtractFileExt
+      EdtCountdownSound.Text := ExtractFileName(FileName);
+      stsBrInfo.Panels.Items[4].Text := Filename + ' Chosen';
     end;    //  if Execute
     Free;
   end;
@@ -670,7 +728,7 @@ begin
     if Execute then
     begin
       EdtCountdownCommand.Text := (FileName);
-      stsBrInfo.Panels.Items[3].Text := Filename + ' Chosen';
+      stsBrInfo.Panels.Items[4].Text := Filename + ' Chosen';
     end;    //  if Execute
     Free;
   end;
@@ -706,7 +764,7 @@ begin
     btnCountdownStart.Enabled := True;
     countdownTicks := val * 60;
 
-    stsBrInfo.Panels.Items[3].Text := format(' Counting down from %d minute[s]', [val]);
+    stsBrInfo.Panels.Items[4].Text := format(' Counting down from %d minute[s]', [val]);
   end
   else
   begin
@@ -714,7 +772,7 @@ begin
     btnCountdownStart.Enabled := False;
     countdownTicks := 0;
 
-    stsBrInfo.Panels.Items[3].Text := ' Only allow 1 - 90 minutes';
+    stsBrInfo.Panels.Items[4].Text := ' Only allow 1 - 90 minutes';
   end;
 end;
 
@@ -730,13 +788,13 @@ begin
   SpnEdtCountdown.Enabled := True;
   CountdownTimer.Enabled := False;
 
-  stsBrInfo.Panels.Items[3].Text := ' Finished counting, now!';
+  stsBrInfo.Panels.Items[4].Text := ' Finished counting, now!';
   frmMain.Caption := 'Countdown';
   application.Title := 'Countdown';
 
   if chckBxCountdownSound.Checked then
   begin      //  only play sound if checked
-    doPlaySound(countdownSoundName);
+    doPlaySound(EdtCountdownSound.Text, userOptions.volume);
     chckBxCountdownSound.Checked := False;
     ChckBxCountdownSoundChange(Sender);    //  now box is unchecked, call change procedure
   end;
@@ -827,7 +885,7 @@ procedure TfrmMain.btnSoundTestClick(Sender: TObject);
 {  Called to test the sound file.
 }
 begin
-  doPlaySound(countdownSoundName);
+  doPlaySound(EdtCountdownSound.Text, userOptions.volume);
 end;
 
 procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
@@ -836,14 +894,14 @@ procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
 begin
   if chckBxCountdownSound.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Sound Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Sound Enabled';
     EdtCountdownSound.Enabled := True;
     btnCountdownLoadSound.Enabled := True;
     btnSoundTest.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Sound Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Sound Disabled';
     EdtCountdownSound.Enabled := False;
     btnCountdownLoadSound.Enabled := False;
     btnSoundTest.Enabled := False;
@@ -856,12 +914,12 @@ procedure TfrmMain.chckBxCountdownReminderChange(Sender: TObject);
 begin
   if chckBxCountdownReminder.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Reminder Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Reminder Enabled';
     EdtCountdownReminder.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Reminder Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Reminder Disabled';
     EdtCountdownReminder.Enabled := False;
   end;
 end;
@@ -872,13 +930,13 @@ procedure TfrmMain.chckBxCountdownEventChange(Sender: TObject);
 begin
   if chckBxCountdownEvent.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'System Event Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'System Event Enabled';
     CmbBxCountdownEvent.Enabled := True;
     CmbBxCountdownEvent.ItemIndex := 0;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'System Event Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'System Event Disabled';
     CmbBxCountdownEvent.Enabled := False;
   end;
 end;
@@ -889,13 +947,13 @@ procedure TfrmMain.chckBxCountdownCommandChange(Sender: TObject);
 begin
   if chckBxCountdownCommand.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Command Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Command Enabled';
     btnCountdownLoadCommand.Enabled := True;
     EdtCountdownCommand.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Command Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Command Disabled';
     btnCountdownLoadCommand.Enabled := False;
     EdtCountdownCommand.Enabled := False;
   end;
@@ -938,7 +996,7 @@ begin
     btnTimerSplit.Enabled := True;
     lblSplitLap.Enabled := True;
     frmMain.Caption := 'Timer :: Started';
-    stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+    stsBrInfo.Panels.Items[4].Text := 'Timer Running';
   end
   else if btnTimerStart.Caption = 'Pause' then
   begin
@@ -948,7 +1006,7 @@ begin
     btnTimerSplit.Enabled := False;
     lblSplitLap.Enabled := False;
     frmMain.Caption := 'Timer :: Paused';
-    stsBrInfo.Panels.Items[3].Text := 'Timer :: Paused';
+    stsBrInfo.Panels.Items[4].Text := 'Timer :: Paused';
   end
   else if btnTimerStart.Caption = 'Resume' then
   begin
@@ -958,7 +1016,7 @@ begin
     btnTimerSplit.Enabled := True;
     lblSplitLap.Enabled := True;
     frmMain.Caption := 'Timer :: Started';
-    stsBrInfo.Panels.Items[3].Text := 'Timer Running';
+    stsBrInfo.Panels.Items[4].Text := 'Timer Running';
   end;
 end;
 
@@ -973,7 +1031,7 @@ begin
   btnTimerClear.Enabled := True;
   btnTimerStart.Caption := 'Start';
   frmMain.Caption := 'Timer :: Stoped';
-  stsBrInfo.Panels.Items[3].Text := 'Timer :: Stoped';
+  stsBrInfo.Panels.Items[4].Text := 'Timer :: Stoped';
 end;
 
 procedure TfrmMain.btnTimerSplitClick(Sender: TObject);
@@ -996,13 +1054,14 @@ begin
     lblSplitLap.Caption := '00:00:00';
   end;  //  if userOptions.timerMilliSeconds = 'True' then
 
-  stsBrInfo.Panels.Items[3].Text := '';
+  stsBrInfo.Panels.Items[4].Text := '';
 
   btnTimerSplit.Enabled := False;
   lblSplitLap.Enabled := False;
 end;
-
+//
 // ************************************************************* Event ********
+//
 procedure TfrmMain.SpnEdtHourChange(Sender: TObject);
 {  will one day be used to validate the hours set.
 }
@@ -1046,7 +1105,7 @@ procedure TfrmMain.btnEventSetClick(Sender: TObject);
 }
 begin
   lblEvent.Caption := format('Event set for %.2d:%.2d - %s', [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
-  stsBrInfo.Panels.Items[3].Text := format('Event set for %.2d:%.2d - %s', [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
+  stsBrInfo.Panels.Items[4].Text := format('Event set for %.2d:%.2d - %s', [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
 
   SpnEdtMins.Visible := False;
   SpnEdtHour.Visible := False;
@@ -1087,7 +1146,7 @@ begin
   if ChckBxEventSound.Checked then
   begin       //  only play sound if checked
     ChckBxEventSound.Checked := False;
-    doPlaySound(EventSoundName);
+    doPlaySound(EdtEventSound.Text, userOptions.volume);
   end;
 
   if ChckBxEventReminder.Checked then
@@ -1152,7 +1211,7 @@ procedure TfrmMain.resetEvent;
 }
 begin
   lblEvent.Caption := 'Event not set';
-  stsBrInfo.Panels.Items[3].Text := '';
+  stsBrInfo.Panels.Items[4].Text := '';
 
   EventTimer.Enabled := False;
   btnEventClear.Enabled := False;
@@ -1230,14 +1289,14 @@ procedure TfrmMain.ChckBxEventSoundChange(Sender: TObject);
 begin
   if ChckBxEventSound.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Sound Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Sound Enabled';
     EdtEventSound.Enabled := True;
     btnEventrLoadSound.Enabled := True;
     btnEventTestSound.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Sound Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Sound Disabled';
     EdtEventSound.Enabled := False;
     btnEventrLoadSound.Enabled := False;
     btnEventTestSound.Enabled := False;
@@ -1248,12 +1307,12 @@ procedure TfrmMain.ChckBxEventReminderChange(Sender: TObject);
 begin
   if ChckBxEventReminder.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Reminder Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Reminder Enabled';
     EdtEventText.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Reminder Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Reminder Disabled';
     EdtEventText.Enabled := False;
   end;
 end;
@@ -1262,13 +1321,13 @@ procedure TfrmMain.ChckBxEventSystemChange(Sender: TObject);
 begin
   if ChckBxEventSystem.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'System Events Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'System Events Enabled';
     CmbBxEventSystem.Enabled := True;
     CmbBxEventSystem.ItemIndex := 0;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'System Events Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'System Events Disabled';
     CmbBxEventSystem.Enabled := False;
   end;
 end;
@@ -1277,13 +1336,13 @@ procedure TfrmMain.ChckBxEventCommandChange(Sender: TObject);
 begin
   if ChckBxEventCommand.Checked then
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Command Enabled';
+    stsBrInfo.Panels.Items[4].Text := 'Command Enabled';
     EdtEventCommand.Enabled := True;
     btnEventLoadCommand.Enabled := True;
   end
   else
   begin
-    stsBrInfo.Panels.Items[3].Text := 'Command Disabled';
+    stsBrInfo.Panels.Items[4].Text := 'Command Disabled';
     EdtEventCommand.Enabled := False;
     btnEventLoadCommand.Enabled := False;
   end;
@@ -1302,7 +1361,7 @@ begin
     if Execute then
     begin
       EdtEventCommand.Text := (FileName);
-      stsBrInfo.Panels.Items[3].Text := Filename + ' Chosen';
+      stsBrInfo.Panels.Items[4].Text := Filename + ' Chosen';
     end;    //  if Exectute
     Free;
   end;
@@ -1310,23 +1369,18 @@ end;
 
 procedure TfrmMain.btnEventrLoadSoundClick(Sender: TObject);
 {  if the text box is clicked, allow the sound file to be changed.
-      MUST BE A .wav FILE.
 }
 begin
 
   with TOpenDialog.Create(Self) do
   begin
-    Filter := '*.wav';
+    Filter := '*.wav; *.mp3';
     InitialDir := getCurrentDir + '\sounds';
-    Title := 'Choose a sound file [.wav]';
+    Title := 'Choose a sound file.';
     if Execute then
     begin
-      if ExtractFileExt(FileName) = '.wav' then
-      begin  //  only allow .wav
-        EventSoundName := FileName;
-        EdtCountdownSound.Text := ExtractFileName(FileName);
-        stsBrInfo.Panels.Items[3].Text := Filename + ' Chosen';
-      end;  //  if ExtractFileExt
+      EdtEventSound.Text := ExtractFileName(FileName);
+      stsBrInfo.Panels.Items[4].Text := Filename + ' Chosen';
     end;    //  if Execute
     Free;
   end;
@@ -1334,7 +1388,7 @@ end;
 
 procedure TfrmMain.btnEventTestSoundClick(Sender: TObject);
 begin
-  doPlaySound(EventSoundName);
+  doPlaySound(EdtEventSound.Text, userOptions.volume);
 end;
 
 // ************************************************************* Reminder ******
@@ -1475,6 +1529,14 @@ begin
 
   frmMain.Visible := False;
 end;
+
+procedure TfrmMain.CloseButtonClick(Sender: TObject);
+{  if clicked will hide the main form and display the tray icon.
+}
+begin
+  close;
+end;
+
 
 // ******************************************************* pop menu ************
 

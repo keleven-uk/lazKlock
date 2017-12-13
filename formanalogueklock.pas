@@ -16,13 +16,11 @@ const
   GWL_EXSTYLE = -20;
 
 {Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal Color As Long, ByVal X As Byte, ByVal alpha As Long) As Boolean }
-function SetLayeredWindowAttributes(hWnd: longint; Color: longint;
-  X: byte; alpha: longint): bool stdcall; external 'USER32';
+function SetLayeredWindowAttributes(hWnd: longint; Color: longint; X: byte; alpha: longint): bool stdcall; external 'USER32';
 
 {not sure how to alias these functions here ????   alias setwindowlonga!!}
 {Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long }
-function SetWindowLongA(hWnd: longint; nIndex: longint;
-  dwNewLong: longint): longint stdcall; external 'USER32';
+function SetWindowLongA(hWnd: longint; nIndex: longint; dwNewLong: longint): longint stdcall; external 'USER32';
 
 
 {Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long }
@@ -43,11 +41,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
-    procedure Shape1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: integer);
+    procedure Shape1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
     procedure Shape1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
-    procedure Shape1MouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: integer);
+    procedure Shape1MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
   private
 
   public
@@ -111,6 +107,7 @@ begin
   begin
     userOptions.analogueFormLeft := frmAnalogueKlock.Left;
     userOptions.analogueFormTop := frmAnalogueKlock.Top;
+    userOptions.writeCurrentOptions;
   end;
 end;
 
@@ -135,15 +132,13 @@ begin
   frmAbout.Show;
 end;
 
-procedure TfrmAnalogueKlock.Shape1MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: integer);
+procedure TfrmAnalogueKlock.Shape1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
 {  update mouse position when form is dragged i.e. left mouse button down  }
 begin
   moveAnalogueKlock := True;
 end;
 
-procedure TfrmAnalogueKlock.Shape1MouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: integer);
+procedure TfrmAnalogueKlock.Shape1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 {  make klock follow the mouse, when left button is held down.  }
 begin
   if moveAnalogueKlock then
@@ -153,8 +148,14 @@ begin
   end;
 end;
 
-procedure TfrmAnalogueKlock.Shape1MouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: integer);
+procedure TfrmAnalogueKlock.Shape1MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
+
+
+
+
+
+
+
 {  Left mouse button released, stop dragging.  }
 begin
   moveAnalogueKlock := False;

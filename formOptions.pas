@@ -24,23 +24,32 @@ type
   TfrmOptions = class(TForm)
     accItemGlobal: TAccordionItem;
     accItemTime: TAccordionItem;
+    accItemOtherKlocks: TAccordionItem;
     accOtherStuff: TAccordionItem;
     btrOptionsReset: TButton;
+    btnGlobalVolumeTest: TButton;
     ButtonPanel1: TButtonPanel;
     ChckGrpTimeOptions: TCheckGroup;
     ChckGrpTimerSettings: TCheckGroup;
     ChckGrpGlobalOptions: TCheckGroup;
+    ChckGrpTimeChimes: TCheckGroup;
+    ChckGrpAnalogueKlock: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
     Label1: TLabel;
     lblSettingsFileName: TLabel;
     Label3: TLabel;
     Settings: TGroupBox;
+    TrckBrGlobalVolume: TTrackBar;
+    procedure btnGlobalVolumeTestClick(Sender: TObject);
     procedure btrOptionsResetClick(Sender: TObject);
+    procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
@@ -49,6 +58,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure TrckBrGlobalVolumeChange(Sender: TObject);
   private
 
   public
@@ -91,19 +101,36 @@ begin
   // userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
 
   AcrdnOptions.ItemIndex := 0;                              //  Always start on Global Options.
-  CmbBxDefaulTtab.ItemIndex := userOptions.defaultTab;
+  CmbBxDefaulTtab.ItemIndex := userBacOptions.defaultTab;
 
   CmbBxDefaultTime.Items.AddStrings(ft.fuzzyTypes);
-  CmbBxDefaultTime.ItemIndex := userOptions.defaultTime;
+  CmbBxDefaultTime.ItemIndex := userBacOptions.defaultTime;
 
-  ChckGrpGlobalOptions.Checked[0] := userOptions.screenSave;
-  ChckGrpGlobalOptions.Checked[1] := userOptions.runAtStartUp;
+  TrckBrGlobalVolume.Position := StrToInt(userBacOptions.volume);
 
-  ChckGrpTimeOptions.Checked[0] := userOptions.netTimeSeconds;
-  ChckGrpTimeOptions.Checked[1] := userOptions.swatchCentibeats;
-  ChckGrpTimeOptions.Checked[2] := userOptions.fuzzyTimeBalloon;
+  ChckGrpGlobalOptions.Checked[0] := userBacOptions.screenSave;
+  ChckGrpGlobalOptions.Checked[1] := userBacOptions.runAtStartUp;
 
-  ChckGrpTimerSettings.Checked[0] := userOptions.timerMilliSeconds;
+  ChckGrpTimeOptions.Checked[0] := userBacOptions.display24Hour;
+  ChckGrpTimeOptions.Checked[1] := userBacOptions.netTimeSeconds;
+  ChckGrpTimeOptions.Checked[2] := userBacOptions.swatchCentibeats;
+  ChckGrpTimeOptions.Checked[3] := userBacOptions.fuzzyTimeBalloon;
+  ChckGrpTimeOptions.Checked[4] := userBacOptions.displayIdleTime;
+
+  ChckGrpTimeChimes.Checked[0] := userBacOptions.hourPips;
+  ChckGrpTimeChimes.Checked[1] := userBacOptions.hourChimes;
+  ChckGrpTimeChimes.Checked[2] := userBacOptions.halfChimes;
+  ChckGrpTimeChimes.Checked[3] := userBacOptions.quarterChimes;
+  ChckGrpTimeChimes.Checked[4] := userBacOptions.threeQuarterChimes;
+
+  ChckGrpTimeChimes.CheckEnabled[1] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[2] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[3] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
+
+  ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
+
+  ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -116,16 +143,13 @@ begin
 end;
 
 {....................................... Options Routines ......................................................}
-
+//
+//....................................................................GLOBAL ....................................
+//
 procedure TfrmOptions.CmbBxDefaulTtabChange(Sender: TObject);
 {  The default tab has changed, relect is user options.  }
 begin
   userBacOptions.defaultTab := CmbBxDefaulTtab.ItemIndex;
-end;
-
-procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
-begin
-  userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
 end;
 
 procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
@@ -139,19 +163,79 @@ begin
   userBacOptions.runAtStartUp := ChckGrpGlobalOptions.Checked[1];
 end;
 
+procedure TfrmOptions.TrckBrGlobalVolumeChange(Sender: TObject);
+{  Sets the global volume.
+   NB  :: is held as string - easier in calling programme.
+}
+begin
+  userBacOptions.volume := intToStr(TrckBrGlobalVolume.Position);
+end;
+
+procedure TfrmOptions.btnGlobalVolumeTestClick(Sender: TObject);
+{  Plays a sound to chech volume.  }
+begin
+  doPlaySound('thepips.mp3', userBacOptions.volume);
+end;
+//
+//....................................................................TIME ....................................
+//
 procedure TfrmOptions.ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Time options according to the state of the radio group.
 
-   index 0 - New Earth Time to display seconds
-         1 - SwatchTime to display Centibeats
-         2 - Display Time in balloon
+index 0 - Display using 24 hour if true, else use 12 hour
+      1 - New Earth Time to display seconds
+      2 - SwatchTime to display Centibeats
+      3 - Display Time in balloon
+      4 - Display system idle time
 }
 begin
-  userBacOptions.netTimeSeconds := ChckGrpTimeOptions.Checked[0];
-  userBacOptions.swatchCentibeats := ChckGrpTimeOptions.Checked[1];
-  userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.Checked[2];
+  userBacOptions.display24Hour := ChckGrpTimeOptions.Checked[0];
+  userBacOptions.netTimeSeconds := ChckGrpTimeOptions.Checked[1];
+  userBacOptions.swatchCentibeats := ChckGrpTimeOptions.Checked[2];
+  userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.Checked[3];
+  userBacOptions.displayIdleTime := ChckGrpTimeOptions.Checked[4];
 end;
 
+procedure TfrmOptions.ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
+{  Sets the Ciming options according to the state of the radio group.
+
+index 0 - Sound "The Pips on the Hour"
+   1 - Hourly Chimes
+   2 - Half hourly Chimes
+   3 - Quarter hourly Chimes
+   4 - ThreeQuarter Horly Chimes
+}
+begin
+  userBacOptions.hourPips := ChckGrpTimeChimes.Checked[0];
+  userBacOptions.hourChimes := ChckGrpTimeChimes.Checked[1];
+  userBacOptions.halfChimes := ChckGrpTimeChimes.Checked[2];
+  userBacOptions.quarterChimes := ChckGrpTimeChimes.Checked[3];
+  userBacOptions.threeQuarterChimes := ChckGrpTimeChimes.Checked[4];
+
+  ChckGrpTimeChimes.CheckEnabled[1] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[2] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[3] := not ChckGrpTimeChimes.Checked[0];
+  ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
+end;
+
+procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
+begin
+  userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
+end;
+//
+//....................................................................ANALOGUE KLOCK ...........................
+//
+procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
+{  Sets the Ciming options according to the state of the radio group.
+
+   index 0 - Save Screen Position
+}
+begin
+  userBacOptions.analogueScreenSave := ChckGrpAnalogueKlock.Checked[0];
+end;
+//
+//....................................................................OTHER STUFF ..............................
+//
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Timer options according to the state of the radio group.
 
@@ -168,6 +252,7 @@ procedure TfrmOptions.CancelButtonClick(Sender: TObject);
     Since the changes are made to userBacOptions - we don't need to do nowt.
 }
 begin
+  close;
 end;
 
 procedure TfrmOptions.OKButtonClick(Sender: TObject);

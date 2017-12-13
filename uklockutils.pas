@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
-  MMSystem, dateutils, registry;
+  MMSystem, dateutils, registry, typinfo;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -17,18 +17,31 @@ type                    //  used to hold the parsed data for a reminder.
     toGo: double;    //  days to go for reminder.
     active: boolean;
   end;
+  //  Used for hour chimes file name.  Zero not used, inserted as a dummy to keep count correct.
+  chimes = (zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve);
+var
+  isPlaying: Boolean = False;
 
 function FontToString(f: TFont): string;
 function StringToFont(s: string): TFont;
 function getTextFont(f1: TFont; f2: TFont): TFont;
 function parseReminder(a: string): reminderData;
+function isHour(secs: Integer): Boolean;
+function isHalfHour(secs: Integer): Boolean;
+function isQuarterHour(secs: Integer): Boolean;
+function isThreeQuarterHour(secs: Integer): Boolean;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string);
-procedure doPlaySound(sound: string);
+procedure doPlaySound(sound: string; volume: string);
+procedure SendMCICommand(command: string);
 procedure applyRunAtStartUp(flag: boolean);
+procedure playChime(mode: String);
 
 implementation
+
+uses
+  formklock;
 
 function FontToString(f: TFont): string;
 {  Produces a string representation of a given font.
@@ -176,9 +189,9 @@ procedure doSystemEvent(event: integer);
 
     It seems that things changed a little in windows 10, a little.
     The parameters now start with a / and not a -.
-    Also, passing parameters with contain spaces seem to be problamatic for Lazarus,
-    I gave up.  Needs more work to make compatible with older versions of windows,
-    to include a message and make cross platform.
+    Also, passing parameters with contain spaces seem to be problematic for Lazarus,
+    Needs more work to make compatible with older versions of windows, to include a message and
+    make cross platform.
 }
 var
   AProcess: TProcess;
@@ -186,22 +199,10 @@ begin
   AProcess := TProcess.Create(nil);
 
   case event of
-    0:
-    begin
-      AProcess.Parameters.Add('/s');
-    end;
-    1:
-    begin
-      AProcess.Parameters.Add('/r');
-    end;
-    2:
-    begin
-      AProcess.Parameters.Add('/h');
-    end;
-    3:
-    begin
-      AProcess.Parameters.Add('/l');
-    end;
+    0: AProcess.Parameters.Add('/s');
+    1: AProcess.Parameters.Add('/r');
+    2: AProcess.Parameters.Add('/h');
+    3: AProcess.Parameters.Add('/l');
   end;
 
   try
@@ -247,17 +248,54 @@ begin
 
 end;
 
-procedure doPlaySound(sound: string);
-var
-  PCharSoundName: PChar;       // PlaySound needs to be passed PChar and not a string
+procedure doPlaySound(sound: string; volume: string);
+{  Plays a sound file at a specified volume, both passed in has strings.
+   The file is assumeded to be a valid sound file and volume is between 1 - 1000.
+   The correct path is attatched by this routine.
+
+   TODO :: Work out how status works, so that it can be determined when play has finished.
+           This would then eliminate the global variable isPlying.
+
+   Fails silently if sounf file does not exist.
+}
+VAR
+  soundFile: String;
 begin
-  PCharSoundname := @sound[1];  //  convert to PCHAR - a pointer to first character
-  //  of the string - i think.
-  try                                        //  in case sound file is not found.
-    PlaySound(PCharSoundname, 0, SND_ASYNC);
-  except
-    on EInOutError do
-      beep;
+  soundFile := ExtractFilePath(Application.ExeName) + '\sounds\' + sound;
+
+  If FileExists(soundFile) Then
+  begin
+    if isPlaying then
+    begin
+      SendMCICommand('close KlockAudio');                       //  close player if alrady been used.
+    end;
+
+    isPlaying := True;
+    SendMCICommand('open ' + soundFile + ' type mpegvideo alias KlockAudio');      //  open audio player.
+
+    SendMCICommand('setaudio KlockAudio volume to ' + volume);                     //  Sets volume [1 - 1000].
+
+    //  SendMCICommand('seek KlockAudio to nil');              //  finds starts of  file, not used.
+
+    SendMCICommand('play KlockAudio');                         //  Play audio file.
+
+    //  SendMCICommand('status KlockAudio mode')               //  supposed to return status of play.
+  end;
+
+end;
+
+procedure SendMCICommand(command: string);
+{  pinched from http://www.programmersforum.ru/showthread.php?t=133180}
+var
+  returnValue: integer;
+  errorMessage: array [0 .. 254] of char;
+begin
+  returnValue := mciSendString(PChar(command), nil, 0, 0);
+  if returnValue <> 0 then
+  begin
+    { get message for returned value }
+    mciGetErrorString(returnValue, errorMessage, 255);
+    ShowMessage(errorMessage);
   end;
 end;
 
@@ -329,7 +367,7 @@ begin
     ' Motor': rmndrData.message := format('%s , in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
   end;
 
-  parseReminder := rmndrData;
+  Result := rmndrData;
 end;
 
 procedure applyRunAtStartUp(flag: boolean);
@@ -369,6 +407,62 @@ begin
     registry.Free;
   end;  //  try
 
+end;
+
+function isHour(secs: Integer): Boolean;
+{  Returns true if the time is at the hour.    }
+begin
+  result := secs mod 3600 = 0;
+end;
+
+function isHalfHour(secs: Integer): Boolean;
+{  Returns true if the time is at the half hour.    }
+Var
+  hour, minute, second,  millisecond: word;
+begin
+  DecodeTime(Time, hour, minute, second, millisecond);
+  result := (secs mod 1800 = 0) and (minute = 30);
+end;
+
+function isQuarterHour(secs: Integer): Boolean;
+{  Returns true if the time is at quarter past the hour.    }
+Var
+  hour, minute, second,  millisecond: word;
+begin
+  DecodeTime(Time, hour, minute, second, millisecond);
+  result := (secs mod 900 = 0) and (minute = 15);
+end;
+
+function isThreeQuarterHour(secs: Integer): Boolean;
+{  Returns true if the time is at three quarter past [a quarter to] the hour.    }
+Var
+  hour, minute, second,  millisecond: word;
+begin
+  DecodeTime(Time, hour, minute, second, millisecond);
+  result := (secs mod 900 = 0) and (minute = 45);
+end;
+
+procedure playChime(mode: String);
+var
+  hour, minute, second,  millisecond: word;
+  arg: string;
+begin
+  DecodeTime(Time, hour, minute, second, millisecond);
+
+  if hour > 12 then
+    hour := hour - 1;
+
+  case mode of
+    'pips': arg := 'thepips.mp3';
+    'hour': arg := GetEnumName(TypeInfo(chimes), hour) + '.mp3';
+    'half': arg := 'halfchime.mp3';
+    'quarter': arg := 'quarterchime.mp3';
+    'threequarter': arg := 'threequarterchime.mp3';
+  else ;
+    arg := '';
+  end;
+
+  doPlaySound(arg, userOptions.volume);
 end;
 
 end.

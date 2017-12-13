@@ -3,12 +3,15 @@ unit UFuzzyTime;
 {$mode objfpc}{$H+}
 
 {
-Kevin Scott         January 2012
+  Kevin Scott         January 2012
 
-returns the time as a string, depending on the value of displayFuzzy.
+  returns the time as a string, depending on the value of displayFuzzy.
 
-displayFuzzy set to True  :: getTime returns time as five past ten.
-displayFuzzy set to False :: getTime returns time as 10:05:00.
+  displayFuzzy set to True  :: getTime returns time as five past ten.
+  displayFuzzy set to False :: getTime returns time as 10:05:00.
+
+  NB :: Bar Code Time, Semaphore Time, Nancy Blackett Time & Braille Time
+  are done by font substitution.
 }
 
 interface
@@ -23,6 +26,7 @@ type
     _displayFuzzy: integer;
     _fuzzyBase: integer;
     _fuzzyTypes: TStringList;
+    _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
 
     function fTime: string;
     function netTime: string;
@@ -38,10 +42,10 @@ type
     property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
     property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
     property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
+    property display24Hour: boolean read _display24Hour write _display24Hour;
 
     constructor Create; overload;
     function getTime: string;
-    function getDblTime: double;
   end;
 
 
@@ -56,7 +60,8 @@ begin
 
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
-    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time"');
+    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Bar Code Time", "Semaphore Time",' +
+    '"Nancy Blackett Time", "Braille Time"');
 end;
 
 function FuzzyTime.fTime: string;
@@ -243,7 +248,7 @@ var
 begin
   noOfSeconds := SecondOfTheDay(Time);
   noOfDecSecs := round(noOfSeconds * (100000 / 84600));  // a decimal second is
-  // smaller then a normal second
+                                                         // smaller then a normal second
   hrs := noOfDecSecs div 10000;
   mins := (noOfDecSecs - hrs * 10000) div 100;
   secs := noOfDecSecs mod 100;
@@ -309,26 +314,7 @@ begin
   noOfSeconds := SecondOfTheDay(Time);
   percentSeconds := noOfSeconds / 86400;
 
-  Result := format('%0.4f % PMH', [percentSeconds * 100]);
-end;
-
-function FuzzyTime.getDblTime: double;
-{  returns current time as a float, in the format hh.mm.
-   a bit klunky - needs a rewrite, when i know how                             }
-var
-  hour: word;
-  min: word;
-  sec: word;
-  msec: word;
-  fhour: double;
-  fmin: double;
-begin
-  DecodeTime(time, hour, min, sec, msec);
-
-  fhour := hour;
-  fmin := min / 100;
-
-  Result := fhour + fmin;
+  Result := format('%0.4f PMH', [percentSeconds * 100]);
 end;
 
 function FuzzyTime.getTime: string;
@@ -336,7 +322,7 @@ begin
 
   case displayFuzzy of
     0: Result := fTime;
-    1: Result := TimeToStr(Time);
+    1: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time) else Result := FormatDateTime('hh : nn : ss am/pm', Time);
     2: Result := netTime;
     3: Result := unixTime;
     4: Result := utcTime;

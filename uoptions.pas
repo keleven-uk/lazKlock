@@ -59,6 +59,7 @@ type
     _formTop: integer;              //  the forms top left.
     _formLeft: integer;
     _defaultTab: integer;
+    _volume:String;
 
     //  Time
     _defaultTime: integer;
@@ -66,6 +67,12 @@ type
     _swatchCentibeats: boolean;
     _fuzzyTimeBalloon: boolean;
     _displayIdleTime: boolean;
+    _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
+    _hourPips: boolean;
+    _hourChimes: boolean;
+    _halfChimes: boolean;
+    _quarterChimes: boolean;
+    _threeQuarterChimes: boolean;
 
     //  Timer
     _timerMilliSeconds: boolean;
@@ -95,6 +102,7 @@ type
     property formTop: integer read _formTop write _formTop;
     property formLeft: integer read _formLeft write _formLeft;
     property defaultTab: integer read _defaultTab write _defaultTab;
+    property volume: string read _volume write _volume;
 
     //  Time
     property defaultTime: integer read _defaultTime write _defaultTime;
@@ -102,6 +110,12 @@ type
     property swatchCentibeats: boolean read _swatchCentibeats write _swatchCentibeats;
     property fuzzyTimeBalloon: boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
     property displayIdleTime: boolean read _displayIdleTime write _displayIdleTime;
+    property display24Hour: boolean read _display24Hour write _display24Hour;
+    property hourPips: boolean read _hourPips write _hourPips;
+    property hourChimes: boolean read _hourChimes write _hourChimes;
+    property halfChimes: boolean read _halfChimes write _halfChimes;
+    property quarterChimes: boolean read _quarterChimes write _quarterChimes;
+    property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
@@ -169,7 +183,11 @@ constructor Options.Create; overload;
 begin
   checkDirectory;
 
-  optionsName := _dirName + 'Options.xml';
+  {$ifdef WIN32}
+  optionsName := _dirName + 'Options32.xml';
+  {$else}
+  optionsName := _dirName + 'Options64.xml';
+  {$endif}
 
   if FileExists(optionsName) then
     readOptions
@@ -231,6 +249,7 @@ begin
   formTop := o.formTop;
   formLeft := o.formLeft;
   defaultTab := o.defaultTab;
+  volume := o.volume;
 
   //  Time
   defaultTime := o.defaultTime;
@@ -238,6 +257,12 @@ begin
   swatchCentibeats := o.swatchCentibeats;
   fuzzyTimeBalloon := o.fuzzyTimeBalloon;
   displayIdleTime := o.displayIdleTime;
+  display24Hour := o.display24Hour;
+  hourPips := o.hourPips;
+  hourChimes := o.hourChimes;
+  halfChimes := o.halfChimes;
+  quarterChimes := o.quarterChimes;
+  threeQuarterChimes := o.threeQuarterChimes;
 
   //  Timer
   timerMilliSeconds := o.timerMilliSeconds;
@@ -302,6 +327,9 @@ begin
     childNode := PassNode.FindNode('defaultTab');
     defaultTab := StrToInt(childNode.TextContent);
 
+    childNode := PassNode.FindNode('volume');
+    volume := ansistring(childNode.TextContent);
+
     //  Time
     PassNode := Doc.DocumentElement.FindNode('Time');
     childNode := PassNode.FindNode('defaultTime');
@@ -318,6 +346,24 @@ begin
 
     childNode := PassNode.FindNode('displayIdleTime');
     displayIdleTime := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('display24Hour');
+    display24Hour := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('hourPips');
+    hourPips := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('hourChimes');
+    hourChimes := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('halfChimes');
+    halfChimes := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('quarterChimes');
+    quarterChimes := StrToBool(childNode.TextContent);
+
+    childNode := PassNode.FindNode('threeQuarterChimes');
+    threeQuarterChimes := StrToBool(childNode.TextContent);
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
@@ -369,6 +415,7 @@ begin
   formTop := 100;              //  the forms top left.
   formLeft := 100;
   defaultTab := 0;
+  volume := '123';
 
   //  Time
   defaultTime := 0;
@@ -376,6 +423,12 @@ begin
   swatchCentibeats := True;
   fuzzyTimeBalloon := True;
   displayIdleTime := True;
+  display24Hour := True;
+  hourPips := False;
+  hourChimes := False;
+  halfChimes := False;
+  quarterChimes := False;
+  threeQuarterChimes := False;
 
   //  Timer
   timerMilliSeconds := True;
@@ -486,6 +539,11 @@ begin
     ItemNode.AppendChild(TextNode);
     ElementNode.AppendChild(ItemNode);
 
+    ItemNode := Doc.CreateElement('volume');
+    TextNode := Doc.CreateTextNode(WideString(volume));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
     RootNode.AppendChild(ElementNode);
 
     //  Time
@@ -512,6 +570,36 @@ begin
 
     ItemNode := Doc.CreateElement('displayIdleTime');
     TextNode := Doc.CreateTextNode(BoolToStr(displayIdleTime));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('display24Hour');
+    TextNode := Doc.CreateTextNode(BoolToStr(display24Hour));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('hourPips');
+    TextNode := Doc.CreateTextNode(BoolToStr(hourPips));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('hourChimes');
+    TextNode := Doc.CreateTextNode(BoolToStr(hourChimes));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('halfChimes');
+    TextNode := Doc.CreateTextNode(BoolToStr(halfChimes));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('quarterChimes');
+    TextNode := Doc.CreateTextNode(BoolToStr(quarterChimes));
+    ItemNode.AppendChild(TextNode);
+    ElementNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('threeQuarterChimes');
+    TextNode := Doc.CreateTextNode(BoolToStr(threeQuarterChimes));
     ItemNode.AppendChild(TextNode);
     ElementNode.AppendChild(ItemNode);
 
