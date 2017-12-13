@@ -26,10 +26,7 @@ function FontToString(f: TFont): string;
 function StringToFont(s: string): TFont;
 function getTextFont(f1: TFont; f2: TFont): TFont;
 function parseReminder(a: string): reminderData;
-function isHour(secs: Integer): Boolean;
-function isHalfHour(secs: Integer): Boolean;
-function isQuarterHour(secs: Integer): Boolean;
-function isThreeQuarterHour(secs: Integer): Boolean;
+function isTime(myNow: TdateTime; mins: integer): Boolean;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string);
@@ -256,7 +253,7 @@ procedure doPlaySound(sound: string; volume: string);
    TODO :: Work out how status works, so that it can be determined when play has finished.
            This would then eliminate the global variable isPlying.
 
-   Fails silently if sounf file does not exist.
+   Fails silently if sound file does not exist.
 }
 VAR
   soundFile: String;
@@ -409,37 +406,13 @@ begin
 
 end;
 
-function isHour(secs: Integer): Boolean;
+function isTime(myNow: TdateTime; mins: integer): Boolean;
 {  Returns true if the time is at the hour.    }
-begin
-  result := secs mod 3600 = 0;
-end;
-
-function isHalfHour(secs: Integer): Boolean;
-{  Returns true if the time is at the half hour.    }
 Var
   hour, minute, second,  millisecond: word;
 begin
-  DecodeTime(Time, hour, minute, second, millisecond);
-  result := (secs mod 1800 = 0) and (minute = 30);
-end;
-
-function isQuarterHour(secs: Integer): Boolean;
-{  Returns true if the time is at quarter past the hour.    }
-Var
-  hour, minute, second,  millisecond: word;
-begin
-  DecodeTime(Time, hour, minute, second, millisecond);
-  result := (secs mod 900 = 0) and (minute = 15);
-end;
-
-function isThreeQuarterHour(secs: Integer): Boolean;
-{  Returns true if the time is at three quarter past [a quarter to] the hour.    }
-Var
-  hour, minute, second,  millisecond: word;
-begin
-  DecodeTime(Time, hour, minute, second, millisecond);
-  result := (secs mod 900 = 0) and (minute = 45);
+  DecodeTime(myNow, hour, minute, second, millisecond);
+  result := (minute = mins) and (second = 0);
 end;
 
 procedure playChime(mode: String);
@@ -450,7 +423,7 @@ begin
   DecodeTime(Time, hour, minute, second, millisecond);
 
   if hour > 12 then
-    hour := hour - 1;
+    hour := hour - 12;
 
   case mode of
     'pips': arg := 'thepips.mp3';

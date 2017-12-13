@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "49"
+#define MyAppVersion "50"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -28,8 +28,8 @@ DefaultGroupName={#MyAppName}
 LicenseFile=GNU GENERAL PUBLIC LICENSE.txt
 InfoAfterFile=help.txt
 OutputDir=D:\My\shed\Projects\pascal
-OutputBaseFilename={#MyAppName}{#MyAppVersion}
-SetupIconFile=klock.ico
+OutputBaseFilename={#MyAppName}_{#MyAppVersion}
+SetupIconFile=time-13-128.ico
 Compression=lzma
 SolidCompression=yes
 DisableStartupPrompt=False

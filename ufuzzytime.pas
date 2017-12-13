@@ -38,6 +38,7 @@ type
     function hexTime: string;
     function radixTime: string;
     function percentTime: string;
+    function getDblTime: string;
   public
     property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
     property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
@@ -60,15 +61,14 @@ begin
 
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
-    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Bar Code Time", "Semaphore Time",' +
-    '"Nancy Blackett Time", "Braille Time"');
+    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time", "Bar Code Time",' +
+    '"Semaphore Time", "Nancy Blackett Time", "Braille Time" ');
 end;
 
 function FuzzyTime.fTime: string;
 type
   Hours = array [0..12] of string;
 var
-  t: TDateTime;
   hour: word;
   mins: word;
   secs: word;
@@ -94,8 +94,7 @@ begin
   hourTxt[11] := 'eleven';
   hourTxt[12] := 'twelve';
 
-  t := Time;
-  DecodeTime(t, hour, mins, secs, mscs);
+  DecodeTime(Time, hour, mins, secs, mscs);
 
   if hour < 12 then
     ampm := ' in the morning'
@@ -171,7 +170,7 @@ begin
 end;
 
 function FuzzyTime.unixTime: string;
-  {  return UNIX epoch time                                                      }
+{  return UNIX epoch time                                                      }
 var
   unix: integer;
 
@@ -205,7 +204,6 @@ begin
 
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
-  {****}
   if userOptions.swatchCentibeats then
     Result := format('@ %3.2f BMT', [noOfBeats])
   else
@@ -286,7 +284,6 @@ end;
 
 function FuzzyTime.radixTime: string;
 var
-  t: TDateTime;
   hrs: word;
   min: word;
   sec: word;
@@ -296,8 +293,7 @@ var
   smin: string;
   shrs: string;
 begin
-  t := Time;
-  DecodeTime(t, hrs, min, sec, msc);
+  DecodeTime(Time, hrs, min, sec, msc);
 
   shrs := Dec2Numb(hrs, 5, fuzzyBase);
   smin := Dec2Numb(min, 6, fuzzyBase);
@@ -317,6 +313,27 @@ begin
   Result := format('%0.4f PMH', [percentSeconds * 100]);
 end;
 
+function FuzzyTime.getDblTime: string;
+{  returns current time as a float, in the format hh.mm.
+   a bit klunky - needs a rewrite, when i know how                             }
+var
+  hour: word;
+  min: word;
+  sec: word;
+  msec: word;
+  fhour: double;
+  fmin: double;
+  fsec: double;
+begin
+  DecodeTime(time, hour, min, sec, msec);
+
+  fhour := hour;
+  fmin := min / 100;
+  fsec := sec / 10000;
+
+  Result := FloatToStr(fhour + fmin + fsec);
+end;
+
 function FuzzyTime.getTime: string;
 begin
 
@@ -332,6 +349,7 @@ begin
     8: Result := hexTime;
     9: Result := radixTime;
     10: Result := percentTime;
+    11: Result := getDblTime;
   end;
 
 end;

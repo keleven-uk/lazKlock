@@ -1371,6 +1371,10 @@ Date:   Wed Dec 13 10:00:24 2017 +0000
 
 Build 49 [2.1.2.49]
 
+commit f7b1216f1f682f9a2f28593dffbda45ca84521d0
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Dec 13 20:12:19 2017 +0000
+
     [This is a NEARLY duplication of build 43]
     Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
     Braille.  Theses are achieved my font substitution.
@@ -1392,6 +1396,55 @@ Build 49 [2.1.2.49]
     screen position.
 
     Currently
-    4080 lines of source code.
-    2120 statements
+    4077 lines of source code.
+    2113 statements
     16.4% comment
+
+ fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
+ fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
+ fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
+ fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
+ fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
+ formHelp.pas                 |  12 +-
+ formKlock.lfm                |   7 +-
+ formKlock.pas                | 284 ++++++++++++++++++++++++++-----------------
+ formOptions.lfm              | 139 ++++++++++++++++++---
+ formOptions.pas              | 125 ++++++++++++++++---
+ formanalogueklock.pas        |  29 ++---
+ history.txt                  |  53 +++++++-
+ klock.iss                    |   6 +-
+ klock.lpi                    | 195 +++++++++++++++--------------
+ klock.lpr                    |   2 +-
+ lazKlock.smproj              | Bin 61799 -> 83961 bytes
+ sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
+ sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
+ sounds/chimes.wav            | Bin 55776 -> 0 bytes
+ sounds/chord.wav             | Bin 97016 -> 0 bytes
+ sounds/ding.wav              | Bin 80856 -> 0 bytes
+ sounds/eight.mp3             | Bin 0 -> 979530 bytes
+ sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
+ sounds/five.mp3              | Bin 0 -> 801223 bytes
+ sounds/four.mp3              | Bin 0 -> 739385 bytes
+ sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
+ sounds/nine.mp3              | Bin 0 -> 1040899 bytes
+ sounds/notify.wav            | Bin 119384 -> 0 bytes
+ sounds/one.mp3               | Bin 0 -> 559035 bytes
+ sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
+ sounds/recycle.wav           | Bin 25434 -> 0 bytes
+ sounds/ringin.wav            | Bin 10026 -> 0 bytes
+ sounds/ringout.wav           | Bin 5212 -> 0 bytes
+ sounds/seven.mp3             | Bin 0 -> 919940 bytes
+ sounds/six.mp3               | Bin 0 -> 862013 bytes
+ sounds/start.wav             | Bin 1192 -> 0 bytes
+ sounds/tada.wav              | Bin 171100 -> 0 bytes
+ sounds/ten.mp3               | Bin 0 -> 1101951 bytes
+ sounds/thepips.mp3           | Bin 0 -> 40874 bytes
+ sounds/three.mp3             | Bin 0 -> 679164 bytes
+ sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
+ sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
+ sounds/two.mp3               | Bin 0 -> 620614 bytes
+ ufonts.pas                   |  78 ++++++++++++
+ ufuzzytime.pas               |  42 +++----
+ uklockutils.pas              | 156 +++++++++++++++++++-----
+ uoptions.pas                 |  90 +++++++++++++-
+ 47 files changed, 895 insertions(+), 323 deletions(-)

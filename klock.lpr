@@ -9,7 +9,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout, formHelp,
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
-  uOptions, formAnalogueKlock, uFonts;
+  uOptions, formAnalogueKlock, uFonts, uOptionsUtils;
 
 {$R *.res}
 

@@ -278,6 +278,9 @@ begin
 
   fs.removeFonts(Handle);
 
+  FreeAndNil(fs);                   //  Release the font store object.
+  FreeAndNil(ft);                   //  Release the fuzzy time object.
+
   CloseAction := caFree;
 end;
 
@@ -440,14 +443,14 @@ begin
   myNow := now;
   mySecs := SecondOfTheDay(myNow);
 
-  if userOptions.HourPips and isHour(mySecs) then
+  if userOptions.HourPips and isTime(myNow, 0) then
     playChime('pips')
   else                                       //  only play chimes if pips turned off.
   begin
-    if userOptions.HourChimes and isHour(mySecs) then playChime('hour');
-    if userOptions.HalfChimes and isHalfHour(mySecs) then playChime('half');
-    if userOptions.quarterChimes and isQuarterHour(mySecs) then playChime('quarter');
-    if userOptions.threeQuarterChimes and isThreeQuarterHour(mySecs) then playChime('threequarter');
+    if userOptions.HourChimes and isTime(myNow, 0) then playChime('hour');
+    if userOptions.quarterChimes and isTime(myNow, 15) then playChime('quarter');
+    if userOptions.HalfChimes and isTime(myNow, 30) then playChime('half');
+    if userOptions.threeQuarterChimes and isTime(myNow, 45) then playChime('threequarter');
   end;
 
   if TrayIcon.Visible then
@@ -1360,7 +1363,7 @@ begin
     Title := 'Choose a executable';
     if Execute then
     begin
-      EdtEventCommand.Text := (FileName);
+      EdtEventCommand.Text := FileName;
       stsBrInfo.Panels.Items[4].Text := Filename + ' Chosen';
     end;    //  if Exectute
     Free;

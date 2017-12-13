@@ -84,7 +84,12 @@ uses
 procedure TfrmOptions.FormCreate(Sender: TObject);
 {  Run things when the form is first created.  }
 begin
-  userBacOptions := Options.Create('Options_temp.xml');  //  create options file as c:\Users\<user>\AppData\Local\Stub\Options_temp.xml
+    //  create options file as c:\Users\<user>\AppData\Local\Stub\Options_temp.xml
+  {$ifdef WIN32}
+    userBacOptions := Options.Create('Options32_temp.xml');
+  {$else}
+    userBacOptions := Options.Create('Options64_temp.xml');
+  {$endif}
 
   lblSettingsFileName.Caption := userOptions.optionsName;
 end;

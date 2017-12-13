@@ -194,7 +194,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 42
+      Top = 0
       Width = 776
       Caption = 'Time'
       Order = 1
@@ -329,7 +329,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 63
+      Top = 0
       Width = 776
       Caption = 'Other Klocks'
       Order = 2

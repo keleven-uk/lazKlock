@@ -5,7 +5,8 @@ unit uOptions;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs, formAnalogueKlock;
+  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs, formAnalogueKlock,
+  uOptionsUtils;
 
 type
 
@@ -174,19 +175,18 @@ type
 
 implementation
 
-
+//
 //............................................ Options methods ............................................
-
-
+//
 constructor Options.Create; overload;
   {  creates the options class with a default filename.  }
 begin
   checkDirectory;
 
   {$ifdef WIN32}
-  optionsName := _dirName + 'Options32.xml';
+    optionsName := _dirName + 'Options32.xml';
   {$else}
-  optionsName := _dirName + 'Options64.xml';
+    optionsName := _dirName + 'Options64.xml';
   {$endif}
 
   if FileExists(optionsName) then
@@ -221,7 +221,6 @@ begin
     if not CreateDir(_dirName) then
       ShowMessage('Failed to create directory !');
 end;
-
 
 procedure Options.Assign(o: Options);
   {  Copy all fields from one options object to another.
@@ -280,7 +279,7 @@ procedure Options.readOptions;
   }
 var
   fvi: myFileVersionInfo;
-  PassNode, childNode: TDOMNode;
+  PassNode: TDOMNode;
   Doc: TXMLDocument;
 begin
   try
@@ -304,81 +303,51 @@ begin
     except
       on E: Exception do
       begin
-        ShowMessage('ERROR: reading XML file.' + LineEnding + E.Message + LineEnding + 'Halting Program Execution');
+        ShowMessage('ERROR: reading XML file.' + LineEnding + E.Message + LineEnding +
+          'Halting Program Execution');
         Halt;
       end;  //  on E:
     end;    //  try
 
     //  Global
     PassNode := Doc.DocumentElement.FindNode('Global');
-    childNode := PassNode.FindNode('formPosition');
-    _formTop := StrToInt(TDOMElement(childNode).GetAttribute('Top'));              //  the forms top left.
-    _formLeft := StrToInt(TDOMElement(childNode).GetAttribute('Left'));
 
-    childNode := PassNode.FindNode('optionsName');
-    optionsName := ansistring(childNode.TextContent);
+    formTop := StrToInt(readChildAttribute(PassNode, 'formPosition', 'Top'));
+    formLeft := StrToInt(readChildAttribute(PassNode, 'formPosition', 'Left'));
 
-    childNode := PassNode.FindNode('runAtStartUp');
-    runAtStartUp := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('screenSave');
-    screenSave := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('defaultTab');
-    defaultTab := StrToInt(childNode.TextContent);
-
-    childNode := PassNode.FindNode('volume');
-    volume := ansistring(childNode.TextContent);
+    optionsName := ansistring(readChild(PassNode, 'optionsName'));
+    runAtStartUp := StrToBool(readChild(PassNode, 'runAtStartUp'));
+    screenSave := StrToBool(readChild(PassNode, 'screenSave'));
+    defaultTab := StrToInt(readChild(PassNode, 'defaultTab'));
+    volume := ansistring(readChild(PassNode, 'volume'));
 
     //  Time
     PassNode := Doc.DocumentElement.FindNode('Time');
-    childNode := PassNode.FindNode('defaultTime');
-    defaultTime := StrToInt(childNode.TextContent);
 
-    childNode := PassNode.FindNode('netTimeSeconds');
-    netTimeSeconds := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('swatchCentibeats');
-    swatchCentibeats := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('fuzzyTimeBalloon');
-    fuzzyTimeBalloon := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('displayIdleTime');
-    displayIdleTime := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('display24Hour');
-    display24Hour := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('hourPips');
-    hourPips := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('hourChimes');
-    hourChimes := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('halfChimes');
-    halfChimes := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('quarterChimes');
-    quarterChimes := StrToBool(childNode.TextContent);
-
-    childNode := PassNode.FindNode('threeQuarterChimes');
-    threeQuarterChimes := StrToBool(childNode.TextContent);
+    defaultTime := StrToInt(readChild(PassNode, 'defaultTime'));
+    netTimeSeconds := StrToBool(readChild(PassNode, 'netTimeSeconds'));
+    swatchCentibeats := StrToBool(readChild(PassNode, 'swatchCentibeats'));
+    fuzzyTimeBalloon := StrToBool(readChild(PassNode, 'fuzzyTimeBalloon'));
+    displayIdleTime := StrToBool(readChild(PassNode, 'displayIdleTime'));
+    display24Hour := StrToBool(readChild(PassNode, 'display24Hour'));
+    hourPips := StrToBool(readChild(PassNode, 'hourPips'));
+    hourChimes := StrToBool(readChild(PassNode, 'hourChimes'));
+    halfChimes := StrToBool(readChild(PassNode, 'halfChimes'));
+    quarterChimes := StrToBool(readChild(PassNode, 'quarterChimes'));
+    threeQuarterChimes := StrToBool(readChild(PassNode, 'threeQuarterChimes'));
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
-    childNode := PassNode.FindNode('timerMilliSeconds');
-    timerMilliSeconds := StrToBool(childNode.TextContent);
+    timerMilliSeconds := StrToBool(readChild(PassNode, 'timerMilliSeconds'));
 
-    // Analogue Timer
+    // Other Klocks
 
     PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
-    childNode := PassNode.FindNode('analogueForm');
-    _analogueFormTop := StrToInt(TDOMElement(childNode).GetAttribute('Top'));              //  the forms top left.
-    _analogueFormLeft := StrToInt(TDOMElement(childNode).GetAttribute('Left'));
 
-    childNode := PassNode.FindNode('analogueScreenSave');
-    analogueScreenSave := StrToBool(childNode.TextContent);
+    analogueFormTop := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Top'));
+    analogueFormLeft := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Left'));
+    analogueScreenSave := StrToBool(readChild(PassNode, 'analogueScreenSave'));
+
   finally
     // finally, free the document
     Doc.Free;
@@ -448,7 +417,7 @@ procedure Options.writeCurrentOptions;
   }
 var
   Doc: TXMLDocument;
-  RootNode, ElementNode, ItemNode, TextNode: TDOMNode;
+  RootNode, ElementNode: TDOMNode;
   fvi: myFileVersionInfo;
 begin
   try
@@ -467,167 +436,54 @@ begin
     //  Global
     ElementNode := Doc.CreateElement('Global');
 
-    ItemNode := Doc.CreateElement('Comments');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileComments));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
+    ElementNode.AppendChild(writeStrChild(doc, 'Comments', fvi.fileComments));
+    ElementNode.AppendChild(writeStrChild(doc, 'companyName', fvi.filecompanyName));
+    ElementNode.AppendChild(writeStrChild(doc, 'fileDescription', fvi.filefileDescription));
+    ElementNode.AppendChild(writeStrChild(doc, 'fileVersion', fvi.filefileVersion));
+    ElementNode.AppendChild(writeStrChild(doc, 'InternalName', fvi.fileInternalName));
+    ElementNode.AppendChild(writeStrChild(doc, 'legalCopyright', fvi.fileLegalCopyright));
+    ElementNode.AppendChild(writeStrChild(doc, 'originalFileName', fvi.fileOriginalFileName));
+    ElementNode.AppendChild(writeStrChild(doc, 'productName', fvi.fileProductName));
+    ElementNode.AppendChild(writeStrChild(doc, 'productVersion', fvi.fileProductVersion));
 
-    ItemNode := Doc.CreateElement('companyName');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileCompanyName));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('fileDescription');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileFileDescription));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('fileVersion');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileFileVersion));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('InternalName');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileInternalName));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('legalCopyright');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileLegalCopyright));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('originalFileName');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileOriginalFileName));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('productName');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileProductName));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('productVersion');
-    TextNode := Doc.CreateTextNode(WideString(fvi.fileProductVersion));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('optionsName');
-    TextNode := Doc.CreateTextNode(WideString(optionsName));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('runAtStartUp');
-    TextNode := Doc.CreateTextNode(BoolToStr(runAtStartUp));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('screenSave');
-    TextNode := Doc.CreateTextNode(BoolToStr(screenSave));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('formPosition');              //  the forms top left.
-    TDOMElement(ItemNode).SetAttribute('Top', IntToStr(formTop));
-    TDOMElement(ItemNode).SetAttribute('Left', IntToStr(formLeft));
-    TextNode := Doc.CreateTextNode('');
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('defaultTab');
-    TextNode := Doc.CreateTextNode(IntToStr(defaultTab));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('volume');
-    TextNode := Doc.CreateTextNode(WideString(volume));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
+    ElementNode.AppendChild(writeStrChild(doc, 'optionsName', optionsName));
+    ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp', runAtStartUp));
+    ElementNode.AppendChild(writeBolChild(doc, 'screenSave', screenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'formPosition', formTop, formLeft));
+    ElementNode.AppendChild(writeIntChild(doc, 'defaultTab', defaultTab));
+    ElementNode.AppendChild(writeStrChild(doc, 'volume', volume));
 
     RootNode.AppendChild(ElementNode);
 
     //  Time
     ElementNode := Doc.CreateElement('Time');
-    ItemNode := Doc.CreateElement('defaultTime');
-    TextNode := Doc.CreateTextNode(IntToStr(defaultTime));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
 
-    ItemNode := Doc.CreateElement('netTimeSeconds');
-    TextNode := Doc.CreateTextNode(BoolToStr(netTimeSeconds));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('swatchCentibeats');
-    TextNode := Doc.CreateTextNode(BoolToStr(swatchCentibeats));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('fuzzyTimeBalloon');
-    TextNode := Doc.CreateTextNode(BoolToStr(fuzzyTimeBalloon));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('displayIdleTime');
-    TextNode := Doc.CreateTextNode(BoolToStr(displayIdleTime));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('display24Hour');
-    TextNode := Doc.CreateTextNode(BoolToStr(display24Hour));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('hourPips');
-    TextNode := Doc.CreateTextNode(BoolToStr(hourPips));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('hourChimes');
-    TextNode := Doc.CreateTextNode(BoolToStr(hourChimes));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('halfChimes');
-    TextNode := Doc.CreateTextNode(BoolToStr(halfChimes));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('quarterChimes');
-    TextNode := Doc.CreateTextNode(BoolToStr(quarterChimes));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('threeQuarterChimes');
-    TextNode := Doc.CreateTextNode(BoolToStr(threeQuarterChimes));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
+    ElementNode.AppendChild(writeIntChild(doc, 'defaultTime', defaultTime));
+    ElementNode.AppendChild(writeBolChild(doc, 'netTimeSeconds', netTimeSeconds));
+    ElementNode.AppendChild(writeBolChild(doc, 'swatchCentibeats', swatchCentibeats));
+    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeBalloon', fuzzyTimeBalloon));
+    ElementNode.AppendChild(writeBolChild(doc, 'displayIdleTime', displayIdleTime));
+    ElementNode.AppendChild(writeBolChild(doc, 'display24Hour', display24Hour));
+    ElementNode.AppendChild(writeBolChild(doc, 'hourPips', hourPips));
+    ElementNode.AppendChild(writeBolChild(doc, 'hourChimes', hourChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'halfChimes', halfChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes', quarterChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'threeQuarterChimes', threeQuarterChimes));
 
     RootNode.AppendChild(ElementNode);
 
     //  Timer
     ElementNode := Doc.CreateElement('Timer');
-    ItemNode := Doc.CreateElement('timerMilliSeconds');
-    TextNode := Doc.CreateTextNode(BoolToStr(timerMilliSeconds));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
+
+    ElementNode.AppendChild(writeBolChild(doc, 'timerMilliSeconds', timerMilliSeconds));
 
     RootNode.AppendChild(ElementNode);
 
     // Analogue Klock
     ElementNode := Doc.CreateElement('AnalogueKlock');
 
-    ItemNode := Doc.CreateElement('analogueScreenSave');
-    TextNode := Doc.CreateTextNode(BoolToStr(analogueScreenSave));
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
-
-    ItemNode := Doc.CreateElement('analogueForm');              //  the forms top left.
-    TDOMElement(ItemNode).SetAttribute('Top', IntToStr(analogueFormTop));
-    TDOMElement(ItemNode).SetAttribute('Left', IntToStr(analogueFormLeft));
-    TextNode := Doc.CreateTextNode('');
-    ItemNode.AppendChild(TextNode);
-    ElementNode.AppendChild(ItemNode);
+    ElementNode.AppendChild(writeBolChild(doc, 'analogueScreenSave', analogueScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'analogueForm', analogueFormTop, analogueFormLeft));
 
     RootNode.AppendChild(ElementNode);
 
@@ -637,7 +493,8 @@ begin
     except
       on E: Exception do
       begin
-        ShowMessage('ERROR: Writing XML file.' + LineEnding + E.Message + LineEnding + 'Halting Program Execution');
+        ShowMessage('ERROR: Writing XML file.' + LineEnding + E.Message + LineEnding +
+          'Halting Program Execution');
         Halt;
       end;  //  on E:
     end;    //  try
@@ -646,11 +503,9 @@ begin
     Doc.Free;
   end;
 end;
-
-
+//
 //........................................ fileVersionInfo methods ............................................
-
-
+//
 procedure myFileVersionInfo.GetFileInfo;
   {  Retrieves the file info from the current file.
      Called from the class myFileVersionInfo.
