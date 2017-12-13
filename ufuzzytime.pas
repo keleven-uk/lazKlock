@@ -19,30 +19,30 @@ uses
 type
   FuzzyTime = class
 
-Private
-  _displayFuzzy : Integer ;
-  _fuzzyBase    : Integer ;
-  _fuzzyTypes   : TStringList;
+  private
+    _displayFuzzy: integer;
+    _fuzzyBase: integer;
+    _fuzzyTypes: TStringList;
 
-  Function fTime       : String;
-  Function netTime     : string;
-  Function unixTime    : string;
-  Function utcTime     : string;
-  Function swatchTime  : string;
-  Function julianTime  : string;
-  Function decimalTime : string;
-  Function hexTime     : string;
-  Function radixTime   : string;
-  Function percentTime: string;
-Public
-  property displayFuzzy: Integer read _displayFuzzy write _displayFuzzy;
-  property fuzzyBase: Integer read _fuzzyBase write _fuzzyBase;
-  property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
+    function fTime: string;
+    function netTime: string;
+    function unixTime: string;
+    function utcTime: string;
+    function swatchTime: string;
+    function julianTime: string;
+    function decimalTime: string;
+    function hexTime: string;
+    function radixTime: string;
+    function percentTime: string;
+  public
+    property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
+    property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
+    property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
 
-  constructor Create; overload;
-  Function getTime : string ;
-  Function getDblTime : Double;
-end;
+    constructor Create; overload;
+    function getTime: string;
+    function getDblTime: double;
+  end;
 
 
 implementation
@@ -50,42 +50,41 @@ implementation
 uses
   formklock;
 
-
-Constructor FuzzyTime.Create; overload;
+constructor FuzzyTime.Create; overload;
 begin
   fuzzyBase := 2;
 
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
-                            '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time"');
+    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time"');
 end;
 
-Function FuzzyTime.fTime : String ;
-Type
-  Hours = Array [0..12] of String;
-VAR
-  t     : TDateTime;
-  hour  : word;
-  mins  : word;
-  secs  : word;
-  mscs  : word;
-  nrms  : word;      //  nearest five minutes
-  ampm  : string;    //  am pm indicator, also used for afternoon or evening
-  sRtn  : string;    //  return string
-  dummy : string;    //  hour text
+function FuzzyTime.fTime: string;
+type
+  Hours = array [0..12] of string;
+var
+  t: TDateTime;
+  hour: word;
+  mins: word;
+  secs: word;
+  mscs: word;
+  nrms: word;      //  nearest five minutes
+  ampm: string;    //  am pm indicator, also used for afternoon or evening
+  sRtn: string;    //  return string
+  dummy: string;    //  hour text
 
-  hourTxt : Hours;
+  hourTxt: Hours;
 begin
   hourTxt[0] := 'twelve';     //  same as 12 o'clock
-  hourTxt[1]  := 'one';
-  hourTxt[2]  := 'two';
-  hourTxt[3]  := 'three';
-  hourTxt[4]  := 'four';
-  hourTxt[5]  := 'five';
-  hourTxt[6]  := 'six';
-  hourTxt[7]  := 'seven';
-  hourTxt[8]  := 'eight';
-  hourTxt[9]  := 'nine';
+  hourTxt[1] := 'one';
+  hourTxt[2] := 'two';
+  hourTxt[3] := 'three';
+  hourTxt[4] := 'four';
+  hourTxt[5] := 'five';
+  hourTxt[6] := 'six';
+  hourTxt[7] := 'seven';
+  hourTxt[8] := 'eight';
+  hourTxt[9] := 'nine';
   hourTxt[10] := 'ten';
   hourTxt[11] := 'eleven';
   hourTxt[12] := 'twelve';
@@ -104,30 +103,31 @@ begin
     nrms := nrms + 5;
 
   case nrms of
-     0 : sRtn := '';
-     5 : sRtn := 'five past ';
-    10 : sRtn := 'ten past ';
-    15 : sRtn := 'quarter past ';
-    20 : sRtn := 'twenty past ';
-    25 : sRtn := 'twenty-five past ';
-    30 : sRtn := 'half past ';
-    35 : sRtn := 'twenty-five to ';
-    40 : sRtn := 'twenty to ';
-    45 : sRtn := 'quarter to ';
-    50 : sRtn := 'ten to ';
-    55 : sRtn := 'five to ';
-    60 : sRtn := '';
+    0: sRtn := '';
+    5: sRtn := 'five past ';
+    10: sRtn := 'ten past ';
+    15: sRtn := 'quarter past ';
+    20: sRtn := 'twenty past ';
+    25: sRtn := 'twenty-five past ';
+    30: sRtn := 'half past ';
+    35: sRtn := 'twenty-five to ';
+    40: sRtn := 'twenty to ';
+    45: sRtn := 'quarter to ';
+    50: sRtn := 'ten to ';
+    55: sRtn := 'five to ';
+    60: sRtn := '';
   end;
 
-  if nrms >30 then
+  if nrms > 30 then
     hour := hour + 1;
 
   if (hour = 12) and (nrms = 0) then   //  fix for noon.
     ampm := ' noon';
 
-  if ampm = 'pm' then begin
+  if ampm = 'pm' then
+  begin
     hour := hour - 12;
-  if hour >= 5 then
+    if hour >= 5 then
       ampm := ' in the evening'
     else
       ampm := ' in the afternoon';
@@ -135,61 +135,65 @@ begin
 
   dummy := hourTxt[hour];
 
-  ftime := sRtn + dummy + ampm;
-end ;
+  Result := sRtn + dummy + ampm;
+end;
 
-Function FuzzyTime.netTime : string;
-{  New Earth Time [or NET] splits the day into 260 degrees. each degree is
+function FuzzyTime.netTime: string;
+{  New Earth Time [or NET] splits the day into 260 degrees. Each degree is
    further split into 60 minutes and further into 60 seconds.
 
    Only returns NET time in NET 15 second intervals [equals 1 normal second]  }
-VAR
-  deg : Int64;
-  min : Int64;
-  sec : Int64;
+var
+  deg: int64;
+  min: int64;
+  sec: int64;
 begin
 
-  if userOptions.netTimeSeconds then begin
+  if userOptions.netTimeSeconds then
+  begin
     deg := (MilliSecondOfTheDay(Time) div 240000);
     min := (MilliSecondOfTheDay(Time) - (deg * 240000)) div 4000;
     sec := (MilliSecondOfTheDay(Time) - (deg * 240000) - (min * 4000)) div 100;
   end
-  else begin
+  else
+  begin
     deg := (SecondOfTheDay(Time) div 240);
     min := (SecondOfTheDay(Time) - (deg * 240)) div 4;
     sec := (SecondOfTheDay(Time) - (deg * 240) - (min * 4)) * 15;
   end;
 
-  netTime := format('%d deg %d min %d sec', [deg, min, sec]);
+  Result := format('%d deg %d min %d sec', [deg, min, sec]);
 end;
 
-Function FuzzyTime.unixTime : string;
-{  return UNIX epoch time                                                      }
-VAR
-  unix : integer;
+function FuzzyTime.unixTime: string;
+  {  return UNIX epoch time                                                      }
+var
+  unix: integer;
 
 begin
   unix := DateTimeToUnix(Now);
 
-  unixTime := format('%d', [unix]);
+  Result := format('%d', [unix]);
 end;
-Function FuzzyTime.utcTime : string;
+
+function FuzzyTime.utcTime: string;
 {  returns UTC, Coordinated Universal Time - will only work in windows.
    This is then encoded into a string.                                         }
-VAR
-  utc : TSystemTime;
+var
+  utc: TSystemTime;
 begin
   GetSystemTime(utc);              //  Get current time in UTC
-  utcTime := TimeToStr(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
+  Result := TimeToStr(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
 end;
-Function FuzzyTime.swatchTime : string;
+
+function FuzzyTime.swatchTime: string;
 {  returns Swatch Time - will only work in windows.
    Swatch time is made up of 1000 beats per day i.e. 1 beat = 0.1157 seconds.
    This is then encoded into a string.                                         }
-VAR
-  utc         : TSystemTime;
-  noOfSeconds : double;
-  noOfBeats   : double;
+var
+  utc: TSystemTime;
+  noOfSeconds: double;
+  noOfBeats: double;
 begin
   GetSystemTime(utc);                    //  Get current time in UTC
   noOfSeconds := SecondOfTheDay(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
@@ -198,19 +202,19 @@ begin
 
   {****}
   if userOptions.swatchCentibeats then
-    swatchTime := format('@ %3.2f BMT', [noOfBeats])
+    Result := format('@ %3.2f BMT', [noOfBeats])
   else
-    swatchTime := format('@ %3.f BMT', [noOfBeats]);
+    Result := format('@ %3.f BMT', [noOfBeats]);
 
 end;
 
-Function FuzzyTime.julianTime : string ;
+function FuzzyTime.julianTime: string;
 {  returns Julian Date Time - will only work in windows.
    Formulae pinched from http://en.wikipedia.org/wiki/Julian_day               }
-VAR
-  a, y, m : double;
-  jt : double;
-  utc         : TSystemTime;
+var
+  a, y, m: double;
+  jt: double;
+  utc: TSystemTime;
 begin
 
   GetSystemTime(utc);                    //  Get current time in UTC
@@ -219,51 +223,51 @@ begin
   y := utc.year + 4800 - a;
   m := utc.month + (12 * a) - 3;
 
-  jt := utc.day + ((153 * m +2) / 5) + (365 * y) + (y/4) - (y/100) + (y/400) - 32045;
+  jt := utc.day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
   jt := jt + ((utc.Hour - 12) / 24) + (utc.Minute / 1440) + (utc.Second / 86400);
 
-  julianTime := format('%7.7f', [jt]);
+  Result := format('%7.7f', [jt]);
 end;
 
-Function FuzzyTime.decimalTime : string ;
+function FuzzyTime.decimalTime: string;
 {  returns the current time in decimal notation.
    The day is divided into 10 hours, each hour is then split into 100 minutes
    of 100 seconds.                                                             }
-VAR
-  noOfSeconds : LongWord;
-  noOfDecSecs : integer;
+var
+  noOfSeconds: longword;
+  noOfDecSecs: integer;
 
-  secs : integer;
-  mins : integer;
-  hrs  : integer;
+  secs: integer;
+  mins: integer;
+  hrs: integer;
 begin
   noOfSeconds := SecondOfTheDay(Time);
-  noOfDecSecs := round(noOfSeconds * ( 100000 / 84600));  // a decimal second is
-                                                          // smaller then a normal second
-  hrs  := noOfDecSecs div 10000;
+  noOfDecSecs := round(noOfSeconds * (100000 / 84600));  // a decimal second is
+  // smaller then a normal second
+  hrs := noOfDecSecs div 10000;
   mins := (noOfDecSecs - hrs * 10000) div 100;
   secs := noOfDecSecs mod 100;
 
 
-  decimalTime := format('%2.d:%2.d:%2.d',[hrs, mins, secs]);
+  Result := format('%2.d:%2.d:%2.d', [hrs, mins, secs]);
 end;
 
-Function FuzzyTime.hexTime : string ;
-VAR
-  noOfSeconds : LongWord;
-  noOfHexSecs : integer;
+function FuzzyTime.hexTime: string;
+var
+  noOfSeconds: longword;
+  noOfHexSecs: integer;
 
-  sec : integer;
-  min : integer;
-  hrs : integer;
+  sec: integer;
+  min: integer;
+  hrs: integer;
 
-  ssec : String;
-  smin : String;
-  shrs : String;
+  ssec: string;
+  smin: string;
+  shrs: string;
 begin
   noOfSeconds := SecondOfTheDay(Time);
-  noOfHexSecs := round(noOfSeconds * ( 65536 / 84600));  // a Hexadecimal second is
-                                                         // larger then a normal second
+  noOfHexSecs := round(noOfSeconds * (65536 / 84600));  // a Hexadecimal second is
+  // larger then a normal second
   hrs := noOfHexSecs div 4096;
   min := (noOfHexSecs - hrs * 4096) div 16;
   sec := noOfHexSecs mod 16;
@@ -272,20 +276,20 @@ begin
   smin := Dec2Numb(min, 2, 16);
   ssec := Dec2Numb(sec, 1, 16);
 
-  hexTime := format('%s_%s_%s', [shrs, smin, ssec])
+  Result := format('%s_%s_%s', [shrs, smin, ssec]);
 end;
 
-Function FuzzyTime.radixTime : string ;
-VAR
-  t     : TDateTime;
-  hrs  : word;
-  min  : word;
-  sec  : word;
-  msc  : word;
+function FuzzyTime.radixTime: string;
+var
+  t: TDateTime;
+  hrs: word;
+  min: word;
+  sec: word;
+  msc: word;
 
-  ssec : String;
-  smin : String;
-  shrs : String;
+  ssec: string;
+  smin: string;
+  shrs: string;
 begin
   t := Time;
   DecodeTime(t, hrs, min, sec, msc);
@@ -294,58 +298,57 @@ begin
   smin := Dec2Numb(min, 6, fuzzyBase);
   ssec := Dec2Numb(sec, 6, fuzzyBase);
 
-  radixTime := format('%s %s %s', [shrs, smin, ssec])
+  Result := format('%s %s %s', [shrs, smin, ssec]);
 end;
 
-Function FuzzyTime.percentTime: string;
+function FuzzyTime.percentTime: string;
 var
-  noOfSeconds : LongWord;
-  percentSeconds : double;
+  noOfSeconds: longword;
+  percentSeconds: double;
 begin
   noOfSeconds := SecondOfTheDay(Time);
   percentSeconds := noOfSeconds / 86400;
 
-  percentTime := format('%0.4f % PMH', [percentSeconds * 100]);
+  Result := format('%0.4f % PMH', [percentSeconds * 100]);
 end;
 
-Function FuzzyTime.getDblTime : Double ;
+function FuzzyTime.getDblTime: double;
 {  returns current time as a float, in the format hh.mm.
    a bit klunky - needs a rewrite, when i know how                             }
-VAR
-  hour  : word;
-  min   : word;
-  sec   : word;
-  msec  : word;
-  fhour : double;
-  fmin  : double;
+var
+  hour: word;
+  min: word;
+  sec: word;
+  msec: word;
+  fhour: double;
+  fmin: double;
 begin
   DecodeTime(time, hour, min, sec, msec);
 
   fhour := hour;
-  fmin  := min / 100;
+  fmin := min / 100;
 
-  getDBlTime := fhour + fmin ;
+  Result := fhour + fmin;
 end;
 
-Function FuzzyTime.getTime : String;
+function FuzzyTime.getTime: string;
 begin
 
   case displayFuzzy of
-    0 : getTime := fTime;
-    1 : getTime := TimeToStr(Time);
-    2 : getTime := netTime;
-    3 : getTime := unixTime;
-    4 : getTime := utcTime;
-    5 : getTime := swatchTime;
-    6 : getTime := julianTime;
-    7 : getTime := decimalTime;
-    8 : getTime := hexTime;
-    9 : getTime := radixTime;
-    10 : getTime := percentTime;
+    0: Result := fTime;
+    1: Result := TimeToStr(Time);
+    2: Result := netTime;
+    3: Result := unixTime;
+    4: Result := utcTime;
+    5: Result := swatchTime;
+    6: Result := julianTime;
+    7: Result := decimalTime;
+    8: Result := hexTime;
+    9: Result := radixTime;
+    10: Result := percentTime;
   end;
 
-end ;
+end;
 
 
 end.
-

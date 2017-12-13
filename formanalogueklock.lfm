@@ -13,7 +13,7 @@ object frmAnalogueKlock: TfrmAnalogueKlock
   OnShow = FormShow
   PopupMenu = popUpMenuAnalogueKlock
   Position = poScreenCenter
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object DTThemedClock1: TDTThemedClock
     Left = 0
     Height = 240

@@ -41,11 +41,11 @@ type
 
 var
   frmReminderInput: TfrmReminderInput;
-  ReminderData    : String;
-  ReminderFile    : TextFile;
-  blType          : Boolean;
-  blDate          : Boolean;
-  blName          : Boolean;
+  ReminderData: string;
+  ReminderFile: TextFile;
+  blType: boolean;
+  blDate: boolean;
+  blName: boolean;
 
 implementation
 
@@ -55,7 +55,7 @@ implementation
 
 procedure TfrmReminderInput.btnReminderExitClick(Sender: TObject);
 begin
-  close;  //  close input form.
+  Close;  //  close input form.
 end;
 
 procedure TfrmReminderInput.btnReminderSaveClick(Sender: TObject);
@@ -65,27 +65,27 @@ procedure TfrmReminderInput.btnReminderSaveClick(Sender: TObject);
 
    Validation should already of been done.
 }
-VAR
-  str : String;
+var
+  str: string;
 begin
   AssignFile(ReminderFile, ReminderData);
   Append(ReminderFile);
 
   str := format('%s, %s, %s, %s, %s',
     [edtReminderName.Text,
-     DatetoStr(DtEdtReminderDate.Date),
-     CmbBxReminderPeriod.Items.Strings[CmbBxReminderPeriod.ItemIndex],
-     CmbBxReminderType.Items.Strings[CmbBxReminderType.ItemIndex],
-     BoolToStr(ChckBxReminderActive.Checked)]);
+    DatetoStr(DtEdtReminderDate.Date),
+    CmbBxReminderPeriod.Items.Strings[CmbBxReminderPeriod.ItemIndex],
+    CmbBxReminderType.Items.Strings[CmbBxReminderType.ItemIndex],
+    BoolToStr(ChckBxReminderActive.Checked)]);
 
   try
     WriteLn(ReminderFile, str);
     CloseFile(ReminderFile);
   except
-    ShowMessage('  ERROR: Cannot write to Reminder File  :: '  + IntToStr(IOResult));
+    ShowMessage('  ERROR: Cannot write to Reminder File  :: ' + IntToStr(IOResult));
   end;
 
-  close;  //  close input form.
+  Close;  //  close input form.
 end;
 
 procedure TfrmReminderInput.CmbBxReminderTypeChange(Sender: TObject);
@@ -105,7 +105,7 @@ procedure TfrmReminderInput.DtEdtReminderDateChange(Sender: TObject);
 begin
   blDate := True;
   if blType and blDate and blName then
-    btnReminderSave.Enabled := True
+    btnReminderSave.Enabled := True;
 end;
 
 procedure TfrmReminderInput.edtReminderNameChange(Sender: TObject);
@@ -118,13 +118,13 @@ begin
 end;
 
 procedure TfrmReminderInput.FormCreate(Sender: TObject);
-VAR
-  appData : String;
+var
+  appData: string;
 begin
   appData := GetAppConfigDir(False);               //  retrieve the correct place to store .ini file
-                                                   //  calling with False - for current user only
-                                                   //  calling with True  - for all users
-//  CreateDir(appData);                            //  create said place :: Should Be Done.
+  //  calling with False - for current user only
+  //  calling with True  - for all users
+  //  CreateDir(appData);                            //  create said place :: Should Be Done.
   ReminderData := appData + 'kReminder.txt';       //  create .ini file path
 
   checkReminderFile;                             //  check for anniversary file, if not there - create
@@ -132,11 +132,11 @@ end;
 
 procedure TfrmReminderInput.FormShow(Sender: TObject);
 begin
-  edtReminderName.Text          := '';          //  Set form defaults.
-  DtEdtReminderDate.Date        := Now;
+  edtReminderName.Text := '';          //  Set form defaults.
+  DtEdtReminderDate.Date := Now;
   CmbBxReminderPeriod.ItemIndex := 0;
-  CmbBxReminderType.ItemIndex   := -1;
-  ChckBxReminderActive.Checked  := True;
+  CmbBxReminderType.ItemIndex := -1;
+  ChckBxReminderActive.Checked := True;
 
   btnReminderSave.Enabled := False;             //  always start with save button not enabled.
   edtReminderName.SetFocus;
@@ -151,11 +151,13 @@ procedure TfrmReminderInput.checkReminderFile;
 
 begin
 
-  if (FileExists(ReminderData)) then begin  // read anniversary files.
+  if (FileExists(ReminderData)) then
+  begin  // read anniversary files.
     AssignFile(ReminderFile, ReminderData);
     Append(ReminderFile);
   end
-  else begin  //  anniversary file does not exist, create it.
+  else
+  begin  //  anniversary file does not exist, create it.
     AssignFile(ReminderFile, ReminderData);
     try
       Rewrite(ReminderFile);  // creating the file
@@ -165,11 +167,10 @@ begin
       WriteLn(ReminderFile, '- name, date, period [Yearly/Monthly], type[Wedding/Birthday/Motor/One Off/Other, active[-1/0]] -');
       WriteLn(ReminderFile, '-------------------------------------------------------------------------------------------------');
     except
-      ShowMessage('  ERROR: Cannot create Reminder File  :: '  + IntToStr(IOResult));
+      ShowMessage('  ERROR: Cannot create Reminder File  :: ' + IntToStr(IOResult));
     end;
   end;
   CloseFile(ReminderFile);
 end;
 
 end.
-

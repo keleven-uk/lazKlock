@@ -18,7 +18,7 @@
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="47"/>
+      <BuildNr Value="48"/>
       <Language Value="0809"/>
       <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2017" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="41"/>
     </VersionInfo>
@@ -73,8 +73,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="512"/>
-        <CursorPos X="58" Y="525"/>
+        <TopLine Value="1484"/>
+        <CursorPos X="48" Y="1502"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -91,8 +91,8 @@
         <ComponentName Value="frmAbout"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="103"/>
-        <CursorPos Y="58"/>
+        <TopLine Value="123"/>
+        <CursorPos X="9" Y="157"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -114,9 +114,9 @@
         <ComponentName Value="frmOptions"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="46"/>
-        <CursorPos Y="68"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="109"/>
+        <CursorPos X="18" Y="132"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -145,9 +145,9 @@
         <Filename Value="ufuzzytime.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UFuzzyTime"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="292"/>
-        <CursorPos X="37" Y="308"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="317"/>
+        <CursorPos X="14" Y="347"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit9>
@@ -164,20 +164,20 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formLicense"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="35"/>
-        <CursorPos Y="38"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="33"/>
+        <CursorPos X="52" Y="67"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="uklockutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UKlockUtils"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="172"/>
-        <CursorPos X="45" Y="224"/>
-        <UsageCount Value="189"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="188"/>
+        <CursorPos X="6" Y="180"/>
+        <UsageCount Value="191"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -193,19 +193,21 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formReminderInput"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="61"/>
-        <UsageCount Value="96"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="139"/>
+        <CursorPos X="5" Y="176"/>
+        <UsageCount Value="98"/>
         <Loaded Value="True"/>
       </Unit14>
       <Unit15>
         <Filename Value="uoptions.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uOptions"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="372"/>
-        <CursorPos X="100" Y="557"/>
-        <UsageCount Value="72"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="198"/>
+        <CursorPos X="86" Y="210"/>
+        <UsageCount Value="74"/>
         <Loaded Value="True"/>
       </Unit15>
       <Unit16>
@@ -222,10 +224,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formAnalogueKlock"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="100"/>
-        <CursorPos X="56" Y="126"/>
-        <UsageCount Value="30"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="111"/>
+        <CursorPos X="38" Y="157"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit17>

@@ -11,7 +11,7 @@ object frmOptions: TfrmOptions
   OnActivate = FormActivate
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
@@ -51,7 +51,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 21
+      Top = 0
       Width = 776
       Caption = 'Global'
       Order = 0

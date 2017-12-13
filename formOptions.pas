@@ -1,8 +1,8 @@
 unit formOptions;
 
-{  This form allows the amenmendt of all user options.
-   The user options are helf in the class Options which is held in uOptions.pas.
-   The main user ptions is created withing formKlock.pas when the aplication is first started.
+{  This form allows the amendment of all user options.
+   The user options are held in the class Options which is held in uOptions.pas.
+   The main user options is created withing formKlock.pas when the application is first started.
    This unit creates a secondary options objects to hold changes made wile the form is active.
    If ok is pressed the secondary options object with the changes are copied to the main
    options and the form is closed.
@@ -16,7 +16,6 @@ interface
 uses
   Classes, SysUtils, FileUtil, ECAccordion, Forms, Controls, Dialogs, UKlockUtils,
   Graphics, StdCtrls, ButtonPanel, Buttons, ComCtrls, ExtCtrls, uOptions;
-
 
 type
 
@@ -54,11 +53,11 @@ type
 
   public
 
-  end; 
+  end;
 
 
 var
-  frmOptions : TfrmOptions;
+  frmOptions: TfrmOptions;
   userBacOptions: Options;          //  holds all the user options.
 
 implementation
@@ -77,7 +76,7 @@ procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
   userBacOptions := Options.Create('Options_temp.xml');  //  create options file as c:\Users\<user>\AppData\Local\Stub\Options_temp.xml
 
-  lblSettingsFileName.caption := userOptions.optionsName ;
+  lblSettingsFileName.Caption := userOptions.optionsName;
 end;
 
 procedure TfrmOptions.FormActivate(Sender: TObject);
@@ -97,20 +96,20 @@ begin
   CmbBxDefaultTime.Items.AddStrings(ft.fuzzyTypes);
   CmbBxDefaultTime.ItemIndex := userOptions.defaultTime;
 
-  ChckGrpGlobalOptions.checked[0] := userOptions.screenSave;
-  ChckGrpGlobalOptions.checked[1] := userOptions.runAtStartUp;
+  ChckGrpGlobalOptions.Checked[0] := userOptions.screenSave;
+  ChckGrpGlobalOptions.Checked[1] := userOptions.runAtStartUp;
 
-  ChckGrpTimeOptions.checked[0] := userOptions.netTimeSeconds;
-  ChckGrpTimeOptions.checked[1] := userOptions.swatchCentibeats;
-  ChckGrpTimeOptions.checked[2] := userOptions.fuzzyTimeBalloon;
+  ChckGrpTimeOptions.Checked[0] := userOptions.netTimeSeconds;
+  ChckGrpTimeOptions.Checked[1] := userOptions.swatchCentibeats;
+  ChckGrpTimeOptions.Checked[2] := userOptions.fuzzyTimeBalloon;
 
-  ChckGrpTimerSettings.checked[0] := userOptions.timerMilliSeconds;
+  ChckGrpTimerSettings.Checked[0] := userOptions.timerMilliSeconds;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
 {  reset user settings to system default
 
-   NOTE :: maybe shoud have a confirm dialog.
+   NOTE :: maybe should have a confirm dialog.
 }
 begin
   userOptions.writeDefaultOptions;
@@ -126,19 +125,18 @@ end;
 
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
 begin
-   userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
+  userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
 end;
 
-procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject;
-  Index: integer);
-{  Sets the use Clobal options according to the state of the radio group.
+procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
+{  Sets the use Global options according to the state of the radio group.
 
    index 0 - Save Screen Position
    index 1 - Run Kock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
 }
 begin
-  userBacOptions.screenSave := ChckGrpGlobalOptions.checked[0];
-  userBacOptions.runAtStartUp := ChckGrpGlobalOptions.checked[1];
+  userBacOptions.screenSave := ChckGrpGlobalOptions.Checked[0];
+  userBacOptions.runAtStartUp := ChckGrpGlobalOptions.Checked[1];
 end;
 
 procedure TfrmOptions.ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
@@ -149,9 +147,9 @@ procedure TfrmOptions.ChckGrpTimeOptionsItemClick(Sender: TObject; Index: intege
          2 - Display Time in balloon
 }
 begin
-  userBacOptions.netTimeSeconds := ChckGrpTimeOptions.checked[0];
-  userBacOptions.swatchCentibeats := ChckGrpTimeOptions.checked[1];
-  userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.checked[2];
+  userBacOptions.netTimeSeconds := ChckGrpTimeOptions.Checked[0];
+  userBacOptions.swatchCentibeats := ChckGrpTimeOptions.Checked[1];
+  userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.Checked[2];
 end;
 
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
@@ -160,7 +158,7 @@ procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: inte
    index 0 - Timer To Show MilliSeconds
 }
 begin
-  userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.checked[0];
+  userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
 end;
 
 {....................................... Pannel Buttons ......................................................}
@@ -177,11 +175,13 @@ procedure TfrmOptions.OKButtonClick(Sender: TObject);
     Write back the main user options.
 }
 begin
-  userOptions.assign(userBacOptions);                     //  Copy amended options to main user options.
+  userOptions.Assign(userBacOptions);                     //  Copy amended options to main user options.
   UserOptions.writeCurrentOptions;                        //  write back amended options back to disk.
 
   applyRunAtStartUp(userOptions.runAtStartUp);
 end;
 
 end.
+
+
 

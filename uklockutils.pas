@@ -11,11 +11,11 @@ uses
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
     message: string;     //  the formatted message for the reminder.
-    orDate : TDateTime;  //  date of original event.
-    rmDate : TDateTime;  //  date of next reminder due.
-    period : Integer;    //  period of reminder in months.
-    toGo   : Double ;    //  days to go for reminder.
-    active : boolean;
+    orDate: TDateTime;  //  date of original event.
+    rmDate: TDateTime;  //  date of next reminder due.
+    period: integer;    //  period of reminder in months.
+    toGo: double;    //  days to go for reminder.
+    active: boolean;
   end;
 
 function FontToString(f: TFont): string;
@@ -26,7 +26,7 @@ procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string);
 procedure doPlaySound(sound: string);
-procedure applyRunAtStartUp(flag: Boolean);
+procedure applyRunAtStartUp(flag: boolean);
 
 implementation
 
@@ -70,12 +70,12 @@ begin
     rtnStr := rtnStr + '.';
 
 
-  FontToString := rtnStr;
+  Result := rtnStr;
 end;
 
 function StringToFont(s: string): TFont;
 {  Produces a font from a given string representation [produced by FonttoString.
-   The string is read a bit at at time [upto the next :] and this is converted
+   The string is read a bit at at time [up to the next :] and this is converted
    to the given font attribute.
 
    NB :: pos starts from position 1, where copy start at position 1.
@@ -151,18 +151,18 @@ begin
   fnt.Quality := TFontQuality(qlty);       //  quality of font
   fnt.Style := fstyles;
 
-  StringToFont := fnt;
+  Result := fnt;
 end;
 
 
 function getTextFont(f1: TFont; f2: TFont): TFont;
-{  takes two fonts, global[f2] and local[f1] and returns one according the the rule.
+{  takes two fonts, global[f2] and local[f1] and returns one according the rule.
    If the local is default return the local, else return the global.           }
 begin
   if f1.IsDefault then
-    getTextFont := f2  //  use local colour
+    Result := f2  //  use local colour
   else
-    getTextFont := f1;  //  use global colour
+    Result := f1;  //  use global colour
 end;
 
 procedure doSystemEvent(event: integer);
@@ -176,8 +176,8 @@ procedure doSystemEvent(event: integer);
 
     It seems that things changed a little in windows 10, a little.
     The parameters now start with a / and not a -.
-    Aslo, passing parameters with contain spaces seem to br problamatic for lazarus,
-    i gave up.  Needs more work to make compatible with older versions of windows,
+    Also, passing parameters with contain spaces seem to be problamatic for Lazarus,
+    I gave up.  Needs more work to make compatible with older versions of windows,
     to include a message and make cross platform.
 }
 var
@@ -270,33 +270,33 @@ function parseReminder(a: string): reminderData;
        4 = active[-1/0]
 }
 var
-  rmndrData : reminderData;
+  rmndrData: reminderData;
 
-  name  : string;
-  date  : string;
+  Name: string;
+  date: string;
   period: string;
-  Rtype : string;
-  active: String;
+  Rtype: string;
+  active: string;
 
-  p : integer;
-  y : integer;
+  p: integer;
+  y: integer;
 begin
   p := Pos(',', a);                                  //  name of reminder
-  name := copy(a, 0, p - 1);
+  Name := copy(a, 0, p - 1);
   Delete(a, 1, p);
 
   p := Pos(',', a);                                  //  date of reminder
   date := copy(a, 0, p - 1);
   Delete(a, 1, p);
-  rmndrData.orDate  := StrToDate(date);
+  rmndrData.orDate := StrToDate(date);
 
   p := Pos(',', a);                                  //  period of reminder
   period := copy(a, 0, p - 1);
   Delete(a, 1, p);
   if period = ' Yearly' then
-    rmndrData.period:= 12
+    rmndrData.period := 12
   else
-    rmndrData.period:= 1;
+    rmndrData.period := 1;
 
   p := Pos(',', a);                                  //  type of reminder
   Rtype := copy(a, 0, p - 1);
@@ -304,7 +304,7 @@ begin
 
   active := a;                                      //  is reminder active
   Delete(a, 1, p);
-  rmndrData.active  := StrToBool(active);
+  rmndrData.active := StrToBool(active);
 
 
   y := YearOf(Now);                                  //  check if reminder passed
@@ -312,34 +312,35 @@ begin
     y += 1;                                          //  then increment year.
 
   if (MonthOf(rmndrData.orDate) = MonthOf(Now)) and  //  if this month, check the
-     (Dayof(rmndrData.orDate) < Dayof(Now)) then     //  if the day has passed
-       y += 1;
+    (Dayof(rmndrData.orDate) < Dayof(Now)) then     //  if the day has passed
+    y += 1;
 
-  rmndrData.rmDate  := EncodeDateTime(y,
-                           MonthOf(rmndrData.orDate),
-                           DayOf(rmndrData.orDate),
-                           0, 0, 0, 0);
+  rmndrData.rmDate := EncodeDateTime(y,
+    MonthOf(rmndrData.orDate),
+    DayOf(rmndrData.orDate),
+    0, 0, 0, 0);
 
 
   rmndrData.toGo := DaySpan(Now, rmndrData.rmDate);
 
   case Rtype of
-    ' Wedding'  : rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
-    ' Birthday' : rmndrData.message := format('%s has a Birthday, in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
-    ' Motor'    : rmndrData.message := format('%s , in %3.f days [%s]', [name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]) ;
+    ' Wedding': rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
+    ' Birthday': rmndrData.message := format('%s has a Birthday, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
+    ' Motor': rmndrData.message := format('%s , in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
   end;
 
   parseReminder := rmndrData;
 end;
-procedure applyRunAtStartUp(flag: Boolean);
 
-CONST
+procedure applyRunAtStartUp(flag: boolean);
+
+const
   rootPath = HKEY_CURRENT_USER;
   regpath = '\Software\Microsoft\Windows\CurrentVersion\run';
-VAR
+var
   registry: TRegistry;
-  AppPath: String;
-  AppName: String;
+  AppPath: string;
+  AppName: string;
 
   openResult: boolean;
 begin
@@ -351,19 +352,19 @@ begin
   AppName := ExtractFileName(AppPath);
 
   try
-    openResult := registry.OpenKey(regpath, true);
+    openResult := registry.OpenKey(regpath, True);
 
     if not openResult then
-      showMessage('Error in opening key')
+      ShowMessage('Error in opening key')
     else
-      begin
-        if flag then
-         registry.WriteString(AppNAme, AppPath)
-        else
-          registry.DeleteValue(AppNAme)
-      end;
+    begin
+      if flag then
+        registry.WriteString(AppNAme, AppPath)
+      else
+        registry.DeleteValue(AppNAme);
+    end;
 
-    registry.CloseKey ;
+    registry.CloseKey;
   finally
     registry.Free;
   end;  //  try
