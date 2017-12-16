@@ -47,6 +47,8 @@ end;
 
 procedure TfrmLicense.FormCreate(Sender: TObject);
 begin
+  kLog.writeLog('FormLicense Create');
+
   mmoLicence.Append('Klock.');
   mmoLicence.Append('');
   mmoLicence.Append('');

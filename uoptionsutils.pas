@@ -26,7 +26,6 @@ Function readChild(PassNode: TDOMNode;  name: string): string;
 var
     childNode: TDOMNode;
 begin
-  //klog.Debug('Reading Child : ' + name);
   childNode := PassNode.FindNode(name);
   result := childNode.TextContent;
 end;
@@ -37,10 +36,8 @@ var
     childNode: TDOMNode;
     s: string;
 begin
-  //klog.Debug(format('reading child %s attribute %s', [name, attribute]));
   childNode := PassNode.FindNode(name);
   s := TDOMElement(childNode).GetAttribute(attribute);
-  //klog.Debug('result = ' + s + ':');
   result := s;
 end;
 

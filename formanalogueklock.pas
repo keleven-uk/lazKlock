@@ -85,6 +85,8 @@ procedure TfrmAnalogueKlock.FormCreate(Sender: TObject);
 var
   transparency: longint;
 begin
+  kLog.writeLog('FormAnalogue Klock Create');
+
   {the color were going to make transparent the red that the form background is set to}
   transparency := clBlack;
 
@@ -114,6 +116,7 @@ end;
 procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
 {  When starting the analogue klock, start the tray icon and hide the main klock.  }
 begin
+  kLog.writeLog('FormAnalogue Klock Show');
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
 

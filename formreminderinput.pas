@@ -49,6 +49,9 @@ var
 
 implementation
 
+uses
+  formklock;
+
 {$R *.lfm}
 
 { TfrmReminderInput }
@@ -121,6 +124,8 @@ procedure TfrmReminderInput.FormCreate(Sender: TObject);
 var
   appData: string;
 begin
+  kLog.writeLog('FormReminderInput Create');
+
   appData := GetAppConfigDir(False);               //  retrieve the correct place to store .ini file
   //  calling with False - for current user only
   //  calling with True  - for all users
@@ -132,6 +137,8 @@ end;
 
 procedure TfrmReminderInput.FormShow(Sender: TObject);
 begin
+  kLog.writeLog('FormReminderInput Show');
+
   edtReminderName.Text := '';          //  Set form defaults.
   DtEdtReminderDate.Date := Now;
   CmbBxReminderPeriod.ItemIndex := 0;

@@ -1,5 +1,10 @@
 unit uFonts;
+{  A class to add and remove system fonts.
+   The fonts to be added are held in the list Fonts.
 
+   See - https://forum.lazarus.freepascal.org/index.php?topic=21032.0
+         mainly post by RAW.
+}
 {$mode objfpc}{$H+}
 
 interface
@@ -16,60 +21,105 @@ type
     private
 
     public
-      procedure addFonts(klockHandle: QWord);
-      procedure removeFonts(klockHandle: QWord);
+      procedure addFonts;
+      procedure removeFonts;
   end;
+
+  CONST
+  MM_MAX_NUMAXES =  16;
+  FR_PRIVATE     = $10;
+  FR_NOT_ENUM    = $20;
+
+ TYPE
+  PDesignVector = ^TDesignVector;
+  TDesignVector = Packed Record
+   dvReserved: DWORD;
+   dvNumAxes : DWORD;
+   dvValues  : Array[0..MM_MAX_NUMAXES-1] Of LongInt;
+  End;
+
+  Function AddFontResourceEx    (Dir : PAnsiChar;
+                                Flag: Cardinal;
+                                PDV : PDesignVector): Int64; StdCall;
+                                External 'GDI32.dll' Name 'AddFontResourceExA';
+
+  Function RemoveFontResourceEx (Dir : PAnsiChar;
+                                Flag: Cardinal;
+                                PDV : PDesignVector): Int64; StdCall;
+                                External 'GDI32.dll' Name 'RemoveFontResourceExA';
 
   Function AddFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External GDI32 Name 'AddFontResourceExA';
   Function RemoveFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External GDI32 Name 'RemoveFontResourceExA';
 
 implementation
 
-procedure fontStore.addFonts(klockHandle: QWord);
+uses
+  formklock;
+
+procedure fontStore.addFonts;
+{  Adds all the fonts in the list Fonts.
+   Checks that the font file exists.
+}
 Var
  strAppPath: String;
  fontName: String;
  f: integer;
 begin
-  strAppPath:= ExtractFilePath(Application.ExeName) + '/fonts/';
+    try
+    strAppPath:= ExtractFilePath(Application.ExeName) + 'fonts\';
 
-  for f := ord(low(Fonts)) to ord(high(Fonts)) do
-  begin
-    fontName := GetEnumName(TypeInfo(Fonts), f) + '.ttf';
+    for f := ord(low(Fonts)) to ord(high(Fonts)) do
+    begin
+      fontName := strAppPath + GetEnumName(TypeInfo(Fonts), f) + '.ttf';
 
-    If FileExists(strAppPath+fontName) Then
-      If AddFont(PAnsiChar(strAppPath+fontName), $10) Then
-        SendMessage(klockHandle, WM_FONTCHANGE, 0, 0)
-       else
-        ShowMessage('Error :: Loading Font');
-  end;  // for
+      If FileExists(fontName) Then
+        If AddFontResourceEx(PAnsiChar(fontName), FR_Private, Nil) <> 0 then
+          begin
+            SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+            kLog.writeLog('Adding ' + fontName);
+          end;
+
+    end;  // for
+  except
+    on E: Exception do
+    begin
+      kLog.writeLog('ERROR: Adding Fonts.' + LineEnding + E.Message);
+    end;  //  on E:
+  end;    //  try
+
 end;
 
-procedure fontStore.removeFonts(klockHandle: QWord);
+procedure fontStore.removeFonts;
+{  Removes all the fonts in the list Fonts.
+   Checks that the font file exists.
+}
 Var
  strAppPath: String;
  fontName: String;
  f: integer;
 begin
   try
-    strAppPath:= ExtractFilePath(Application.ExeName) + '/fonts/';
+    strAppPath:= ExtractFilePath(Application.ExeName) + 'fonts\';
 
     for f := ord(low(Fonts)) to ord(high(Fonts)) do
     begin
-      fontName := GetEnumName(TypeInfo(Fonts), f) + '.ttf';
+      fontName := strAppPath + GetEnumName(TypeInfo(Fonts), f) + '.ttf';
 
-      If FileExists(strAppPath+fontName) Then
-       If RemoveFont(PAnsiChar(strAppPath+fontName), $10) Then
-        SendMessage(klockHandle, WM_FONTCHANGE, 0, 0)
-      else
-       ShowMessage('Error :: Removing Font');
+      If FileExists(fontName) Then
+       If RemoveFontResourceEx(PAnsiChar(fontName), FR_Private, Nil) <> 0 then
+        begin
+          SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+          kLog.writeLog('Removing ' + fontName);
+        end;
+
     end;  // for
   except
     on E: Exception do
     begin
-      ShowMessage('ERROR: removing Fonts.' + LineEnding + E.Message);
+      kLog.writeLog('ERROR: removing Fonts.' + LineEnding + E.Message);
     end;  //  on E:
   end;    //  try
+
 end;
 
 end.

@@ -8,7 +8,7 @@ object frmReminderInput: TfrmReminderInput
   ClientWidth = 420
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 8
     Height = 42

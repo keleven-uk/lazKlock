@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
-  MMSystem, dateutils, registry, typinfo;
+  MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -34,6 +34,10 @@ procedure doPlaySound(sound: string; volume: string);
 procedure SendMCICommand(command: string);
 procedure applyRunAtStartUp(flag: boolean);
 procedure playChime(mode: String);
+procedure logHeader;
+procedure logFooter;
+function getUpTime(system: string): string;
+function getWindowsVersion: string;
 
 implementation
 
@@ -436,6 +440,97 @@ begin
   end;
 
   doPlaySound(arg, userOptions.volume);
+end;
+
+procedure logHeader;
+{  Write header infomation to log file.    }
+begin
+  kLog.writeLog('............................................................');
+  kLog.writeLog(userOptions.InternalName);
+  kLog.writeLog('User : ' + SysUtils.GetEnvironmentVariable('USERNAME'));  // not the one in windows.
+  kLog.writeLog('PC   : ' + SysUtils.GetEnvironmentVariable('COMPUTERNAME'));
+  kLog.writeLog('OS   : ' + getWindowsVersion);
+  kLog.writeLog(format('lazKlock Build   :: %s', [userOptions.productVersion]));
+  kLog.writeLog(format('lazKlock Version :: %s', [userOptions.fileVersion]));
+  {$ifdef WIN32}
+    kLog.writeLog(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
+  {$else}
+    kLog.writeLog(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
+  {$endif}
+  kLog.writeLog('............................................................');
+end;
+
+procedure logFooter;
+{  Write fotter to log file.    }
+begin
+  kLog.writeLog('............................................................');
+  kLog.writeLog('Klock has been running for ' + getUpTime('Application'));
+  kLog.writeLog('Klock Ending [normaly]');
+  kLog.writeLog('............................................................');
+end;
+
+function getUpTime(system: string): string;
+{  Determines the up time of either System or Application - depending on argument S or A.
+   Used in formAbout & uKlockUtils.
+
+   appStartTime := GetTickCount64; needs to be run when the app starts.
+
+   NOTE :: Windows Only - use LclIntf.GetTickCount for cross platform.
+
+   TODO : Need to check for roll over and account for it.
+}
+var
+  noTicks: int64;
+  noSeconds: integer;
+  noOfDays: integer;
+  noOfHours: integer;
+  noOfMinutes: integer;
+  noOfSeconds: integer;
+begin
+  system := AnsiLowerCase(system);
+
+  if AnsiStartsStr('s', system) then
+    noTicks := GetTickCount64                     //  How long has the system been running.
+  else
+    noTicks := GetTickCount64 - appStartTime;     //  How long has the application been running.
+
+  noSeconds := noTicks div 1000;                  //  1000 ticks per second.
+
+  noOfDays := noSeconds div 86400;
+  noSeconds := noSeconds - (noOfDays * 86400);
+  noOfHours := noSeconds div 3600;
+  noSeconds := noSeconds - (noOfHours * 3600);
+  noOfMinutes := noSeconds div 60;
+  noSeconds := noSeconds - (noOfMinutes * 60);
+  NoOfSeconds := noSeconds;
+
+  Result := format('%d days : %d hours : %d mins : %d secs', [noOfDays, noOfHours, noOfMinutes, noOfSeconds]);
+end;
+
+function getWindowsVersion: string;
+{  Gets the version of the windows OS.
+   This is achieved by caputuring the output from the DOS command ver.
+   The ver command is run  into a file and then the file is read back.
+}
+VAR
+  AProcess: TProcess;
+  winVer: TStringList;
+  tmpFileName: string;
+begin
+  tmpFileName := GetTempDir(true) + 'ver.txt';
+
+  AProcess := TProcess.Create(nil);
+  AProcess.Options := [poWaitOnExit, poUsePipes];
+  AProcess.Executable := 'CMD ';
+  AProcess.Parameters.Add('/C ver >' + tmpFileName);
+  AProcess.Execute;
+
+  winVer := TStringList.Create;
+  winVer.LoadFromFile(tmpFileName);
+
+  AProcess.Free;
+
+  Result := winVer[1];
 end;
 
 end.

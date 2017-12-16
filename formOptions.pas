@@ -14,8 +14,9 @@ unit formOptions;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ECAccordion, Forms, Controls, Dialogs, UKlockUtils,
-  Graphics, StdCtrls, ButtonPanel, Buttons, ComCtrls, ExtCtrls, uOptions;
+  Classes, SysUtils, FileUtil, ECAccordion, Forms, Controls, Dialogs,
+  UKlockUtils, Graphics, StdCtrls, ButtonPanel, Buttons, ComCtrls, ExtCtrls,
+  Spin, ColorBox, uOptions;
 
 type
 
@@ -23,12 +24,15 @@ type
 
   TfrmOptions = class(TForm)
     accItemGlobal: TAccordionItem;
+    accItemLogging: TAccordionItem;
     accItemTime: TAccordionItem;
     accItemOtherKlocks: TAccordionItem;
     accOtherStuff: TAccordionItem;
     btrOptionsReset: TButton;
     btnGlobalVolumeTest: TButton;
     ButtonPanel1: TButtonPanel;
+    ChckBxCullLogsFiles: TCheckBox;
+    ChckBxLogging: TCheckBox;
     ChckGrpTimeOptions: TCheckGroup;
     ChckGrpTimerSettings: TCheckGroup;
     ChckGrpGlobalOptions: TCheckGroup;
@@ -40,13 +44,19 @@ type
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
     Label1: TLabel;
+    lblCullFileDays: TLabel;
     lblSettingsFileName: TLabel;
     Label3: TLabel;
+    LstBxLogFiles: TListBox;
     Settings: TGroupBox;
+    SpnEdtCullDays: TSpinEdit;
     TrckBrGlobalVolume: TTrackBar;
     procedure btnGlobalVolumeTestClick(Sender: TObject);
     procedure btrOptionsResetClick(Sender: TObject);
+    procedure ChckBxCullLogsFilesChange(Sender: TObject);
+    procedure ChckBxLoggingChange(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
@@ -84,7 +94,11 @@ uses
 procedure TfrmOptions.FormCreate(Sender: TObject);
 {  Run things when the form is first created.  }
 begin
-    //  create options file as c:\Users\<user>\AppData\Local\Stub\Options_temp.xml
+  kLog.writeLog('FormOptions Create');
+
+  //  Create tmp options file as c:\Users\<user>\AppData\Local\<app Name>\OptionsXX_tmp.xml
+  //  This is used to store local amendments and only copied to the main options files
+  //  if the OK button is clicked.
   {$ifdef WIN32}
     userBacOptions := Options.Create('Options32_temp.xml');
   {$else}
@@ -101,7 +115,10 @@ procedure TfrmOptions.FormActivate(Sender: TObject);
    See ChckGrpTimerSettingsItemClick for what the check Timer group index means.
    See ChckGrpGlobalOptionsItemClick for what the check Global group index means.
 }
+var
+  logFiles:TStringlist;
 begin
+  kLog.writeLog('FormOptions Activate');
   userBacOptions.Assign(userOptions);                       //  make a copy of the current user options
   // userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
 
@@ -136,6 +153,18 @@ begin
   ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
+
+  ChckBxLogging.Checked := userBacOptions.logging;
+  SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
+  lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
+
+  logFiles := TstringList.Create;             //  Scan for log files and load listbox.
+    try
+    kLog.readLogFile(logFiles);
+    LstBxLogFiles.Items.Assign(logFiles) ;
+  finally
+      freeandnil(logFiles);
+  end;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -249,7 +278,27 @@ procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: inte
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
 end;
+//
+//....................................................................LOGGING ...................................
+//
+procedure TfrmOptions.ChckBxLoggingChange(Sender: TObject);
+{  Switch on/off logging.    }
+begin
+  userBacOptions.logging := ChckBxLogging.Checked;
+end;
 
+procedure TfrmOptions.ChckBxCullLogsFilesChange(Sender: TObject);
+{  Only show cull days if log culling is enabled.    }
+begin
+  SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
+  lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
+
+  if ChckBxCullLogsFiles.Checked then
+  begin
+    userBacOptions.cullLogs := ChckBxCullLogsFiles.Checked;
+    userBacOptions.CullLogsDays := SpnEdtCullDays.Value;
+  end;
+end;
 {....................................... Pannel Buttons ......................................................}
 
 procedure TfrmOptions.CancelButtonClick(Sender: TObject);

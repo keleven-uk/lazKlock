@@ -42,6 +42,8 @@ uses
 
 procedure TfrmHelp.FormCreate(Sender: TObject);
 begin
+  kLog.writeLog('FormHelp Create');
+
   mmoHelp.Append('Klock.');
   mmoHelp.Append('');
   mmoHelp.Append('');

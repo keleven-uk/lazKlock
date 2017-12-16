@@ -18,6 +18,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 }
 
+{ TODO : Look at main timer interval. }
+{ TODO : Check if options file has new options. }
+{ TODO : Check out Ballon Time. }
+{ TODO : Check out Reminders. }
+{ TODO : Look at up time in formAbout. }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -26,7 +32,8 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock;
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
+  ULogging;
 
 type
 
@@ -209,6 +216,7 @@ var
   userOptions: Options;         //  holds all the user options.
   ft: FuzzyTime;                //  the object to give the different times.
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
+  kLog: Logger;                 //  used to log erors, debug statements etc.
   appStartTime: int64;          //  used by formAbout to determine how long the app has been running.
   countdownTicks: integer;
   timerStart: TDateTime;
@@ -223,13 +231,14 @@ implementation
 {$R *.lfm}
 
 { TfrmMain }
-
+//
 // *********************************************************** Global **********
+//
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 begin
-  mainTimer.Enabled := False;  //  disable main timer until all options and fuzzt time are set up.
+  mainTimer.Enabled := False;  //  disable main timer until all options and fuzzy time are set up.
 
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
   EdtEventSound.Text := 'alarm-fatal.mp3';
@@ -246,8 +255,12 @@ begin
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
   ft := FuzzyTime.Create;
   fs := fontStore.Create;
+  kLog := Logger.Create(Application.MainFormHandle);
 
-  fs.addFonts(Handle);
+  logHeader;
+  kLog.cullLogFile;
+
+  fs.addFonts;                     //  Add custom fonts.
 
   with mainIdleTimer do            //  set up the idle timer.
   begin
@@ -261,6 +274,7 @@ end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
+  kLog.writeLog('FormKlock Showing');
   SetDefaults;
   mainTimer.Enabled := True;        //  Now safe to enable main timer.
 end;
@@ -269,6 +283,7 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
 begin
+  kLog.writeLog('FormKlock Closing');
   if userOptions.screenSave then
   begin
     userOptions.formTop := frmMain.Top;
@@ -276,10 +291,13 @@ begin
     userOptions.writeCurrentOptions;
   end;
 
-  fs.removeFonts(Handle);
+  fs.removeFonts;                   //  Remove custom fonts.
 
   FreeAndNil(fs);                   //  Release the font store object.
   FreeAndNil(ft);                   //  Release the fuzzy time object.
+
+  logFooter;
+  FreeAndNil(kLog);                 //  Release the logger object.
 
   CloseAction := caFree;
 end;
@@ -289,6 +307,8 @@ procedure TfrmMain.SetDefaults;
    Set things that can be changed in the options screen, to the values in the options screen.
 }
 begin
+  kLog.writeLog('FormKlock SetDefaults');
+
   PageControl1.TabIndex := userOptions.defaultTab;
   CmbBxTime.Items := ft.fuzzyTypes;
   CmbBxTime.ItemIndex := userOptions.defaultTime;
@@ -309,6 +329,7 @@ begin
   else
     mainTimer.Interval := 1000;
 
+  klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
 end;
 
 procedure TfrmMain.DisplayMessage;
@@ -355,8 +376,6 @@ begin
   end;  //  with PopupNotifier1 do
 
 end;
-
-
 
 procedure TfrmMain.PageControl1Change(Sender: TObject);
 {   called when tabs is changed on the main tab control.
@@ -490,24 +509,24 @@ begin
     'Bar Code Time':
     begin
       lblfuzzy.Font.Name := 'Bar Code 39';
-      lblfuzzy.Caption := TimeToStr(KTime);
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
     end;
     'Nancy Blackett Time':
     begin
       lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
-      lblfuzzy.Caption := TimeToStr(KTime);
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
     end;
   'Semaphore Time':
   begin
     lblfuzzy.Font.Name := 'Semaphore';
-    lblfuzzy.Caption := TimeToStr(KTime);
+    lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
   end;
   'Braille Time':
   begin
     lblfuzzy.Font.Name := 'BrailleLatin';
-    lblfuzzy.Caption := TimeToStr(KTime);
+    lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
   end;
-    else
+    else   //  no font substitution, use default font.
       begin
         lblfuzzy.Font.Name := 'default';
         lblfuzzy.Caption := ft.getTime;
@@ -568,19 +587,18 @@ procedure TfrmMain.mainIdleTimerStopTimer(Sender: TObject);
 begin
   tick := 0;
 end;
-
-
+//
 // *********************************************************** Fuzzy Time ******
+//
 procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
 {  called to set the different format of time.
    If index = 9 then radix time is chosen, so display choice of bases.
 }
 begin
-
   ft.displayFuzzy := CmbBxTime.ItemIndex;
   lblfuzzy.Caption := ft.getTime;
 
-  if CmbBxTime.ItemIndex = 9 then
+  if CmbBxTime.ItemIndex = 9 then   //  hard coded for radix time.
   begin
     SpnEdtTimeBase.Visible := True;
     lblRadix.Visible := True;
@@ -598,9 +616,9 @@ procedure TfrmMain.SpnEdtTimeBaseChange(Sender: TObject);
 begin
   ft.FuzzyBase := SpnEdtTimeBase.Value;
 end;
-
-
+//
 // *********************************************************** Countdown *******
+//
 procedure TfrmMain.CmbBxCountdownActionChange(Sender: TObject);
 {  Set the desired action, for when the countdown is completed.
 }
@@ -703,7 +721,6 @@ procedure TfrmMain.btnCountdownLoadSoundClick(Sender: TObject);
 {  if the text box is clicked, allow the sound file to be changed.
 }
 begin
-
   with TOpenDialog.Create(Self) do
   begin
     Filter := '*.wav; *.mp3';
@@ -722,7 +739,6 @@ procedure TfrmMain.btnCountdownLoadCommandClick(Sender: TObject);
 {  if the command box is clicked, allow the command file to be loaded.
 }
 begin
-
   with TOpenDialog.Create(Self) do
   begin
     Filter := '*.*';
@@ -757,7 +773,7 @@ procedure TfrmMain.SpnEdtCountdownChange(Sender: TObject);
 }
 var
   val: integer;                 //  used to hold value from spin edit
-  //  can't pass this to the function directly
+                                //  can't pass this to the function directly
 begin
   val := SpnEdtCountdown.Value;
 
@@ -780,8 +796,7 @@ begin
 end;
 
 procedure TfrmMain.StopCountDown(Sender: TObject);
-{    Called when the timer has finished.
-}
+{    Called when the timer has finished.    }
 begin
   LblCountdownTime.Caption := '00:00';
 
@@ -838,14 +853,12 @@ begin
 
 end;
 
-
 procedure TfrmMain.btnCountdownShutdownAbortClick(Sender: TObject);
 {  button only visible during delay prior to a system shutdown/reboot.
    Allows user to abort action.
    Also tidies up application = a bit messy I'm afraid.
 }
 begin
-
   abortSystemEvent;
 
   PopupNotifier1.Visible := False;
@@ -885,15 +898,13 @@ end;
 
 
 procedure TfrmMain.btnSoundTestClick(Sender: TObject);
-{  Called to test the sound file.
-}
+{  Called to test the sound file.    }
 begin
   doPlaySound(EdtCountdownSound.Text, userOptions.volume);
 end;
 
 procedure TfrmMain.ChckBxCountdownSoundChange(Sender: TObject);
-{  Called to enable/disable the sound - from a check box.
-}
+{  Called to enable/disable the sound - from a check box.    }
 begin
   if chckBxCountdownSound.Checked then
   begin
@@ -912,8 +923,7 @@ begin
 end;
 
 procedure TfrmMain.chckBxCountdownReminderChange(Sender: TObject);
-{  enable or disable reminders.
-}
+{  enable or disable reminders.    }
 begin
   if chckBxCountdownReminder.Checked then
   begin
@@ -928,8 +938,7 @@ begin
 end;
 
 procedure TfrmMain.chckBxCountdownEventChange(Sender: TObject);
-{  enable or disable system events.
-}
+{  enable or disable system events.    }
 begin
   if chckBxCountdownEvent.Checked then
   begin
@@ -945,8 +954,7 @@ begin
 end;
 
 procedure TfrmMain.chckBxCountdownCommandChange(Sender: TObject);
-{  enable or disable commands.
-}
+{  enable or disable commands.    }
 begin
   if chckBxCountdownCommand.Checked then
   begin
@@ -961,11 +969,11 @@ begin
     EdtCountdownCommand.Enabled := False;
   end;
 end;
-
+//
 // *********************************************************** Timer ***********
+//
 procedure TfrmMain.timerTimerTimer(Sender: TObject);
-{  is time is enables, this will be the timer tick.
-}
+{  is time is enables, this will be the timer tick.    }
 var
   hh, mm, ss, ms: word;
   timerInterval: TDateTime;
@@ -1024,8 +1032,7 @@ begin
 end;
 
 procedure TfrmMain.btnTimerStopClick(Sender: TObject);
-{  Stop the timer.
-}
+{  Stop the timer.    }
 begin
   btnTimerStop.Enabled := False;
   timerTimer.Enabled := False;
@@ -1043,8 +1050,7 @@ begin
 end;
 
 procedure TfrmMain.btnTimerClearClick(Sender: TObject);
-{  Reset [clear] the timer.
-}
+{  Reset [clear] the timer.    }
 begin
   if userOptions.timerMilliSeconds then
   begin
@@ -1066,29 +1072,26 @@ end;
 // ************************************************************* Event ********
 //
 procedure TfrmMain.SpnEdtHourChange(Sender: TObject);
-{  will one day be used to validate the hours set.
-}
+{  will one day be used to validate the hours set.    }
 begin
   EventValid;
 end;
 
 procedure TfrmMain.SpnEdtMinsChange(Sender: TObject);
-{  will one day be used to validate the minute set.
-}
+{  will one day be used to validate the minute set.    }
 begin
   EventValid;
 end;
 
 procedure TfrmMain.DtEdtEventChange(Sender: TObject);
-{  will one day be used to validate the date set.
-}
+{  will one day be used to validate the date set.    }
 begin
   EventValid;
 end;
 
 procedure TfrmMain.EventValid;
-{  only allow the reminder set button to be enabled, if the reminder
-   date is in the future.
+{  only allow the reminder set button to be enabled,
+   if the reminder date is in the future.
 }
 var
   EvntDt: TDateTime;
@@ -1104,8 +1107,7 @@ begin
 end;
 
 procedure TfrmMain.btnEventSetClick(Sender: TObject);
-{  Set the reminder.
-}
+{  Set the reminder.    }
 begin
   lblEvent.Caption := format('Event set for %.2d:%.2d - %s', [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
   stsBrInfo.Panels.Items[4].Text := format('Event set for %.2d:%.2d - %s', [SpnEdtHour.Value, SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
@@ -1126,7 +1128,8 @@ begin
 end;
 
 procedure TfrmMain.EventTimerTimer(Sender: TObject);
-{  if reminders are set, this will be ticking and tested to see if the reminder is due.
+{  if reminders are set, this will be ticking and tested to
+   see if the reminder is due.
 }
 var
   EvntDt: TDateTime;
@@ -1140,8 +1143,7 @@ begin
 end;
 
 procedure Tfrmmain.EventTimerStop(Sender: TObject);
-{  Called when the reminder date/time is passed - calls any actions required.
-}
+{  Called when the reminder date/time is passed - calls any actions required.    }
 begin
   EventTimer.Enabled := False;
   btnEventSet.Enabled := False;
@@ -1210,8 +1212,7 @@ begin
 end;
 
 procedure TfrmMain.resetEvent;
-{  performs reminder reset.
-}
+{  performs reminder reset.    }
 begin
   lblEvent.Caption := 'Event not set';
   stsBrInfo.Panels.Items[4].Text := '';
@@ -1352,10 +1353,8 @@ begin
 end;
 
 procedure TfrmMain.btnEventLoadCommandClick(Sender: TObject);
-{  if the command box is clicked, allow the command file to be loaded.
- }
+{  if the command box is clicked, allow the command file to be loaded.    }
 begin
-
   with TOpenDialog.Create(Self) do
   begin
     Filter := '*.*';
@@ -1371,10 +1370,8 @@ begin
 end;
 
 procedure TfrmMain.btnEventrLoadSoundClick(Sender: TObject);
-{  if the text box is clicked, allow the sound file to be changed.
-}
+{  if the text box is clicked, allow the sound file to be changed.    }
 begin
-
   with TOpenDialog.Create(Self) do
   begin
     Filter := '*.wav; *.mp3';
@@ -1393,12 +1390,11 @@ procedure TfrmMain.btnEventTestSoundClick(Sender: TObject);
 begin
   doPlaySound(EdtEventSound.Text, userOptions.volume);
 end;
-
+//
 // ************************************************************* Reminder ******
-
+//
 procedure TfrmMain.btnReminderNewClick(Sender: TObject);
-{  Loads form, so a new reminder can be input.
-}
+{  Loads form, so a new reminder can be input.    }
 begin
   frmReminderInput.ShowModal;
   readReminderFile;              //  reread reminder file, to reflect changes - if any.
@@ -1446,12 +1442,11 @@ begin
 
   CloseFile(ReminderFile);
 end;
-
+//
 // *********************************************************** Menu procs ******
-
+//
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
-{  if clicked, call the option screen, reapply options after.
-}
+{  if clicked, call the option screen, reapply options after.    }
 var
   frmTop: integer;
   frmLeft: integer;
@@ -1502,11 +1497,9 @@ procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
 begin
   frmLicense.ShowModal;
 end;
-
+//
 // ********************************************************* ButtonPannel ******
-
-
-
+//
 procedure TfrmMain.HelpButtonClick(Sender: TObject);
 var
   helpText: string;
@@ -1524,8 +1517,7 @@ begin
 end;
 
 procedure TfrmMain.OKButtonClick(Sender: TObject);
-{  if clicked will hide the main form and display the tray icon.
-}
+{  if clicked will hide the main form and display the tray icon.    }
 begin
   TrayIcon.Visible := True;
   TrayIcon.Show;
@@ -1534,15 +1526,13 @@ begin
 end;
 
 procedure TfrmMain.CloseButtonClick(Sender: TObject);
-{  if clicked will hide the main form and display the tray icon.
-}
+{  if clicked will hide the main form and display the tray icon.    }
 begin
   close;
 end;
-
-
+//
 // ******************************************************* pop menu ************
-
+//
 procedure TfrmMain.ppMnItmShowClick(Sender: TObject);
 {  on menu show, hides the tray icon and redisplays the main form.
    Unchecks time menu item.
@@ -1556,7 +1546,6 @@ begin
   if ppMnItmTime.Checked then
     ppMnItmTime.Checked := False;
 end;
-
 
 procedure TfrmMain.ppMnItmTimeClick(Sender: TObject);
 {  on menu click, toggle the checked status.
@@ -1606,8 +1595,7 @@ begin
 
   CloseAction := caFree;
 end;
-
-
+//
 // *****************************************************************************
-
+//
 end.

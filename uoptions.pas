@@ -5,8 +5,8 @@ unit uOptions;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs, formAnalogueKlock,
-  uOptionsUtils;
+  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs,
+  formAnalogueKlock, uOptionsUtils;
 
 type
 
@@ -83,6 +83,11 @@ type
     _analogueFormTop: integer;              //  the forms top left.
     _analogueFormLeft: integer;
 
+    //  Logging
+    _logging: Boolean;
+    _cullLogs: Boolean;
+    _CullLogsDays: integer;
+
     procedure checkDirectory;
   public
     //  Global - file stuff
@@ -126,6 +131,10 @@ type
     property analogueFormTop: integer read _analogueFormTop write _analogueFormTop;
     property analogueFormLeft: integer read _analogueFormLeft write _analogueFormLeft;
 
+    //  Logging
+    property logging: boolean read _logging write _logging;
+    property cullLogs: boolean read _cullLogs write _cullLogs;
+    property CullLogsDays: integer read _CullLogsDays write _CullLogsDays;
 
     constructor Create; overload;
     constructor Create(filename: string); overload;
@@ -196,7 +205,7 @@ begin
 end;
 
 constructor Options.Create(filename: string);
-  {  creates the options class with a specified filename.  }
+{  creates the options class with a specified filename.  }
 begin
   checkDirectory;
 
@@ -209,11 +218,11 @@ begin
 end;
 
 procedure Options.checkDirectory;
-  {  Checks that the options directory exists.
+{  Checks that the options directory exists.
 
-     GetAppConfigDir(False) -> c:\Users\<user>\AppData\Local\<app Name>\
-     GetAppConfigDir(True)  -> c:\ProgramData\<app Name>\
-  }
+   GetAppConfigDir(False) -> c:\Users\<user>\AppData\Local\<app Name>\
+   GetAppConfigDir(True)  -> c:\ProgramData\<app Name>\
+}
 begin
   _dirName := GetAppConfigDir(False);
 
@@ -223,12 +232,12 @@ begin
 end;
 
 procedure Options.Assign(o: Options);
-  {  Copy all fields from one options object to another.
-     Because Options is derived from TObjects and not TPersistent, we don't get assign for free.
+{  Copy all fields from one options object to another.
+   Because Options is derived from TObjects and not TPersistent, we don't get assign for free.
 
-     NOTE :: When a new field of added to the Option class, it HAS to be added here.
-             Must be a better way of doing this.
-  }
+   NOTE :: When a new field of added to the Option class, it HAS to be added here.
+           Must be a better way of doing this.
+}
 begin
   //  Global - file stuff
   Comments := o.Comments;
@@ -270,13 +279,18 @@ begin
   analogueScreenSave := o.analogueScreenSave;
   analogueFormTop := o.analogueFormTop;
   analogueFormLeft := o.analogueFormLeft;
+
+  //  Logging
+  logging := o.logging;
+  cullLogs := o.cullLogs;
+  CullLogsDays := o.CullLogsDays;
 end;
 
 procedure Options.readOptions;
-  {  Read in the options file.
-     The filename is specified when the user options class is created.
-     The file info is re-read, in case is has changed
-  }
+{  Read in the options file.
+   The filename is specified when the user options class is created.
+   The file info is re-read, in case is has changed
+}
 var
   fvi: myFileVersionInfo;
   PassNode: TDOMNode;
@@ -338,15 +352,22 @@ begin
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
+
     timerMilliSeconds := StrToBool(readChild(PassNode, 'timerMilliSeconds'));
 
     // Other Klocks
-
     PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
 
     analogueFormTop := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Top'));
     analogueFormLeft := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Left'));
     analogueScreenSave := StrToBool(readChild(PassNode, 'analogueScreenSave'));
+
+    //  Logging
+    PassNode := Doc.DocumentElement.FindNode('Logging');
+
+    logging := StrToBool(readChild(PassNode, 'LogginginUse'));
+    cullLogs := StrToBool(readChild(PassNode, 'cullLogs'));
+    CullLogsDays := StrToInt(readChild(PassNode, 'CullLogsDays'));
 
   finally
     // finally, free the document
@@ -355,11 +376,11 @@ begin
 end;
 
 procedure Options.writeDefaultOptions;
-  {  Sets us some sensible defaults and then calls writeCurrentOptions to writs out the xml file.
-     Used if the useroptions file does not exist.
-     The filename is specified when the user options class is created.
-     The file info is re-read, in case is has changed
-  }
+{  Sets us some sensible defaults and then calls writeCurrentOptions to writs out the xml file.
+   Used if the useroptions file does not exist.
+   The filename is specified when the user options class is created.
+   The file info is re-read, in case is has changed
+}
 var
   fvi: myFileVersionInfo;
 begin
@@ -407,14 +428,19 @@ begin
   analogueFormTop := 100;
   analogueFormLeft := 100;
 
+  //  Logging
+  logging := True;
+  cullLogs := False;
+  CullLogsDays := 14;
+
   writeCurrentOptions;
 end;
 
 procedure Options.writeCurrentOptions;
-  {  Writes out the user options to a xml file.
-     The filename is specified when the user options class is created.
-     The file info is re-read, in case is has changed
-  }
+{  Writes out the user options to a xml file.
+   The filename is specified when the user options class is created.
+   The file info is re-read, in case is has changed
+}
 var
   Doc: TXMLDocument;
   RootNode, ElementNode: TDOMNode;
@@ -487,6 +513,15 @@ begin
 
     RootNode.AppendChild(ElementNode);
 
+    // Logging
+    ElementNode := Doc.CreateElement('Logging');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'LogginginUse', logging));
+    ElementNode.AppendChild(writeBolChild(doc, 'cullLogs', cullLogs));
+    ElementNode.AppendChild(writeIntChild(doc, 'CullLogsDays', CullLogsDays));
+
+    RootNode.AppendChild(ElementNode);
+
     try
       // Save XML
       WriteXMLFile(Doc, optionsName);
@@ -507,9 +542,9 @@ end;
 //........................................ fileVersionInfo methods ............................................
 //
 procedure myFileVersionInfo.GetFileInfo;
-  {  Retrieves the file info from the current file.
-     Called from the class myFileVersionInfo.
-  }
+{  Retrieves the file info from the current file.
+   Called from the class myFileVersionInfo.
+}
 var
   FileVerInfo: TFileVersionInfo;
 begin

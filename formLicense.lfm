@@ -14,7 +14,7 @@ object frmLicense: TfrmLicense
   Constraints.MinWidth = 620
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 8
     Height = 160

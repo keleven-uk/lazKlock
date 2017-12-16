@@ -1224,7 +1224,7 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Tue Nov 14 14:57:13 2017 +0000
 
     Added the ability for Klock to write Info and Debug information to log
-    files.  Logging can be enabled / disabled bu a user options.  Also the
+    files.  Logging can be enabled / disabled by a user options.  Also the
     ability to delete log files older then a certain age.  This is also
     specified by user options.
 
@@ -1448,3 +1448,74 @@ Date:   Wed Dec 13 20:12:19 2017 +0000
  uklockutils.pas              | 156 +++++++++++++++++++-----
  uoptions.pas                 |  90 +++++++++++++-
  47 files changed, 895 insertions(+), 323 deletions(-)
+
+Build 50 [2.1.2.50]
+
+commit ce387521eca09467d8a50d3617c9b0d79254acd5
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Dec 13 22:06:13 2017 +0000
+
+        [This is a part duplication of build 45 - mainly the options stuff.]
+        Cleaned up the calling process for the chimes.
+
+        Added doubleTime to uFuzzyTime.
+
+        Added a new unit, uOptionsUtils.  This unit contains helper routines to
+        read and write XML entries.
+
+        Changed the Klock icon.
+
+    Currently
+    4051 lines of source code.
+    2051 statements
+    16.9% comment
+
+ formAbout.pas     |    4 +-
+ formKlock.lfm     | 9364 ++++++++++++++++++++++++++---------------------------
+ formKlock.pas     |   15 +-
+ formOptions.lfm   |    4 +-
+ formOptions.pas   |    7 +-
+ history.txt       |   57 +-
+ klock.ico         |  Bin 67646 -> 67646 bytes
+ klock.iss         |    6 +-
+ klock.lpi         |  172 +-
+ klock.lpr         |    2 +-
+ lazKlock.smproj   |  Bin 83961 -> 96029 bytes
+ time-13-128.ico   |  Bin 0 -> 67646 bytes
+ ufuzzytime.pas    |   38 +-
+ uklockutils.pas   |   39 +-
+ uoptions.pas      |  285 +-
+ uoptionsutils.pas |  100 +
+ 16 files changed, 5059 insertions(+), 5034 deletions(-)
+
+Build 51 [2.1.2.51]
+
+    [This is a part duplication of build 45 - mainly the options stuff.]
+    Added the ability for Klock to write Info and Debug information to log
+    files.  Logging can be enabled / disabled by a user options.  Also the
+    ability to delete log files older then a certain age.  This is also
+    specified by user options.
+
+    A extra tab was added to the options form for the logging options, the log
+    files are also displayed here.
+
+    Added a new unit, uLogging.pas.  The unit contains the helper routines
+    to read and delete log files.
+
+    Started to sprinkle debug entries all over.
+
+    I started to get the Access Violation again, especially in the 32 bit application.
+    This seemed to be either the logging not being thread safe and a problem in loading
+    the fonts.  I changed the method that loads the faults and stopped using TEvent and
+    wrote a simple logging class of my own that just appends to a text file.
+    [The logging class resides in uLogging.pas]
+
+    All seems to be okay.
+
+    Added a routine that retrieves the version of Windows, this is displayed in the
+    About form and the header of the log file.
+
+    Currently
+    4402 lines of source code.
+    2228 statements
+    17.2% comment

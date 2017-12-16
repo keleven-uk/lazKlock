@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  LCLVersion, ExtCtrls, ShellApi, strutils;
+  LCLVersion, ExtCtrls, ShellApi, UKlockUtils;
 
 type
 
@@ -16,6 +16,7 @@ type
     btnAboutExit: TButton;
     btnAboutMSinfo: TButton;
     Image1: TImage;
+    lblWindowsVersion: TLabel;
     lblAppUpTime: TLabel;
     lblSysUpTime: TLabel;
     lblApplicationUpTime: TLabel;
@@ -39,7 +40,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure TmrUpTimeTimer(Sender: TObject);
   private
-    function getUpTime(system: string): string;
+
   public
     { public declarations }
   end;
@@ -79,6 +80,8 @@ var
   message: string;
   i: integer;
 begin
+  kLog.writeLog('FormAbout Create');
+
   tmrUpTime.Enabled := True;
   lblAppUpTime.Caption := getUpTime('Application');
   lblSysUpTime.Caption := getUpTime('System');
@@ -96,6 +99,7 @@ begin
   lblProgrammer.Caption := userOptions.legalCopyright;
   lblKlockversion.Caption := format('lazKlock Build   :: %s', [userOptions.productVersion]);
   lblFileVersion.Caption := format('lazKlock Version :: %s', [userOptions.fileVersion]);
+  lblWindowsVersion.Caption := getWindowsVersion;
   lblCompanyName.Caption := userOptions.CompanyName;
   lblContact.Caption := userOptions.Comments;
 
@@ -120,41 +124,5 @@ begin
   lblSysUpTime.Caption := getUpTime('System');
 end;
 
-function TfrmAbout.getUpTime(system: string): string;
-{  Determines the up time of either System or Application - depending on argument S or A.
-
-   appStartTime := GetTickCount64; needs to be run when the app starts.
-
-   NOTE :: Windows Only - use LclIntf.GetTickCount for cross platform.
-
-   TODO : Need to check for roll over and account for it.
-}
-var
-  noTicks: int64;
-  noSeconds: integer;
-  noOfDays: integer;
-  noOfHours: integer;
-  noOfMinutes: integer;
-  noOfSeconds: integer;
-begin
-  system := AnsiLowerCase(system);
-
-  if AnsiStartsStr('s', system) then
-    noTicks := GetTickCount64                     //  How long has the system been running.
-  else
-    noTicks := GetTickCount64 - appStartTime;     //  How long has the application been running.
-
-  noSeconds := noTicks div 1000;                  //  1000 ticks per second.
-
-  noOfDays := noSeconds div 86400;
-  noSeconds := noSeconds - (noOfDays * 86400);
-  noOfHours := noSeconds div 3600;
-  noSeconds := noSeconds - (noOfHours * 3600);
-  noOfMinutes := noSeconds div 60;
-  noSeconds := noSeconds - (noOfMinutes * 60);
-  NoOfSeconds := noSeconds;
-
-  Result := format('%d days : %d hours : %d mins : %d secs', [noOfDays, noOfHours, noOfMinutes, noOfSeconds]);
-end;
 
 end.

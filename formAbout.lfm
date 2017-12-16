@@ -1,7 +1,7 @@
 object frmAbout: TfrmAbout
-  Left = 1544
+  Left = 1306
   Height = 535
-  Top = 190
+  Top = 227
   Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -119,7 +119,7 @@ object frmAbout: TfrmAbout
   }
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 8
     Height = 304
@@ -129,9 +129,9 @@ object frmAbout: TfrmAbout
     ClientWidth = 306
     TabOrder = 0
     object lblLazarusVersion: TLabel
-      Left = 8
+      Left = 16
       Height = 15
-      Top = 184
+      Top = 155
       Width = 144
       Caption = 'Built With Lazarus Version ::'
       ParentColor = False
@@ -162,9 +162,9 @@ object frmAbout: TfrmAbout
       ParentFont = False
     end
     object lblProgrammer: TLabel
-      Left = 68
+      Left = 136
       Height = 17
-      Top = 136
+      Top = 112
       Width = 159
       Caption = 'Kevin Scott  (c) 2012 - 2017'
       Font.Height = -13
@@ -172,9 +172,9 @@ object frmAbout: TfrmAbout
       ParentFont = False
     end
     object lblDescription: TLabel
-      Left = 8
+      Left = 16
       Height = 17
-      Top = 160
+      Top = 128
       Width = 80
       Caption = 'lblDescription'
       Font.Height = -13
@@ -182,31 +182,31 @@ object frmAbout: TfrmAbout
       ParentFont = False
     end
     object lblKlockversion: TLabel
-      Left = 8
+      Left = 16
       Height = 15
-      Top = 208
+      Top = 180
       Width = 80
       Caption = 'lblKlockversion'
       ParentColor = False
     end
     object lblFileVersion: TLabel
-      Left = 8
+      Left = 16
       Height = 15
-      Top = 232
+      Top = 205
       Width = 69
       Caption = 'lblFileVersion'
       ParentColor = False
     end
     object lblCompanyName: TLabel
-      Left = 8
+      Left = 16
       Height = 15
-      Top = 256
+      Top = 255
       Width = 97
       Caption = 'lblCompanyName'
       ParentColor = False
     end
     object lblContact: TLabel
-      Left = 8
+      Left = 16
       Height = 15
       Top = 280
       Width = 55
@@ -698,6 +698,15 @@ object frmAbout: TfrmAbout
         895384A7330000000049454E44AE426082
       }
       Transparent = True
+    end
+    object lblWindowsVersion: TLabel
+      Left = 16
+      Height = 15
+      Top = 230
+      Width = 100
+      Caption = 'lblWindowsVersion'
+      Color = clDefault
+      Transparent = False
     end
   end
   object Panel2: TPanel
