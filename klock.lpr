@@ -9,7 +9,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout, formHelp,
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
-  uOptions, formAnalogueKlock, uFonts, uOptionsUtils, ULogging;
+  uOptions, formAnalogueKlock, uFonts, uOptionsUtils, ULogging,
+  UformClipBoardUtils, formClipBoard;
 
 {$R *.res}
 
@@ -23,6 +24,7 @@ begin
   Application.CreateForm(TfrmLicense, frmLicense);
   Application.CreateForm(TfrmReminderInput, frmReminderInput);
   Application.CreateForm(TfrmAnalogueKlock, frmAnalogueKlock);
+  Application.CreateForm(TfrmClipBoard, frmClipBoard);
   Application.Run;
 end.
 

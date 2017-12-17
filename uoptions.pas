@@ -56,11 +56,15 @@ type
 
     _optionsName: string;           //  full path to the options file.
     _runAtStartUp: boolean;         //  run Klock at windows start up - Current user only.
-    _screenSave: boolean;           //  do we save from position or not.
+    _screenSave: boolean;           //  do we save Klock position or not.
     _formTop: integer;              //  the forms top left.
     _formLeft: integer;
     _defaultTab: integer;
     _volume:String;
+    _monitorClipboard: boolean;     //  Moinitor Clipboard i.e. Klock captures all clipboard activities.
+    _CB_ScreenSave: boolean;        //  do we save clipboard manager position or not.
+    _CB_formTop: integer;           //  the clipboard manager top left.
+    _CB_formLeft: integer;
 
     //  Time
     _defaultTime: integer;
@@ -109,6 +113,10 @@ type
     property formLeft: integer read _formLeft write _formLeft;
     property defaultTab: integer read _defaultTab write _defaultTab;
     property volume: string read _volume write _volume;
+    property monitorClipboard: boolean read _monitorClipboard write _monitorClipboard;
+    property CB_ScreenSave: boolean read _CB_ScreenSave write _CB_ScreenSave;
+    property CB_formTop: integer read _CB_formTop write _CB_formTop;
+    property CB_formLeft: integer read _CB_formLeft write _CB_formLeft;
 
     //  Time
     property defaultTime: integer read _defaultTime write _defaultTime;
@@ -258,6 +266,10 @@ begin
   formLeft := o.formLeft;
   defaultTab := o.defaultTab;
   volume := o.volume;
+  monitorClipboard := o.monitorClipboard;
+  CB_screenSave := o.CB_screenSave;
+  CB_formTop := o.CB_formTop;
+  CB_formLeft := o.CB_formLeft;
 
   //  Time
   defaultTime := o.defaultTime;
@@ -334,6 +346,10 @@ begin
     screenSave := StrToBool(readChild(PassNode, 'screenSave'));
     defaultTab := StrToInt(readChild(PassNode, 'defaultTab'));
     volume := ansistring(readChild(PassNode, 'volume'));
+    monitorClipboard := StrToBool(readChild(PassNode, 'monitorClipboard'));
+    CB_screenSave := StrToBool(readChild(PassNode, 'CB_screenSave'));
+    CB_formTop := StrToInt(readChildAttribute(PassNode, 'CB_formPosition', 'Top'));
+    CB_formLeft := StrToInt(readChildAttribute(PassNode, 'CB_formPosition', 'Left'));
 
     //  Time
     PassNode := Doc.DocumentElement.FindNode('Time');
@@ -406,6 +422,10 @@ begin
   formLeft := 100;
   defaultTab := 0;
   volume := '123';
+  monitorClipboard := True;
+  CB_screenSave := True;
+  CB_formTop := 0;              //  the clipboard manager top left.
+  CB_formLeft := 0;
 
   //  Time
   defaultTime := 0;
@@ -478,6 +498,9 @@ begin
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'formPosition', formTop, formLeft));
     ElementNode.AppendChild(writeIntChild(doc, 'defaultTab', defaultTab));
     ElementNode.AppendChild(writeStrChild(doc, 'volume', volume));
+    ElementNode.AppendChild(writeBolChild(doc, 'monitorClipboard', monitorClipboard));
+    ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave', CB_screenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'CB_formPosition', CB_formTop, CB_formLeft));
 
     RootNode.AppendChild(ElementNode);
 

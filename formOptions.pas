@@ -16,7 +16,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, ECAccordion, Forms, Controls, Dialogs,
   UKlockUtils, Graphics, StdCtrls, ButtonPanel, Buttons, ComCtrls, ExtCtrls,
-  Spin, ColorBox, uOptions;
+  Spin, uOptions;
 
 type
 
@@ -132,6 +132,8 @@ begin
 
   ChckGrpGlobalOptions.Checked[0] := userBacOptions.screenSave;
   ChckGrpGlobalOptions.Checked[1] := userBacOptions.runAtStartUp;
+  ChckGrpGlobalOptions.Checked[2] := userBacOptions.monitorClipboard;
+  ChckGrpGlobalOptions.Checked[3] := userBacOptions.CB_ScreenSave;
 
   ChckGrpTimeOptions.Checked[0] := userBacOptions.display24Hour;
   ChckGrpTimeOptions.Checked[1] := userBacOptions.netTimeSeconds;
@@ -155,6 +157,8 @@ begin
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
   ChckBxLogging.Checked := userBacOptions.logging;
+  ChckBxCullLogsFiles.Checked := userBacOptions.cullLogs;
+  SpnEdtCullDays.Value := userBacOptions.CullLogsDays;
   SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
   lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
 
@@ -189,12 +193,16 @@ end;
 procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Global options according to the state of the radio group.
 
-   index 0 - Save Screen Position
+   index 0 - Save Screen Position.
    index 1 - Run Kock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
+   index 2 - Monitor Clipboard.
+   index 4 - Save Screen Position [Clipboard Monitor].
 }
 begin
   userBacOptions.screenSave := ChckGrpGlobalOptions.Checked[0];
   userBacOptions.runAtStartUp := ChckGrpGlobalOptions.Checked[1];
+  userBacOptions.monitorClipboard := ChckGrpGlobalOptions.Checked[2];
+  userBacOptions.CB_ScreenSave := ChckGrpGlobalOptions.Checked[3];
 end;
 
 procedure TfrmOptions.TrckBrGlobalVolumeChange(Sender: TObject);
@@ -231,13 +239,13 @@ begin
 end;
 
 procedure TfrmOptions.ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
-{  Sets the Ciming options according to the state of the radio group.
+{  Sets the Chiming options according to the state of the radio group.
 
 index 0 - Sound "The Pips on the Hour"
-   1 - Hourly Chimes
-   2 - Half hourly Chimes
-   3 - Quarter hourly Chimes
-   4 - ThreeQuarter Horly Chimes
+      1 - Hourly Chimes
+      2 - Half hourly Chimes
+      3 - Quarter hourly Chimes
+      4 - ThreeQuarter Horly Chimes
 }
 begin
   userBacOptions.hourPips := ChckGrpTimeChimes.Checked[0];

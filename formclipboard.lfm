@@ -1,0 +1,139 @@
+object frmClipBoard: TfrmClipBoard
+  Left = 1231
+  Height = 387
+  Top = 544
+  Width = 658
+  Caption = 'Clipboard Monitor'
+  ClientHeight = 387
+  ClientWidth = 658
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.8.0.6'
+  object Panel1: TPanel
+    Left = 8
+    Height = 234
+    Top = 8
+    Width = 642
+    ClientHeight = 234
+    ClientWidth = 642
+    TabOrder = 0
+    object LstVwClipBoard: TListView
+      Left = 8
+      Height = 212
+      Top = 12
+      Width = 626
+      Columns = <      
+        item
+          Caption = 'Category'
+          Width = 70
+        end      
+        item
+          Caption = 'Date'
+          Width = 140
+        end      
+        item
+          Caption = 'Data'
+          Width = 412
+        end>
+      ParentColor = True
+      ReadOnly = True
+      RowSelect = True
+      ScrollBars = ssAutoHorizontal
+      TabOrder = 0
+      ViewStyle = vsReport
+      OnClick = LstVwClipBoardClick
+      OnCustomDrawSubItem = LstVwClipBoardCustomDrawSubItem
+    end
+  end
+  object Panel2: TPanel
+    Left = 8
+    Height = 106
+    Top = 248
+    Width = 642
+    ClientHeight = 106
+    ClientWidth = 642
+    TabOrder = 1
+    object btnClpBrdClearMonitor: TButton
+      Left = 8
+      Height = 25
+      Top = 24
+      Width = 107
+      Caption = 'Clear Monitor'
+      OnClick = btnClpBrdClearMonitorClick
+      TabOrder = 0
+    end
+    object btnClpBrdClearClipboard: TButton
+      Left = 8
+      Height = 25
+      Top = 64
+      Width = 104
+      Caption = 'Clear Clipboard'
+      OnClick = btnClpBrdClearClipboardClick
+      TabOrder = 1
+    end
+    object btnClpBrdLoad: TButton
+      Left = 128
+      Height = 25
+      Top = 24
+      Width = 107
+      Caption = 'Load from .CSV'
+      OnClick = btnClpBrdLoadClick
+      TabOrder = 2
+    end
+    object btnClpBrdSave: TButton
+      Left = 128
+      Height = 25
+      Top = 64
+      Width = 107
+      Caption = 'Save as .CSV'
+      OnClick = btnClpBrdSaveClick
+      TabOrder = 3
+    end
+    object btnClpBrdClose: TButton
+      Left = 559
+      Height = 25
+      Top = 64
+      Width = 75
+      Caption = 'Close'
+      OnClick = btnClpBrdCloseClick
+      TabOrder = 4
+    end
+    object ImgClipBoard: TImage
+      Left = 248
+      Height = 90
+      Top = 8
+      Width = 296
+    end
+  end
+  object StsBrClipBoard: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 364
+    Width = 658
+    Panels = <    
+      item
+        Alignment = taCenter
+        Width = 70
+      end    
+      item
+        Width = 75
+      end    
+      item
+        Width = 35
+      end    
+      item
+        Width = 125
+      end    
+      item
+        Width = 100
+      end>
+    SimplePanel = False
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    left = 599
+    top = 277
+  end
+end

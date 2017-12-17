@@ -16,6 +16,10 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  To compile, the following components must be instaled into Lazarus.
+     BGRA comtorls, which installs BGRA bitmap.
+     EC-contols - Eye Candy - used for the accordion on the options screen
 }
 
 { TODO : Look at main timer interval. }

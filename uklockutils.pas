@@ -269,6 +269,7 @@ begin
     if isPlaying then
     begin
       SendMCICommand('close KlockAudio');                       //  close player if alrady been used.
+      isPlaying := false;
     end;
 
     isPlaying := True;

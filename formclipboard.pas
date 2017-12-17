@@ -1,0 +1,266 @@
+unit formClipBoard;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  ComCtrls, StdCtrls, UformClipBoardUtils, LCLIntf, LCLType, Clipbrd;
+
+type
+
+  { TfrmClipBoard }
+
+  TfrmClipBoard = class(TForm)
+    btnClpBrdClearClipboard: TButton;
+    btnClpBrdClearMonitor: TButton;
+    btnClpBrdLoad: TButton;
+    btnClpBrdSave: TButton;
+    btnClpBrdClose: TButton;
+    ImgClipBoard: TImage;
+    LstVwClipBoard: TListView;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    StsBrClipBoard: TStatusBar;
+    Timer1: TTimer;
+    procedure btnClpBrdClearClipboardClick(Sender: TObject);
+    procedure btnClpBrdClearMonitorClick(Sender: TObject);
+    procedure btnClpBrdCloseClick(Sender: TObject);
+    procedure btnClpBrdLoadClick(Sender: TObject);
+    procedure btnClpBrdSaveClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure LstVwClipBoardClick(Sender: TObject);
+    procedure LstVwClipBoardCustomDrawSubItem(Sender: TCustomListView;
+      Item: TListItem; SubItem: Integer; State: TCustomDrawState;
+      var DefaultDraw: Boolean);
+    procedure Timer1Timer(Sender: TObject);
+  private
+    FListener: TClipboardListener;
+
+    procedure UpdateStatusBar(KTime: TDateTime);
+    procedure ClipboardChanged(Sender: TObject);
+    function isThere(s: string): boolean;
+  public
+
+  end;
+
+var
+  frmClipBoard: TfrmClipBoard;
+
+implementation
+
+uses
+  formklock;
+
+{$R *.lfm}
+
+{ TfrmClipBoard }
+//
+//....................................... Form Stuff ...........................
+//
+procedure TfrmClipBoard.FormClose(Sender: TObject; var CloseAction: TCloseAction
+  );
+begin
+  kLog.writeLog('formClipBoard Close');
+  if userOptions.CB_ScreenSave then
+  begin
+    userOptions.CB_formTop := frmClipBoard.Top;
+    userOptions.CB_formLeft := frmClipBoard.Left;
+    userOptions.writeCurrentOptions;
+  end;
+end;
+
+procedure TfrmClipBoard.FormCreate(Sender: TObject);
+begin
+  kLog.writeLog('formClipBoard Create');
+  FListener := TClipboardListener.Create;
+  FListener.OnClipboardChange := @ClipboardChanged;
+
+  if userOptions.CB_ScreenSave then
+  begin
+    frmClipBoard.Top := userOptions.CB_formTop;
+    frmClipBoard.Left := userOptions.CB_formLeft;
+    userOptions.writeCurrentOptions;
+  end;
+end;
+
+procedure TfrmClipBoard.FormDestroy(Sender: TObject);
+begin
+  FListener.Free;
+end;
+
+procedure TfrmClipBoard.FormActivate(Sender: TObject);
+begin
+  kLog.writeLog('formClipBoard Activate');
+end;
+//
+//....................................... Buttons ..............................
+//
+procedure TfrmClipBoard.btnClpBrdClearMonitorClick(Sender: TObject);
+begin
+  lstVwClipBoard.Clear;
+end;
+
+procedure TfrmClipBoard.btnClpBrdCloseClick(Sender: TObject);
+begin
+    close;
+end;
+
+procedure TfrmClipBoard.btnClpBrdLoadClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmClipBoard.btnClpBrdSaveClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmClipBoard.btnClpBrdClearClipboardClick(Sender: TObject);
+begin
+  clipboard.Clear;
+end;
+//
+//....................................... ListView .............................
+//
+procedure TfrmClipBoard.LstVwClipBoardClick(Sender: TObject);
+{  When a row of the listview is clicked, pass that row to the clipboard.    }
+var
+  item: TListItem;
+  bitmap: TBitmap;
+begin
+  item := LstVwClipBoard.Selected;
+
+  if Item.Caption = 'Image' then
+  begin
+    bitmap := TBitmap.Create;
+    bitmap.LoadFromFile(Item.SubItems.Strings[1]);
+    bitmap.Canvas.StretchDraw(rect(0, 0, ImgClipBoard.Width, ImgClipBoard.Height), bitmap);
+    bitmap.SetSize(ImgClipBoard.Width, ImgClipBoard.Height);
+    ImgClipBoard.Picture.Bitmap := bitmap;
+    bitmap.Free;
+  end
+  else
+    ImgClipBoard.Picture.Clear;
+
+  FListener.CopyToClipboard(item);
+end;
+
+procedure TfrmClipBoard.LstVwClipBoardCustomDrawSubItem(
+  Sender: TCustomListView; Item: TListItem; SubItem: Integer;
+  State: TCustomDrawState; var DefaultDraw: Boolean);
+begin
+  if Item.caption = 'Text' then
+    Sender.Canvas.Font.Color := clRed;
+  if Item.caption = 'File' then
+    Sender.Canvas.Font.Color := clgreen;
+  if Item.caption = 'Dir' then
+    Sender.Canvas.Font.Color := clolive;
+  if Item.caption = 'Image' then
+    Sender.Canvas.Font.Color := clblue;
+end;
+//
+//....................................... Timer ...............................
+//
+procedure TfrmClipBoard.Timer1Timer(Sender: TObject);
+begin
+  UpdateStatusBar(now)
+end;
+
+procedure TfrmClipBoard.UpdateStatusBar(KTime: TDateTime);
+{  Updates the status bar.    }
+VAR
+  keyResult: string;
+begin
+  keyResult := ' cns ';
+    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
+      keyResult[2] := 'C';
+    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
+      keyResult[3] := 'N';
+    if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
+      keyResult[4] := 'S';
+
+    if userOptions.display24Hour then
+      StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
+    else
+      StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
+
+    StsBrClipBoard.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
+    StsBrClipBoard.Panels.Items[2].Text := keyResult;
+
+    if userOptions.displayIdleTime then
+      StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
+    else
+      StsBrClipBoard.Panels.Items[3].Text := '';
+end;
+
+procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);
+{  Called by the Clipboard Listner.
+   The contents of the clipboard are added to the listview, if not already present.
+}
+var
+  newItem: TListItem;
+  bitmap: TBitmap;
+  dirName: string;
+
+begin
+  if LstVwClipBoard.Focused then exit;
+
+  if not frmClipBoard.Visible then frmClipBoard.Visible := True;
+
+  if FListener.category = 'Image' then
+  begin
+    dirname  := GetTempFileName(GetAppConfigDir(False), 'Klock');
+    FListener.text := dirname;
+    FListener.image.SaveToFile(dirname);
+    bitmap := TBitmap.Create;
+    bitmap := FListener.image;
+    bitmap.Canvas.StretchDraw(rect(0, 0, ImgClipBoard.Width, ImgClipBoard.Height), bitmap);
+    bitmap.SetSize(ImgClipBoard.Width, ImgClipBoard.Height);
+    ImgClipBoard.Picture.Bitmap := bitmap;
+    bitmap.Free;
+  end;
+  if not isthere(FListener.text) then
+    begin
+      newItem := LstVwClipBoard.Items.Add;
+      newItem.Caption := FListener.category;
+      newItem.SubItems.add(FListener.epoch);
+      newItem.SubItems.add(FListener.text);
+      klog.writeLog(format('%s %s %s', [FListener.category, FListener.epoch, FListener.text]));
+    end;
+end;
+
+function TfrmClipBoard.isThere(s: string): boolean;
+{  Returns true if the string s already exists in the listview.
+   Could not see a easy way to do this, so the listview is itarated
+   over and every item is checked in turn.
+
+   This not only stops duplicate enries, but also stops the annoyance of
+   the entry being entered again when the lixtview is clicked.
+}
+var
+  Item: TListItem;
+  f: integer;
+  max: integer;
+  found: boolean = false;
+begin
+  max := LstVwClipBoard.Items.Count;
+  if max <> 0 then
+  begin
+    for f := 0 to max-1 do     //  zero based.
+    begin
+      item := LstVwClipBoard.Items.Item[f];
+      if item.SubItems.Strings[1] = s then
+        found := True;
+    end;
+  end;
+
+  result := found;
+end;
+
+end.
+

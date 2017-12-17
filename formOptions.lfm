@@ -1,11 +1,11 @@
 object frmOptions: TfrmOptions
   Left = 1106
-  Height = 427
-  Top = 495
+  Height = 488
+  Top = 234
   Width = 793
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
-  ClientHeight = 427
+  ClientHeight = 488
   ClientWidth = 793
   Constraints.MinWidth = 320
   OnActivate = FormActivate
@@ -15,7 +15,7 @@ object frmOptions: TfrmOptions
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 387
+    Top = 448
     Width = 781
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
@@ -33,11 +33,11 @@ object frmOptions: TfrmOptions
   end
   object AcrdnOptions: TECAccordion
     Left = 0
-    Height = 376
+    Height = 440
     Top = 0
     Width = 776
     FullExpand = True
-    ItemIndex = 4
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -50,8 +50,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 335
+      Top = 21
       Width = 776
       Caption = 'Global'
       Order = 0
@@ -128,7 +128,7 @@ object frmOptions: TfrmOptions
       end
       object ChckGrpGlobalOptions: TCheckGroup
         Left = 8
-        Height = 80
+        Height = 128
         Top = 120
         Width = 337
         AutoFill = True
@@ -141,26 +141,28 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 60
+        ClientHeight = 108
         ClientWidth = 333
         Items.Strings = (
-          'Save Screen Position '
-          'Run Kock on start up'
+          'Save Screen Position. '
+          'Run Kock on start up.'
+          'Monitor Clipboard.'
+          'Save Screen Position [Clipboard Manager].'
         )
         OnItemClick = ChckGrpGlobalOptionsItemClick
         TabOrder = 2
         Data = {
-          020000000202
+          0400000002020202
         }
       end
       object GroupBox3: TGroupBox
-        Left = 7
+        Left = 8
         Height = 73
-        Top = 208
-        Width = 330
+        Top = 248
+        Width = 337
         Caption = 'Volume'
         ClientHeight = 53
-        ClientWidth = 326
+        ClientWidth = 333
         TabOrder = 3
         object btnGlobalVolumeTest: TButton
           Left = 247
@@ -367,18 +369,18 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 271
-      Top = 105
+      Height = 0
+      Top = 0
       Width = 776
       Caption = 'Logging'
       Order = 4
       object GroupBox4: TGroupBox
-        Left = 8
-        Height = 254
+        Left = 7
+        Height = 304
         Top = 16
         Width = 185
         Caption = 'Settings'
-        ClientHeight = 234
+        ClientHeight = 284
         ClientWidth = 181
         TabOrder = 0
         object ChckBxLogging: TCheckBox
@@ -419,7 +421,7 @@ object frmOptions: TfrmOptions
       end
       object LstBxLogFiles: TListBox
         Left = 200
-        Height = 246
+        Height = 296
         Top = 24
         Width = 568
         ItemHeight = 0

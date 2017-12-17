@@ -1490,6 +1490,11 @@ Date:   Wed Dec 13 22:06:13 2017 +0000
 
 Build 51 [2.1.2.51]
 
+commit 22135ab71701bcf61cedef606c118d34eae6ab28
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sat Dec 16 18:56:37 2017 +0000
+
+
     [This is a part duplication of build 45 - mainly the options stuff.]
     Added the ability for Klock to write Info and Debug information to log
     files.  Logging can be enabled / disabled by a user options.  Also the
@@ -1515,7 +1520,49 @@ Build 51 [2.1.2.51]
     Added a routine that retrieves the version of Windows, this is displayed in the
     About form and the header of the log file.
 
+    Also removed the option to install the sources from the inno installer, they
+    can download them from GitHub.
+
     Currently
     4402 lines of source code.
     2228 statements
     17.2% comment
+
+ formAbout.lfm         |  41 ++++++-----
+ formAbout.pas         |  44 ++----------
+ formHelp.pas          |   2 +
+ formKlock.pas         | 160 +++++++++++++++++++----------------------
+ formLicense.lfm       |   2 +-
+ formOptions.lfm       |  78 ++++++++++++++++++--
+ formOptions.pas       |  55 ++++++++++++++-
+ formanalogueklock.pas |   3 +
+ formlicense.pas       |   2 +
+ formreminderinput.lfm |   2 +-
+ formreminderinput.pas |   7 ++
+ history.txt           |  73 ++++++++++++++++++-
+ klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
+ klock.lpr             |   2 +-
+ lazKlock.smproj       | Bin 96029 -> 108871 bytes
+ ufonts.pas            |  98 +++++++++++++++++++-------
+ uklockutils.pas       |  97 ++++++++++++++++++++++++-
+ ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
+ uoptions.pas          |  93 ++++++++++++++++--------
+ uoptionsutils.pas     |   3 -
+ 20 files changed, 805 insertions(+), 304 deletions(-)
+
+Build 52 [2.1.2.52]
+
+    [This is a NEARLY duplication of build 43]
+    Added formCipboard and uformClipboardUtils which implements a clipboard manager.
+
+    Added various options for the clipboard manages to formOptions and uOptions.
+
+    Currently
+    4946 lines of source code.
+    2517 statements
+    16.6% comment
+
+/*******************************************************************************************************/
+Klock has nnow caught up to the point before the curruption.
+I have done two things differently - the logger and the font loading - see build 51.
+/*******************************************************************************************************/
