@@ -28,7 +28,18 @@ type
     _fuzzyTypes: TStringList;
     _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
 
+    // globally declare arrays, so can be used by more then one sub and also not re-created every call of the sub.
+    const hourTxt: array [0..12] of string = ('twelve', 'one', 'two', 'three', 'four',
+                     'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve');
+
+    const tensTxt: array [0..11] of string = ('zero', 'ten', 'eleven', 'twelve', 'thirteen',
+          'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty');
+
+    const unitsTxt: array [0..12] of string = ('zero', 'one', 'two', 'three', 'four',
+                    'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve');
+
     function fTime: string;
+    function wordTime: string;
     function netTime: string;
     function unixTime: string;
     function utcTime: string;
@@ -39,6 +50,9 @@ type
     function radixTime: string;
     function percentTime: string;
     function getDblTime: string;
+    function codeTime(mode: string): string;
+    function toMorse(time: integer): string;
+    function toRoman(time: integer): string;
   public
     property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
     property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
@@ -60,14 +74,15 @@ begin
   fuzzyBase := 2;
 
   _fuzzyTypes := TStringList.Create;
-  _fuzzyTypes.CommaText := ('"Fuzzy Time", "Local Time", "NET Time", "Unix Time", "UTC Time", "Swatch Time",' +
-    '"Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time", "Bar Code Time",' +
-    '"Semaphore Time", "Nancy Blackett Time", "Braille Time" ');
-end;
+  _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
+   '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
+   '"Roman Time", "Morse Time", "Bar Code Time", "Semaphore Time", "Nancy Blackett Time", "Braille Time",');
+ end;
 
 function FuzzyTime.fTime: string;
-type
-  Hours = array [0..12] of string;
+{  Returns the current [local] time as fuzzy time i.e. ten past three in the afternoon.
+   But rounds to the nearest five minutes.
+}
 var
   hour: word;
   mins: word;
@@ -77,23 +92,7 @@ var
   ampm: string;    //  am pm indicator, also used for afternoon or evening
   sRtn: string;    //  return string
   dummy: string;    //  hour text
-
-  hourTxt: Hours;
 begin
-  hourTxt[0] := 'twelve';     //  same as 12 o'clock
-  hourTxt[1] := 'one';
-  hourTxt[2] := 'two';
-  hourTxt[3] := 'three';
-  hourTxt[4] := 'four';
-  hourTxt[5] := 'five';
-  hourTxt[6] := 'six';
-  hourTxt[7] := 'seven';
-  hourTxt[8] := 'eight';
-  hourTxt[9] := 'nine';
-  hourTxt[10] := 'ten';
-  hourTxt[11] := 'eleven';
-  hourTxt[12] := 'twelve';
-
   DecodeTime(Time, hour, mins, secs, mscs);
 
   if hour < 12 then
@@ -126,9 +125,12 @@ begin
     hour := hour + 1;
 
   if (hour = 12) and (nrms = 0) then   //  fix for noon.
-    ampm := ' noon';
-
-  if ampm = 'pm' then
+    ampm := ' about noon'
+  else if (hour = 0) and (nrms = 0) then
+    ampm := ' about Midnight'
+  else if (hour = 24) and (nrms = 0) then
+    ampm := ' about Midnight'
+  else
   begin
     hour := hour - 12;
     if hour >= 5 then
@@ -140,6 +142,51 @@ begin
   dummy := hourTxt[hour];
 
   Result := sRtn + dummy + ampm;
+end;
+
+function FuzzyTime.wordTime: string;
+{  Returns the current [local] time as fuzzy time i.e. ten past three in the afternoon.
+   But uses the exact minute.
+}
+var
+  hour: word;
+  mins: word;
+  secs: word;
+  mscs: word;
+  ampm: string;    //  am pm indicator, also used for afternoon or evening
+  pastTo: string;    //  return string
+  sRtn: string;    //  hour text
+ begin
+    DecodeTime(Time, hour, mins, secs, mscs);
+    pastTo := 'past';
+
+    if mins > 30 then
+    begin
+      hour := hour + 1;
+      pastTo := 'to';
+      mins := 60 - mins;
+    end;
+
+    if hour < 12 then
+      ampm := 'in the morning'
+    else
+      begin
+        hour := hour - 12;
+        if hour >= 5 then
+          ampm := 'in the evening'
+        else
+          ampm := 'in the afternoon';
+      end;
+
+    case mins of
+      0: sRtn := format('%s Oclock %s', [hourTxt[hour], ampm]);
+      1..9: sRtn := format('%s minutes %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
+      10..20: sRtn := format('%s minutes %s %s %s', [tensTxt[mins - 9], pastTo, hourTxt[hour], ampm ]);
+      21..29: sRtn := format('twenty%s minutes %s %s %s', [unitsTxt[mins mod 10], pastTo, hourTxt[hour], ampm ]);
+      30: sRtn := format('thirty minutes %s %s %s', [pastTo, hourTxt[hour], ampm ]);
+    end;
+
+    Result := sRtn;
 end;
 
 function FuzzyTime.netTime: string;
@@ -302,6 +349,47 @@ begin
   Result := format('%s %s %s', [shrs, smin, ssec]);
 end;
 
+function FuzzyTime.codeTime(mode: string): string;
+var
+  hour: word;
+  mins: word;
+  secs: word;
+  msec: word;
+  codeHour: String;
+  codeMins: String;
+  codeSecs: String;
+begin
+  DecodeTime(time, hour, mins, secs, msec);
+
+  case mode of
+    'Roman':
+      begin
+        codeHour := toRoman(hour);
+        codeMins := toRoman(mins);
+        codeSecs := toRoman(secs);
+      end;
+    'Morse':
+      begin
+        if hour < 9 then
+          codeHour := toMorse(hour)
+        else
+          codeHour := toMorse(hour div 10) + toMorse(hour mod 10);
+
+        if mins < 9 then
+          codeMins := toMorse(mins)
+        else
+          codeMins := toMorse(mins div 10) + toMorse(mins mod 10);
+
+        if hour < 9 then
+          codeSecs := toMorse(secs)
+        else
+          codeSecs := toMorse(secs div 10) + toMorse(secs mod 10);
+      end;
+  end;  //  case mode of
+
+  result := format('%s %s %s', [codeHour, codeMins, codeSecs]);
+end;
+
 function FuzzyTime.percentTime: string;
 var
   noOfSeconds: longword;
@@ -339,20 +427,93 @@ begin
 
   case displayFuzzy of
     0: Result := fTime;
-    1: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time) else Result := FormatDateTime('hh : nn : ss am/pm', Time);
-    2: Result := netTime;
-    3: Result := unixTime;
-    4: Result := utcTime;
-    5: Result := swatchTime;
-    6: Result := julianTime;
-    7: Result := decimalTime;
-    8: Result := hexTime;
-    9: Result := radixTime;
-    10: Result := percentTime;
-    11: Result := getDblTime;
+    1: Result := wordTime;
+    2: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time) else Result := FormatDateTime('hh : nn : ss am/pm', Time);
+    3: Result := netTime;
+    4: Result := unixTime;
+    5: Result := utcTime;
+    6: Result := swatchTime;
+    7: Result := julianTime;
+    8: Result := decimalTime;
+    9: Result := hexTime;
+    10: Result := radixTime;
+    11: Result := percentTime;
+    12: Result := getDblTime;
+    13: Result := codeTime('Roman');
+    14: Result := codeTime('Morse');
   end;
 
 end;
 
+function FuzzyTime.toRoman(time: integer): string;
+{  Returns string in Morse code.    }
+var
+  roman: string;
+begin
+  roman := '';
+  repeat
+  begin
+    Case time of
+        50 .. 60:
+          begin
+            roman := roman + 'L';
+            time := time - 50;
+          end;
+        40 .. 49:
+          begin
+            roman := roman + 'XL';
+            time := time - 40;
+          end;
+        10 .. 39:
+          begin
+            roman := roman + 'X';
+            time := time - 10;
+          end;
+        9:
+          begin
+            roman := roman + 'IX';
+            time := time - 9;
+          end;
+        5 .. 8:
+          begin
+            roman := roman + 'V';
+            time := time - 5;
+          end;
+        4:
+          begin
+            roman := roman + 'IV';
+            time := time - 4;
+          end;
+        1 .. 3:
+          begin
+            roman := roman + 'I';
+            time := time - 1;
+          end;
+        0: roman := '';
+      End;
+  end;
+  until time < 1;
+
+  result := roman;
+End;
+
+function FuzzyTime.toMorse(time: integer): string;
+var
+  morse: string;
+begin
+  Case time of
+    1: morse := '·----';
+    2: morse := '··---';
+    3: morse := '···--';
+    4: morse := '····-';
+    5: morse := '·····';
+    6: morse := '-····';
+    7: morse := '--···';
+    8: morse := '---··';
+    9: morse := '----·';
+    0: morse := '-----';
+  End;
+  result := morse;
+end;
 
 end.

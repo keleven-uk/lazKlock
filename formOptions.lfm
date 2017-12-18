@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1106
+  Left = 1133
   Height = 488
-  Top = 234
+  Top = 252
   Width = 793
   BorderIcons = [biSystemMenu]
   Caption = 'Options'

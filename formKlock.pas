@@ -37,7 +37,7 @@ uses
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging;
+  ULogging, formInfo;
 
 type
 
@@ -92,6 +92,11 @@ type
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmPowerSource: TMenuItem;
+    mnuItmLentDates: TMenuItem;
+    mnuItmEasterDates: TMenuItem;
+    mnuItmDaylightSaving: TMenuItem;
+    mnuInfo: TMenuItem;
     mnuTime: TMenuItem;
     MenuItem2: TMenuItem;
     Panel17: TPanel;
@@ -105,7 +110,7 @@ type
     mnuItmHelp: TMenuItem;
     mnuItmAbout: TMenuItem;
     mnuItmExit: TMenuItem;
-    mnuhelp: TMenuItem;
+    mnuHelp: TMenuItem;
     mnuFile: TMenuItem;
     mnuMain: TMainMenu;
     PageControl1: TPageControl;
@@ -182,10 +187,14 @@ type
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
+    procedure mnuItmDaylightSavingClick(Sender: TObject);
+    procedure mnuItmEasterDatesClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
+    procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
+    procedure mnuItmPowerSourceClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CloseButtonClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
@@ -263,6 +272,8 @@ begin
 
   logHeader;
   kLog.cullLogFile;
+
+  //cullTmpFile;                     //  Remove old .tmp files left over from clipboard operations.
 
   fs.addFonts;                     //  Add custom fonts.
 
@@ -509,6 +520,7 @@ end;
 procedure TfrmMain.UpdateTime(KTime: TDateTime);
 {  Updates the time in the correct font.    }
 begin
+
   case CmbBxTime.Items[CmbBxTime.ItemIndex] of
     'Bar Code Time':
     begin
@@ -520,22 +532,25 @@ begin
       lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
     end;
-  'Semaphore Time':
-  begin
-    lblfuzzy.Font.Name := 'Semaphore';
-    lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-  end;
-  'Braille Time':
-  begin
-    lblfuzzy.Font.Name := 'BrailleLatin';
-    lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-  end;
+    'Semaphore Time':
+    begin
+      lblfuzzy.Font.Name := 'Semaphore';
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+    end;
+    'Braille Time':
+    begin
+      lblfuzzy.Font.Name := 'BrailleLatin';
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+    end;
     else   //  no font substitution, use default font.
       begin
+        lblfuzzy.Top := 2;
         lblfuzzy.Font.Name := 'default';
+        lblfuzzy.Font.Size := 18;
         lblfuzzy.Caption := ft.getTime;
-      end
+      end;
   end;
+
 end;
 
 procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
@@ -1500,6 +1515,32 @@ end;
 procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
 begin
   frmLicense.ShowModal;
+end;
+//
+// ********************************************************* Info Menu *********
+//
+procedure TfrmMain.mnuItmDaylightSavingClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Daylight Saving';
+  frmInfo.ShowModal;
+end;
+
+procedure TfrmMain.mnuItmEasterDatesClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Easter Dates';
+  frmInfo.ShowModal;
+end;
+
+procedure TfrmMain.mnuItmLentDatesClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Lent Dates';
+  frmInfo.ShowModal;
+end;
+
+procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Power Source';
+  frmInfo.ShowModal;
 end;
 //
 // ********************************************************* ButtonPannel ******

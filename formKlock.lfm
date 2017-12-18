@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1224
+  Left = 1189
   Height = 260
-  Top = 361
+  Top = 483
   Width = 620
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -3006,7 +3006,26 @@ object frmMain: TfrmMain
         OnClick = MenuItem2Click
       end
     end
-    object mnuhelp: TMenuItem
+    object mnuInfo: TMenuItem
+      Caption = 'Info'
+      object mnuItmDaylightSaving: TMenuItem
+        Caption = 'Daylight Saving'
+        OnClick = mnuItmDaylightSavingClick
+      end
+      object mnuItmEasterDates: TMenuItem
+        Caption = 'Easter Dates'
+        OnClick = mnuItmEasterDatesClick
+      end
+      object mnuItmLentDates: TMenuItem
+        Caption = 'Lent Dates'
+        OnClick = mnuItmLentDatesClick
+      end
+      object mnuItmPowerSource: TMenuItem
+        Caption = 'Power Source'
+        OnClick = mnuItmPowerSourceClick
+      end
+    end
+    object mnuHelp: TMenuItem
       Caption = 'Help'
       object mnuItmHelp: TMenuItem
         Caption = 'Help'

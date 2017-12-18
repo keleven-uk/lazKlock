@@ -1552,7 +1552,11 @@ Date:   Sat Dec 16 18:56:37 2017 +0000
 
 Build 52 [2.1.2.52]
 
-    [This is a NEARLY duplication of build 43]
+commit 955ef8502453ccbc89da6a283ef28ff39acb7f7a
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Dec 17 21:37:49 2017 +0000
+
+    [This is a NEARLY duplication of build 46]
     Added formCipboard and uformClipboardUtils which implements a clipboard manager.
 
     Added various options for the clipboard manages to formOptions and uOptions.
@@ -1561,6 +1565,28 @@ Build 52 [2.1.2.52]
     4946 lines of source code.
     2517 statements
     16.6% comment
+
+ formAbout.lfm         |  41 ++++++-----
+ formAbout.pas         |  44 ++----------
+ formHelp.pas          |   2 +
+ formKlock.pas         | 160 +++++++++++++++++++----------------------
+ formLicense.lfm       |   2 +-
+ formOptions.lfm       |  78 ++++++++++++++++++--
+ formOptions.pas       |  55 ++++++++++++++-
+ formanalogueklock.pas |   3 +
+ formlicense.pas       |   2 +
+ formreminderinput.lfm |   2 +-
+ formreminderinput.pas |   7 ++
+ history.txt           |  73 ++++++++++++++++++-
+ klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
+ klock.lpr             |   2 +-
+ lazKlock.smproj       | Bin 96029 -> 108871 bytes
+ ufonts.pas            |  98 +++++++++++++++++++-------
+ uklockutils.pas       |  97 ++++++++++++++++++++++++-
+ ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
+ uoptions.pas          |  93 ++++++++++++++++--------
+ uoptionsutils.pas     |   3 -
+ 20 files changed, 805 insertions(+), 304 deletions(-)
 
 /*******************************************************************************************************/
 Klock has nnow caught up to the point before the curruption.

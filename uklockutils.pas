@@ -458,6 +458,7 @@ begin
   {$else}
     kLog.writeLog(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
   {$endif}
+  kLog.writeLog('App Dir : ' + ExtractFilePath(Application.ExeName));
   kLog.writeLog('............................................................');
 end;
 

@@ -16,6 +16,7 @@ type
     btnAboutExit: TButton;
     btnAboutMSinfo: TButton;
     Image1: TImage;
+    lblAppDir: TLabel;
     lblWindowsVersion: TLabel;
     lblAppUpTime: TLabel;
     lblSysUpTime: TLabel;
@@ -102,6 +103,7 @@ begin
   lblWindowsVersion.Caption := getWindowsVersion;
   lblCompanyName.Caption := userOptions.CompanyName;
   lblContact.Caption := userOptions.Comments;
+  lblAppDir.Caption := 'App Dir : ' + ExtractFilePath(Application.ExeName);
 
   // Display the free space on drives B, C, D, E, F, where present
   for i := 2 to 10 do

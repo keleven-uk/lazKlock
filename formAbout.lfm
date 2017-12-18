@@ -1,16 +1,16 @@
 object frmAbout: TfrmAbout
   Left = 1306
-  Height = 535
+  Height = 570
   Top = 227
   Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'About Klock'
-  ClientHeight = 535
+  ClientHeight = 570
   ClientWidth = 320
-  Constraints.MaxHeight = 535
+  Constraints.MaxHeight = 570
   Constraints.MaxWidth = 320
-  Constraints.MinHeight = 535
+  Constraints.MinHeight = 570
   Constraints.MinWidth = 320
   Icon.Data = {
     BE0C00000000010001002020000001001800A80C000016000000280000002000
@@ -122,10 +122,10 @@ object frmAbout: TfrmAbout
   LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 8
-    Height = 304
+    Height = 336
     Top = 8
     Width = 306
-    ClientHeight = 304
+    ClientHeight = 336
     ClientWidth = 306
     TabOrder = 0
     object lblLazarusVersion: TLabel
@@ -137,9 +137,9 @@ object frmAbout: TfrmAbout
       ParentColor = False
     end
     object lblProgramName: TLabel
-      Left = 160
+      Left = 168
       Height = 32
-      Top = 32
+      Top = 24
       Width = 67
       Caption = 'Klock'
       Font.CharSet = ANSI_CHARSET
@@ -152,9 +152,9 @@ object frmAbout: TfrmAbout
       ParentFont = False
     end
     object lblProgramDescription: TLabel
-      Left = 144
+      Left = 152
       Height = 21
-      Top = 80
+      Top = 64
       Width = 114
       Caption = 'A Clock with a K.'
       Font.Height = -16
@@ -162,9 +162,9 @@ object frmAbout: TfrmAbout
       ParentFont = False
     end
     object lblProgrammer: TLabel
-      Left = 136
+      Left = 137
       Height = 17
-      Top = 112
+      Top = 96
       Width = 159
       Caption = 'Kevin Scott  (c) 2012 - 2017'
       Font.Height = -13
@@ -706,13 +706,22 @@ object frmAbout: TfrmAbout
       Width = 100
       Caption = 'lblWindowsVersion'
       Color = clDefault
+      ParentColor = False
       Transparent = False
+    end
+    object lblAppDir: TLabel
+      Left = 16
+      Height = 15
+      Top = 312
+      Width = 50
+      Caption = 'lblAppDir'
+      ParentColor = False
     end
   end
   object Panel2: TPanel
     Left = 8
     Height = 96
-    Top = 320
+    Top = 352
     Width = 306
     ClientHeight = 96
     ClientWidth = 306
@@ -728,9 +737,9 @@ object frmAbout: TfrmAbout
     end
   end
   object btnAboutExit: TButton
-    Left = 224
+    Left = 216
     Height = 25
-    Top = 496
+    Top = 528
     Width = 75
     Caption = 'Exit'
     OnClick = btnAboutExitClick
@@ -739,7 +748,7 @@ object frmAbout: TfrmAbout
   object btnAboutMSinfo: TButton
     Left = 120
     Height = 25
-    Top = 496
+    Top = 528
     Width = 75
     Caption = 'MSinfo'
     OnClick = btnAboutMSinfoClick
@@ -748,7 +757,7 @@ object frmAbout: TfrmAbout
   object Panel3: TPanel
     Left = 8
     Height = 56
-    Top = 424
+    Top = 456
     Width = 306
     ClientHeight = 56
     ClientWidth = 306
