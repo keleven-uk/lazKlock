@@ -16,21 +16,14 @@ type
     btnAboutExit: TButton;
     btnAboutMSinfo: TButton;
     Image1: TImage;
-    lblAppDir: TLabel;
-    lblWindowsVersion: TLabel;
     lblAppUpTime: TLabel;
     lblSysUpTime: TLabel;
     lblApplicationUpTime: TLabel;
     lblSystemUpTime: TLabel;
-    lblDescription: TLabel;
-    lblKlockversion: TLabel;
-    lblFileVersion: TLabel;
-    lblCompanyName: TLabel;
-    lblContact: TLabel;
     lblProgrammer: TLabel;
     lblProgramDescription: TLabel;
     lblProgramName: TLabel;
-    lblLazarusVersion: TLabel;
+    LstBxInfo: TListBox;
     LstBxDiscSpace: TListBox;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -62,6 +55,7 @@ uses
 procedure TfrmAbout.btnAboutExitClick(Sender: TObject);
 {  Close About form.  }
 begin
+  tmrUpTime.Enabled := false;
   Close;
 end;
 
@@ -90,20 +84,25 @@ begin
   dskFree := FloatToStrF(DiskFree(0) / 1073741824, ffFixed, 3, 2);
   dskSize := FloatToStrF(DiskSize(0) / 1073741824, ffFixed, 3, 2);
 
+  lstBxInfo.Items.add(userOptions.fileDescription);
+  lstBxInfo.Items.add('');
   {$ifdef WIN32}
-    lblLazarusVersion.Caption := format('Built with 32 bit Lazarus Version :: %s', [lcl_version]);
+    lstBxInfo.Items.add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
   {$else}
-    lblLazarusVersion.Caption := format('Built with 64 bit Lazarus Version :: %s', [lcl_version]);
+    lstBxInfo.Items.add(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
   {$endif}
-
-  lblDescription.Caption := userOptions.fileDescription;
-  lblProgrammer.Caption := userOptions.legalCopyright;
-  lblKlockversion.Caption := format('lazKlock Build   :: %s', [userOptions.productVersion]);
-  lblFileVersion.Caption := format('lazKlock Version :: %s', [userOptions.fileVersion]);
-  lblWindowsVersion.Caption := getWindowsVersion;
-  lblCompanyName.Caption := userOptions.CompanyName;
-  lblContact.Caption := userOptions.Comments;
-  lblAppDir.Caption := 'App Dir : ' + ExtractFilePath(Application.ExeName);
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(getWindowsVersion);
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(userOptions.CompanyName);
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(userOptions.Comments);
+  lstBxInfo.Items.add('');
+  lstBxInfo.Items.add('App Dir : ' + ExtractFilePath(Application.ExeName));
 
   // Display the free space on drives B, C, D, E, F, where present
   for i := 2 to 10 do
@@ -121,6 +120,7 @@ begin
 end;
 
 procedure TfrmAbout.tmrUpTimeTimer(Sender: TObject);
+{  Update the labels in real time.    }
 begin
   lblAppUpTime.Caption := getUpTime('Application');
   lblSysUpTime.Caption := getUpTime('System');

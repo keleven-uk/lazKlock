@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ComCtrls, StdCtrls, UformClipBoardUtils, LCLIntf, LCLType, Clipbrd;
+  ComCtrls, StdCtrls, UformClipBoardUtils, LCLIntf, LCLType, Clipbrd, dateUtils,
+  LazFileUtils;
 
 type
 
@@ -45,7 +46,7 @@ type
     procedure ClipboardChanged(Sender: TObject);
     function isThere(s: string): boolean;
   public
-
+    procedure cullTmpFiles;
   end;
 
 var
@@ -232,6 +233,27 @@ begin
       newItem.SubItems.add(FListener.text);
       klog.writeLog(format('%s %s %s', [FListener.category, FListener.epoch, FListener.text]));
     end;
+end;
+
+procedure TfrmClipBoard.cullTmpFiles;
+{  Will delete [to recycle bin] all log files older then a specified time, if switched on.  }
+var
+  tmpFiles:TStringlist;
+  tmpFile: string;
+  tmpDate:TDateTime;
+  tmpAge:longInt;
+begin
+  tmpFiles := TstringList.Create;
+  FindAllFiles(tmpFiles, GetAppConfigDir(False), '*.tmp', True);
+
+  for tmpFile in tmpFiles do
+    begin
+      tmpDate := FileDateTodateTime(FileAgeUTF8(tmpFile));
+      tmpAge := DaysBetween(Now, tmpDate);
+      kLog.writeLog(format('%S with age %D  %S', [tmpfile, tmpAge, FormatDateTime('DD MMM YYYY', tmpDate)]));
+    end;
+
+  freeandnil(tmpFiles);
 end;
 
 function TfrmClipBoard.isThere(s: string): boolean;

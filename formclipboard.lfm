@@ -3,9 +3,14 @@ object frmClipBoard: TfrmClipBoard
   Height = 387
   Top = 544
   Width = 658
+  BorderStyle = bsSingle
   Caption = 'Clipboard Monitor'
   ClientHeight = 387
   ClientWidth = 658
+  Constraints.MaxHeight = 387
+  Constraints.MaxWidth = 658
+  Constraints.MinHeight = 387
+  Constraints.MinWidth = 658
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate

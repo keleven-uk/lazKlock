@@ -1,7 +1,7 @@
 object frmAbout: TfrmAbout
-  Left = 1306
+  Left = 1397
   Height = 570
-  Top = 227
+  Top = 211
   Width = 320
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -128,14 +128,6 @@ object frmAbout: TfrmAbout
     ClientHeight = 336
     ClientWidth = 306
     TabOrder = 0
-    object lblLazarusVersion: TLabel
-      Left = 16
-      Height = 15
-      Top = 155
-      Width = 144
-      Caption = 'Built With Lazarus Version ::'
-      ParentColor = False
-    end
     object lblProgramName: TLabel
       Left = 168
       Height = 32
@@ -170,48 +162,6 @@ object frmAbout: TfrmAbout
       Font.Height = -13
       ParentColor = False
       ParentFont = False
-    end
-    object lblDescription: TLabel
-      Left = 16
-      Height = 17
-      Top = 128
-      Width = 80
-      Caption = 'lblDescription'
-      Font.Height = -13
-      ParentColor = False
-      ParentFont = False
-    end
-    object lblKlockversion: TLabel
-      Left = 16
-      Height = 15
-      Top = 180
-      Width = 80
-      Caption = 'lblKlockversion'
-      ParentColor = False
-    end
-    object lblFileVersion: TLabel
-      Left = 16
-      Height = 15
-      Top = 205
-      Width = 69
-      Caption = 'lblFileVersion'
-      ParentColor = False
-    end
-    object lblCompanyName: TLabel
-      Left = 16
-      Height = 15
-      Top = 255
-      Width = 97
-      Caption = 'lblCompanyName'
-      ParentColor = False
-    end
-    object lblContact: TLabel
-      Left = 16
-      Height = 15
-      Top = 280
-      Width = 55
-      Caption = 'lblContact'
-      ParentColor = False
     end
     object Image1: TImage
       Left = 16
@@ -699,23 +649,14 @@ object frmAbout: TfrmAbout
       }
       Transparent = True
     end
-    object lblWindowsVersion: TLabel
-      Left = 16
-      Height = 15
-      Top = 230
-      Width = 100
-      Caption = 'lblWindowsVersion'
-      Color = clDefault
-      ParentColor = False
-      Transparent = False
-    end
-    object lblAppDir: TLabel
-      Left = 16
-      Height = 15
-      Top = 312
-      Width = 50
-      Caption = 'lblAppDir'
-      ParentColor = False
+    object LstBxInfo: TListBox
+      Left = 8
+      Height = 192
+      Top = 128
+      Width = 288
+      ItemHeight = 0
+      ParentColor = True
+      TabOrder = 0
     end
   end
   object Panel2: TPanel

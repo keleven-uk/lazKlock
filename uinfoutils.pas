@@ -50,27 +50,32 @@ begin
         begin
           strResults.add('We are not currently in the daylight savings time period');
           strResults.Add(StandardName);
+          strResults.Add('');
         end;
         time_zone_id_daylight:
         begin
           strResults.add('We are currently in the daylight savings time period');
           strResults.Add(Daylightname);
+          strResults.Add('');
         end;
       end;
 
       strResults.add(format('Daylight Saving for %d', [year]));
+      strResults.Add('');
 
       with daylightdate do
       begin
         if (Daylightname = '') then
         begin
           strResults.Add('No Daylight Saving Time information available');
+          strResults.Add('');
         end
         else
         begin
           d2 := getNthDSTDOW(year, wmonth, wDayOfWeek, wDay);
           t := encodedate(year, wmonth, d2) + encodetime(whour, wminute, wsecond, wmilliseconds);
           strResults.add(formatdatetime('"Daylight saving starts: " mmmm dd  hh:nn am/pm', t));
+          strResults.Add('');
         end;   //  if (Daylightname = '')
       end;     //  with daylightdate
 
@@ -80,6 +85,7 @@ begin
         d2 := getNthDSTDOW(year, wmonth, wDayOfWeek, wday);
         t := encodedate(year, wmonth, d2) + encodetime(whour, wminute, wsecond, wmilliseconds);
         strResults.add(formatdatetime('"Daylight saving ends: " mmmm dd  hh:nn am/pm', t));
+        strResults.Add('');
       end;     //  with standarddate
     end;       //  with timezoneinfo
   end          //  if r >
@@ -120,7 +126,9 @@ begin
   easter := getEasterSunday(year);
 
   strResults.add('');
+  strResults.add('');
   strResults.add(format('Easter Dates for %d', [year]));
+  strResults.add('');
   strResults.add(FormatDateTime('"Good Friday   :: "DD MMM YYYY', incDay(easter, -2)));
   strResults.add(FormatDateTime('"Easter Sunday :: "DD MMM YYYY', easter));
   strResults.add(FormatDateTime('"Easter Monday :: "DD MMM YYYY', incDay(easter)));
@@ -142,7 +150,8 @@ begin
 
   strResults.add('');
   strResults.add('');
-  strResults.add(format('Easter Dates for %d', [year]));
+  strResults.add(format('Lent Dates for %d', [year]));
+  strResults.add('');
   strResults.add(FormatDateTime('"Lent Starts [Ash Wednesday] :: "DD MMM YYYY', incDay(easter, -46)));
   strResults.add(FormatDateTime('"Lent Ends   [Easter Sunday] :: "DD MMM YYYY', easter));
 
@@ -163,6 +172,8 @@ begin
       strResults.add('Mains power online')
     else
       strResults.add('No mains Power');
+
+    strResults.add('');
 
     case powerStatus.BatteryFlag of
       1: strResults.add('High — the battery capacity is at more than 66 percent');

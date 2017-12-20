@@ -4,84 +4,84 @@ commit a3539dd01031498d3c25c9a5ca3a454e18748aa6
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 20:50:37 2016 +0100
 
-    Initial Import.
+Initial Import.
 
-    Most of the GUI structure is complete.
+Most of the GUI structure is complete.
 
-    Countdown page complete.
+Countdown page complete.
 
- .gitignore                     |  33 ++
- GNU GENERAL PUBLIC LICENSE.txt | 674 +++++++++++++++++++++++++++++++++++++++++
- blue-letters/!.ico             | Bin 0 -> 119149 bytes
- blue-letters/A.ico             | Bin 0 -> 133106 bytes
- blue-letters/B.ico             | Bin 0 -> 130770 bytes
- blue-letters/C.ico             | Bin 0 -> 136698 bytes
- blue-letters/D.ico             | Bin 0 -> 129097 bytes
- blue-letters/Dot.ico           | Bin 0 -> 118524 bytes
- blue-letters/E.ico             | Bin 0 -> 124688 bytes
- blue-letters/F.ico             | Bin 0 -> 124147 bytes
- blue-letters/G.ico             | Bin 0 -> 135767 bytes
- blue-letters/H.ico             | Bin 0 -> 126025 bytes
- blue-letters/I.ico             | Bin 0 -> 120077 bytes
- blue-letters/J.ico             | Bin 0 -> 126758 bytes
- blue-letters/K.ico             | Bin 0 -> 132202 bytes
- blue-letters/L.ico             | Bin 0 -> 123843 bytes
- blue-letters/M.ico             | Bin 0 -> 132420 bytes
- blue-letters/N.ico             | Bin 0 -> 128936 bytes
- blue-letters/O.ico             | Bin 0 -> 135070 bytes
- blue-letters/P.ico             | Bin 0 -> 127568 bytes
- blue-letters/Q.ico             | Bin 0 -> 138504 bytes
- blue-letters/Question.ico      | Bin 0 -> 122752 bytes
- blue-letters/R.ico             | Bin 0 -> 131815 bytes
- blue-letters/S.ico             | Bin 0 -> 138950 bytes
- blue-letters/T.ico             | Bin 0 -> 123861 bytes
- blue-letters/U.ico             | Bin 0 -> 126431 bytes
- blue-letters/V.ico             | Bin 0 -> 133394 bytes
- blue-letters/W.ico             | Bin 0 -> 137393 bytes
- blue-letters/X.ico             | Bin 0 -> 133641 bytes
- blue-letters/Y.ico             | Bin 0 -> 130920 bytes
- blue-letters/Z.ico             | Bin 0 -> 129292 bytes
- blue-letters/readme.txt        |  26 ++
- blue-letters/sA.ico            | Bin 0 -> 894 bytes
- blue-letters/sB.ico            | Bin 0 -> 894 bytes
- blue-letters/sC.ico            | Bin 0 -> 894 bytes
- blue-letters/sD.ico            | Bin 0 -> 894 bytes
- info.txt                       |  15 +
- klock.ico                      | Bin 0 -> 3262 bytes
- klock.lpi                      | 268 ++++++++++++++++
- klock.lpr                      |  22 ++
- random/random1.ico             | Bin 0 -> 151787 bytes
- random/random10.ico            | Bin 0 -> 161228 bytes
- random/random11.ico            | Bin 0 -> 179933 bytes
- random/random12.ico            | Bin 0 -> 173332 bytes
- random/random2.ico             | Bin 0 -> 161370 bytes
- random/random3.ico             | Bin 0 -> 154710 bytes
- random/random4.ico             | Bin 0 -> 176679 bytes
- random/random5.ico             | Bin 0 -> 132648 bytes
- random/random6.ico             | Bin 0 -> 149826 bytes
- random/random7.ico             | Bin 0 -> 155776 bytes
- random/random8.ico             | Bin 0 -> 156516 bytes
- random/random9.ico             | Bin 0 -> 151106 bytes
- random/readme.txt              |  17 ++
- sounds/alarm-fatal.wav         | Bin 0 -> 1359604 bytes
- sounds/chimes.wav              | Bin 0 -> 55776 bytes
- sounds/chord.wav               | Bin 0 -> 97016 bytes
- sounds/ding.wav                | Bin 0 -> 80856 bytes
- sounds/notify.wav              | Bin 0 -> 119384 bytes
- sounds/recycle.wav             | Bin 0 -> 25434 bytes
- sounds/ringin.wav              | Bin 0 -> 10026 bytes
- sounds/ringout.wav             | Bin 0 -> 5212 bytes
- sounds/start.wav               | Bin 0 -> 1192 bytes
- sounds/tada.wav                | Bin 0 -> 171100 bytes
- uabout.lfm                     | 204 +++++++++++++
- uabout.pas                     |  62 ++++
- uhelp.lfm                      | 159 ++++++++++
- uhelp.pas                      |  68 +++++
- uklock.lfm                     | 376 +++++++++++++++++++++++
- uklock.pas                     | 295 ++++++++++++++++++
- uoptions.lfm                   |  42 +++
- uoptions.pas                   |  47 +++
- 71 files changed, 2308 insertions(+)
+.gitignore                     |  33 ++
+GNU GENERAL PUBLIC LICENSE.txt | 674 +++++++++++++++++++++++++++++++++++++++++
+blue-letters/!.ico             | Bin 0 -> 119149 bytes
+blue-letters/A.ico             | Bin 0 -> 133106 bytes
+blue-letters/B.ico             | Bin 0 -> 130770 bytes
+blue-letters/C.ico             | Bin 0 -> 136698 bytes
+blue-letters/D.ico             | Bin 0 -> 129097 bytes
+blue-letters/Dot.ico           | Bin 0 -> 118524 bytes
+blue-letters/E.ico             | Bin 0 -> 124688 bytes
+blue-letters/F.ico             | Bin 0 -> 124147 bytes
+blue-letters/G.ico             | Bin 0 -> 135767 bytes
+blue-letters/H.ico             | Bin 0 -> 126025 bytes
+blue-letters/I.ico             | Bin 0 -> 120077 bytes
+blue-letters/J.ico             | Bin 0 -> 126758 bytes
+blue-letters/K.ico             | Bin 0 -> 132202 bytes
+blue-letters/L.ico             | Bin 0 -> 123843 bytes
+blue-letters/M.ico             | Bin 0 -> 132420 bytes
+blue-letters/N.ico             | Bin 0 -> 128936 bytes
+blue-letters/O.ico             | Bin 0 -> 135070 bytes
+blue-letters/P.ico             | Bin 0 -> 127568 bytes
+blue-letters/Q.ico             | Bin 0 -> 138504 bytes
+blue-letters/Question.ico      | Bin 0 -> 122752 bytes
+blue-letters/R.ico             | Bin 0 -> 131815 bytes
+blue-letters/S.ico             | Bin 0 -> 138950 bytes
+blue-letters/T.ico             | Bin 0 -> 123861 bytes
+blue-letters/U.ico             | Bin 0 -> 126431 bytes
+blue-letters/V.ico             | Bin 0 -> 133394 bytes
+blue-letters/W.ico             | Bin 0 -> 137393 bytes
+blue-letters/X.ico             | Bin 0 -> 133641 bytes
+blue-letters/Y.ico             | Bin 0 -> 130920 bytes
+blue-letters/Z.ico             | Bin 0 -> 129292 bytes
+blue-letters/readme.txt        |  26 ++
+blue-letters/sA.ico            | Bin 0 -> 894 bytes
+blue-letters/sB.ico            | Bin 0 -> 894 bytes
+blue-letters/sC.ico            | Bin 0 -> 894 bytes
+blue-letters/sD.ico            | Bin 0 -> 894 bytes
+info.txt                       |  15 +
+klock.ico                      | Bin 0 -> 3262 bytes
+klock.lpi                      | 268 ++++++++++++++++
+klock.lpr                      |  22 ++
+random/random1.ico             | Bin 0 -> 151787 bytes
+random/random10.ico            | Bin 0 -> 161228 bytes
+random/random11.ico            | Bin 0 -> 179933 bytes
+random/random12.ico            | Bin 0 -> 173332 bytes
+random/random2.ico             | Bin 0 -> 161370 bytes
+random/random3.ico             | Bin 0 -> 154710 bytes
+random/random4.ico             | Bin 0 -> 176679 bytes
+random/random5.ico             | Bin 0 -> 132648 bytes
+random/random6.ico             | Bin 0 -> 149826 bytes
+random/random7.ico             | Bin 0 -> 155776 bytes
+random/random8.ico             | Bin 0 -> 156516 bytes
+random/random9.ico             | Bin 0 -> 151106 bytes
+random/readme.txt              |  17 ++
+sounds/alarm-fatal.wav         | Bin 0 -> 1359604 bytes
+sounds/chimes.wav              | Bin 0 -> 55776 bytes
+sounds/chord.wav               | Bin 0 -> 97016 bytes
+sounds/ding.wav                | Bin 0 -> 80856 bytes
+sounds/notify.wav              | Bin 0 -> 119384 bytes
+sounds/recycle.wav             | Bin 0 -> 25434 bytes
+sounds/ringin.wav              | Bin 0 -> 10026 bytes
+sounds/ringout.wav             | Bin 0 -> 5212 bytes
+sounds/start.wav               | Bin 0 -> 1192 bytes
+sounds/tada.wav                | Bin 0 -> 171100 bytes
+uabout.lfm                     | 204 +++++++++++++
+uabout.pas                     |  62 ++++
+uhelp.lfm                      | 159 ++++++++++
+uhelp.pas                      |  68 +++++
+uklock.lfm                     | 376 +++++++++++++++++++++++
+uklock.pas                     | 295 ++++++++++++++++++
+uoptions.lfm                   |  42 +++
+uoptions.pas                   |  47 +++
+71 files changed, 2308 insertions(+)
 
 Build 2
 
@@ -89,70 +89,70 @@ commit dc39233aeaa2191988890a6964d7d721e78d3bf0
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 20:56:56 2016 +0100
 
-    Nearly completed timer page - just an issue with the pause/resume.
+Nearly completed timer page - just an issue with the pause/resume.
 
-    Changed icon to clock.ico
+Changed icon to clock.ico
 
-    Changed message to popup notification.
+Changed message to popup notification.
 
- blue-letters/!.ico        |  Bin 119149 -> 0 bytes
- blue-letters/A.ico        |  Bin 133106 -> 0 bytes
- blue-letters/B.ico        |  Bin 130770 -> 0 bytes
- blue-letters/C.ico        |  Bin 136698 -> 0 bytes
- blue-letters/D.ico        |  Bin 129097 -> 0 bytes
- blue-letters/Dot.ico      |  Bin 118524 -> 0 bytes
- blue-letters/E.ico        |  Bin 124688 -> 0 bytes
- blue-letters/F.ico        |  Bin 124147 -> 0 bytes
- blue-letters/G.ico        |  Bin 135767 -> 0 bytes
- blue-letters/H.ico        |  Bin 126025 -> 0 bytes
- blue-letters/I.ico        |  Bin 120077 -> 0 bytes
- blue-letters/J.ico        |  Bin 126758 -> 0 bytes
- blue-letters/K.ico        |  Bin 132202 -> 0 bytes
- blue-letters/L.ico        |  Bin 123843 -> 0 bytes
- blue-letters/M.ico        |  Bin 132420 -> 0 bytes
- blue-letters/N.ico        |  Bin 128936 -> 0 bytes
- blue-letters/O.ico        |  Bin 135070 -> 0 bytes
- blue-letters/P.ico        |  Bin 127568 -> 0 bytes
- blue-letters/Q.ico        |  Bin 138504 -> 0 bytes
- blue-letters/Question.ico |  Bin 122752 -> 0 bytes
- blue-letters/R.ico        |  Bin 131815 -> 0 bytes
- blue-letters/S.ico        |  Bin 138950 -> 0 bytes
- blue-letters/T.ico        |  Bin 123861 -> 0 bytes
- blue-letters/U.ico        |  Bin 126431 -> 0 bytes
- blue-letters/V.ico        |  Bin 133394 -> 0 bytes
- blue-letters/W.ico        |  Bin 137393 -> 0 bytes
- blue-letters/X.ico        |  Bin 133641 -> 0 bytes
- blue-letters/Y.ico        |  Bin 130920 -> 0 bytes
- blue-letters/Z.ico        |  Bin 129292 -> 0 bytes
- blue-letters/readme.txt   |   26 -
- blue-letters/sA.ico       |  Bin 894 -> 0 bytes
- blue-letters/sB.ico       |  Bin 894 -> 0 bytes
- blue-letters/sC.ico       |  Bin 894 -> 0 bytes
- blue-letters/sD.ico       |  Bin 894 -> 0 bytes
- clock.ico                 |  Bin 0 -> 67646 bytes
- info.txt                  |   10 +-
- klock.ico                 |  Bin 3262 -> 67646 bytes
- klock.lpi                 |  129 ++-
- random/random1.ico        |  Bin 151787 -> 0 bytes
- random/random10.ico       |  Bin 161228 -> 0 bytes
- random/random11.ico       |  Bin 179933 -> 0 bytes
- random/random12.ico       |  Bin 173332 -> 0 bytes
- random/random2.ico        |  Bin 161370 -> 0 bytes
- random/random3.ico        |  Bin 154710 -> 0 bytes
- random/random4.ico        |  Bin 176679 -> 0 bytes
- random/random5.ico        |  Bin 132648 -> 0 bytes
- random/random6.ico        |  Bin 149826 -> 0 bytes
- random/random7.ico        |  Bin 155776 -> 0 bytes
- random/random8.ico        |  Bin 156516 -> 0 bytes
- random/random9.ico        |  Bin 151106 -> 0 bytes
- random/readme.txt         |   17 -
- uabout.lfm                |   30 +-
- uabout.pas                |    2 +-
- uhelp.lfm                 |    6 +-
- uhelp.pas                 |    2 +-
- uklock.lfm                | 2268 +++++++++++++++++++++++++++++++++++++++++++--
- uklock.pas                |   92 +-
- 57 files changed, 2361 insertions(+), 221 deletions(-)
+blue-letters/!.ico        |  Bin 119149 -> 0 bytes
+blue-letters/A.ico        |  Bin 133106 -> 0 bytes
+blue-letters/B.ico        |  Bin 130770 -> 0 bytes
+blue-letters/C.ico        |  Bin 136698 -> 0 bytes
+blue-letters/D.ico        |  Bin 129097 -> 0 bytes
+blue-letters/Dot.ico      |  Bin 118524 -> 0 bytes
+blue-letters/E.ico        |  Bin 124688 -> 0 bytes
+blue-letters/F.ico        |  Bin 124147 -> 0 bytes
+blue-letters/G.ico        |  Bin 135767 -> 0 bytes
+blue-letters/H.ico        |  Bin 126025 -> 0 bytes
+blue-letters/I.ico        |  Bin 120077 -> 0 bytes
+blue-letters/J.ico        |  Bin 126758 -> 0 bytes
+blue-letters/K.ico        |  Bin 132202 -> 0 bytes
+blue-letters/L.ico        |  Bin 123843 -> 0 bytes
+blue-letters/M.ico        |  Bin 132420 -> 0 bytes
+blue-letters/N.ico        |  Bin 128936 -> 0 bytes
+blue-letters/O.ico        |  Bin 135070 -> 0 bytes
+blue-letters/P.ico        |  Bin 127568 -> 0 bytes
+blue-letters/Q.ico        |  Bin 138504 -> 0 bytes
+blue-letters/Question.ico |  Bin 122752 -> 0 bytes
+blue-letters/R.ico        |  Bin 131815 -> 0 bytes
+blue-letters/S.ico        |  Bin 138950 -> 0 bytes
+blue-letters/T.ico        |  Bin 123861 -> 0 bytes
+blue-letters/U.ico        |  Bin 126431 -> 0 bytes
+blue-letters/V.ico        |  Bin 133394 -> 0 bytes
+blue-letters/W.ico        |  Bin 137393 -> 0 bytes
+blue-letters/X.ico        |  Bin 133641 -> 0 bytes
+blue-letters/Y.ico        |  Bin 130920 -> 0 bytes
+blue-letters/Z.ico        |  Bin 129292 -> 0 bytes
+blue-letters/readme.txt   |   26 -
+blue-letters/sA.ico       |  Bin 894 -> 0 bytes
+blue-letters/sB.ico       |  Bin 894 -> 0 bytes
+blue-letters/sC.ico       |  Bin 894 -> 0 bytes
+blue-letters/sD.ico       |  Bin 894 -> 0 bytes
+clock.ico                 |  Bin 0 -> 67646 bytes
+info.txt                  |   10 +-
+klock.ico                 |  Bin 3262 -> 67646 bytes
+klock.lpi                 |  129 ++-
+random/random1.ico        |  Bin 151787 -> 0 bytes
+random/random10.ico       |  Bin 161228 -> 0 bytes
+random/random11.ico       |  Bin 179933 -> 0 bytes
+random/random12.ico       |  Bin 173332 -> 0 bytes
+random/random2.ico        |  Bin 161370 -> 0 bytes
+random/random3.ico        |  Bin 154710 -> 0 bytes
+random/random4.ico        |  Bin 176679 -> 0 bytes
+random/random5.ico        |  Bin 132648 -> 0 bytes
+random/random6.ico        |  Bin 149826 -> 0 bytes
+random/random7.ico        |  Bin 155776 -> 0 bytes
+random/random8.ico        |  Bin 156516 -> 0 bytes
+random/random9.ico        |  Bin 151106 -> 0 bytes
+random/readme.txt         |   17 -
+uabout.lfm                |   30 +-
+uabout.pas                |    2 +-
+uhelp.lfm                 |    6 +-
+uhelp.pas                 |    2 +-
+uklock.lfm                | 2268 +++++++++++++++++++++++++++++++++++++++++++--
+uklock.pas                |   92 +-
+57 files changed, 2361 insertions(+), 221 deletions(-)
 
 Build 3
 
@@ -160,14 +160,14 @@ commit d16134c3bd9b03fee717a13f51b75ca79be2ed4d
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:12:48 2016 +0100
 
-    Timer page completed.
+Timer page completed.
 
-    Reminder page started.
+Reminder page started.
 
- klock.lpi  | 91 +++++++++++++++++++++++++++++++++-----------------------------
- uklock.lfm | 66 +++++++++++++++++++++++++++++++++++++++------
- uklock.pas | 62 +++++++++++++++++++++++++++++++++++++-----
- 3 files changed, 163 insertions(+), 56 deletions(-
+klock.lpi  | 91 +++++++++++++++++++++++++++++++++-----------------------------
+uklock.lfm | 66 +++++++++++++++++++++++++++++++++++++++------
+uklock.pas | 62 +++++++++++++++++++++++++++++++++++++-----
+3 files changed, 163 insertions(+), 56 deletions(-
 
 Build 4
 
@@ -175,16 +175,16 @@ commit 2bb295ab57abacd842d99879a21a46feeec62d8c
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:15:59 2016 +0100
 
-    Fuzzy time page completed.
+Fuzzy time page completed.
 
-    Still working on reminder page.
+Still working on reminder page.
 
- klock.lpi      | 100 +++++++++++++++++++----------------
- klock.lpr      |   2 +-
- ufuzzytime.pas | 153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- uklock.lfm     | 161 +++++++++++++++++++++++++++++++++++++++++++--------------
- uklock.pas     |  64 +++++++++++++++++++----
- 5 files changed, 386 insertions(+), 94 deletions(-
+klock.lpi      | 100 +++++++++++++++++++----------------
+klock.lpr      |   2 +-
+ufuzzytime.pas | 153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+uklock.lfm     | 161 +++++++++++++++++++++++++++++++++++++++++++--------------
+uklock.pas     |  64 +++++++++++++++++++----
+5 files changed, 386 insertions(+), 94 deletions(-
 
 Build 5
 
@@ -192,11 +192,11 @@ commit 012c8dcaa5ef6569b178c9263e8553b0208f46aa
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:22:06 2016 +0100
 
-    All four pages [fuzzy, countdown, time & reminder] are all complete.
+All four pages [fuzzy, countdown, time & reminder] are all complete.
 
-    Added logic to change status bar on page change.
+Added logic to change status bar on page change.
 
-    Tidied up code.
+Tidied up code.
 
  info.txt     |   6 +-
  klock.lpi    |  99 +++++++-------
@@ -215,23 +215,23 @@ commit 04bbd3f4d9c7fbff3d493f570177b9c422f8fbbd
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:26:21 2016 +0100
 
-    All four pages now work - maybe an issue with reminders.
+All four pages now work - maybe an issue with reminders.
 
-    Added option record, that is passed between option form and the main form.
-    Added first option - colour of the main labels.
+Added option record, that is passed between option form and the main form.
+Added first option - colour of the main labels.
 
- history.txt        |  37 +++++++++++++
- klock.iss          |  54 +++++++++++++++++++
- klock.lpi          | 152 ++++++++++++++++++++++++++++-------------------------
- klock.lpr          |   2 +-
- uabout.lfm         |   4 +-
- uhelp.lfm          |   4 +-
- uklock.lfm         |  59 +++++++++++++--------
- uklock.pas         |  38 ++++++++++++--
- uoptions.lfm       |  69 +++++++++++++++++-------
- uoptions.pas       |  71 +++++++++++++++++++++++--
- uoptionsrecord.pas |  32 +++++++++++
- 11 files changed, 399 insertions(+), 123 deletions(-
+history.txt        |  37 +++++++++++++
+klock.iss          |  54 +++++++++++++++++++
+klock.lpi          | 152 ++++++++++++++++++++++++++++-------------------------
+klock.lpr          |   2 +-
+uabout.lfm         |   4 +-
+uhelp.lfm          |   4 +-
+uklock.lfm         |  59 +++++++++++++--------
+uklock.pas         |  38 ++++++++++++--
+uoptions.lfm       |  69 +++++++++++++++++-------
+uoptions.pas       |  71 +++++++++++++++++++++++--
+uoptionsrecord.pas |  32 +++++++++++
+11 files changed, 399 insertions(+), 123 deletions(-
 
 Build 7
 
@@ -239,21 +239,21 @@ commit 3a979b66d0e3fad03dfb79aef2b207025db3784f
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:29:35 2016 +0100
 
-    Added NET & UNIX time to fuzzypage.
-    Added extra buttons to the radio group.
+Added NET & UNIX time to fuzzypage.
+Added extra buttons to the radio group.
 
- info.txt       |   6 +--
- klock.lpi      | 160 ++++++++++++++++++++++++++++++---------------------------
- klock.lpr      |   2 +-
- uabout.pas     |   2 +-
- ufuzzytime.pas |  66 ++++++++++++++++++------
- uhelp.lfm      |   4 +-
- uhelp.pas      |   5 +-
- uklock.lfm     |  30 ++++++++---
- uklock.pas     |  35 ++++++++-----
- uoptions.lfm   |   4 +-
- uoptions.pas   |   2 +-
- 11 files changed, 191 insertions(+), 125 deletions(-)
+info.txt       |   6 +--
+klock.lpi      | 160 ++++++++++++++++++++++++++++++---------------------------
+klock.lpr      |   2 +-
+uabout.pas     |   2 +-
+ufuzzytime.pas |  66 ++++++++++++++++++------
+uhelp.lfm      |   4 +-
+uhelp.pas      |   5 +-
+uklock.lfm     |  30 ++++++++---
+uklock.pas     |  35 ++++++++-----
+uoptions.lfm   |   4 +-
+uoptions.pas   |   2 +-
+11 files changed, 191 insertions(+), 125 deletions(-)
 
 Build 8
 
@@ -261,19 +261,19 @@ commit fd88525ca99a09df732c03859b5e963c91c4679f
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:32:24 2016 +0100
 
-    Corrected bugs in fuzzytime & net time.
+Corrected bugs in fuzzytime & net time.
 
-    Added UTC time.
+Added UTC time.
 
- klock.iss      |   4 +-
- klock.lpi      | 140 ++++++++++++++++++++++++++++-----------------------------
- uabout.lfm     |   4 +-
- ufuzzytime.pas |  19 ++++++--
- uhelp.lfm      |   4 +-
- uklock.lfm     |  11 ++---
- uklock.pas     |   4 ++
- uoptions.lfm   |   4 +-
- 8 files changed, 104 insertions(+), 86 deletions(-)
+klock.iss      |   4 +-
+klock.lpi      | 140 ++++++++++++++++++++++++++++-----------------------------
+uabout.lfm     |   4 +-
+ufuzzytime.pas |  19 ++++++--
+uhelp.lfm      |   4 +-
+uklock.lfm     |  11 ++---
+uklock.pas     |   4 ++
+uoptions.lfm   |   4 +-
+8 files changed, 104 insertions(+), 86 deletions(-)
 
 Build 9
 
@@ -281,21 +281,21 @@ commit 2aad4c41fb6f0410f6ff7f69c952e660a5c96f2d
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:35:59 2016 +0100
 
-    Changed the way to select the time format from a radio group to a combo box.
+Changed the way to select the time format from a radio group to a combo box.
 
-    Added Swatch time.
+Added Swatch time.
 
- history.txt    |  54 +++++++++++++++++++--------
- info.txt       |   6 +--
- klock.lpi      | 116 ++++++++++++++++++++++++++++-----------------------------
- uabout.pas     |   2 +-
- ufuzzytime.pas |  42 ++++++++++++++++-----
- uhelp.pas      |   2 +-
- uklock.lfm     |  37 +++++++-----------
- uklock.pas     |  22 ++++++-----
- uoptions.lfm   |   4 +-
- uoptions.pas   |   2 +-
- 10 files changed, 164 insertions(+), 123 deletions(-
+history.txt    |  54 +++++++++++++++++++--------
+info.txt       |   6 +--
+klock.lpi      | 116 ++++++++++++++++++++++++++++-----------------------------
+uabout.pas     |   2 +-
+ufuzzytime.pas |  42 ++++++++++++++++-----
+uhelp.pas      |   2 +-
+uklock.lfm     |  37 +++++++-----------
+uklock.pas     |  22 ++++++-----
+uoptions.lfm   |   4 +-
+uoptions.pas   |   2 +-
+10 files changed, 164 insertions(+), 123 deletions(-
 
 Build 10
 
@@ -303,22 +303,22 @@ commit 53193a6c8825b941b4b2d9648e40eb1552d8a87b
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:38:26 2016 +0100
 
-    Changed the data input on the reminder page from spin edits [one for hours
-    and one for minutes] to a floating spin edit to handle both hours and
-    minutes.  Still working on the logic to make it work in 24 hours and 60 minutes.
+Changed the data input on the reminder page from spin edits [one for hours
+and one for minutes] to a floating spin edit to handle both hours and
+minutes.  Still working on the logic to make it work in 24 hours and 60 minutes.
 
-    Also added a date picker to the reminder page.
+Also added a date picker to the reminder page.
 
- info.txt       |   6 +--
- klock.lpi      | 126 ++++++++++++++++++++++++++---------------------------
- uabout.lfm     |  28 ++++++------
- uabout.pas     |   2 +-
- ufuzzytime.pas |  21 ++++++++-
- uhelp.lfm      |   4 +-
- uhelp.pas      |   2 +-
- uklock.lfm     | 134 +++++++++++++++++++++++++++++++++------------------------
- uklock.pas     |  73 ++++++++++++++++---------------
- 9 files changed, 218 insertions(+), 178 deletions(-)
+info.txt       |   6 +--
+klock.lpi      | 126 ++++++++++++++++++++++++++---------------------------
+uabout.lfm     |  28 ++++++------
+uabout.pas     |   2 +-
+ufuzzytime.pas |  21 ++++++++-
+uhelp.lfm      |   4 +-
+uhelp.pas      |   2 +-
+uklock.lfm     | 134 +++++++++++++++++++++++++++++++++------------------------
+uklock.pas     |  73 ++++++++++++++++---------------
+9 files changed, 218 insertions(+), 178 deletions(-)
 
 Build 11
 
@@ -326,20 +326,20 @@ commit e1da1e2a4a2bdb103668b2bab9a084b2bb8df54d
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:42:20 2016 +0100
 
-    More work done on the reminder page.
-    Finally decided to use two normal spin edits for the hours and mins.
-    Not too pretty, but simple and it works.
-    Also added a date picker and added the date into the reminder logic.
+More work done on the reminder page.
+Finally decided to use two normal spin edits for the hours and mins.
+Not too pretty, but simple and it works.
+Also added a date picker and added the date into the reminder logic.
 
-    Added a clear button to the reminder page, to cancel the running reminder.
+Added a clear button to the reminder page, to cancel the running reminder.
 
- info.txt   |   6 +--
- klock.lpi  | 120 +++++++++++++++++++++++++++-----------------------------
- uabout.pas |   2 +-
- uhelp.pas  |   2 +-
- uklock.lfm |  96 +++++++++++++++++++++++++--------------------
- uklock.pas | 129 +++++++++++++++++++++++++++++++++++++++----------------------
- 6 files changed, 201 insertions(+), 154 deletions(-
+info.txt   |   6 +--
+klock.lpi  | 120 +++++++++++++++++++++++++++-----------------------------
+uabout.pas |   2 +-
+uhelp.pas  |   2 +-
+uklock.lfm |  96 +++++++++++++++++++++++++--------------------
+uklock.pas | 129 +++++++++++++++++++++++++++++++++++++++----------------------
+6 files changed, 201 insertions(+), 154 deletions(-
 
 Build 12
 
@@ -347,14 +347,14 @@ commit 00b786ab517dc5c7833ace39a7cb35187d9fa811
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 21:59:53 2016 +0100
 
-    Tidied up the code for the radio group - select time.
+Tidied up the code for the radio group - select time.
 
- info.txt   |  6 +++---
- klock.lpi  | 20 ++++++++++----------
- uabout.pas |  2 +-
- uhelp.pas  |  2 +-
- uklock.pas | 48 ++++++++++++++----------------------------------
- 5 files changed, 29 insertions(+), 49 deletions(-)
+info.txt   |  6 +++---
+klock.lpi  | 20 ++++++++++----------
+uabout.pas |  2 +-
+uhelp.pas  |  2 +-
+uklock.pas | 48 ++++++++++++++----------------------------------
+5 files changed, 29 insertions(+), 49 deletions(-)
 
 Build 13
 
@@ -362,24 +362,24 @@ commit 9cdc03d6cb236ae91a3b997d203371a6849910a6
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:02:36 2016 +0100
 
-    Reduced the height of most of the components, to make the overall
-    application more sleek - I think it looks better.
+Reduced the height of most of the components, to make the overall
+application more sleek - I think it looks better.
 
-    Added a new form for the license [same as the help form], hangs off the help menu.
-    Help & Licence forms now load their text from text files.
+Added a new form for the license [same as the help form], hangs off the help menu.
+Help & Licence forms now load their text from text files.
 
- help.txt     |  71 ++++++++++++++++++++++++
- info.txt     |   6 +-
- klock.lpi    | 126 ++++++++++++++++++++++++------------------
- klock.lpr    |   4 +-
- uabout.pas   |   2 +-
- uhelp.lfm    |   4 +-
- uhelp.pas    |  18 +-----
- uklock.lfm   | 175 ++++++++++++++++++++++++++++++-----------------------------
- uklock.pas   |  22 +++++++-
- ulicense.lfm |  53 ++++++++++++++++++
- ulicense.pas |  54 ++++++++++++++++++
- 11 files changed, 373 insertions(+), 162 deletions(-)
+help.txt     |  71 ++++++++++++++++++++++++
+info.txt     |   6 +-
+klock.lpi    | 126 ++++++++++++++++++++++++------------------
+klock.lpr    |   4 +-
+uabout.pas   |   2 +-
+uhelp.lfm    |   4 +-
+uhelp.pas    |  18 +-----
+uklock.lfm   | 175 ++++++++++++++++++++++++++++++-----------------------------
+uklock.pas   |  22 +++++++-
+ulicense.lfm |  53 ++++++++++++++++++
+ulicense.pas |  54 ++++++++++++++++++
+11 files changed, 373 insertions(+), 162 deletions(-)
 
 
 Build 14
@@ -388,22 +388,22 @@ commit daaa17da01956208064528a5eaad527547f31994
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:06:24 2016 +0100
 
-    Added split time button to time page.
+Added split time button to time page.
 
-    Removed the function ItoS, which converted integer to two digit strings
-    and use internal format functions instead.
+Removed the function ItoS, which converted integer to two digit strings
+and use internal format functions instead.
 
- help.txt     |  38 ++++++++++++++++----
- history.txt  |  38 ++++++++++++++++----
- info.txt     |   6 ++--
- klock.lpi    | 113 ++++++++++++++++++++++++++++++-----------------------------
- uabout.lfm   |   6 ++--
- uabout.pas   |   6 ++--
- uhelp.pas    |   2 +-
- uklock.lfm   |  44 ++++++++++++++++++-----
- uklock.pas   |  66 ++++++++++++++++++++++------------
- ulicense.pas |   2 +-
- 10 files changed, 211 insertions(+), 110 deletions(-)
+help.txt     |  38 ++++++++++++++++----
+history.txt  |  38 ++++++++++++++++----
+info.txt     |   6 ++--
+klock.lpi    | 113 ++++++++++++++++++++++++++++++-----------------------------
+uabout.lfm   |   6 ++--
+uabout.pas   |   6 ++--
+uhelp.pas    |   2 +-
+uklock.lfm   |  44 ++++++++++++++++++-----
+uklock.pas   |  66 ++++++++++++++++++++++------------
+ulicense.pas |   2 +-
+10 files changed, 211 insertions(+), 110 deletions(-)
 
 Build 15
 
@@ -411,23 +411,23 @@ commit f69334f878d9b7451b21fb5811aaa45203ea1a8d
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:25:08 2016 +0100
 
-    Added try..except clause to all file operations.
+Added try..except clause to all file operations.
 
-    Another attempt to fix noon bug in fuzzytime.
+Another attempt to fix noon bug in fuzzytime.
 
- help.txt       | 32 +++++++++++++++++--
- info.txt       |  8 ++---
- klock.lpi      | 97 ++++++++++++++++++++++++++++------------------------------
- uabout.lfm     |  6 ++--
- uabout.pas     |  2 +-
- ufuzzytime.pas | 11 ++++---
- uhelp.lfm      |  6 ++--
- uhelp.pas      | 14 +++++++--
- uklock.lfm     | 16 +++++-----
- ulicense.lfm   |  6 ++--
- ulicense.pas   | 14 +++++++--
- uoptions.lfm   |  9 +++---
- 12 files changed, 134 insertions(+), 87 deletions(-)
+help.txt       | 32 +++++++++++++++++--
+info.txt       |  8 ++---
+klock.lpi      | 97 ++++++++++++++++++++++++++++------------------------------
+uabout.lfm     |  6 ++--
+uabout.pas     |  2 +-
+ufuzzytime.pas | 11 ++++---
+uhelp.lfm      |  6 ++--
+uhelp.pas      | 14 +++++++--
+uklock.lfm     | 16 +++++-----
+ulicense.lfm   |  6 ++--
+ulicense.pas   | 14 +++++++--
+uoptions.lfm   |  9 +++---
+12 files changed, 134 insertions(+), 87 deletions(-)
 
 Build 16
 
@@ -435,19 +435,19 @@ commit b2a0dc26bb2192179201688d36afd76500aedb9f
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:27:24 2016 +0100
 
-    Recompiled to check for Lazarus 0.9.30.4
+Recompiled to check for Lazarus 0.9.30.4
 
- history.txt  | 12 ++++++++++++
- info.txt     |  8 ++++----
- klock.iss    |  8 ++++----
- klock.lpi    | 10 +++++-----
- uabout.lfm   | 26 +++++++++++++-------------
- uabout.pas   |  2 +-
- uhelp.lfm    |  2 +-
- uhelp.pas    |  2 +-
- ulicense.lfm |  2 +-
- ulicense.pas |  2 +-
- 10 files changed, 43 insertions(+), 31 deletions(-)
+history.txt  | 12 ++++++++++++
+info.txt     |  8 ++++----
+klock.iss    |  8 ++++----
+klock.lpi    | 10 +++++-----
+uabout.lfm   | 26 +++++++++++++-------------
+uabout.pas   |  2 +-
+uhelp.lfm    |  2 +-
+uhelp.pas    |  2 +-
+ulicense.lfm |  2 +-
+ulicense.pas |  2 +-
+10 files changed, 43 insertions(+), 31 deletions(-)
 
 Build 17
 
@@ -455,24 +455,24 @@ commit 7d528975e17fb50a1b14fc38e5a585c25bcd2a38
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:28:56 2016 +0100
 
-    Licence window made read only - thanks Zach.
-    Reminders can now not be set in the past - thanks Zach.
+Licence window made read only - thanks Zach.
+Reminders can now not be set in the past - thanks Zach.
 
-    Start of code for saving options in a .ini file.
+Start of code for saving options in a .ini file.
 
- info.txt     |   9 +--
- klock.ini    |  21 ++++++
- klock.lpi    | 172 +++++++++++++++++++++++----------------------
- uabout.lfm   |  24 +++----
- uabout.pas   |   2 +-
- uhelp.pas    |   2 +-
- uklock.lfm   |  11 +--
- uklock.pas   |  49 +++++++++----
- ulicense.lfm |   1 +
- ulicense.pas |   2 +-
- uoptions.lfm | 222 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
- uoptions.pas | 153 +++++++++++++++++++++++++++++++++++-----
- 12 files changed, 500 insertions(+), 168 deletions(-)
+info.txt     |   9 +--
+klock.ini    |  21 ++++++
+klock.lpi    | 172 +++++++++++++++++++++++----------------------
+uabout.lfm   |  24 +++----
+uabout.pas   |   2 +-
+uhelp.pas    |   2 +-
+uklock.lfm   |  11 +--
+uklock.pas   |  49 +++++++++----
+ulicense.lfm |   1 +
+ulicense.pas |   2 +-
+uoptions.lfm | 222 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
+uoptions.pas | 153 +++++++++++++++++++++++++++++++++++-----
+12 files changed, 500 insertions(+), 168 deletions(-)
 
 Build 18
 
@@ -480,17 +480,17 @@ commit eb8bb66d933973ec2915c68f5be9a78ac921a6c1
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:38:52 2016 +0100
 
-    Further work completed on the .ini file
+Further work completed on the .ini file
 
-    Extended the GUI on the options screen.
+Extended the GUI on the options screen.
 
- klock.ini    |   3 +-
- klock.lpi    |  94 +++++++++++-----------
- uklock.lfm   |  72 ++++++++---------
- uklock.pas   |   6 +-
- uoptions.lfm | 259 +++++++++++++++++++++++++++++++++--------------------------
- uoptions.pas |  70 ++++++++++------
- 6 files changed, 280 insertions(+), 224 deletions(-)
+klock.ini    |   3 +-
+klock.lpi    |  94 +++++++++++-----------
+uklock.lfm   |  72 ++++++++---------
+uklock.pas   |   6 +-
+uoptions.lfm | 259 +++++++++++++++++++++++++++++++++--------------------------
+uoptions.pas |  70 ++++++++++------
+6 files changed, 280 insertions(+), 224 deletions(-)
 
 Build 19
 
@@ -498,23 +498,23 @@ commit 6258d4478adef926ad45e166503e3a9e47b46bb4
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:41:08 2016 +0100
 
-    Further work on the ini file stuff.
+Further work on the ini file stuff.
 
-    Timer can now run either second / milli seconds.
-    Default page control can now be set.
-    Both saved to ini file.
+Timer can now run either second / milli seconds.
+Default page control can now be set.
+Both saved to ini file.
 
- info.txt     |   6 +--
- klock.ini    |  11 ++---
- klock.lpi    | 140 +++++++++++++++++++++++++++++------------------------------
- uabout.pas   |   4 +-
- uhelp.pas    |   2 +-
- uklock.lfm   |  46 ++++++++++----------
- uklock.pas   |  47 ++++++++++++++------
- ulicense.pas |   2 +-
- uoptions.lfm |  25 ++++++-----
- uoptions.pas | 127 ++++++++++++++++++++++++++++++++++-------------------
- 10 files changed, 232 insertions(+), 178 deletions(-)
+info.txt     |   6 +--
+klock.ini    |  11 ++---
+klock.lpi    | 140 +++++++++++++++++++++++++++++------------------------------
+uabout.pas   |   4 +-
+uhelp.pas    |   2 +-
+uklock.lfm   |  46 ++++++++++----------
+uklock.pas   |  47 ++++++++++++++------
+ulicense.pas |   2 +-
+uoptions.lfm |  25 ++++++-----
+uoptions.pas | 127 ++++++++++++++++++++++++++++++++++-------------------
+10 files changed, 232 insertions(+), 178 deletions(-)
 
 Build 20
 
@@ -522,14 +522,14 @@ commit d6208a7f77b04de861eac0154dc886be990c34b4
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:43:24 2016 +0100
 
-    All modules now load version info from options record.
+All modules now load version info from options record.
 
- info.txt     |   6 +--
- klock.lpi    | 120 +++++++++++++++++++++++++++++------------------------------
- uhelp.pas    |   4 +-
- ulicense.pas |   4 +-
- uoptions.pas |  11 +++---
- 5 files changed, 73 insertions(+), 72 deletions(-)
+info.txt     |   6 +--
+klock.lpi    | 120 +++++++++++++++++++++++++++++------------------------------
+uhelp.pas    |   4 +-
+ulicense.pas |   4 +-
+uoptions.pas |  11 +++---
+5 files changed, 73 insertions(+), 72 deletions(-)
 
 Build 21
 
@@ -537,19 +537,19 @@ commit 9f04e9dd7a8ad1106d10310a6f9933d40b297faa
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:46:44 2016 +0100
 
-    Added unit uOptionsUtils.pas, which contains the functions StringToFont &
-    FontToString - enables font information to be saved to the ini file.
+Added unit uOptionsUtils.pas, which contains the functions StringToFont &
+FontToString - enables font information to be saved to the ini file.
 
-    Added code to save and load fonts from the ini file - to be tested.
+Added code to save and load fonts from the ini file - to be tested.
 
- klock.ini        |   7 ++-
- klock.lpi        | 153 +++++++++++++++++++++++++----------------------
- klock.lpr        |   2 +-
- uklock.pas       |  31 +++++++---
- uoptions.lfm     |  38 +++++++++++-
- uoptions.pas     | 177 ++++++++++++++++++++++++++++++++++++++++++++++++-------
- uoptionutils.pas | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 466 insertions(+), 106 deletions(-)
+klock.ini        |   7 ++-
+klock.lpi        | 153 +++++++++++++++++++++++++----------------------
+klock.lpr        |   2 +-
+uklock.pas       |  31 +++++++---
+uoptions.lfm     |  38 +++++++++++-
+uoptions.pas     | 177 ++++++++++++++++++++++++++++++++++++++++++++++++-------
+uoptionutils.pas | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++
+7 files changed, 466 insertions(+), 106 deletions(-)
 
 Build 22
 
@@ -557,16 +557,16 @@ commit d74e9710c48371a8e92a440c372b15ae673e6119
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 22:50:15 2016 +0100
 
-    Further work on font options.
+Further work on font options.
 
-    Removal of colour buttons in the options screen.  The colour can be
-    changed in the font page, so making these buttons redundant.
+Removal of colour buttons in the options screen.  The colour can be
+changed in the font page, so making these buttons redundant.
 
- klock.ini    |  22 ++++++------
- klock.lpi    | 115 +++++++++++++++++++++++++++++------------------------------
- uoptions.lfm |  34 ++++++++++--------
- uoptions.pas |  57 +++++++++++++++++++++++------
- 4 files changed, 134 insertions(+), 94 deletions(-)
+klock.ini    |  22 ++++++------
+klock.lpi    | 115 +++++++++++++++++++++++++++++------------------------------
+uoptions.lfm |  34 ++++++++++--------
+uoptions.pas |  57 +++++++++++++++++++++++------
+4 files changed, 134 insertions(+), 94 deletions(-)
 
 Build 23
 
@@ -574,23 +574,23 @@ commit 2f4a695fc917e80fa463ee1726e62eb95c253ac0
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 23:01:23 2016 +0100
 
-    Removed colour buttons, duplicated in font dialogue screen.
+Removed colour buttons, duplicated in font dialogue screen.
 
-    Finished font stuff.
+Finished font stuff.
 
-    Will save screen position if desired.
+Will save screen position if desired.
 
- info.txt         |  12 ++--
- klock.ini        |  22 ++++---
- klock.iss        |   7 ++-
- klock.lpi        | 117 ++++++++++++++++++------------------
- uhelp.lfm        |   4 +-
- uklock.lfm       |  47 ++++++++-------
- uklock.pas       |  53 ++++++++--------
- uoptions.lfm     | 164 +++++++++++++++++++++-----------------------------
- uoptions.pas     | 179 +++++++++++++++++--------------------------------------
- uoptionutils.pas |  15 +----
- 10 files changed, 255 insertions(+), 365 deletions(-)
+info.txt         |  12 ++--
+klock.ini        |  22 ++++---
+klock.iss        |   7 ++-
+klock.lpi        | 117 ++++++++++++++++++------------------
+uhelp.lfm        |   4 +-
+uklock.lfm       |  47 ++++++++-------
+uklock.pas       |  53 ++++++++--------
+uoptions.lfm     | 164 +++++++++++++++++++++-----------------------------
+uoptions.pas     | 179 +++++++++++++++++--------------------------------------
+uoptionutils.pas |  15 +----
+10 files changed, 255 insertions(+), 365 deletions(-)
 
 Build 24
 
@@ -598,30 +598,30 @@ commit 0d76e07735779d51ae2e12853badf8d9ca57a8d5
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 29 23:04:34 2016 +0100
 
-    Added option for net time to count in 1 or 15 seconds.
+Added option for net time to count in 1 or 15 seconds.
             [15 seconds net time = i second real time]
-    Added option for Swatch time to display centibeats.
+Added option for Swatch time to display centibeats.
 
-    Added option for default time display.
-    Changed both default time & tab to be drop down lists.
+Added option for default time display.
+Changed both default time & tab to be drop down lists.
 
-    Added option for countdown to trigger sound, event command or pop up message.
+Added option for countdown to trigger sound, event command or pop up message.
             event is a system event i.e. PC shut down or reboot.
             command is the ability to run an external application.
 
- info.txt       |  14 ++--
- klock.ini      |  11 ++-
- klock.lpi      | 146 +++++++++++++++++-----------------
- uabout.lfm     |  35 +++++---
- uabout.pas     |   1 +
- ufuzzytime.pas |  28 +++++--
- uhelp.pas      |   1 +
- uklock.lfm     | 160 ++++++++++++++++++++++++++++++-------
- uklock.pas     | 246 +++++++++++++++++++++++++++++++++++++++++++++++++++------
- ulicense.pas   |   1 +
- uoptions.lfm   | 213 +++++++++++++++++++++++++++++++++----------------
- uoptions.pas   | 180 +++++++++++++++++++++++++++--------------
- 12 files changed, 757 insertions(+), 279 deletions(-)
+info.txt       |  14 ++--
+klock.ini      |  11 ++-
+klock.lpi      | 146 +++++++++++++++++-----------------
+uabout.lfm     |  35 +++++---
+uabout.pas     |   1 +
+ufuzzytime.pas |  28 +++++--
+uhelp.pas      |   1 +
+uklock.lfm     | 160 ++++++++++++++++++++++++++++++-------
+uklock.pas     | 246 +++++++++++++++++++++++++++++++++++++++++++++++++++------
+ulicense.pas   |   1 +
+uoptions.lfm   | 213 +++++++++++++++++++++++++++++++++----------------
+uoptions.pas   | 180 +++++++++++++++++++++++++++--------------
+12 files changed, 757 insertions(+), 279 deletions(-)
 
 
 Build 25
@@ -630,37 +630,37 @@ commit 35b26cb97e749407f6b120ca4c0bcc4c853e4a2e
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:34:21 2016 +0100
 
-    Over 1000 lines of meaningless code :0)
+Over 1000 lines of meaningless code :0)
 
-    Renamed UOptionsUtils.pas to UKlockUtils.pas - a more general utils unit.
-    Moved doSystemEvent & doComand procedures into this unit.
+Renamed UOptionsUtils.pas to UKlockUtils.pas - a more general utils unit.
+Moved doSystemEvent & doComand procedures into this unit.
 
-    Corrected several bugs with the countdown event procedures.
+Corrected several bugs with the countdown event procedures.
 
-    Change AProcess.CommandLine [depreciated] to AProcess.Executable & Aprocess.Parameters.
+Change AProcess.CommandLine [depreciated] to AProcess.Executable & Aprocess.Parameters.
 
-    Corrected bug; screen would reset to saved screen co-ordinates, even though
-    the screen saved not clicked in options.  Now checks option when resets main form.
+Corrected bug; screen would reset to saved screen co-ordinates, even though
+the screen saved not clicked in options.  Now checks option when resets main form.
 
-    Options; changed around the NET time and Swatch time to be a common
-    checkbox list, instead of two check boxes.
+Options; changed around the NET time and Swatch time to be a common
+checkbox list, instead of two check boxes.
 
-    Finally got around to the case statement, converted most nested IF statements.
+Finally got around to the case statement, converted most nested IF statements.
 
-    Added Julian Time - needs checking.
+Added Julian Time - needs checking.
 
- help.txt                            |   2 +-
- info.txt                            |   8 +-
- klock.ini                           |  10 +-
- klock.lpi                           | 141 ++++-----
- klock.lpr                           |   2 +-
- ufuzzytime.pas                      | 108 +++----
- uklock.lfm                          | 228 ++++++++++++---
- uklock.pas                          | 551 ++++++++++++++++++++++++------------
- uoptionutils.pas => uklockutils.pas | 101 ++++++-
- uoptions.lfm                        | 128 +++------
- uoptions.pas                        |  39 ++-
- 11 files changed, 842 insertions(+), 476 deletions(-)
+help.txt                            |   2 +-
+info.txt                            |   8 +-
+klock.ini                           |  10 +-
+klock.lpi                           | 141 ++++-----
+klock.lpr                           |   2 +-
+ufuzzytime.pas                      | 108 +++----
+uklock.lfm                          | 228 ++++++++++++---
+uklock.pas                          | 551 ++++++++++++++++++++++++------------
+uoptionutils.pas => uklockutils.pas | 101 ++++++-
+uoptions.lfm                        | 128 +++------
+uoptions.pas                        |  39 ++-
+11 files changed, 842 insertions(+), 476 deletions(-)
 
 Build 26
 
@@ -668,18 +668,18 @@ commit 730fffd5076edbf3267f54ae52616ca06a94a043
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:50:20 2016 +0100
 
-    Added Julian time.
-    Added Decimal Time.
-    Added Hexadecimal Time.
-    Added Binary Time.
+Added Julian time.
+Added Decimal Time.
+Added Hexadecimal Time.
+Added Binary Time.
 
- info.txt       |   9 ++--
- klock.lpi      | 143 ++++++++++++++++++++++++++++-----------------------------
- ufuzzytime.pas | 116 ++++++++++++++++++++++++++++++++++++++++------
- uklock.lfm     |  41 +++++++++--------
- uoptions.lfm   |  42 +++++++++--------
- uoptions.pas   |   2 +-
- 6 files changed, 222 insertions(+), 131 deletions(-)
+info.txt       |   9 ++--
+klock.lpi      | 143 ++++++++++++++++++++++++++++-----------------------------
+ufuzzytime.pas | 116 ++++++++++++++++++++++++++++++++++++++++------
+uklock.lfm     |  41 +++++++++--------
+uoptions.lfm   |  42 +++++++++--------
+uoptions.pas   |   2 +-
+6 files changed, 222 insertions(+), 131 deletions(-)
 
 Build 27
 
@@ -687,19 +687,18 @@ commit 82242ff21bab25c4919463bdde34d3f8c335f4d2
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:55:00 2016 +0100
 
-    Bug with the ini file, could not create in Windows 7.
-    Not enough permissions, I think.
-    Use GetAppConfigDir, it retrieves the correct place to store the ini file.
-    Store in something like c:\Users\user\AppData\local\kloc\ in Windows 7.
-    And c:\D&S\usr\Local Settings\Application Data|Klock\ on Windows XP.
+Bug with the ini file, could not create in Windows 7.  Not enough permissions, I think.
+Use GetAppConfigDir, it retrieves the correct place to store the ini file.
+Store in something like c:\Users\user\AppData\local\kloc\ in Windows 7.
+And c:\D&S\usr\Local Settings\Application Data|Klock\ on Windows XP.
 
- history.txt  | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- info.txt     |  6 ++--
- klock.ini    |  4 +--
- klock.iss    |  7 +++--
- klock.lpi    | 32 ++++++++++++---------
- uoptions.pas |  8 ++++--
- 6 files changed, 126 insertions(+), 24 deletions(-)
+history.txt  | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+info.txt     |  6 ++--
+klock.ini    |  4 +--
+klock.iss    |  7 +++--
+klock.lpi    | 32 ++++++++++++---------
+uoptions.pas |  8 ++++--
+6 files changed, 126 insertions(+), 24 deletions(-)
 
 Build 28
 
@@ -707,20 +706,20 @@ commit 1c4daa3d9c873b3bf2feea83630b46e4e9ef2ee3
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 21:58:57 2016 +0100
 
-    Removed local Klock.ini, not now needed - will create on start up.
+Removed local Klock.ini, not now needed - will create on start up.
 
-    Problem with the screen position of main form after options screen closed
+Problem with the screen position of main form after options screen closed
     - Corrected [thanks Zach].
 
- info.txt       |  10 ++--
- klock.ini      |  25 ----------
- klock.lpi      | 146 ++++++++++++++++++++++++++++-----------------------------
- ufuzzytime.pas |  18 +++----
- uklock.lfm     |  83 ++++++++++++++++++++------------
- uklock.pas     |  25 +++++++++-
- uoptions.lfm   |  36 +++++++-------
- uoptions.pas   |   2 +-
- 8 files changed, 185 insertions(+), 160 deletions(-)
+info.txt       |  10 ++--
+klock.ini      |  25 ----------
+klock.lpi      | 146 ++++++++++++++++++++++++++++-----------------------------
+ufuzzytime.pas |  18 +++----
+uklock.lfm     |  83 ++++++++++++++++++++------------
+uklock.pas     |  25 +++++++++-
+uoptions.lfm   |  36 +++++++-------
+uoptions.pas   |   2 +-
+8 files changed, 185 insertions(+), 160 deletions(-)
 
 Build 29
 
@@ -728,15 +727,15 @@ commit 8453f000a73e627323eef4c51971a9cce65e09d3
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:03:36 2016 +0100
 
-    Corrected bug; Setting the date on the reminder did not enable the set
-    button - the time needed changing as well - [thanks Zach].
+Corrected bug; Setting the date on the reminder did not enable the set
+button - the time needed changing as well - [thanks Zach].
 
- info.txt     |   8 ++---
- klock.lpi    | 108 +++++++++++++++++++++++++++++------------------------------
- uklock.lfm   |   6 ++--
- uklock.pas   |  26 +++++++-------
- uoptions.pas |   2 +-
- 5 files changed, 75 insertions(+), 75 deletions(-)
+info.txt     |   8 ++---
+klock.lpi    | 108 +++++++++++++++++++++++++++++------------------------------
+uklock.lfm   |   6 ++--
+uklock.pas   |  26 +++++++-------
+uoptions.pas |   2 +-
+5 files changed, 75 insertions(+), 75 deletions(-)
 
 Build 30
 
@@ -744,25 +743,25 @@ commit 0e1fc4257b6bdde90a8282545b24531a7e3ea83a
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:08:30 2016 +0100
 
-    Added tray icon to klock.
-    Added button, that hides the main form to a tray icon.
-    Added pop-up menu to tray icon, that gives the following options -
-            1 - Show main form.
-            2 - Show current selected time as a pop-up notification.
-            3 - Exit Klock.
+Added tray icon to klock.
+Added button, that hides the main form to a tray icon.
+Added pop-up menu to tray icon, that gives the following options -
+        1 - Show main form.
+        2 - Show current selected time as a pop-up notification.
+        3 - Exit Klock.
 
-    Changed the way the pop-up notification is called.  Now uses a global
-    array to hold different messages from time, countdown and reminder.
+Changed the way the pop-up notification is called.  Now uses a global
+array to hold different messages from time, countdown and reminder.
 
-    Added some new comments to procedures [which where their all the time ;o)]
+Added some new comments to procedures [which where their all the time ;o)]
 
- klock.iss    |   46 +-
- klock.lpi    |  116 +--
- uklock.lfm   | 2226 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- uklock.pas   |  276 ++++++--
- uoptions.lfm |   75 +-
- uoptions.pas |   29 +-
- 6 files changed, 2580 insertions(+), 188 deletions(-)
+klock.iss    |   46 +-
+klock.lpi    |  116 +--
+uklock.lfm   | 2226 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+uklock.pas   |  276 ++++++--
+uoptions.lfm |   75 +-
+uoptions.pas |   29 +-
+6 files changed, 2580 insertions(+), 188 deletions(-)
 
 Build 31
 
@@ -770,15 +769,15 @@ commit 1d6bf1d7c014e3575f62223afeb9729d5bcfbeb8
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:14:03 2016 +0100
 
-    Recompiled to check for lazarus 1.0 RC1 [although showing 0.9.31 in about box].
+Recompiled to check for lazarus 1.0 RC1 [although showing 0.9.31 in about box].
 
-    Also turned off generate debugging info GDN in linking options.
-    This creates a lot smaller executable.
+Also turned off generate debugging info GDN in linking options.
+This creates a lot smaller executable.
 
- klock.lpi    | 18 +++++++++++++-----
- uoptions.lfm | 46 +++++++++++++++++++++++-----------------------
- uoptions.pas |  2 +-
- 3 files changed, 37 insertions(+), 29 deletions(-)
+klock.lpi    | 18 +++++++++++++-----
+uoptions.lfm | 46 +++++++++++++++++++++++-----------------------
+uoptions.pas |  2 +-
+3 files changed, 37 insertions(+), 29 deletions(-)
 
 Build 32
 
@@ -786,27 +785,25 @@ commit f73c566840d177dadc0dc09013bab2422c7ab883
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:17:23 2016 +0100
 
-    Recompiled to check for Lazarus 1.0 RC2 [now showing 1.0.1.2 in about box].
+Recompiled to check for Lazarus 1.0 RC2 [now showing 1.0.1.2 in about box].
 
-    Tidied up the logic that checks that a reminder has been set in the future date.
+Tidied up the logic that checks that a reminder has been set in the future date.
 
-    If a system shut down is chosen in reminder or countdown and the application
-    is being displayed in the system tray, switch to normal mode - allows the
-    abort button to be selected.
+If a system shut down is chosen in reminder or countdown and the application is being
+displayed in the system tray, switch to normal mode - allows the abort button to be selected.
 
-    Added a display to the status bar that indicates the status of the cap,
-    numlock & scroll lock [in real time].
+Added a display to the status bar that indicates the status of the cap, numlock & scroll lock [in real time].
 
- help.txt     | 101 ++++++++------------------------------
- info.txt     |  15 ------
- klock.lpi    | 144 ++++++++++++++++++++++++++++--------------------------
- uhelp.lfm    |  26 +++++-----
- uklock.lfm   |  50 +++++++++----------
- uklock.pas   | 156 +++++++++++++++++++++++++++++------------------------------
- ulicense.lfm |   6 +--
- uoptions.lfm |  36 +++++++-------
- uoptions.pas |   2 +-
- 9 files changed, 232 insertions(+), 304 deletions(-)
+help.txt     | 101 ++++++++------------------------------
+info.txt     |  15 ------
+klock.lpi    | 144 ++++++++++++++++++++++++++++--------------------------
+uhelp.lfm    |  26 +++++-----
+uklock.lfm   |  50 +++++++++----------
+uklock.pas   | 156 +++++++++++++++++++++++++++++------------------------------
+ulicense.lfm |   6 +--
+uoptions.lfm |  36 +++++++-------
+uoptions.pas |   2 +-
+9 files changed, 232 insertions(+), 304 deletions(-)
 
 Build 33
 
@@ -814,35 +811,35 @@ commit 03c22837daa680df290ed247314cca7b33ce18a3
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:22:17 2016 +0100
 
-    Ran source through a spell checker - many changes.
+Ran source through a spell checker - many changes.
 
-    Changed reminder tab to event tab.
-    Changed all existing references of reminder to event.
-    This is to allow a new reminder tab, which will remind on birthdays, anniversaries etc.
+Changed reminder tab to event tab.
+Changed all existing references of reminder to event.
+This is to allow a new reminder tab, which will remind on birthdays, anniversaries etc.
 
-    Added new reminder tab.
-    Added new form to add reminders.
-    Added logic to save reminders to csv file.
-    Added logic to load csv file and display date on reminder tab.
+Added new reminder tab.
+Added new form to add reminders.
+Added logic to save reminders to csv file.
+Added logic to load csv file and display date on reminder tab.
 
-    There is a bug with lcl, the pop-up notifier timeout does not seem to work.
-    Added a timer, that will kill the notifier after ten seconds.
+There is a bug with lcl, the pop-up notifier timeout does not seem to work.
+Added a timer, that will kill the notifier after ten seconds.
 
- kReminder.txt      |  16 ++
- klock.lpi          | 201 ++++++++++---------
- klock.lpr          |   3 +-
- ufuzzytime.pas     |   2 +-
- uhelp.lfm          |   6 +-
- uhelp.pas          |   2 +-
- uklock.lfm         | 227 +++++++++++++++-------
- uklock.pas         | 557 +++++++++++++++++++++++++++++++----------------------
- uklockutils.pas    | 252 ++++++++++++++++--------
- ulicense.lfm       |   6 +-
- uoptions.lfm       |  55 +++---
- uoptions.pas       | 115 ++++++-----
- ureminderinput.lfm | 193 +++++++++++++++++++
- ureminderinput.pas | 175 +++++++++++++++++
- 14 files changed, 1256 insertions(+), 554 deletions(-)
+kReminder.txt      |  16 ++
+klock.lpi          | 201 ++++++++++---------
+klock.lpr          |   3 +-
+ufuzzytime.pas     |   2 +-
+uhelp.lfm          |   6 +-
+uhelp.pas          |   2 +-
+uklock.lfm         | 227 +++++++++++++++-------
+uklock.pas         | 557 +++++++++++++++++++++++++++++++----------------------
+uklockutils.pas    | 252 ++++++++++++++++--------
+ulicense.lfm       |   6 +-
+uoptions.lfm       |  55 +++---
+uoptions.pas       | 115 ++++++-----
+ureminderinput.lfm | 193 +++++++++++++++++++
+ureminderinput.pas | 175 +++++++++++++++++
+14 files changed, 1256 insertions(+), 554 deletions(-)
 
 Build 34
 
@@ -850,27 +847,26 @@ commit 0a457f25b2170992c563062f8a5ee4d8084ba82f
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Fri Sep 30 22:57:59 2016 +0100
 
-    Converted SVN repository to GIT.  Uploaded this to GitHub.
+Converted SVN repository to GIT.  Uploaded this to GitHub.
 
-    Recompiled to check for Lazarus 1.6 [showing 1.6.0.4 in about box].
+Recompiled to check for Lazarus 1.6 [showing 1.6.0.4 in about box].
 
- LICENSE     | 479 +++++++++++++++++++++++++++++
- README.md   |  76 +++++
- history.txt | 981 ++++++++++++++++++++++++++++++++++++++++++++++++------------
- 3 files changed, 1344 insertions(+), 192 deletions(-)
+LICENSE     | 479 +++++++++++++++++++++++++++++
+README.md   |  76 +++++
+history.txt | 981 ++++++++++++++++++++++++++++++++++++++++++++++++------------
+3 files changed, 1344 insertions(+), 192 deletions(-)
 
 Build 35
 
-    Recompiled to check for Lazarus 1.8.0.4.
+Recompiled to check for Lazarus 1.8.0.4.
 
-    Added VI backup files to .gitignore.
+Added VI backup files to .gitignore.
 
-    Amended klock.iss [inno setup script] to either install 32 or 64 bit
-    executable, depending on target machine.
+Amended klock.iss [inno setup script] to either install 32 or 64 bit executable, depending on target machine.
 
-    Increased version number of 35 in uOptions.pas.
+Increased version number of 35 in uOptions.pas.
 
-    Tidied up history.txt
+Tidied up history.txt
 
 
 Build 36 [1.0.0.36]
@@ -879,35 +875,34 @@ commit c607cfc8110893a99bc89120532a1f1f34c6955c
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Sep 7 22:36:38 2017 +0100
 
-    Renamed all form files from uxxx.pas to formxxx.pas.
-    i.e.  uKlock.pas -> formKlock.pas.
+Renamed all form files from uxxx.pas to formxxx.pas.  i.e.  uKlock.pas -> formKlock.pas.
 
-    So, all source files that contain GUI elements will start with form.
-    All none GUI source files will start with u - a unit file.
+So, all source files that contain GUI elements will start with form.
+All none GUI source files will start with u - a unit file.
 
-    Currently
-    2968 lines of source code.
-    1549 statements
-    14.6% comments
+Currently
+2968 lines of source code.
+1549 statements
+14.6% comments
 
- uabout.lfm => formAbout.lfm                 |  38 +++----
- uabout.pas => formAbout.pas                 |   4 +-
- uhelp.lfm => formHelp.lfm                   |   2 +-
- uhelp.pas => formHelp.pas                   |   4 +-
- uklock.lfm => formKlock.lfm                 |   0
- uklock.pas => formKlock.pas                 |  20 ++--
- ulicense.lfm => formLicense.lfm             |   2 +-
- uoptions.lfm => formOptions.lfm             |   4 +-
- uoptions.pas => formOptions.pas             |   2 +-
- ulicense.pas => formlicense.pas             |   4 +-
- ureminderinput.lfm => formreminderinput.lfm |  39 +++----
- ureminderinput.pas => formreminderinput.pas |   2 +-
- klock.lpi                                   | 168 +++++++++++-----------------
- klock.lpr                                   |   4 +-
- klock.xml                                   |   4 +
- ufuzzytime.pas                              |   2 +-
- uklockutils.pas                             |   2 +-
- 17 files changed, 133 insertions(+), 168 deletions(-)
+uabout.lfm => formAbout.lfm                 |  38 +++----
+uabout.pas => formAbout.pas                 |   4 +-
+uhelp.lfm => formHelp.lfm                   |   2 +-
+uhelp.pas => formHelp.pas                   |   4 +-
+uklock.lfm => formKlock.lfm                 |   0
+uklock.pas => formKlock.pas                 |  20 ++--
+ulicense.lfm => formLicense.lfm             |   2 +-
+uoptions.lfm => formOptions.lfm             |   4 +-
+uoptions.pas => formOptions.pas             |   2 +-
+ulicense.pas => formlicense.pas             |   4 +-
+ureminderinput.lfm => formreminderinput.lfm |  39 +++----
+ureminderinput.pas => formreminderinput.pas |   2 +-
+klock.lpi                                   | 168 +++++++++++-----------------
+klock.lpr                                   |   4 +-
+klock.xml                                   |   4 +
+ufuzzytime.pas                              |   2 +-
+uklockutils.pas                             |   2 +-
+17 files changed, 133 insertions(+), 168 deletions(-)
 
 ***************************************************** Version 2 ************
 
@@ -917,34 +912,33 @@ commit 3d7a9e43522baac7af8adea345307b107d33a228
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Mon Oct 16 22:15:32 2017 +0100
 
-    Added config file for SourceMonitor.
+Added config file for SourceMonitor.
 
-    Added uOptions.pas, a options record that uses XML files.  Hopefully
-    this will replace the existing .ini file based options.
+Added uOptions.pas, a options record that uses XML files.  Hopefully
+this will replace the existing .ini file based options.
 
-    Amended all references in formKlock.pas that used the old .ini options
-    to use the new .xml options record.
+Amended all references in formKlock.pas that used the old .ini options to use the new .xml options record.
 
-    NOTE :: formOptions has not been touched yet and still point to the old
-    style options records - this will be stripped out next.
+NOTE :: formOptions has not been touched yet and still point to the old
+style options records - this will be stripped out next.
 
-    Currently
-    3450 lines of source code.
-    1802 statements
-    15.5% comments
+Currently
+3450 lines of source code.
+1802 statements
+15.5% comments
 
- formKlock.lfm          |    6 +-
- formKlock.pas          |   57 +-
- formOptions.lfm        |    2 +-
- formreminderinput.lfm  |    6 +-
- history.txt            | 1364 +++++++++++++++++++++++++-----------------------
- klock.iss              |    8 +-
- klock.lpi              |  141 +++--
- klock.lpr              |    3 +-
- lazKlock.smproj        |  Bin 0 -> 10684 bytes
- powered_by_lazarus.png |  Bin 0 -> 15189 bytes
- uoptions.pas           |  467 +++++++++++++++++
- 11 files changed, 1310 insertions(+), 744 deletions(-)
+formKlock.lfm          |    6 +-
+formKlock.pas          |   57 +-
+formOptions.lfm        |    2 +-
+formreminderinput.lfm  |    6 +-
+history.txt            | 1364 +++++++++++++++++++++++++-----------------------
+klock.iss              |    8 +-
+klock.lpi              |  141 +++--
+klock.lpr              |    3 +-
+lazKlock.smproj        |  Bin 0 -> 10684 bytes
+powered_by_lazarus.png |  Bin 0 -> 15189 bytes
+uoptions.pas           |  467 +++++++++++++++++
+11 files changed, 1310 insertions(+), 744 deletions(-)
 
 Build 38 [2.0.0.38]
 
@@ -952,36 +946,36 @@ commit c35513fb5200d949b4d7a01cb63240000e00073b
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Wed Oct 18 22:18:09 2017 +0100
 
-    Amended formLicence, formHelp & formAbout to use new user Options.
+Amended formLicence, formHelp & formAbout to use new user Options.
 
-    Added to formAbout disk size and free space for all disks on the system
-    Added to formAbout system and application up time.
-    Added to formAbout to display if compile to either 32 or 64 bit.
-    Added to formAboout powered by Lazarus logo.
-    Tidied up formAbout.
+Added to formAbout disk size and free space for all disks on the system
+Added to formAbout system and application up time.
+Added to formAbout to display if compile to either 32 or 64 bit.
+Added to formAboout powered by Lazarus logo.
+Tidied up formAbout.
 
-    Amended klock.iss to use lazKlock instead of Klock - should that be lazKlock.iss.
+Amended klock.iss to use lazKlock instead of Klock - should that be lazKlock.iss.
 
-    reloaded licence.txt from web site.
+reloaded licence.txt from web site.
 
-    Currently
-    3567 lines of source code.
-    1856 statements
-    16.0% comment
+Currently
+3567 lines of source code.
+1856 statements
+16.0% comment
 
- GNU GENERAL PUBLIC LICENSE.txt | 880 ++++++++++-------------------------------
- formAbout.lfm                  | 652 ++++++++++++++++++++++++++++--
- formAbout.pas                  | 114 +++++-
- formHelp.lfm                   |  47 ++-
- formHelp.pas                   |  24 +-
- formKlock.pas                  |  44 ++-
- formLicense.lfm                |  64 ++-
- formlicense.pas                |  13 +-
- history.txt                    |  35 +-
- klock.iss                      |   4 +-
- klock.lpi                      | 160 ++++----
- lazKlock.smproj                | Bin 10684 -> 21721 bytes
- 12 files changed, 1166 insertions(+), 871 deletions(-)
+GNU GENERAL PUBLIC LICENSE.txt | 880 ++++++++++-------------------------------
+formAbout.lfm                  | 652 ++++++++++++++++++++++++++++--
+formAbout.pas                  | 114 +++++-
+formHelp.lfm                   |  47 ++-
+formHelp.pas                   |  24 +-
+formKlock.pas                  |  44 ++-
+formLicense.lfm                |  64 ++-
+formlicense.pas                |  13 +-
+history.txt                    |  35 +-
+klock.iss                      |   4 +-
+klock.lpi                      | 160 ++++----
+lazKlock.smproj                | Bin 10684 -> 21721 bytes
+12 files changed, 1166 insertions(+), 871 deletions(-)
 
 Build 39 [2.0.0.39]
 
@@ -989,30 +983,30 @@ commit b9e05ca031036a4a64abf128859f401e10fab5f2
 Author: Kevin Scott <lazKlock@keleven.co.uk>
 Date:   Thu Oct 19 21:21:15 2017 +0100
 
-    Removed all references to the old .ini in formOptions, fromKlock & ufuzzyTime.
+Removed all references to the old .ini in formOptions, fromKlock & ufuzzyTime.
 
-    Also removed all non-visual components from formOptions.
+Also removed all non-visual components from formOptions.
 
-    We now build the new options screen.
+We now build the new options screen.
 
-    Currently
-    3112 lines of source code.
-    1615 statements
-    16.4% comment
+Currently
+3112 lines of source code.
+1615 statements
+16.4% comment
 
- clock.ico       | Bin 67646 -> 0 bytes
- formAbout.pas   |   2 +-
- formKlock.pas   |  21 +--
- formOptions.lfm | 319 +-------------------------------------
- formOptions.pas | 465 +-------------------------------------------------------
- formlicense.pas |   2 +-
- history.txt     |  36 +++++
- klock.iss       |  10 +-
- klock.lpi       | 153 ++++++++++---------
- lazKlock.smproj | Bin 21721 -> 32884 bytes
- ufuzzytime.pas  |  12 +-
- uoptions.pas    |  11 ++
- 12 files changed, 149 insertions(+), 882 deletions(-)
+clock.ico       | Bin 67646 -> 0 bytes
+formAbout.pas   |   2 +-
+formKlock.pas   |  21 +--
+formOptions.lfm | 319 +-------------------------------------
+formOptions.pas | 465 +-------------------------------------------------------
+formlicense.pas |   2 +-
+history.txt     |  36 +++++
+klock.iss       |  10 +-
+klock.lpi       | 153 ++++++++++---------
+lazKlock.smproj | Bin 21721 -> 32884 bytes
+ufuzzytime.pas  |  12 +-
+uoptions.pas    |  11 ++
+12 files changed, 149 insertions(+), 882 deletions(-)
 
 Build 40 [2.0.0.40]
 
@@ -1020,40 +1014,38 @@ commit 98eeea8d6afdab62fc0bfc23bd0cc52fbc703883
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Fri Oct 27 21:40:30 2017 +0100
 
-    Started building the new options screens - using an accordion.
+Started building the new options screens - using an accordion.
 
-    Although all options are written to the xml file has strings, amended
-    the Options class so that all options are presented to lazKlock  has
-    native type i..e. Integers and Boolean.  The conversions are not his
-    within the options class and not the main program.
+Although all options are written to the xml file has strings, amended the Options
+class so that all options are presented to lazKlock has native type i..e. Integers
+and Boolean.  The conversions are not his within the options class and not the main program.
 
-    Changed the logic in formOptions, when the options form loads a backup
-    options record is created and this is amended, it is only copied to the
-    main options records if OK is clicked.  If cancel is click the
-    amendments are discarded.
+Changed the logic in formOptions, when the options form loads a backup options record is
+created and this is amended, it is only copied to the main options records if OK is clicked.
+If cancel is click the amendments are discarded.
 
-    Added the logic to uKlockUtils to amend the registry for starting the app with windows.
+Added the logic to uKlockUtils to amend the registry for starting the app with windows.
 
-    Removed self from variable references in uFuzztTime - not sure why they where there.
+Removed self from variable references in uFuzztTime - not sure why they where there.
 
-    Currently
-    3338 lines of source code.
-    1738 statements
-    17.4% comment
+Currently
+3338 lines of source code.
+1738 statements
+17.4% comment
 
- formKlock.lfm      |  17 ++--
- formKlock.pas      |  57 ++++++------
- formOptions.lfm    | 258 +++++++++++++++++++++++++++++++++++++++++++++++++----
- formOptions.pas    | 167 +++++++++++++++++++++++++++++++---
- history.txt        |  31 +++++++
- klock.lpi          | 203 ++++++++++++++++++++++-------------------
- klock.lpr          |   5 +-
- lazKlock.smproj    | Bin 32884 -> 41764 bytes
- ufuzzytime.pas     |  38 +++++---
- uklockutils.pas    |  42 ++++++++-
- uoptions.pas       | 178 ++++++++++++++++++++++++------------
- uoptionsrecord.pas |  32 -------
- 12 files changed, 762 insertions(+), 266 deletions(-)
+formKlock.lfm      |  17 ++--
+formKlock.pas      |  57 ++++++------
+formOptions.lfm    | 258 +++++++++++++++++++++++++++++++++++++++++++++++++----
+formOptions.pas    | 167 +++++++++++++++++++++++++++++++---
+history.txt        |  31 +++++++
+klock.lpi          | 203 ++++++++++++++++++++++-------------------
+klock.lpr          |   5 +-
+lazKlock.smproj    | Bin 32884 -> 41764 bytes
+ufuzzytime.pas     |  38 +++++---
+uklockutils.pas    |  42 ++++++++-
+options.pas       | 178 ++++++++++++++++++++++++------------
+uoptionsrecord.pas |  32 -------
+12 files changed, 762 insertions(+), 266 deletions(-)
 
 Build 41 [2.0.0.41]
 
@@ -1061,27 +1053,27 @@ commit 57332b6a2300cb489eee6d399318876c9519575e
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Mon Oct 30 22:14:19 2017 +0000
 
-    Added a separate form to house an Analogue Klock - frmAnalogueKlock.pas.
-    Made this form transparent, just leaving the form.
-    Added logic to make this draggable, with just the Klock visible.
-    Added User Options to remember the Analogue Klock screen position.
+Added a separate form to house an Analogue Klock - frmAnalogueKlock.pas.
+Made this form transparent, just leaving the form.
+Added logic to make this draggable, with just the Klock visible.
+Added User Options to remember the Analogue Klock screen position.
 
-    Added to main Klock to display the idle time.
+Added to main Klock to display the idle time.
 
-    Added percent Time to FuzzyTime.
+Added percent Time to FuzzyTime.
 
- formKlock.lfm         |  19 ++++-
- formKlock.pas         |  48 +++++++++--
- formOptions.lfm       |  13 +--
- formanalogueklock.lfm |  78 ++++++++++++++++++
- formanalogueklock.pas | 162 +++++++++++++++++++++++++++++++++++++
- history.txt           |  45 ++++++++++-
- klock.lpi             | 216 ++++++++++++++++++++++++++++----------------------
- klock.lpr             |   3 +-
- lazKlock.smproj       | Bin 41764 -> 51298 bytes
- ufuzzytime.pas        |  21 ++++-
- uoptions.pas          |  61 +++++++++++++-
- 11 files changed, 549 insertions(+), 117 deletions(-)
+formKlock.lfm         |  19 ++++-
+formKlock.pas         |  48 +++++++++--
+formOptions.lfm       |  13 +--
+formanalogueklock.lfm |  78 ++++++++++++++++++
+formanalogueklock.pas | 162 +++++++++++++++++++++++++++++++++++++
+history.txt           |  45 ++++++++++-
+klock.lpi             | 216 ++++++++++++++++++++++++++++----------------------
+klock.lpr             |   3 +-
+lazKlock.smproj       | Bin 41764 -> 51298 bytes
+ufuzzytime.pas        |  21 ++++-
+uoptions.pas          |  61 +++++++++++++-
+11 files changed, 549 insertions(+), 117 deletions(-)
 
 Build 42 [2.0.0.42]
 
@@ -1089,20 +1081,19 @@ commit 7b3781a898da3a2f69387a5eca5eae372c198112
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Mon Nov 6 13:39:29 2017 +0000
 
-    The shutdown command seems to have changed in windows 10.
-    Parameters are now preceded with a / and not a -.
-    Also, having problems passing parameter's with spaces, removed for now.
+The shutdown command seems to have changed in windows 10.
+Parameters are now preceded with a / and not a -.
+Also, having problems passing parameter's with spaces, removed for now.
 
-    Corrected bug where if no action was selected, an index out of bounds
-    could be created.
+Corrected bug where if no action was selected, an index out of bounds could be created.
 
- formAbout.pas   |   2 +-
- formKlock.lfm   |  12 ++---
- formKlock.pas   |  16 ++++---
- history.txt     |  27 ++++++++++++
- klock.lpi       | 134 ++++++++++++++++++++++++++++----------------------------
- uklockutils.pas |  52 +++++++++++-----------
- 6 files changed, 136 insertions(+), 107 deletions(-)
+formAbout.pas   |   2 +-
+formKlock.lfm   |  12 ++---
+formKlock.pas   |  16 ++++---
+history.txt     |  27 ++++++++++++
+klock.lpi       | 134 ++++++++++++++++++++++++++++----------------------------
+uklockutils.pas |  52 +++++++++++-----------
+6 files changed, 136 insertions(+), 107 deletions(-)
 
 Build 43 [2.0.0.43]
 
@@ -1110,32 +1101,32 @@ commit 92d89f0d1125dd1f4aa33a102f38c94de928ef13
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Mon Nov 6 15:03:59 2017 +0000
 
-    Passed all source files through a spell checker - mainly for comments.
+Passed all source files through a spell checker - mainly for comments.
 
-    Passed all source through JEDI source checker.
+Passed all source through JEDI source checker.
 
-    Bumped up a minor version point.
+Bumped up a minor version point.
 
-    Currently
-    3693 lines of source code.
-    1874 statements
-    16.7% comment
+Currently
+3693 lines of source code.
+1874 statements
+16.7% comment
 
- formAbout.pas         |  53 ++-
- formHelp.pas          |  12 +-
- formKlock.pas         | 961 +++++++++++++++++++++++++++-----------------------
- formOptions.lfm       |   2 +-
- formOptions.pas       |  53 ++-
- formanalogueklock.pas |  76 ++--
- formlicense.pas       |  12 +-
- formreminderinput.pas |  73 ++--
- help.txt              |   6 +-
- klock.lpi             | 139 ++++----
- klock.lpr             |  25 +-
- ufuzzytime.pas        | 333 ++++++++---------
- uklockutils.pas       | 115 +++---
- uoptions.pas          | 951 +++++++++++++++++++++++++------------------------
- 14 files changed, 1451 insertions(+), 1360 deletions(-)
+formAbout.pas         |  53 ++-
+formHelp.pas          |  12 +-
+formKlock.pas         | 961 +++++++++++++++++++++++++++-----------------------
+formOptions.lfm       |   2 +-
+formOptions.pas       |  53 ++-
+formanalogueklock.pas |  76 ++--
+formlicense.pas       |  12 +-
+formreminderinput.pas |  73 ++--
+help.txt              |   6 +-
+klock.lpi             | 139 ++++----
+klock.lpr             |  25 +-
+ufuzzytime.pas        | 333 ++++++++---------
+uklockutils.pas       | 115 +++---
+uoptions.pas          | 951 +++++++++++++++++++++++++------------------------
+14 files changed, 1451 insertions(+), 1360 deletions(-)
 
 Build 44 [2.0.1.44]
 
@@ -1143,78 +1134,77 @@ commit d0ffe89eb2885a8226c87d2b274fe099ce0684cc
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Fri Nov 10 20:15:11 2017 +0000
 
-    Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
-    Braille.  Theses are achieved my font substitution.
+Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
+Braille.  Theses are achieved my font substitution.
 
-    Added a new unit uFont.pas - to load custom fonts.
+Added a new unit uFont.pas - to load custom fonts.
 
-    Added logic to formKlock to use new fonts when required.
+Added logic to formKlock to use new fonts when required.
 
-    Added two new directories fonts & sounds.
+Added two new directories fonts & sounds.
 
-    Added a number of mp3 files to play the hourly chimes and The pips.
+Added a number of mp3 files to play the hourly chimes and The pips.
 
-    Amended to procedure doPlaySound in uKlockUtils.pas to play all sound
-    files and not just .wav files.  Also, made this procedure more robust.
-    Also added to this unit to play the hourly chimes.
+Amended to procedure doPlaySound in uKlockUtils.pas to play all sound
+files and not just .wav files.  Also, made this procedure more robust.
+Also added to this unit to play the hourly chimes.
 
-    Added user options for sound volume, sound the pips on the hour or
-    hourly chimes.  Also added the option for the analogue klock to save
-    screen position.
+Added user options for sound volume, sound the pips on the hour or hourly chimes.
+Also added the option for the analogue klock to save screen position.
 
-    Currently
-    4080 lines of source code.
-    2120 statements
-    16.4% comment
+Currently
+4080 lines of source code.
+2120 statements
+16.4% comment
 
- fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
- fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
- fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
- fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
- fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
- formKlock.lfm                |  12 ++-
- formKlock.pas                | 240 ++++++++++++++++++++++++++-----------------
- formOptions.lfm              | 158 +++++++++++++++++++++++-----
- formOptions.pas              | 116 ++++++++++++++++++---
- formanalogueklock.pas        |   1 +
- history.txt                  |  56 +++++++++-
- klock.iss                    |   2 +-
- klock.lpi                    | 229 ++++++++++++++++++++---------------------
- klock.lpr                    |   2 +-
- klock.xml                    |   4 -
- lazKlock.smproj              | Bin 51298 -> 61875 bytes
- sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
- sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
- sounds/chimes.wav            | Bin 55776 -> 0 bytes
- sounds/chord.wav             | Bin 97016 -> 0 bytes
- sounds/ding.wav              | Bin 80856 -> 0 bytes
- sounds/eight.mp3             | Bin 0 -> 979530 bytes
- sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
- sounds/five.mp3              | Bin 0 -> 801223 bytes
- sounds/four.mp3              | Bin 0 -> 739385 bytes
- sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
- sounds/nine.mp3              | Bin 0 -> 1040899 bytes
- sounds/notify.wav            | Bin 119384 -> 0 bytes
- sounds/one.mp3               | Bin 0 -> 559035 bytes
- sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
- sounds/recycle.wav           | Bin 25434 -> 0 bytes
- sounds/ringin.wav            | Bin 10026 -> 0 bytes
- sounds/ringout.wav           | Bin 5212 -> 0 bytes
- sounds/seven.mp3             | Bin 0 -> 919940 bytes
- sounds/six.mp3               | Bin 0 -> 862013 bytes
- sounds/start.wav             | Bin 1192 -> 0 bytes
- sounds/tada.wav              | Bin 171100 -> 0 bytes
- sounds/ten.mp3               | Bin 0 -> 1101951 bytes
- sounds/thepips.mp3           | Bin 0 -> 40874 bytes
- sounds/three.mp3             | Bin 0 -> 679164 bytes
- sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
- sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
- sounds/two.mp3               | Bin 0 -> 620614 bytes
- ufonts.pas                   |  69 +++++++++++++
- ufuzzytime.pas               |  43 +++-----
- uklockutils.pas              | 130 +++++++++++++++++++++--
- uoptions.pas                 |  84 +++++++++++++++
- 47 files changed, 843 insertions(+), 303 deletions(-)
+fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
+fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
+fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
+fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
+fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
+formKlock.lfm                |  12 ++-
+formKlock.pas                | 240 ++++++++++++++++++++++++++-----------------
+formOptions.lfm              | 158 +++++++++++++++++++++++-----
+formOptions.pas              | 116 ++++++++++++++++++---
+formanalogueklock.pas        |   1 +
+history.txt                  |  56 +++++++++-
+klock.iss                    |   2 +-
+klock.lpi                    | 229 ++++++++++++++++++++---------------------
+klock.lpr                    |   2 +-
+klock.xml                    |   4 -
+lazKlock.smproj              | Bin 51298 -> 61875 bytes
+sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
+sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
+sounds/chimes.wav            | Bin 55776 -> 0 bytes
+sounds/chord.wav             | Bin 97016 -> 0 bytes
+sounds/ding.wav              | Bin 80856 -> 0 bytes
+sounds/eight.mp3             | Bin 0 -> 979530 bytes
+sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
+sounds/five.mp3              | Bin 0 -> 801223 bytes
+sounds/four.mp3              | Bin 0 -> 739385 bytes
+sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
+sounds/nine.mp3              | Bin 0 -> 1040899 bytes
+sounds/notify.wav            | Bin 119384 -> 0 bytes
+sounds/one.mp3               | Bin 0 -> 559035 bytes
+sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
+sounds/recycle.wav           | Bin 25434 -> 0 bytes
+sounds/ringin.wav            | Bin 10026 -> 0 bytes
+sounds/ringout.wav           | Bin 5212 -> 0 bytes
+sounds/seven.mp3             | Bin 0 -> 919940 bytes
+sounds/six.mp3               | Bin 0 -> 862013 bytes
+sounds/start.wav             | Bin 1192 -> 0 bytes
+sounds/tada.wav              | Bin 171100 -> 0 bytes
+sounds/ten.mp3               | Bin 0 -> 1101951 bytes
+sounds/thepips.mp3           | Bin 0 -> 40874 bytes
+sounds/three.mp3             | Bin 0 -> 679164 bytes
+sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
+sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
+sounds/two.mp3               | Bin 0 -> 620614 bytes
+ufonts.pas                   |  69 +++++++++++++
+ufuzzytime.pas               |  43 +++-----
+uklockutils.pas              | 130 +++++++++++++++++++++--
+uoptions.pas                 |  84 +++++++++++++++
+47 files changed, 843 insertions(+), 303 deletions(-)
 
 Build 45 [2.0.1.45]
 
@@ -1223,50 +1213,47 @@ commit a9296bca47a258c567d6d096bca416709e943c63
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Tue Nov 14 14:57:13 2017 +0000
 
-    Added the ability for Klock to write Info and Debug information to log
-    files.  Logging can be enabled / disabled by a user options.  Also the
-    ability to delete log files older then a certain age.  This is also
-    specified by user options.
+Added the ability for Klock to write Info and Debug information to log files.
+Logging can be enabled / disabled by a user options.  Also the ability to delete
+log files older then a certain age.  This is also specified by user options.
 
-    A extra tab was added to the options form for the logging options, the log
-    files are also displayed here.
+A extra tab was added to the options form for the logging options, the log
+files are also displayed here.
 
-    Added a new unit, uLoggingUtils.  The unit contains the helper routines
-    to read and delete log files.
+Added a new unit, uLoggingUtils.  The unit contains the helper routines to read and delete log files.
 
-    Started to sprinkle debug entries all over.
+Started to sprinkle debug entries all over.
 
-    Cleaned up the calling process for the chimes.
+Cleaned up the calling process for the chimes.
 
-    Added doubleTime to uFuzzyTime.
+Added doubleTime to uFuzzyTime.
 
-    Added a new unit, uOptionsUtils.  This unit contains helper routines to
-    read and write XML entries.
+Added a new unit, uOptionsUtils.  This unit contains helper routines to read and write XML entries.
 
-    Changed the Klock icon.
+Changed the Klock icon.
 
-    Currently
-    4303 lines of source code.
-    2199 statements
-    16.7% comment
+Currently
+4303 lines of source code.
+2199 statements
+16.7% comment
 
- formKlock.lfm         | 5994 ++++++++++++++++---------------------------------
- formKlock.pas         |   78 +-
- formOptions.lfm       |  105 +-
- formOptions.pas       |   58 +-
- formanalogueklock.pas |    1 +
- history.txt           |   82 +-
- klock.ico             |  Bin 67646 -> 0 bytes
- klock.lpi             |  212 +-
- klock.lpr             |    9 +-
- lazKlock.smproj       |  Bin 61875 -> 73456 bytes
- time-13-128.ico       |  Bin 0 -> 67646 bytes
- ufuzzytime.pas        |   41 +-
- uklockutils.pas       |   44 +-
- uloggerutils.pas      |   90 +
- uoptions.pas          |  374 ++-
- uoptionsutils.pas     |   99 +
- 16 files changed, 2749 insertions(+), 4438 deletions(-)
+formKlock.lfm         | 5994 ++++++++++++++++---------------------------------
+formKlock.pas         |   78 +-
+formOptions.lfm       |  105 +-
+formOptions.pas       |   58 +-
+formanalogueklock.pas |    1 +
+history.txt           |   82 +-
+klock.ico             |  Bin 67646 -> 0 bytes
+klock.lpi             |  212 +-
+klock.lpr             |    9 +-
+lazKlock.smproj       |  Bin 61875 -> 73456 bytes
+time-13-128.ico       |  Bin 0 -> 67646 bytes
+ufuzzytime.pas        |   41 +-
+uklockutils.pas       |   44 +-
+uloggerutils.pas      |   90 +
+uoptions.pas          |  374 ++-
+uoptionsutils.pas     |   99 +
+16 files changed, 2749 insertions(+), 4438 deletions(-)
 
 Build 46 [2.0.1.46]
 
@@ -1274,29 +1261,29 @@ commit 2a0201bd0094f867199523c53545e03695adb89f
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Mon Nov 20 14:11:16 2017 +0000
 
-    Added formCipboard and uformClipboardUtils which implements a clipboard manager.
+Added formCipboard and uformClipboardUtils which implements a clipboard manager.
 
-    Added various options for the clipboard manages to formOptions and uOptions.
+Added various options for the clipboard manages to formOptions and uOptions.
 
- README.md               |  18 ++--
- formKlock.lfm           |   1 -
- formKlock.pas           |  13 ++-
- formOptions.lfm         |  50 +++++----
- formOptions.pas         |  15 +++
- formanalogueklock.lfm   |   8 +-
- formanalogueklock.pas   |   3 +-
- formclipboard.lfm       | 140 ++++++++++++++++++++++++
- formclipboard.pas       | 241 +++++++++++++++++++++++++++++++++++++++++
- help.txt                |  43 +++++---
- history.txt             |  55 +++++++++-
- klock.ico               | Bin 0 -> 67646 bytes
- klock.iss               |   5 +-
- klock.lpi               | 279 +++++++++++++++++++++++++++---------------------
- klock.lpr               |   5 +-
- lazKlock.smproj         | Bin 73456 -> 100949 bytes
- uformclipboardutils.pas | 244 ++++++++++++++++++++++++++++++++++++++++++
- uoptions.pas            |  26 ++++-
- 18 files changed, 966 insertions(+), 180 deletions(-)
+README.md               |  18 ++--
+formKlock.lfm           |   1 -
+formKlock.pas           |  13 ++-
+formOptions.lfm         |  50 +++++----
+formOptions.pas         |  15 +++
+formanalogueklock.lfm   |   8 +-
+formanalogueklock.pas   |   3 +-
+formclipboard.lfm       | 140 ++++++++++++++++++++++++
+formclipboard.pas       | 241 +++++++++++++++++++++++++++++++++++++++++
+help.txt                |  43 +++++---
+history.txt             |  55 +++++++++-
+klock.ico               | Bin 0 -> 67646 bytes
+klock.iss               |   5 +-
+klock.lpi               | 279 +++++++++++++++++++++++++++---------------------
+klock.lpr               |   5 +-
+lazKlock.smproj         | Bin 73456 -> 100949 bytes
+uformclipboardutils.pas | 244 ++++++++++++++++++++++++++++++++++++++++++
+uoptions.pas            |  26 ++++-
+18 files changed, 966 insertions(+), 180 deletions(-)
 
 /*******************************************************************************************************/
 
@@ -1321,26 +1308,26 @@ commit 6cd165f08dbdf1636c5e595ab623e35d89a5efb4
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Tue Dec 12 21:22:21 2017 +0000
 
-    [This is a duplication of build 42]
-    The shutdown command seems to have changed in windows 10.
-    Parameters are now preceded with a / and not a -.
-    Also, having problems passing parameter's with spaces, removed for now.
+[This is a duplication of build 42]
+The shutdown command seems to have changed in windows 10.
+Parameters are now preceded with a / and not a -.
+Also, having problems passing parameter's with spaces, removed for now.
 
-    Corrected bug where if no action was selected, an index out of bounds could be created.
+Corrected bug where if no action was selected, an index out of bounds could be created.
 
-    Currently
-    3611 lines of source code.
-    1851 statements
-    17.2% comment
+Currently
+3611 lines of source code.
+1851 statements
+17.2% comment
 
- formAbout.pas   |   2 +-
- formKlock.lfm   |   2 +-
- formKlock.pas   |  16 ++-
- history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
- klock.iss       |   2 +-
- klock.lpi       |  53 ++++----
- uklockutils.pas |  29 ++--
- 7 files changed, 388 insertions(+), 117 deletions(-)
+formAbout.pas   |   2 +-
+formKlock.lfm   |   2 +-
+formKlock.pas   |  16 ++-
+history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
+klock.iss       |   2 +-
+klock.lpi       |  53 ++++----
+uklockutils.pas |  29 ++--
+7 files changed, 388 insertions(+), 117 deletions(-)
 
 Build 48 [2.1.2.48]
 
@@ -1348,247 +1335,301 @@ commit e6d03bec376307cbf63b324ea64f181d8a03867b
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Wed Dec 13 10:00:24 2017 +0000
 
-    [This is a duplication of build 43]
-    Passed all source files through a spell checker - mainly for comments.
+[This is a duplication of build 43]
+Passed all source files through a spell checker - mainly for comments.
 
-    Passed all source through JEDI source checker.
+Passed all source through JEDI source checker.
 
-    Bumped up a minor version point.
+Bumped up a minor version point.
 
-    Currently
-    3703 lines of source code.
-    1863 statements
-    16.7% comment
+Currently
+3703 lines of source code.
+1863 statements
+16.7% comment
 
- formAbout.pas   |   2 +-
- formKlock.lfm   |   2 +-
- formKlock.pas   |  16 ++-
- history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
- klock.iss       |   2 +-
- klock.lpi       |  53 ++++----
- uklockutils.pas |  29 ++--
- 7 files changed, 388 insertions(+), 117 deletions(-)
+formAbout.pas   |   2 +-
+formKlock.lfm   |   2 +-
+formKlock.pas   |  16 ++-
+history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
+klock.iss       |   2 +-
+klock.lpi       |  53 ++++----
+uklockutils.pas |  29 ++--
+7 files changed, 388 insertions(+), 117 deletions(-)
 
-Build 49 [2.1.2.49]
+Build 49 [2.1.3.49]
 
 commit f7b1216f1f682f9a2f28593dffbda45ca84521d0
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Wed Dec 13 20:12:19 2017 +0000
 
-    [This is a NEARLY duplication of build 43]
-    Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
-    Braille.  Theses are achieved my font substitution.
+[This is a NEARLY duplication of build 43]
+Added time displayed as barcode, Semaphore, Nancy Blackett Semaphore &
+Braille.  Theses are achieved my font substitution.
 
-    Added a new unit uFont.pas - to load custom fonts.
+Added a new unit uFont.pas - to load custom fonts.
 
-    Added logic to formKlock to use new fonts when required.
+Added logic to formKlock to use new fonts when required.
 
-    Added two new directories fonts & sounds.
+Added two new directories fonts & sounds.
 
-    Added a number of mp3 files to play the hourly chimes and The pips.
+Added a number of mp3 files to play the hourly chimes and The pips.
 
-    Amended to procedure doPlaySound in uKlockUtils.pas to play all sound
-    files and not just .wav files.  Also, made this procedure more robust.
-    Also added to this unit to play the hourly chimes.
+Amended to procedure doPlaySound in uKlockUtils.pas to play all sound files and not just .wav files.
+Also, made this procedure more robust. Also added to this unit to play the hourly chimes.
 
-    Added user options for sound volume, sound the pips on the hour or
-    hourly chimes.  Also added the option for the analogue klock to save
-    screen position.
+Added user options for sound volume, sound the pips on the hour or hourly chimes.
+Also added the option for the analogue klock to save screen position.
 
-    Currently
-    4077 lines of source code.
-    2113 statements
-    16.4% comment
+Currently
+4077 lines of source code.
+2113 statements
+16.4% comment
 
- fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
- fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
- fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
- fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
- fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
- formHelp.pas                 |  12 +-
- formKlock.lfm                |   7 +-
- formKlock.pas                | 284 ++++++++++++++++++++++++++-----------------
- formOptions.lfm              | 139 ++++++++++++++++++---
- formOptions.pas              | 125 ++++++++++++++++---
- formanalogueklock.pas        |  29 ++---
- history.txt                  |  53 +++++++-
- klock.iss                    |   6 +-
- klock.lpi                    | 195 +++++++++++++++--------------
- klock.lpr                    |   2 +-
- lazKlock.smproj              | Bin 61799 -> 83961 bytes
- sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
- sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
- sounds/chimes.wav            | Bin 55776 -> 0 bytes
- sounds/chord.wav             | Bin 97016 -> 0 bytes
- sounds/ding.wav              | Bin 80856 -> 0 bytes
- sounds/eight.mp3             | Bin 0 -> 979530 bytes
- sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
- sounds/five.mp3              | Bin 0 -> 801223 bytes
- sounds/four.mp3              | Bin 0 -> 739385 bytes
- sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
- sounds/nine.mp3              | Bin 0 -> 1040899 bytes
- sounds/notify.wav            | Bin 119384 -> 0 bytes
- sounds/one.mp3               | Bin 0 -> 559035 bytes
- sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
- sounds/recycle.wav           | Bin 25434 -> 0 bytes
- sounds/ringin.wav            | Bin 10026 -> 0 bytes
- sounds/ringout.wav           | Bin 5212 -> 0 bytes
- sounds/seven.mp3             | Bin 0 -> 919940 bytes
- sounds/six.mp3               | Bin 0 -> 862013 bytes
- sounds/start.wav             | Bin 1192 -> 0 bytes
- sounds/tada.wav              | Bin 171100 -> 0 bytes
- sounds/ten.mp3               | Bin 0 -> 1101951 bytes
- sounds/thepips.mp3           | Bin 0 -> 40874 bytes
- sounds/three.mp3             | Bin 0 -> 679164 bytes
- sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
- sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
- sounds/two.mp3               | Bin 0 -> 620614 bytes
- ufonts.pas                   |  78 ++++++++++++
- ufuzzytime.pas               |  42 +++----
- uklockutils.pas              | 156 +++++++++++++++++++-----
- uoptions.pas                 |  90 +++++++++++++-
- 47 files changed, 895 insertions(+), 323 deletions(-)
+fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
+fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
+fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
+fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
+fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
+formHelp.pas                 |  12 +-
+formKlock.lfm                |   7 +-
+formKlock.pas                | 284 ++++++++++++++++++++++++++-----------------
+formOptions.lfm              | 139 ++++++++++++++++++---
+formOptions.pas              | 125 ++++++++++++++++---
+formanalogueklock.pas        |  29 ++---
+history.txt                  |  53 +++++++-
+klock.iss                    |   6 +-
+klock.lpi                    | 195 +++++++++++++++--------------
+klock.lpr                    |   2 +-
+lazKlock.smproj              | Bin 61799 -> 83961 bytes
+sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
+sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
+sounds/chimes.wav            | Bin 55776 -> 0 bytes
+sounds/chord.wav             | Bin 97016 -> 0 bytes
+sounds/ding.wav              | Bin 80856 -> 0 bytes
+sounds/eight.mp3             | Bin 0 -> 979530 bytes
+sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
+sounds/five.mp3              | Bin 0 -> 801223 bytes
+sounds/four.mp3              | Bin 0 -> 739385 bytes
+sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
+sounds/nine.mp3              | Bin 0 -> 1040899 bytes
+sounds/notify.wav            | Bin 119384 -> 0 bytes
+sounds/one.mp3               | Bin 0 -> 559035 bytes
+sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
+sounds/recycle.wav           | Bin 25434 -> 0 bytes
+sounds/ringin.wav            | Bin 10026 -> 0 bytes
+sounds/ringout.wav           | Bin 5212 -> 0 bytes
+sounds/seven.mp3             | Bin 0 -> 919940 bytes
+sounds/six.mp3               | Bin 0 -> 862013 bytes
+sounds/start.wav             | Bin 1192 -> 0 bytes
+sounds/tada.wav              | Bin 171100 -> 0 bytes
+sounds/ten.mp3               | Bin 0 -> 1101951 bytes
+sounds/thepips.mp3           | Bin 0 -> 40874 bytes
+sounds/three.mp3             | Bin 0 -> 679164 bytes
+sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
+sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
+sounds/two.mp3               | Bin 0 -> 620614 bytes
+ufonts.pas                   |  78 ++++++++++++
+ufuzzytime.pas               |  42 +++----
+uklockutils.pas              | 156 +++++++++++++++++++-----
+uoptions.pas                 |  90 +++++++++++++-
+47 files changed, 895 insertions(+), 323 deletions(-)
 
-Build 50 [2.1.2.50]
+Build 50 [2.1.3.50]
 
 commit ce387521eca09467d8a50d3617c9b0d79254acd5
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Wed Dec 13 22:06:13 2017 +0000
 
-        [This is a part duplication of build 45 - mainly the options stuff.]
-        Cleaned up the calling process for the chimes.
+[This is a part duplication of build 45 - mainly the options stuff.]
+Cleaned up the calling process for the chimes.
 
-        Added doubleTime to uFuzzyTime.
+Added doubleTime to uFuzzyTime.
 
-        Added a new unit, uOptionsUtils.  This unit contains helper routines to
-        read and write XML entries.
+Added a new unit, uOptionsUtils.  This unit contains helper routines to read and write XML entries.
 
-        Changed the Klock icon.
+Changed the Klock icon.
 
-    Currently
-    4051 lines of source code.
-    2051 statements
-    16.9% comment
+Currently
+4051 lines of source code.
+2051 statements
+16.9% comment
 
- formAbout.pas     |    4 +-
- formKlock.lfm     | 9364 ++++++++++++++++++++++++++---------------------------
- formKlock.pas     |   15 +-
- formOptions.lfm   |    4 +-
- formOptions.pas   |    7 +-
- history.txt       |   57 +-
- klock.ico         |  Bin 67646 -> 67646 bytes
- klock.iss         |    6 +-
- klock.lpi         |  172 +-
- klock.lpr         |    2 +-
- lazKlock.smproj   |  Bin 83961 -> 96029 bytes
- time-13-128.ico   |  Bin 0 -> 67646 bytes
- ufuzzytime.pas    |   38 +-
- uklockutils.pas   |   39 +-
- uoptions.pas      |  285 +-
- uoptionsutils.pas |  100 +
- 16 files changed, 5059 insertions(+), 5034 deletions(-)
+formAbout.pas     |    4 +-
+formKlock.lfm     | 9364 ++++++++++++++++++++++++++---------------------------
+formKlock.pas     |   15 +-
+formOptions.lfm   |    4 +-
+formOptions.pas   |    7 +-
+history.txt       |   57 +-
+klock.ico         |  Bin 67646 -> 67646 bytes
+klock.iss         |    6 +-
+klock.lpi         |  172 +-
+klock.lpr         |    2 +-
+lazKlock.smproj   |  Bin 83961 -> 96029 bytes
+time-13-128.ico   |  Bin 0 -> 67646 bytes
+ufuzzytime.pas    |   38 +-
+uklockutils.pas   |   39 +-
+uoptions.pas      |  285 +-
+uoptionsutils.pas |  100 +
+16 files changed, 5059 insertions(+), 5034 deletions(-)
 
-Build 51 [2.1.2.51]
+Build 51 [2.1.3.51]
 
 commit 22135ab71701bcf61cedef606c118d34eae6ab28
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Sat Dec 16 18:56:37 2017 +0000
 
 
-    [This is a part duplication of build 45 - mainly the options stuff.]
-    Added the ability for Klock to write Info and Debug information to log
-    files.  Logging can be enabled / disabled by a user options.  Also the
-    ability to delete log files older then a certain age.  This is also
-    specified by user options.
+[This is a part duplication of build 45 - mainly the options stuff.]
+Added the ability for Klock to write Info and Debug information to log files.
+Logging can be enabled / disabled by a user options.  Also the ability to delete
+log files older then a certain age.  This is also specified by user options.
 
-    A extra tab was added to the options form for the logging options, the log
-    files are also displayed here.
+A extra tab was added to the options form for the logging options, the log files are also displayed here.
 
-    Added a new unit, uLogging.pas.  The unit contains the helper routines
-    to read and delete log files.
+Added a new unit, uLogging.pas.  The unit contains the helper routines to read and delete log files.
 
-    Started to sprinkle debug entries all over.
+Started to sprinkle debug entries all over.
 
-    I started to get the Access Violation again, especially in the 32 bit application.
-    This seemed to be either the logging not being thread safe and a problem in loading
-    the fonts.  I changed the method that loads the faults and stopped using TEvent and
-    wrote a simple logging class of my own that just appends to a text file.
-    [The logging class resides in uLogging.pas]
+I started to get the Access Violation again, especially in the 32 bit application.
+This seemed to be either the logging not being thread safe and a problem in loading
+the fonts.  I changed the method that loads the faults and stopped using TEvent and
+wrote a simple logging class of my own that just appends to a text file.
+[The logging class resides in uLogging.pas]
 
-    All seems to be okay.
+All seems to be okay.
 
-    Added a routine that retrieves the version of Windows, this is displayed in the
-    About form and the header of the log file.
+Added a routine that retrieves the version of Windows, this is displayed in the
+About form and the header of the log file.
 
-    Also removed the option to install the sources from the inno installer, they
-    can download them from GitHub.
+Also removed the option to install the sources from the inno installer, they can download them from GitHub.
 
-    Currently
-    4402 lines of source code.
-    2228 statements
-    17.2% comment
+Currently
+4402 lines of source code.
+2228 statements
+17.2% comment
 
- formAbout.lfm         |  41 ++++++-----
- formAbout.pas         |  44 ++----------
- formHelp.pas          |   2 +
- formKlock.pas         | 160 +++++++++++++++++++----------------------
- formLicense.lfm       |   2 +-
- formOptions.lfm       |  78 ++++++++++++++++++--
- formOptions.pas       |  55 ++++++++++++++-
- formanalogueklock.pas |   3 +
- formlicense.pas       |   2 +
- formreminderinput.lfm |   2 +-
- formreminderinput.pas |   7 ++
- history.txt           |  73 ++++++++++++++++++-
- klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
- klock.lpr             |   2 +-
- lazKlock.smproj       | Bin 96029 -> 108871 bytes
- ufonts.pas            |  98 +++++++++++++++++++-------
- uklockutils.pas       |  97 ++++++++++++++++++++++++-
- ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
- uoptions.pas          |  93 ++++++++++++++++--------
- uoptionsutils.pas     |   3 -
- 20 files changed, 805 insertions(+), 304 deletions(-)
+formAbout.lfm         |  41 ++++++-----
+formAbout.pas         |  44 ++----------
+formHelp.pas          |   2 +
+formKlock.pas         | 160 +++++++++++++++++++----------------------
+formLicense.lfm       |   2 +-
+formOptions.lfm       |  78 ++++++++++++++++++--
+formOptions.pas       |  55 ++++++++++++++-
+formanalogueklock.pas |   3 +
+formlicense.pas       |   2 +
+formreminderinput.lfm |   2 +-
+formreminderinput.pas |   7 ++
+history.txt           |  73 ++++++++++++++++++-
+klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
+klock.lpr             |   2 +-
+lazKlock.smproj       | Bin 96029 -> 108871 bytes
+ufonts.pas            |  98 +++++++++++++++++++-------
+uklockutils.pas       |  97 ++++++++++++++++++++++++-
+ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
+uoptions.pas          |  93 ++++++++++++++++--------
+uoptionsutils.pas     |   3 -
+20 files changed, 805 insertions(+), 304 deletions(-)
 
-Build 52 [2.1.2.52]
+Build 52 [2.1.3.52]
 
 commit 955ef8502453ccbc89da6a283ef28ff39acb7f7a
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Sun Dec 17 21:37:49 2017 +0000
 
-    [This is a NEARLY duplication of build 46]
-    Added formCipboard and uformClipboardUtils which implements a clipboard manager.
+[This is a NEARLY duplication of build 46]
+Added formCipboard and uformClipboardUtils which implements a clipboard manager.
 
-    Added various options for the clipboard manages to formOptions and uOptions.
+Added various options for the clipboard manages to formOptions and uOptions.
 
-    Currently
-    4946 lines of source code.
-    2517 statements
-    16.6% comment
+Currently
+4946 lines of source code.
+2517 statements
+16.6% comment
 
- formAbout.lfm         |  41 ++++++-----
- formAbout.pas         |  44 ++----------
- formHelp.pas          |   2 +
- formKlock.pas         | 160 +++++++++++++++++++----------------------
- formLicense.lfm       |   2 +-
- formOptions.lfm       |  78 ++++++++++++++++++--
- formOptions.pas       |  55 ++++++++++++++-
- formanalogueklock.pas |   3 +
- formlicense.pas       |   2 +
- formreminderinput.lfm |   2 +-
- formreminderinput.pas |   7 ++
- history.txt           |  73 ++++++++++++++++++-
- klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
- klock.lpr             |   2 +-
- lazKlock.smproj       | Bin 96029 -> 108871 bytes
- ufonts.pas            |  98 +++++++++++++++++++-------
- uklockutils.pas       |  97 ++++++++++++++++++++++++-
- ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
- uoptions.pas          |  93 ++++++++++++++++--------
- uoptionsutils.pas     |   3 -
- 20 files changed, 805 insertions(+), 304 deletions(-)
+formAbout.lfm         |  41 ++++++-----
+formAbout.pas         |  44 ++----------
+formHelp.pas          |   2 +
+formKlock.pas         | 160 +++++++++++++++++++----------------------
+formLicense.lfm       |   2 +-
+formOptions.lfm       |  78 ++++++++++++++++++--
+formOptions.pas       |  55 ++++++++++++++-
+formanalogueklock.pas |   3 +
+formlicense.pas       |   2 +
+formreminderinput.lfm |   2 +-
+formreminderinput.pas |   7 ++
+history.txt           |  73 ++++++++++++++++++-
+klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
+klock.lpr             |   2 +-
+lazKlock.smproj       | Bin 96029 -> 108871 bytes
+ufonts.pas            |  98 +++++++++++++++++++-------
+uklockutils.pas       |  97 ++++++++++++++++++++++++-
+ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
+uoptions.pas          |  93 ++++++++++++++++--------
+uoptionsutils.pas     |   3 -
+20 files changed, 805 insertions(+), 304 deletions(-)
 
 /*******************************************************************************************************/
 Klock has nnow caught up to the point before the curruption.
 I have done two things differently - the logger and the font loading - see build 51.
+Another bump on the minor version.
 /*******************************************************************************************************/
+
+Build 53 [2.1.4.53]
+
+commit a8fcda0f1df54159f605d1241fbcdec9aed1f45b
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Dec 18 13:04:20 2017 +0000
+
+Added an info screen it display information about Easter & lent dates, Power Source and
+Daylight Saving.  These are called from an Info menu from the main Klock screen.
+uInfoUtils was added and this contains the routins which do the heavy lifting.
+
+Added Time in words, Morse time and Roman Numerals Time to uFuzzyTime.
+
+Added Application directory to formAbout and log file header.
+
+Currently
+5514 lines of source code.
+2903 statements
+15.8% comment
+
+formAbout.lfm   |  43 ++++++----
+formAbout.pas   |   2 +
+formKlock.lfm   |  25 +++++-
+formKlock.pas   |  67 +++++++++++++---
+formOptions.lfm |   4 +-
+forminfo.lfm    | 106 ++++++++++++++++++++++++
+forminfo.pas    | 118 +++++++++++++++++++++++++++
+history.txt     |  28 ++++++-
+klock.iss       |   2 +-
+klock.lpi       | 210 +++++++++++++++++++++++++++---------------------
+klock.lpr       |   3 +-
+ufuzzytime.pas  | 233 ++++++++++++++++++++++++++++++++++++++++++++---------
+uinfoutils.pas  | 245 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+uklockutils.pas |   1 +
+14 files changed, 920 insertions(+), 167 deletions(-)
+
+Build 54 [2.1.4.54]
+
+Added a Christmas font nad an option to sutomatically use this font for the 12 day of
+christmas - 12 days before and 12 days after.
+Other holiday fonts will be added when found.
+
+formAbout - Removed info labels and added a listboz to display Klock about stuff.
+
+formKlock - Tidied up the setting of main timer interval when using NET time.
+          - Added logic to use Christmas font.
+          - First attempt at auto sizing main fuzzy time label depending upon size.
+
+formOptions - Added checkbox for Christmas font.
+
+formClipboard - Added the start of culling tmp files.
+
+formInfo - Removed info labels and added a listboz to display Info stuff.
+
+uFonts - Added loading and removal of Christmas font.
+
+uFuzzyTime - Added logic for fuzzyTime to write out it's own debug log.
+           - Corrected bug[s] in fuzzyTime.
+
+uKlockUtils - Added getTextWidth & isChristams helper functions.

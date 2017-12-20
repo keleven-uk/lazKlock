@@ -38,6 +38,7 @@ type
     ChckGrpGlobalOptions: TCheckGroup;
     ChckGrpTimeChimes: TCheckGroup;
     ChckGrpAnalogueKlock: TCheckGroup;
+    ChckGrpHolidayFonts: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -59,6 +60,7 @@ type
     procedure ChckBxLoggingChange(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
@@ -141,6 +143,8 @@ begin
   ChckGrpTimeOptions.Checked[3] := userBacOptions.fuzzyTimeBalloon;
   ChckGrpTimeOptions.Checked[4] := userBacOptions.displayIdleTime;
 
+  ChckGrpHolidayFonts.Checked[0] := userBacOptions.christmasFont;
+
   ChckGrpTimeChimes.Checked[0] := userBacOptions.hourPips;
   ChckGrpTimeChimes.Checked[1] := userBacOptions.hourChimes;
   ChckGrpTimeChimes.Checked[2] := userBacOptions.halfChimes;
@@ -191,7 +195,7 @@ begin
 end;
 
 procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
-{  Sets the use Global options according to the state of the radio group.
+{  Sets the user Global options according to the state of the radio group.
 
    index 0 - Save Screen Position.
    index 1 - Run Kock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
@@ -258,6 +262,15 @@ begin
   ChckGrpTimeChimes.CheckEnabled[2] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[3] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
+end;
+
+procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
+{  sets the user Global options forthe holiday fonts.
+
+    index 0 - 12 days of Christmas [before and after]
+}
+begin
+  userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
 end;
 
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);

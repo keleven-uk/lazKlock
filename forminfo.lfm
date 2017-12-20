@@ -1,13 +1,18 @@
 object frmInfo: TfrmInfo
-  Left = 1109
+  Left = 1390
   Height = 306
-  Top = 328
+  Top = 284
   Width = 362
+  BorderStyle = bsSingle
   Caption = 'Info'
   ClientHeight = 306
   ClientWidth = 362
-  OnCreate = FormCreate
+  Constraints.MaxHeight = 306
+  Constraints.MaxWidth = 362
+  Constraints.MinHeight = 306
+  Constraints.MinWidth = 362
   OnShow = FormShow
+  Position = poMainFormCenter
   LCLVersion = '1.8.0.6'
   object GroupBox1: TGroupBox
     Left = 8
@@ -30,59 +35,24 @@ object frmInfo: TfrmInfo
       TabOrder = 0
       Value = 2017
     end
-    object lblInfo1: TLabel
-      Left = 24
-      Height = 15
-      Top = 8
-      Width = 20
-      Caption = 'one'
-      Color = clDefault
-      Transparent = False
-    end
-    object lblInfo2: TLabel
-      Left = 24
-      Height = 15
-      Top = 32
-      Width = 20
-      Caption = 'two'
-      Color = clDefault
-      Transparent = False
-    end
-    object lblInfo3: TLabel
-      Left = 24
-      Height = 15
-      Top = 64
-      Width = 27
-      Caption = 'three'
-      Color = clDefault
-      Transparent = False
-    end
-    object lblInfo4: TLabel
-      Left = 24
-      Height = 15
-      Top = 96
-      Width = 22
-      Caption = 'four'
-      Color = clDefault
-      Transparent = False
-    end
-    object lblInfo5: TLabel
-      Left = 24
-      Height = 15
-      Top = 120
-      Width = 19
-      Caption = 'five'
-      Color = clDefault
-      Transparent = False
-    end
     object lblYear: TLabel
       Left = 56
       Height = 15
       Top = 168
       Width = 56
       Caption = 'Select Year'
-      Color = clDefault
-      Transparent = False
+      ParentColor = False
+    end
+    object lstBxInfo: TListBox
+      Left = 8
+      Height = 152
+      Top = 0
+      Width = 327
+      ItemHeight = 0
+      OnDrawItem = lstBxInfoDrawItem
+      ParentColor = True
+      Style = lbOwnerDrawFixed
+      TabOrder = 1
     end
   end
   object GroupBox2: TGroupBox

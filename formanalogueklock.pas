@@ -152,13 +152,6 @@ begin
 end;
 
 procedure TfrmAnalogueKlock.Shape1MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
-
-
-
-
-
-
-
 {  Left mouse button released, stop dragging.  }
 begin
   moveAnalogueKlock := False;

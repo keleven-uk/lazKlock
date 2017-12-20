@@ -4,9 +4,10 @@ unit UKlockUtils;
 
 interface
 
+//  Graphics has to come after Windows - so TBitmap.Create works.
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Process,
-  MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows;
+  Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process,
+  MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -38,6 +39,8 @@ procedure logHeader;
 procedure logFooter;
 function getUpTime(system: string): string;
 function getWindowsVersion: string;
+function GetTextWidth(AText: String; AFont: TFont): Integer;
+function isChristmas(): Boolean;
 
 implementation
 
@@ -533,6 +536,34 @@ begin
   AProcess.Free;
 
   Result := winVer[1];
+end;
+
+function GetTextWidth(AText: String; AFont: TFont): Integer;
+var
+  bmp: TBitmap;
+begin
+  Result := 0;
+  bmp := TBitmap.Create;
+  try
+    bmp.Canvas.Font.Assign(AFont);
+    Result := bmp.Canvas.TextWidth(AText);
+  finally
+    bmp.Free;
+  end;
+end;
+
+function isChristmas: Boolean;
+VAR
+  chritmasDay: TDateTime;
+  currentDate: TDateTime;
+begin
+  chritmasDay := EncodeDate(Currentyear, 12, 25);
+  currentDate := Date;
+
+  if DaysBetween(chritmasDay, currentDate) < 13 then
+    Result := true
+  else
+    Result := False;
 end;
 
 end.

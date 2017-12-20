@@ -78,6 +78,7 @@ type
     _halfChimes: boolean;
     _quarterChimes: boolean;
     _threeQuarterChimes: boolean;
+    _christmasFont: boolean;
 
     //  Timer
     _timerMilliSeconds: boolean;
@@ -130,6 +131,7 @@ type
     property halfChimes: boolean read _halfChimes write _halfChimes;
     property quarterChimes: boolean read _quarterChimes write _quarterChimes;
     property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
+    property christmasFont: boolean read _christmasFont write _christmasFont;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
@@ -283,6 +285,7 @@ begin
   halfChimes := o.halfChimes;
   quarterChimes := o.quarterChimes;
   threeQuarterChimes := o.threeQuarterChimes;
+  christmasFont := o.christmasFont;
 
   //  Timer
   timerMilliSeconds := o.timerMilliSeconds;
@@ -365,6 +368,7 @@ begin
     halfChimes := StrToBool(readChild(PassNode, 'halfChimes'));
     quarterChimes := StrToBool(readChild(PassNode, 'quarterChimes'));
     threeQuarterChimes := StrToBool(readChild(PassNode, 'threeQuarterChimes'));
+    christmasFont := StrToBool(readChild(PassNode, 'christmasFont'));
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
@@ -439,6 +443,7 @@ begin
   halfChimes := False;
   quarterChimes := False;
   threeQuarterChimes := False;
+  christmasFont := True;
 
   //  Timer
   timerMilliSeconds := True;
@@ -518,6 +523,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'halfChimes', halfChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes', quarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'threeQuarterChimes', threeQuarterChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'christmasFont', christmasFont));
 
     RootNode.AppendChild(ElementNode);
 

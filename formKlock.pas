@@ -22,7 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      EC-contols - Eye Candy - used for the accordion on the options screen
 }
 
-{ TODO : Look at main timer interval. }
 { TODO : Check if options file has new options. }
 { TODO : Check out Ballon Time. }
 { TODO : Check out Reminders. }
@@ -37,7 +36,7 @@ uses
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging, formInfo;
+  ULogging, formInfo, Graph, formClipBoard;
 
 type
 
@@ -273,7 +272,7 @@ begin
   logHeader;
   kLog.cullLogFile;
 
-  //cullTmpFile;                     //  Remove old .tmp files left over from clipboard operations.
+  frmClipBoard.cullTmpFiles;                     //  Remove old .tmp files left over from clipboard operations.
 
   fs.addFonts;                     //  Add custom fonts.
 
@@ -339,7 +338,7 @@ begin
     frmMain.Left := userOptions.formLeft;
   end;
 
-  if userOptions.netTimeSeconds then
+  if userOptions.netTimeSeconds and (CmbBxTime.Items[CmbBxTime.ItemIndex] = 'NET Time') then
     mainTimer.Interval := 1
   else
     mainTimer.Interval := 1000;
@@ -520,33 +519,59 @@ end;
 procedure TfrmMain.UpdateTime(KTime: TDateTime);
 {  Updates the time in the correct font.    }
 begin
-
   case CmbBxTime.Items[CmbBxTime.ItemIndex] of
     'Bar Code Time':
     begin
       lblfuzzy.Font.Name := 'Bar Code 39';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Font.Size := 22;
+      lblfuzzy.AutoSize := true;
     end;
     'Nancy Blackett Time':
     begin
       lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Font.Size := 22;
+      lblfuzzy.AutoSize := true;
     end;
     'Semaphore Time':
     begin
       lblfuzzy.Font.Name := 'Semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Font.Size := 22;
+      lblfuzzy.AutoSize := true;
     end;
     'Braille Time':
     begin
       lblfuzzy.Font.Name := 'BrailleLatin';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Font.Size := 22;
+      lblfuzzy.AutoSize := true;
     end;
+    'Christmas':
+    begin
+      lblfuzzy.Top := 1;
+      lblfuzzy.Font.Name := 'Christmas';
+      lblfuzzy.Font.Size := 28;
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.AutoSize := true;
+    end;
+    'Fuzzy Time', 'Word Time':
+      begin
+        if userOptions.christmasFont and isChristmas then
+          lblfuzzy.Font.Name := 'Christmas'
+        else
+          lblfuzzy.Font.Name := 'default';
+        lblfuzzy.Font.Size := 22;          //  seems to neede this, or changes size on each call.
+        lblfuzzy.Font.Size := Trunc( 22 * (490 / GetTextWidth(ft.getTime, lblfuzzy.Font)));
+        lblfuzzy.Caption := ft.getTime;
+        lblfuzzy.Top := 0;
+        lblfuzzy.AutoSize := true;
+      end;
     else   //  no font substitution, use default font.
       begin
-        lblfuzzy.Top := 2;
         lblfuzzy.Font.Name := 'default';
-        lblfuzzy.Font.Size := 18;
+        lblfuzzy.Font.Size := 22;
         lblfuzzy.Caption := ft.getTime;
       end;
   end;
@@ -617,7 +642,7 @@ begin
   ft.displayFuzzy := CmbBxTime.ItemIndex;
   lblfuzzy.Caption := ft.getTime;
 
-  if CmbBxTime.ItemIndex = 9 then   //  hard coded for radix time.
+  if CmbBxTime.Items[CmbBxTime.ItemIndex] = 'Radix Time' then   //  hard coded for radix time.
   begin
     SpnEdtTimeBase.Visible := True;
     lblRadix.Visible := True;
@@ -629,6 +654,12 @@ begin
     lblRadix.Visible := False;
   end;
 
+  if userOptions.netTimeSeconds and (CmbBxTime.Items[CmbBxTime.ItemIndex] = 'NET Time') then
+    mainTimer.Interval := 1
+  else
+    mainTimer.Interval := 1000;
+
+  klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
 end;
 
 procedure TfrmMain.SpnEdtTimeBaseChange(Sender: TObject);

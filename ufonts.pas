@@ -14,7 +14,7 @@ uses
   StdCtrls, Windows, Messages, typinfo;
 
 type
-  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore);
+  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas);
 
   fontStore = class
 
@@ -83,7 +83,7 @@ begin
   except
     on E: Exception do
     begin
-      kLog.writeLog('ERROR: Adding Fonts.' + LineEnding + E.Message);
+      kLog.writeLog('ERROR: Adding Fonts.' + E.Message);
     end;  //  on E:
   end;    //  try
 
@@ -116,7 +116,7 @@ begin
   except
     on E: Exception do
     begin
-      kLog.writeLog('ERROR: removing Fonts.' + LineEnding + E.Message);
+      kLog.writeLog('ERROR: removing Fonts.' + E.Message);
     end;  //  on E:
   end;    //  try
 
