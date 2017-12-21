@@ -1611,6 +1611,10 @@ uklockutils.pas |   1 +
 
 Build 54 [2.1.4.54]
 
+commit d4c4e3ef6602799b13f2e93f662ee9d86002df5a
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Dec 20 20:10:32 2017 +0000
+
 Added a Christmas font nad an option to sutomatically use this font for the 12 day of
 christmas - 12 days before and 12 days after.
 Other holiday fonts will be added when found.
@@ -1633,3 +1637,48 @@ uFuzzyTime - Added logic for fuzzyTime to write out it's own debug log.
            - Corrected bug[s] in fuzzyTime.
 
 uKlockUtils - Added getTextWidth & isChristams helper functions.
+
+Currently
+5654 lines of source code.
+2984 statements
+15.7% comment
+
+fonts/Christmas.ttf   |  Bin 0 -> 57012 bytes
+formAbout.lfm         |   79 +-
+formAbout.pas         |   38 +-
+formKlock.lfm         |  166 ++--
+formKlock.pas         |   47 +-
+formOptions.lfm       |   36 +-
+formOptions.pas       |   15 +-
+formanalogueklock.pas |    7 -
+formclipboard.lfm     |    5 +
+formclipboard.pas     |   26 +-
+forminfo.lfm          |   70 +-
+forminfo.pas          |   58 +-
+history.txt           | 2243 +++++++++++++++++++++++++------------------------
+klock.iss             |    2 +-
+klock.lpi             |  228 ++---
+lazKlock.smproj       |  Bin 123852 -> 140380 bytes
+ufonts.pas            |    6 +-
+ufuzzytime.pas        |   51 +-
+uinfoutils.pas        |   13 +-
+uklockutils.pas       |   35 +-
+uoptions.pas          |    6 +
+21 files changed, 1636 insertions(+), 1495 deletions(-)
+
+Build 55 [2.1.4.55]
+
+Added a LED Klock, this hangs off the Time menu on the main Klock.
+Added formLEDKlock to the project.
+
+formKlock - Added menu item to call the LED Klock.
+
+formOptionss - Added options for LED Klock [save screen position].
+uOptions     -
+
+uFuzzyTime - Added Flow Time and Metric Time.
+
+Currently
+5917 lines of source code.
+3091 statements
+15.8% comment

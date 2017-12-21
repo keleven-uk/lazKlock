@@ -1,9 +1,9 @@
 object frmAnalogueKlock: TfrmAnalogueKlock
-  Left = 1507
+  Left = 1422
   Height = 248
-  Top = 151
+  Top = 219
   Width = 248
-  BorderIcons = [biHelp]
+  BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Analogue Klock'
   ClientHeight = 248

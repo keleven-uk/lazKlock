@@ -3001,9 +3001,13 @@ object frmMain: TfrmMain
     end
     object mnuTime: TMenuItem
       Caption = 'Time'
-      object MenuItem2: TMenuItem
+      object mnuItmAnalogueKlock: TMenuItem
         Caption = 'Analogue Klock'
-        OnClick = MenuItem2Click
+        OnClick = mnuItmAnalogueKlockClick
+      end
+      object mnuItmLEDKlock: TMenuItem
+        Caption = 'LED Klock'
+        OnClick = mnuItmLEDKlockClick
       end
     end
     object mnuInfo: TMenuItem

@@ -55,6 +55,8 @@ type
     function codeTime(mode: string): string;
     function toMorse(time: integer): string;
     function toRoman(time: integer): string;
+    function getFlowTime: string;
+    function getMetricTime: string;
     procedure writeLog(message: string);
   public
     property filename: string read _filename write _filename;
@@ -89,8 +91,9 @@ begin
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
-   '"Roman Time", "Morse Time", "Bar Code Time", "Semaphore Time", "Nancy Blackett Time", "Braille Time",' +
-   '"Christmas"');
+   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Bar Code Time", "Semaphore Time",' +
+   '"Nancy Blackett Time", "Braille Time", "Christmas"');
+
   //writeLog('End of Create');
  end;
 
@@ -467,13 +470,53 @@ begin
   Result := FloatToStr(fhour + fmin + fsec);
 end;
 
+function FuzzyTime.getFlowTime: string;
+{  Returns the current [local] time as Flow Time.
+   Flow Time still divides the day into 24 hours, but each hour is divided
+   into 100 minutes of 100 seconds.
+   A Quick conversion is takes 2/3 of the minute [or second] and add it to it's self.
+}
+var
+  hour: word;
+  mins: word;
+  secs: word;
+  msec: word;
+  m: double;
+  s: double;
+begin
+  DecodeTime(time, hour, mins, secs, msec);
+
+  m := mins * (5/3);
+  s := secs * (5/3);
+
+  result := format('%d %d %d', [hour, trunc(m), trunc(s)]);
+end;
+
+function FuzzyTime.getMetricTime: string;
+{  Returns the current [local] time in Metric time.
+   Metric time is the measure of time interval using the metric system,
+   which defines the second as the base unit of time, and multiple and
+   submultiple units formed with metric prefixes, such as kilo-seconds and milliseconds.
+   Only Kilo-seconds are used here.
+}
+var
+  noOfSeconds: longword;
+  noOfKSeconds: double;
+begin
+  noOfSeconds := SecondOfTheDay(Time);
+  noOfKSeconds := noOfSeconds / 1000;
+
+  Result := format('%0.3f Kilo-Seconds', [noOfKSeconds]);
+end;
+
 function FuzzyTime.getTime: string;
 begin
 
   case displayFuzzy of
     0: Result := fTime;
     1: Result := wordTime;
-    2: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time) else Result := FormatDateTime('hh : nn : ss am/pm', Time);
+    2: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time)
+                        else Result := FormatDateTime('hh : nn : ss am/pm', Time);
     3: Result := netTime;
     4: Result := unixTime;
     5: Result := utcTime;
@@ -486,6 +529,8 @@ begin
     12: Result := getDblTime;
     13: Result := codeTime('Roman');
     14: Result := codeTime('Morse');
+    15: Result := getFlowTime;
+    16: Result := getMetricTime;
   end;
 
 end;

@@ -39,6 +39,7 @@ type
     ChckGrpTimeChimes: TCheckGroup;
     ChckGrpAnalogueKlock: TCheckGroup;
     ChckGrpHolidayFonts: TCheckGroup;
+    ChckGrpLEDKlock: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -61,6 +62,7 @@ type
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
@@ -91,7 +93,7 @@ uses
 
 { TfrmOptions }
 
-{....................................... Form Routines ......................................................}
+//............................ Form Routines ...................................
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 {  Run things when the form is first created.  }
@@ -158,6 +160,8 @@ begin
 
   ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
 
+  ChckGrpLEDKlock.Checked[0] := userBacOptions.LEDScreenSave;
+
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
   ChckBxLogging.Checked := userBacOptions.logging;
@@ -184,9 +188,9 @@ begin
   userOptions.writeDefaultOptions;
 end;
 
-{....................................... Options Routines ......................................................}
+//............................ Options Routines ................................
 //
-//....................................................................GLOBAL ....................................
+//...................................GLOBAL ....................................
 //
 procedure TfrmOptions.CmbBxDefaulTtabChange(Sender: TObject);
 {  The default tab has changed, relect is user options.  }
@@ -223,7 +227,7 @@ begin
   doPlaySound('thepips.mp3', userBacOptions.volume);
 end;
 //
-//....................................................................TIME ....................................
+//.....................................TIME ....................................
 //
 procedure TfrmOptions.ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Time options according to the state of the radio group.
@@ -278,7 +282,7 @@ begin
   userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
 end;
 //
-//....................................................................ANALOGUE KLOCK ...........................
+//....................................ANALOGUE KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the Ciming options according to the state of the radio group.
@@ -289,7 +293,14 @@ begin
   userBacOptions.analogueScreenSave := ChckGrpAnalogueKlock.Checked[0];
 end;
 //
-//....................................................................OTHER STUFF ..............................
+//.........................................LED KLOCK ...........................
+//
+procedure TfrmOptions.ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
+begin
+   userBacOptions.LEDScreenSave := ChckGrpLEDKlock.Checked[0];
+end;
+//
+//....................................OTHER STUFF ..............................
 //
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Timer options according to the state of the radio group.
@@ -300,7 +311,7 @@ begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
 end;
 //
-//....................................................................LOGGING ...................................
+//...................................LOGGING ...................................
 //
 procedure TfrmOptions.ChckBxLoggingChange(Sender: TObject);
 {  Switch on/off logging.    }
@@ -320,13 +331,14 @@ begin
     userBacOptions.CullLogsDays := SpnEdtCullDays.Value;
   end;
 end;
-{....................................... Pannel Buttons ......................................................}
+{........ Pannel Buttons ......................................................}
 
 procedure TfrmOptions.CancelButtonClick(Sender: TObject);
 {  The cancel button has been pressed, so we forget any changes.
     Since the changes are made to userBacOptions - we don't need to do nowt.
 }
 begin
+  FreeAndNil(userBacOptions);
   close;
 end;
 
@@ -339,6 +351,7 @@ begin
   UserOptions.writeCurrentOptions;                        //  write back amended options back to disk.
 
   applyRunAtStartUp(userOptions.runAtStartUp);
+  FreeAndNil(userBacOptions);
 end;
 
 end.

@@ -103,14 +103,14 @@ begin
 
   frmMain.Visible := True;
 
-  frmAnalogueKlock.Close;
-
   if userOptions.analogueScreenSave then
   begin
-    userOptions.analogueFormLeft := frmAnalogueKlock.Left;
-    userOptions.analogueFormTop := frmAnalogueKlock.Top;
+    userOptions.analogueFormLeft := Left;
+    userOptions.analogueFormTop := Top;
     userOptions.writeCurrentOptions;
   end;
+
+  Close;
 end;
 
 procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
@@ -124,8 +124,8 @@ begin
 
   if userOptions.analogueScreenSave then
   begin
-    frmAnalogueKlock.Left := userOptions.analogueFormLeft;
-    frmAnalogueKlock.Top := userOptions.analogueFormTop;
+    Left := userOptions.analogueFormLeft;
+    Top := userOptions.analogueFormTop;
   end;
 end;
 

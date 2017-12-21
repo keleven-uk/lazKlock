@@ -34,6 +34,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure LstVwClipBoardClick(Sender: TObject);
     procedure LstVwClipBoardCustomDrawSubItem(Sender: TCustomListView;
       Item: TListItem; SubItem: Integer; State: TCustomDrawState;
@@ -67,10 +68,11 @@ procedure TfrmClipBoard.FormClose(Sender: TObject; var CloseAction: TCloseAction
   );
 begin
   kLog.writeLog('formClipBoard Close');
+
   if userOptions.CB_ScreenSave then
   begin
-    userOptions.CB_formTop := frmClipBoard.Top;
-    userOptions.CB_formLeft := frmClipBoard.Left;
+    userOptions.CB_formTop := Top;
+    userOptions.CB_formLeft := Left;
     userOptions.writeCurrentOptions;
   end;
 end;
@@ -80,18 +82,21 @@ begin
   kLog.writeLog('formClipBoard Create');
   FListener := TClipboardListener.Create;
   FListener.OnClipboardChange := @ClipboardChanged;
-
-  if userOptions.CB_ScreenSave then
-  begin
-    frmClipBoard.Top := userOptions.CB_formTop;
-    frmClipBoard.Left := userOptions.CB_formLeft;
-    userOptions.writeCurrentOptions;
-  end;
 end;
 
 procedure TfrmClipBoard.FormDestroy(Sender: TObject);
 begin
   FListener.Free;
+end;
+
+procedure TfrmClipBoard.FormShow(Sender: TObject);
+begin
+  if userOptions.CB_ScreenSave then
+  begin
+    Top := userOptions.CB_formTop;
+    Left := userOptions.CB_formLeft;
+    userOptions.writeCurrentOptions;
+  end;
 end;
 
 procedure TfrmClipBoard.FormActivate(Sender: TObject);

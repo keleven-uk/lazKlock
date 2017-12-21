@@ -19,7 +19,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   To compile, the following components must be instaled into Lazarus.
      BGRA comtorls, which installs BGRA bitmap.
-     EC-contols - Eye Candy - used for the accordion on the options screen
+     EC-contols - Eye Candy - used for the accordion on the options screen.
+     VisualPlanit - L.E.D. control.
+
+     All from the Online Package manager.
 }
 
 { TODO : Check if options file has new options. }
@@ -36,7 +39,7 @@ uses
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging, formInfo, Graph, formClipBoard;
+  ULogging, formInfo, Graph, formClipBoard, formLEDKlock;
 
 type
 
@@ -91,13 +94,14 @@ type
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmLEDKlock: TMenuItem;
     mnuItmPowerSource: TMenuItem;
     mnuItmLentDates: TMenuItem;
     mnuItmEasterDates: TMenuItem;
     mnuItmDaylightSaving: TMenuItem;
     mnuInfo: TMenuItem;
     mnuTime: TMenuItem;
-    MenuItem2: TMenuItem;
+    mnuItmAnalogueKlock: TMenuItem;
     Panel17: TPanel;
     Panel18: TPanel;
     Panel19: TPanel;
@@ -184,12 +188,13 @@ type
     procedure HelpButtonClick(Sender: TObject);
     procedure mainIdleTimerStopTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
-    procedure MenuItem2Click(Sender: TObject);
+    procedure mnuItmAnalogueKlockClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmDaylightSavingClick(Sender: TObject);
     procedure mnuItmEasterDatesClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
+    procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
@@ -298,6 +303,7 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 }
 begin
   kLog.writeLog('FormKlock Closing');
+
   if userOptions.screenSave then
   begin
     userOptions.formTop := frmMain.Top;
@@ -305,12 +311,20 @@ begin
     userOptions.writeCurrentOptions;
   end;
 
+  //  if clipboard manager active, we need to save its position - if needed.
+  if userOptions.CB_ScreenSave then
+  begin
+    userOptions.CB_formTop := frmClipBoard.Top;
+    userOptions.CB_formLeft := frmClipBoard.Left;
+  end;
+
   fs.removeFonts;                   //  Remove custom fonts.
+
+  logFooter;
 
   FreeAndNil(fs);                   //  Release the font store object.
   FreeAndNil(ft);                   //  Release the fuzzy time object.
-
-  logFooter;
+  FreeAndNil(userOptions);          //  Release the user options
   FreeAndNil(kLog);                 //  Release the logger object.
 
   CloseAction := caFree;
@@ -620,11 +634,6 @@ procedure TfrmMain.mainIdleTimerTimer(Sender: TObject);
 
 begin
   tick += 1;
-end;
-
-procedure TfrmMain.MenuItem2Click(Sender: TObject);
-begin
-  frmAnalogueKlock.Show;
 end;
 
 procedure TfrmMain.mainIdleTimerStopTimer(Sender: TObject);
@@ -1546,6 +1555,17 @@ end;
 procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
 begin
   frmLicense.ShowModal;
+end;
+//
+// ********************************************************* Time Menu *********
+//
+procedure TfrmMain.mnuItmAnalogueKlockClick(Sender: TObject);
+begin
+  frmAnalogueKlock.Show;
+end;
+procedure TfrmMain.mnuItmLEDKlockClick(Sender: TObject);
+begin
+  frmLEDKlock.Show;
 end;
 //
 // ********************************************************* Info Menu *********

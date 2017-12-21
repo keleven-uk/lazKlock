@@ -88,6 +88,11 @@ type
     _analogueFormTop: integer;              //  the forms top left.
     _analogueFormLeft: integer;
 
+    // LED Klock
+    _LEDScreenSave: boolean;           //  do we save from position or not.
+    _LEDFormTop: integer;              //  the forms top left.
+    _LEDFormLeft: integer;
+
     //  Logging
     _logging: Boolean;
     _cullLogs: Boolean;
@@ -140,6 +145,11 @@ type
     property analogueScreenSave: boolean read _analogueScreenSave write _analogueScreenSave;
     property analogueFormTop: integer read _analogueFormTop write _analogueFormTop;
     property analogueFormLeft: integer read _analogueFormLeft write _analogueFormLeft;
+
+    // LED Kock
+    property LEDScreenSave: boolean read _LEDScreenSave write _LEDScreenSave;
+    property LEDFormTop: integer read _LEDFormTop write _LEDFormTop;
+    property LEDFormLeft: integer read _LEDFormLeft write _LEDFormLeft;
 
     //  Logging
     property logging: boolean read _logging write _logging;
@@ -295,6 +305,11 @@ begin
   analogueFormTop := o.analogueFormTop;
   analogueFormLeft := o.analogueFormLeft;
 
+  //  LED Klock
+  LEDScreenSave := o.LEDScreenSave;
+  LEDFormTop := o.LEDFormTop;
+  LEDFormLeft := o.LEDFormLeft;
+
   //  Logging
   logging := o.logging;
   cullLogs := o.cullLogs;
@@ -382,6 +397,12 @@ begin
     analogueFormLeft := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Left'));
     analogueScreenSave := StrToBool(readChild(PassNode, 'analogueScreenSave'));
 
+    PassNode := Doc.DocumentElement.FindNode('LEDKlock');
+
+    LEDFormTop := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Top'));
+    LEDFormLeft := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Left'));
+    LEDScreenSave := StrToBool(readChild(PassNode, 'LEDScreenSave'));
+
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
 
@@ -452,6 +473,11 @@ begin
   analogueScreenSave := True;
   analogueFormTop := 100;
   analogueFormLeft := 100;
+
+  //  LED Klock
+  LEDScreenSave := True;
+  LEDFormTop := 100;
+  LEDFormLeft := 100;
 
   //  Logging
   logging := True;
@@ -531,6 +557,14 @@ begin
     ElementNode := Doc.CreateElement('Timer');
 
     ElementNode.AppendChild(writeBolChild(doc, 'timerMilliSeconds', timerMilliSeconds));
+
+    RootNode.AppendChild(ElementNode);
+
+    // Analogue Klock
+    ElementNode := Doc.CreateElement('LEDKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave', LEDScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'LEDForm', LEDFormTop, LEDFormLeft));
 
     RootNode.AppendChild(ElementNode);
 

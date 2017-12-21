@@ -1,0 +1,45 @@
+object frmLEDKlock: TfrmLEDKlock
+  Left = 1702
+  Height = 60
+  Top = 255
+  Width = 187
+  BorderIcons = []
+  BorderStyle = bsNone
+  Caption = 'LED Klock'
+  ClientHeight = 60
+  ClientWidth = 187
+  KeyPreview = True
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PopupMenu = popUpMenuLEDKlock
+  LCLVersion = '1.8.0.6'
+  object LEDKlock: TVpLEDLabel
+    Left = 0
+    Height = 60
+    Top = 0
+    Width = 187
+    Caption = 'LEDKlock'
+    Columns = 11
+    Rows = 2
+    OffColor = 930866
+    OnColor = clLime
+  end
+  object TmrLEDKlock: TTimer
+    OnTimer = TmrLEDKlockTimer
+    left = 144
+    top = 32
+  end
+  object popUpMenuLEDKlock: TPopupMenu
+    left = 80
+    top = 32
+    object MnItmExit: TMenuItem
+      Caption = 'Exit'
+      OnClick = MnItmExitClick
+    end
+    object MnItmAbout: TMenuItem
+      Caption = 'About'
+      OnClick = MnItmAboutClick
+    end
+  end
+end
