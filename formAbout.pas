@@ -86,15 +86,13 @@ begin
 
   lstBxInfo.Items.add(userOptions.fileDescription);
   lstBxInfo.Items.add('');
+  lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
+  lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
   {$ifdef WIN32}
     lstBxInfo.Items.add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
   {$else}
     lstBxInfo.Items.add(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
   {$endif}
-  lstBxInfo.Items.add('');
-  lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
-  lstBxInfo.Items.add('');
-  lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
   lstBxInfo.Items.add('');
   lstBxInfo.Items.add(getWindowsVersion);
   lstBxInfo.Items.add('');

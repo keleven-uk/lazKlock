@@ -10,7 +10,8 @@ uses
   Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout, formHelp,
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
   uOptions, formAnalogueKlock, uFonts, uOptionsUtils, ULogging,
-  UformClipBoardUtils, formClipBoard, uInfoUtils, formInfo, formLEDKlock;
+  UformClipBoardUtils, formClipBoard, uInfoUtils, formInfo, formLEDKlock,
+  formBinaryKlock;
 
 {$R *.res}
 
@@ -27,6 +28,7 @@ begin
   Application.CreateForm(TfrmClipBoard, frmClipBoard);
   Application.CreateForm(TfrmInfo, frmInfo);
   Application.CreateForm(TfrmLEDKlock, frmLEDKlock);
+  Application.CreateForm(TfrmBinaryKlock, frmBinaryKlock);
   Application.Run;
 end.
 

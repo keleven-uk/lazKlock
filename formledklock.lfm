@@ -1,13 +1,17 @@
 object frmLEDKlock: TfrmLEDKlock
-  Left = 1702
+  Left = 1494
   Height = 60
-  Top = 255
-  Width = 187
+  Top = 143
+  Width = 255
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'LED Klock'
   ClientHeight = 60
-  ClientWidth = 187
+  ClientWidth = 255
+  Constraints.MaxHeight = 60
+  Constraints.MaxWidth = 255
+  Constraints.MinHeight = 60
+  Constraints.MinWidth = 255
   KeyPreview = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -18,9 +22,9 @@ object frmLEDKlock: TfrmLEDKlock
     Left = 0
     Height = 60
     Top = 0
-    Width = 187
+    Width = 255
     Caption = 'LEDKlock'
-    Columns = 11
+    Columns = 15
     Rows = 2
     OffColor = 930866
     OnColor = clLime

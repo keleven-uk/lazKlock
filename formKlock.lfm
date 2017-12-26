@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1182
+  Left = 1191
   Height = 260
-  Top = 445
+  Top = 392
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -3008,6 +3008,10 @@ object frmMain: TfrmMain
       object mnuItmLEDKlock: TMenuItem
         Caption = 'LED Klock'
         OnClick = mnuItmLEDKlockClick
+      end
+      object mnuItmBinaryKlock: TMenuItem
+        Caption = 'Binary Klock'
+        OnClick = mnuItmBinaryKlockClick
       end
     end
     object mnuInfo: TMenuItem

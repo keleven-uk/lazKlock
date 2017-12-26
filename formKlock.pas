@@ -39,7 +39,7 @@ uses
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging, formInfo, Graph, formClipBoard, formLEDKlock;
+  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock;
 
 type
 
@@ -94,6 +94,7 @@ type
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmBinaryKlock: TMenuItem;
     mnuItmLEDKlock: TMenuItem;
     mnuItmPowerSource: TMenuItem;
     mnuItmLentDates: TMenuItem;
@@ -190,6 +191,7 @@ type
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure mnuItmAnalogueKlockClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
+    procedure mnuItmBinaryKlockClick(Sender: TObject);
     procedure mnuItmDaylightSavingClick(Sender: TObject);
     procedure mnuItmEasterDatesClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
@@ -1567,6 +1569,10 @@ procedure TfrmMain.mnuItmLEDKlockClick(Sender: TObject);
 begin
   frmLEDKlock.Show;
 end;
+procedure TfrmMain.mnuItmBinaryKlockClick(Sender: TObject);
+begin
+  frmBinaryKlock.Show;
+end;
 //
 // ********************************************************* Info Menu *********
 //
@@ -1638,6 +1644,8 @@ begin
   TrayIcon.Hide;
 
   frmMain.Visible := True;
+
+  KillOtherKlocks;    //  if made visable from the tray, kill any other klocks that are visable.
 
   if ppMnItmTime.Checked then
     ppMnItmTime.Checked := False;

@@ -1,7 +1,7 @@
 object frmAnalogueKlock: TfrmAnalogueKlock
-  Left = 1422
+  Left = 1437
   Height = 248
-  Top = 219
+  Top = 165
   Width = 248
   BorderIcons = []
   BorderStyle = bsNone
@@ -10,6 +10,7 @@ object frmAnalogueKlock: TfrmAnalogueKlock
   ClientWidth = 248
   Color = clBlack
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = popUpMenuAnalogueKlock
   Position = poScreenCenter
@@ -51,17 +52,6 @@ object frmAnalogueKlock: TfrmAnalogueKlock
     ScaleSettings.EnableRangeIndicator = True
     Position = 0
     Enabled = True
-  end
-  object Shape1: TShape
-    Left = 224
-    Height = 20
-    Top = 208
-    Width = 15
-    Brush.Color = clMoneyGreen
-    OnMouseDown = Shape1MouseDown
-    OnMouseMove = Shape1MouseMove
-    OnMouseUp = Shape1MouseUp
-    Shape = stTriangleRight
   end
   object popUpMenuAnalogueKlock: TPopupMenu
     left = 24

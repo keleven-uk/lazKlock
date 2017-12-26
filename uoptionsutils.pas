@@ -6,7 +6,7 @@ unit uOptionsUtils;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead;
+  Classes, SysUtils, DOM;
 
 Function readChild(PassNode: TDOMNode;  name: string): string;
 Function readChildAttribute(PassNode: TDOMNode;  name: string; attribute: string): string;

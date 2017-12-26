@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, VpLEDLabel, formAbout, LMessages;
+  Menus, VpLEDLabel, LMessages;
 
 type
 
@@ -40,7 +40,7 @@ var
 implementation
 
 uses
-  formklock;
+  formklock, formAbout;
 
 {$R *.lfm}
 
@@ -65,6 +65,7 @@ begin
   frmMain.TrayIcon.Show;
 
   frmMain.Visible := False;
+  TmrLEDKlock.Enabled := True;
 
   if userOptions.LEDScreenSave then
   begin
@@ -108,13 +109,21 @@ begin
 end;
 
 procedure TfrmLEDKlock.TmrLEDKlockTimer(Sender: TObject);
+VAR
+  topLine: string;
+  btmLine: string;
 begin
   if userOptions.display24Hour then
-    LEDKlock.Caption := FormatDateTime('hh:nn:ss', now)  + lineending +
-                        FormatDateTime('ddd MM YYYY', now)
+    topLine := FormatDateTime('   hh:nn:ss', now)
   else
-    LEDKlock.Caption := FormatDateTime('hh:nn:ss am/pm', now)  + lineending +
-                        FormatDateTime('ddd MM YYYY', now);
+    topLine := FormatDateTime('  hh:nn:ss am/pm', now);
+
+  if userOptions.LEDlongDate then
+    btmLine := FormatDateTime('ddd dd MMM YYYY', now)
+  else
+    btmLine := FormatDateTime('  dd MM YYYY', now);
+
+  LEDKlock.Caption := topLine  + lineending + btmLine;
 end;
 //
 // ******************************************************* Pop Up Menu *********
@@ -130,8 +139,9 @@ begin
   frmMain.TrayIcon.Hide;
 
   frmMain.Visible := True;
+  TmrLEDKlock.Enabled := False;
 
-    if userOptions.analogueScreenSave then
+  if userOptions.analogueScreenSave then
   begin
     userOptions.LEDFormLeft := Left;
     userOptions.LEDFormTop := Top;

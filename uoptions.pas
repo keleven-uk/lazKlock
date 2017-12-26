@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs,
-  formAnalogueKlock, uOptionsUtils;
+  uOptionsUtils;
 
 type
 
@@ -92,6 +92,13 @@ type
     _LEDScreenSave: boolean;           //  do we save from position or not.
     _LEDFormTop: integer;              //  the forms top left.
     _LEDFormLeft: integer;
+    _LEDlongDate: boolean;
+
+    // Binary Klock
+    _BinaryScreenSave: boolean;           //  do we save from position or not.
+    _BinaryFormTop: integer;              //  the forms top left.
+    _BinaryFormLeft: integer;
+    _BinaryFormat: boolean;               //  Binary or BCD format - true for binary.
 
     //  Logging
     _logging: Boolean;
@@ -150,6 +157,13 @@ type
     property LEDScreenSave: boolean read _LEDScreenSave write _LEDScreenSave;
     property LEDFormTop: integer read _LEDFormTop write _LEDFormTop;
     property LEDFormLeft: integer read _LEDFormLeft write _LEDFormLeft;
+    property LEDlongDate: boolean read _LEDlongDate write _LEDlongDate;
+
+    // Binary Kock
+    property BinaryScreenSave: boolean read _BinaryScreenSave write _BinaryScreenSave;
+    property BinaryFormTop: integer read _BinaryFormTop write _BinaryFormTop;
+    property BinaryFormLeft: integer read _BinaryFormLeft write _BinaryFormLeft;
+    property BinaryFormat: boolean read _BinaryFormat write _BinaryFormat;
 
     //  Logging
     property logging: boolean read _logging write _logging;
@@ -309,6 +323,13 @@ begin
   LEDScreenSave := o.LEDScreenSave;
   LEDFormTop := o.LEDFormTop;
   LEDFormLeft := o.LEDFormLeft;
+  LEDlongDate := o.LEDlongDate;
+
+  //  Binary Klock
+  BinaryScreenSave := o.BinaryScreenSave;
+  BinaryFormTop := o.BinaryFormTop;
+  BinaryFormLeft := o.BinaryFormLeft;
+  BinaryFormat := o.BinaryFormat;
 
   //  Logging
   logging := o.logging;
@@ -390,18 +411,28 @@ begin
 
     timerMilliSeconds := StrToBool(readChild(PassNode, 'timerMilliSeconds'));
 
-    // Other Klocks
+    //  Analogue Klock
     PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
 
     analogueFormTop := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Top'));
     analogueFormLeft := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Left'));
     analogueScreenSave := StrToBool(readChild(PassNode, 'analogueScreenSave'));
 
+    //  LED Klock
     PassNode := Doc.DocumentElement.FindNode('LEDKlock');
 
     LEDFormTop := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Top'));
     LEDFormLeft := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Left'));
     LEDScreenSave := StrToBool(readChild(PassNode, 'LEDScreenSave'));
+    LEDlongDate := StrToBool(readChild(PassNode, 'LEDlongDate'));
+
+    //  Binary Klock
+    PassNode := Doc.DocumentElement.FindNode('BinaryKlock');
+
+    BinaryFormTop := StrToInt(readChildAttribute(PassNode, 'BinaryForm', 'Top'));
+    BinaryFormLeft := StrToInt(readChildAttribute(PassNode, 'BinaryForm', 'Left'));
+    BinaryScreenSave := StrToBool(readChild(PassNode, 'BinaryScreenSave'));
+    BinaryFormat := StrToBool(readChild(PassNode, 'BinaryFormat'));
 
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
@@ -478,6 +509,13 @@ begin
   LEDScreenSave := True;
   LEDFormTop := 100;
   LEDFormLeft := 100;
+  LEDlongDate := True;
+
+  //  Binary Klock
+  BinaryScreenSave := True;
+  BinaryFormTop := 100;
+  BinaryFormLeft := 100;
+  BinaryFormat := False;     //  default to BCD.
 
   //  Logging
   logging := True;
@@ -561,18 +599,28 @@ begin
     RootNode.AppendChild(ElementNode);
 
     // Analogue Klock
-    ElementNode := Doc.CreateElement('LEDKlock');
-
-    ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave', LEDScreenSave));
-    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'LEDForm', LEDFormTop, LEDFormLeft));
-
-    RootNode.AppendChild(ElementNode);
-
-    // Analogue Klock
     ElementNode := Doc.CreateElement('AnalogueKlock');
 
     ElementNode.AppendChild(writeBolChild(doc, 'analogueScreenSave', analogueScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'analogueForm', analogueFormTop, analogueFormLeft));
+
+    RootNode.AppendChild(ElementNode);
+
+    // LED Klock
+    ElementNode := Doc.CreateElement('LEDKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave', LEDScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'LEDForm', LEDFormTop, LEDFormLeft));
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDlongDate', LEDlongDate));
+
+    RootNode.AppendChild(ElementNode);
+
+    // Binary Klock
+    ElementNode := Doc.CreateElement('BinaryKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryScreenSave', BinaryScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'BinaryForm', BinaryFormTop, BinaryFormLeft));
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryFormat', BinaryFormat));
 
     RootNode.AppendChild(ElementNode);
 

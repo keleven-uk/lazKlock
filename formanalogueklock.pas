@@ -5,8 +5,8 @@ unit formAnalogueKlock;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, dtthemedclock, DTAnalogClock, Forms, Controls,
-  Graphics, Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, Windows, formAbout;
+  Classes, SysUtils, FileUtil, dtthemedclock, Forms, Controls,
+  Graphics, Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, Windows, LMessages;
 
 const
   LWA_COLORKEY = 1;
@@ -36,18 +36,20 @@ type
     MnItmAbout: TMenuItem;
     MnItmExit: TMenuItem;
     popUpMenuAnalogueKlock: TPopupMenu;
-    Shape1: TShape;
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
-    procedure Shape1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
-    procedure Shape1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
-    procedure Shape1MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
-  private
 
+  private
+    WindowDragMousePos: TPoint;
+    WindowDragTopLeft: TPoint;
+    WindowDragStarted: Boolean;
+
+    procedure MouseHook(Sender: TObject; Msg: Cardinal);
   public
-    moveAnalogueKlock: boolean;
+
   end;
 
 var
@@ -58,7 +60,7 @@ implementation
 {$R *.lfm}
 
 uses
-  formklock;
+  formklock, formAbout;
 
 
 { TfrmAnalogueKlock }
@@ -87,11 +89,53 @@ var
 begin
   kLog.writeLog('FormAnalogue Klock Create');
 
+  Application.AddOnUserInputHandler(@MouseHook);
+
   {the color were going to make transparent the red that the form background is set to}
   transparency := clBlack;
 
   {call the function to do it}
   SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
+end;
+
+procedure TfrmAnalogueKlock.FormDestroy(Sender: TObject);
+begin
+    // To prevent possible system resource leaks
+  Application.RemoveOnUserInputHandler(@MouseHook);
+end;
+
+procedure TfrmAnalogueKlock.MouseHook(Sender: TObject; Msg: Cardinal);
+{  Implements a dragable window.  Because the control fills the complete window
+   We cant just catch the forms mouse events - so we use a global hook and
+   filter out just the mouse movements.
+}
+begin
+  if (Msg <> LM_MOUSEMOVE) and (Msg <> LM_LBUTTONUP) and (Msg <> LM_LBUTTONDOWN) then Exit;
+
+  { MouseMove - Code to drag the main window using the mouse}
+  if msg = LM_MOUSEMOVE then
+  begin
+    if WindowDragStarted then
+      begin
+        Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
+        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+      end;
+  end;
+
+  { MouseUp - Code to drag the main window using the mouse }
+  if msg = LM_LBUTTONUP then
+  begin
+    WindowDragStarted := False;
+  end;
+
+  { MouseDown - Code to drag the main window using the mouse}
+  if msg = LM_LBUTTONDOWN then
+  begin
+    WindowDragStarted := True;
+    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragTopLeft.X := Left;
+    WindowDragTopLeft.Y := Top;
+  end;
 end;
 
 procedure TfrmAnalogueKlock.MnItmExitClick(Sender: TObject);
@@ -135,26 +179,5 @@ begin
   frmAbout.Show;
 end;
 
-procedure TfrmAnalogueKlock.Shape1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
-{  update mouse position when form is dragged i.e. left mouse button down  }
-begin
-  moveAnalogueKlock := True;
-end;
-
-procedure TfrmAnalogueKlock.Shape1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
-{  make klock follow the mouse, when left button is held down.  }
-begin
-  if moveAnalogueKlock then
-  begin
-    frmAnalogueKlock.Left := mouse.CursorPos.x - Height;
-    frmAnalogueKlock.Top := mouse.CursorPos.y - Width;
-  end;
-end;
-
-procedure TfrmAnalogueKlock.Shape1MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
-{  Left mouse button released, stop dragging.  }
-begin
-  moveAnalogueKlock := False;
-end;
 
 end.

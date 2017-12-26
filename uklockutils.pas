@@ -6,8 +6,9 @@ interface
 
 //  Graphics has to come after Windows - so TBitmap.Create works.
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process,
-  MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics;
+  Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
+  MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
+  formLEDKlock;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -41,6 +42,7 @@ function getUpTime(system: string): string;
 function getWindowsVersion: string;
 function GetTextWidth(AText: String; AFont: TFont): Integer;
 function isChristmas(): Boolean;
+procedure KillOtherKlocks;
 
 implementation
 
@@ -564,6 +566,16 @@ begin
     Result := true
   else
     Result := False;
+end;
+
+procedure KillOtherKlocks;
+{  Kill any other klocks that are visable.    }
+begin
+  if frmAnalogueKlock.Visible then
+    frmAnalogueKlock.Visible := False;
+
+  if frmLEDKlock.Visible then
+    frmLEDKlock.Visible := False;
 end;
 
 end.

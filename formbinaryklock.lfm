@@ -1,0 +1,249 @@
+object frmBinaryKlock: TfrmBinaryKlock
+  Left = 1427
+  Height = 120
+  Top = 308
+  Width = 433
+  BorderIcons = []
+  BorderStyle = bsNone
+  Caption = 'frmBinaryKlock'
+  ClientHeight = 120
+  ClientWidth = 433
+  Color = clBlack
+  Font.Height = -29
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PopupMenu = popUpMenuBinaryKlock
+  LCLVersion = '1.8.0.6'
+  object StsBinaryKlock: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 97
+    Width = 433
+    Font.Color = clGreen
+    Panels = <    
+      item
+        Alignment = taCenter
+        Style = psOwnerDraw
+        Width = 70
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 75
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 35
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 125
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 100
+      end>
+    ParentFont = False
+    SimplePanel = False
+    SizeGrip = False
+    UseSystemFont = False
+    OnDrawPanel = StsBinaryKlockDrawPanel
+  end
+  object Shp00: TShape
+    Left = 0
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp10: TShape
+    Left = 72
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp20: TShape
+    Left = 144
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp30: TShape
+    Left = 216
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp40: TShape
+    Left = 288
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp50: TShape
+    Left = 360
+    Height = 25
+    Top = 0
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp01: TShape
+    Left = 0
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp11: TShape
+    Left = 72
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp21: TShape
+    Left = 144
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp31: TShape
+    Left = 216
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp41: TShape
+    Left = 288
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp51: TShape
+    Left = 360
+    Height = 25
+    Top = 24
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp02: TShape
+    Left = 0
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp12: TShape
+    Left = 72
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp22: TShape
+    Left = 144
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp32: TShape
+    Left = 216
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp42: TShape
+    Left = 288
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp52: TShape
+    Left = 360
+    Height = 25
+    Top = 48
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp03: TShape
+    Left = 0
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp13: TShape
+    Left = 72
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp23: TShape
+    Left = 144
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp33: TShape
+    Left = 216
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp43: TShape
+    Left = 288
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object Shp53: TShape
+    Left = 360
+    Height = 25
+    Top = 72
+    Width = 75
+    Brush.Color = clBlack
+  end
+  object tmrBinartKlock: TTimer
+    OnTimer = tmrBinartKlockTimer
+    top = 24
+  end
+  object popUpMenuBinaryKlock: TPopupMenu
+    left = 72
+    top = 40
+    object MnItmExit: TMenuItem
+      Caption = 'Exit'
+      OnClick = MnItmExitClick
+    end
+    object MnItmAbout: TMenuItem
+      Caption = 'About'
+      OnClick = MnItmAboutClick
+    end
+    object MnItmBinary: TMenuItem
+      AutoCheck = True
+      Caption = 'Binary'
+      Checked = True
+      RadioItem = True
+      OnClick = MnItmBinaryClick
+    end
+    object MnItmBCD: TMenuItem
+      AutoCheck = True
+      Caption = 'BCD'
+      RadioItem = True
+      OnClick = MnItmBCDClick
+    end
+  end
+end

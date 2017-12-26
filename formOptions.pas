@@ -40,6 +40,7 @@ type
     ChckGrpAnalogueKlock: TCheckGroup;
     ChckGrpHolidayFonts: TCheckGroup;
     ChckGrpLEDKlock: TCheckGroup;
+    ChckGrpBinaryKlock: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -60,6 +61,7 @@ type
     procedure ChckBxCullLogsFilesChange(Sender: TObject);
     procedure ChckBxLoggingChange(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
@@ -100,15 +102,6 @@ procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormOptions Create');
 
-  //  Create tmp options file as c:\Users\<user>\AppData\Local\<app Name>\OptionsXX_tmp.xml
-  //  This is used to store local amendments and only copied to the main options files
-  //  if the OK button is clicked.
-  {$ifdef WIN32}
-    userBacOptions := Options.Create('Options32_temp.xml');
-  {$else}
-    userBacOptions := Options.Create('Options64_temp.xml');
-  {$endif}
-
   lblSettingsFileName.Caption := userOptions.optionsName;
 end;
 
@@ -123,8 +116,18 @@ var
   logFiles:TStringlist;
 begin
   kLog.writeLog('FormOptions Activate');
-  userBacOptions.Assign(userOptions);                       //  make a copy of the current user options
-  // userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
+
+  //  Create tmp options file as c:\Users\<user>\AppData\Local\<app Name>\OptionsXX_tmp.xml
+  //  This is used to store local amendments and only copied to the main options files
+  //  if the OK button is clicked.
+  {$ifdef WIN32}
+    userBacOptions := Options.Create('Options32_temp.xml');
+  {$else}
+    userBacOptions := Options.Create('Options64_temp.xml');
+  {$endif}
+
+  userBacOptions.Assign(userOptions);                    //  make a copy of the current user options
+  userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
 
   AcrdnOptions.ItemIndex := 0;                              //  Always start on Global Options.
   CmbBxDefaulTtab.ItemIndex := userBacOptions.defaultTab;
@@ -161,6 +164,10 @@ begin
   ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
 
   ChckGrpLEDKlock.Checked[0] := userBacOptions.LEDScreenSave;
+  ChckGrpLEDKlock.Checked[1] := userBacOptions.LEDlongDate ;
+
+  ChckGrpBinaryKlock.Checked[0] := userBacOptions.BinaryScreenSave;
+  ChckGrpBinaryKlock.Checked[1] := userBacOptions.BinaryFormat;
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
@@ -269,7 +276,7 @@ begin
 end;
 
 procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
-{  sets the user Global options forthe holiday fonts.
+{  sets the user Global options for the holiday fonts.
 
     index 0 - 12 days of Christmas [before and after]
 }
@@ -285,9 +292,9 @@ end;
 //....................................ANALOGUE KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
-{  Sets the Ciming options according to the state of the radio group.
+{  Sets the options for the Analogue Klock.
 
-   index 0 - Save Screen Position
+   Index 0 - Save Screen Position.
 }
 begin
   userBacOptions.analogueScreenSave := ChckGrpAnalogueKlock.Checked[0];
@@ -296,8 +303,27 @@ end;
 //.........................................LED KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
+{  Sets the options for the LED Klock.
+
+   Index 0 - Save Screen Position.
+   Index 1 - Long Date Format
+}
 begin
    userBacOptions.LEDScreenSave := ChckGrpLEDKlock.Checked[0];
+   userBacOptions.LEDlongDate := ChckGrpLEDKlock.Checked[1];
+end;
+//
+//......................................Binary KLOCK ...........................
+//
+procedure TfrmOptions.ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
+{  Sets the options for the Binary Klock.
+
+   Index 0 - Save Screen Position.
+   Index 1 - Binary / BCD Format - true for Binary.
+}
+begin
+  userBacOptions.BinaryScreenSave := ChckGrpBinaryKlock.Checked[0];
+  userBacOptions.BinaryFormat := ChckGrpBinaryKlock.Checked[1];
 end;
 //
 //....................................OTHER STUFF ..............................
