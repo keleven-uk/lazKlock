@@ -100,6 +100,12 @@ type
     _BinaryFormLeft: integer;
     _BinaryFormat: boolean;               //  Binary or BCD format - true for binary.
 
+    // Small Text Klock
+    _smallTextScreenSave: boolean;        //  do we save from position or not.
+    _smallTextFormTop: integer;           //  the forms top left.
+    _smallTextFormLeft: integer;
+    _smallTextTransparent: boolean;       //  is Small Text Klock transparent?
+
     //  Logging
     _logging: Boolean;
     _cullLogs: Boolean;
@@ -165,6 +171,12 @@ type
     property BinaryFormLeft: integer read _BinaryFormLeft write _BinaryFormLeft;
     property BinaryFormat: boolean read _BinaryFormat write _BinaryFormat;
 
+    // Small Text Klock
+    property smallTextScreenSave: boolean read _smallTextScreenSave write _smallTextScreenSave;
+    property smallTextFormTop: integer read _smallTextFormTop write _smallTextFormTop;
+    property smallTextFormLeft: integer read _smallTextFormLeft write _smallTextFormLeft;
+    property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
+
     //  Logging
     property logging: boolean read _logging write _logging;
     property cullLogs: boolean read _cullLogs write _cullLogs;
@@ -227,9 +239,9 @@ begin
   checkDirectory;
 
   {$ifdef WIN32}
-    optionsName := _dirName + 'Options32.xml';
+    optionsName := _dirName + 'KOptions32.xml';
   {$else}
-    optionsName := _dirName + 'Options64.xml';
+    optionsName := _dirName + 'KOptions64.xml';
   {$endif}
 
   if FileExists(optionsName) then
@@ -330,6 +342,12 @@ begin
   BinaryFormTop := o.BinaryFormTop;
   BinaryFormLeft := o.BinaryFormLeft;
   BinaryFormat := o.BinaryFormat;
+
+  // Small Text Klock
+  smallTextScreenSave := o.smallTextScreenSave;
+  smallTextFormTop := o.smallTextFormTop;
+  smallTextFormLeft := o.smallTextFormLeft;
+  smallTextTransparent := o.smallTextTransparent;
 
   //  Logging
   logging := o.logging;
@@ -434,6 +452,14 @@ begin
     BinaryScreenSave := StrToBool(readChild(PassNode, 'BinaryScreenSave'));
     BinaryFormat := StrToBool(readChild(PassNode, 'BinaryFormat'));
 
+    // Small Text Klock
+    PassNode := Doc.DocumentElement.FindNode('SmallTextKlock');
+
+    smallTextFormTop := StrToInt(readChildAttribute(PassNode, 'SmallTextForm', 'Top'));
+    smallTextFormLeft := StrToInt(readChildAttribute(PassNode, 'SmallTextForm', 'Left'));
+    smallTextScreenSave := StrToBool(readChild(PassNode, 'smallTextScreenSave'));
+    smallTextTransparent := StrToBool(readChild(PassNode, 'smallTextTransparent'));
+
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
 
@@ -516,6 +542,12 @@ begin
   BinaryFormTop := 100;
   BinaryFormLeft := 100;
   BinaryFormat := False;     //  default to BCD.
+
+  // Small Text Klock
+  smallTextScreenSave := True;
+  smallTextFormTop := 100;
+  smallTextFormLeft := 100;
+  smallTextTransparent := True;
 
   //  Logging
   logging := True;
@@ -621,6 +653,15 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'BinaryScreenSave', BinaryScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'BinaryForm', BinaryFormTop, BinaryFormLeft));
     ElementNode.AppendChild(writeBolChild(doc, 'BinaryFormat', BinaryFormat));
+
+    RootNode.AppendChild(ElementNode);
+
+    // Small Text Klock
+    ElementNode := Doc.CreateElement('SmallTextKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'smallTextScreenSave', smallTextScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'SmallTextForm', smallTextFormTop, smallTextFormLeft));
+    ElementNode.AppendChild(writeBolChild(doc, 'smallTextTransparent', smallTextTransparent));
 
     RootNode.AppendChild(ElementNode);
 

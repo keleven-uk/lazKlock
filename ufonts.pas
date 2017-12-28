@@ -14,7 +14,7 @@ uses
   StdCtrls, Windows, Messages, typinfo;
 
 type
-  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas);
+  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas, Hack);
 
   fontStore = class
 

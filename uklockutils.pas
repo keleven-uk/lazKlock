@@ -8,17 +8,18 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock;
+  formLEDKlock, formSmallTextKlock;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
-    message: string;     //  the formatted message for the reminder.
+    message: string;    //  the formatted message for the reminder.
     orDate: TDateTime;  //  date of original event.
     rmDate: TDateTime;  //  date of next reminder due.
     period: integer;    //  period of reminder in months.
-    toGo: double;    //  days to go for reminder.
+    toGo: double;       //  days to go for reminder.
     active: boolean;
   end;
+
   //  Used for hour chimes file name.  Zero not used, inserted as a dummy to keep count correct.
   chimes = (zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve);
 var
@@ -576,6 +577,10 @@ begin
 
   if frmLEDKlock.Visible then
     frmLEDKlock.Visible := False;
+
+  if frmSmallTextKlock.Visible then
+    frmSmallTextKlock.Visible := False;
+
 end;
 
 end.

@@ -1708,6 +1708,10 @@ uoptions.pas          |  34 +++++++
 
 Build 56 [2.1.4.56]
 
+commit 16b49360bd2f6cb5c60385c86662c27817c0829d
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Tue Dec 26 22:14:24 2017 +0000
+
 Added a Binary Klock, this hangs off the Time menu on the main Klock.
 Added formBinaryKlock to the project.
 The Klock can display timein either Binary or BCD format.
@@ -1731,3 +1735,24 @@ Currently
 6514 lines of source code.
 3437 statements
 15.4% comment
+
+formAbout.pas         |   6 +-
+ formKlock.lfm         |   8 +-
+ formKlock.pas         |  10 +-
+ formOptions.lfm       |  42 ++++-
+ formOptions.pas       |  54 ++++--
+ formanalogueklock.lfm |  16 +-
+ formanalogueklock.pas |  81 +++++----
+ formbinaryklock.lfm   | 249 ++++++++++++++++++++++++++
+ formbinaryklock.pas   | 472 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ formledklock.lfm      |  16 +-
+ formledklock.pas      |  24 ++-
+ history.txt           |  71 ++++++--
+ klock.iss             |   2 +-
+ klock.lpi             | 296 +++++++++----------------------
+ klock.lpr             |   4 +-
+ lazKlock.smproj       | Bin 174874 -> 193883 bytes
+ uklockutils.pas       |  16 +-
+ uoptions.pas          |  60 ++++++-
+ uoptionsutils.pas     |   2 +-
+ 19 files changed, 1108 insertions(+), 321 deletions(-)

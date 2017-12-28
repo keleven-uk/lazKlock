@@ -39,7 +39,7 @@ uses
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock;
+  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock;
 
 type
 
@@ -94,6 +94,7 @@ type
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmSmallTextKlock: TMenuItem;
     mnuItmBinaryKlock: TMenuItem;
     mnuItmLEDKlock: TMenuItem;
     mnuItmPowerSource: TMenuItem;
@@ -201,6 +202,7 @@ type
     procedure mnuItmLicenseClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
+    procedure mnuItmSmallTextKlockClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CloseButtonClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
@@ -1572,6 +1574,10 @@ end;
 procedure TfrmMain.mnuItmBinaryKlockClick(Sender: TObject);
 begin
   frmBinaryKlock.Show;
+end;
+procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
+begin
+  frmSmallTextKlock.Show;
 end;
 //
 // ********************************************************* Info Menu *********

@@ -1,7 +1,7 @@
 object frmLEDKlock: TfrmLEDKlock
-  Left = 1494
+  Left = 1501
   Height = 60
-  Top = 143
+  Top = 587
   Width = 255
   BorderIcons = []
   BorderStyle = bsNone

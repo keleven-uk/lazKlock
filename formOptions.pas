@@ -41,6 +41,7 @@ type
     ChckGrpHolidayFonts: TCheckGroup;
     ChckGrpLEDKlock: TCheckGroup;
     ChckGrpBinaryKlock: TCheckGroup;
+    ChckGrpSmallTextKlock: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -65,6 +66,7 @@ type
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
@@ -121,9 +123,9 @@ begin
   //  This is used to store local amendments and only copied to the main options files
   //  if the OK button is clicked.
   {$ifdef WIN32}
-    userBacOptions := Options.Create('Options32_temp.xml');
+    userBacOptions := Options.Create('KOptions32_temp.xml');
   {$else}
-    userBacOptions := Options.Create('Options64_temp.xml');
+    userBacOptions := Options.Create('KOptions64_temp.xml');
   {$endif}
 
   userBacOptions.Assign(userOptions);                    //  make a copy of the current user options
@@ -168,6 +170,9 @@ begin
 
   ChckGrpBinaryKlock.Checked[0] := userBacOptions.BinaryScreenSave;
   ChckGrpBinaryKlock.Checked[1] := userBacOptions.BinaryFormat;
+
+  ChckGrpSmallTextKlock.Checked[0] := userBacOptions.smallTextScreenSave;
+  ChckGrpSmallTextKlock.Checked[1] := userBacOptions.smallTextTransparent;
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
@@ -324,6 +329,19 @@ procedure TfrmOptions.ChckGrpBinaryKlockItemClick(Sender: TObject; Index: intege
 begin
   userBacOptions.BinaryScreenSave := ChckGrpBinaryKlock.Checked[0];
   userBacOptions.BinaryFormat := ChckGrpBinaryKlock.Checked[1];
+end;
+//
+//......................................Small Text KLOCK .......................
+//
+procedure TfrmOptions.ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: integer);
+{  Sets the options for the Small Text Klock.
+
+   Index 0 - Save Screen Position.
+   Index 1 - Small Text Klock Transparent.
+}
+begin
+  userBacOptions.smallTextScreenSave := ChckGrpSmallTextKlock.Checked[0];
+  userBacOptions.smallTextTransparent := ChckGrpSmallTextKlock.Checked[1];
 end;
 //
 //....................................OTHER STUFF ..............................

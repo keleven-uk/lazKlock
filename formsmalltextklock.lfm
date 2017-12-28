@@ -1,0 +1,58 @@
+object frmSmallTextKlock: TfrmSmallTextKlock
+  Left = 1509
+  Height = 223
+  Top = 710
+  Width = 320
+  BorderStyle = bsNone
+  Caption = 'frmSmallTextKlock'
+  ClientHeight = 223
+  ClientWidth = 320
+  Color = clBlack
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PopupMenu = popUpMenuSmallTextKlock
+  LCLVersion = '1.8.0.6'
+  object Panel1: TPanel
+    Left = 0
+    Height = 34
+    Top = 190
+    Width = 320
+    BevelColor = clBlack
+    ClientHeight = 34
+    ClientWidth = 320
+    TabOrder = 0
+    object lblSmallTextKlock: TLabel
+      Left = 8
+      Height = 16
+      Top = 8
+      Width = 103
+      Caption = 'lblSmallTextKlock'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object popUpMenuSmallTextKlock: TPopupMenu
+    left = 94
+    top = 219
+    object MnItmClose: TMenuItem
+      Caption = 'Close'
+      OnClick = MnItmCloseClick
+    end
+    object MnuItmAbout: TMenuItem
+      Caption = 'About'
+      OnClick = MnuItmAboutClick
+    end
+  end
+  object tmrSmallTextKlock: TTimer
+    OnTimer = tmrSmallTextKlockTimer
+    left = 263
+    top = 177
+  end
+end
