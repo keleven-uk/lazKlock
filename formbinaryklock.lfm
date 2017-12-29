@@ -1,7 +1,7 @@
 object frmBinaryKlock: TfrmBinaryKlock
-  Left = 1427
+  Left = 1420
   Height = 120
-  Top = 308
+  Top = 551
   Width = 433
   BorderIcons = []
   BorderStyle = bsNone
@@ -9,6 +9,10 @@ object frmBinaryKlock: TfrmBinaryKlock
   ClientHeight = 120
   ClientWidth = 433
   Color = clBlack
+  Constraints.MaxHeight = 120
+  Constraints.MaxWidth = 433
+  Constraints.MinHeight = 120
+  Constraints.MinWidth = 433
   Font.Height = -29
   OnCreate = FormCreate
   OnDestroy = FormDestroy

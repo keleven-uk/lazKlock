@@ -1,13 +1,17 @@
 object frmSmallTextKlock: TfrmSmallTextKlock
-  Left = 1509
-  Height = 223
-  Top = 710
+  Left = 1485
+  Height = 220
+  Top = 145
   Width = 320
   BorderStyle = bsNone
   Caption = 'frmSmallTextKlock'
-  ClientHeight = 223
+  ClientHeight = 220
   ClientWidth = 320
   Color = clBlack
+  Constraints.MaxHeight = 220
+  Constraints.MaxWidth = 320
+  Constraints.MinHeight = 220
+  Constraints.MinWidth = 320
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -39,8 +43,8 @@ object frmSmallTextKlock: TfrmSmallTextKlock
     end
   end
   object popUpMenuSmallTextKlock: TPopupMenu
-    left = 94
-    top = 219
+    left = 192
+    top = 144
     object MnItmClose: TMenuItem
       Caption = 'Close'
       OnClick = MnItmCloseClick
@@ -49,10 +53,15 @@ object frmSmallTextKlock: TfrmSmallTextKlock
       Caption = 'About'
       OnClick = MnuItmAboutClick
     end
+    object MnuItmTransparent: TMenuItem
+      Caption = 'Transparent'
+      Checked = True
+      OnClick = MnuItmTransparentClick
+    end
   end
   object tmrSmallTextKlock: TTimer
     OnTimer = tmrSmallTextKlockTimer
     left = 263
-    top = 177
+    top = 144
   end
 end

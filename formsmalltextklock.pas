@@ -34,6 +34,7 @@ type
 
   TfrmSmallTextKlock = class(TForm)
     lblSmallTextKlock: TLabel;
+    MnuItmTransparent: TMenuItem;
     MnItmClose: TMenuItem;
     MnuItmAbout: TMenuItem;
     Panel1: TPanel;
@@ -45,6 +46,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure MnItmCloseClick(Sender: TObject);
     procedure MnuItmAboutClick(Sender: TObject);
+    procedure MnuItmTransparentClick(Sender: TObject);
     procedure tmrSmallTextKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -241,8 +243,8 @@ begin
 
   if userOptions.smallTextScreenSave then
   begin
-    userOptions.analogueFormLeft := Left;
-    userOptions.analogueFormTop := Top;
+    userOptions.smallTextFormLeft := Left;
+    userOptions.smallTextFormTop := Top;
     userOptions.writeCurrentOptions;
   end;
 
@@ -253,6 +255,23 @@ procedure TfrmSmallTextKlock.MnuItmAboutClick(Sender: TObject);
 begin
   frmAbout.Show;
 end;
+
+procedure TfrmSmallTextKlock.MnuItmTransparentClick(Sender: TObject);
+{  Set the form transparancy according to the menu option.    }
+var
+  transparency: longint;
+begin
+  MnuItmTransparent.Checked := not MnuItmTransparent.Checked;
+
+  transparency := clBlack;
+
+  if MnuItmTransparent.Checked then
+    SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 1)
+  else
+    SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 0);
+
+end;
+
 //
 // ******************************************************* Label Stuff *********
 //
