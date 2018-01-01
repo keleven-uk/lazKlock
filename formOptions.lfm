@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1130
+  Left = 1104
   Height = 488
-  Top = 557
+  Top = 236
   Width = 793
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -26,6 +26,7 @@ object frmOptions: TfrmOptions
     OKButton.OnClick = OKButtonClick
     HelpButton.Name = 'HelpButton'
     HelpButton.DefaultCaption = True
+    HelpButton.OnClick = HelpButtonClick
     CloseButton.Name = 'CloseButton'
     CloseButton.DefaultCaption = True
     CloseButton.Enabled = False

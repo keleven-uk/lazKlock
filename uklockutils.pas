@@ -33,6 +33,7 @@ function isTime(myNow: TdateTime; mins: integer): Boolean;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string);
+procedure displayHelp(chm: string; topic: string);
 procedure doPlaySound(sound: string; volume: string);
 procedure SendMCICommand(command: string);
 procedure applyRunAtStartUp(flag: boolean);
@@ -238,13 +239,16 @@ end;
 
 procedure doCommandEvent(command: string);
 {  called to execute a command, which hopefully is in command.
-   NB  :: does not check if the command is really executable.                                     }
+   NB  :: does not check if the command is really executable.
+   ALSO, command can not have arguments
+}
 begin
   if command <> '' then
   begin
     with TProcess.Create(nil) do
       try
         Executable := Command;
+        Options := Options + [poWaitOnExit];
         Execute;
       finally
         Free;
@@ -252,6 +256,28 @@ begin
   end       //  if command <> ''
   else
     ShowMessage('Even Klock cant run with nowt!!');
+
+end;
+
+procedure displayHelp(chm: string; topic: string);
+{  called to display a chm help file, this is passed to hh.exe.
+   I would use lhelp.exe which comes with lazarus, but sees buggy.
+}
+begin
+  If FileExists(chm) Then
+  begin
+    with TProcess.Create(nil) do
+      try
+        Executable := 'hh.exe';
+        Parameters.Add(format('%s::%s', [chm, topic]));
+        Options := Options + [poWaitOnExit];
+        Execute;
+      finally
+        Free;
+     end;
+  end
+  else
+    showmessage('ERROR :: Loading ' + chm);
 
 end;
 

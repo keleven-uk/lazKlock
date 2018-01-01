@@ -235,13 +235,20 @@ implementation
 //
 constructor Options.Create; overload;
   {  creates the options class with a default filename.  }
+var
+  optnFile: String;
 begin
   checkDirectory;
 
-  {$ifdef WIN32}
-    optionsName := _dirName + 'KOptions32.xml';
+  {$IFDEF DEBUG}
+    optnFile := 'DEBUG_Options';
   {$else}
-    optionsName := _dirName + 'KOptions64.xml';
+    optnFile := 'Options';
+  {$endif}
+  {$ifdef WIN32}
+    optionsName := _dirName + optnFile + '32_temp.xml';
+  {$else}
+    optionsName := _dirName + optnFile + '64_temp.xml';
   {$endif}
 
   if FileExists(optionsName) then
@@ -498,7 +505,7 @@ begin
   productVersion := fvi.fileProductVersion;
 
   optionsName := optionsName;
-  runAtStartUp := True;
+  runAtStartUp := false;
   screenSave := True;
   formTop := 100;              //  the forms top left.
   formLeft := 100;

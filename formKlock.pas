@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel, Process,
   formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock;
@@ -1553,7 +1553,7 @@ end;
 
 procedure TfrmMain.mnuItmHelpClick(Sender: TObject);
 begin
-  frmHelp.ShowModal;
+  displayHelp('help\Klock.chm', '/Introduction.htm');
 end;
 
 procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
@@ -1609,19 +1609,8 @@ end;
 // ********************************************************* ButtonPannel ******
 //
 procedure TfrmMain.HelpButtonClick(Sender: TObject);
-var
-  helpText: string;
 begin
-
-  case PageControl1.TabIndex of
-    0: helpText := 'Fuzzy Time' + LineEnding + 'Displays current time in a number of different formats';
-    1: helpText := 'Countdown' + LineEnding + 'Select a time to countdown and an event to be triggered';
-    2: helpText := 'Timer' + LineEnding + 'Simple timer with pause and split time function';
-    3: helpText := 'Event' + LineEnding + 'Set a time and/or date to be reminded of';
-    4: helpText := 'Reminder' + LineEnding + 'Set a time and/or date to be reminded of';
-  end;
-
-  ShowMessage(helpText);
+  displayHelp('help\Klock.chm', '/Introduction.htm');
 end;
 
 procedure TfrmMain.OKButtonClick(Sender: TObject);

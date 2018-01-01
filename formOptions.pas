@@ -74,6 +74,7 @@ type
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure HelpButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
@@ -90,6 +91,7 @@ var
 
 implementation
 
+{$DEFINE DEBUG}
 {$R *.lfm}
 
 uses
@@ -116,16 +118,22 @@ procedure TfrmOptions.FormActivate(Sender: TObject);
 }
 var
   logFiles:TStringlist;
+  optnFile: String;
 begin
   kLog.writeLog('FormOptions Activate');
 
   //  Create tmp options file as c:\Users\<user>\AppData\Local\<app Name>\OptionsXX_tmp.xml
   //  This is used to store local amendments and only copied to the main options files
   //  if the OK button is clicked.
-  {$ifdef WIN32}
-    userBacOptions := Options.Create('KOptions32_temp.xml');
+  {$IFDEF DEBUG}
+    optnFile := 'DEBUG_Options';
   {$else}
-    userBacOptions := Options.Create('KOptions64_temp.xml');
+    optnFile := 'Options';
+  {$endif}
+  {$ifdef WIN32}
+    userBacOptions := Options.Create(optnFile + '32_temp.xml');
+  {$else}
+    userBacOptions := Options.Create(optnFile + '64_temp.xml');
   {$endif}
 
   userBacOptions.Assign(userOptions);                    //  make a copy of the current user options
@@ -397,6 +405,12 @@ begin
   applyRunAtStartUp(userOptions.runAtStartUp);
   FreeAndNil(userBacOptions);
 end;
+
+procedure TfrmOptions.HelpButtonClick(Sender: TObject);
+begin
+  displayHelp('help\Klock.chm', '/Options.htm');
+end;
+
 
 end.
 

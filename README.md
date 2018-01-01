@@ -4,20 +4,17 @@ Klock - a clock with a k.
 
 A multifunction timing thingy, where some [but not necessary all] of the things are useful.
 
-The multifunction timing thingy is split into twelve things;
+The multifunction timing thingy is split into many things;
 
-Fuzzy Time, World Klock, Countdown, Timer, Reminder.
+Fuzzy Time, Countdown, Timer, Event, Reminder & Clipboard Monitor.
 
-Klock currently consists of over 1000 lines of Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  
-Previous versions of Klock have existed in VB.net, Python, Pascal [Lazarus] and Freebasic - and may again.
+Klock currently consists of over 6000 lines of Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python, Pascal [Lazarus] and Freebasic - and may again.
+
 
 Fuzzy Time
 
 Allows the current time to be displayed in a number of different formats.
 
-NB: The time can be displayed in two different forms of hex time.
-Hex time is just current [local] time display in hexadecimal format
-Where True Hex Time, divides the day into 16 hours of 256 minutes of 16 seconds.
 
 Countdown
 
@@ -53,7 +50,7 @@ Hide  - Switches the application to the system area.
 When the program is running in the system area, the following options are available.
 If hovered over, the current time will be displayed.
 Right clicked on the icon will display a pop up menu.
-This will allow the application to be restored, the option screen to be displayed, the application can be exited or toggle the displaying of time in a notification window.
+This will allow the application to be restored, the application can be exited or e current time can be displayed.
 
 If the application is in the task bar, any display messages
 [i.e. a reminder becoming due] will be displayed in a notification window [as will errors etc.].
@@ -65,7 +62,6 @@ The c represents caps lock.
 The n represents Num Lock.
 The S represents Scroll Lock.
 The letter will be upper case if the key is activated, otherwise lower case.
-If the PC is detected to be running on battery, these will appear in red.
 
 
 The application also contains a options screen [file / Options] which allows various options to be set.

@@ -1714,22 +1714,20 @@ Date:   Tue Dec 26 22:14:24 2017 +0000
 
 Added a Binary Klock, this hangs off the Time menu on the main Klock.
 Added formBinaryKlock to the project.
-The Klock can display timein either Binary or BCD format.
+The Klock can display time in either Binary or BCD format.
 
 formKlock - Added menu item to call the Binary Klock.
 
-formOptionss - Added options for LED Klock [Use long date format].
-             - Added options for Binary Klock [save screen position].
-             - Added options for Binary Klock [Binary/BCD format].
-uOptions     - Added above options.
+formOptions - Added options for LED Klock [Use long date format].
+            - Added options for Binary Klock [save screen position].
+            - Added options for Binary Klock [Binary/BCD format].
+uOptions    - Added above options.
 
 formAnalogueKlock - Changed method of moving [draggiing] the klock,
                     it now mirrors the LED Klock.
 
 formLEDKlock - Added use long date option.
              - Fixed a bug in screen save logic.
-
-
 
 Currently
 6514 lines of source code.
@@ -1756,3 +1754,60 @@ formAbout.pas         |   6 +-
  uoptions.pas          |  60 ++++++-
  uoptionsutils.pas     |   2 +-
  19 files changed, 1108 insertions(+), 321 deletions(-)
+
+Build 57 [2.1.4.57]
+
+commit 0c32a35cbb44ae3e11875382adb185a32ec9f074
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Thu Dec 28 13:47:14 2017 +0000
+
+    Developing Small Text Klock.
+
+fonts/{Hack-Regular.ttf => Hack.ttf} |  Bin
+formKlock.lfm                        |    8 +-
+formKlock.pas                        |    8 +-
+formOptions.lfm                      |   31 +-
+formOptions.pas                      |   22 +-
+formledklock.lfm                     |    4 +-
+formsmalltextklock.lfm               |   58 ++
+formsmalltextklock.pas               | 1033 ++++++++++++++++++++++++++++++++++
+history.txt                          |   25 +
+klock.lpi                            |  214 +++++--
+klock.lpr                            |    3 +-
+ufonts.pas                           |    2 +-
+uklockutils.pas                      |   11 +-
+uoptions.pas                         |   45 +-
+14 files changed, 1411 insertions(+), 53 deletions(-)
+
+Build 58 [2.1.4.58]
+
+commit 8c72e195366d5433a2a37e10d3122f7113a1d94b
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Dec 29 22:51:21 2017 +0000
+
+Added a Small Text Klock, this hangs off the Time menu on the main Klock.
+Added formSmallTextKlock to the project.
+The Klock can either have a transparent or solid background.
+
+formKlock - Added menu item to call the Binary Klock.
+
+formOptions - Added options for Binary Klock [save screen position].
+            - Added options for Binary Klock [Transparent background].
+uOptions    - Added above options.
+
+Renamed hack-Regular.ttf to Hack.ttf.
+uFonts - Added loading of hack.ttf.
+
+Currently
+7636 lines of source code.
+4140 statements
+14.1% comment
+
+formKlock.lfm          |   4 +-
+formOptions.lfm        |   4 +-
+formbinaryklock.lfm    |   8 ++-
+formledklock.lfm       |   4 +-
+formsmalltextklock.lfm |  23 ++++++---
+formsmalltextklock.pas |  23 ++++++++-
+klock.lpi              | 132 +++++++++++++++++++++++++------------------------
+7 files changed, 116 insertions(+), 82 deletions(-)

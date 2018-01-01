@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout, formHelp,
+  Forms, runtimetypeinfocontrols, lazcontrols, formklock, formAbout,
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
   uOptions, formAnalogueKlock, uFonts, uOptionsUtils, ULogging,
   UformClipBoardUtils, formClipBoard, uInfoUtils, formInfo, formLEDKlock,
@@ -21,7 +21,6 @@ begin
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmOptions, frmOptions);
   Application.CreateForm(TfrmAbout, frmAbout);
-  Application.CreateForm(TfrmHelp, frmHelp);
   Application.CreateForm(TfrmLicense, frmLicense);
   Application.CreateForm(TfrmReminderInput, frmReminderInput);
   Application.CreateForm(TfrmAnalogueKlock, frmAnalogueKlock);
