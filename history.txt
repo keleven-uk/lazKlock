@@ -1811,3 +1811,189 @@ formsmalltextklock.lfm |  23 ++++++---
 formsmalltextklock.pas |  23 ++++++++-
 klock.lpi              | 132 +++++++++++++++++++++++++------------------------
 7 files changed, 116 insertions(+), 82 deletions(-)
+
+Build 58 [2.1.4.58]
+
+commit 76c6308ba019b6fcab6df701040e99fb393f91a2
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Jan 1 20:08:48 2018 +0000
+
+Added A [proper] help file in .chm, .pdf and .html format.
+This was created using HelpNDoc V5, a help.hdn file has been added to the source.
+A new sub directory called help was vreated to hold all the files.
+
+The old style formHelp has beed deleted from the project.
+
+The new style help [.chm] is now loaded from both the help button on the main form,
+the help menu and the help button on the options screen.
+
+Currently
+7600 lines of source code.
+4116 statements
+14.2% comment
+
+README.md                                          |   14 +-
+formHelp.lfm                                       |  185 --
+formHelp.pas                                       |   72 -
+formKlock.pas                                      |   17 +-
+formOptions.lfm                                    |    5 +-
+formOptions.pas                                    |   18 +-
+help.txt                                           |   42 +-
+help/Klock.chm                                     |  Bin 0 -> 864090 bytes
+help/Klock.pdf                                     |  Bin 0 -> 4115286 bytes
+help/html/About.html                               |  338 ++++
+help/html/AnalogueKlock.html                       |  282 +++
+help/html/BinaryKlock.html                         |  290 +++
+help/html/ClipboardMonitor.html                    |  285 +++
+help/html/Countdown.html                           |  292 +++
+help/html/Credits.html                             |  298 +++
+help/html/Events.html                              |  278 +++
+help/html/Events1.html                             |  268 +++
+help/html/ExtraKlock.html                          |  284 +++
+help/html/File.html                                |  278 +++
+help/html/FuzzyTime.html                           |  278 +++
+help/html/GettingStarted.html                      |  269 +++
+help/html/Gettinghelp.html                         |  272 +++
+help/html/Global.html                              |  294 +++
+help/html/Help.html                                |  282 +++
+help/html/History.html                             | 2075 ++++++++++++++++++++
+help/html/Info.html                                |  298 +++
+help/html/Introduction.html                        |  296 +++
+help/html/Klock.html                               |  296 +++
+help/html/LEDKlock.html                            |  283 +++
+help/html/License.html                             |  749 +++++++
+help/html/Logging.html                             |  274 +++
+help/html/Menu.html                                |  277 +++
+help/html/Options.html                             |  284 +++
+help/html/OtherKlocks.html                         |  279 +++
+help/html/OtherStuff.html                          |  282 +++
+help/html/Reminder.html                            |  279 +++
+help/html/SmallTextKlock.html                      |  284 +++
+help/html/Statusbar.html                           |  289 +++
+help/html/SystemTray.html                          |  289 +++
+help/html/Systemrequirements.html                  |  273 +++
+help/html/Thingymabobs.html                        |  278 +++
+help/html/Time.html                                |  290 +++
+help/html/Time1.html                               |  278 +++
+help/html/Timer.html                               |  277 +++
+help/html/Welcome.html                             |  289 +++
+help/html/WorldKlock.html                          |  276 +++
+help/html/_keywords.json                           |    1 +
+help/html/_toc.json                                |    1 +
+help/html/_translations.js                         |   11 +
+help/html/css/effects.min.css                      |    5 +
+help/html/css/hnd.content.css                      |  183 ++
+help/html/css/layout.min.css                       |    5 +
+help/html/css/print.min.css                        |    5 +
+help/html/css/theme-dark-blue.min.css              |    5 +
+help/html/css/theme-dark-green.min.css             |    5 +
+help/html/css/theme-dark-orange.min.css            |    5 +
+help/html/css/theme-dark-purple.min.css            |    5 +
+help/html/css/theme-light-blue.min.css             |    5 +
+help/html/css/theme-light-green.min.css            |    5 +
+help/html/css/theme-light-orange.min.css           |    5 +
+help/html/css/theme-light-purple.min.css           |    5 +
+help/html/js/app.min.js                            |    6 +
+help/html/js/hndsd.min.js                          |    1 +
+help/html/js/hndse.min.js                          |    6 +
+.../bootstrap-3.3.6/css/bootstrap-theme.min.css    |    5 +
+.../vendors/bootstrap-3.3.6/css/bootstrap.min.css  |    5 +
+.../css/ie10-viewport-bug-workaround.css           |   15 +
+.../fonts/glyphicons-halflings-regular.eot         |  Bin 0 -> 20127 bytes
+.../fonts/glyphicons-halflings-regular.svg         |  288 +++
+.../fonts/glyphicons-halflings-regular.ttf         |  Bin 0 -> 45404 bytes
+.../fonts/glyphicons-halflings-regular.woff        |  Bin 0 -> 23424 bytes
+.../fonts/glyphicons-halflings-regular.woff2       |  Bin 0 -> 18028 bytes
+.../vendors/bootstrap-3.3.6/js/bootstrap.min.js    |    7 +
+.../js/ie10-viewport-bug-workaround.js             |   23 +
+help/html/vendors/fastclick-1.0.6/fastclick.min.js |   11 +
+help/html/vendors/headroom-0.9.3/headroom.min.js   |    7 +
+.../vendors/headroom-0.9.3/jquery.headroom.min.js  |    7 +
+help/html/vendors/helpndoc-5/icons/0.png           |  Bin 0 -> 291 bytes
+help/html/vendors/helpndoc-5/icons/1.png           |  Bin 0 -> 266 bytes
+help/html/vendors/helpndoc-5/icons/10.png          |  Bin 0 -> 244 bytes
+help/html/vendors/helpndoc-5/icons/11.png          |  Bin 0 -> 262 bytes
+help/html/vendors/helpndoc-5/icons/12.png          |  Bin 0 -> 328 bytes
+help/html/vendors/helpndoc-5/icons/13.png          |  Bin 0 -> 327 bytes
+help/html/vendors/helpndoc-5/icons/14.png          |  Bin 0 -> 343 bytes
+help/html/vendors/helpndoc-5/icons/15.png          |  Bin 0 -> 344 bytes
+help/html/vendors/helpndoc-5/icons/16.png          |  Bin 0 -> 261 bytes
+help/html/vendors/helpndoc-5/icons/17.png          |  Bin 0 -> 277 bytes
+help/html/vendors/helpndoc-5/icons/18.png          |  Bin 0 -> 250 bytes
+help/html/vendors/helpndoc-5/icons/19.png          |  Bin 0 -> 275 bytes
+help/html/vendors/helpndoc-5/icons/2.png           |  Bin 0 -> 332 bytes
+help/html/vendors/helpndoc-5/icons/20.png          |  Bin 0 -> 249 bytes
+help/html/vendors/helpndoc-5/icons/21.png          |  Bin 0 -> 276 bytes
+help/html/vendors/helpndoc-5/icons/22.png          |  Bin 0 -> 299 bytes
+help/html/vendors/helpndoc-5/icons/23.png          |  Bin 0 -> 293 bytes
+help/html/vendors/helpndoc-5/icons/24.png          |  Bin 0 -> 286 bytes
+help/html/vendors/helpndoc-5/icons/25.png          |  Bin 0 -> 313 bytes
+help/html/vendors/helpndoc-5/icons/26.png          |  Bin 0 -> 296 bytes
+help/html/vendors/helpndoc-5/icons/27.png          |  Bin 0 -> 304 bytes
+help/html/vendors/helpndoc-5/icons/28.png          |  Bin 0 -> 309 bytes
+help/html/vendors/helpndoc-5/icons/29.png          |  Bin 0 -> 329 bytes
+help/html/vendors/helpndoc-5/icons/3.png           |  Bin 0 -> 283 bytes
+help/html/vendors/helpndoc-5/icons/30.png          |  Bin 0 -> 338 bytes
+help/html/vendors/helpndoc-5/icons/31.png          |  Bin 0 -> 363 bytes
+help/html/vendors/helpndoc-5/icons/32.png          |  Bin 0 -> 288 bytes
+help/html/vendors/helpndoc-5/icons/33.png          |  Bin 0 -> 310 bytes
+help/html/vendors/helpndoc-5/icons/34.png          |  Bin 0 -> 256 bytes
+help/html/vendors/helpndoc-5/icons/35.png          |  Bin 0 -> 294 bytes
+help/html/vendors/helpndoc-5/icons/36.png          |  Bin 0 -> 314 bytes
+help/html/vendors/helpndoc-5/icons/37.png          |  Bin 0 -> 304 bytes
+help/html/vendors/helpndoc-5/icons/38.png          |  Bin 0 -> 285 bytes
+help/html/vendors/helpndoc-5/icons/39.png          |  Bin 0 -> 319 bytes
+help/html/vendors/helpndoc-5/icons/4.png           |  Bin 0 -> 211 bytes
+help/html/vendors/helpndoc-5/icons/40.png          |  Bin 0 -> 320 bytes
+help/html/vendors/helpndoc-5/icons/41.png          |  Bin 0 -> 335 bytes
+help/html/vendors/helpndoc-5/icons/5.png           |  Bin 0 -> 255 bytes
+help/html/vendors/helpndoc-5/icons/6.png           |  Bin 0 -> 229 bytes
+help/html/vendors/helpndoc-5/icons/7.png           |  Bin 0 -> 273 bytes
+help/html/vendors/helpndoc-5/icons/8.png           |  Bin 0 -> 242 bytes
+help/html/vendors/helpndoc-5/icons/9.png           |  Bin 0 -> 266 bytes
+help/html/vendors/html5shiv-3.7.2/html5shiv.min.js |    4 +
+help/html/vendors/jquery-1.11.3/jquery.min.js      |    6 +
+help/html/vendors/jstree-3.3.2/jstree.min.js       |    6 +
+.../jstree-3.3.2/themes/default-dark/32px.png      |  Bin 0 -> 1562 bytes
+.../jstree-3.3.2/themes/default-dark/40px.png      |  Bin 0 -> 5717 bytes
+.../jstree-3.3.2/themes/default-dark/style.css     | 1112 +++++++++++
+.../jstree-3.3.2/themes/default-dark/style.min.css |    1 +
+.../jstree-3.3.2/themes/default-dark/throbber.gif  |  Bin 0 -> 1720 bytes
+.../vendors/jstree-3.3.2/themes/default/32px.png   |  Bin 0 -> 3121 bytes
+.../vendors/jstree-3.3.2/themes/default/40px.png   |  Bin 0 -> 1880 bytes
+.../vendors/jstree-3.3.2/themes/default/style.css  | 1068 ++++++++++
+.../jstree-3.3.2/themes/default/style.min.css      |    1 +
+.../jstree-3.3.2/themes/default/throbber.gif       |  Bin 0 -> 1720 bytes
+help/html/vendors/markjs-8.8.3/jquery.mark.min.js  |    7 +
+help/html/vendors/respond-1.4.2/respond.min.js     |    5 +
+help/html/vendors/uri-1.18.9/uri.min.js            |  114 ++
+help/klock.hnd                                     |  Bin 0 -> 49463296 bytes
+history.txt                                        |   69 +-
+klock.iss                                          |   20 +-
+klock.lpi                                          |  206 +-
+klock.lpr                                          |    3 +-
+lazKlock.smproj                                    |  Bin 193883 -> 215570 bytes
+uklockutils.pas                                    |   28 +-
+uoptions.pas                                       |   13 +-
+143 files changed, 16008 insertions(+), 423 deletions(-)
+
+Build 59 [2.2.0.59]
+
+Changes to history.txt and lazKlock.smproj hanging over from last commit.
+
+Also, did some git admin.  Since the master branch was currupt and all the recent
+work had been done in branch V2.1, it was time to clean up.  This was achieved
+with the following.
+
+  git branch -m master master-old  # rename master on local
+  git push -f origin :master       # delete master on remote
+  git push origin master-old       # create master-old on remote
+  git checkout -b master V2.1      # create a new local master on top of seotweaks
+  git push origin master           # create master on remote
+
+I now have a current and good master and a working copy at V2.1.
+
+I also deleted branches v1 and v2.  I will delete branches master-old and v2.1
+when happy is all is okay.
+
+This also becomes V2.2 ans will vreate a working branch of v2.
