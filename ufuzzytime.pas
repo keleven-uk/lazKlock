@@ -77,8 +77,6 @@ uses
   formklock;
 
 constructor FuzzyTime.Create; overload;
-var
-  logFile: TextFile;
 begin
   dirname := GetAppConfigDir(False);
   filename := dirname + 'fuzzytime_' + FormatDateTime('DDMMMYYYY', now) + '.log';
@@ -92,7 +90,7 @@ begin
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
    '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Bar Code Time", "Semaphore Time",' +
-   '"Nancy Blackett Time", "Braille Time", "Christmas"');
+   '"Nancy Blackett Time", "Braille Time", "Christmas", "Easter"');
 
   //writeLog('End of Create');
  end;

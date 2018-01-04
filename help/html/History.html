@@ -1997,6 +1997,220 @@
 <p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 132 +++++++++++++++++++++++++------------------------</span></p>
 <p class="rvps2"><span class="rvts6">7 files changed, 116 insertions(+), 82 deletions(-)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 58 [2.1.4.58]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit 76c6308ba019b6fcab6df701040e99fb393f91a2</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Mon Jan 1 20:08:48 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added A [proper] help file in .chm, .pdf and .html format.</span></p>
+<p class="rvps2"><span class="rvts6">This was created using HelpNDoc V5, a help.hdn file has been added to the source.</span></p>
+<p class="rvps2"><span class="rvts6">A new sub directory called help was vreated to hold all the files.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The old style formHelp has beed deleted from the project.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The new style help [.chm] is now loaded from both the help button on the main form,</span></p>
+<p class="rvps2"><span class="rvts6">the help menu and the help button on the options screen.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">7600 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">4116 statements</span></p>
+<p class="rvps2"><span class="rvts6">14.2% comment</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">README.md &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 14 +-</span></p>
+<p class="rvps2"><span class="rvts6">formHelp.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;185 --</span></p>
+<p class="rvps2"><span class="rvts6">formHelp.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 72 -</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 17 +-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 18 +-</span></p>
+<p class="rvps2"><span class="rvts6">help.txt &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 42 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.chm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 864090 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.pdf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 4115286 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/About.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;338 ++++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/AnalogueKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;282 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/BinaryKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;290 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/ClipboardMonitor.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;285 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Countdown.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;292 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Credits.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;298 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Events.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;278 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Events1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;268 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/ExtraKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;284 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/File.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;278 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/FuzzyTime.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;278 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/GettingStarted.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;269 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Gettinghelp.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;272 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Global.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;294 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Help.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;282 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/History.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 2075 ++++++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Info.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;298 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Introduction.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;296 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Klock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;296 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/LEDKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;283 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/License.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;749 +++++++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Logging.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;274 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Menu.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;277 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Options.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;284 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/OtherKlocks.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;279 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/OtherStuff.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;282 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Reminder.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;279 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/SmallTextKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;284 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Statusbar.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;289 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/SystemTray.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;289 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Systemrequirements.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;273 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Thingymabobs.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;278 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;290 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;278 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Timer.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;277 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Welcome.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;289 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/WorldKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;276 +++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/_keywords.json &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;1 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/_toc.json &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;1 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/_translations.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 11 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/effects.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/hnd.content.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;183 ++</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/layout.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/print.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-dark-blue.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-dark-green.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-dark-orange.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-dark-purple.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-light-blue.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-light-green.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-light-orange.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/theme-light-purple.min.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/js/app.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/js/hndsd.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;1 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/js/hndse.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +</span></p>
+<p class="rvps2"><span class="rvts6">.../bootstrap-3.3.6/css/bootstrap-theme.min.css &nbsp; &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/bootstrap-3.3.6/css/bootstrap.min.css &nbsp;| &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">.../css/ie10-viewport-bug-workaround.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 15 +</span></p>
+<p class="rvps2"><span class="rvts6">.../fonts/glyphicons-halflings-regular.eot &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 20127 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../fonts/glyphicons-halflings-regular.svg &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;288 +++</span></p>
+<p class="rvps2"><span class="rvts6">.../fonts/glyphicons-halflings-regular.ttf &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 45404 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../fonts/glyphicons-halflings-regular.woff &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 23424 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../fonts/glyphicons-halflings-regular.woff2 &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 18028 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/bootstrap-3.3.6/js/bootstrap.min.js &nbsp; &nbsp;| &nbsp; &nbsp;7 +</span></p>
+<p class="rvps2"><span class="rvts6">.../js/ie10-viewport-bug-workaround.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 23 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/fastclick-1.0.6/fastclick.min.js | &nbsp; 11 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/headroom-0.9.3/headroom.min.js &nbsp; | &nbsp; &nbsp;7 +</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/headroom-0.9.3/jquery.headroom.min.js &nbsp;| &nbsp; &nbsp;7 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/0.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 291 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/1.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 266 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/10.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 244 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/11.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 262 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/12.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 328 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/13.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 327 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/14.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 343 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/15.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 344 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/16.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 261 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/17.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 277 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/18.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 250 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/19.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 275 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/2.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 332 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/20.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 249 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/21.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 276 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/22.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 299 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/23.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 293 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/24.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 286 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/25.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 313 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/26.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 296 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/27.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 304 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/28.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 309 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/29.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 329 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/3.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 283 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/30.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 338 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/31.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 363 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/32.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 288 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/33.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 310 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/34.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 256 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/35.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 294 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/36.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 314 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/37.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 304 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/38.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 285 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/39.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 319 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/4.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 211 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/40.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 320 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/41.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 335 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/5.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 255 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/6.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 229 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/7.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 273 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/8.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 242 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/helpndoc-5/icons/9.png &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 266 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/html5shiv-3.7.2/html5shiv.min.js | &nbsp; &nbsp;4 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/jquery-1.11.3/jquery.min.js &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/jstree-3.3.2/jstree.min.js &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;6 +</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default-dark/32px.png &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 1562 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default-dark/40px.png &nbsp; &nbsp; &nbsp;| &nbsp;Bin 0 -&gt; 5717 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default-dark/style.css &nbsp; &nbsp; | 1112 +++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default-dark/style.min.css | &nbsp; &nbsp;1 +</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default-dark/throbber.gif &nbsp;| &nbsp;Bin 0 -&gt; 1720 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/jstree-3.3.2/themes/default/32px.png &nbsp; | &nbsp;Bin 0 -&gt; 3121 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/jstree-3.3.2/themes/default/40px.png &nbsp; | &nbsp;Bin 0 -&gt; 1880 bytes</span></p>
+<p class="rvps2"><span class="rvts6">.../vendors/jstree-3.3.2/themes/default/style.css &nbsp;| 1068 ++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default/style.min.css &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;1 +</span></p>
+<p class="rvps2"><span class="rvts6">.../jstree-3.3.2/themes/default/throbber.gif &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 1720 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/markjs-8.8.3/jquery.mark.min.js &nbsp;| &nbsp; &nbsp;7 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/respond-1.4.2/respond.min.js &nbsp; &nbsp; | &nbsp; &nbsp;5 +</span></p>
+<p class="rvps2"><span class="rvts6">help/html/vendors/uri-1.18.9/uri.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;114 ++</span></p>
+<p class="rvps2"><span class="rvts6">help/klock.hnd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 0 -&gt; 49463296 bytes</span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 69 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.iss &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 20 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;206 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;3 +-</span></p>
+<p class="rvps2"><span class="rvts6">lazKlock.smproj &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 193883 -&gt; 215570 bytes</span></p>
+<p class="rvps2"><span class="rvts6">uklockutils.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 28 +-</span></p>
+<p class="rvps2"><span class="rvts6">uoptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 13 +-</span></p>
+<p class="rvps2"><span class="rvts6">143 files changed, 16008 insertions(+), 423 deletions(-)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 59 [2.2.0.59]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit a0ad6ae5e5e9530dd159b19ad3010dc5c7b597e5</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Wed Jan 3 15:06:05 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Changes to history.txt and lazKlock.smproj hanging over from last commit.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Also, did some git admin. &nbsp;Since the master branch was currupt and all the recent</span></p>
+<p class="rvps2"><span class="rvts6">work had been done in branch V2.1, it was time to clean up. &nbsp;This was achieved</span></p>
+<p class="rvps2"><span class="rvts6">with the following.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git branch -m master master-old &nbsp;# rename master on local</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git push -f origin :master &nbsp; &nbsp; &nbsp; # delete master on remote</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git push origin master-old &nbsp; &nbsp; &nbsp; # create master-old on remote</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git checkout -b master V2.1 &nbsp; &nbsp; &nbsp;# create a new local master on top of seotweaks</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git push origin master &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # create master on remote</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">I now have a current and good master and a working copy at V2.1.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">I also deleted branches v1 and v2. &nbsp;I will delete branches master-old and v2.1</span></p>
+<p class="rvps2"><span class="rvts6">when happy is all is okay.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">This also becomes V2.2 ans will vreate a working branch of v2.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; | 186 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">lazKlock.smproj | Bin 215570 -&gt; 237081 bytes</span></p>
+<p class="rvps2"><span class="rvts6">2 files changed, 186 insertions(+)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 60 [2.2.0.60]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added easter font and option to use this font at the easter weekend.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">formOptions - Added logic to cull [delete] log files over a certain age.</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;This can be configures in options.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">formClipboard - Added logic to cull [delete] tmp files over a certain age.</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The age is currentl hard coded to be 10 days..</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">formBinaryKlock - changed the status bar for a panel.</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;This can have the background colour changed without leaving</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ugly lines as the status bar does.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">7742 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">4185 statements</span></p>
+<p class="rvps2"><span class="rvts6">14.6% comment</span></p>
 <p></p>
 <p class="rvps6" style="clear: both;"><span class="rvts10">Created with the Personal Edition of HelpNDoc: </span><a class="rvts11" href="https://www.helpndoc.com/help-authoring-tool">Full-featured multi-format Help generator</a></p>
 

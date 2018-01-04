@@ -29,7 +29,7 @@ type
 
       procedure writeLog(message: string);
       procedure readLogFile(logFiles:TStringlist);
-      procedure cullLogFile;
+      procedure cullLogFile(CullLogsDays: Integer);
   end;
 
 implementation
@@ -94,7 +94,7 @@ begin
   FindAllFiles(logFiles, dirname, '*.log', True);
 end;
 
-procedure Logger.cullLogFile;
+procedure Logger.cullLogFile(CullLogsDays: Integer);
 {  Will delete [to recycle bin] all log files older then a specified time, if switched on.  }
 var
   logFiles:TStringlist;
@@ -109,7 +109,13 @@ begin
     begin
       logDate := FileDateTodateTime(FileAgeUTF8(logFile));
       logAge := DaysBetween(Now, logDate);
-      writeLog(format('%S with age %D  %S', [logfile, logAge, FormatDateTime('DD MMM YYYY', logDate)]));
+
+      if logAge > CullLogsDays then
+      begin
+        deleteToRycycle(logFile);
+        writeLog(format('Deleting %S with age %D  %S', [logfile, logAge, FormatDateTime('DD MMM YYYY', logDate)]));
+      end;
+
     end;
 
   freeandnil(logFiles);

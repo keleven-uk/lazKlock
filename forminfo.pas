@@ -75,7 +75,6 @@ procedure TfrmInfo.updateInfo;
 {  Updates the labels.    }
 var
   strResults: TStringList;
-  i: integer;
 begin
   strResults := TStringList.Create;
 

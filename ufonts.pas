@@ -14,7 +14,7 @@ uses
   StdCtrls, Windows, Messages, typinfo;
 
 type
-  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas, Hack);
+  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas, Hack, rmbunny);
 
   fontStore = class
 
@@ -48,8 +48,8 @@ type
                                 PDV : PDesignVector): Int64; StdCall;
                                 External 'GDI32.dll' Name 'RemoveFontResourceExA';
 
-  Function AddFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External GDI32 Name 'AddFontResourceExA';
-  Function RemoveFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External GDI32 Name 'RemoveFontResourceExA';
+  Function AddFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External 'GDI32.dll' Name 'AddFontResourceExA';
+  Function RemoveFont (Dir : PAnsiChar; Flag: DWORD): LongBool; StdCall; External 'GDI32.dll' Name 'RemoveFontResourceExA';
 
 implementation
 

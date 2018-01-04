@@ -36,8 +36,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel, Process,
-  formAbout, formHelp, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
+  formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock;
 
@@ -279,7 +279,9 @@ begin
   kLog := Logger.Create(Application.MainFormHandle);
 
   logHeader;
-  kLog.cullLogFile;
+
+  if userOptions.cullLogs then                   //  Removed old log files, if instructed.
+    kLog.cullLogFile(userOptions.CullLogsDays);
 
   frmClipBoard.cullTmpFiles;                     //  Remove old .tmp files left over from clipboard operations.
 
@@ -542,6 +544,7 @@ begin
     begin
       lblfuzzy.Font.Name := 'Bar Code 39';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Top := 8;
       lblfuzzy.Font.Size := 22;
       lblfuzzy.AutoSize := true;
     end;
@@ -549,6 +552,7 @@ begin
     begin
       lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Top := 8;
       lblfuzzy.Font.Size := 22;
       lblfuzzy.AutoSize := true;
     end;
@@ -556,6 +560,7 @@ begin
     begin
       lblfuzzy.Font.Name := 'Semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Top := 4;
       lblfuzzy.Font.Size := 22;
       lblfuzzy.AutoSize := true;
     end;
@@ -563,14 +568,23 @@ begin
     begin
       lblfuzzy.Font.Name := 'BrailleLatin';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.Top := 8;
       lblfuzzy.Font.Size := 22;
       lblfuzzy.AutoSize := true;
     end;
     'Christmas':
     begin
-      lblfuzzy.Top := 1;
       lblfuzzy.Font.Name := 'Christmas';
       lblfuzzy.Font.Size := 28;
+      lblfuzzy.Top := 2;
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+      lblfuzzy.AutoSize := true;
+    end;
+    'Easter':
+    begin
+      lblfuzzy.Font.Name := 'RMBunny';
+      lblfuzzy.Font.Size := 28;
+      lblfuzzy.Top := 2;
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
       lblfuzzy.AutoSize := true;
     end;
@@ -578,18 +592,21 @@ begin
       begin
         if userOptions.christmasFont and isChristmas then
           lblfuzzy.Font.Name := 'Christmas'
+        else if userOptions.easterFont and isEaster then
+          lblfuzzy.Font.Name := 'RMBunny'
         else
-          lblfuzzy.Font.Name := 'default';
-        lblfuzzy.Font.Size := 22;          //  seems to neede this, or changes size on each call.
-        lblfuzzy.Font.Size := Trunc( 22 * (490 / GetTextWidth(ft.getTime, lblfuzzy.Font)));
+        lblfuzzy.Font.Name := 'default';
+        lblfuzzy.Font.Size := 22;          //  seems to need this, or changes size on each call.
+        lblfuzzy.Font.Size := GetTextSize(ft.getTime, lblfuzzy.Font);
         lblfuzzy.Caption := ft.getTime;
-        lblfuzzy.Top := 0;
+        lblfuzzy.Top := 2;
         lblfuzzy.AutoSize := true;
       end;
     else   //  no font substitution, use default font.
       begin
         lblfuzzy.Font.Name := 'default';
         lblfuzzy.Font.Size := 22;
+        lblfuzzy.Font.Size := GetTextSize(ft.getTime, lblfuzzy.Font);
         lblfuzzy.Caption := ft.getTime;
       end;
   end;

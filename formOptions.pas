@@ -30,6 +30,7 @@ type
     accOtherStuff: TAccordionItem;
     btrOptionsReset: TButton;
     btnGlobalVolumeTest: TButton;
+    btnCullLogs: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCullLogsFiles: TCheckBox;
     ChckBxLogging: TCheckBox;
@@ -57,6 +58,7 @@ type
     Settings: TGroupBox;
     SpnEdtCullDays: TSpinEdit;
     TrckBrGlobalVolume: TTrackBar;
+    procedure btnCullLogsClick(Sender: TObject);
     procedure btnGlobalVolumeTestClick(Sender: TObject);
     procedure btrOptionsResetClick(Sender: TObject);
     procedure ChckBxCullLogsFilesChange(Sender: TObject);
@@ -91,7 +93,6 @@ var
 
 implementation
 
-{$DEFINE DEBUG}
 {$R *.lfm}
 
 uses
@@ -125,8 +126,9 @@ begin
   //  Create tmp options file as c:\Users\<user>\AppData\Local\<app Name>\OptionsXX_tmp.xml
   //  This is used to store local amendments and only copied to the main options files
   //  if the OK button is clicked.
-  {$IFDEF DEBUG}
-    optnFile := 'DEBUG_Options';
+
+  {$IFDEF TEST}
+    optnFile := 'TEST_Options';
   {$else}
     optnFile := 'Options';
   {$endif}
@@ -137,7 +139,7 @@ begin
   {$endif}
 
   userBacOptions.Assign(userOptions);                    //  make a copy of the current user options
-  userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
+  //userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
 
   AcrdnOptions.ItemIndex := 0;                              //  Always start on Global Options.
   CmbBxDefaulTtab.ItemIndex := userBacOptions.defaultTab;
@@ -159,6 +161,7 @@ begin
   ChckGrpTimeOptions.Checked[4] := userBacOptions.displayIdleTime;
 
   ChckGrpHolidayFonts.Checked[0] := userBacOptions.christmasFont;
+  ChckGrpHolidayFonts.Checked[1] := userBacOptions.easterFont;
 
   ChckGrpTimeChimes.Checked[0] := userBacOptions.hourPips;
   ChckGrpTimeChimes.Checked[1] := userBacOptions.hourChimes;
@@ -295,6 +298,7 @@ procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integ
 }
 begin
   userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
+  userBacOptions.easterFont := ChckGrpHolidayFonts.Checked[1];
 end;
 
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
@@ -376,11 +380,32 @@ procedure TfrmOptions.ChckBxCullLogsFilesChange(Sender: TObject);
 begin
   SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
   lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
+  btnCullLogs.Visible := ChckBxCullLogsFiles.Checked;
 
   if ChckBxCullLogsFiles.Checked then
   begin
     userBacOptions.cullLogs := ChckBxCullLogsFiles.Checked;
     userBacOptions.CullLogsDays := SpnEdtCullDays.Value;
+  end;
+end;
+
+procedure TfrmOptions.btnCullLogsClick(Sender: TObject);
+{  If enabled [cull logs is checked], then delete all logs files over due.
+}
+var
+  logFiles:TStringlist;
+begin
+  if userOptions.cullLogs then         //  Removed old log files, if instructed.
+  begin
+    kLog.cullLogFile(userOptions.CullLogsDays);
+
+    logFiles := TstringList.Create;    //  Scan for log files and load listbox.
+    try
+      kLog.readLogFile(logFiles);
+      LstBxLogFiles.Items.Assign(logFiles) ;
+    finally
+      freeandnil(logFiles);
+    end;
   end;
 end;
 {........ Pannel Buttons ......................................................}

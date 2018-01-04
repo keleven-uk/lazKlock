@@ -54,6 +54,7 @@ type
     WindowDragStarted: Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
+    procedure UpdateStatusBar(KTime: TDateTime);
     procedure createlabels;
     procedure clearlabels;
     procedure setTime;
@@ -177,23 +178,32 @@ begin
 end;
 
 procedure TfrmSmallTextKlock.tmrSmallTextKlockTimer(Sender: TObject);
+{  Called on each timer tick.    }
+begin
+  UpdateStatusBar(now);
+  clearlabels;
+  setTime;
+end;
+
+procedure TfrmSmallTextKlock.UpdateStatusBar(KTime: TDateTime);
+{  Updates the status bar with current time, date and Key States.
+   NB, status bar is implementes as a panel allows proper backgroud
+   colour change and transparancy.
+}
 VAR
   keyResult: string;
 begin
   keyResult := ' cns ';
   if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-    keyResult[2] := 'C';
+    keyResult := StringReplace(keyResult, 'c', 'C', [rfReplaceAll]);
   if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-    keyResult[3] := 'N';
+    keyResult := StringReplace(keyResult, 'n', 'N', [rfReplaceAll]);
   if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-    keyResult[4] := 'S';
+    keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
 
-  lblSmallTextKlock.Caption := FormatDateTime('hh:nn:ss am/pm ', now) +
-                               FormatDateTime(' DD MMM YYYY ', now) +
+  lblSmallTextKlock.Caption := FormatDateTime('hh:nn:ss am/pm ', KTime) +
+                               FormatDateTime(' DD MMM YYYY ', KTime) +
                                keyResult;
-
-  clearlabels;
-  setTime;
 end;
 
 procedure TfrmSmallTextKlock.MouseHook(Sender: TObject; Msg: Cardinal);

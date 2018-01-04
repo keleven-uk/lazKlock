@@ -115,6 +115,8 @@ object frmClipBoard: TfrmClipBoard
       Center = True
       KeepOriginXWhenClipped = True
       KeepOriginYWhenClipped = True
+      StretchOutEnabled = False
+      StretchInEnabled = False
     end
   end
   object StsBrClipBoard: TStatusBar

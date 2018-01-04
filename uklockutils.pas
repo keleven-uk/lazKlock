@@ -8,7 +8,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock, formSmallTextKlock;
+  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -42,8 +42,9 @@ procedure logHeader;
 procedure logFooter;
 function getUpTime(system: string): string;
 function getWindowsVersion: string;
-function GetTextWidth(AText: String; AFont: TFont): Integer;
-function isChristmas(): Boolean;
+function GetTextSize(AText: String; AFont: TFont): Integer;
+function isChristmas: Boolean;
+function isEaster: Boolean;
 procedure KillOtherKlocks;
 
 implementation
@@ -123,6 +124,7 @@ begin
 
   p := Pos(':', s);                                   //  Character set of font
   val(copy(s, 0, p - 1), chrs, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                   //  colour of font
@@ -131,6 +133,7 @@ begin
 
   p := Pos(':', s);                                  //  height of font
   val(copy(s, 0, p - 1), Hght, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  name of font
@@ -139,18 +142,22 @@ begin
 
   p := Pos(':', s);                                  //  orientation of font
   val(copy(s, 0, p - 1), Ortn, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  size of font
   val(copy(s, 0, p - 1), sze, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  pitch of font
   val(copy(s, 0, p - 1), ptch, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                 //  quality of font
   val(copy(s, 0, p - 1), qlty, err);
+  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   if Pos('B', s) <> 0 then
@@ -270,7 +277,6 @@ begin
       try
         Executable := 'hh.exe';
         Parameters.Add(format('%s::%s', [chm, topic]));
-        Options := Options + [poWaitOnExit];
         Execute;
       finally
         Free;
@@ -567,7 +573,7 @@ begin
   Result := winVer[1];
 end;
 
-function GetTextWidth(AText: String; AFont: TFont): Integer;
+function GetTextSize(AText: String; AFont: TFont): Integer;
 var
   bmp: TBitmap;
 begin
@@ -575,21 +581,46 @@ begin
   bmp := TBitmap.Create;
   try
     bmp.Canvas.Font.Assign(AFont);
-    Result := bmp.Canvas.TextWidth(AText);
+    //klog.writeLog(format ('text width %d :: text height %d', [bmp.Canvas.TextWidth(AText),
+    //                                                          bmp.Canvas.TextHeight(AText)]));
+
+    Result := Trunc( 22 * (490 / bmp.Canvas.TextWidth(AText)));
   finally
     bmp.Free;
   end;
 end;
 
 function isChristmas: Boolean;
+{  Returns true if current date is within 12 days of Christmas day.
+}
 VAR
+  year, month, day: word;
   chritmasDay: TDateTime;
-  currentDate: TDateTime;
+  currentYear: integer;
 begin
-  chritmasDay := EncodeDate(Currentyear, 12, 25);
-  currentDate := Date;
 
-  if DaysBetween(chritmasDay, currentDate) < 13 then
+  DecodeDate(Date, year, month, day);
+  if month < 7 then                       //  if in first half of year, compare
+    currentYear := year - 1               //  agiinst christmas of last year.
+  else
+    currentYear := year;
+
+  chritmasDay := EncodeDate(currentYear, 12, 25);
+
+  if DaysBetween(chritmasDay, Date) < 13 then
+    Result := true
+  else
+    Result := False;
+end;
+
+function isEaster: Boolean;
+{  Returns true if current date is within one week of easter sunday.    }
+VAR
+  easter: TdateTime;
+begin
+  easter := getEasterSunday(currentYear);
+
+  if DaysBetween(easter, Date) < 7 then
     Result := true
   else
     Result := False;
@@ -603,6 +634,9 @@ begin
 
   if frmLEDKlock.Visible then
     frmLEDKlock.Visible := False;
+
+  if frmBinaryKlock.Visible then
+    frmBinaryKlock.Visible := False;
 
   if frmSmallTextKlock.Visible then
     frmSmallTextKlock.Visible := False;

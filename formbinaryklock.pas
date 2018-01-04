@@ -8,15 +8,22 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls,
   ExtCtrls, LCLIntf, LCLType, Menus, LMessages, StdCtrls, strutils;
 
+const
+  ON_COLOUR = clLIME;
+  OFF_COLOUR = clBlack;
+
+
 type
 
   { TfrmBinaryKlock }
 
   TfrmBinaryKlock = class(TForm)
+    lblStatusBar: TLabel;
     MnItmBCD: TMenuItem;
     MnItmBinary: TMenuItem;
     MnItmExit: TMenuItem;
     MnItmAbout: TMenuItem;
+    PnlStatusbar: TPanel;
     popUpMenuBinaryKlock: TPopupMenu;
     Shp00: TShape;
     Shp31: TShape;
@@ -42,7 +49,6 @@ type
     Shp01: TShape;
     Shp11: TShape;
     Shp21: TShape;
-    StsBinaryKlock: TStatusBar;
     tmrBinartKlock: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -84,6 +90,7 @@ uses
 { TfrmBinaryKlock }
 
 procedure TfrmBinaryKlock.tmrBinartKlockTimer(Sender: TObject);
+{  Called on each timer tick.    }
 begin
   if MnItmBinary.Checked then
     decodeBinaryTime
@@ -190,30 +197,29 @@ begin
 end;
 
 procedure TfrmBinaryKlock.UpdateStatusBar(KTime: TDateTime);
-{  Updates the status bar.    }
+{  Updates the status bar with current time, date and Key States.
+   NB, status bar is implementes as a panel allows proper backgroud
+   colour change and transparancy [not yet implemented].
+}
 VAR
   keyResult: string;
 begin
-  keyResult := ' cns ';
-    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-      keyResult[2] := 'C';
-    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-      keyResult[3] := 'N';
-    if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-      keyResult[4] := 'S';
+  keyResult := ' :: cns ';
+  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
+    keyResult := StringReplace(keyResult, 'c', 'C', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
+    keyResult := StringReplace(keyResult, 'n', 'N', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
+    keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
 
-    if userOptions.display24Hour then
-      StsBinaryKlock.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
-    else
-      StsBinaryKlock.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
+  if userOptions.displayIdleTime then
+    keyResult += '  :: Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay);
 
-    StsBinaryKlock.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
-    StsBinaryKlock.Panels.Items[2].Text := keyResult;
+  lblStatusBar.Caption := FormatDateTime('hh:nn:ss am/pm ', KTime) +
+                          FormatDateTime(' DD MMM YYYY ', KTime) +
+                          keyResult;
 
-    if userOptions.displayIdleTime then
-      StsBinaryKlock.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
-    else
-      StsBinaryKlock.Panels.Items[3].Text := '';
+
 end;
 //
 // ******************************************************* Pop Up Menu *********
@@ -295,9 +301,9 @@ begin
     if tmpButton <> nil then
     begin
       if sl[0][f] = '1' then
-        tmpButton.Brush.Color := clGreen
+        tmpButton.Brush.Color := ON_COLOUR
       else
-        tmpButton.Brush.Color := clBlack;
+        tmpButton.Brush.Color := OFF_COLOUR;
 
     end;
 
@@ -306,9 +312,9 @@ begin
     if tmpButton <> nil then
     begin
       if sl[1][f+1] = '1' then
-        tmpButton.Brush.Color := clGreen
+        tmpButton.Brush.Color := ON_COLOUR
       else
-        tmpButton.Brush.Color := clBlack;
+        tmpButton.Brush.Color := OFF_COLOUR;
     end;
 
     // secs
@@ -316,9 +322,9 @@ begin
     if tmpButton <> nil then
     begin
       if sl[2][f+1] = '1' then
-        tmpButton.Brush.Color := clGreen
+        tmpButton.Brush.Color := ON_COLOUR
       else
-        tmpButton.Brush.Color := clBlack;
+        tmpButton.Brush.Color := OFF_COLOUR;
      end;
   end; // for
 
@@ -377,17 +383,17 @@ begin
     if tmpShape <> nil then
     begin
       if sl[0][f] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
     tmpShape := FindComponent('Shp1' + intToStr(f-1)) as TShape;
     if tmpShape <> nil then
     begin
       if sl[0][f+4] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
 
      // mins
@@ -395,17 +401,17 @@ begin
     if tmpShape <> nil then
     begin
       if sl[1][f] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
     tmpShape := FindComponent('Shp3' + intToStr(f-1)) as TShape;
     if tmpShape <> nil then
     begin
       if sl[1][f+4] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
 
     // secs
@@ -413,17 +419,17 @@ begin
     if tmpShape <> nil then
     begin
       if sl[2][f] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
     tmpShape := FindComponent('Shp5' + intToStr(f-1)) as TShape;
     if tmpShape <> nil then
     begin
       if sl[2][f+4] = '1' then
-        tmpShape.Brush.Color := clGreen
+        tmpShape.Brush.Color := ON_COLOUR
       else
-        tmpShape.Brush.Color := clBlack;
+        tmpShape.Brush.Color := OFF_COLOUR;
      end;
 
    end;   //  for
@@ -433,38 +439,38 @@ end;      //  procedure
 //
 procedure TfrmBinaryKlock.StsBinaryKlockDrawPanel(StatusBar: TStatusBar;
   Panel: TStatusPanel; const Rect: TRect);
-VAR
-  OldColor, OldBrushColor : TColor;
-  OldStyle : TFontStyles;
-  f: integer;
+//VAR
+//  OldColor, OldBrushColor : TColor;
+//  OldStyle : TFontStyles;
+//  f: integer;
 begin
-
-  for f:= 0 to 4 do
-  begin
-    if Panel.Index = f then begin
-      with StatusBar.Canvas do begin
-        // store off the original settings
-        OldColor := Font.Color;
-        OldStyle := Font.Style;
-        OldBrushColor := Brush.Color;
-        try
-          //  set the Brush Color
-          //// fill the panel with the brush color (ie background color)
-          //brush.Color := clBlack;
-          FillRect(Rect);
-          // set the text font color / style
-          Font.Color := clGreen;
-          //Font.Style := [fsBold];
-          //display the text from the panel
-          TextOut(Rect.Left + 3, Rect.Top, Panel.Text);
-        finally  // restore the original settings
-          Font.Color := OldColor;
-          Font.Style := OldStyle;
-          Brush.Color := OldBrushColor;
-        end;  //  try
-      end;    //  with StatusBar.Canvas
-    end;      //  if Panel.Index = 0
-  end;        //  for f:= 0 to 4
+//
+//  for f:= 0 to 4 do
+//  begin
+//    if Panel.Index = f then begin
+//      with StatusBar.Canvas do begin
+//        // store off the original settings
+//        OldColor := Font.Color;
+//        OldStyle := Font.Style;
+//        OldBrushColor := Brush.Color;
+//        try
+//          //  set the Brush Color
+//          //// fill the panel with the brush color (ie background color)
+//          //brush.Color := clBlack;
+//          FillRect(Rect);
+//          // set the text font color / style
+//          Font.Color := clGreen;
+//          //Font.Style := [fsBold];
+//          //display the text from the panel
+//          TextOut(Rect.Left + 3, Rect.Top, Panel.Text);
+//        finally  // restore the original settings
+//          Font.Color := OldColor;
+//          Font.Style := OldStyle;
+//          Brush.Color := OldBrushColor;
+//        end;  //  try
+//      end;    //  with StatusBar.Canvas
+//    end;      //  if Panel.Index = 0
+//  end;        //  for f:= 0 to 4
 
 end;
 

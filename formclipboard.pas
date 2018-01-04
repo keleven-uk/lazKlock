@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, StdCtrls, UformClipBoardUtils, LCLIntf, LCLType, Clipbrd, dateUtils,
-  LazFileUtils;
+  LazFileUtils, ShellApi;
 
 type
 
@@ -45,6 +45,7 @@ type
 
     procedure UpdateStatusBar(KTime: TDateTime);
     procedure ClipboardChanged(Sender: TObject);
+    procedure deleteToRycycle(aFile: string);
     function isThere(s: string): boolean;
   public
     procedure cullTmpFiles;
@@ -236,12 +237,11 @@ begin
       newItem.Caption := FListener.category;
       newItem.SubItems.add(FListener.epoch);
       newItem.SubItems.add(FListener.text);
-      klog.writeLog(format('%s %s %s', [FListener.category, FListener.epoch, FListener.text]));
     end;
 end;
 
 procedure TfrmClipBoard.cullTmpFiles;
-{  Will delete [to recycle bin] all log files older then a specified time, if switched on.  }
+{  Will delete [to recycle bin] all log files older then a 10 days.  }
 var
   tmpFiles:TStringlist;
   tmpFile: string;
@@ -255,10 +255,51 @@ begin
     begin
       tmpDate := FileDateTodateTime(FileAgeUTF8(tmpFile));
       tmpAge := DaysBetween(Now, tmpDate);
-      kLog.writeLog(format('%S with age %D  %S', [tmpfile, tmpAge, FormatDateTime('DD MMM YYYY', tmpDate)]));
+
+      if tmpAge > 10 then
+      begin
+        deleteToRycycle(tmpFile);
+        klog.writeLog(format('Deleting %S with age %D  %S', [tmpFile, tmpAge, FormatDateTime('DD MMM YYYY', tmpDate)]));
+      end;
     end;
 
   freeandnil(tmpFiles);
+end;
+
+procedure TfrmClipBoard.deleteToRycycle(aFile: string);
+{  Delets files to the Rycycle bin.
+    Thanks to Lush - http://forum.lazarus-ide.org/index.php?topic=12288.0
+
+    FOF_ALLOWUNDO -> moves file to the bin.
+    FOF_SILENT -> deletes the file permanently.
+    Add FOF_NOCONFIRMATION to any of the previous constants to disable the "are you sure" dialog box.
+
+    NB : Seems to ignore directories at the moment.
+}
+
+var
+  fileOpStruct: TSHFileOpStruct;
+
+begin
+  with fileOpStruct do
+  begin
+    Wnd := frmMain.Handle;      //  Hmm, seems to need a handle of the main form.
+    wFunc := FO_DELETE;
+    pFrom := PChar(aFile + #0#0);
+    pTo := nil;
+    hNameMappings := nil;
+
+    fFlags := FOF_ALLOWUNDO;                    //  Use recycle bin.
+    fFlags := fFlags or FOF_NOCONFIRMATION;
+  end;
+
+  try
+    SHFileOperation(fileOpStruct);
+  except
+    on E: Exception do
+      klog.writeLog(E.Message);
+  end;
+
 end;
 
 function TfrmClipBoard.isThere(s: string): boolean;

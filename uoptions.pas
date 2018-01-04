@@ -79,6 +79,7 @@ type
     _quarterChimes: boolean;
     _threeQuarterChimes: boolean;
     _christmasFont: boolean;
+    _easterFont: boolean;
 
     //  Timer
     _timerMilliSeconds: boolean;
@@ -150,6 +151,7 @@ type
     property quarterChimes: boolean read _quarterChimes write _quarterChimes;
     property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
     property christmasFont: boolean read _christmasFont write _christmasFont;
+    property easterFont: boolean read _easterFont write _easterFont;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
@@ -240,15 +242,15 @@ var
 begin
   checkDirectory;
 
-  {$IFDEF DEBUG}
-    optnFile := 'DEBUG_Options';
+  {$IFDEF TEST}
+    optnFile := 'TEST_Options';
   {$else}
     optnFile := 'Options';
   {$endif}
   {$ifdef WIN32}
-    optionsName := _dirName + optnFile + '32_temp.xml';
+    optionsName := _dirName + optnFile + '32.xml';
   {$else}
-    optionsName := _dirName + optnFile + '64_temp.xml';
+    optionsName := _dirName + optnFile + '64.xml';
   {$endif}
 
   if FileExists(optionsName) then
@@ -329,6 +331,7 @@ begin
   quarterChimes := o.quarterChimes;
   threeQuarterChimes := o.threeQuarterChimes;
   christmasFont := o.christmasFont;
+  easterFont := o.easterFont;
 
   //  Timer
   timerMilliSeconds := o.timerMilliSeconds;
@@ -430,6 +433,7 @@ begin
     quarterChimes := StrToBool(readChild(PassNode, 'quarterChimes'));
     threeQuarterChimes := StrToBool(readChild(PassNode, 'threeQuarterChimes'));
     christmasFont := StrToBool(readChild(PassNode, 'christmasFont'));
+    easterFont := StrToBool(readChild(PassNode, 'easterFont'));
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
@@ -529,6 +533,7 @@ begin
   quarterChimes := False;
   threeQuarterChimes := False;
   christmasFont := True;
+  easterFont := True;
 
   //  Timer
   timerMilliSeconds := True;
@@ -627,6 +632,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes', quarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'threeQuarterChimes', threeQuarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'christmasFont', christmasFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'easterFont', christmasFont));
 
     RootNode.AppendChild(ElementNode);
 

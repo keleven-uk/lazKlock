@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 776
     FullExpand = True
-    ItemIndex = 2
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,8 +55,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 335
+      Top = 21
       Width = 776
       Caption = 'Global'
       Order = 0
@@ -209,12 +209,13 @@ object frmOptions: TfrmOptions
         ClientHeight = 108
         ClientWidth = 237
         Items.Strings = (
-          '12 Days of Christams [before and after]'
+          '12 Days of Christams [before and after].'
+          '7 Days of Easter  [before and after].'
         )
         OnItemClick = ChckGrpHolidayFontsItemClick
         TabOrder = 4
         Data = {
-          0100000002
+          020000000202
         }
       end
     end
@@ -227,7 +228,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 42
       Width = 776
       Caption = 'Time'
       Order = 1
@@ -322,7 +323,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 84
       Width = 776
       Caption = 'Other Stuff'
       Order = 3
@@ -361,7 +362,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 335
+      Height = 0
       Top = 63
       Width = 776
       Caption = 'Other Klocks'
@@ -483,7 +484,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 105
       Width = 776
       Caption = 'Logging'
       Order = 4
@@ -530,6 +531,15 @@ object frmOptions: TfrmOptions
           Width = 25
           Caption = 'Days'
           ParentColor = False
+        end
+        object btnCullLogs: TButton
+          Left = 9
+          Height = 25
+          Top = 112
+          Width = 75
+          Caption = 'Cull Logs'
+          OnClick = btnCullLogsClick
+          TabOrder = 3
         end
       end
       object LstBxLogFiles: TListBox

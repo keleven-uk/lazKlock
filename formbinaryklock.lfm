@@ -1,7 +1,7 @@
 object frmBinaryKlock: TfrmBinaryKlock
-  Left = 1420
+  Left = 1439
   Height = 120
-  Top = 551
+  Top = 414
   Width = 433
   BorderIcons = []
   BorderStyle = bsNone
@@ -19,40 +19,6 @@ object frmBinaryKlock: TfrmBinaryKlock
   OnShow = FormShow
   PopupMenu = popUpMenuBinaryKlock
   LCLVersion = '1.8.0.6'
-  object StsBinaryKlock: TStatusBar
-    Left = 0
-    Height = 23
-    Top = 97
-    Width = 433
-    Font.Color = clGreen
-    Panels = <    
-      item
-        Alignment = taCenter
-        Style = psOwnerDraw
-        Width = 70
-      end    
-      item
-        Style = psOwnerDraw
-        Width = 75
-      end    
-      item
-        Style = psOwnerDraw
-        Width = 35
-      end    
-      item
-        Style = psOwnerDraw
-        Width = 125
-      end    
-      item
-        Style = psOwnerDraw
-        Width = 100
-      end>
-    ParentFont = False
-    SimplePanel = False
-    SizeGrip = False
-    UseSystemFont = False
-    OnDrawPanel = StsBinaryKlockDrawPanel
-  end
   object Shp00: TShape
     Left = 0
     Height = 25
@@ -220,6 +186,28 @@ object frmBinaryKlock: TfrmBinaryKlock
     Top = 72
     Width = 75
     Brush.Color = clBlack
+  end
+  object PnlStatusbar: TPanel
+    Left = 0
+    Height = 28
+    Top = 92
+    Width = 435
+    BevelColor = clBlack
+    ClientHeight = 28
+    ClientWidth = 435
+    Color = clBlack
+    ParentColor = False
+    TabOrder = 0
+    object lblStatusBar: TLabel
+      Left = 8
+      Height = 15
+      Top = 4
+      Width = 62
+      Caption = 'lblStatusBar'
+      Font.Color = clGreen
+      ParentColor = False
+      ParentFont = False
+    end
   end
   object tmrBinartKlock: TTimer
     OnTimer = tmrBinartKlockTimer
