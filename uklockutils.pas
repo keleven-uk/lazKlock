@@ -32,7 +32,7 @@ function parseReminder(a: string): reminderData;
 function isTime(myNow: TdateTime; mins: integer): Boolean;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
-procedure doCommandEvent(command: string);
+procedure doCommandEvent(command: string; args: string);
 procedure displayHelp(chm: string; topic: string);
 procedure doPlaySound(sound: string; volume: string);
 procedure SendMCICommand(command: string);
@@ -244,17 +244,17 @@ begin
 
 end;
 
-procedure doCommandEvent(command: string);
+procedure doCommandEvent(command: string; args: string);
 {  called to execute a command, which hopefully is in command.
    NB  :: does not check if the command is really executable.
-   ALSO, command can not have arguments
 }
 begin
   if command <> '' then
   begin
     with TProcess.Create(nil) do
       try
-        Executable := Command;
+        Executable := command;
+        Parameters.Add(args);
         Options := Options + [poWaitOnExit];
         Execute;
       finally

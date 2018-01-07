@@ -6,9 +6,12 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, Countdown, Timer, Event, Reminder & Clipboard Monitor.
+Fuzzy Time, Countdown, Timer, Event, Reminder, Conversion & Clipboard Monitor.
 
-Klock currently consists of over 6000 lines of Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python, Pascal [Lazarus] and Freebasic - and may again.
+Also, the time can be displayed in several ways - text, digital and analogue and binary klocks,
+
+
+Klock currently consists of over 8000 lines of Free Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 
 Fuzzy Time
@@ -24,21 +27,31 @@ The time for the countdown can be either entered directly of the up/down control
 
 Timer
 
-Implements  a simple timer, with split time function.
+Implements a simple timer, with split time function.
 The timer can be stopped, paused and resumed.
 A split function allows for given time to be remembered.
+
+
+Events
+
+This enables for events to set up and notifications displayed to the user.
+
+Today's date is default, but a future date can also be selected.  A time can also be added to the reminder date.  If no date is added, the reminder will fire at midnight.  When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.
+
+Note : Setting the time to 00:00, indicates midnight of the previous day so will not enable the set button.  To set a reminder for midnight of today, disable the time and pick tomorrow's date.  00:00 indicates zero minutes into the present day.
 
 
 Reminder
 
 Implements a reminder option.
-Today's date is default, but a future date can also be selected.  A time can also be added to the reminder date.  If no date is added, the reminder will fire at midnight.  When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.
+This enables for [recurring] Reminders to set up and reminders displayed to the user.  A number of pre-defined events types are already set up.
 
 
-Events
+Conversion
 
-Implements a events option.
-This enables for [recurring] events to set up and reminders displayed to the user.  A number of pre-defined events types are already set up.
+Implements a simple conversion screen.
+This allows the conversion between various units of weight, distance and area etc.
+
 
 
 The button bar contains three buttons -

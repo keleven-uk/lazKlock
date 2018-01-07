@@ -51,27 +51,27 @@ a.rvts9, span.rvts9
 {
  text-decoration: none;
 }
-span.rvts10 /* Font Style */
+a.rvts10, span.rvts10
+{
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts11 /* Font Style */
 {
  font-family: 'Tahoma', 'Geneva', sans-serif;
  font-style: italic;
  color: #c0c0c0;
 }
-a.rvts11, span.rvts11 /* Font Style */
+a.rvts12, span.rvts12 /* Font Style */
 {
  font-family: 'Tahoma', 'Geneva', sans-serif;
  font-style: italic;
  color: #6666ff;
  text-decoration: underline;
 }
-span.rvts12
+span.rvts13
 {
  font-style: italic;
-}
-a.rvts13, span.rvts13
-{
- color: #0000ff;
- text-decoration: underline;
 }
 span.rvts14
 {

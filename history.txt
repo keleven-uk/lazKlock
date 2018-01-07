@@ -2010,6 +2010,10 @@ lazKlock.smproj | Bin 215570 -> 237081 bytes
 
 Build 60 [2.2.0.60]
 
+commit c98469c78125b59aa4c0cbb8733024250a402f47
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Thu Jan 4 17:05:51 2018 +0000
+
 Added easter font and option to use this font at the easter weekend.
 
 formOptions - Added logic to cull [delete] log files over a certain age.
@@ -2021,3 +2025,54 @@ formClipboard - Added logic to cull [delete] tmp files over a certain age.
 formBinaryKlock - changed the status bar for a panel.
                   This can have the background colour changed without leaving
                   ugly lines as the status bar does.
+
+Currently
+7742 lines of source code.
+4185 statements
+14.6% comment
+
+fonts/rmbunny.ttf               | Bin 0 -> 150424 bytes
+formKlock.pas                   |  33 +++--
+formOptions.lfm                 |  28 +++--
+formOptions.pas                 |  33 ++++-
+formbinaryklock.lfm             |  60 ++++-----
+formbinaryklock.pas             | 148 +++++++++++-----------
+formclipboard.lfm               |   2 +
+formclipboard.pas               |  49 +++++++-
+forminfo.pas                    |   1 -
+formsmalltextklock.pas          |  26 ++--
+help/Klock.chm                  | Bin 864090 -> 870264 bytes
+help/Klock.pdf                  | Bin 4115286 -> 4112582 bytes
+help/html/About.html            |   2 +-
+help/html/ClipboardMonitor.html |   2 +
+help/html/Credits.html          |   2 +-
+help/html/Gettinghelp.html      |   2 +-
+help/html/Global.html           |   2 +-
+help/html/History.html          | 214 +++++++++++++++++++++++++++++++
+help/html/Introduction.html     |   4 +-
+help/html/Klock.html            |   4 +-
+help/html/Logging.html          |   3 +-
+help/html/Welcome.html          |   4 +-
+help/html/js/hndsd.min.js       |   2 +-
+help/klock.hnd                  | Bin 49463296 -> 49524736 bytes
+history.txt                     |  24 ++++
+klock.iss                       |   2 +-
+klock.lpi                       | 272 +++++++++++++++++++++-------------------
+lazKlock.smproj                 | Bin 237081 -> 258836 bytes
+ufonts.pas                      |   6 +-
+ufuzzytime.pas                  |   4 +-
+uklockutils.pas                 |  54 ++++++--
+ulogging.pas                    |  12 +-
+uoptions.pas                    |  14 ++-
+33 files changed, 704 insertions(+), 305 deletions(-)
+
+Build 61 [2.2.1.61]
+
+Added a new tab to Klock for Conversions.  This allows the conversion between
+several units i.e. weight and distance etc.  A new file uConversion was
+added, this holds the helper functions for the conversion tab.
+
+Currently
+8021 lines of source code.
+4339 statements
+14.9% comment

@@ -38,8 +38,9 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
   ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
   formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows, formAnalogueKlock,
-  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock;
+  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
+  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
+  formAnalogueKlock, formSmallTextKlock, UConversion;
 
 type
 
@@ -65,6 +66,8 @@ type
     btnReminderNew: TButton;
     btnReminderEdit: TButton;
     btnReminderDelete: TButton;
+    btnConverionConvert: TButton;
+    btnConversionAddUnits: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     chckBxCountdownEvent: TCheckBox;
@@ -80,13 +83,21 @@ type
     CmbBxCountdownEvent: TComboBox;
     CmbBxEventAction: TComboBox;
     CmbBxEventSystem: TComboBox;
+    CmbBxCategory: TComboBox;
+    CmbBxConvertTo: TComboBox;
     DtEdtEvent: TDateEdit;
+    edtConverionValue: TEdit;
+    edtConverionResult: TEdit;
     EdtEventCommand: TEdit;
     EdtEventText: TEdit;
     EdtEventSound: TEdit;
     EdtCountdownCommand: TEdit;
     EdtCountdownReminder: TEdit;
     EdtCountdownSound: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
     mainIdleTimer: TIdleTimer;
     lblRadix: TLabel;
     lblSplitLap: TLabel;
@@ -107,6 +118,9 @@ type
     Panel17: TPanel;
     Panel18: TPanel;
     Panel19: TPanel;
+    Panel20: TPanel;
+    Panel21: TPanel;
+    Panel22: TPanel;
     ppMnItmTime: TMenuItem;
     ppMnItmExit: TMenuItem;
     ppMnItmShow: TMenuItem;
@@ -142,6 +156,7 @@ type
     SpnEdtMins: TSpinEdit;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
+    TbShtConversion: TTabSheet;
     TbShtReminder: TTabSheet;
     TbShtFuzzy: TTabSheet;
     TbShtCountdown: TTabSheet;
@@ -154,6 +169,8 @@ type
     ballonTimer: TTimer;
     TrayIcon: TTrayIcon;
     procedure ballonTimerTimer(Sender: TObject);
+    procedure btnConverionConvertClick(Sender: TObject);
+    procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnReminderNewClick(Sender: TObject);
     procedure btnCountdownLoadCommandClick(Sender: TObject);
     procedure btnCountdownLoadSoundClick(Sender: TObject);
@@ -179,11 +196,14 @@ type
     procedure ChckBxEventReminderChange(Sender: TObject);
     procedure ChckBxEventSoundChange(Sender: TObject);
     procedure ChckBxEventSystemChange(Sender: TObject);
+    procedure CmbBxCategoryChange(Sender: TObject);
+    procedure CmbBxConvertToChange(Sender: TObject);
     procedure CmbBxEventActionChange(Sender: TObject);
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CmbBxCountdownActionChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
     procedure DtEdtEventChange(Sender: TObject);
+    procedure edtConverionValueChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -238,6 +258,9 @@ var
   ft: FuzzyTime;                //  the object to give the different times.
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
   kLog: Logger;                 //  used to log erors, debug statements etc.
+  ConversionUnits: TStrings;    //  used to hold the converions units - read from file.
+  unitConvertVal: double;       //  used to hold the conversion value.
+  unitConvertfactor: double;    //  used to hold the conversion factor.
   appStartTime: int64;          //  used by formAbout to determine how long the app has been running.
   countdownTicks: integer;
   timerStart: TDateTime;
@@ -277,13 +300,14 @@ begin
   ft := FuzzyTime.Create;
   fs := fontStore.Create;
   kLog := Logger.Create(Application.MainFormHandle);
+  ConversionUnits := TStringList.Create;
 
   logHeader;
 
-  if userOptions.cullLogs then                   //  Removed old log files, if instructed.
+  if userOptions.cullLogs then     //  Removed old log files, if instructed.
     kLog.cullLogFile(userOptions.CullLogsDays);
 
-  frmClipBoard.cullTmpFiles;                     //  Remove old .tmp files left over from clipboard operations.
+  frmClipBoard.cullTmpFiles;       //  Remove old .tmp files left over from clipboard operations.
 
   fs.addFonts;                     //  Add custom fonts.
 
@@ -332,6 +356,7 @@ begin
   FreeAndNil(ft);                   //  Release the fuzzy time object.
   FreeAndNil(userOptions);          //  Release the user options
   FreeAndNil(kLog);                 //  Release the logger object.
+  ConversionUnits.Free;             //  release the Conversion string list
 
   CloseAction := caFree;
 end;
@@ -476,8 +501,16 @@ begin
       end;  //  if btnEventSet.Enabled
     end;
     4:
-    begin                    //   reminder Page
+    begin                    //   Reminder Page.
       readReminderFile;
+    end;
+    5:
+    begin                       //  Conversion Page.
+      checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
+      readConversionUnitsFile;
+      parseConversionUnitsFile('LoadCategory');
+      parseConversionUnitsFile('LoadUnits');
+      cleartextFiles;
     end;
   end;
 
@@ -922,7 +955,7 @@ begin
 
   if chckBxCountdownCommand.Checked then
   begin   //  only do command if checked
-    doCommandEvent(EdtCountdownCommand.Text);
+    doCommandEvent(EdtCountdownCommand.Text, '');
     chckBxCountdownCommand.Checked := False;
     chckBxCountdownCommandChange(Sender);    //  now box is unchecked, call change procedure
   end;
@@ -1245,7 +1278,7 @@ begin
   if ChckBxEventCommand.Checked then
   begin     //  only execute command if checked
     ChckBxEventCommand.Checked := False;
-    doCommandEvent(EdtEventCommand.Text);
+    doCommandEvent(EdtEventCommand.Text, '');
   end;
 
   if ChckBxEventSystem.Checked then
@@ -1416,6 +1449,8 @@ begin
   end;
 end;
 
+
+
 procedure TfrmMain.ChckBxEventCommandChange(Sender: TObject);
 begin
   if ChckBxEventCommand.Checked then
@@ -1523,6 +1558,55 @@ begin
   CloseFile(ReminderFile);
 end;
 //
+// *********************************************************** Conversion ******
+//
+procedure TfrmMain.CmbBxCategoryChange(Sender: TObject);
+{  A new category has been chosen, re-load the categories.    }
+begin
+  parseConversionUnitsFile('LoadUnits');
+  cleartextFiles;
+end;
+
+procedure TfrmMain.CmbBxConvertToChange(Sender: TObject);
+{  A new convert tp has been chosen, clear the edit boxes.
+   The new choice is still within the same category - so no need to reload the units file.
+}
+begin
+  cleartextFiles;
+end;
+
+procedure TfrmMain.edtConverionValueChange(Sender: TObject);
+{  Entry into the value field, if numeric then enable the convert button.    }
+begin
+  if tryStrToFloat(edtConverionValue.Text, unitConvertVal) then
+    btnConverionConvert.Enabled := true
+  else
+    btnConverionConvert.Enabled := false;
+end;
+
+procedure TfrmMain.btnConverionConvertClick(Sender: TObject);
+{  carry out the conversion.    }
+begin
+  parseConversionUnitsFile('SelectUnit');
+
+  edtConverionResult.text := floatToStr(unitConvertVal * unitConvertfactor);
+end;
+
+procedure TfrmMain.btnConversionAddUnitsClick(Sender: TObject);
+{  This allows new conversion units to be added,
+   loads file into notepad.
+}
+begin
+  EditConversionUnitsFile;
+
+  //  reload everything - in case anything has been added.
+  readConversionUnitsFile;
+  parseConversionUnitsFile('LoadCategory');
+  parseConversionUnitsFile('LoadUnits');
+  cleartextFiles;
+end;
+
+//
 // *********************************************************** Menu procs ******
 //
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
@@ -1564,16 +1648,19 @@ begin
 end;
 
 procedure TfrmMain.mnuItmAboutClick(Sender: TObject);
+{  Calls the About screen.    }
 begin
   frmAbout.ShowModal;
 end;
 
 procedure TfrmMain.mnuItmHelpClick(Sender: TObject);
+{  Calls the Help file.    }
 begin
   displayHelp('help\Klock.chm', '/Introduction.htm');
 end;
 
 procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
+{  Calls the License screen.    }
 begin
   frmLicense.ShowModal;
 end;
@@ -1581,18 +1668,22 @@ end;
 // ********************************************************* Time Menu *********
 //
 procedure TfrmMain.mnuItmAnalogueKlockClick(Sender: TObject);
+{  Calls the Analogue Klock'.    }
 begin
   frmAnalogueKlock.Show;
 end;
 procedure TfrmMain.mnuItmLEDKlockClick(Sender: TObject);
+{  Calls the LED Klock'.    }
 begin
   frmLEDKlock.Show;
 end;
 procedure TfrmMain.mnuItmBinaryKlockClick(Sender: TObject);
+{  Calls the Binary Klock'.    }
 begin
   frmBinaryKlock.Show;
 end;
 procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
+{  Calls the Small Text Klock'.    }
 begin
   frmSmallTextKlock.Show;
 end;
@@ -1600,24 +1691,28 @@ end;
 // ********************************************************* Info Menu *********
 //
 procedure TfrmMain.mnuItmDaylightSavingClick(Sender: TObject);
+{  Calls the Daylight Saving Info screen'.    }
 begin
   frmInfo.Info := 'Daylight Saving';
   frmInfo.ShowModal;
 end;
 
 procedure TfrmMain.mnuItmEasterDatesClick(Sender: TObject);
+{  Calls the Easter Dates Info screen'.    }
 begin
   frmInfo.Info := 'Easter Dates';
   frmInfo.ShowModal;
 end;
 
 procedure TfrmMain.mnuItmLentDatesClick(Sender: TObject);
+{  Calls the Lent Dates Info screen'.    }
 begin
   frmInfo.Info := 'Lent Dates';
   frmInfo.ShowModal;
 end;
 
 procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
+{  Calls the Power Source Saving Info screen'.    }
 begin
   frmInfo.Info := 'Power Source';
   frmInfo.ShowModal;
@@ -1626,6 +1721,7 @@ end;
 // ********************************************************* ButtonPannel ******
 //
 procedure TfrmMain.HelpButtonClick(Sender: TObject);
+{  Calls the Help file.    }
 begin
   displayHelp('help\Klock.chm', '/Introduction.htm');
 end;

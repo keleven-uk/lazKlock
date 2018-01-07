@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1220
+  Left = 1180
   Height = 260
-  Top = 144
+  Top = 245
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -2190,16 +2190,16 @@ object frmMain: TfrmMain
           TabOrder = 0
           object Panel13: TPanel
             Left = 12
-            Height = 43
+            Height = 80
             Top = 8
             Width = 116
-            ClientHeight = 43
+            ClientHeight = 80
             ClientWidth = 116
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
               Height = 23
-              Top = 10
+              Top = 24
               Width = 96
               ItemHeight = 15
               ItemIndex = 0
@@ -2223,15 +2223,15 @@ object frmMain: TfrmMain
           end
           object Panel14: TPanel
             Left = 136
-            Height = 43
+            Height = 75
             Top = 8
             Width = 512
-            ClientHeight = 43
+            ClientHeight = 75
             ClientWidth = 512
             TabOrder = 1
             object lblfuzzy: TLabel
               Left = 8
-              Height = 41
+              Height = 80
               Top = 0
               Width = 510
               AutoSize = False
@@ -2960,10 +2960,131 @@ object frmMain: TfrmMain
           end
         end
       end
+      object TbShtConversion: TTabSheet
+        Caption = 'Conversion'
+        ClientHeight = 102
+        ClientWidth = 656
+        object Panel20: TPanel
+          Left = 0
+          Height = 102
+          Top = 0
+          Width = 656
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ClientHeight = 102
+          ClientWidth = 656
+          Color = clForm
+          ParentColor = False
+          TabOrder = 0
+          object Panel21: TPanel
+            Left = 8
+            Height = 88
+            Top = 8
+            Width = 114
+            ClientHeight = 88
+            ClientWidth = 114
+            TabOrder = 0
+            object btnConverionConvert: TButton
+              Left = 16
+              Height = 25
+              Top = 8
+              Width = 75
+              Caption = 'Convert'
+              OnClick = btnConverionConvertClick
+              TabOrder = 0
+            end
+            object btnConversionAddUnits: TButton
+              Left = 16
+              Height = 25
+              Top = 46
+              Width = 75
+              Caption = 'Add Units'
+              OnClick = btnConversionAddUnitsClick
+              TabOrder = 1
+            end
+          end
+          object Panel22: TPanel
+            Left = 128
+            Height = 88
+            Top = 8
+            Width = 514
+            ClientHeight = 88
+            ClientWidth = 514
+            TabOrder = 1
+            object Label1: TLabel
+              Left = 24
+              Height = 15
+              Top = 16
+              Width = 48
+              Caption = 'Category'
+              ParentColor = False
+            end
+            object Label2: TLabel
+              Left = 24
+              Height = 15
+              Top = 56
+              Width = 58
+              Caption = 'Convert To'
+              ParentColor = False
+            end
+            object CmbBxCategory: TComboBox
+              Left = 96
+              Height = 23
+              Top = 10
+              Width = 216
+              ItemHeight = 15
+              OnChange = CmbBxCategoryChange
+              Style = csDropDownList
+              TabOrder = 0
+            end
+            object CmbBxConvertTo: TComboBox
+              Left = 96
+              Height = 23
+              Top = 48
+              Width = 216
+              ItemHeight = 15
+              OnChange = CmbBxConvertToChange
+              Style = csDropDownList
+              TabOrder = 1
+            end
+            object Label3: TLabel
+              Left = 328
+              Height = 15
+              Top = 15
+              Width = 87
+              Caption = 'Value to Convert'
+              ParentColor = False
+            end
+            object Label4: TLabel
+              Left = 328
+              Height = 15
+              Top = 53
+              Width = 32
+              Caption = 'Result'
+              ParentColor = False
+            end
+            object edtConverionValue: TEdit
+              Left = 424
+              Height = 23
+              Top = 8
+              Width = 80
+              OnChange = edtConverionValueChange
+              TabOrder = 2
+            end
+            object edtConverionResult: TEdit
+              Left = 424
+              Height = 23
+              Top = 48
+              Width = 80
+              ReadOnly = True
+              TabOrder = 3
+            end
+          end
+        end
+      end
     end
   end
   object ButtonPanel1: TButtonPanel
-    Left = 389
+    Left = 424
     Height = 26
     Top = 176
     Width = 237

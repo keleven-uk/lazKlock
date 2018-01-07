@@ -47,7 +47,6 @@ VAR
 begin
   dirname := GetAppConfigDir(False);
   filename := dirname + 'klog_' + FormatDateTime('DDMMMYYYY', now) + '.log';
-  handle := wnd;
 
   AssignFile(logFile, filename);
 
