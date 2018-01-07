@@ -5,8 +5,7 @@ unit uOptions;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs,
-  uOptionsUtils;
+  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs;
 
 type
 
@@ -113,6 +112,13 @@ type
     _CullLogsDays: integer;
 
     procedure checkDirectory;
+    Function readChild(PassNode: TDOMNode;  name: string): string;
+    Function readChildAttribute(PassNode: TDOMNode;  name: string; attribute: string): string;
+    function writeStrChild(Doc: TXMLDocument; name: string; value: string): TDOMNode;
+    function writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
+    function writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
+    function writeIntChildAttribute(Doc: TXMLDocument; name: string; value1: integer; value2: integer): TDOMNode;
+
   public
     //  Global - file stuff
     property Comments: string read _Comments write _Comments;
@@ -254,9 +260,13 @@ begin
   {$endif}
 
   if FileExists(optionsName) then
-    readOptions
+    begin
+      writeDefaultOptions;       //  Set up the defaults [which includes any new values]
+      readOptions;               //  read the exiting options file.
+      writeCurrentOptions;       //  write out a new options file [which includes any new values]
+    end
   else
-    writeDefaultOptions;
+    writeDefaultOptions;         //  options file not found, write out a new one.
 end;
 
 constructor Options.Create(filename: string);
@@ -267,9 +277,13 @@ begin
   optionsName := _dirName + fileName;
 
   if FileExists(optionsName) then
-    readOptions
+    begin
+      writeDefaultOptions;       //  Set up the defaults [which includes any new values]
+      readOptions;               //  read the exiting options file.
+      writeCurrentOptions;       //  write out a new options file [which includes any new values]
+    end
   else
-    writeDefaultOptions;
+    writeDefaultOptions;         //  options file not found, write out a new one.
 end;
 
 procedure Options.checkDirectory;
@@ -368,12 +382,21 @@ end;
 procedure Options.readOptions;
 {  Read in the options file.
    The filename is specified when the user options class is created.
-   The file info is re-read, in case is has changed
+   The file info is re-read, in case is has changed.
+
+   The read is now a two stage process.
+   Stage 1 - the xml node is read, this return a string value.
+   stage 2 - if the return is 'ERROR', the xml node is missing and then use the
+             default value.  If not the return will hold the value which is passed
+             to the options property.
+
+   NOTE : This cures the missing child problem, BUT NOT the missing node.
 }
 var
   fvi: myFileVersionInfo;
   PassNode: TDOMNode;
   Doc: TXMLDocument;
+  rtn: string;
 begin
   try
     //  retrieve file info i.e build numner etc.
@@ -405,78 +428,145 @@ begin
     //  Global
     PassNode := Doc.DocumentElement.FindNode('Global');
 
-    formTop := StrToInt(readChildAttribute(PassNode, 'formPosition', 'Top'));
-    formLeft := StrToInt(readChildAttribute(PassNode, 'formPosition', 'Left'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChildAttribute(PassNode, 'formPosition', 'Top');
+      if rtn <> 'ERROR' then formTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'formPosition', 'Left');
+      if rtn <> 'ERROR' then formLeft := StrToInt(rtn);
 
-    optionsName := ansistring(readChild(PassNode, 'optionsName'));
-    runAtStartUp := StrToBool(readChild(PassNode, 'runAtStartUp'));
-    screenSave := StrToBool(readChild(PassNode, 'screenSave'));
-    defaultTab := StrToInt(readChild(PassNode, 'defaultTab'));
-    volume := ansistring(readChild(PassNode, 'volume'));
-    monitorClipboard := StrToBool(readChild(PassNode, 'monitorClipboard'));
-    CB_screenSave := StrToBool(readChild(PassNode, 'CB_screenSave'));
-    CB_formTop := StrToInt(readChildAttribute(PassNode, 'CB_formPosition', 'Top'));
-    CB_formLeft := StrToInt(readChildAttribute(PassNode, 'CB_formPosition', 'Left'));
+      rtn := readChild(PassNode, 'optionsName');
+      if rtn <> 'ERROR' then optionsName := ansistring(rtn);
+      rtn := readChild(PassNode, 'runAtStartUp');
+      if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
+      rtn := readChild(PassNode, 'screenSave');
+      if rtn <> 'ERROR' then screenSave := StrToBool(rtn);
+      rtn := readChild(PassNode, 'defaultTab');
+      if rtn <> 'ERROR' then defaultTab := StrToInt(rtn);
+      rtn := readChild(PassNode, 'volume');
+      if rtn <> 'ERROR' then volume := ansistring(rtn);
+      rtn := readChild(PassNode, 'monitorClipboard');
+      if rtn <> 'ERROR' then monitorClipboard := StrToBool(rtn);
+      rtn := readChild(PassNode, 'CB_screenSave');
+      if rtn <> 'ERROR' then CB_screenSave := StrToBool(rtn);
+      rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Top');
+      if rtn <> 'ERROR' then CB_formTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Left');
+      if rtn <> 'ERROR' then CB_formLeft := StrToInt(rtn);
+    end;
 
     //  Time
     PassNode := Doc.DocumentElement.FindNode('Time');
 
-    defaultTime := StrToInt(readChild(PassNode, 'defaultTime'));
-    netTimeSeconds := StrToBool(readChild(PassNode, 'netTimeSeconds'));
-    swatchCentibeats := StrToBool(readChild(PassNode, 'swatchCentibeats'));
-    fuzzyTimeBalloon := StrToBool(readChild(PassNode, 'fuzzyTimeBalloon'));
-    displayIdleTime := StrToBool(readChild(PassNode, 'displayIdleTime'));
-    display24Hour := StrToBool(readChild(PassNode, 'display24Hour'));
-    hourPips := StrToBool(readChild(PassNode, 'hourPips'));
-    hourChimes := StrToBool(readChild(PassNode, 'hourChimes'));
-    halfChimes := StrToBool(readChild(PassNode, 'halfChimes'));
-    quarterChimes := StrToBool(readChild(PassNode, 'quarterChimes'));
-    threeQuarterChimes := StrToBool(readChild(PassNode, 'threeQuarterChimes'));
-    christmasFont := StrToBool(readChild(PassNode, 'christmasFont'));
-    easterFont := StrToBool(readChild(PassNode, 'easterFont'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'defaultTime');
+      if rtn <> 'ERROR' then defaultTime := StrToInt(rtn);
+      rtn := readChild(PassNode, 'netTimeSeconds');
+      if rtn <> 'ERROR' then netTimeSeconds := StrToBool(rtn);
+      rtn := readChild(PassNode, 'swatchCentibeats');
+      if rtn <> 'ERROR' then swatchCentibeats := StrToBool(rtn);
+      rtn := readChild(PassNode, 'fuzzyTimeBalloon');
+      if rtn <> 'ERROR' then fuzzyTimeBalloon := StrToBool(rtn);
+      rtn := readChild(PassNode, 'displayIdleTime');
+      if rtn <> 'ERROR' then displayIdleTime := StrToBool(rtn);
+      rtn := readChild(PassNode, 'display24Hour');
+      if rtn <> 'ERROR' then display24Hour := StrToBool(rtn);
+      rtn := readChild(PassNode, 'hourPips');
+      if rtn <> 'ERROR' then hourPips := StrToBool(rtn);
+      rtn := readChild(PassNode, 'hourChimes');
+      if rtn <> 'ERROR' then hourChimes := StrToBool(rtn);
+      rtn := readChild(PassNode, 'halfChimes');
+      if rtn <> 'ERROR' then halfChimes := StrToBool(rtn);
+      rtn := readChild(PassNode, 'quarterChimes');
+      if rtn <> 'ERROR' then quarterChimes := StrToBool(rtn);
+      rtn := readChild(PassNode, 'threeQuarterChimes');
+      if rtn <> 'ERROR' then threeQuarterChimes := StrToBool(rtn);
+      rtn := readChild(PassNode, 'christmasFont');
+      if rtn <> 'ERROR' then christmasFont := StrToBool(rtn);
+      rtn := readChild(PassNode, 'easterFont');
+      if rtn <> 'ERROR' then easterFont := StrToBool(rtn);
+    end;
 
     //  Timer
     PassNode := Doc.DocumentElement.FindNode('Timer');
 
-    timerMilliSeconds := StrToBool(readChild(PassNode, 'timerMilliSeconds'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'timerMilliSeconds');
+      if rtn <> 'ERROR' then timerMilliSeconds := StrToBool(rtn);
+    end;
 
     //  Analogue Klock
     PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
 
-    analogueFormTop := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Top'));
-    analogueFormLeft := StrToInt(readChildAttribute(PassNode, 'analogueForm', 'Left'));
-    analogueScreenSave := StrToBool(readChild(PassNode, 'analogueScreenSave'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChildAttribute(PassNode, 'analogueForm', 'Top');
+      if rtn <> 'ERROR' then analogueFormTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'analogueForm', 'Left');
+      if rtn <> 'ERROR' then analogueFormLeft := StrToInt(rtn);
+      rtn := readChild(PassNode, 'analogueScreenSave');
+      if rtn <> 'ERROR' then analogueScreenSave := StrToBool(rtn);
+    end;
 
     //  LED Klock
     PassNode := Doc.DocumentElement.FindNode('LEDKlock');
 
-    LEDFormTop := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Top'));
-    LEDFormLeft := StrToInt(readChildAttribute(PassNode, 'LEDForm', 'Left'));
-    LEDScreenSave := StrToBool(readChild(PassNode, 'LEDScreenSave'));
-    LEDlongDate := StrToBool(readChild(PassNode, 'LEDlongDate'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChildAttribute(PassNode, 'LEDForm', 'Top');
+      if rtn <> 'ERROR' then LEDFormTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'LEDForm', 'Left');
+      if rtn <> 'ERROR' then LEDFormLeft := StrToInt(rtn);
+      rtn := readChild(PassNode, 'LEDScreenSave');
+      if rtn <> 'ERROR' then LEDScreenSave := StrToBool(rtn);
+      rtn := readChild(PassNode, 'LEDlongDate');
+      if rtn <> 'ERROR' then LEDlongDate := StrToBool(rtn);
+    end;
 
     //  Binary Klock
     PassNode := Doc.DocumentElement.FindNode('BinaryKlock');
 
-    BinaryFormTop := StrToInt(readChildAttribute(PassNode, 'BinaryForm', 'Top'));
-    BinaryFormLeft := StrToInt(readChildAttribute(PassNode, 'BinaryForm', 'Left'));
-    BinaryScreenSave := StrToBool(readChild(PassNode, 'BinaryScreenSave'));
-    BinaryFormat := StrToBool(readChild(PassNode, 'BinaryFormat'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChildAttribute(PassNode, 'BinaryForm', 'Top');
+      if rtn <> 'ERROR' then BinaryFormTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'BinaryForm', 'Left');
+      if rtn <> 'ERROR' then BinaryFormLeft := StrToInt(rtn);
+      rtn := readChild(PassNode, 'BinaryScreenSave');
+      if rtn <> 'ERROR' then BinaryScreenSave := StrToBool(rtn);
+      rtn := readChild(PassNode, 'BinaryFormat');
+      if rtn <> 'ERROR' then BinaryFormat := StrToBool(rtn);
+    end;
 
     // Small Text Klock
     PassNode := Doc.DocumentElement.FindNode('SmallTextKlock');
 
-    smallTextFormTop := StrToInt(readChildAttribute(PassNode, 'SmallTextForm', 'Top'));
-    smallTextFormLeft := StrToInt(readChildAttribute(PassNode, 'SmallTextForm', 'Left'));
-    smallTextScreenSave := StrToBool(readChild(PassNode, 'smallTextScreenSave'));
-    smallTextTransparent := StrToBool(readChild(PassNode, 'smallTextTransparent'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Top');
+      if rtn <> 'ERROR' then smallTextFormTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Left');
+      if rtn <> 'ERROR' then smallTextFormLeft := StrToInt(rtn);
+      rtn := readChild(PassNode, 'smallTextScreenSave');
+      if rtn <> 'ERROR' then smallTextScreenSave := StrToBool(rtn);
+      rtn := readChild(PassNode, 'smallTextTransparent');
+      if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
+    end;
 
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
 
-    logging := StrToBool(readChild(PassNode, 'LogginginUse'));
-    cullLogs := StrToBool(readChild(PassNode, 'cullLogs'));
-    CullLogsDays := StrToInt(readChild(PassNode, 'CullLogsDays'));
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'LogginginUse');
+      if rtn <> 'ERROR' then logging := StrToBool(rtn);
+      rtn := readChild(PassNode, 'cullLogs');
+      if rtn <> 'ERROR' then cullLogs := StrToBool(rtn);
+      rtn := readChild(PassNode, 'CullLogsDays');
+      if rtn <> 'ERROR' then CullLogsDays := StrToInt(rtn);
+    end;
 
   finally
     // finally, free the document
@@ -485,7 +575,7 @@ begin
 end;
 
 procedure Options.writeDefaultOptions;
-{  Sets us some sensible defaults and then calls writeCurrentOptions to writs out the xml file.
+{  Sets us some sensible defaults.
    Used if the useroptions file does not exist.
    The filename is specified when the user options class is created.
    The file info is re-read, in case is has changed
@@ -565,8 +655,6 @@ begin
   logging := True;
   cullLogs := False;
   CullLogsDays := 14;
-
-  writeCurrentOptions;
 end;
 
 procedure Options.writeCurrentOptions;
@@ -704,7 +792,7 @@ begin
   end;
 end;
 //
-//........................................ fileVersionInfo methods ............................................
+//........................................ fileVersionInfo methods .............
 //
 procedure myFileVersionInfo.GetFileInfo;
 {  Retrieves the file info from the current file.
@@ -731,6 +819,84 @@ begin
     FileVerInfo.Free;
   end;
 
+end;
+//
+//........................................ Helper functions ....................
+//
+Function Options.readChild(PassNode: TDOMNode;  name: string): string;
+{  Read a child node and return its [string] value.    }
+var
+    childNode: TDOMNode;
+begin
+    childNode := PassNode.FindNode(name);
+
+    if assigned(childNode) then
+      result := childNode.TextContent
+    else
+      result := 'ERROR';
+end;
+
+Function Options.readChildAttribute(PassNode: TDOMNode;  name: string; attribute: string): string;
+{  Read a child node and return its named [string] attribute.    }
+var
+    childNode: TDOMNode;
+begin
+  childNode := PassNode.FindNode(name);
+
+  if assigned(childNode) then
+    result := TDOMElement(childNode).GetAttribute(attribute)
+  else
+    result := 'ERROR';
+end;
+
+function Options.writeStrChild(Doc: TXMLDocument; name: string; value: string): TDOMNode;
+{  Write a [string] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(WideString(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
+{  Write a [boolean] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(BoolToStr(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
+{  Write a [integer] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(IntToStr(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeIntChildAttribute(Doc: TXMLDocument; name: string; value1: integer; value2: integer): TDOMNode;
+{  Write a [integer] attribute to a child node.
+
+   It seems you have to write both attributes at once, i can read them singularly.
+   So, this routine is hard coded for form position until i can fix.
+}
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TDOMElement(ItemNode).SetAttribute('Top', IntToStr(value1));
+  TDOMElement(ItemNode).SetAttribute('Left', IntToStr(value2));
+  TextNode := Doc.CreateTextNode('');
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
 end;
 
 

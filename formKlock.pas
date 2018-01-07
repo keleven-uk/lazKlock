@@ -25,7 +25,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      All from the Online Package manager.
 }
 
-{ TODO : Check if options file has new options. }
 { TODO : Check out Ballon Time. }
 { TODO : Check out Reminders. }
 { TODO : Look at up time in formAbout. }

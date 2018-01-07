@@ -2223,18 +2223,17 @@ object frmMain: TfrmMain
           end
           object Panel14: TPanel
             Left = 136
-            Height = 75
+            Height = 80
             Top = 8
             Width = 512
-            ClientHeight = 75
+            ClientHeight = 80
             ClientWidth = 512
             TabOrder = 1
             object lblfuzzy: TLabel
               Left = 8
-              Height = 80
+              Height = 32
               Top = 0
-              Width = 510
-              AutoSize = False
+              Width = 388
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False

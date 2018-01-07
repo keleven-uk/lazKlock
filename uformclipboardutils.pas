@@ -1,5 +1,7 @@
 unit UformClipBoardUtils;
-{  Code based on submission by ASerge in http://forum.lazarus.freepascal.org/index.php?topic=15488.0  }
+{  Code based on submission by ASerge in
+   http://forum.lazarus.freepascal.org/index.php?topic=15488.0
+}
 
 
 {$mode objfpc}{$H+}

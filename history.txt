@@ -1582,7 +1582,7 @@ Date:   Mon Dec 18 13:04:20 2017 +0000
 
 Added an info screen it display information about Easter & lent dates, Power Source and
 Daylight Saving.  These are called from an Info menu from the main Klock screen.
-uInfoUtils was added and this contains the routins which do the heavy lifting.
+uInfoUtils was added and this contains the routines which do the heavy lifting.
 
 Added Time in words, Morse time and Roman Numerals Time to uFuzzyTime.
 
@@ -1616,7 +1616,7 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Wed Dec 20 20:10:32 2017 +0000
 
 Added a Christmas font and an option to automatically use this font for the 12 day of
-christmas - 12 days before and 12 days after.
+Christmas - 12 days before and 12 days after.
 Other holiday fonts will be added when found.
 
 formAbout - Removed info labels and added a listbox to display Klock about stuff.
@@ -1723,7 +1723,7 @@ formOptions - Added options for LED Klock [Use long date format].
             - Added options for Binary Klock [Binary/BCD format].
 uOptions    - Added above options.
 
-formAnalogueKlock - Changed method of moving [draggiing] the klock,
+formAnalogueKlock - Changed method of moving [dragging] the klock,
                     it now mirrors the LED Klock.
 
 formLEDKlock - Added use long date option.
@@ -1820,9 +1820,9 @@ Date:   Mon Jan 1 20:08:48 2018 +0000
 
 Added A [proper] help file in .chm, .pdf and .html format.
 This was created using HelpNDoc V5, a help.hdn file has been added to the source.
-A new sub directory called help was vreated to hold all the files.
+A new sub directory called help was created to hold all the files.
 
-The old style formHelp has beed deleted from the project.
+The old style formHelp has been deleted from the project.
 
 The new style help [.chm] is now loaded from both the help button on the main form,
 the help menu and the help button on the options screen.
@@ -1986,22 +1986,22 @@ Date:   Wed Jan 3 15:06:05 2018 +0000
 
 Changes to history.txt and lazKlock.smproj hanging over from last commit.
 
-Also, did some git admin.  Since the master branch was currupt and all the recent
+Also, did some git admin.  Since the master branch was corrupt and all the recent
 work had been done in branch V2.1, it was time to clean up.  This was achieved
 with the following.
 
-  git branch -m master master-old  # rename master on local
-  git push -f origin :master       # delete master on remote
-  git push origin master-old       # create master-old on remote
-  git checkout -b master V2.1      # create a new local master on top of seotweaks
-  git push origin master           # create master on remote
+  git branch -m master master-old 	  # rename master on local
+  git push -f origin :master       		# delete master on remote
+  git push origin master-old      		# create master-old on remote
+  git checkout -b master V2.1      	  # create a new local master on top of V2.1
+  git push origin master           		# create master on remote
 
 I now have a current and good master and a working copy at V2.1.
 
 I also deleted branches v1 and v2.  I will delete branches master-old and v2.1
 when happy is all is okay.
 
-This also becomes V2.2 ans will vreate a working branch of v2.
+This also becomes V2.2 and will create a working branch of v2.
 
 history.txt     | 186 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 lazKlock.smproj | Bin 215570 -> 237081 bytes
@@ -2014,13 +2014,13 @@ commit c98469c78125b59aa4c0cbb8733024250a402f47
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Thu Jan 4 17:05:51 2018 +0000
 
-Added easter font and option to use this font at the easter weekend.
+Added Easter font and option to use this font at the Easter weekend.
 
 formOptions - Added logic to cull [delete] log files over a certain age.
               This can be configures in options.
 
 formClipboard - Added logic to cull [delete] tmp files over a certain age.
-                The age is currentl hard coded to be 10 days..
+                The age is currently hard coded to be 10 days..
 
 formBinaryKlock - changed the status bar for a panel.
                   This can have the background colour changed without leaving
@@ -2068,11 +2068,86 @@ uoptions.pas                    |  14 ++-
 
 Build 61 [2.2.1.61]
 
+commit fd4886c7d4a8aafd195e5c57bc3762cda5e055fe
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Jan 7 17:07:08 2018 +0000
+
 Added a new tab to Klock for Conversions.  This allows the conversion between
 several units i.e. weight and distance etc.  A new file uConversion was
 added, this holds the helper functions for the conversion tab.
+
+Also removed a lot of old image files from the help file - reduced the size a lot.
+
+Merged branch V2 back into master branch.
 
 Currently
 8021 lines of source code.
 4339 statements
 14.9% comment
+
+README.md                                      |  27 ++-
+formKlock.lfm                                  | 139 +++++++++++-
+formKlock.pas                                  | 110 +++++++++-
+help/Klock.chm                                 | Bin 870264 -> 914620 bytes
+help/Klock.pdf                                 | Bin 4112582 -> 4475682 bytes
+help/html/About.html                           |  17 +-
+help/html/AnalogueKlock.html                   |   2 +-
+help/html/BinaryKlock.html                     |   2 +-
+help/html/ClipboardMonitor.html                |   4 +-
+help/html/{WorldKlock.html => Conversion.html} |  42 ++--
+help/html/Countdown.html                       |   4 +-
+help/html/Credits.html                         |   2 +-
+help/html/Events.html                          |   4 +-
+help/html/Events1.html                         | 268 -----------------------
+help/html/ExtraKlock.html                      | 284 ------------------------
+help/html/File.html                            |   2 +-
+help/html/FuzzyTime.html                       |   4 +-
+help/html/GettingStarted.html                  |   2 +-
+help/html/Gettinghelp.html                     |   2 +-
+help/html/Global.html                          |   2 +-
+help/html/Help.html                            |   2 +-
+help/html/History.html                         |  83 +++++--
+help/html/Info.html                            |   2 +-
+help/html/Introduction.html                    |  18 +-
+help/html/Klock.html                           |  20 +-
+help/html/LEDKlock.html                        |   2 +-
+help/html/License.html                         |   2 +-
+help/html/Logging.html                         |   2 +-
+help/html/Menu.html                            |   2 +-
+help/html/Options.html                         |   2 +-
+help/html/OtherKlocks.html                     |   2 +-
+help/html/OtherStuff.html                      |   2 +-
+help/html/Reminder.html                        |   6 +-
+help/html/SmallTextKlock.html                  |   2 +-
+help/html/Statusbar.html                       |   2 +-
+help/html/SystemTray.html                      |   2 +-
+help/html/Systemrequirements.html              |   2 +-
+help/html/Thingymabobs.html                    |   2 +-
+help/html/Time.html                            |   2 +-
+help/html/Time1.html                           |   2 +-
+help/html/Timer.html                           |   4 +-
+help/html/Welcome.html                         |  14 +-
+help/html/_toc.json                            |   2 +-
+help/html/css/hnd.content.css                  |  16 +-
+help/html/js/hndsd.min.js                      |   2 +-
+help/klock.hnd                                 | Bin 49524736 -> 1839104 bytes
+history.txt                                    |  55 +++++
+klock.iss                                      |  20 +-
+klock.lpi                                      | 288 ++++++++++++-------------
+klock.lpr                                      |   2 +-
+lazKlock.smproj                                | Bin 258836 -> 281546 bytes
+uconversion.pas                                | 184 ++++++++++++++++
+uklockutils.pas                                |   8 +-
+ulogging.pas                                   |   1 -
+54 files changed, 823 insertions(+), 849 deletions(-)
+
+Build 62 [2.2.1.62]
+
+Made the xml [options] reading routines more robust.
+If an entry is missing, the default values for that entry is
+now used instead of an error being generated.
+This then cures the problem of new options being added, up to
+now if the old options file was not deleted and error was genarated.
+
+Also, removed uOptinsUtils and moved the helper routines into
+the main options class.
