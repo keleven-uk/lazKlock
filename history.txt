@@ -2066,6 +2066,7 @@ ulogging.pas                    |  12 +-
 uoptions.pas                    |  14 ++-
 33 files changed, 704 insertions(+), 305 deletions(-)
 
+
 Build 61 [2.2.1.61]
 
 commit fd4886c7d4a8aafd195e5c57bc3762cda5e055fe
@@ -2141,7 +2142,12 @@ uklockutils.pas                                |   8 +-
 ulogging.pas                                   |   1 -
 54 files changed, 823 insertions(+), 849 deletions(-)
 
+
 Build 62 [2.2.1.62]
+
+commit fa152df41daf92f75bf9d74b5b69e1b9efa4942e
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Jan 7 23:05:10 2018 +0000
 
 Made the xml [options] reading routines more robust.
 If an entry is missing, the default values for that entry is
@@ -2151,3 +2157,30 @@ now if the old options file was not deleted and error was genarated.
 
 Also, removed uOptinsUtils and moved the helper routines into
 the main options class.
+
+formKlock.lfm           |   9 +-
+formKlock.pas           |   1 -
+history.txt             | 103 +++++++++++++++---
+klock.lpi               | 172 +++++++++++++++---------------
+klock.lpr               |   6 +-
+uformclipboardutils.pas |   4 +-
+uoptions.pas            | 276 ++++++++++++++++++++++++++++++++++++++----------
+uoptionsutils.pas       |  97 -----------------
+8 files changed, 406 insertions(+), 262 deletions(-)
+
+
+Build 63 [2.2.2.63]
+
+Added a Sticky note option.
+This comprmises of two classes [uStickNote and UStickNotes] and one form [formStickNote].
+The uStickNote holds the info for one stick Note and uStickyNotes handles creation and
+storage of all the stick Notes.
+
+A menu option was added to Klock to create a new Sticky Note.
+
+Needs some testing yet.
+
+Currently
+8762 lines of source code.
+4777 statements
+15.4% comment

@@ -102,7 +102,7 @@ end;
 
 procedure TfrmBinaryKlock.FormCreate(Sender: TObject);
 begin
-  kLog.writeLog('FormBinaryKlock Klock Create');
+  kLog.writeLog('FormBinaryKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
 
   setShapes;
@@ -116,7 +116,7 @@ end;
 
 procedure TfrmBinaryKlock.FormShow(Sender: TObject);
 begin
-  kLog.writeLog('formBinaryKlock Klock Show');
+  kLog.writeLog('formBinaryKlock Show');
 
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;

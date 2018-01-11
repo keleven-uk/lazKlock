@@ -39,7 +39,7 @@ uses
   formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock, UConversion;
+  formAnalogueKlock, formSmallTextKlock, UConversion, ustickyNotes;
 
 type
 
@@ -104,6 +104,8 @@ type
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    mnuItmNewStickyNote: TMenuItem;
+    mnuItmStickyNote: TMenuItem;
     mnuItmSmallTextKlock: TMenuItem;
     mnuItmBinaryKlock: TMenuItem;
     mnuItmLEDKlock: TMenuItem;
@@ -219,6 +221,7 @@ type
     procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
+    procedure mnuItmNewStickyNoteClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
     procedure mnuItmSmallTextKlockClick(Sender: TObject);
@@ -252,11 +255,12 @@ type
 
 var
   frmMain: TfrmMain;
-  rmndrStore: TAvgLvlTree;      //  to store all the reminders.
-  userOptions: Options;         //  holds all the user options.
+  rmndrStore: TAvgLvlTree;      //  used to store all the reminders.
+  userOptions: Options;         //  used to hold all the user options.
   ft: FuzzyTime;                //  the object to give the different times.
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
   kLog: Logger;                 //  used to log erors, debug statements etc.
+  stickies: stickyNotes;        //  used to store the Sticky Notes.
   ConversionUnits: TStrings;    //  used to hold the converions units - read from file.
   unitConvertVal: double;       //  used to hold the conversion value.
   unitConvertfactor: double;    //  used to hold the conversion factor.
@@ -300,6 +304,7 @@ begin
   fs := fontStore.Create;
   kLog := Logger.Create(Application.MainFormHandle);
   ConversionUnits := TStringList.Create;
+  stickies := stickyNotes.Create;
 
   logHeader;
 
@@ -323,6 +328,7 @@ end;
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormKlock Showing');
+  stickies.restoreStickyNotes;   //  must be on show
   SetDefaults;
   mainTimer.Enabled := True;        //  Now safe to enable main timer.
 end;
@@ -349,13 +355,16 @@ begin
 
   fs.removeFonts;                   //  Remove custom fonts.
 
+  stickies.updateStickyNotes;
+
   logFooter;
 
   FreeAndNil(fs);                   //  Release the font store object.
   FreeAndNil(ft);                   //  Release the fuzzy time object.
-  FreeAndNil(userOptions);          //  Release the user options
+  FreeAndNil(stickies);             //  Release the Sticky Noye store.
+  FreeAndNil(userOptions);          //  Release the user options .
   FreeAndNil(kLog);                 //  Release the logger object.
-  ConversionUnits.Free;             //  release the Conversion string list
+  ConversionUnits.Free;             //  release the Conversion string list.
 
   CloseAction := caFree;
 end;
@@ -1715,6 +1724,14 @@ procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
 begin
   frmInfo.Info := 'Power Source';
   frmInfo.ShowModal;
+end;
+//
+// ************************************************** Sticky Note Menu *********
+//
+procedure TfrmMain.mnuItmNewStickyNoteClick(Sender: TObject);
+{  Created a new sticky note, will appear on the screen.    }
+begin
+  stickies.new;
 end;
 //
 // ********************************************************* ButtonPannel ******

@@ -1,0 +1,82 @@
+object frmStickyNote: TfrmStickyNote
+  Left = 1313
+  Height = 240
+  Top = 219
+  Width = 320
+  AlphaBlend = True
+  BorderIcons = [biSystemMenu]
+  Caption = 'frmStickyNote'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PopupMenu = PopupMenu1
+  LCLVersion = '1.8.0.6'
+  object Memo: TMemo
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Color = clYellow
+    OnMouseEnter = MemoMouseEnter
+    OnMouseLeave = MemoMouseLeave
+    PopupMenu = PopupMenu1
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object PopupMenu1: TPopupMenu
+    left = 96
+    top = 184
+    object MnItmClose: TMenuItem
+      Caption = 'Note Close'
+      OnClick = MnItmCloseClick
+    end
+    object MnItmFont: TMenuItem
+      Caption = 'Note Font'
+      OnClick = MnItmFontClick
+    end
+    object MntmColour: TMenuItem
+      Caption = 'Note Colour'
+      OnClick = MntmColourClick
+    end
+  end
+  object tmrSticky: TTimer
+    OnTimer = tmrStickyTimer
+    left = 32
+    top = 184
+  end
+  object FontDialog1: TFontDialog
+    MinFontSize = 0
+    MaxFontSize = 0
+    left = 168
+    top = 184
+  end
+  object ColorDialog1: TColorDialog
+    Color = clBlack
+    CustomColors.Strings = (
+      'ColorA=000000'
+      'ColorB=000080'
+      'ColorC=008000'
+      'ColorD=008080'
+      'ColorE=800000'
+      'ColorF=800080'
+      'ColorG=808000'
+      'ColorH=808080'
+      'ColorI=C0C0C0'
+      'ColorJ=0000FF'
+      'ColorK=00FF00'
+      'ColorL=00FFFF'
+      'ColorM=FF0000'
+      'ColorN=FF00FF'
+      'ColorO=FFFF00'
+      'ColorP=FFFFFF'
+      'ColorQ=C0DCC0'
+      'ColorR=F0CAA6'
+      'ColorS=F0FBFF'
+      'ColorT=A4A0A0'
+    )
+    left = 244
+    top = 184
+  end
+end

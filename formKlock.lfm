@@ -3157,6 +3157,13 @@ object frmMain: TfrmMain
         OnClick = mnuItmPowerSourceClick
       end
     end
+    object mnuItmStickyNote: TMenuItem
+      Caption = 'Sticky Note'
+      object mnuItmNewStickyNote: TMenuItem
+        Caption = 'New'
+        OnClick = mnuItmNewStickyNoteClick
+      end
+    end
     object mnuHelp: TMenuItem
       Caption = 'Help'
       object mnuItmHelp: TMenuItem

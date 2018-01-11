@@ -48,7 +48,7 @@ uses
 
 procedure TfrmLEDKlock.FormCreate(Sender: TObject);
 begin
-  kLog.writeLog('FormLEDKlock Klock Create');
+  kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
 end;
 
@@ -60,7 +60,7 @@ end;
 
 procedure TfrmLEDKlock.FormShow(Sender: TObject);
 begin
-  kLog.writeLog('FormLEDKlock Klock Show');
+  kLog.writeLog('FormLEDKlock Show');
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
 

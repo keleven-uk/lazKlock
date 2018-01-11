@@ -192,6 +192,7 @@ begin
   SpnEdtCullDays.Value := userBacOptions.CullLogsDays;
   SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
   lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
+  btnCullLogs.Visible := ChckBxCullLogsFiles.Checked;
 
   logFiles := TstringList.Create;             //  Scan for log files and load listbox.
     try

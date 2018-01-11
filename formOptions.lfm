@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 776
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 4
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,7 +55,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 335
+      Height = 0
       Top = 21
       Width = 776
       Caption = 'Global'
@@ -483,7 +483,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
+      Height = 335
       Top = 105
       Width = 776
       Caption = 'Logging'

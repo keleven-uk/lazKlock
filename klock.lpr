@@ -11,7 +11,7 @@ uses
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
-  formSmallTextKlock, UConversion;
+  formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote;
 
 {$R *.res}
 
@@ -29,6 +29,7 @@ begin
   Application.CreateForm(TfrmLEDKlock, frmLEDKlock);
   Application.CreateForm(TfrmBinaryKlock, frmBinaryKlock);
   Application.CreateForm(TfrmSmallTextKlock, frmSmallTextKlock);
+  Application.CreateForm(TfrmStickyNote, frmStickyNote);
   Application.Run;
 end.
 
