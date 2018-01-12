@@ -16,6 +16,7 @@ type
     ColorDialog1: TColorDialog;
     FontDialog1: TFontDialog;
     Memo: TMemo;
+    MntmSave: TMenuItem;
     MnItmClose: TMenuItem;
     MnItmFont: TMenuItem;
     MntmColour: TMenuItem;
@@ -28,6 +29,7 @@ type
     procedure MnItmCloseClick(Sender: TObject);
     procedure MnItmFontClick(Sender: TObject);
     procedure MntmColourClick(Sender: TObject);
+    procedure MntmSaveClick(Sender: TObject);
     procedure tmrStickyTimer(Sender: TObject);
   private
 
@@ -98,6 +100,11 @@ procedure TfrmStickyNote.MntmColourClick(Sender: TObject);
 begin
   if colorDialog1.Execute then
     Memo.color := colorDialog1.Color;
+end;
+
+procedure TfrmStickyNote.MntmSaveClick(Sender: TObject);
+begin
+  stickies.updateStickyNotes;
 end;
 
 

@@ -6,7 +6,7 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, Countdown, Timer, Event, Reminder, Conversion & Clipboard Monitor.
+Fuzzy Time, Countdown, Timer, Event, Reminder, Conversion, Sticky Notes & Clipboard Monitor.
 
 Also, the time can be displayed in several ways - text, digital and analogue and binary klocks,
 
@@ -53,12 +53,19 @@ Implements a simple conversion screen.
 This allows the conversion between various units of weight, distance and area etc.
 
 
+Stick Notes
+
+Implements a simple sticky Note thingy.
+This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc.
+Klock will keep track of the notes and re-display any active notes when Klock is first launched.
+
+
 
 The button bar contains three buttons -
 help  - will display a simple help screen, depending upon the tab being currently viewed [not yet implemented].
 Close - Quits the application.
 Hide  - Switches the application to the system area.
-
+Also, a quick sticky note launch button.
 
 When the program is running in the system area, the following options are available.
 If hovered over, the current time will be displayed.

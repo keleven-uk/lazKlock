@@ -57,6 +57,8 @@ type
     function toRoman(time: integer): string;
     function getFlowTime: string;
     function getMetricTime: string;
+    function getBCDTime: string;
+    function getBinaryTime: string;
     procedure writeLog(message: string);
   public
     property filename: string read _filename write _filename;
@@ -89,8 +91,8 @@ begin
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
-   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Bar Code Time", "Semaphore Time",' +
-   '"Nancy Blackett Time", "Braille Time", "Christmas", "Easter"');
+   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time", "Bar Code Time",' +
+   '"Semaphore Time", "Nancy Blackett Time", "Braille Time", "Christmas", "Easter"');
 
   //writeLog('End of Create');
  end;
@@ -507,6 +509,70 @@ begin
   Result := format('%0.3f Kilo-Seconds', [noOfKSeconds]);
 end;
 
+function FuzzyTime.getBinaryTime: string;
+{  Returns current [local] time in binary [base 2] format.
+   This is only a binary representation of the current time.
+}
+var
+  hrs: word;
+  min: word;
+  sec: word;
+  msc: word;
+
+  ssec: string;
+  smin: string;
+  shrs: string;
+begin
+  DecodeTime(Time, hrs, min, sec, msc);
+
+  if not userOptions.display24Hour and (hrs > 12) then        //  use 12 hour klock.
+    hrs -= 12;
+
+  shrs := Dec2Numb(hrs, 5, 2);
+  smin := Dec2Numb(min, 6, 2);
+  ssec := Dec2Numb(sec, 6, 2);
+
+  Result := format('%s:%s:%s', [shrs, smin, ssec]);
+end;
+
+function FuzzyTime.getBCDTime: string;
+{  Returns current [local] time in Binary-Coded Decimal [base 2] format.
+   This is only a binary representation of the current time.
+   If below 9, still return a two bcd string i.e first digit is 0.
+}
+var
+  hrs: word;
+  min: word;
+  sec: word;
+  msc: word;
+
+  ssec: string;
+  smin: string;
+  shrs: string;
+begin
+  DecodeTime(Time, hrs, min, sec, msc);
+
+  if not userOptions.display24Hour and (hrs > 12) then        //  use 12 hour klock.
+    hrs -= 12;
+
+  if hrs < 9 then
+    shrs := format('0000%s', [Dec2Numb(hrs, 4, 2)])
+  else
+    shrs := format('%s%s', [Dec2Numb(hrs div 10, 4, 2), Dec2Numb(hrs mod 10, 4, 2)]);
+
+  if min < 9 then
+    smin := format('0000%s', [Dec2Numb(min, 4, 2)])
+  else
+    smin := format('%s%s', [Dec2Numb(min div 10, 4, 2), Dec2Numb(min mod 10, 4, 2)]);
+
+  if sec < 9 then
+    ssec := format('0000%s', [Dec2Numb(sec, 4, 2)])
+  else
+    ssec := format('%s%s', [Dec2Numb(sec div 10, 4, 2), Dec2Numb(sec mod 10, 4, 2)]);
+
+  Result := format('%s:%s:%s', [shrs, smin, ssec]);
+end;
+
 function FuzzyTime.getTime: string;
 begin
 
@@ -529,6 +595,8 @@ begin
     14: Result := codeTime('Morse');
     15: Result := getFlowTime;
     16: Result := getMetricTime;
+    17: Result := getBinaryTime;
+    18: Result := getBCDTime;
   end;
 
 end;

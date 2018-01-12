@@ -1977,7 +1977,7 @@
 <p class="rvps2"><span class="rvts6">formKlock - Added menu item to call the Binary Klock.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">formOptions - Added options for Binary Klock [save screen position].</span></p>
-<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Added options for Binary Klock [Transparent background].</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Added options for Binary Klock [Transparent background].</span></p>
 <p class="rvps2"><span class="rvts6">uOptions &nbsp; &nbsp;- Added above options.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Renamed hack-Regular.ttf to Hack.ttf.</span></p>
@@ -2175,10 +2175,10 @@
 <p class="rvps2"><span class="rvts6">work had been done in branch V2.1, it was time to clean up. &nbsp;This was achieved</span></p>
 <p class="rvps2"><span class="rvts6">with the following.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6"> &nbsp;git branch -m master master-old </span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"># rename master on local</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git branch -m master master-old </span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp;# rename master on local</span></p>
 <p class="rvps2"><span class="rvts6"> &nbsp;git push -f origin :master &nbsp; &nbsp; &nbsp; </span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"># delete master on remote</span></p>
 <p class="rvps2"><span class="rvts6"> &nbsp;git push origin master-old &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"># create master-old on remote</span></p>
-<p class="rvps2"><span class="rvts6"> &nbsp;git checkout -b master V2.1 &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"># create a new local master on top of V2.1</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;git checkout -b master V2.1 &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp;# create a new local master on top of V2.1</span></p>
 <p class="rvps2"><span class="rvts6"> &nbsp;git push origin master &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"># create master on remote</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">I now have a current and good master and a working copy at V2.1.</span></p>
@@ -2251,16 +2251,161 @@
 <p class="rvps2"><span class="rvts6">uoptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;14 ++-</span></p>
 <p class="rvps2"><span class="rvts6">33 files changed, 704 insertions(+), 305 deletions(-)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Build 61 [2.2.1.61]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit fd4886c7d4a8aafd195e5c57bc3762cda5e055fe</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Sun Jan 7 17:07:08 2018 +0000</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Added a new tab to Klock for Conversions. &nbsp;This allows the conversion between</span></p>
 <p class="rvps2"><span class="rvts6">several units i.e. weight and distance etc. &nbsp;A new file uConversion was</span></p>
 <p class="rvps2"><span class="rvts6">added, this holds the helper functions for the conversion tab.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Also removed a lot of old image files from the help file - reduced the size a lot.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Merged branch V2 back into master branch.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Currently</span></p>
 <p class="rvps2"><span class="rvts6">8021 lines of source code.</span></p>
 <p class="rvps2"><span class="rvts6">4339 statements</span></p>
 <p class="rvps2"><span class="rvts6">14.9% comment</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">README.md &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;27 ++-</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 139 +++++++++++-</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 110 +++++++++-</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.chm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Bin 870264 -&gt; 914620 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.pdf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Bin 4112582 -&gt; 4475682 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/About.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;17 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/AnalogueKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/BinaryKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/ClipboardMonitor.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/{WorldKlock.html =&gt; Conversion.html} | &nbsp;42 ++--</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Countdown.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Credits.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Events.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Events1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 268 -----------------------</span></p>
+<p class="rvps2"><span class="rvts6">help/html/ExtraKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 284 ------------------------</span></p>
+<p class="rvps2"><span class="rvts6">help/html/File.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/FuzzyTime.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/GettingStarted.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Gettinghelp.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Global.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Help.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/History.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;83 +++++--</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Info.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Introduction.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;18 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Klock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;20 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/LEDKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/License.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Logging.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Menu.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Options.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/OtherKlocks.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/OtherStuff.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Reminder.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 6 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/SmallTextKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Statusbar.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/SystemTray.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Systemrequirements.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Thingymabobs.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Timer.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Welcome.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;14 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/_toc.json &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/css/hnd.content.css &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;16 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/js/hndsd.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/klock.hnd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Bin 49524736 -&gt; 1839104 bytes</span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;55 +++++</span></p>
+<p class="rvps2"><span class="rvts6">klock.iss &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;20 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 288 ++++++++++++-------------</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 2 +-</span></p>
+<p class="rvps2"><span class="rvts6">lazKlock.smproj &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Bin 258836 -&gt; 281546 bytes</span></p>
+<p class="rvps2"><span class="rvts6">uconversion.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 184 ++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">uklockutils.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 8 +-</span></p>
+<p class="rvps2"><span class="rvts6">ulogging.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 1 -</span></p>
+<p class="rvps2"><span class="rvts6">54 files changed, 823 insertions(+), 849 deletions(-)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 62 [2.2.1.62]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit fa152df41daf92f75bf9d74b5b69e1b9efa4942e</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Sun Jan 7 23:05:10 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Made the xml [options] reading routines more robust.</span></p>
+<p class="rvps2"><span class="rvts6">If an entry is missing, the default values for that entry is</span></p>
+<p class="rvps2"><span class="rvts6">now used instead of an error being generated.</span></p>
+<p class="rvps2"><span class="rvts6">This then cures the problem of new options being added, up to</span></p>
+<p class="rvps2"><span class="rvts6">now if the old options file was not deleted and error was genarated.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Also, removed uOptinsUtils and moved the helper routines into</span></p>
+<p class="rvps2"><span class="rvts6">the main options class.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">formKlock.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 9 +-</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 1 -</span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 103 +++++++++++++++---</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 172 +++++++++++++++---------------</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 6 +-</span></p>
+<p class="rvps2"><span class="rvts6">uformclipboardutils.pas | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">uoptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 276 ++++++++++++++++++++++++++++++++++++++----------</span></p>
+<p class="rvps2"><span class="rvts6">uoptionsutils.pas &nbsp; &nbsp; &nbsp; | &nbsp;97 -----------------</span></p>
+<p class="rvps2"><span class="rvts6">8 files changed, 406 insertions(+), 262 deletions(-)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 63 [2.2.2.63]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit c964c7287aa66205cd3f014015fca519daefc92f</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Thu Jan 11 22:07:21 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added a Sticky note option.</span></p>
+<p class="rvps2"><span class="rvts6">This comprmises of two classes [uStickNote and UStickNotes] and one form [formStickNote].</span></p>
+<p class="rvps2"><span class="rvts6">The uStickNote holds the info for one stick Note and uStickyNotes handles creation and</span></p>
+<p class="rvps2"><span class="rvts6">storage of all the stick Notes.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">A menu option was added to Klock to create a new Sticky Note.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Needs some testing yet.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">8762 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">4777 statements</span></p>
+<p class="rvps2"><span class="rvts6">15.4% comment</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">formKlock.lfm &nbsp; &nbsp; &nbsp; | &nbsp; 7 ++</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.pas &nbsp; &nbsp; &nbsp; | &nbsp;27 ++++-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.lfm &nbsp; &nbsp; | &nbsp; 6 +-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.pas &nbsp; &nbsp; | &nbsp; 1 +</span></p>
+<p class="rvps2"><span class="rvts6">formbinaryklock.pas | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">formledklock.pas &nbsp; &nbsp;| &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">formstickynote.lfm &nbsp;| &nbsp;82 +++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">formstickynote.pas &nbsp;| 105 +++++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;33 ++++++</span></p>
+<p class="rvps2"><span class="rvts6">klock.iss &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 4 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 229 ++++++++++++++++++++++++----------------</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 3 +-</span></p>
+<p class="rvps2"><span class="rvts6">lazKlock.smproj &nbsp; &nbsp; | Bin 281546 -&gt; 305920 bytes</span></p>
+<p class="rvps2"><span class="rvts6">ustickynote.pas &nbsp; &nbsp; | 297 ++++++++++++++++++++++++++++++++++++++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">ustickynotes.pas &nbsp; &nbsp;| 251 ++++++++++++++++++++++++++++++++++++++++++++</span></p>
+<p class="rvps2"><span class="rvts6">15 files changed, 946 insertions(+), 107 deletions(-)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 64 [2.2.2.64]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Changed all the icon [again] - now from https://icons8.com/</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Removed the button bar from the main Klock screen and added individual buttons, with their own icons.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added a sub menu option to save the Sticky Notes to each Sticky Note.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added Binary and BCD time to uFuzzyTime.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">8863 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">4830 statements</span></p>
+<p class="rvps2"><span class="rvts6">15.3% comment</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
 <p class="rvps6" style="clear: both;"><span class="rvts11">Created with the Personal Edition of HelpNDoc: </span><a class="rvts12" href="https://www.helpndoc.com/help-authoring-tool">Full-featured multi-format Help generator</a></p>

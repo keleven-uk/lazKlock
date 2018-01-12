@@ -46,6 +46,9 @@ type
   { TfrmMain }
 
   TfrmMain = class(TForm)
+    BitBtnHide: TBitBtn;
+    BitBtnClose: TBitBtn;
+    BitBtnHelp: TBitBtn;
     btnCountdownStart: TButton;
     btnCountdownStop: TButton;
     btnCountdownLoadSound: TButton;
@@ -67,7 +70,6 @@ type
     btnReminderDelete: TButton;
     btnConverionConvert: TButton;
     btnConversionAddUnits: TButton;
-    ButtonPanel1: TButtonPanel;
     ChckBxCountdownSound: TCheckBox;
     chckBxCountdownEvent: TCheckBox;
     chckBxCountdownReminder: TCheckBox;
@@ -122,6 +124,7 @@ type
     Panel20: TPanel;
     Panel21: TPanel;
     Panel22: TPanel;
+    Panel23: TPanel;
     ppMnItmTime: TMenuItem;
     ppMnItmExit: TMenuItem;
     ppMnItmShow: TMenuItem;
@@ -152,6 +155,7 @@ type
     Panel9: TPanel;
     PpMnTray: TPopupMenu;
     PopupNotifier1: TPopupNotifier;
+    SpeedButton1: TSpeedButton;
     SpnEdtTimeBase: TSpinEdit;
     SpnEdtHour: TSpinEdit;
     SpnEdtMins: TSpinEdit;
@@ -170,6 +174,9 @@ type
     ballonTimer: TTimer;
     TrayIcon: TTrayIcon;
     procedure ballonTimerTimer(Sender: TObject);
+    procedure BitBtnCloseClick(Sender: TObject);
+    procedure BitBtnHelpClick(Sender: TObject);
+    procedure BitBtnHideClick(Sender: TObject);
     procedure btnConverionConvertClick(Sender: TObject);
     procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnReminderNewClick(Sender: TObject);
@@ -208,7 +215,6 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure HelpButtonClick(Sender: TObject);
     procedure mainIdleTimerStopTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure mnuItmAnalogueKlockClick(Sender: TObject);
@@ -233,6 +239,7 @@ type
     procedure ppMnItmShowClick(Sender: TObject);
     procedure ppMnItmTimeClick(Sender: TObject);
     procedure EventTimerTimer(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure SpnEdtHourChange(Sender: TObject);
     procedure SpnEdtMinsChange(Sender: TObject);
@@ -536,6 +543,9 @@ var
 begin
   myNow := now;
   mySecs := SecondOfTheDay(myNow);
+
+  if isTime(myNow, 0) then             //  Every hour, update Sticky Notes file.
+    stickies.updateStickyNotes;
 
   if userOptions.HourPips and isTime(myNow, 0) then
     playChime('pips')
@@ -1695,6 +1705,17 @@ procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
 begin
   frmSmallTextKlock.Show;
 end;
+
+procedure TfrmMain.OKButtonClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmMain.CloseButtonClick(Sender: TObject);
+begin
+
+end;
+
 //
 // ********************************************************* Info Menu *********
 //
@@ -1736,13 +1757,7 @@ end;
 //
 // ********************************************************* ButtonPannel ******
 //
-procedure TfrmMain.HelpButtonClick(Sender: TObject);
-{  Calls the Help file.    }
-begin
-  displayHelp('help\Klock.chm', '/Introduction.htm');
-end;
-
-procedure TfrmMain.OKButtonClick(Sender: TObject);
+procedure TfrmMain.BitBtnHideClick(Sender: TObject);
 {  if clicked will hide the main form and display the tray icon.    }
 begin
   TrayIcon.Visible := True;
@@ -1751,10 +1766,21 @@ begin
   frmMain.Visible := False;
 end;
 
-procedure TfrmMain.CloseButtonClick(Sender: TObject);
+procedure TfrmMain.BitBtnCloseClick(Sender: TObject);
 {  if clicked will hide the main form and display the tray icon.    }
 begin
   close;
+end;
+
+procedure TfrmMain.BitBtnHelpClick(Sender: TObject);
+{  Calls the Help file.    }
+begin
+  displayHelp('help\Klock.chm', '/Introduction.htm');
+end;
+procedure TfrmMain.SpeedButton1Click(Sender: TObject);
+{  Created a new sticky note, will appear on the screen.    }
+begin
+  stickies.new;
 end;
 //
 // ******************************************************* pop menu ************

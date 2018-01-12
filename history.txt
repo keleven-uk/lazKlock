@@ -2171,6 +2171,10 @@ uoptionsutils.pas       |  97 -----------------
 
 Build 63 [2.2.2.63]
 
+commit c964c7287aa66205cd3f014015fca519daefc92f
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Thu Jan 11 22:07:21 2018 +0000
+
 Added a Sticky note option.
 This comprmises of two classes [uStickNote and UStickNotes] and one form [formStickNote].
 The uStickNote holds the info for one stick Note and uStickyNotes handles creation and
@@ -2184,3 +2188,35 @@ Currently
 8762 lines of source code.
 4777 statements
 15.4% comment
+
+formKlock.lfm       |   7 ++
+formKlock.pas       |  27 ++++-
+formOptions.lfm     |   6 +-
+formOptions.pas     |   1 +
+formbinaryklock.pas |   4 +-
+formledklock.pas    |   4 +-
+formstickynote.lfm  |  82 +++++++++++++++
+formstickynote.pas  | 105 +++++++++++++++++++
+history.txt         |  33 ++++++
+klock.iss           |   4 +-
+klock.lpi           | 229 ++++++++++++++++++++++++----------------
+klock.lpr           |   3 +-
+lazKlock.smproj     | Bin 281546 -> 305920 bytes
+ustickynote.pas     | 297 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ustickynotes.pas    | 251 ++++++++++++++++++++++++++++++++++++++++++++
+15 files changed, 946 insertions(+), 107 deletions(-)
+
+Build 64 [2.2.2.64]
+
+Changed all the icon [again] - now from https://icons8.com/
+
+Removed the button bar from the main Klock screen and added individual buttons, with their own icons.
+
+Added a sub menu option to save the Sticky Notes to each Sticky Note.
+
+Added Binary and BCD time to uFuzzyTime.
+
+Currently
+8863 lines of source code.
+4830 statements
+15.3% comment
