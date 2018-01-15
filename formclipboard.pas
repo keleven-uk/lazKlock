@@ -1,5 +1,9 @@
 unit formClipBoard;
 
+{  Implements a Clipboard managed, the form display item that have been copied
+   to the clipboard, so they can be further copied at a later date.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -76,6 +80,7 @@ begin
     userOptions.CB_formLeft := Left;
     userOptions.writeCurrentOptions;
   end;
+  CloseAction := caFree;
 end;
 
 procedure TfrmClipBoard.FormCreate(Sender: TObject);
@@ -206,7 +211,7 @@ begin
 end;
 
 procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);
-{  Called by the Clipboard Listner.
+{  Called by the Clipboard Listener.
    The contents of the clipboard are added to the listview, if not already present.
 }
 var
@@ -267,7 +272,7 @@ begin
 end;
 
 procedure TfrmClipBoard.deleteToRycycle(aFile: string);
-{  Delets files to the Rycycle bin.
+{  Deletes files to the Rycycle bin.
     Thanks to Lush - http://forum.lazarus-ide.org/index.php?topic=12288.0
 
     FOF_ALLOWUNDO -> moves file to the bin.
@@ -304,10 +309,10 @@ end;
 
 function TfrmClipBoard.isThere(s: string): boolean;
 {  Returns true if the string s already exists in the listview.
-   Could not see a easy way to do this, so the listview is itarated
+   Could not see a easy way to do this, so the listview is iterated
    over and every item is checked in turn.
 
-   This not only stops duplicate enries, but also stops the annoyance of
+   This not only stops duplicate entries, but also stops the annoyance of
    the entry being entered again when the lixtview is clicked.
 }
 var

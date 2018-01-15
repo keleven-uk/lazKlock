@@ -1,5 +1,8 @@
 unit formLEDKlock;
 
+{  Implements a L.E.D. Klock using the L.E.D. Component from Visual Palnit.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -14,15 +17,18 @@ type
 
   TfrmLEDKlock = class(TForm)
     LEDKlock: TVpLEDLabel;
+    MnItmStickyNote: TMenuItem;
     MnItmExit: TMenuItem;
     MnItmAbout: TMenuItem;
     popUpMenuLEDKlock: TPopupMenu;
     TmrLEDKlock: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
+    procedure MnItmStickyNoteClick(Sender: TObject);
     procedure TmrLEDKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -50,6 +56,11 @@ procedure TfrmLEDKlock.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
+end;
+
+procedure TfrmLEDKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmLEDKlock.FormDestroy(Sender: TObject);
@@ -109,6 +120,7 @@ begin
 end;
 
 procedure TfrmLEDKlock.TmrLEDKlockTimer(Sender: TObject);
+{  Sets the time to the LED Klock component.    }
 VAR
   topLine: string;
   btmLine: string;
@@ -131,6 +143,11 @@ end;
 procedure TfrmLEDKlock.MnItmAboutClick(Sender: TObject);
 begin
   frmAbout.Show;
+end;
+
+procedure TfrmLEDKlock.MnItmStickyNoteClick(Sender: TObject);
+begin
+  stickies.new;
 end;
 
 procedure TfrmLEDKlock.MnItmExitClick(Sender: TObject);

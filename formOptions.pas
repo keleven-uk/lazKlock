@@ -4,7 +4,7 @@ unit formOptions;
    The user options are held in the class Options which is held in uOptions.pas.
    The main user options is created withing formKlock.pas when the application is first started.
    This unit creates a secondary options objects to hold changes made wile the form is active.
-   If ok is pressed the secondary options object with the changes are copied to the main
+   If OK is pressed the secondary options object with the changes are copied to the main
    options and the form is closed.
    If cancel is pressed, the form is closed and the changes are lost.
 }
@@ -27,7 +27,6 @@ type
     accItemLogging: TAccordionItem;
     accItemTime: TAccordionItem;
     accItemOtherKlocks: TAccordionItem;
-    accOtherStuff: TAccordionItem;
     btrOptionsReset: TButton;
     btnGlobalVolumeTest: TButton;
     btnCullLogs: TButton;
@@ -35,7 +34,6 @@ type
     ChckBxCullLogsFiles: TCheckBox;
     ChckBxLogging: TCheckBox;
     ChckGrpTimeOptions: TCheckGroup;
-    ChckGrpTimerSettings: TCheckGroup;
     ChckGrpGlobalOptions: TCheckGroup;
     ChckGrpTimeChimes: TCheckGroup;
     ChckGrpAnalogueKlock: TCheckGroup;
@@ -43,6 +41,7 @@ type
     ChckGrpLEDKlock: TCheckGroup;
     ChckGrpBinaryKlock: TCheckGroup;
     ChckGrpSmallTextKlock: TCheckGroup;
+    ChckGrpTimerSettings: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -75,6 +74,7 @@ type
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
@@ -203,6 +203,11 @@ begin
   end;
 end;
 
+procedure TfrmOptions.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
+
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
 {  reset user settings to system default
 
@@ -226,7 +231,7 @@ procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: inte
 {  Sets the user Global options according to the state of the radio group.
 
    index 0 - Save Screen Position.
-   index 1 - Run Kock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
+   index 1 - Run Klock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
    index 2 - Monitor Clipboard.
    index 4 - Save Screen Position [Clipboard Monitor].
 }
@@ -277,7 +282,7 @@ index 0 - Sound "The Pips on the Hour"
       1 - Hourly Chimes
       2 - Half hourly Chimes
       3 - Quarter hourly Chimes
-      4 - ThreeQuarter Horly Chimes
+      4 - ThreeQuarter Hourly Chimes
 }
 begin
   userBacOptions.hourPips := ChckGrpTimeChimes.Checked[0];
@@ -295,7 +300,8 @@ end;
 procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
 {  sets the user Global options for the holiday fonts.
 
-    index 0 - 12 days of Christmas [before and after]
+    Index 0 - 12 days of Christmas [before and after]
+    Index 1 - Easter Holidays [week before and after].
 }
 begin
   userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
@@ -424,7 +430,7 @@ procedure TfrmOptions.OKButtonClick(Sender: TObject);
 {  The OK button has been pressed, Copy the amended changes to main user options.
     Write back the main user options.
 }
-begin
+    begin
   userOptions.Assign(userBacOptions);                     //  Copy amended options to main user options.
   UserOptions.writeCurrentOptions;                        //  write back amended options back to disk.
 

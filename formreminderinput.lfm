@@ -6,6 +6,7 @@ object frmReminderInput: TfrmReminderInput
   Caption = 'Reminder Input'
   ClientHeight = 275
   ClientWidth = 420
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   LCLVersion = '1.8.0.6'

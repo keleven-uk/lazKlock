@@ -1,5 +1,7 @@
 unit UKlockUtils;
 
+{ A collection of useful stuff used else where in Klock.    }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -289,8 +291,8 @@ end;
 
 procedure doPlaySound(sound: string; volume: string);
 {  Plays a sound file at a specified volume, both passed in has strings.
-   The file is assumeded to be a valid sound file and volume is between 1 - 1000.
-   The correct path is attatched by this routine.
+   The file is assumed to be a valid sound file and volume is between 1 - 1000.
+   The correct path is attached by this routine.
 
    TODO :: Work out how status works, so that it can be determined when play has finished.
            This would then eliminate the global variable isPlying.
@@ -482,7 +484,7 @@ begin
 end;
 
 procedure logHeader;
-{  Write header infomation to log file.    }
+{  Write header information to log file.    }
 begin
   kLog.writeLog('............................................................');
   kLog.writeLog(userOptions.InternalName);
@@ -501,7 +503,7 @@ begin
 end;
 
 procedure logFooter;
-{  Write fotter to log file.    }
+{  Write footer to log file.    }
 begin
   kLog.writeLog('............................................................');
   kLog.writeLog('Klock has been running for ' + getUpTime('Application'));
@@ -549,7 +551,7 @@ end;
 
 function getWindowsVersion: string;
 {  Gets the version of the windows OS.
-   This is achieved by caputuring the output from the DOS command ver.
+   This is achieved by capturing the output from the DOS command ver.
    The ver command is run  into a file and then the file is read back.
 }
 VAR
@@ -614,7 +616,7 @@ begin
 end;
 
 function isEaster: Boolean;
-{  Returns true if current date is within one week of easter sunday.    }
+{  Returns true if current date is within one week of Easter Sunday.    }
 VAR
   easter: TdateTime;
 begin
@@ -627,7 +629,7 @@ begin
 end;
 
 procedure KillOtherKlocks;
-{  Kill any other klocks that are visable.    }
+{  Kill any other klocks that are visible.    }
 begin
   if frmAnalogueKlock.Visible then
     frmAnalogueKlock.Visible := False;

@@ -1,4 +1,5 @@
 unit UformClipBoardUtils;
+
 {  Code based on submission by ASerge in
    http://forum.lazarus.freepascal.org/index.php?topic=15488.0
 }
@@ -140,7 +141,7 @@ begin
 end;
 
 procedure TClipboardListener.getFileData;
-{  Retrives the actual filename, using pointer black magic.    }
+{  Retrieves the actual filename, using pointer black magic.    }
 var
   hDropHandle: HDROP;
   iCount, iIndex: Integer;
@@ -169,7 +170,7 @@ begin
 end;  //  if clipboard.HasFormat(CF_HDROP) then
 
 procedure TClipboardListener.setFileameData(fn: string);
-{  Detemines if the filename is a file or directory.    }
+{  Determines if the filename is a file or directory.    }
 begin
   if FileExists(fn) then
     category := 'File'

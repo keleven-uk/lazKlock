@@ -250,10 +250,11 @@ object frmMain: TfrmMain
             ClientWidth = 512
             TabOrder = 1
             object lblfuzzy: TLabel
-              Left = 8
-              Height = 32
-              Top = 0
-              Width = 388
+              Left = 1
+              Height = 78
+              Top = 1
+              Width = 510
+              Align = alClient
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False

@@ -1,5 +1,15 @@
 unit formBinaryKlock;
 
+{  Implements a binary Klock, which can be run in either true binary
+   or BCD [Binary Coded decimal] mode.  This mode is selected via a
+   menu activated by right clicking on the LED Klock.
+
+   The L.E.D's are actually implemented by using rectangular shapes,
+   these can be either ON_COLOUR or OFF_COLOUR.
+   The shape was used instead of a L.E.D. component because they
+   can be positioned closer together and they use LED system resources.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -8,6 +18,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls,
   ExtCtrls, LCLIntf, LCLType, Menus, LMessages, StdCtrls, strutils;
 
+{ TODO : Should these be user selectable. }
 const
   ON_COLOUR = clLIME;
   OFF_COLOUR = clBlack;
@@ -19,6 +30,7 @@ type
 
   TfrmBinaryKlock = class(TForm)
     lblStatusBar: TLabel;
+    MnItmNewStickNote: TMenuItem;
     MnItmBCD: TMenuItem;
     MnItmBinary: TMenuItem;
     MnItmExit: TMenuItem;
@@ -50,6 +62,7 @@ type
     Shp11: TShape;
     Shp21: TShape;
     tmrBinartKlock: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -57,8 +70,7 @@ type
     procedure MnItmBCDClick(Sender: TObject);
     procedure MnItmBinaryClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
-    procedure StsBinaryKlockDrawPanel(StatusBar: TStatusBar;
-      Panel: TStatusPanel; const Rect: TRect);
+    procedure MnItmNewStickNoteClick(Sender: TObject);
     procedure tmrBinartKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -108,6 +120,11 @@ begin
   setShapes;
 end;
 
+procedure TfrmBinaryKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
+
 procedure TfrmBinaryKlock.FormDestroy(Sender: TObject);
 begin
   // To prevent possible system resource leaks
@@ -140,6 +157,9 @@ begin
 end;
 
 procedure TfrmBinaryKlock.setShapes;
+{  The binary Klock only uses 4 rows of L.E.D's, so if in this mode
+   switch off the bottom row.  The BCD klock uses all 5 rows.
+}
 begin
   if MnItmBinary.Checked then
   begin
@@ -198,8 +218,8 @@ end;
 
 procedure TfrmBinaryKlock.UpdateStatusBar(KTime: TDateTime);
 {  Updates the status bar with current time, date and Key States.
-   NB, status bar is implementes as a panel allows proper backgroud
-   colour change and transparancy [not yet implemented].
+   NB, status bar is implemented as a panel allows proper background
+   colour change and transparency.
 }
 VAR
   keyResult: string;
@@ -257,10 +277,17 @@ begin
 
   close;
 end;
+
+procedure TfrmBinaryKlock.MnItmNewStickNoteClick(Sender: TObject);
+begin
+  stickies.new;
+end;
+
 //
 // ****************************************************** Binary Stuff *********
 //
 function TfrmBinaryKlock.binaryTime: string;
+{  Returns a binary string of the current time.    }
 var
   hrs: word;
   min: word;
@@ -284,6 +311,7 @@ begin
 end;
 
 procedure TfrmBinaryKlock.decodeBinaryTime;
+{  Parses the binary string and turns on or off the required L.E.D's.    }
 var
   f : integer;
   tmpButton: TShape;
@@ -332,6 +360,7 @@ begin
 end;
 
 function TfrmBinaryKlock.BCDTime: string;
+{  Returns a BCD binary string of the current time.    }
 var
   hrs: word;
   min: word;
@@ -366,6 +395,7 @@ begin
 end;
 
 procedure TfrmBinaryKlock.decodeBCDTime;
+{  Parses the binary string and turns on or off the required L.E.D's.    }
 var
   f : integer;
   tmpShape: TShape;
@@ -434,45 +464,6 @@ begin
 
    end;   //  for
 end;      //  procedure
-//
-// ****************************************************** Status Bar ***********
-//
-procedure TfrmBinaryKlock.StsBinaryKlockDrawPanel(StatusBar: TStatusBar;
-  Panel: TStatusPanel; const Rect: TRect);
-//VAR
-//  OldColor, OldBrushColor : TColor;
-//  OldStyle : TFontStyles;
-//  f: integer;
-begin
-//
-//  for f:= 0 to 4 do
-//  begin
-//    if Panel.Index = f then begin
-//      with StatusBar.Canvas do begin
-//        // store off the original settings
-//        OldColor := Font.Color;
-//        OldStyle := Font.Style;
-//        OldBrushColor := Brush.Color;
-//        try
-//          //  set the Brush Color
-//          //// fill the panel with the brush color (ie background color)
-//          //brush.Color := clBlack;
-//          FillRect(Rect);
-//          // set the text font color / style
-//          Font.Color := clGreen;
-//          //Font.Style := [fsBold];
-//          //display the text from the panel
-//          TextOut(Rect.Left + 3, Rect.Top, Panel.Text);
-//        finally  // restore the original settings
-//          Font.Color := OldColor;
-//          Font.Style := OldStyle;
-//          Brush.Color := OldBrushColor;
-//        end;  //  try
-//      end;    //  with StatusBar.Canvas
-//    end;      //  if Panel.Index = 0
-//  end;        //  for f:= 0 to 4
-
-end;
 
 end.
 

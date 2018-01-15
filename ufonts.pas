@@ -5,6 +5,7 @@ unit uFonts;
    See - https://forum.lazarus.freepascal.org/index.php?topic=21032.0
          mainly post by RAW.
 }
+
 {$mode objfpc}{$H+}
 
 interface

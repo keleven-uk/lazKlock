@@ -1,18 +1,17 @@
 unit UFuzzyTime;
 
-{$mode objfpc}{$H+}
+{  Kevin Scott         January 2012
 
-{
-  Kevin Scott         January 2012
+   returns the time as a string, depending on the value of displayFuzzy.
 
-  returns the time as a string, depending on the value of displayFuzzy.
+   displayFuzzy set to True  :: getTime returns time as five past ten.
+   displayFuzzy set to False :: getTime returns time as 10:05:00.
 
-  displayFuzzy set to True  :: getTime returns time as five past ten.
-  displayFuzzy set to False :: getTime returns time as 10:05:00.
-
-  NB :: Bar Code Time, Semaphore Time, Nancy Blackett Time & Braille Time
-  are done by font substitution.
+   NB :: Bar Code Time, Semaphore Time, Nancy Blackett Time & Braille Time
+   are done by font substitution.
 }
+
+{$mode objfpc}{$H+}
 
 interface
 

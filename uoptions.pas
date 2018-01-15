@@ -1,5 +1,32 @@
 unit uOptions;
 
+{  Holds the current user options.  The options are hard coded in this class.
+
+   When the class is created, the constructor first checks that the user directory
+   exists - this should be something like c:\Users\<user>\AppData\Local\<app Name>\Options.xml.
+   The file name can be passed to the constructor, if it's absent the 'Options.xml' is used.
+   If this directory does not exist, it will be created.
+
+   Next, the user options file is checked.  If it is exists, it is read.
+   If the file does not exist - the file will be created with default values.
+
+   class methods -
+       create                       - creates the options class with a default filename.
+       create(fileName: string)     - creates the options class with a specified filename.
+       readOptions                  - reads the options file and populates the options class
+       writeCurrentOptions          - writes the current options to the options filename [in XML].
+       writeDefaultOptions          - writes the options file with default files [internal use really]
+                                    - could be used to reset options.
+
+   The writeCurrentOptions should be executed when the program closes, or when options change.
+   That is if the changes need to be saved.
+
+   NOTE :: If there is an error while either reading or writing the options file, the application is halted.
+
+   NOTE :: All XML values are string, so need to be casted before use - this is done in the read / write routines.
+
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -12,34 +39,7 @@ type
   { Options }
 
   Options = class
-  {  Holds the current user options.  The options are hard coded in this class.
 
-     When the class is created, the constructor first checks that the user directory
-     exists - this should be something like c:\Users\<user>\AppData\Local\<app Name>\Options.xml.
-     The file name can be passed to the constructor, if it's absent the 'Options.xml' is used.
-     If this directory does not exist, it will be created.
-
-     Next, the user options file is checked.  If it is exists, it is read.
-     If the file does not exist - the file will be created with default values.
-
-     class methods -
-         create                       - creates the options class with a default filename.
-         create(fileName: string)     - creates the options class with a specified filename.
-         readOptions                  - reads the options file and populates the options class
-         writeCurrentOptions          - writes the current options to the options filename [in XML].
-         writeDefaultOptions          - writes the options file with default files [internal use really]
-                                      - could be used to reset options.
-
-     The writeCurrentOptions should be executed when the program closes, or when options change.
-     That is if the changes need to be saved.
-
-     NOTE :: If there is an error while either reading or writing the options file, the application is halted.
-
-     NOTE :: All XML values are string, so need to be casted before use - this is done in the read / write routines.
-
-     TODO :: causes a read failure if an option has been added to the class which is not in the XML file.
-             Needs some way to check.
-  }
   private
     _dirName: string;
     //  Global

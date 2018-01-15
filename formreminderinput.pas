@@ -1,5 +1,7 @@
 unit formReminderInput;
 
+{  Gathers user input for a reminder.    }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -31,6 +33,7 @@ type
     procedure CmbBxReminderTypeChange(Sender: TObject);
     procedure DtEdtReminderDateChange(Sender: TObject);
     procedure edtReminderNameChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -55,6 +58,44 @@ uses
 {$R *.lfm}
 
 { TfrmReminderInput }
+
+procedure TfrmReminderInput.FormCreate(Sender: TObject);
+var
+  appData: string;
+begin
+  kLog.writeLog('FormReminderInput Create');
+
+  appData := GetAppConfigDir(False);               //  retrieve the correct place to store .ini file
+  //  calling with False - for current user only
+  //  calling with True  - for all users
+  //  CreateDir(appData);                            //  create said place :: Should Be Done.
+  ReminderData := appData + 'kReminder.txt';       //  create .ini file path
+
+  checkReminderFile;                             //  check for anniversary file, if not there - create
+end;
+
+procedure TfrmReminderInput.FormShow(Sender: TObject);
+begin
+  kLog.writeLog('FormReminderInput Show');
+
+  edtReminderName.Text := '';          //  Set form defaults.
+  DtEdtReminderDate.Date := Now;
+  CmbBxReminderPeriod.ItemIndex := 0;
+  CmbBxReminderType.ItemIndex := -1;
+  ChckBxReminderActive.Checked := True;
+
+  btnReminderSave.Enabled := False;             //  always start with save button not enabled.
+  edtReminderName.SetFocus;
+
+  blType := False;
+  blDate := False;
+  blName := False;
+end;
+
+procedure TfrmReminderInput.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
 
 procedure TfrmReminderInput.btnReminderExitClick(Sender: TObject);
 begin
@@ -118,39 +159,6 @@ begin
   blName := True;
   if blType and blDate and blName then
     btnReminderSave.Enabled := True;
-end;
-
-procedure TfrmReminderInput.FormCreate(Sender: TObject);
-var
-  appData: string;
-begin
-  kLog.writeLog('FormReminderInput Create');
-
-  appData := GetAppConfigDir(False);               //  retrieve the correct place to store .ini file
-  //  calling with False - for current user only
-  //  calling with True  - for all users
-  //  CreateDir(appData);                            //  create said place :: Should Be Done.
-  ReminderData := appData + 'kReminder.txt';       //  create .ini file path
-
-  checkReminderFile;                             //  check for anniversary file, if not there - create
-end;
-
-procedure TfrmReminderInput.FormShow(Sender: TObject);
-begin
-  kLog.writeLog('FormReminderInput Show');
-
-  edtReminderName.Text := '';          //  Set form defaults.
-  DtEdtReminderDate.Date := Now;
-  CmbBxReminderPeriod.ItemIndex := 0;
-  CmbBxReminderType.ItemIndex := -1;
-  ChckBxReminderActive.Checked := True;
-
-  btnReminderSave.Enabled := False;             //  always start with save button not enabled.
-  edtReminderName.SetFocus;
-
-  blType := False;
-  blDate := False;
-  blName := False;
 end;
 
 procedure TfrmReminderInput.checkReminderFile;

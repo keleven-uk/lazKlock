@@ -117,6 +117,7 @@ object frmAbout: TfrmAbout
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
+  OnClose = FormClose
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.8.0.6'

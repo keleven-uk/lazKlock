@@ -1,5 +1,8 @@
 unit formSmallTextKlock;
 
+{  Implements a Text Klcok, where the time is highlighted within a text matrix.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -34,6 +37,7 @@ type
 
   TfrmSmallTextKlock = class(TForm)
     lblSmallTextKlock: TLabel;
+    MnuItmNewStickyNote: TMenuItem;
     MnuItmTransparent: TMenuItem;
     MnItmClose: TMenuItem;
     MnuItmAbout: TMenuItem;
@@ -46,6 +50,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure MnItmCloseClick(Sender: TObject);
     procedure MnuItmAboutClick(Sender: TObject);
+    procedure MnuItmNewStickyNoteClick(Sender: TObject);
     procedure MnuItmTransparentClick(Sender: TObject);
     procedure tmrSmallTextKlockTimer(Sender: TObject);
   private
@@ -108,7 +113,7 @@ uses
 { TfrmSmallTextKlock }
 
 procedure SetTranslucent(ThehWnd: longint; Color: longint; nTrans: integer; flag: integer);
-{  Used to make the form transparen.
+{  Used to make the form transparent.
 
    See http://lazplanet.blogspot.co.uk/2013/04/make-your-forms-transparent.html
 }
@@ -147,6 +152,7 @@ end;
 procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   tmrSmallTextKlock.Enabled := false;
+  CloseAction := caFree;
 end;
 
 procedure TfrmSmallTextKlock.FormShow(Sender: TObject);
@@ -187,8 +193,8 @@ end;
 
 procedure TfrmSmallTextKlock.UpdateStatusBar(KTime: TDateTime);
 {  Updates the status bar with current time, date and Key States.
-   NB, status bar is implementes as a panel allows proper backgroud
-   colour change and transparancy.
+   NB, status bar is implemented as a panel allows proper background
+   colour change and transparency.
 }
 VAR
   keyResult: string;
@@ -239,7 +245,6 @@ begin
     WindowDragTopLeft.Y := Top;
   end;
 end;
-
 //
 // ******************************************************* Pop Up Menu *********
 //
@@ -266,8 +271,13 @@ begin
   frmAbout.Show;
 end;
 
+procedure TfrmSmallTextKlock.MnuItmNewStickyNoteClick(Sender: TObject);
+begin
+  stickies.new;
+end;
+
 procedure TfrmSmallTextKlock.MnuItmTransparentClick(Sender: TObject);
-{  Set the form transparancy according to the menu option.    }
+{  Set the form transparency according to the menu option.    }
 var
   transparency: longint;
 begin

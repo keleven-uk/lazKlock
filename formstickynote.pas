@@ -1,5 +1,8 @@
 unit formStickyNote;
 
+{  Implements a simple sticky note, which when created is displayed on the desktop.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -22,6 +25,7 @@ type
     MntmColour: TMenuItem;
     PopupMenu1: TPopupMenu;
     tmrSticky: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MemoMouseEnter(Sender: TObject);
@@ -57,9 +61,15 @@ begin
   AlphaBlend := true;
 end;
 
+procedure TfrmStickyNote.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  kLog.writeLog('formStickyNote Close : ' + name);
+  CloseAction := caFree;
+end;
+
 procedure TfrmStickyNote.FormShow(Sender: TObject);
 begin
-  kLog.writeLog('formStickyNote show : ' + name);
+  kLog.writeLog('formStickyNote Show : ' + name);
 end;
 
 procedure TfrmStickyNote.MemoMouseEnter(Sender: TObject);

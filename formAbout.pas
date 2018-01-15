@@ -31,6 +31,7 @@ type
     TmrUpTime: TTimer;
     procedure btnAboutExitClick(Sender: TObject);
     procedure btnAboutMSinfoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure TmrUpTimeTimer(Sender: TObject);
   private
@@ -60,12 +61,17 @@ begin
 end;
 
 procedure TfrmAbout.btnAboutMSinfoClick(Sender: TObject);
-{  Run the extermal application MSinfo.
+{  Run the external application MSinfo.
    If ShellExecute returns 32 or less this indicates an error, just inform the user.
 }
 begin
   if ShellExecute(0, nil, PChar('"msinfo32.exe"'), nil, nil, 1) < 33 then
     ShowMessage('ERROR : running MSinfo');
+end;
+
+procedure TfrmAbout.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmAbout.FormCreate(Sender: TObject);

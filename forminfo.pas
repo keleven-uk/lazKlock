@@ -1,4 +1,5 @@
 unit formInfo;
+
 {  Displays useful [hopefully] information.    }
 
 {$mode objfpc}{$H+}
@@ -21,6 +22,7 @@ type
     lstBxInfo: TListBox;
     SpnEdtYear: TSpinEdit;
     procedure btnCloseClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
@@ -58,6 +60,11 @@ begin
   SpnEdtyear.Value := Currentyear;
 
   updateInfo;
+end;
+
+procedure TfrmInfo.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmInfo.btnCloseClick(Sender: TObject);

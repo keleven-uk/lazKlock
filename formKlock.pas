@@ -2,7 +2,7 @@ unit formklock;
 
 {
 Klock :: A Clock with a K.
-Copyright (C) 2012 - 2017 :: Kevin Scott
+Copyright (C) 2012 - 2018 :: Kevin Scott
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,9 +17,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  To compile, the following components must be instaled into Lazarus.
+
+  To compile, the following components must be installed into Lazarus.
      BGRA comtorls, which installs BGRA bitmap.
-     EC-contols - Eye Candy - used for the accordion on the options screen.
+     EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
 
      All from the Online Package manager.
@@ -35,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, ButtonPanel,
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
   formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
@@ -647,11 +648,11 @@ begin
           lblfuzzy.Font.Name := 'RMBunny'
         else
         lblfuzzy.Font.Name := 'default';
+        lblfuzzy.Top := 2;
         lblfuzzy.Font.Size := 22;          //  seems to need this, or changes size on each call.
         lblfuzzy.Font.Size := GetTextSize(ft.getTime, lblfuzzy.Font);
         lblfuzzy.Caption := ft.getTime;
-        lblfuzzy.Top := 2;
-        lblfuzzy.AutoSize := true;
+        lblfuzzy.AutoSize := false;
       end;
     else   //  no font substitution, use default font.
       begin
@@ -1586,7 +1587,7 @@ begin
 end;
 
 procedure TfrmMain.CmbBxConvertToChange(Sender: TObject);
-{  A new convert tp has been chosen, clear the edit boxes.
+{  A new convert to has been chosen, clear the edit boxes.
    The new choice is still within the same category - so no need to reload the units file.
 }
 begin

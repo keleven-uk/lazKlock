@@ -11,6 +11,7 @@ object frmInfo: TfrmInfo
   Constraints.MaxWidth = 362
   Constraints.MinHeight = 306
   Constraints.MinWidth = 362
+  OnClose = FormClose
   OnShow = FormShow
   Position = poMainFormCenter
   LCLVersion = '1.8.0.6'

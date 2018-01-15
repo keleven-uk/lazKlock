@@ -1,5 +1,8 @@
 unit formAnalogueKlock;
 
+{  Implements a Analogue Klock, using the analogue Klock from BGRA Controls.
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -33,14 +36,17 @@ type
 
   TfrmAnalogueKlock = class(TForm)
     DTThemedClock1: TDTThemedClock;
+    MnItmNewStickyNote: TMenuItem;
     MnItmAbout: TMenuItem;
     MnItmExit: TMenuItem;
     popUpMenuAnalogueKlock: TPopupMenu;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
+    procedure MnItmNewStickyNoteClick(Sender: TObject);
 
   private
     WindowDragMousePos: TPoint;
@@ -66,7 +72,7 @@ uses
 { TfrmAnalogueKlock }
 
 procedure SetTranslucent(ThehWnd: longint; Color: longint; nTrans: integer);
-{  Used to make the form transparen.
+{  Used to make the form transparent.
 
    See http://lazplanet.blogspot.co.uk/2013/04/make-your-forms-transparent.html
 }
@@ -96,6 +102,11 @@ begin
 
   {call the function to do it}
   SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
+end;
+
+procedure TfrmAnalogueKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmAnalogueKlock.FormDestroy(Sender: TObject);
@@ -138,6 +149,24 @@ begin
   end;
 end;
 
+procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
+{  When starting the analogue klock, start the tray icon and hide the main klock.  }
+begin
+  kLog.writeLog('FormAnalogue Klock Show');
+  frmMain.TrayIcon.Visible := True;
+  frmMain.TrayIcon.Show;
+
+  frmMain.Visible := False;
+
+  if userOptions.analogueScreenSave then
+  begin
+    Left := userOptions.analogueFormLeft;
+    Top := userOptions.analogueFormTop;
+  end;
+end;
+//
+// ******************************************************* Pop Up Menu *********
+//
 procedure TfrmAnalogueKlock.MnItmExitClick(Sender: TObject);
 {  When exiting the analogue klock, kill off the tray icon and restore the main klock.
 }
@@ -157,27 +186,14 @@ begin
   Close;
 end;
 
-procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
-{  When starting the analogue klock, start the tray icon and hide the main klock.  }
-begin
-  kLog.writeLog('FormAnalogue Klock Show');
-  frmMain.TrayIcon.Visible := True;
-  frmMain.TrayIcon.Show;
-
-  frmMain.Visible := False;
-
-  if userOptions.analogueScreenSave then
-  begin
-    Left := userOptions.analogueFormLeft;
-    Top := userOptions.analogueFormTop;
-  end;
-end;
-
 procedure TfrmAnalogueKlock.MnItmAboutClick(Sender: TObject);
 {  Load the about page.  }
 begin
   frmAbout.Show;
 end;
 
-
+procedure TfrmAnalogueKlock.MnItmNewStickyNoteClick(Sender: TObject);
+begin
+  stickies.new;
+end;
 end.

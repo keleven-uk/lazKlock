@@ -145,6 +145,7 @@ object frmStickyNote: TfrmStickyNote
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PopupMenu = PopupMenu1

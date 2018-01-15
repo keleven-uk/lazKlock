@@ -2153,7 +2153,7 @@ Made the xml [options] reading routines more robust.
 If an entry is missing, the default values for that entry is
 now used instead of an error being generated.
 This then cures the problem of new options being added, up to
-now if the old options file was not deleted and error was genarated.
+now if the old options file was not deleted and error was generated.
 
 Also, removed uOptinsUtils and moved the helper routines into
 the main options class.
@@ -2176,7 +2176,7 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Thu Jan 11 22:07:21 2018 +0000
 
 Added a Sticky note option.
-This comprmises of two classes [uStickNote and UStickNotes] and one form [formStickNote].
+This compromises of two classes [uStickNote and UStickNotes] and one form [formStickNote].
 The uStickNote holds the info for one stick Note and uStickyNotes handles creation and
 storage of all the stick Notes.
 
@@ -2206,7 +2206,12 @@ ustickynote.pas     | 297 ++++++++++++++++++++++++++++++++++++++++++++++++++++
 ustickynotes.pas    | 251 ++++++++++++++++++++++++++++++++++++++++++++
 15 files changed, 946 insertions(+), 107 deletions(-)
 
+
 Build 64 [2.2.2.64]
+
+commit 5abce3c97050cf33dbbbf4dc177af99d224af7db
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Jan 12 16:02:37 2018 +0000
 
 Changed all the icon [again] - now from https://icons8.com/
 
@@ -2220,3 +2225,50 @@ Currently
 8863 lines of source code.
 4830 statements
 15.3% comment
+
+README.md                       |   11 +-
+formKlock.lfm                   | 2748 ++++++++++-----------------------------
+formKlock.pas                   |   46 +-
+formstickynote.lfm              |  141 ++
+formstickynote.pas              |    7 +
+help/Klock.chm                  |  Bin 914620 -> 1014404 bytes
+help/Klock.pdf                  |  Bin 4475682 -> 4807268 bytes
+help/html/About.html            |   11 +-
+help/html/ClipboardMonitor.html |    4 +-
+help/html/Conversion.html       |    2 +-
+help/html/Countdown.html        |    4 +-
+help/html/Credits.html          |    7 +-
+help/html/Events.html           |    6 +-
+help/html/File.html             |    2 +-
+help/html/FuzzyTime.html        |    2 +-
+help/html/Help.html             |    4 +-
+help/html/History.html          |  151 ++-
+help/html/Info.html             |    4 +-
+help/html/Introduction.html     |    4 +-
+help/html/Klock.html            |    6 +-
+help/html/Menu.html             |    3 +-
+help/html/Reminder.html         |    4 +-
+help/html/StickyNote.html       |  299 +++++
+help/html/StickyNote1.html      |  272 ++++
+help/html/Thingymabobs.html     |    3 +
+help/html/Time1.html            |    2 +-
+help/html/Timer.html            |    2 +-
+help/html/Welcome.html          |    4 +-
+help/html/_toc.json             |    2 +-
+help/html/js/hndsd.min.js       |    2 +-
+help/klock.hnd                  |  Bin 1839104 -> 2228224 bytes
+history.txt                     |   36 +
+icons/icons8-clock-32.png       |  Bin 0 -> 730 bytes
+icons/icons8-delete-40.png      |  Bin 0 -> 1841 bytes
+icons/icons8-help-32.png        |  Bin 0 -> 645 bytes
+icons/icons8-hide-50.png        |  Bin 0 -> 1989 bytes
+icons/icons8-note-32.png        |  Bin 0 -> 403 bytes
+klock.ico                       |  Bin 67646 -> 4286 bytes
+klock.iss                       |    6 +-
+klock.lpi                       |  161 +--
+lazKlock.smproj                 |  Bin 305920 -> 330666 bytes
+time-13-128.ico                 |  Bin 67646 -> 0 bytes
+ufuzzytime.pas                  |   72 +-
+43 files changed, 1802 insertions(+), 2226 deletions(-)
+
+Build 65 [2.2.2.65]

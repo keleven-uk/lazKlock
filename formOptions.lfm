@@ -1,18 +1,19 @@
 object frmOptions: TfrmOptions
-  Left = 1104
+  Left = 1272
   Height = 488
-  Top = 236
-  Width = 793
+  Top = 249
+  Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Options'
   ClientHeight = 488
-  ClientWidth = 793
+  ClientWidth = 620
   Constraints.MaxHeight = 488
-  Constraints.MaxWidth = 793
+  Constraints.MaxWidth = 620
   Constraints.MinHeight = 488
-  Constraints.MinWidth = 793
+  Constraints.MinWidth = 620
   OnActivate = FormActivate
+  OnClose = FormClose
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.8.0.6'
@@ -20,7 +21,7 @@ object frmOptions: TfrmOptions
     Left = 6
     Height = 34
     Top = 448
-    Width = 781
+    Width = 608
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
     OKButton.OnClick = OKButtonClick
@@ -40,9 +41,9 @@ object frmOptions: TfrmOptions
     Left = 0
     Height = 440
     Top = 0
-    Width = 776
+    Width = 616
     FullExpand = True
-    ItemIndex = 4
+    ItemIndex = 3
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -56,8 +57,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 21
-      Width = 776
+      Top = 0
+      Width = 616
       Caption = 'Global'
       Order = 0
       object GroupBox1: TGroupBox
@@ -228,8 +229,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 42
-      Width = 776
+      Top = 0
+      Width = 616
       Caption = 'Time'
       Order = 1
       object ChckGrpTimeOptions: TCheckGroup
@@ -264,11 +265,11 @@ object frmOptions: TfrmOptions
       end
       object GroupBox2: TGroupBox
         Left = 280
-        Height = 105
+        Height = 136
         Top = 16
         Width = 185
         Caption = 'Default Time'
-        ClientHeight = 85
+        ClientHeight = 116
         ClientWidth = 181
         TabOrder = 1
         object CmbBxDefaultTime: TComboBox
@@ -280,7 +281,7 @@ object frmOptions: TfrmOptions
           OnChange = CmbBxDefaultTimeChange
           ParentColor = True
           TabOrder = 0
-          Text = 'Fuzzt Time'
+          Text = 'Fuzzy Time'
         end
       end
       object ChckGrpTimeChimes: TCheckGroup
@@ -313,24 +314,10 @@ object frmOptions: TfrmOptions
           050000000202020202
         }
       end
-    end
-    object accOtherStuff: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideTop.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      AnchorSideBottom.Control = AcrdnOptions
-      AnchorSideBottom.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 84
-      Width = 776
-      Caption = 'Other Stuff'
-      Order = 3
       object ChckGrpTimerSettings: TCheckGroup
-        Left = 0
+        Left = 280
         Height = 56
-        Top = 8
+        Top = 160
         Width = 192
         AutoFill = True
         Caption = 'Timer Settings'
@@ -348,7 +335,7 @@ object frmOptions: TfrmOptions
           'Timer To Show MilliSeconds'
         )
         OnItemClick = ChckGrpTimerSettingsItemClick
-        TabOrder = 0
+        TabOrder = 3
         Data = {
           0100000002
         }
@@ -363,13 +350,13 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 63
-      Width = 776
+      Top = 0
+      Width = 616
       Caption = 'Other Klocks'
       Order = 2
       object ChckGrpAnalogueKlock: TCheckGroup
         Left = 7
-        Height = 57
+        Height = 82
         Top = 8
         Width = 185
         AutoFill = True
@@ -382,7 +369,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 37
+        ClientHeight = 62
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
@@ -421,9 +408,9 @@ object frmOptions: TfrmOptions
         }
       end
       object ChckGrpBinaryKlock: TCheckGroup
-        Left = 392
+        Left = 7
         Height = 82
-        Top = 8
+        Top = 96
         Width = 185
         AutoFill = True
         Caption = 'Binary Klock'
@@ -448,9 +435,9 @@ object frmOptions: TfrmOptions
         }
       end
       object ChckGrpSmallTextKlock: TCheckGroup
-        Left = 583
+        Left = 200
         Height = 82
-        Top = 8
+        Top = 96
         Width = 185
         AutoFill = True
         Caption = 'Small Text Klock'
@@ -483,11 +470,11 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 335
-      Top = 105
-      Width = 776
+      Height = 356
+      Top = 84
+      Width = 616
       Caption = 'Logging'
-      Order = 4
+      Order = 3
       object GroupBox4: TGroupBox
         Left = 7
         Height = 304
@@ -546,7 +533,7 @@ object frmOptions: TfrmOptions
         Left = 200
         Height = 296
         Top = 24
-        Width = 568
+        Width = 416
         ItemHeight = 0
         ParentColor = True
         TabOrder = 1

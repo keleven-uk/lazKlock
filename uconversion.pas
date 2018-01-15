@@ -4,6 +4,7 @@ unit UConversion;
 
    A Helper module that contains functions linked to the convert tab.
 }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -86,7 +87,7 @@ end;
 
 procedure readConversionUnitsFile;
 {  Loads the data file units.txt, which contains the data for the conversions
-   The file is loaded in to a global string list, this imporoves perfrmance later on.
+   The file is loaded in to a global string list, this improves performance later on.
    So this is only carried out when the conversion tab is chosen,#
 
    i.e.
@@ -113,7 +114,7 @@ procedure parseConversionUnitsFile(mode: string);
    This can be called with several modes -
      LoadCategory - loads the categories only and populates the required combo bow.
      LoadUnits - loads the units only and populates the required combo box.
-     SelectUnits - determins the conversion factor that matched the two combo boxes.
+     SelectUnits - determines the conversion factor that matched the two combo boxes.
 }
 var
   f: integer;
@@ -161,6 +162,8 @@ begin
 end;
 
 procedure EditConversionUnitsFile;
+{  Loads the conversion file into notepad, so it can be edited or added to.
+}
 VAR
   filename: string;
 begin
