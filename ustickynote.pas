@@ -18,7 +18,7 @@ type
   stickyNote = class
 
   private
-    _body: string;         //  Body  text of the Sticky Note.
+    _body: string;         //  Body text of the Sticky Note.
     _id: integer;          //  unique id of the Sticky Note.
 
     _height: integer;      //  Height of the Sticky Note.

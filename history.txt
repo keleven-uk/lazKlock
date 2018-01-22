@@ -2271,4 +2271,67 @@ time-13-128.ico                 |  Bin 67646 -> 0 bytes
 ufuzzytime.pas                  |   72 +-
 43 files changed, 1802 insertions(+), 2226 deletions(-)
 
+
 Build 65 [2.2.2.65]
+
+commit 06a77cd4cae5903b208f99fa53239d4c360007c5
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Jan 15 14:14:25 2018 +0000
+
+Added a form close to all forms if missing, this allowd a
+CloseAction := caFree; to be added to every form.
+
+Added a new Sticky Note option to all extra Klocks pop up menus.
+Added icons to all extra Klocks pop up menus.
+
+Ran all source [including this file] through a spell checker.
+
+Currently
+8952 lines of source code.
+4861 statements
+15.2% comment
+
+formAbout.lfm                          |   1 +
+formAbout.pas                          |   8 +-
+formKlock.lfm                          |   9 +-
+formKlock.pas                          |  15 +-
+formLicense.lfm                        |   1 +
+formOptions.lfm                        |  79 ++---
+formOptions.pas                        |  20 +-
+formanalogueklock.lfm                  | 335 +++++++++++++++++-
+formanalogueklock.pas                  |  52 ++-
+formbinaryklock.lfm                    | 611 ++++++++++++++++++++++++++++++++-
+formbinaryklock.pas                    |  77 ++---
+formclipboard.pas                      |  13 +-
+forminfo.lfm                           |   1 +
+forminfo.pas                           |   7 +
+formledklock.lfm                       | 335 +++++++++++++++++-
+formledklock.pas                       |  17 +
+formlicense.pas                        |   6 +
+formreminderinput.lfm                  |   1 +
+formreminderinput.pas                  |  74 ++--
+formsmalltextklock.lfm                 | 466 ++++++++++++++++++++++++-
+formsmalltextklock.pas                 |  20 +-
+formstickynote.lfm                     |   1 +
+formstickynote.pas                     |  12 +-
+help.txt                               |  76 ----
+help/klock.hnd                         | Bin 2228224 -> 2232320 bytes
+history.txt                            |  56 ++-
+icons/icons8-about-32.png              | Bin 0 -> 776 bytes
+icons/icons8-binary-file-32.png        | Bin 0 -> 717 bytes
+icons/icons8-binary-file-filled-32.png | Bin 0 -> 653 bytes
+icons/icons8-eye-32.png                | Bin 0 -> 1229 bytes
+kReminder.txt                          |  16 -
+klock.iss                              |   4 +-
+klock.lpi                              | 253 +++++++-------
+klock.xml                              |   4 -
+lazKlock.smproj                        | Bin 330666 -> 356088 bytes
+uconversion.pas                        |   7 +-
+uFonts.pas                             |   1 +
+uformclipboardutils.pas                |   5 +-
+ufuzzytime.pas                         |  17 +-
+uklockutils.pas                        |  16 +-
+uoptions.pas                           |  54 +--
+41 files changed, 2197 insertions(+), 473 deletions(-)
+
+Build 65 [2.2.3.66]

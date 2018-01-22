@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, uMemos,
   formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
@@ -54,6 +54,12 @@ type
     btnCountdownStop: TButton;
     btnCountdownLoadSound: TButton;
     btnEventAbort: TButton;
+    btnMemoNew: TButton;
+    btnMemoAdd: TButton;
+    btnMemoClear: TButton;
+    btnMemoEdit: TButton;
+    btnMemoDelete: TButton;
+    btnMemoPrint: TButton;
     btnTimerStart: TButton;
     btnTimerStop: TButton;
     btnTimerClear: TButton;
@@ -71,6 +77,7 @@ type
     btnReminderDelete: TButton;
     btnConverionConvert: TButton;
     btnConversionAddUnits: TButton;
+    btnMemoDecrypt: TButton;
     ChckBxCountdownSound: TCheckBox;
     chckBxCountdownEvent: TCheckBox;
     chckBxCountdownReminder: TCheckBox;
@@ -88,6 +95,7 @@ type
     CmbBxCategory: TComboBox;
     CmbBxConvertTo: TComboBox;
     DtEdtEvent: TDateEdit;
+    edtMemoKey: TEdit;
     edtConverionValue: TEdit;
     edtConverionResult: TEdit;
     EdtEventCommand: TEdit;
@@ -100,13 +108,16 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    mainIdleTimer: TIdleTimer;
+    LblMemoName: TLabel;
     lblRadix: TLabel;
+    mainIdleTimer: TIdleTimer;
     lblSplitLap: TLabel;
     lblfuzzy: TLabel;
     lblEvent: TLabel;
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
+    MmMemoData: TMemo;
+    MmMemoKey: TMemo;
     mnuItmNewStickyNote: TMenuItem;
     mnuItmStickyNote: TMenuItem;
     mnuItmSmallTextKlock: TMenuItem;
@@ -126,6 +137,9 @@ type
     Panel21: TPanel;
     Panel22: TPanel;
     Panel23: TPanel;
+    Panel24: TPanel;
+    Panel25: TPanel;
+    Panel26: TPanel;
     ppMnItmTime: TMenuItem;
     ppMnItmExit: TMenuItem;
     ppMnItmShow: TMenuItem;
@@ -156,12 +170,14 @@ type
     Panel9: TPanel;
     PpMnTray: TPopupMenu;
     PopupNotifier1: TPopupNotifier;
+    RdBttnMemoEncrypt: TRadioButton;
     SpeedButton1: TSpeedButton;
     SpnEdtTimeBase: TSpinEdit;
     SpnEdtHour: TSpinEdit;
     SpnEdtMins: TSpinEdit;
     SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
+    TbShtMemo: TTabSheet;
     TbShtConversion: TTabSheet;
     TbShtReminder: TTabSheet;
     TbShtFuzzy: TTabSheet;
@@ -180,6 +196,9 @@ type
     procedure BitBtnHideClick(Sender: TObject);
     procedure btnConverionConvertClick(Sender: TObject);
     procedure btnConversionAddUnitsClick(Sender: TObject);
+    procedure btnMemoAddClick(Sender: TObject);
+    procedure btnMemoClearClick(Sender: TObject);
+    procedure btnMemoNewClick(Sender: TObject);
     procedure btnReminderNewClick(Sender: TObject);
     procedure btnCountdownLoadCommandClick(Sender: TObject);
     procedure btnCountdownLoadSoundClick(Sender: TObject);
@@ -213,11 +232,13 @@ type
     procedure CountdownTimerTimer(Sender: TObject);
     procedure DtEdtEventChange(Sender: TObject);
     procedure edtConverionValueChange(Sender: TObject);
+    procedure edtMemoKeyChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mainIdleTimerStopTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
+    procedure MmMemoDataChange(Sender: TObject);
     procedure mnuItmAnalogueKlockClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmBinaryKlockClick(Sender: TObject);
@@ -257,6 +278,7 @@ type
     procedure readReminderFile;
     procedure UpdateStatusBar(KTime: TDateTime);
     procedure UpdateTime(KTime: TDateTime);
+    procedure setMemoButtons(mode: Boolean);
   public
 
   end;
@@ -269,6 +291,7 @@ var
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
   kLog: Logger;                 //  used to log erors, debug statements etc.
   stickies: stickyNotes;        //  used to store the Sticky Notes.
+  memorandum: Memos;            //  usrd to store memos.
   ConversionUnits: TStrings;    //  used to hold the converions units - read from file.
   unitConvertVal: double;       //  used to hold the conversion value.
   unitConvertfactor: double;    //  used to hold the conversion factor.
@@ -298,11 +321,6 @@ begin
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
   EdtEventSound.Text := 'alarm-fatal.mp3';
 
-  DtEdtEvent.Date := now;
-  SpnEdtMins.Value := MinuteOf(time);
-  SpnEdtHour.Value := HourOf(time);
-  btnEventSet.Enabled := False;
-
   noReminder := 0;
   appStartTime := GetTickCount64;  //  tick count when application starts.
 
@@ -313,6 +331,7 @@ begin
   kLog := Logger.Create(Application.MainFormHandle);
   ConversionUnits := TStringList.Create;
   stickies := stickyNotes.Create;
+  memorandum := Memos.Create;
 
   logHeader;
 
@@ -337,7 +356,16 @@ procedure TfrmMain.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormKlock Showing');
   stickies.restoreStickyNotes;   //  must be on show
+
+  DtEdtEvent.Date := now;
+  SpnEdtMins.Value := MinuteOf(time);
+  SpnEdtHour.Value := HourOf(time);
+  btnEventSet.Enabled := False;
+
+  SpnEdtTimeBase.Visible := False;
+  lblRadix.Visible := False;
   SetDefaults;
+  setMemoButtons(false);
   mainTimer.Enabled := True;        //  Now safe to enable main timer.
 end;
 
@@ -364,6 +392,7 @@ begin
   fs.removeFonts;                   //  Remove custom fonts.
 
   stickies.updateStickyNotes;
+  memorandum.updateMemos;
 
   logFooter;
 
@@ -462,6 +491,7 @@ procedure TfrmMain.PageControl1Change(Sender: TObject);
         4 = reminder
 }
 begin
+  setMemoButtons(false);
 
   case PageControl1.TabIndex of
     0:
@@ -520,7 +550,11 @@ begin
     begin                    //   Reminder Page.
       readReminderFile;
     end;
-    5:
+    5:                       //  memo page.
+    begin
+      setMemoButtons(true);
+    end;
+    6:
     begin                       //  Conversion Page.
       checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
       readConversionUnitsFile;
@@ -530,6 +564,33 @@ begin
     end;
   end;
 
+end;
+
+procedure TfrmMain.setMemoButtons(mode: Boolean);
+begin
+  btnMemoNew.Visible := mode;
+
+  if MmMemoKey.Lines.Count = 0 then     //  Only enable remining  buttone
+    mode := false;                      //  if there are existing memos.
+
+  btnMemoAdd.Visible := mode;
+  btnMemoClear.Visible := mode;
+  btnMemoEdit.Visible := mode;
+  btnMemoDelete.Visible := mode;
+  btnMemoPrint.Visible := mode;
+
+  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
+
+  MmMemoKey.ReadOnly := true;
+  MmMemoKey.Enabled := false;
+
+  MmMemoData.ReadOnly := true;
+  MmMemoData.Enabled := false;
+
+  RdBttnMemoEncrypt.Enabled := false;
+
+  edtMemoKey.ReadOnly := true;
+  edtMemoKey.Enabled := false;
 end;
 
 procedure TfrmMain.mainTimerTimer(Sender: TObject);
@@ -590,55 +651,48 @@ end;
 
 procedure TfrmMain.UpdateTime(KTime: TDateTime);
 {  Updates the time in the correct font.    }
+VAR
+  b: boolean;
 begin
+  lblfuzzy.Top := 8;
+  lblfuzzy.Left := 8;
+  lblfuzzy.Font.Size := 22;
+  lblfuzzy.AutoSize := true;
+
+  klog.writeLog(CmbBxTime.Items[CmbBxTime.ItemIndex]);
+
   case CmbBxTime.Items[CmbBxTime.ItemIndex] of
     'Bar Code Time':
     begin
       lblfuzzy.Font.Name := 'Bar Code 39';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.Top := 8;
-      lblfuzzy.Font.Size := 22;
-      lblfuzzy.AutoSize := true;
     end;
     'Nancy Blackett Time':
     begin
       lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.Top := 8;
-      lblfuzzy.Font.Size := 22;
-      lblfuzzy.AutoSize := true;
     end;
     'Semaphore Time':
     begin
       lblfuzzy.Font.Name := 'Semaphore';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.Top := 4;
-      lblfuzzy.Font.Size := 22;
-      lblfuzzy.AutoSize := true;
     end;
     'Braille Time':
     begin
       lblfuzzy.Font.Name := 'BrailleLatin';
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.Top := 8;
-      lblfuzzy.Font.Size := 22;
-      lblfuzzy.AutoSize := true;
     end;
     'Christmas':
     begin
       lblfuzzy.Font.Name := 'Christmas';
       lblfuzzy.Font.Size := 28;
-      lblfuzzy.Top := 2;
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.AutoSize := true;
     end;
     'Easter':
     begin
       lblfuzzy.Font.Name := 'RMBunny';
       lblfuzzy.Font.Size := 28;
-      lblfuzzy.Top := 2;
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-      lblfuzzy.AutoSize := true;
     end;
     'Fuzzy Time', 'Word Time':
       begin
@@ -647,22 +701,15 @@ begin
         else if userOptions.easterFont and isEaster then
           lblfuzzy.Font.Name := 'RMBunny'
         else
-        lblfuzzy.Font.Name := 'default';
-        lblfuzzy.Top := 2;
-        lblfuzzy.Font.Size := 22;          //  seems to need this, or changes size on each call.
-        lblfuzzy.Font.Size := GetTextSize(ft.getTime, lblfuzzy.Font);
         lblfuzzy.Caption := ft.getTime;
-        lblfuzzy.AutoSize := false;
       end;
     else   //  no font substitution, use default font.
       begin
         lblfuzzy.Font.Name := 'default';
-        lblfuzzy.Font.Size := 22;
-        lblfuzzy.Font.Size := GetTextSize(ft.getTime, lblfuzzy.Font);
         lblfuzzy.Caption := ft.getTime;
       end;
   end;
-
+  b := lblfuzzy.AdjustFontForOptimalFill;
 end;
 
 procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
@@ -1625,6 +1672,43 @@ begin
   cleartextFiles;
 end;
 
+//
+// *********************************************************** Memo ************
+//
+procedure TfrmMain.btnMemoNewClick(Sender: TObject);
+begin
+  edtMemoKey.Enabled := true;
+  edtMemoKey.ReadOnly := false;
+  edtMemoKey.SetFocus;
+
+  btnMemoClear.Visible := true;
+  RdBttnMemoEncrypt.Enabled := true;
+  MmMemoData.Enabled := true;
+  MmMemoData.ReadOnly := false;
+end;
+
+procedure TfrmMain.btnMemoClearClick(Sender: TObject);
+begin
+  setMemoButtons(True);
+end;
+
+procedure TfrmMain.edtMemoKeyChange(Sender: TObject);
+begin
+ if (edtMemoKey.Text <> '') and (MmMemoData.Text <> '') then
+   btnMemoAdd.Visible := true;
+end;
+
+procedure TfrmMain.MmMemoDataChange(Sender: TObject);
+begin
+ if (edtMemoKey.Text <> '') and (MmMemoData.Text <> '') then
+   btnMemoAdd.Visible := true;
+end;
+
+procedure TfrmMain.btnMemoAddClick(Sender: TObject);
+begin
+  memorandum.new(edtMemoKey.Text, MmMemoData.Text, RdBttnMemoEncrypt.Checked);
+  setMemoButtons(True);
+end;
 //
 // *********************************************************** Menu procs ******
 //

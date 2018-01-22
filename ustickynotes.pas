@@ -191,7 +191,7 @@ begin
     fileIn.Free;
   end;        //  try
 
-  //  if Sticky Note Count nis greater then 0 and the visibale count equals 0,
+  //  if Sticky Note Count is greater then 0 and the visibale count equals 0,
   //  then we have a file full of prevously closed Sticky Notes.
   //  So, we clear everythng and start again.
   if (stickyNotesCount > 0)  and (visableCount = 0) then

@@ -11,7 +11,8 @@ uses
   formOptions, uFuzzyTime, formLicense, UKlockUtils, formReminderInput,
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
-  formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote;
+  formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote,
+  uMemo, uMemos;
 
 {$R *.res}
 
