@@ -53,6 +53,7 @@ begin
     writeLn(unitFile, 'Category, Liquid');
     writeLn(unitFile, 'Category, Volume');
     writeLn(unitFile, 'category, Power');
+    writeLn(unitFile, 'category, Presure');
     writeLn(unitFile, 'Weight, LB to KG, 0.45359237');
     writeLn(unitFile, 'Weight, KG to LB, 2.20462262');
     writeLn(unitFile, 'Weight, Ton to KG, 6.350293');
@@ -77,6 +78,8 @@ begin
     writeLn(unitFile, 'Volume, Cubic Centimetres to Cubic Inches, 0.061');
     writeLn(unitFile, 'Power, Horse power to Watts, 745.7');
     writeLn(unitFile, 'Power, Watts to Horse Power, 0.001341022');
+    WriteLn(unitFile, 'Presure, Bar to PSI, 14.5038');
+    WriteLn(unitFile, 'Presure, PSI to bar, 0.0689476');
 
     CloseFile(unitFile);
   except

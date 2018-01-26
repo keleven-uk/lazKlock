@@ -48,8 +48,9 @@ constructor memo.Create(sn_id: integer);
 begin
   id := sn_id;
 
+  name := '';
   body := '';
-  encrypt := true;
+  encrypt := false;
 end;
 
 constructor memo.Create(fsOut: TFileStream);

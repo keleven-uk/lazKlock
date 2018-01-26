@@ -172,6 +172,7 @@ begin
   if not fileExists(stickyNotesFile) then exit;
 
   fileIn := TFileStream.Create(stickyNotesFile, fmOpenRead or fmShareDenyWrite);
+
   try
     repeat
       try
@@ -184,7 +185,7 @@ begin
         stickyNotesCount := stickyNotesCount + 1;
         except
           on E: EInOutError do
-          ShowMessage('ERROR : Writing Sticky Note file');
+          ShowMessage('ERROR : Reading Sticky Note file');
       end;  //  try
       until FileIn.Position >= fileIn.Size;
    finally

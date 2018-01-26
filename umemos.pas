@@ -9,11 +9,10 @@ unit uMemos;
    new - creates a new Memo and places it in the store.
          It can then be edited and/or deleted when not needed.
 
-   updateMemo - should be called after a new memo is created.
-                It save all memos to a binary file in the users data area.
-
    restoreMemo - Should be run on starrt up.
                  It restore all memos to the memo store.
+
+   NB : No updatememo is needed, the memos are saved to file after every add.
 }
 {$mode objfpc}{$H+}
 
@@ -33,14 +32,14 @@ type
     property MemosFile: string read _MemosFile write _MemosFile;
 
     procedure writeToFile;
-    procedure Remove(pos: integer);
   public
     property MemosCount: integer read _MemosCount write _MemosCount;
 
     constructor Create; overload;
     procedure new(key: string; data: string; hide: boolean);
+    function retrieve(id: integer): Memo;
     procedure restoreMemos;
-    procedure updateMemos;
+    procedure Remove(pos: integer);
   end;
 
 
@@ -56,7 +55,7 @@ implementation
 constructor Memos.Create; overload;
 {  set up some variables on create.    }
 begin
-  MemosFile := GetAppConfigDir(False) + 'StickyNotes.bin';
+  MemosFile := GetAppConfigDir(False) + 'Memo.bin';
   MemosStore := keyStore.Create;
   MemosStore.Sorted := true;
   MemosCount := 0;
@@ -69,6 +68,7 @@ procedure Memos.new(key: string; data: string; hide: boolean);
 VAR
   m: Memo;                   //  Memo.
 begin
+  MemosCount := MemosCount + 1;
   m := Memo.Create(MemosCount);
 
   m.name := key;
@@ -78,42 +78,48 @@ begin
 
   MemosStore.Add(MemosCount, m);
 
-  MemosCount := MemosCount + 1;
+  writeToFile;
+end;
+
+function Memos.retrieve(id: integer): Memo;
+{returns a memo out of the store at position id.    }
+VAR
+  m: Memo;                   //  Memo.
+begin
+  m := Memo.Create(0);
+  m.name := MemosStore.Data[id].name;
+  m.body := MemosStore.Data[id].body;
+  m.encrypt := MemosStore.Data[id].encrypt;
+
+  result := m
 end;
 
 procedure Memos.Remove(pos: integer);
-{  Remove a Sticky Note from the store at a given position.
-
-   Seems to be a problem with either .remove or .delete.
-   Both give me a list out of bounds error, even though the
-   argument passed in is valid i.e. 0 < pos < stickyNotesStore.Count
-
-   Added a visible parameter to Sticky note has a work around.
-}
+{  Remove a memo from the store at a given position.    }
 var
   r: integer;
 begin
-  for r := 0 to MemosStore.Count -1 do
-    showMessage(intToStr(MemosStore.Keys[r]));
-
   r := MemosStore.Remove(pos);
+  MemosCount := MemosCount - 1;
+  writeToFile;
 end;
 
 procedure Memos.writeToFile;
-{  Write out the contents of the Sticky Note Store to a binary file.    }
+{  Write out the contents of the memo Store to a binary file.    }
 var
   fileOut: TFileStream;
   f: integer;
 begin
   fileOut := TFileStream.Create(memosFile, fmCreate or fmShareDenyWrite);
+
   try
-    for f := 0 to MemosCount -1 do
+    for f := 0 to MemosCount - 1 do
     begin
       try
       MemosStore.Data[f].saveToFile(fileOut);
       except
         on E: EInOutError do
-        ShowMessage('ERROR : Writing Sticky Note file');
+        ShowMessage('ERROR : Writing Memo file');
       end;
     end;
   finally
@@ -122,24 +128,31 @@ begin
 end;
 
 procedure Memos.restoreMemos;
-{  Read in a binary file and convert contents to sticky notes and
-   populate the store.
+{  Read in a binary file and convert contents to memos and populate the store.
 }
-
+var
+  fileIn: TFileStream;
 begin
+  MemosCount := 0;
 
+  if not fileExists(memosFile) then exit;     //  file not there then exit
+  if fileSize(memosFile) = 0 then exit;       //  empty file then exit.
 
-end;
+  fileIn := TFileStream.Create(memosFile, fmOpenRead or fmShareDenyWrite);
 
-procedure Memos.updateMemos;
-{  Called by the host program to save all visible Sticky Notes.
-   All forms are scanned for forms that name start with STICKY.
-   The if they are visible, their data is updated in the store,
-   if they are not visible [they have been closed] their visible
-   is set to false.
-}
-
-begin
+  try
+    repeat
+      try
+        MemosStore.Add(MemosCount, memo.Create(fileIn));
+        MemosCount := MemosCount + 1;
+        except
+          on E: EInOutError do
+          ShowMessage('ERROR : Reading memo file');
+      end;  //  try
+      until FileIn.Position >= fileIn.Size;
+   finally
+    fileIn.Free;
+  end;        //  try
 
 end;
 

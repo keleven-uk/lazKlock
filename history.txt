@@ -2334,4 +2334,9 @@ uklockutils.pas                        |  16 +-
 uoptions.pas                           |  54 +--
 41 files changed, 2197 insertions(+), 473 deletions(-)
 
-Build 65 [2.2.3.66]
+Build 66 [2.2.3.66]
+
+Half way through adding the Memo tab.
+Added uMemos.pas and uMemo.pas.
+
+Build 67 [2.2.3.67]

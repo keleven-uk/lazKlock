@@ -36,7 +36,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, uMemos,
+  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, uMemos, uMemo,
   formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
   CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
   ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
@@ -110,6 +110,7 @@ type
     Label4: TLabel;
     LblMemoName: TLabel;
     lblRadix: TLabel;
+    LstBxMemoName: TListBox;
     mainIdleTimer: TIdleTimer;
     lblSplitLap: TLabel;
     lblfuzzy: TLabel;
@@ -117,7 +118,6 @@ type
     lblTimer: TLabel;
     LblCountdownTime: TLabel;
     MmMemoData: TMemo;
-    MmMemoKey: TMemo;
     mnuItmNewStickyNote: TMenuItem;
     mnuItmStickyNote: TMenuItem;
     mnuItmSmallTextKlock: TMenuItem;
@@ -198,7 +198,10 @@ type
     procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
+    procedure btnMemoDeleteClick(Sender: TObject);
+    procedure btnMemoEditClick(Sender: TObject);
     procedure btnMemoNewClick(Sender: TObject);
+    procedure btnMemoPrintClick(Sender: TObject);
     procedure btnReminderNewClick(Sender: TObject);
     procedure btnCountdownLoadCommandClick(Sender: TObject);
     procedure btnCountdownLoadSoundClick(Sender: TObject);
@@ -236,6 +239,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure LstBxMemoNameClick(Sender: TObject);
     procedure mainIdleTimerStopTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure MmMemoDataChange(Sender: TObject);
@@ -253,8 +257,6 @@ type
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
     procedure mnuItmSmallTextKlockClick(Sender: TObject);
-    procedure OKButtonClick(Sender: TObject);
-    procedure CloseButtonClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
@@ -279,6 +281,8 @@ type
     procedure UpdateStatusBar(KTime: TDateTime);
     procedure UpdateTime(KTime: TDateTime);
     procedure setMemoButtons(mode: Boolean);
+    procedure displayMemo(pos: integer);
+    procedure loadMemo;
   public
 
   end;
@@ -356,6 +360,8 @@ procedure TfrmMain.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormKlock Showing');
   stickies.restoreStickyNotes;   //  must be on show
+  memorandum.restoreMemos;
+  loadMemo;
 
   DtEdtEvent.Date := now;
   SpnEdtMins.Value := MinuteOf(time);
@@ -392,13 +398,13 @@ begin
   fs.removeFonts;                   //  Remove custom fonts.
 
   stickies.updateStickyNotes;
-  memorandum.updateMemos;
 
   logFooter;
 
   FreeAndNil(fs);                   //  Release the font store object.
   FreeAndNil(ft);                   //  Release the fuzzy time object.
-  FreeAndNil(stickies);             //  Release the Sticky Noye store.
+  FreeAndNil(stickies);             //  Release the Sticky Note store.
+  FreeAndNil(memorandum);           //  Release the Memo store.
   FreeAndNil(userOptions);          //  Release the user options .
   FreeAndNil(kLog);                 //  Release the logger object.
   ConversionUnits.Free;             //  release the Conversion string list.
@@ -497,6 +503,7 @@ begin
     0:
     begin                     //  fuzzy page
       stsBrInfo.Panels.Items[4].Text := '';
+      setMemoButtons(false);
     end;
     1:
     begin                     //  countdown page
@@ -504,6 +511,7 @@ begin
         stsBrInfo.Panels.Items[4].Text := ''
       else
         stsBrInfo.Panels.Items[4].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
+      setMemoButtons(false);
     end;
     2:
     begin                     //  timer page
@@ -529,6 +537,7 @@ begin
           end;  //  if OptionsRec.TimerMilliSeconds
         end;    //  btnTimerStart.Caption = 'Start'
       end;      //  if timerTimer.Enabled = false
+      setMemoButtons(false);
     end;
     3:
     begin                    //  event page
@@ -545,10 +554,12 @@ begin
         stsBrInfo.Panels.Items[4].Text := format('Reminder set for %.2d:%.2d - %s', [SpnEdtHour.Value,
           SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
       end;  //  if btnEventSet.Enabled
+      setMemoButtons(false);
     end;
     4:
     begin                    //   Reminder Page.
       readReminderFile;
+      setMemoButtons(false);
     end;
     5:                       //  memo page.
     begin
@@ -561,36 +572,10 @@ begin
       parseConversionUnitsFile('LoadCategory');
       parseConversionUnitsFile('LoadUnits');
       cleartextFiles;
+      setMemoButtons(false);
     end;
   end;
 
-end;
-
-procedure TfrmMain.setMemoButtons(mode: Boolean);
-begin
-  btnMemoNew.Visible := mode;
-
-  if MmMemoKey.Lines.Count = 0 then     //  Only enable remining  buttone
-    mode := false;                      //  if there are existing memos.
-
-  btnMemoAdd.Visible := mode;
-  btnMemoClear.Visible := mode;
-  btnMemoEdit.Visible := mode;
-  btnMemoDelete.Visible := mode;
-  btnMemoPrint.Visible := mode;
-
-  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
-
-  MmMemoKey.ReadOnly := true;
-  MmMemoKey.Enabled := false;
-
-  MmMemoData.ReadOnly := true;
-  MmMemoData.Enabled := false;
-
-  RdBttnMemoEncrypt.Enabled := false;
-
-  edtMemoKey.ReadOnly := true;
-  edtMemoKey.Enabled := false;
 end;
 
 procedure TfrmMain.mainTimerTimer(Sender: TObject);
@@ -1676,38 +1661,152 @@ end;
 // *********************************************************** Memo ************
 //
 procedure TfrmMain.btnMemoNewClick(Sender: TObject);
+{  Add a new memo.    }
 begin
   edtMemoKey.Enabled := true;
   edtMemoKey.ReadOnly := false;
+  edtMemoKey.Text := '';
   edtMemoKey.SetFocus;
 
   btnMemoClear.Visible := true;
   RdBttnMemoEncrypt.Enabled := true;
   MmMemoData.Enabled := true;
   MmMemoData.ReadOnly := false;
+  MmMemoData.Text := '';
+
+  btnMemoEdit.Visible := false;
+  btnMemoDelete.Visible := false;
+  btnMemoPrint.Visible := false;
+end;
+
+procedure TfrmMain.btnMemoPrintClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmMain.btnMemoClearClick(Sender: TObject);
+{  Clear all fields and return to new mode.    }
 begin
-  setMemoButtons(True);
+  setMemoButtons(false);
+end;
+
+procedure TfrmMain.btnMemoDeleteClick(Sender: TObject);
+begin
+  if QuestionDlg ('Memo Delete',
+                  'Do You Reallt Want To Delete This memo',
+                   mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
+  begin
+    memorandum.Remove(LstBxMemoName.ItemIndex);
+    loadmemo;
+    setMemoButtons(true);
+  end;
+end;
+
+procedure TfrmMain.btnMemoEditClick(Sender: TObject);
+{  Edit a selected memo and resave file.    }
+begin
+
+end;
+
+procedure TfrmMain.btnMemoAddClick(Sender: TObject);
+{  Add a memo to the store.
+   This is achieved by calling meo store [memorandum] new function and
+   passing in the data.  The listbox is then re-populated.
+   The memoCount is one more then the actual count.
+}
+begin
+  memorandum.new(edtMemoKey.Text, MmMemoData.Text, RdBttnMemoEncrypt.Checked);
+
+  loadMemo;
+
+  setMemoButtons(true);
 end;
 
 procedure TfrmMain.edtMemoKeyChange(Sender: TObject);
+{  makes the add button visible when both name and date contain text.
+
+   Was also being fired when loading a previous memo.
+   Since the Clear button is made visible when the new button
+   is clicked, this used as a flag to indicate a new memo is being added
+   and not a previous memo being displayed.
+}
 begin
  if (edtMemoKey.Text <> '') and (MmMemoData.Text <> '') then
-   btnMemoAdd.Visible := true;
+   btnMemoAdd.Visible := btnMemoClear.Visible;
 end;
 
 procedure TfrmMain.MmMemoDataChange(Sender: TObject);
 begin
  if (edtMemoKey.Text <> '') and (MmMemoData.Text <> '') then
-   btnMemoAdd.Visible := true;
+   btnMemoAdd.Visible := btnMemoClear.Visible;
 end;
 
-procedure TfrmMain.btnMemoAddClick(Sender: TObject);
+procedure TfrmMain.LstBxMemoNameClick(Sender: TObject);
+{  Display the memo at position of the mouse click.    }
 begin
-  memorandum.new(edtMemoKey.Text, MmMemoData.Text, RdBttnMemoEncrypt.Checked);
-  setMemoButtons(True);
+  displayMemo(LstBxMemoName.ItemIndex);
+end;
+
+procedure TfrmMain.loadMemo;
+{ Load the contents of the memo file into the listbox.    }
+var
+  f: integer;
+begin
+ LstBxMemoName.Clear;
+  for f := 0 to memorandum.MemosCount -1 do
+  begin
+    displayMemo(f);
+    LstBxMemoName.Items.Add(edtMemoKey.Text);
+  end;
+end;
+
+procedure TfrmMain.displayMemo(pos: integer);
+{  Display a memo at position pos.
+   If the memo count is zero i.e. no memos - then just exit.
+}
+VAR
+  m: Memo;                   //  Memo.
+begin
+  if memorandum.MemosCount = 0 then exit;
+  m := Memo.Create(0);
+  m := memorandum.retrieve(pos);
+
+  edtMemoKey.Text := m.name;
+  MmMemoData.Text := m.body;
+  RdBttnMemoEncrypt.Checked := m.encrypt;
+end;
+
+procedure TfrmMain.setMemoButtons(mode: Boolean);
+{  Configure the memo buttons and memo fields.    }
+begin
+  btnMemoNew.Visible := mode;
+
+  btnMemoAdd.Visible := false;
+  btnMemoClear.Visible := false;
+
+  if (PageControl1.TabIndex = 5) and (memorandum.MemosCount <> 0) then
+  begin
+    btnMemoEdit.Visible := true;
+    btnMemoDelete.Visible := true;
+    btnMemoPrint.Visible := true;
+    LstBxMemoName.Selected[0] := true;
+    displayMemo(0);                    //  Display the first memo, if exists.
+  end
+  else
+  begin
+    btnMemoEdit.Visible := false;
+    btnMemoDelete.Visible := false;
+    btnMemoPrint.Visible := false;
+  end;
+
+  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
+
+  RdBttnMemoEncrypt.Enabled := false;
+  RdBttnMemoEncrypt.Checked := false;
+
+  edtMemoKey.ReadOnly := true;
+  edtMemoKey.Enabled := false;
+  edtMemoKey.Caption := '';
 end;
 //
 // *********************************************************** Menu procs ******
@@ -1790,17 +1889,6 @@ procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
 begin
   frmSmallTextKlock.Show;
 end;
-
-procedure TfrmMain.OKButtonClick(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmMain.CloseButtonClick(Sender: TObject);
-begin
-
-end;
-
 //
 // ********************************************************* Info Menu *********
 //
