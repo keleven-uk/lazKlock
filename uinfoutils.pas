@@ -161,50 +161,50 @@ end;
 function getPower: TStringList;
 {  see https://msdn.microsoft.com/en-us/library/windows/desktop/aa373232(v=vs.85).aspx  }
 var
-  strResults: TStringList;
-  PowerStatus:TSystemPowerStatus;
+  PowerStatus: TSystemPowerStatus;
 begin
-  strResults := TStringList.Create;
+  result := TStringList.Create;   //  This solves the promle of not being able to
+                                  //  free the StringList and stop the memory leak.
+                                  //  Also stope the double creation of the stringList
+                                  //  which casues a sig fault.
 
   if GetSystemPowerStatus(PowerStatus) then
   begin
     if powerStatus.ACLineStatus = 1 then
-      strResults.add('Mains power online')
+      result.add('Mains power online')
     else
-      strResults.add('No mains Power');
+      result.add('No mains Power');
 
-    strResults.add('');
+    result.add('');
 
     case powerStatus.BatteryFlag of
-      1: strResults.add('High — the battery capacity is at more than 66 percent');
-      2: strResults.add('Low — the battery capacity is at less than 33 percent');
-      4: strResults.add('Critical — the battery capacity is at less than five percent');
-      8: strResults.add('Charging');
-      128: strResults.add('No system battery');
-      255: strResults.add('Unknown status — unable to read the battery flag information');
+      1: result.add('High — the battery capacity is at more than 66 percent');
+      2: result.add('Low — the battery capacity is at less than 33 percent');
+      4: result.add('Critical — the battery capacity is at less than five percent');
+      8: result.add('Charging');
+      128: result.add('No system battery');
+      255: result.add('Unknown status — unable to read the battery flag information');
     end;
 
     if powerStatus.ACLineStatus = 0 then
     begin
       if powerStatus.BatteryLifePercent <> 0 then
-        strResults.add(format('Battery Life %d %%', [powerStatus.BatteryLifePercent]));
+        result.add(format('Battery Life %d %%', [powerStatus.BatteryLifePercent]));
       if powerStatus.BatteryFullLifeTime <> 0 then
-        strResults.add(format('Battery Life %d secs', [powerStatus.BatteryFullLifeTime]));
+        result.add(format('Battery Life %d secs', [powerStatus.BatteryFullLifeTime]));
       if powerStatus.BatteryLifeTime <> 0 then
-        strResults.add(format('Battery Full Life %d secs', [powerStatus.BatteryFullLifeTime]));
+        result.add(format('Battery Full Life %d secs', [powerStatus.BatteryFullLifeTime]));
     end;
 
   end
   else
   begin
-    strResults.add('');
-    strResults.add('');
-    strResults.add('');
-    strResults.add('');
-    strResults.add('Unable to get system power details');
+    result.add('');
+    result.add('');
+    result.add('');
+    result.add('');
+    result.add('Unable to get system power details');
   end;
-
-  result := strResults;
 end;
 
 function getEasterSunday(year: integer): TdateTime;

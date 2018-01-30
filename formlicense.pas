@@ -21,7 +21,6 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     procedure btnLicenseClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
   private
     { private declarations }
@@ -44,11 +43,6 @@ uses
 procedure TfrmLicense.btnLicenseClick(Sender: TObject);
 begin
   Close;
-end;
-
-procedure TfrmLicense.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
 end;
 
 procedure TfrmLicense.FormCreate(Sender: TObject);

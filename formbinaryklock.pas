@@ -62,7 +62,6 @@ type
     Shp11: TShape;
     Shp21: TShape;
     tmrBinartKlock: TTimer;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -118,11 +117,6 @@ begin
   Application.AddOnUserInputHandler(@MouseHook);
 
   setShapes;
-end;
-
-procedure TfrmBinaryKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
 end;
 
 procedure TfrmBinaryKlock.FormDestroy(Sender: TObject);

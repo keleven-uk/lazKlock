@@ -12,7 +12,6 @@ object frmLicense: TfrmLicense
   Constraints.MaxWidth = 620
   Constraints.MinHeight = 267
   Constraints.MinWidth = 620
-  OnClose = FormClose
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.8.0.6'

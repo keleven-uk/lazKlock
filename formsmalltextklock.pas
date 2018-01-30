@@ -44,7 +44,6 @@ type
     Panel1: TPanel;
     popUpMenuSmallTextKlock: TPopupMenu;
     tmrSmallTextKlock: TTimer;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -147,12 +146,6 @@ procedure TfrmSmallTextKlock.FormDestroy(Sender: TObject);
 begin
   // To prevent possible system resource leaks
 Application.RemoveOnUserInputHandler(@MouseHook);
-end;
-
-procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  tmrSmallTextKlock.Enabled := false;
-  CloseAction := caFree;
 end;
 
 procedure TfrmSmallTextKlock.FormShow(Sender: TObject);

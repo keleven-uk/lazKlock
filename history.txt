@@ -2279,7 +2279,7 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Mon Jan 15 14:14:25 2018 +0000
 
 Added a form close to all forms if missing, this allowd a
-CloseAction := caFree; to be added to every form.
+"CloseAction := caFree;" to be added to every form.
 
 Added a new Sticky Note option to all extra Klocks pop up menus.
 Added icons to all extra Klocks pop up menus.
@@ -2306,7 +2306,7 @@ formclipboard.pas                      |  13 +-
 forminfo.lfm                           |   1 +
 forminfo.pas                           |   7 +
 formledklock.lfm                       | 335 +++++++++++++++++-
-formledklock.pas                       |  17 +
+f77cd4cae59 uOormledklock.pas                       |  17 +
 formlicense.pas                        |   6 +
 formreminderinput.lfm                  |   1 +
 formreminderinput.pas                  |  74 ++--
@@ -2334,9 +2334,46 @@ uklockutils.pas                        |  16 +-
 uoptions.pas                           |  54 +--
 41 files changed, 2197 insertions(+), 473 deletions(-)
 
+
 Build 66 [2.2.3.66]
 
+commit c6501001cd0fe2e02f3a2a5e06f5aab51a0fa2cc
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Jan 22 12:00:56 2018 +000
+
+Added a memo tab, this will allow memo's to be entered, edited, printed and
+saved.  Any previously saved memos will be loaded into Klock on startup.
+The memos can be optionally encrypted and only be displayed on demand.
+
+This added two new files - uMemos.pas and uMemo.pas.
+The memo workflow is modeled on the Sticky Note workflow.
+
 Half way through adding the Memo tab.
-Added uMemos.pas and uMemo.pas.
+
 
 Build 67 [2.2.3.67]
+
+commit b3f072e6e432af1feeb6126b2334053e374f3b65
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Jan 26 16:50:33 2018 +0000
+
+Still implementing memo tab.
+    
+The new, delete, save and load functions seem now to work.
+Edit and print to go
+
+
+Build 68 [2.2.3.68]
+
+Completed the Edit and Encryption bit.
+They look to be working - but need further testing.
+Still got print to go.
+
+In build 65 I added in "CloseAction := caFree;" to every form, I read this was a
+good idea.  This seems to make Klock crash if that form is opened more then
+once in any session.  So, I removed it from every form.
+
+Currently
+8952 lines of source code.
+4861 statements
+15.2% comment

@@ -40,7 +40,6 @@ type
     MnItmAbout: TMenuItem;
     MnItmExit: TMenuItem;
     popUpMenuAnalogueKlock: TPopupMenu;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -102,11 +101,6 @@ begin
 
   {call the function to do it}
   SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
-end;
-
-procedure TfrmAnalogueKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
 end;
 
 procedure TfrmAnalogueKlock.FormDestroy(Sender: TObject);

@@ -22,7 +22,6 @@ type
     MnItmAbout: TMenuItem;
     popUpMenuLEDKlock: TPopupMenu;
     TmrLEDKlock: TTimer;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -56,11 +55,6 @@ procedure TfrmLEDKlock.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
-end;
-
-procedure TfrmLEDKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
 end;
 
 procedure TfrmLEDKlock.FormDestroy(Sender: TObject);

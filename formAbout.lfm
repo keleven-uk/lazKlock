@@ -117,9 +117,8 @@ object frmAbout: TfrmAbout
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
-  OnClose = FormClose
   OnCreate = FormCreate
-  Position = poMainFormCenter
+  Position = poScreenCenter
   LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 8

@@ -74,7 +74,6 @@ type
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
@@ -201,11 +200,6 @@ begin
   finally
       freeandnil(logFiles);
   end;
-end;
-
-procedure TfrmOptions.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);

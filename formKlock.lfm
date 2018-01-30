@@ -147,7 +147,6 @@ object frmMain: TfrmMain
     0000
   }
   Menu = mnuMain
-  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
@@ -1045,6 +1044,7 @@ object frmMain: TfrmMain
               Top = 27
               Width = 60
               Caption = 'Decrypt'
+              OnClick = btnMemoDecryptClick
               TabOrder = 2
             end
             object MmMemoData: TMemo
@@ -4066,5 +4066,27 @@ object frmMain: TfrmMain
     OnStopTimer = mainIdleTimerStopTimer
     left = 328
     top = 184
+  end
+  object DCP_rijndael1: TDCP_rijndael
+    Id = 9
+    Algorithm = 'Rijndael'
+    MaxKeySize = 256
+    BlockSize = 128
+    left = 384
+    top = 184
+  end
+  object DCP_sha256_1: TDCP_sha256
+    Id = 28
+    Algorithm = 'SHA256'
+    HashSize = 256
+    left = 440
+    top = 184
+  end
+  object tmrMemo: TTimer
+    Enabled = False
+    Interval = 30000
+    OnTimer = tmrMemoTimer
+    left = 480
+    top = 8
   end
 end

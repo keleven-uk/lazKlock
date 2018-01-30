@@ -52,8 +52,8 @@ begin
     writeLn(unitFile, 'Category, Area');
     writeLn(unitFile, 'Category, Liquid');
     writeLn(unitFile, 'Category, Volume');
-    writeLn(unitFile, 'category, Power');
-    writeLn(unitFile, 'category, Presure');
+    writeLn(unitFile, 'Category, Power');
+    writeLn(unitFile, 'Category, Presure');
     writeLn(unitFile, 'Weight, LB to KG, 0.45359237');
     writeLn(unitFile, 'Weight, KG to LB, 2.20462262');
     writeLn(unitFile, 'Weight, Ton to KG, 6.350293');

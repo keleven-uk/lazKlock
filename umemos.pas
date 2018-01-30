@@ -9,8 +9,13 @@ unit uMemos;
    new - creates a new Memo and places it in the store.
          It can then be edited and/or deleted when not needed.
 
+   amend - Amends a memo - but only the body text and the encypt flag.
+
    restoreMemo - Should be run on starrt up.
                  It restore all memos to the memo store.
+
+   savememos - Saves the memos to a binary file.  Called by new and amend.
+               [this could be private]
 
    NB : No updatememo is needed, the memos are saved to file after every add.
 }
@@ -31,14 +36,15 @@ type
 
     property MemosFile: string read _MemosFile write _MemosFile;
 
-    procedure writeToFile;
   public
     property MemosCount: integer read _MemosCount write _MemosCount;
 
     constructor Create; overload;
     procedure new(key: string; data: string; hide: boolean);
+    procedure amend(id:integer; data: string; hide: boolean);
     function retrieve(id: integer): Memo;
     procedure restoreMemos;
+    procedure saveMemos;
     procedure Remove(pos: integer);
   end;
 
@@ -64,6 +70,7 @@ end;
 procedure Memos.new(key: string; data: string; hide: boolean);
 {  Creates a new memo.  This is called from the host program.
    A new memo is created and added to the store.
+   The memo store is then saved to file.
 }
 VAR
   m: Memo;                   //  Memo.
@@ -78,7 +85,18 @@ begin
 
   MemosStore.Add(MemosCount, m);
 
-  writeToFile;
+  saveMemos;
+end;
+
+procedure Memos.amend(id:integer; data: string; hide: boolean);
+{  Amends a memo - but only the body text and the encypt flag.
+   The memo store is then saved to file.
+}
+begin
+  MemosStore.Data[id].body := data;
+  MemosStore.Data[id].encrypt := hide;
+
+  saveMemos;
 end;
 
 function Memos.retrieve(id: integer): Memo;
@@ -101,10 +119,10 @@ var
 begin
   r := MemosStore.Remove(pos);
   MemosCount := MemosCount - 1;
-  writeToFile;
+  saveMemos;
 end;
 
-procedure Memos.writeToFile;
+procedure Memos.saveMemos;
 {  Write out the contents of the memo Store to a binary file.    }
 var
   fileOut: TFileStream;

@@ -13,7 +13,6 @@ object frmOptions: TfrmOptions
   Constraints.MinHeight = 488
   Constraints.MinWidth = 620
   OnActivate = FormActivate
-  OnClose = FormClose
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.8.0.6'

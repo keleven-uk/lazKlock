@@ -14,7 +14,6 @@ object frmBinaryKlock: TfrmBinaryKlock
   Constraints.MinHeight = 120
   Constraints.MinWidth = 433
   Font.Height = -29
-  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

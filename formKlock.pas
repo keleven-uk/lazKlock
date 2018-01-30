@@ -35,12 +35,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, uFonts,
-  ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn, uMemos, uMemo,
-  formAbout, formOptions, formLicense, UFuzzyTime, dateutils, LCLIntf, LCLType,
-  CheckLst, UKlockUtils, formReminderInput, AvgLvlTree, uOptions, Windows,
-  ULogging, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock, UConversion, ustickyNotes;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
+  uMemos, uMemo, formAbout, formOptions, formLicense, UFuzzyTime, dateutils,
+  LCLIntf, LCLType, CheckLst, DCPrijndael, DCPsha256, UKlockUtils, UConversion,
+  formReminderInput, AvgLvlTree, uOptions, Windows, ULogging, ustickyNotes,
+  formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
+  formAnalogueKlock, formSmallTextKlock;
 
 type
 
@@ -50,74 +51,113 @@ type
     BitBtnHide: TBitBtn;
     BitBtnClose: TBitBtn;
     BitBtnHelp: TBitBtn;
+    btnConverionConvert: TButton;
+    btnConversionAddUnits: TButton;
+    btnCountdownLoadCommand: TButton;
+    btnCountdownLoadSound: TButton;
+    btnCountdownShutdownAbort: TButton;
     btnCountdownStart: TButton;
     btnCountdownStop: TButton;
-    btnCountdownLoadSound: TButton;
     btnEventAbort: TButton;
+    btnEventClear: TButton;
+    btnEventLoadCommand: TButton;
+    btnEventrLoadSound: TButton;
+    btnEventSet: TButton;
+    btnEventTestSound: TButton;
+    btnMemoDecrypt: TButton;
     btnMemoNew: TButton;
     btnMemoAdd: TButton;
     btnMemoClear: TButton;
     btnMemoEdit: TButton;
     btnMemoDelete: TButton;
     btnMemoPrint: TButton;
+    btnReminderDelete: TButton;
+    btnReminderEdit: TButton;
+    btnReminderNew: TButton;
+    btnSoundTest: TButton;
+    btnTimerClear: TButton;
+    btnTimerSplit: TButton;
     btnTimerStart: TButton;
     btnTimerStop: TButton;
-    btnTimerClear: TButton;
-    btnEventSet: TButton;
-    btnSoundTest: TButton;
-    btnEventClear: TButton;
-    btnTimerSplit: TButton;
-    btnCountdownShutdownAbort: TButton;
-    btnCountdownLoadCommand: TButton;
-    btnEventrLoadSound: TButton;
-    btnEventTestSound: TButton;
-    btnEventLoadCommand: TButton;
-    btnReminderNew: TButton;
-    btnReminderEdit: TButton;
-    btnReminderDelete: TButton;
-    btnConverionConvert: TButton;
-    btnConversionAddUnits: TButton;
-    btnMemoDecrypt: TButton;
-    ChckBxCountdownSound: TCheckBox;
+    chckBxCountdownCommand: TCheckBox;
     chckBxCountdownEvent: TCheckBox;
     chckBxCountdownReminder: TCheckBox;
-    chckBxCountdownCommand: TCheckBox;
-    ChckBxEventSound: TCheckBox;
-    ChckBxEventReminder: TCheckBox;
-    ChckBxEventSystem: TCheckBox;
+    chckBxCountdownSound: TCheckBox;
     ChckBxEventCommand: TCheckBox;
+    ChckBxEventReminder: TCheckBox;
+    ChckBxEventSound: TCheckBox;
+    ChckBxEventSystem: TCheckBox;
     ChckLstBxReminder: TCheckListBox;
-    CmbBxTime: TComboBox;
+    CmbBxCategory: TComboBox;
+    CmbBxConvertTo: TComboBox;
     CmbBxCountdownAction: TComboBox;
     CmbBxCountdownEvent: TComboBox;
     CmbBxEventAction: TComboBox;
     CmbBxEventSystem: TComboBox;
-    CmbBxCategory: TComboBox;
-    CmbBxConvertTo: TComboBox;
+    CmbBxTime: TComboBox;
+    DCP_rijndael1: TDCP_rijndael;
+    DCP_sha256_1: TDCP_sha256;
     DtEdtEvent: TDateEdit;
-    edtMemoKey: TEdit;
-    edtConverionValue: TEdit;
     edtConverionResult: TEdit;
-    EdtEventCommand: TEdit;
-    EdtEventText: TEdit;
-    EdtEventSound: TEdit;
+    edtConverionValue: TEdit;
     EdtCountdownCommand: TEdit;
     EdtCountdownReminder: TEdit;
     EdtCountdownSound: TEdit;
+    EdtEventCommand: TEdit;
+    EdtEventSound: TEdit;
+    EdtEventText: TEdit;
+    edtMemoKey: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    LblCountdownTime: TLabel;
+    lblEvent: TLabel;
+    lblfuzzy: TLabel;
     LblMemoName: TLabel;
     lblRadix: TLabel;
-    LstBxMemoName: TListBox;
-    mainIdleTimer: TIdleTimer;
     lblSplitLap: TLabel;
-    lblfuzzy: TLabel;
-    lblEvent: TLabel;
     lblTimer: TLabel;
-    LblCountdownTime: TLabel;
+    LstBxMemoName: TListBox;
     MmMemoData: TMemo;
+    PageControl1: TPageControl;
+    Panel1: TPanel;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
+    Panel13: TPanel;
+    Panel14: TPanel;
+    Panel15: TPanel;
+    Panel16: TPanel;
+    Panel17: TPanel;
+    Panel18: TPanel;
+    Panel19: TPanel;
+    Panel20: TPanel;
+    Panel21: TPanel;
+    Panel22: TPanel;
+    Panel24: TPanel;
+    Panel25: TPanel;
+    Panel26: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    RdBttnMemoEncrypt: TRadioButton;
+    SpnEdtCountdown: TSpinEdit;
+    SpnEdtHour: TSpinEdit;
+    SpnEdtMins: TSpinEdit;
+    SpnEdtTimeBase: TSpinEdit;
+    TbShtConversion: TTabSheet;
+    TbShtCountdown: TTabSheet;
+    TbShtEvent: TTabSheet;
+    TbShtFuzzy: TTabSheet;
+    TbShtMemo: TTabSheet;
+    TbShtReminder: TTabSheet;
+    TbShtTimer: TTabSheet;
+    mainIdleTimer: TIdleTimer;
     mnuItmNewStickyNote: TMenuItem;
     mnuItmStickyNote: TMenuItem;
     mnuItmSmallTextKlock: TMenuItem;
@@ -130,16 +170,7 @@ type
     mnuInfo: TMenuItem;
     mnuTime: TMenuItem;
     mnuItmAnalogueKlock: TMenuItem;
-    Panel17: TPanel;
-    Panel18: TPanel;
-    Panel19: TPanel;
-    Panel20: TPanel;
-    Panel21: TPanel;
-    Panel22: TPanel;
     Panel23: TPanel;
-    Panel24: TPanel;
-    Panel25: TPanel;
-    Panel26: TPanel;
     ppMnItmTime: TMenuItem;
     ppMnItmExit: TMenuItem;
     ppMnItmShow: TMenuItem;
@@ -151,42 +182,15 @@ type
     mnuHelp: TMenuItem;
     mnuFile: TMenuItem;
     mnuMain: TMainMenu;
-    PageControl1: TPageControl;
-    Panel1: TPanel;
-    Panel10: TPanel;
-    Panel11: TPanel;
-    Panel12: TPanel;
-    Panel13: TPanel;
-    Panel14: TPanel;
-    Panel15: TPanel;
-    Panel16: TPanel;
     Panel2: TPanel;
-    Panel3: TPanel;
-    Panel4: TPanel;
-    Panel5: TPanel;
-    Panel6: TPanel;
-    Panel7: TPanel;
-    Panel8: TPanel;
-    Panel9: TPanel;
     PpMnTray: TPopupMenu;
     PopupNotifier1: TPopupNotifier;
-    RdBttnMemoEncrypt: TRadioButton;
     SpeedButton1: TSpeedButton;
-    SpnEdtTimeBase: TSpinEdit;
-    SpnEdtHour: TSpinEdit;
-    SpnEdtMins: TSpinEdit;
-    SpnEdtCountdown: TSpinEdit;
     stsBrInfo: TStatusBar;
-    TbShtMemo: TTabSheet;
-    TbShtConversion: TTabSheet;
-    TbShtReminder: TTabSheet;
-    TbShtFuzzy: TTabSheet;
-    TbShtCountdown: TTabSheet;
-    TbShtTimer: TTabSheet;
-    TbShtEvent: TTabSheet;
     mainTimer: TTimer;
     CountdownTimer: TTimer;
     EventTimer: TTimer;
+    tmrMemo: TTimer;
     timerTimer: TTimer;
     ballonTimer: TTimer;
     TrayIcon: TTrayIcon;
@@ -198,6 +202,7 @@ type
     procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
+    procedure btnMemoDecryptClick(Sender: TObject);
     procedure btnMemoDeleteClick(Sender: TObject);
     procedure btnMemoEditClick(Sender: TObject);
     procedure btnMemoNewClick(Sender: TObject);
@@ -269,6 +274,7 @@ type
     procedure SpnEdtMinsChange(Sender: TObject);
     procedure SpnEdtTimeBaseChange(Sender: TObject);
     procedure timerTimerTimer(Sender: TObject);
+    procedure tmrMemoTimer(Sender: TObject);
     procedure TrayIconDblClick(Sender: TObject);
   private
     procedure DisplayMessage;
@@ -282,10 +288,14 @@ type
     procedure UpdateTime(KTime: TDateTime);
     procedure setMemoButtons(mode: Boolean);
     procedure displayMemo(pos: integer);
-    procedure loadMemo;
+    procedure displayEncryptedMemo;
+    procedure loadMemos;
   public
 
   end;
+
+CONST
+  PASSWORD = 'KLOCK';          //  Default password used to decypt memos.
 
 var
   frmMain: TfrmMain;
@@ -361,7 +371,7 @@ begin
   kLog.writeLog('FormKlock Showing');
   stickies.restoreStickyNotes;   //  must be on show
   memorandum.restoreMemos;
-  loadMemo;
+  loadMemos;
 
   DtEdtEvent.Date := now;
   SpnEdtMins.Value := MinuteOf(time);
@@ -636,15 +646,11 @@ end;
 
 procedure TfrmMain.UpdateTime(KTime: TDateTime);
 {  Updates the time in the correct font.    }
-VAR
-  b: boolean;
 begin
   lblfuzzy.Top := 8;
   lblfuzzy.Left := 8;
   lblfuzzy.Font.Size := 22;
   lblfuzzy.AutoSize := true;
-
-  klog.writeLog(CmbBxTime.Items[CmbBxTime.ItemIndex]);
 
   case CmbBxTime.Items[CmbBxTime.ItemIndex] of
     'Bar Code Time':
@@ -694,7 +700,7 @@ begin
         lblfuzzy.Caption := ft.getTime;
       end;
   end;
-  b := lblfuzzy.AdjustFontForOptimalFill;
+  lblfuzzy.AdjustFontForOptimalFill;
 end;
 
 procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
@@ -1687,7 +1693,13 @@ end;
 procedure TfrmMain.btnMemoClearClick(Sender: TObject);
 {  Clear all fields and return to new mode.    }
 begin
-  setMemoButtons(false);
+  setMemoButtons(true);
+end;
+
+procedure TfrmMain.btnMemoDecryptClick(Sender: TObject);
+begin
+  displayEncryptedMemo;
+  tmrMemo.Enabled := true;                     //  only display for 30 seconds.
 end;
 
 procedure TfrmMain.btnMemoDeleteClick(Sender: TObject);
@@ -1696,29 +1708,110 @@ begin
                   'Do You Reallt Want To Delete This memo',
                    mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
   begin
+    klog.writeLog(format('Deleting memo at pos %d', [LstBxMemoName.ItemIndex]));
     memorandum.Remove(LstBxMemoName.ItemIndex);
-    loadmemo;
+    loadmemos;
     setMemoButtons(true);
   end;
 end;
 
 procedure TfrmMain.btnMemoEditClick(Sender: TObject);
 {  Edit a selected memo and resave file.    }
+var
+  passWord: string;
 begin
+  btnMemoNew.Visible := false;
+  btnMemoDelete.Visible := false;
+  btnMemoPrint.Visible := false;
 
+  if btnMemoEdit.Caption = 'Edit' then          //  Edit memo.
+  begin
+    klog.writeLog(format('Editing memo at pos %d', [LstBxMemoName.ItemIndex]));
+    MmMemoData.ReadOnly := false;
+    btnMemoEdit.Caption := 'Save';
+    btnMemoClear.Visible := true;
+    RdBttnMemoEncrypt.Enabled := true;
+    if RdBttnMemoEncrypt.checked then
+      displayEncryptedMemo;   //  no timer on edit.
+  end
+  else                                          //  save memo
+  begin
+    klog.writeLog(format('Saving memo at pos %d', [LstBxMemoName.ItemIndex]));
+    MmMemoData.ReadOnly := true;
+    btnMemoEdit.Caption := 'Edit';
+    btnMemoClear.Visible := false;
+
+    if RdBttnMemoEncrypt.checked then
+    begin
+      passWord := PasswordBox('Memo Password',
+                              'Input a password to encypt memo, or return to use default.');
+
+      if passWord = '' then   //  if password is blank then use default.
+        passWord := PASSWORD;
+
+      MmMemoData.Text := encrypt(MmMemoData.Text, passWord);
+    end;
+    memorandum.amend(LstBxMemoName.ItemIndex, MmMemoData.Text, RdBttnMemoEncrypt.Checked);
+    setMemoButtons(true);
+  end;
+end;
+
+procedure TfrmMain.displayEncryptedMemo;
+{  Dispaly an encrypted memo - used by edite and decypt.    }
+var
+  m: Memo;                   //  Memo.
+  passWord: string;
+begin
+  m := Memo.Create(0);
+  m := memorandum.retrieve(LstBxMemoName.ItemIndex);
+
+  btnMemoNew.Visible := false;
+  btnMemoDelete.Visible := false;
+  btnMemoPrint.Visible := false;
+  btnMemoEdit.Visible := false;
+
+  //  Use a InputQuery instead of passWordbox because we can detect
+  //  if the user selects cancel.
+  //
+  //passWord := PasswordBox('Memo Password',
+  //                        'Input a password to decrypt memo,' + LineEnding +
+  //                        ' or return to use default.');
+
+  if InputQuery('Memo Password',
+                'Input a password to decrypt memo, or return to use default.',
+                TRUE, passWord) then
+  begin
+    if passWord = '' then   //  if password is blank then use default.
+      passWord := PASSWORD;
+
+    MmMemoData.Text := decrypt(m.body, passWord);
+  end;  //  if InputQuery('Memo Password',
 end;
 
 procedure TfrmMain.btnMemoAddClick(Sender: TObject);
 {  Add a memo to the store.
-   This is achieved by calling meo store [memorandum] new function and
+   This is achieved by calling memo store [memorandum] new function and
    passing in the data.  The listbox is then re-populated.
    The memoCount is one more then the actual count.
 }
+var
+  passWord: string;
 begin
+  klog.writeLog('Adding memo');
+  if RdBttnMemoEncrypt.checked then
+  begin
+    if InputQuery('Memo Password',
+                  'Input a password to decrypt memo, or return to use default.',
+                  TRUE, passWord) then
+
+      if passWord = '' then   //  if password is blank then use default.
+        passWord := PASSWORD;
+
+      MmMemoData.Text := decrypt(MmMemoData.Text, passWord);
+  end;  //  if RdBttnMemoEncrypt.checked then
+
   memorandum.new(edtMemoKey.Text, MmMemoData.Text, RdBttnMemoEncrypt.Checked);
-
-  loadMemo;
-
+  loadMemos;
   setMemoButtons(true);
 end;
 
@@ -1747,12 +1840,13 @@ begin
   displayMemo(LstBxMemoName.ItemIndex);
 end;
 
-procedure TfrmMain.loadMemo;
+procedure TfrmMain.loadMemos;
 { Load the contents of the memo file into the listbox.    }
 var
   f: integer;
 begin
- LstBxMemoName.Clear;
+  klog.writeLog(format('Loading %d memos', [memorandum.MemosCount]));
+  LstBxMemoName.Clear;
   for f := 0 to memorandum.MemosCount -1 do
   begin
     displayMemo(f);
@@ -1763,6 +1857,8 @@ end;
 procedure TfrmMain.displayMemo(pos: integer);
 {  Display a memo at position pos.
    If the memo count is zero i.e. no memos - then just exit.
+   If the memo is encypted, the display the Decrypt button.
+   If the memo is encypted, then display 'Secret' instead of the encrypted text.
 }
 VAR
   m: Memo;                   //  Memo.
@@ -1772,8 +1868,18 @@ begin
   m := memorandum.retrieve(pos);
 
   edtMemoKey.Text := m.name;
-  MmMemoData.Text := m.body;
   RdBttnMemoEncrypt.Checked := m.encrypt;
+
+  if m.encrypt then
+  begin
+    MmMemoData.Text := 'Shhh it''s a secret';
+    btnMemoDecrypt.visible := true
+  end
+  else
+  begin
+    MmMemoData.Text := m.body;
+    btnMemoDecrypt.visible := false;
+  end;
 end;
 
 procedure TfrmMain.setMemoButtons(mode: Boolean);
@@ -1783,6 +1889,9 @@ begin
 
   btnMemoAdd.Visible := false;
   btnMemoClear.Visible := false;
+  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
+
+  btnMemoEdit.Caption := 'Edit';
 
   if (PageControl1.TabIndex = 5) and (memorandum.MemosCount <> 0) then
   begin
@@ -1793,21 +1902,30 @@ begin
     displayMemo(0);                    //  Display the first memo, if exists.
   end
   else
-  begin
+  begin                                //  No memos, don't need the buttons yet.
     btnMemoEdit.Visible := false;
     btnMemoDelete.Visible := false;
     btnMemoPrint.Visible := false;
+    RdBttnMemoEncrypt.Checked := false;
+    edtMemoKey.Caption := '';
   end;
 
-  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
+  MmMemoData.ReadOnly := true;
 
   RdBttnMemoEncrypt.Enabled := false;
-  RdBttnMemoEncrypt.Checked := false;
+
 
   edtMemoKey.ReadOnly := true;
   edtMemoKey.Enabled := false;
-  edtMemoKey.Caption := '';
 end;
+
+procedure TfrmMain.tmrMemoTimer(Sender: TObject);
+begin
+  tmrMemo.Enabled := false;
+  MmMemoData.Text := 'Shhh it''s a secret';
+  setMemoButtons(true);
+end;
+
 //
 // *********************************************************** Menu procs ******
 //

@@ -22,7 +22,6 @@ type
     lstBxInfo: TListBox;
     SpnEdtYear: TSpinEdit;
     procedure btnCloseClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
@@ -62,11 +61,6 @@ begin
   updateInfo;
 end;
 
-procedure TfrmInfo.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  CloseAction := caFree;
-end;
-
 procedure TfrmInfo.btnCloseClick(Sender: TObject);
 begin
   Close;
@@ -85,20 +79,23 @@ var
 begin
   strResults := TStringList.Create;
 
-  case Info of
-    'Daylight Saving': strResults := getDaylightSaving(SpnEdtyear.Value);
-    'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
-    'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
-    'Power Source': strResults := getPower;
-  end;
+  try
+    case Info of
+      'Daylight Saving': strResults := getDaylightSaving(SpnEdtyear.Value);
+      'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
+      'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
+      'Power Source': strResults := getPower;
+    end;
 
-  lstBxInfo.Items := strResults;
-  strResults.free;
+    lstBxInfo.Items := strResults;
+  finally
+    strResults.free;
+  end;
 end;
 
 procedure TfrmInfo.lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
   ARect: TRect; State: TOwnerDrawState);
-{  Centers the test.    }
+{  Centers the text.    }
 var
   ts: TTextStyle;
 begin

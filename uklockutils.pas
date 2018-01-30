@@ -10,7 +10,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils;
+  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils, DCPrijndael, DCPsha256;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -48,6 +48,8 @@ function GetTextSize(AText: String; AFont: TFont): Integer;
 function isChristmas: Boolean;
 function isEaster: Boolean;
 procedure KillOtherKlocks;
+function encrypt(s: string; pwd: string): string;
+function decrypt(s: string; pwd: string): string;
 
 implementation
 
@@ -644,5 +646,49 @@ begin
     frmSmallTextKlock.Visible := False;
 
 end;
+//
+//...................................... encrypt and decrypt ...................
+//
+function encrypt(s: string; pwd: string): string;
+{  Encrypts a stings using a pasword pwd.
 
+   see https://forum.lazarus.freepascal.org/index.php?topic=33013.0
+}
+var
+  Crypt: TDCP_rijndael;
+  EncText: string;
+begin
+  Crypt := TDCP_rijndael.Create(nil);
+  try
+    // encrypt string using password
+    Crypt.InitStr(Pwd, TDCP_sha256);
+    EncText := Crypt.EncryptString(s);
+  finally
+    FreeAndNil(Crypt);
+  end;
+
+  result := EncText;
+end;
+
+function decrypt(s: string; pwd: string): string;
+{  Dencrypts a stings using a pasword pwd.
+   the string must of been encypted with the same password using the above
+   encypt function.
+}
+var
+  Crypt: TDCP_rijndael;
+  DecText: string;
+begin
+  Crypt := TDCP_rijndael.Create(nil);
+
+  try
+    // now decrypt it to show it works
+    Crypt.InitStr(Pwd, TDCP_sha256);
+    DecText := Crypt.DecryptString(s);
+  finally
+    FreeAndNil(Crypt);
+  end;
+
+  result := DecText;
+end;
 end.
