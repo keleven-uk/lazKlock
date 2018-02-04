@@ -27,6 +27,7 @@ type
     tmrSticky: TTimer;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MemoMouseEnter(Sender: TObject);
     procedure MemoMouseLeave(Sender: TObject);
@@ -61,10 +62,15 @@ begin
   AlphaBlend := true;
 end;
 
+procedure TfrmStickyNote.FormDestroy(Sender: TObject);
+{  After the Sticky Note has been destoyes [almost] update the Stick Note File.    }
+begin
+  stickies.updateStickyNotes;
+end;
+
 procedure TfrmStickyNote.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   kLog.writeLog('formStickyNote Close : ' + name);
-  CloseAction := caFree;
 end;
 
 procedure TfrmStickyNote.FormShow(Sender: TObject);

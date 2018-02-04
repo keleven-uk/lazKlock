@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      BGRA comtorls, which installs BGRA bitmap.
      EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
+     DCPciphers - Encyption and Decription stuff.
+     Astronomy - Moon image.
 
      All from the Online Package manager.
 }
@@ -119,6 +121,7 @@ type
     lblSplitLap: TLabel;
     lblTimer: TLabel;
     LstBxMemoName: TListBox;
+    mnuItmMoonPhase: TMenuItem;
     MmMemoData: TMemo;
     PageControl1: TPageControl;
     Panel1: TPanel;
@@ -258,6 +261,7 @@ type
     procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
+    procedure mnuItmMoonPhaseClick(Sender: TObject);
     procedure mnuItmNewStickyNoteClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
@@ -330,6 +334,11 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 begin
+  userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
+
+  kLog := Logger.Create;
+  logHeader;
+
   mainTimer.Enabled := False;  //  disable main timer until all options and fuzzy time are set up.
 
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
@@ -339,15 +348,12 @@ begin
   appStartTime := GetTickCount64;  //  tick count when application starts.
 
   rmndrStore := TAvgLvlTree.Create;
-  userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
   ft := FuzzyTime.Create;
   fs := fontStore.Create;
-  kLog := Logger.Create(Application.MainFormHandle);
+
   ConversionUnits := TStringList.Create;
   stickies := stickyNotes.Create;
   memorandum := Memos.Create;
-
-  logHeader;
 
   if userOptions.cullLogs then     //  Removed old log files, if instructed.
     kLog.cullLogFile(userOptions.CullLogsDays);
@@ -364,14 +370,15 @@ begin
     Interval := 1000;
     Enabled := False;
   end;
+
+  stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
+  memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
+  loadMemos;                     //  Load memo stoe into listbox, if any.
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormKlock Showing');
-  stickies.restoreStickyNotes;   //  must be on show
-  memorandum.restoreMemos;
-  loadMemos;
 
   DtEdtEvent.Date := now;
   SpnEdtMins.Value := MinuteOf(time);
@@ -418,8 +425,6 @@ begin
   FreeAndNil(userOptions);          //  Release the user options .
   FreeAndNil(kLog);                 //  Release the logger object.
   ConversionUnits.Free;             //  release the Conversion string list.
-
-  CloseAction := caFree;
 end;
 
 procedure TfrmMain.SetDefaults;
@@ -2037,13 +2042,19 @@ begin
   frmInfo.Info := 'Power Source';
   frmInfo.ShowModal;
 end;
+
+procedure TfrmMain.mnuItmMoonPhaseClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Moon Phase';
+  frmInfo.ShowModal;
+end;
 //
 // ************************************************** Sticky Note Menu *********
 //
 procedure TfrmMain.mnuItmNewStickyNoteClick(Sender: TObject);
 {  Created a new sticky note, will appear on the screen.    }
 begin
-  stickies.new;
+  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 //
 // ********************************************************* ButtonPannel ******
@@ -2071,7 +2082,7 @@ end;
 procedure TfrmMain.SpeedButton1Click(Sender: TObject);
 {  Created a new sticky note, will appear on the screen.    }
 begin
-  stickies.new;
+  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 //
 // ******************************************************* pop menu ************

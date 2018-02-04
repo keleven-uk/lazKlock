@@ -1,7 +1,7 @@
 object frmInfo: TfrmInfo
-  Left = 1390
+  Left = 1376
   Height = 306
-  Top = 284
+  Top = 203
   Width = 362
   BorderStyle = bsSingle
   Caption = 'Info'
@@ -45,14 +45,32 @@ object frmInfo: TfrmInfo
     end
     object lstBxInfo: TListBox
       Left = 8
-      Height = 152
-      Top = 0
+      Height = 40
+      Top = 112
       Width = 327
       ItemHeight = 0
       OnDrawItem = lstBxInfoDrawItem
       ParentColor = True
       Style = lbOwnerDrawFixed
       TabOrder = 1
+    end
+    object moonPhase: TMoon
+      Left = 120
+      Height = 100
+      Top = 0
+      Width = 100
+      AntialiasingMode = amOn
+      AutoSize = True
+      Constraints.MaxHeight = 100
+      Constraints.MaxWidth = 100
+      Constraints.MinHeight = 100
+      Constraints.MinWidth = 100
+      Stretch = True
+      StretchInEnabled = False
+      MoonSize = ms64
+      Rotation = rot_none
+      ShowApollo11 = True
+      MoonStyle = msColor
     end
   end
   object GroupBox2: TGroupBox

@@ -11,16 +11,22 @@ unit uInfoUtils;
 interface
 
 uses
-  Classes, SysUtils, windows, dateutils, dialogs;
+  Classes, SysUtils, windows, dateutils, dialogs, math;
 
 function getDaylightSaving(year: integer): TStringList;
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
 function getEasterDates(Year: integer): TStringList;
 function getLentDates(year: integer): TStringList;
 function getPower: TStringList;
+function getMoonPhase: TStringList;
 function getEasterSunday(year: integer): TdateTime;
+function julianTime: double;
 
 implementation
+
+CONST
+  LAST_NEW_MOON = 2451549.516678;
+  SIDEREAL_PERIOD = 29.53059;
 
 function getDaylightSaving(Year: integer): TStringList;
 {  Returns daylight saving stuff.    }
@@ -249,6 +255,68 @@ begin
   end ;
 
   result :=  EncodeDate (year, month, days) ;
+end;
+
+function getMoonPhase: TStringList;
+{  Determins the phase of the moon and the illuminayion.
+   This is acheived bu findinf the days differance between now and a known
+   full moon, both dates are express as jullian dates.
+   This differance is then divided by the Sidereal Period of the moon [this is
+   mean values between succseve full moons].  This gives the number of days
+   into the current moon cycle.
+   This is also used to calculate the amounbt of illumination from the moon.
+
+   Known full moon date used - 6 january 200 @ 12:24:01 [2451549.516678 Julian].
+
+   NB : accurate to plus or minus one day of moon phase and only after year 2000
+}
+VAR
+  julianToday: double;
+  julianSinceNew: double;
+  noOfNewMoons: double;
+  moonPhase: integer;
+  moonPhaseDesc: string;
+  moonIllumination: double;
+begin
+  result := TStringList.Create;   //  This solves the promle of not being able to
+                                  //  free the StringList and stop the memory leak.
+                                  //  Also stope the double creation of the stringList
+                                  //  which casues a sig fault.
+
+  julianToday := julianTime;
+  julianSinceNew := julianToday - LAST_NEW_MOON;
+  noOfNewMoons := julianSinceNew / SIDEREAL_PERIOD;
+  moonPhase := floor(frac(noOfNewMoons) * SIDEREAL_PERIOD);
+
+  case moonPhase of
+    0, 29: moonPhaseDesc := 'New Moon';
+    1, 2, 3, 4, 5, 6: moonPhaseDesc := 'Waxing Crescent';
+    7: moonPhaseDesc := 'First Quarter';
+    8, 9, 10, 11, 12, 13, 14: moonPhaseDesc := 'Waxing Gibbous';
+    15: moonPhaseDesc := 'Full Moon';
+    16, 17, 18, 19, 20: moonPhaseDesc := 'Waning Gibbous';
+    21: moonPhaseDesc := 'Last Quarter';
+    22, 23, 24, 25, 26, 27, 28: moonPhaseDesc := 'Waning Crescent';
+  end;
+
+  moonIllumination := 0.5 * (1 + COS(moonPhase / SIDEREAL_PERIOD * 360));
+
+  result.add(format('Phase of moon a %s', [moonPhaseDesc]));
+  result.add(format('Illumination of the moon = %2.3F%%', [moonIllumination * 100]));
+end;
+
+function julianTime: double;
+{  returns Julian Date Time - will only work in windows.
+   Formulae pinched from http://en.wikipedia.org/wiki/Julian_day               }
+var
+  day,month,year: word;
+  a,y,m: longint;
+begin
+  DecodeDate ( Now, year, month, day );
+  a := (14-month) div 12;
+  y := year + 4800 - a;
+  m := month + (12*a) - 3;
+  result := day + ((153*m+2) div 5) + (365*y) + (y div 4) - (y div 100) + (y div 400) - 32045.5 + frac(Now);
 end;
 
 end.

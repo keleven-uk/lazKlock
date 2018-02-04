@@ -2374,6 +2374,57 @@ good idea.  This seems to make Klock crash if that form is opened more then
 once in any session.  So, I removed it from every form.
 
 Currently
-8952 lines of source code.
-4861 statements
-15.2% comment
+9558 lines of source code.
+5132 statements
+15.7% comment
+
+formAbout.lfm          |   3 +-
+formAbout.pas          |   6 -
+formKlock.lfm          |  24 +++-
+formKlock.pas          | 310 ++++++++++++++++++++++++++++++++++---------------
+formLicense.lfm        |   1 -
+formOptions.lfm        |   1 -
+formOptions.pas        |   6 -
+formanalogueklock.lfm  |   1 -
+formanalogueklock.pas  |   6 -
+formbinaryklock.lfm    |   1 -
+formbinaryklock.pas    |   6 -
+forminfo.lfm           |   3 +-
+forminfo.pas           |  27 ++---
+formledklock.lfm       |   1 -
+formledklock.pas       |   6 -
+formlicense.pas        |   6 -
+formsmalltextklock.lfm |   1 -
+formsmalltextklock.pas |   7 --
+history.txt            |  43 ++++++-
+klock.iss              |   4 +-
+klock.lpi              | 296 +++++++++++++++++++++++++---------------------
+uconversion.pas        |   4 +-
+uinfoutils.pas         |  44 +++----
+uklockutils.pas        |  48 +++++++-
+umemos.pas             |  26 ++++-
+25 files changed, 550 insertions(+), 331 deletions(-)
+
+
+Build 69 [2.2.3.69]
+
+formKlock - Moved the loading of Sticky Notes and memo to formload from
+formShow, this should stop duplicate loading of Stick notes when switching from
+another klock back to the main Klock.
+
+formOptions, uOptions - added options for Sticky Note Colour and Font.
+                        added options for Memo default password, use default
+                        password and Time out.
+
+formInfo, uInfoUtils - Added Moon stuff to Info menu.  This includes a graphic
+of the moon phase and procedure to calculate the moon phase and illuminance.
+
+uFuzzyTime - Change the algorithm for calculating the Julian Date - this looks
+more accurate.
+
+formStickNote - Amended to use default colour and font on create.
+
+Currently
+9835 lines of source code.
+5287 statements
+15.8% comment

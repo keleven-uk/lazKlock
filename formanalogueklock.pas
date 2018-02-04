@@ -188,6 +188,6 @@ end;
 
 procedure TfrmAnalogueKlock.MnItmNewStickyNoteClick(Sender: TObject);
 begin
-  stickies.new;
+  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 end.

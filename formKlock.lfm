@@ -1,12 +1,12 @@
 object frmMain: TfrmMain
   Left = 1200
-  Height = 260
-  Top = 322
+  Height = 259
+  Top = 323
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 240
+  ClientHeight = 239
   ClientWidth = 705
   Constraints.MinWidth = 620
   Icon.Data = {
@@ -154,7 +154,7 @@ object frmMain: TfrmMain
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
-    Top = 217
+    Top = 216
     Width = 705
     Panels = <    
       item
@@ -1714,6 +1714,10 @@ object frmMain: TfrmMain
       object mnuItmPowerSource: TMenuItem
         Caption = 'Power Source'
         OnClick = mnuItmPowerSourceClick
+      end
+      object mnuItmMoonPhase: TMenuItem
+        Caption = 'Moon Phase'
+        OnClick = mnuItmMoonPhaseClick
       end
     end
     object mnuItmStickyNote: TMenuItem

@@ -27,9 +27,11 @@ type
     accItemLogging: TAccordionItem;
     accItemTime: TAccordionItem;
     accItemOtherKlocks: TAccordionItem;
+    accItemStickyMemo: TAccordionItem;
     btrOptionsReset: TButton;
     btnGlobalVolumeTest: TButton;
     btnCullLogs: TButton;
+    btnStickyNoteFont: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCullLogsFiles: TCheckBox;
     ChckBxLogging: TCheckBox;
@@ -42,25 +44,38 @@ type
     ChckGrpBinaryKlock: TCheckGroup;
     ChckGrpSmallTextKlock: TCheckGroup;
     ChckGrpTimerSettings: TCheckGroup;
+    ChckBxDefaultPassWord: TCheckBox;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
+    clrBtnStickyNoteColour: TColorButton;
+    ColorDialog1: TColorDialog;
+    EdtDefaultPassWord: TEdit;
+    FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
     Label1: TLabel;
+    Label2: TLabel;
+    LblStickyNoteColour: TLabel;
     lblCullFileDays: TLabel;
     lblSettingsFileName: TLabel;
     Label3: TLabel;
     LstBxLogFiles: TListBox;
     Settings: TGroupBox;
+    SpnEdtMemoTimeOut: TSpinEdit;
     SpnEdtCullDays: TSpinEdit;
+    lblStickyNoteFont: TStaticText;
     TrckBrGlobalVolume: TTrackBar;
     procedure btnCullLogsClick(Sender: TObject);
     procedure btnGlobalVolumeTestClick(Sender: TObject);
+    procedure btnStickyNoteFontClick(Sender: TObject);
     procedure btrOptionsResetClick(Sender: TObject);
     procedure ChckBxCullLogsFilesChange(Sender: TObject);
+    procedure ChckBxDefaultPassWordChange(Sender: TObject);
     procedure ChckBxLoggingChange(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
@@ -71,13 +86,16 @@ type
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
+    procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
+    procedure EdtDefaultPassWordExit(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure SpnEdtMemoTimeOutChange(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
   private
 
@@ -200,6 +218,15 @@ begin
   finally
       freeandnil(logFiles);
   end;
+
+  edtDefaultPassWord.Caption := userBacOptions.DefaultpassWord;
+  ChckBxDefaultPassWord.Checked := userBacOptions.usedefaultpassWord;
+  edtDefaultPassWord.Visible := ChckBxDefaultPassWord.Checked;
+  SpnEdtMemoTimeOut.Value := userBacOptions.decryptTimeOut;
+
+  LblStickyNoteColour.Font.Color := userBacOptions.stickyColor;
+  clrBtnStickyNoteColour.ButtonColor := userBacOptions.stickyColor;
+  lblStickyNoteFont.Font := userBacOptions.stickyFont;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -249,6 +276,7 @@ procedure TfrmOptions.btnGlobalVolumeTestClick(Sender: TObject);
 begin
   doPlaySound('thepips.mp3', userBacOptions.volume);
 end;
+
 //
 //.....................................TIME ....................................
 //
@@ -366,6 +394,45 @@ procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: inte
 }
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
+end;
+//
+//................................... Sticky Notes and Memos ...................
+//
+procedure TfrmOptions.ChckBxDefaultPassWordChange(Sender: TObject);
+begin
+  userBacOptions.useDefaultpassWord := ChckBxDefaultPassWord.Checked;
+  edtDefaultPassWord.Visible := ChckBxDefaultPassWord.Checked;
+end;
+
+procedure TfrmOptions.EdtDefaultPassWordExit(Sender: TObject);
+begin
+  userBacOptions.defaultpassWord := EdtDefaultPassWord.Caption;
+end;
+
+procedure TfrmOptions.SpnEdtMemoTimeOutChange(Sender: TObject);
+begin
+  userBacOptions.decryptTimeOut := SpnEdtMemoTimeOut.Value;
+end;
+
+procedure TfrmOptions.clrBtnStickyNoteColourColorChanged(Sender: TObject);
+{  When the colour button is clicked, it runs the colour dialog chooser.
+   When A colour is selected, this procedure is called.
+   Sets the label and button colour to the chosen colour.
+}
+begin
+  LblStickyNoteColour.Font.Color := clrBtnStickyNoteColour.ButtonColor;
+  clrBtnStickyNoteColour.ButtonColor := clrBtnStickyNoteColour.ButtonColor;
+
+  userBacOptions.stickyColor := clrBtnStickyNoteColour.ButtonColor;
+end;
+
+procedure TfrmOptions.btnStickyNoteFontClick(Sender: TObject);
+begin
+   if FontDialog1.Execute then
+   begin
+     lblStickyNoteFont.Font := FontDialog1.Font;
+     userBacOptions.stickyFont := FontDialog1.Font;
+   end;
 end;
 //
 //...................................LOGGING ...................................

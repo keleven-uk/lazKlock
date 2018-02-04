@@ -147,6 +147,7 @@ object frmStickyNote: TfrmStickyNote
   }
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = PopupMenu1
   LCLVersion = '1.8.0.6'

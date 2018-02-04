@@ -25,7 +25,7 @@ type
     public
       property filename: string read _filename write _filename;
       property dirname: string read _dirname write _dirname;
-      constructor Create(wnd: QWord); overload;
+      constructor Create;
 
       procedure writeLog(message: string);
       procedure readLogFile(logFiles:TStringlist);
@@ -34,7 +34,7 @@ type
 
 implementation
 
-constructor Logger.Create(wnd: QWord); overload;
+constructor Logger.Create;
 {  Creates the logger.
    A new logfile is created each day.
    If the logfile alreads does not exist then create else append.

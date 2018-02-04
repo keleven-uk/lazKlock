@@ -32,14 +32,14 @@ type
     property stickyNotesFile: string read _stickyNotesFile write _stickyNotesFile;
 
     procedure createStickyNote;
-    procedure createStickyForm;
+    procedure createStickyForm(colour: TColor; font: TFont);
     procedure writeToFile;
     procedure Remove(pos: integer);
   public
     property stickyNotesCount: integer read _stickyNotesCount write _stickyNotesCount;
 
     constructor Create; overload;
-    procedure new;
+    procedure new(colour: TColor; font: TFont);
     procedure restoreStickyNotes;
     procedure updateStickyNotes;
   end;
@@ -68,14 +68,14 @@ begin
   stickyNotesCount := 0;
 end;
 
-procedure stickyNotes.new;
+procedure stickyNotes.new(colour: TColor; font: TFont);
 {  Creates a new Sticky Note.  This is called from the host program.
    A new sticky note is created and added to the store, then a sticky
    Note form is created and displayed on the screen.
 }
 begin
   createStickyNote;
-  createStickyForm;
+  createStickyForm(colour, font);
   stickyNotesCount := stickyNotesCount + 1;
 end;
 
@@ -94,8 +94,12 @@ begin
   stickyNotesStore.Add(stickyNotesCount, sn);
 end;
 
-procedure stickyNotes.createStickyForm;
-{  Create a sticky Note form.    }
+procedure stickyNotes.createStickyForm(colour: TColor; font: TFont);
+{  Create a sticky Note form.
+   has to use passed in variable and not access stickyNotesStore,
+   because this is also used to create a new Sticky Form and colour and font
+   could be set from user options defaults.
+}
 var
   sf: TfrmStickyNote;                        //  sf = Sticky Note Form
   m: TMemo;                                  //  local TMemo.
@@ -110,10 +114,10 @@ begin
   sf.Caption := FormatDateTime('dddd MM YYYY : hh nn', now);
   sf.AlphaBlend := true;
 
-  m := sf.FindChildControl('Memo') as TMemo;
+  m := sf.FindChildControl('Memo') as TMemo;      //  has to succesede.
   m.Lines.Text := stickyNotesStore[stickyNotesCount].body;
-  m.Color := stickyNotesStore[stickyNotesCount].colour;
-  m.Font := stickyNotesStore[stickyNotesCount].font;
+  m.Color := colour;
+  m.Font := font;
 
   sf.Show;
 
@@ -137,28 +141,6 @@ begin
   r := stickyNotesStore.Remove(pos);
 end;
 
-procedure stickyNotes.writeToFile;
-{  Write out the contents of the Sticky Note Store to a binary file.    }
-var
-  fileOut: TFileStream;
-  f: integer;
-begin
-  fileOut := TFileStream.Create(stickyNotesFile, fmCreate or fmShareDenyWrite);
-  try
-    for f := 0 to stickyNotesCount -1 do
-    begin
-      try
-      stickyNotesStore.Data[f].saveToFile(fileOut);
-      except
-        on E: EInOutError do
-        ShowMessage('ERROR : Writing Sticky Note file');
-      end;
-    end;
-  finally
-    fileOut.Free;
-  end;
-end;
-
 procedure stickyNotes.restoreStickyNotes;
 {  Read in a binary file and convert contents to sticky notes and
    populate the store.
@@ -179,7 +161,8 @@ begin
         stickyNotesStore.Add(stickyNotesCount, stickyNote.Create(fileIn));
         if stickyNotesStore[stickyNotesCount].visable then
         begin
-          createStickyForm;
+          createStickyForm(stickyNotesStore[stickyNotesCount].colour,
+                           stickyNotesStore[stickyNotesCount].font);
           visableCount += 1;
         end;
         stickyNotesCount := stickyNotesCount + 1;
@@ -245,6 +228,28 @@ begin
 
   if stickyNotesCount > 0 then
     writeToFile;
+end;
+
+procedure stickyNotes.writeToFile;
+{  Write out the contents of the Sticky Note Store to a binary file.    }
+var
+  fileOut: TFileStream;
+  f: integer;
+begin
+  fileOut := TFileStream.Create(stickyNotesFile, fmCreate or fmShareDenyWrite);
+  try
+    for f := 0 to stickyNotesCount -1 do
+    begin
+      try
+      stickyNotesStore.Data[f].saveToFile(fileOut);
+      except
+        on E: EInOutError do
+        ShowMessage('ERROR : Writing Sticky Note file');
+      end;
+    end;
+  finally
+    fileOut.Free;
+  end;
 end;
 
 end.

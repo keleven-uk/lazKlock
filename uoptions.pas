@@ -32,7 +32,8 @@ unit uOptions;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs;
+  Classes, SysUtils, DOM, XMLWrite, XMLRead, fileinfo, winpeimagereader, Dialogs,
+  Graphics, UKlockUtils;
 
 type
 
@@ -106,6 +107,15 @@ type
     _smallTextFormLeft: integer;
     _smallTextTransparent: boolean;       //  is Small Text Klock transparent?
 
+    // memos
+    _useDefaultpassWord: boolean;         //  Memo allowed to use default pass word.
+    _defaultpassWord: string;             //  Memo default pass word.
+    _decryptTimeOut: integer;             //  Memo decrypt Time Out.
+
+    //Sticky Notes
+    _stickyColor: TColor;                   //  Sticky Note colour.
+    _stickyFont:TFont;                      //  Sticky Note Font.
+
     //  Logging
     _logging: Boolean;
     _cullLogs: Boolean;
@@ -115,6 +125,8 @@ type
     Function readChild(PassNode: TDOMNode;  name: string): string;
     Function readChildAttribute(PassNode: TDOMNode;  name: string; attribute: string): string;
     function writeStrChild(Doc: TXMLDocument; name: string; value: string): TDOMNode;
+    function writeFontChild(Doc: TXMLDocument; name: string; value: Tfont): TDOMNode;
+    function writeColChild(Doc: TXMLDocument; name: string; value: TColor): TDOMNode;
     function writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
     function writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
     function writeIntChildAttribute(Doc: TXMLDocument; name: string; value1: integer; value2: integer): TDOMNode;
@@ -184,6 +196,15 @@ type
     property smallTextFormTop: integer read _smallTextFormTop write _smallTextFormTop;
     property smallTextFormLeft: integer read _smallTextFormLeft write _smallTextFormLeft;
     property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
+
+    // Memos
+    property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
+    property defaultpassWord: string read _defaultpassWord write _defaultpassWord;
+    property decryptTimeOut: integer read _decryptTimeOut write _decryptTimeOut;
+
+    //Sticky Notes
+    property stickyColor: TColor read _stickyColor write _stickyColor;
+    property stickyFont: TFont read _stickyFont write _stickyFont;
 
     //  Logging
     property logging: boolean read _logging write _logging;
@@ -373,6 +394,15 @@ begin
   smallTextFormLeft := o.smallTextFormLeft;
   smallTextTransparent := o.smallTextTransparent;
 
+  // memos
+  useDefaultpassWord := o.useDefaultpassWord;
+  defaultpassWord := o.defaultpassWord;
+  decryptTimeOut := o.decryptTimeOut;
+
+  //Sticky Notes
+  stickyColor := o.stickyColor;
+  stickyFont := o.stickyFont;
+
   //  Logging
   logging := o.logging;
   cullLogs := o.cullLogs;
@@ -555,6 +585,30 @@ begin
       if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
     end;
 
+    // memos
+    PassNode := Doc.DocumentElement.FindNode('Memo');
+
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'useDefaultpassWord');
+      if rtn <> 'ERROR' then useDefaultpassWord := StrToBool(rtn);
+      rtn := readChild(PassNode, 'defaultpassWord');
+      if rtn <> 'ERROR' then defaultpassWord := ansistring(rtn);
+      rtn := readChild(PassNode, 'decryptTimeOut');
+      if rtn <> 'ERROR' then decryptTimeOut := StrToInt(rtn);
+    end;
+
+    //Sticky Notes
+    PassNode := Doc.DocumentElement.FindNode('StickyNote');
+
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'stickyColor');
+      if rtn <> 'ERROR' then stickyColor := StringToColor(rtn);
+      rtn := readChild(PassNode, 'stickyFont');
+      if rtn <> 'ERROR' then stickyFont := StringToFont(rtn);
+    end;
+
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
 
@@ -650,6 +704,15 @@ begin
   smallTextFormTop := 100;
   smallTextFormLeft := 100;
   smallTextTransparent := True;
+
+  // memos
+  useDefaultpassWord := true;
+  defaultpassWord := 'klock';
+  decryptTimeOut := 30;
+
+  //Sticky Notes
+  stickyColor := clYellow;
+  stickyFont := TFont.Create;
 
   //  Logging
   logging := True;
@@ -766,6 +829,22 @@ begin
 
     RootNode.AppendChild(ElementNode);
 
+    // memos
+    ElementNode := Doc.CreateElement('Memo');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'useDefaultpassWord', useDefaultpassWord));
+    ElementNode.AppendChild(writeStrChild(doc, 'defaultpassWord', defaultpassWord));
+    ElementNode.AppendChild(writeIntChild(doc, 'decryptTimeOut', decryptTimeOut));
+
+    RootNode.AppendChild(ElementNode);
+
+    //Sticky Notes
+    ElementNode := Doc.CreateElement('StickyNote');
+
+    ElementNode.AppendChild(writeColChild(doc, 'stickyColor', stickyColor));
+    ElementNode.AppendChild(writeFontChild(doc, 'stickyFont', stickyFont));
+
+    RootNode.AppendChild(ElementNode);
     // Logging
     ElementNode := Doc.CreateElement('Logging');
 
@@ -856,6 +935,28 @@ var
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(WideString(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeColChild(Doc: TXMLDocument; name: string; value: TColor): TDOMNode;
+{  Write a [string] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(ColorToString(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeFontChild(Doc: TXMLDocument; name: string; value: TFont): TDOMNode;
+{  Write a [font] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(FontToString(value));
   ItemNode.AppendChild(TextNode);
   result := ItemNode;
 end;

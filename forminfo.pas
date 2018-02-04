@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Spin, Grids, uInfoUtils, Types;
+  Spin, mooncomp, uInfoUtils, Types;
 
 type
 
@@ -20,6 +20,7 @@ type
     GroupBox2: TGroupBox;
     lblYear: TLabel;
     lstBxInfo: TListBox;
+    moonPhase: TMoon;
     SpnEdtYear: TSpinEdit;
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -50,10 +51,31 @@ procedure TfrmInfo.FormShow(Sender: TObject);
 begin
   klog.writeLog('FormInfo Show' + Info);
 
+  GroupBox1.Caption := info;
+
   if info = 'Power Source' then
   begin
     lblYear.Visible := False;
     SpnEdtyear.Visible := False;
+  end;
+
+  if info = 'Moon Phase' then
+  begin
+    moonPhase.Enabled := true;
+    SpnEdtYear.Visible := false;
+    lblYear.Visible := false;
+    lstBxInfo.Height := 40;
+    lstBxInfo.Left := 8;
+    lstBxInfo.Top := 112;
+    lstBxInfo.Width := 327;
+  end
+  else
+  begin
+    moonPhase.Enabled := false;
+    lstBxInfo.Height := 152;
+    lstBxInfo.Left := 8;
+    lstBxInfo.Top := 0;
+    lstBxInfo.Width := 327;
   end;
 
   SpnEdtyear.Value := Currentyear;
@@ -85,6 +107,7 @@ begin
       'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
       'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
       'Power Source': strResults := getPower;
+      'Moon Phase': strResults := getMoonPhase;
     end;
 
     lstBxInfo.Items := strResults;

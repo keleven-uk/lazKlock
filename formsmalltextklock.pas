@@ -266,7 +266,7 @@ end;
 
 procedure TfrmSmallTextKlock.MnuItmNewStickyNoteClick(Sender: TObject);
 begin
-  stickies.new;
+  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 
 procedure TfrmSmallTextKlock.MnuItmTransparentClick(Sender: TObject);

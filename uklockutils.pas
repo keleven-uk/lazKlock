@@ -128,7 +128,7 @@ begin
 
   p := Pos(':', s);                                   //  Character set of font
   val(copy(s, 0, p - 1), chrs, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                   //  colour of font
@@ -137,7 +137,7 @@ begin
 
   p := Pos(':', s);                                  //  height of font
   val(copy(s, 0, p - 1), Hght, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  name of font
@@ -146,22 +146,22 @@ begin
 
   p := Pos(':', s);                                  //  orientation of font
   val(copy(s, 0, p - 1), Ortn, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  size of font
   val(copy(s, 0, p - 1), sze, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                  //  pitch of font
   val(copy(s, 0, p - 1), ptch, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   p := Pos(':', s);                                 //  quality of font
   val(copy(s, 0, p - 1), qlty, err);
-  if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
+  //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
   if Pos('B', s) <> 0 then
@@ -595,8 +595,7 @@ begin
 end;
 
 function isChristmas: Boolean;
-{  Returns true if current date is within 12 days of Christmas day.
-}
+{  Returns true if current date is within 12 days of Christmas day.    }
 VAR
   year, month, day: word;
   chritmasDay: TDateTime;

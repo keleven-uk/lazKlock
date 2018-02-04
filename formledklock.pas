@@ -141,7 +141,7 @@ end;
 
 procedure TfrmLEDKlock.MnItmStickyNoteClick(Sender: TObject);
 begin
-  stickies.new;
+  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 
 procedure TfrmLEDKlock.MnItmExitClick(Sender: TObject);

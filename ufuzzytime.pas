@@ -306,22 +306,18 @@ begin
 end;
 
 function FuzzyTime.julianTime: string;
-{  returns Julian Date Time - will only work in windows.
-   Formulae pinched from http://en.wikipedia.org/wiki/Julian_day               }
+{  returns Julian Date Time - will only work in windows.     }
 var
-  a, y, m: double;
   jt: double;
-  utc: TSystemTime;
+  day,month,year: word;
+  a,y,m: longint;
 begin
-
-  GetSystemTime(utc);                    //  Get current time in UTC
-
-  a := (14 - utc.month) / 12;
-  y := utc.year + 4800 - a;
-  m := utc.month + (12 * a) - 3;
-
-  jt := utc.day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
-  jt := jt + ((utc.Hour - 12) / 24) + (utc.Minute / 1440) + (utc.Second / 86400);
+  DecodeDate ( Now, year, month, day );
+  a := (14-month) div 12;
+  y := year + 4800 - a;
+  m := month + (12*a) - 3;
+  jt := day + ((153*m+2) div 5) + (365*y) + (y div 4) - (y div 100) +
+               (y div 400) - 32045.5 + frac(Now);
 
   Result := format('%7.7f', [jt]);
 end;
