@@ -91,7 +91,8 @@ begin
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
    '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time", "Bar Code Time",' +
-   '"Semaphore Time", "Nancy Blackett Time", "Braille Time", "Christmas", "Easter"');
+   '"Semaphore Time", "Nancy Blackett Time", "Braille Time", "Christmas", "Christmas Card", "Easter", ' +
+   '"Valentines", "Halloween"');
 
   //writeLog('End of Create');
  end;
@@ -227,7 +228,8 @@ var
 
     case mins of
       0: sRtn := format('%s Oclock %s', [hourTxt[hour], ampm]);
-      1..9: sRtn := format('%s minutes %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
+      1: sRtn := format('%s minute %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
+      2..9: sRtn := format('%s minutes %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
       10..20: sRtn := format('%s minutes %s %s %s', [tensTxt[mins - 9], pastTo, hourTxt[hour], ampm ]);
       21..29: sRtn := format('twenty%s minutes %s %s %s', [unitsTxt[mins mod 10], pastTo, hourTxt[hour], ampm ]);
       30: sRtn := format('thirty minutes %s %s %s', [pastTo, hourTxt[hour], ampm ]);

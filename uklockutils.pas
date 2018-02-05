@@ -47,6 +47,8 @@ function getWindowsVersion: string;
 function GetTextSize(AText: String; AFont: TFont): Integer;
 function isChristmas: Boolean;
 function isEaster: Boolean;
+function isValentines: Boolean;
+function isHalloween: Boolean;
 procedure KillOtherKlocks;
 function encrypt(s: string; pwd: string): string;
 function decrypt(s: string; pwd: string): string;
@@ -625,6 +627,32 @@ begin
 
   if DaysBetween(easter, Date) < 7 then
     Result := true
+  else
+    Result := False;
+end;
+
+function isValentines: Boolean;
+{  Returns true if current date is Valentines Day.    }
+VAR
+  valantimnesDay: TdateTime;
+begin
+  valantimnesDay := Encodedate(currentYear, 02, 14);
+
+  if valantimnesDay = Date then
+      Result := true
+  else
+    Result := False;
+end;
+
+function isHalloween: Boolean;
+{  Returns true if current date is Halloween.    }
+VAR
+  halloweenDay: TdateTime;
+begin
+  halloweenDay := Encodedate(currentYear, 10, 31);
+
+  if halloweenDay = Date then
+      Result := true
   else
     Result := False;
 end;

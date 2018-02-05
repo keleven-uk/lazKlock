@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 616
     FullExpand = True
-    ItemIndex = 3
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,8 +55,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 335
+      Top = 21
       Width = 616
       Caption = 'Global'
       Order = 0
@@ -211,11 +211,13 @@ object frmOptions: TfrmOptions
         Items.Strings = (
           '12 Days of Christams [before and after].'
           '7 Days of Easter  [before and after].'
+          'Valentines day [on that day only]'
+          'Halloween [on that day only]'
         )
         OnItemClick = ChckGrpHolidayFontsItemClick
         TabOrder = 4
         Data = {
-          020000000202
+          0400000002020202
         }
       end
     end
@@ -546,8 +548,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 335
-      Top = 84
+      Height = 0
+      Top = 0
       Width = 616
       Caption = 'Sticky Notes and Memo'
       Order = 3

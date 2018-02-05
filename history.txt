@@ -2408,6 +2408,10 @@ umemos.pas             |  26 ++++-
 
 Build 69 [2.2.3.69]
 
+commit fbfef9e5ddc0d89be56546412de91ebfe8924554
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Feb 4 21:39:00 2018 +000
+
 formKlock - Moved the loading of Sticky Notes and memo to formload from
 formShow, this should stop duplicate loading of Stick notes when switching from
 another klock back to the main Klock.
@@ -2428,3 +2432,92 @@ Currently
 9835 lines of source code.
 5287 statements
 15.8% comment
+
+fonts/SweetHearts.TTF             | Bin 0 -> 36520 bytes
+formKlock.lfm                     |  12 +-
+formKlock.pas                     |  33 ++--
+formOptions.lfm                   | 147 ++++++++++++++-
+formOptions.pas                   |  67 +++++++
+formanalogueklock.pas             |   2 +-
+formbinaryklock.pas               |   2 +-
+forminfo.lfm                      |  26 ++-
+forminfo.pas                      |  25 ++-
+formledklock.pas                  |   2 +-
+formsmalltextklock.pas            |   2 +-
+formstickynote.lfm                |   1 +
+formstickynote.pas                |   8 +-
+help/Klock.chm                    | Bin 1014404 -> 1094002 bytes
+help/Klock.pdf                    | Bin 4807268 -> 5317846 bytes
+help/html/About.html              |  13 +-
+help/html/AnalogueKlock.html      |   4 +-
+help/html/BinaryKlock.html        |  10 +-
+help/html/ClipboardMonitor.html   |   2 +-
+help/html/Conversion.html         |   6 +-
+help/html/Countdown.html          |   6 +-
+help/html/Credits.html            |  15 +-
+help/html/Events.html             |  12 +-
+help/html/File.html               |   2 +-
+help/html/FuzzyTime.html          |   4 +-
+help/html/GettingStarted.html     |   2 +-
+help/html/Gettinghelp.html        |   2 +-
+help/html/Global.html             |   8 +-
+help/html/Help.html               |   2 +-
+help/html/History.html            |   2 +-
+help/html/Info.html               |  14 +-
+help/html/Introduction.html       |  12 +-
+help/html/Klock.html              |  14 +-
+help/html/LEDKlock.html           |   4 +-
+help/html/License.html            |   2 +-
+help/html/Logging.html            |   4 +-
+help/html/Memo.html               | 301 ++++++++++++++++++++++++++++++
+help/html/Menu.html               |   2 +-
+help/html/Options.html            |   2 +-
+help/html/OtherKlocks.html        |   2 +-
+help/html/OtherStuff.html         |   6 +-
+help/html/Reminder.html           |   8 +-
+help/html/SmallTextKlock.html     |   4 +-
+help/html/Statusbar.html          |   4 +-
+help/html/StickyNote.html         |   4 +-
+help/html/StickyNote1.html        |   4 +-
+help/html/SystemTray.html         |   4 +-
+help/html/Systemrequirements.html |   2 +-
+help/html/Thingymabobs.html       |   3 +-
+help/html/Time.html               |   6 +-
+help/html/Time1.html              |   2 +-
+help/html/Timer.html              |   4 +-
+help/html/Welcome.html            |  12 +-
+help/html/_toc.json               |   2 +-
+help/html/css/hnd.content.css     |  30 ++-
+help/html/js/hndsd.min.js         |   2 +-
+help/klock.hnd                    | Bin 2232320 -> 2347008 bytes
+history.txt                       |  57 +++++-
+klock.iss                         |   4 +-
+klock.lpi                         | 374 +++++++++++++++++++++-----------------
+lazKlock.smproj                   | Bin 356088 -> 410472 bytes
+ufonts.pas                        |   3 +-
+ufuzzytime.pas                    |  22 +--
+uinfoutils.pas                    |  70 ++++++-
+uklockutils.pas                   |  15 +-
+ulogging.pas                      |   4 +-
+uoptions.pas                      | 103 ++++++++++-
+ustickynotes.pas                  |  69 +++----
+68 files changed, 1221 insertions(+), 371 deletions(-)
+
+
+Build 70 [2.2.3.70]
+
+Added three new fonts - SweetHearts [Valtenines], grrovyChosties [Haloween]
+and Christmascard [a rather nice script font].  Added user options so the first
+two will be used on their holiday days.
+
+Corrected a bug in fuzzyTime wich refered to one minutes intead of one minute in
+wordtime.
+
+Updated all help files.
+
+
+Currently
+9910 lines of source code.
+5351 statements
+15.7% comment
+

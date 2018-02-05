@@ -179,6 +179,8 @@ begin
 
   ChckGrpHolidayFonts.Checked[0] := userBacOptions.christmasFont;
   ChckGrpHolidayFonts.Checked[1] := userBacOptions.easterFont;
+  ChckGrpHolidayFonts.Checked[2] := userBacOptions.valentinesFont;
+  ChckGrpHolidayFonts.Checked[3] := userBacOptions.haloweenFont;
 
   ChckGrpTimeChimes.Checked[0] := userBacOptions.hourPips;
   ChckGrpTimeChimes.Checked[1] := userBacOptions.hourChimes;
@@ -323,11 +325,15 @@ procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integ
 {  sets the user Global options for the holiday fonts.
 
     Index 0 - 12 days of Christmas [before and after]
-    Index 1 - Easter Holidays [week before and after].
+    Index 1 - Easter Holidays [week before and after]
+    Index 2 - Valentines day [on that day only]
+    Index 3 - Haloween [on that day only]
 }
 begin
   userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
   userBacOptions.easterFont := ChckGrpHolidayFonts.Checked[1];
+  userBacOptions.valentinesFont := ChckGrpHolidayFonts.Checked[2];
+  userBacOptions.haloweenFont := ChckGrpHolidayFonts.Checked[3];
 end;
 
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);

@@ -80,6 +80,8 @@ type
     _threeQuarterChimes: boolean;
     _christmasFont: boolean;
     _easterFont: boolean;
+    _valentinesFont: boolean;
+    _haloweenFont: boolean;
 
     //  Timer
     _timerMilliSeconds: boolean;
@@ -170,6 +172,8 @@ type
     property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
     property christmasFont: boolean read _christmasFont write _christmasFont;
     property easterFont: boolean read _easterFont write _easterFont;
+    property valentinesFont: boolean read _valentinesFont write _valentinesFont;
+    property haloweenFont: boolean read _haloweenFont write _haloweenFont;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
@@ -367,6 +371,8 @@ begin
   threeQuarterChimes := o.threeQuarterChimes;
   christmasFont := o.christmasFont;
   easterFont := o.easterFont;
+  valentinesFont := o.valentinesFont;
+  haloweenFont := o.haloweenFont;
 
   //  Timer
   timerMilliSeconds := o.timerMilliSeconds;
@@ -516,6 +522,10 @@ begin
       if rtn <> 'ERROR' then christmasFont := StrToBool(rtn);
       rtn := readChild(PassNode, 'easterFont');
       if rtn <> 'ERROR' then easterFont := StrToBool(rtn);
+      rtn := readChild(PassNode, 'valentinesFont');
+      if rtn <> 'ERROR' then valentinesFont := StrToBool(rtn);
+      rtn := readChild(PassNode, 'haloweenFont');
+      if rtn <> 'ERROR' then haloweenFont := StrToBool(rtn);
     end;
 
     //  Timer
@@ -666,18 +676,20 @@ begin
 
   //  Time
   defaultTime := 0;
-  netTimeSeconds := True;
-  swatchCentibeats := True;
-  fuzzyTimeBalloon := True;
-  displayIdleTime := True;
-  display24Hour := True;
-  hourPips := False;
-  hourChimes := False;
-  halfChimes := False;
-  quarterChimes := False;
-  threeQuarterChimes := False;
-  christmasFont := True;
-  easterFont := True;
+  netTimeSeconds := true;
+  swatchCentibeats := true;
+  fuzzyTimeBalloon := true;
+  displayIdleTime := true;
+  display24Hour := true;
+  hourPips := false;
+  hourChimes := false;
+  halfChimes := false;
+  quarterChimes := false;
+  threeQuarterChimes := false;
+  christmasFont := true;
+  easterFont := true;
+  valentinesFont := true;
+  haloweenFont := true;
 
   //  Timer
   timerMilliSeconds := True;
@@ -783,7 +795,9 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes', quarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'threeQuarterChimes', threeQuarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'christmasFont', christmasFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'easterFont', christmasFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'easterFont', easterFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'valentinesFont', valentinesFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'haloweenFont', haloweenFont));
 
     RootNode.AppendChild(ElementNode);
 

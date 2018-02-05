@@ -16,7 +16,7 @@ uses
 
 type
   Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas, Hack,
-  rmbunny, SweetHearts);
+  rmbunny, SweetHearts, groovyGhosties, ChristmasCard);
 
   fontStore = class
 

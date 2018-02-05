@@ -652,8 +652,8 @@ end;
 procedure TfrmMain.UpdateTime(KTime: TDateTime);
 {  Updates the time in the correct font.    }
 begin
-  lblfuzzy.Top := 8;
-  lblfuzzy.Left := 8;
+  lblfuzzy.Top := 4;
+  lblfuzzy.Left := 4;
   lblfuzzy.Font.Size := 22;
   lblfuzzy.AutoSize := true;
 
@@ -684,9 +684,27 @@ begin
       lblfuzzy.Font.Size := 28;
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
     end;
+    'Christmas Card':
+    begin
+      lblfuzzy.Font.Name := 'Christmas Card';
+      lblfuzzy.Font.Size := 28;
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+    end;
     'Easter':
     begin
       lblfuzzy.Font.Name := 'RMBunny';
+      lblfuzzy.Font.Size := 28;
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+    end;
+    'Valentines':
+    begin
+      lblfuzzy.Font.Name := 'Sweet Hearts BV';
+      lblfuzzy.Font.Size := 28;
+      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
+    end;
+    'Halloween':
+    begin
+      lblfuzzy.Font.Name := 'Groovy Ghosties';
       lblfuzzy.Font.Size := 28;
       lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
     end;
@@ -696,8 +714,15 @@ begin
           lblfuzzy.Font.Name := 'Christmas'
         else if userOptions.easterFont and isEaster then
           lblfuzzy.Font.Name := 'RMBunny'
+        else if userOptions.valentinesFont and isValentines then
+          lblfuzzy.Font.Name := 'Sweet Hearts BV'
+        else if userOptions.haloweenFont and isHalloween then
+          lblfuzzy.Font.Name := 'Groovy Ghosties'
         else
-        lblfuzzy.Caption := ft.getTime;
+        begin
+          lblfuzzy.Font.Name := 'Christmas Card';
+          lblfuzzy.Caption := ft.getTime
+        end;
       end;
     else   //  no font substitution, use default font.
       begin
