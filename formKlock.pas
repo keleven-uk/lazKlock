@@ -415,16 +415,17 @@ begin
   fs.removeFonts;                   //  Remove custom fonts.
 
   stickies.updateStickyNotes;
+  kLog.writeLog('Updated Sticky Note File');
 
   logFooter;
 
-  FreeAndNil(fs);                   //  Release the font store object.
-  FreeAndNil(ft);                   //  Release the fuzzy time object.
-  FreeAndNil(stickies);             //  Release the Sticky Note store.
-  FreeAndNil(memorandum);           //  Release the Memo store.
-  FreeAndNil(userOptions);          //  Release the user options .
-  FreeAndNil(kLog);                 //  Release the logger object.
-  ConversionUnits.Free;             //  release the Conversion string list.
+  fs.Free;                   //  Release the font store object.
+  ft.Free;                   //  Release the fuzzy time object.
+  stickies.Free;             //  Release the Sticky Note store.
+  memorandum.Free;           //  Release the Memo store.
+  userOptions.Free;          //  Release the user options .
+  kLog.Free;                 //  Release the logger object.
+  ConversionUnits.Free;      //  release the Conversion string list.
 end;
 
 procedure TfrmMain.SetDefaults;

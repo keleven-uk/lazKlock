@@ -147,6 +147,7 @@ object frmMain: TfrmMain
     0000
   }
   Menu = mnuMain
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter

@@ -64,9 +64,9 @@ begin
     moonPhase.Enabled := true;
     SpnEdtYear.Visible := false;
     lblYear.Visible := false;
-    lstBxInfo.Height := 40;
+    lstBxInfo.Height := 123;
     lstBxInfo.Left := 8;
-    lstBxInfo.Top := 112;
+    lstBxInfo.Top := 64;
     lstBxInfo.Width := 327;
   end
   else

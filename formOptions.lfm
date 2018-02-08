@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1272
+  Left = 1191
   Height = 488
-  Top = 249
+  Top = 210
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 616
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 5
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,7 +55,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 335
+      Height = 0
       Top = 21
       Width = 616
       Caption = 'Global'
@@ -549,7 +549,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 84
       Width = 616
       Caption = 'Sticky Notes and Memo'
       Order = 3
@@ -643,6 +643,101 @@ object frmOptions: TfrmOptions
           OnChange = SpnEdtMemoTimeOutChange
           TabOrder = 2
           Value = 30
+        end
+      end
+    end
+    object accItemArchive: TAccordionItem
+      AnchorSideLeft.Control = AcrdnOptions
+      AnchorSideTop.Control = AcrdnOptions
+      AnchorSideRight.Control = AcrdnOptions
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = AcrdnOptions
+      AnchorSideBottom.Side = asrBottom
+      Left = 0
+      Height = 314
+      Top = 126
+      Width = 616
+      Caption = 'Archive'
+      Order = 5
+      object GroupBox7: TGroupBox
+        Left = 8
+        Height = 224
+        Top = 8
+        Width = 600
+        Caption = 'Save Archive'
+        ClientHeight = 204
+        ClientWidth = 596
+        TabOrder = 0
+        object ChckLstBxArchive: TCheckListBox
+          Left = 8
+          Height = 160
+          Top = 0
+          Width = 576
+          ItemHeight = 0
+          OnClickCheck = ChckLstBxArchiveClickCheck
+          TabOrder = 0
+        end
+        object FlNmEdtSaveArchiveName: TFileNameEdit
+          Left = 8
+          Height = 23
+          Top = 176
+          Width = 488
+          FileName = 'FlNmEdtSaveArchiveName'
+          DialogKind = dkSave
+          DialogTitle = 'Archive File Name'
+          FilterIndex = 0
+          HideDirectories = False
+          ButtonWidth = 23
+          NumGlyphs = 1
+          MaxLength = 0
+          TabOrder = 1
+          Text = 'FlNmEdtSaveArchiveName'
+        end
+        object btnSaveArchive: TButton
+          Left = 504
+          Height = 23
+          Top = 174
+          Width = 75
+          Caption = 'Save'
+          OnClick = btnSaveArchiveClick
+          TabOrder = 2
+        end
+      end
+      object GroupBox8: TGroupBox
+        Left = 8
+        Height = 73
+        Top = 240
+        Width = 600
+        Caption = 'Load Archive'
+        ClientHeight = 53
+        ClientWidth = 596
+        TabOrder = 1
+        object FlNmEdtLoadArchiveName: TFileNameEdit
+          Left = 8
+          Height = 23
+          Top = 16
+          Width = 488
+          FileName = 'FlNmEdtLoadArchiveName'
+          OnAcceptFileName = FlNmEdtLoadArchiveNameAcceptFileName
+          DialogTitle = 'Load Archive zip file.'
+          DialogOptions = [ofFileMustExist, ofEnableSizing, ofViewDetail]
+          FilterIndex = 0
+          DefaultExt = '.zip'
+          HideDirectories = False
+          ButtonWidth = 23
+          NumGlyphs = 1
+          MaxLength = 0
+          TabOrder = 0
+          Text = 'FlNmEdtLoadArchiveName'
+        end
+        object btnLoadArchive: TButton
+          Left = 510
+          Height = 23
+          Top = 16
+          Width = 75
+          Caption = 'Load'
+          OnClick = btnLoadArchiveClick
+          TabOrder = 1
         end
       end
     end

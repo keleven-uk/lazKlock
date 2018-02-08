@@ -2506,11 +2506,15 @@ ustickynotes.pas                  |  69 +++----
 
 Build 70 [2.2.3.70]
 
-Added three new fonts - SweetHearts [Valtenines], grrovyChosties [Haloween]
-and Christmascard [a rather nice script font].  Added user options so the first
+commit 3ea9e46703b0151a67b57214f9b283ef6cf01ec0
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Mon Feb 5 20:54:16 2018 +000
+
+Added three new fonts - SweetHearts [Valentines], grrovyChosties [Halloween]
+and ChristmasChard [a rather nice script font].  Added user options so the first
 two will be used on their holiday days.
 
-Corrected a bug in fuzzyTime wich refered to one minutes intead of one minute in
+Corrected a bug in fuzzyTime which referred to one minutes instead of one minute in
 wordtime.
 
 Updated all help files.
@@ -2521,3 +2525,33 @@ Currently
 5351 statements
 15.7% comment
 
+fonts/ChristmasCard.ttf                            | Bin 0 -> 50792 bytes
+fonts/groovyGhosties.ttf                           | Bin 0 -> 142052 bytes
+formKlock.pas                                      |  31 ++-
+formOptions.lfm                                    |  14 +-
+formOptions.pas                                    |   8 +-
+help/Klock.chm                                     | Bin 1094002 -> 1102050 bytes
+help/Klock.pdf                                     | Bin 5317846 -> 5348434 bytes
+help/html/About.html                               |   2 +-
+help/html/Credits.html                             |   2 +-
+help/html/Global.html                              |   2 +-
+help/html/History.html                             | 285 ++++++++++++++++++++-
+help/html/Klock.html                               |   2 +-
+help/html/Logging.html                             |   4 +-
+help/html/Memo.html                                |   2 +
+help/html/Options.html                             |   2 +-
+help/html/OtherKlocks.html                         |   4 +-
+.../{OtherStuff.html => StickyNotesandMemos.html}  |  26 +-
+help/html/Time.html                                |   8 +-
+help/html/_toc.json                                |   2 +-
+help/html/js/hndsd.min.js                          |   2 +-
+help/klock.hnd                                     | Bin 2347008 -> 2347008 bytes
+history.txt                                        |  93 +++++++
+klock.iss                                          |   4 +-
+klock.lpi                                          | 139 +++++-----
+lazKlock.smproj                                    | Bin 410472 -> 438167 bytes
+ufonts.pas                                         |   2 +-
+ufuzzytime.pas                                     |   6 +-
+uklockutils.pas                                    |  28 ++
+uoptions.pas                                       |  40 ++-
+29 files changed, 583 insertions(+), 125 deletions(-)

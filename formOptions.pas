@@ -16,7 +16,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, ECAccordion, Forms, Controls, Dialogs,
   UKlockUtils, Graphics, StdCtrls, ButtonPanel, Buttons, ComCtrls, ExtCtrls,
-  Spin, uOptions;
+  Spin, CheckLst, EditBtn, uOptions, uArchiveUtils;
 
 type
 
@@ -28,10 +28,13 @@ type
     accItemTime: TAccordionItem;
     accItemOtherKlocks: TAccordionItem;
     accItemStickyMemo: TAccordionItem;
+    accItemArchive: TAccordionItem;
     btrOptionsReset: TButton;
     btnGlobalVolumeTest: TButton;
     btnCullLogs: TButton;
     btnStickyNoteFont: TButton;
+    btnSaveArchive: TButton;
+    btnLoadArchive: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCullLogsFiles: TCheckBox;
     ChckBxLogging: TCheckBox;
@@ -45,12 +48,15 @@ type
     ChckGrpSmallTextKlock: TCheckGroup;
     ChckGrpTimerSettings: TCheckGroup;
     ChckBxDefaultPassWord: TCheckBox;
+    ChckLstBxArchive: TCheckListBox;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
     clrBtnStickyNoteColour: TColorButton;
     ColorDialog1: TColorDialog;
     EdtDefaultPassWord: TEdit;
+    FlNmEdtLoadArchiveName: TFileNameEdit;
+    FlNmEdtSaveArchiveName: TFileNameEdit;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
@@ -58,6 +64,8 @@ type
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     LblStickyNoteColour: TLabel;
@@ -72,6 +80,8 @@ type
     TrckBrGlobalVolume: TTrackBar;
     procedure btnCullLogsClick(Sender: TObject);
     procedure btnGlobalVolumeTestClick(Sender: TObject);
+    procedure btnLoadArchiveClick(Sender: TObject);
+    procedure btnSaveArchiveClick(Sender: TObject);
     procedure btnStickyNoteFontClick(Sender: TObject);
     procedure btrOptionsResetClick(Sender: TObject);
     procedure ChckBxCullLogsFilesChange(Sender: TObject);
@@ -86,10 +96,13 @@ type
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
+    procedure ChckLstBxArchiveClickCheck(Sender: TObject);
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
+    procedure FlNmEdtLoadArchiveNameAcceptFileName(Sender: TObject;
+      Var Value: String);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
@@ -229,6 +242,14 @@ begin
   LblStickyNoteColour.Font.Color := userBacOptions.stickyColor;
   clrBtnStickyNoteColour.ButtonColor := userBacOptions.stickyColor;
   lblStickyNoteFont.Font := userBacOptions.stickyFont;
+
+  btnSaveArchive.Enabled := false;
+  btnLoadArchive.Enabled := false;
+  FlNmEdtSaveArchiveName.InitialDir := GetAppConfigDir(False);
+  FlNmEdtSaveArchiveName.FileName := format('%sKlock_%s.zip', [GetAppConfigDir(False),
+                                                              FormatDateTime('DDMMMYYYY', now)]);
+  FlNmEdtLoadArchiveName.FileName := '';
+  ChckLstBxArchive.Items := getArchiveFiles;
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -401,6 +422,7 @@ procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: inte
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
 end;
+
 //
 //................................... Sticky Notes and Memos ...................
 //
@@ -509,7 +531,66 @@ procedure TfrmOptions.HelpButtonClick(Sender: TObject);
 begin
   displayHelp('help\Klock.chm', '/Options.htm');
 end;
+//
+//...................................ARCHIVE ...................................
+//
+procedure TfrmOptions.btnSaveArchiveClick(Sender: TObject);
+{  Save all files that have been clicked in the lsitbox.
+   The zip file name is taken from the save file edit box.
+}
+var
+  f: integer;
+  files: TStringList;
+begin
+  files := TStringList.Create;
 
+  try
+    for f := 0 to ChckLstBxArchive.Items.Count - 1 do
+      if ChckLstBxArchive.Checked[f] then
+        files.Add(ChckLstBxArchive.Items.Strings[f]);
+
+    saveArchive(FlNmEdtSaveArchiveName.FileName, files);
+  finally
+    files.free;
+  end;
+end;
+
+procedure TfrmOptions.ChckLstBxArchiveClickCheck(Sender: TObject);
+{  Loops through the list box and count the clicked items.
+   If count is 0 [no item clicked] the save button is disabled.
+   If the count is not 0 then enable the save button.
+}
+var
+  f: integer;
+  count: integer;
+begin
+  count := 0;
+  for f := 0 to ChckLstBxArchive.Items.Count - 1 do
+    if ChckLstBxArchive.Checked[f] then
+      inc(count);
+
+  if count <> 0 then
+    btnSaveArchive.Enabled := true
+  else
+    btnSaveArchive.Enabled := false;
+end;
+
+procedure TfrmOptions.btnLoadArchiveClick(Sender: TObject);
+{  Loads the zip file.    }
+begin
+  LoadArchive(FlNmEdtLoadArchiveName.FileName);
+end;
+
+procedure TfrmOptions.FlNmEdtLoadArchiveNameAcceptFileName(Sender: TObject; Var Value: String);
+{  If the file name edit contains text then enable the load button.
+   Does not check for a valid zip file [yet].
+}
+begin
+  if value <> '' then
+    btnLoadArchive.Enabled := true
+  else
+    btnLoadArchive.Enabled := false;
+end;
 
 end.
 

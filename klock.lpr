@@ -12,7 +12,7 @@ uses
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
   formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote,
-  uMemo, uMemos;
+  uMemo, uMemos, uArchiveUtils;
 
 {$R *.res}
 
