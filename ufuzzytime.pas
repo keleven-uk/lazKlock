@@ -90,9 +90,7 @@ begin
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
-   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time", "Bar Code Time",' +
-   '"Semaphore Time", "Nancy Blackett Time", "Braille Time", "Christmas", "Christmas Card", "Easter", ' +
-   '"Valentines", "Halloween"');
+   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time"');
 
   //writeLog('End of Create');
  end;

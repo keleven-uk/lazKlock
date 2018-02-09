@@ -97,6 +97,7 @@ type
     CmbBxEventAction: TComboBox;
     CmbBxEventSystem: TComboBox;
     CmbBxTime: TComboBox;
+    CmbBxName: TComboBox;
     DCP_rijndael1: TDCP_rijndael;
     DCP_sha256_1: TDCP_sha256;
     DtEdtEvent: TDateEdit;
@@ -289,7 +290,7 @@ type
     procedure EventValid;
     procedure readReminderFile;
     procedure UpdateStatusBar(KTime: TDateTime);
-    procedure UpdateTime(KTime: TDateTime);
+    procedure UpdateTime;
     procedure setMemoButtons(mode: Boolean);
     procedure displayMemo(pos: integer);
     procedure displayEncryptedMemo;
@@ -435,10 +436,15 @@ procedure TfrmMain.SetDefaults;
 begin
   kLog.writeLog('FormKlock SetDefaults');
 
+  mainIdleTimer.Enabled := userOptions.displayIdleTime;  //  switch on main timer.
+
   PageControl1.TabIndex := userOptions.defaultTab;
-  CmbBxTime.Items := ft.fuzzyTypes;
+
+  CmbBxTime.Items := ft.fuzzyTypes;                      //  set up time combo box.
   CmbBxTime.ItemIndex := userOptions.defaultTime;
-  mainIdleTimer.Enabled := userOptions.displayIdleTime;
+
+  CmbBxName.Items := fs.fontTypes;                       //  set up font combo box.
+  CmbBxName.ItemIndex := 0;
 
   ft.displayFuzzy := userOptions.defaultTime;
   ft.display24Hour:= userOptions.display24Hour;
@@ -644,93 +650,31 @@ begin
    end         //  if TrayIcon.Visible then
    else
    begin  //  normal display i.e. not trayicon
-     UpdateTime(myNow);
+     UpdateTime;
      UpdateStatusBar(myNow);
    end;  //  if TrayIcon.Visible then
 
 end;
 
-procedure TfrmMain.UpdateTime(KTime: TDateTime);
+procedure TfrmMain.UpdateTime;
 {  Updates the time in the correct font.    }
 begin
   lblfuzzy.Top := 4;
   lblfuzzy.Left := 4;
   lblfuzzy.Font.Size := 22;
   lblfuzzy.AutoSize := true;
+  lblfuzzy.Caption := ft.getTime;
+  lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
 
-  case CmbBxTime.Items[CmbBxTime.ItemIndex] of
-    'Bar Code Time':
-    begin
-      lblfuzzy.Font.Name := 'Bar Code 39';
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Nancy Blackett Time':
-    begin
-      lblfuzzy.Font.Name := 'Nancy Blackett semaphore';
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Semaphore Time':
-    begin
-      lblfuzzy.Font.Name := 'Semaphore';
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Braille Time':
-    begin
-      lblfuzzy.Font.Name := 'BrailleLatin';
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Christmas':
-    begin
-      lblfuzzy.Font.Name := 'Christmas';
-      lblfuzzy.Font.Size := 28;
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Christmas Card':
-    begin
-      lblfuzzy.Font.Name := 'Christmas Card';
-      lblfuzzy.Font.Size := 28;
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Easter':
-    begin
-      lblfuzzy.Font.Name := 'RMBunny';
-      lblfuzzy.Font.Size := 28;
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Valentines':
-    begin
-      lblfuzzy.Font.Name := 'Sweet Hearts BV';
-      lblfuzzy.Font.Size := 28;
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Halloween':
-    begin
-      lblfuzzy.Font.Name := 'Groovy Ghosties';
-      lblfuzzy.Font.Size := 28;
-      lblfuzzy.Caption := FormatDateTime('hh  nn  ss', KTime);
-    end;
-    'Fuzzy Time', 'Word Time':
-      begin
-        if userOptions.christmasFont and isChristmas then
-          lblfuzzy.Font.Name := 'Christmas'
-        else if userOptions.easterFont and isEaster then
-          lblfuzzy.Font.Name := 'RMBunny'
-        else if userOptions.valentinesFont and isValentines then
-          lblfuzzy.Font.Name := 'Sweet Hearts BV'
-        else if userOptions.haloweenFont and isHalloween then
-          lblfuzzy.Font.Name := 'Groovy Ghosties'
-        else
-        begin
-          lblfuzzy.Font.Name := 'Christmas Card';
-          lblfuzzy.Caption := ft.getTime
-        end;
-      end;
-    else   //  no font substitution, use default font.
-      begin
-        lblfuzzy.Font.Name := 'default';
-        lblfuzzy.Caption := ft.getTime;
-      end;
-  end;
+  if userOptions.christmasFont and isChristmas then
+    lblfuzzy.Font.Name := 'Christmas'
+  else if userOptions.easterFont and isEaster then
+    lblfuzzy.Font.Name := 'RMBunny'
+  else if userOptions.valentinesFont and isValentines then
+    lblfuzzy.Font.Name := 'Sweet Hearts BV'
+  else if userOptions.haloweenFont and isHalloween then
+    lblfuzzy.Font.Name := 'Groovy Ghosties';
+
   lblfuzzy.AdjustFontForOptimalFill;
 end;
 
@@ -790,6 +734,8 @@ procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
    If index = 9 then radix time is chosen, so display choice of bases.
 }
 begin
+  klog.writeLog('Fuzzt time selected : ' + CmbBxTime.Items[CmbBxTime.ItemIndex]);
+
   ft.displayFuzzy := CmbBxTime.ItemIndex;
   lblfuzzy.Caption := ft.getTime;
 

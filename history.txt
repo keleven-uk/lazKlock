@@ -2555,3 +2555,55 @@ ufuzzytime.pas                                     |   6 +-
 uklockutils.pas                                    |  28 ++
 uoptions.pas                                       |  40 ++-
 29 files changed, 583 insertions(+), 125 deletions(-)
+
+
+Build 71 [2.2.3.71]
+
+commit a4ab066100526459c2c02ad69ad431a32870ef67
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Thu Feb 8 21:22:29 2018 +0000
+
+Added a tab to the options firm - Archive.
+This allows the loading and saving of certain configuration files to and from a zip file.
+The configuration files will onlu apear if they exist on the system.
+The location of the zip file can be selected, but a default is presented.
+A new file, uArchiveUtils, holds the helper Archive routines [called from formOptions].
+
+Added the location of the configuration files to the options files, easier to use eslewhere 
+in the program and are now only specified in one place.
+
+.gitattributes                     |   1 +
+ formKlock.lfm                      |   1 +
+ formKlock.pas                      |  15 +-
+ formOptions.lfm                    | 105 ++++++++++++-
+ formOptions.pas                    |  83 +++++++++-
+ forminfo.lfm                       |  30 ++--
+ forminfo.pas                       |   4 +-
+ help/Klock.chm                     | Bin 1102050 -> 1120838 bytes
+ help/Klock.pdf                     | Bin 5348434 -> 5485402 bytes
+ help/html/Archive.html             | 293 +++++++++++++++++++++++++++++++++++
+ help/html/Global.html              |   2 +-
+ help/html/History.html             |   2 +-
+ help/html/Klock.html               |   2 +-
+ help/html/Logging.html             |   4 +-
+ help/html/Options.html             |   1 +
+ help/html/OtherKlocks.html         |   2 +-
+ help/html/StickyNotesandMemos.html |   2 +-
+ help/html/Time.html                |   2 +-
+ help/html/_toc.json                |   2 +-
+ help/html/js/hndsd.min.js          |   2 +-
+ help/klock.hnd                     | Bin 2347008 -> 7528448 bytes
+ history.txt                        |  40 ++++-
+ klock.iss                          |   4 +-
+ klock.lpi                          | 309 +++++++++++++++++++------------------
+ klock.lpr                          |   2 +-
+ lazKlock.smproj                    | Bin 438167 -> 466548 bytes
+ uarchiveutils.pas                  | 107 +++++++++++++
+ uoptions.pas                       |  31 +++-
+ 28 files changed, 850 insertions(+), 196 deletions(-)
+ 
+Currently
+10128 lines of source code.
+5499 statements
+15.7% comment
+

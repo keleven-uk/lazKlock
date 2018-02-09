@@ -15,14 +15,20 @@ uses
   StdCtrls, Windows, Messages, typinfo;
 
 type
-  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, Christmas, Hack,
-  rmbunny, SweetHearts, groovyGhosties, ChristmasCard);
+  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, KBABCDoodles,
+  Backwards, UpsideDown, Christmas, rmbunny, SweetHearts, groovyGhosties,
+  ChristmasCard, Hack, GushingMeadow, GallaudetRegular, chintzy, chintzys,
+  CartoonBones);
 
   fontStore = class
 
     private
-
+      _fontTypes: TStringList;
     public
+      property fontTypes: TStringList read _fontTypes;
+
+      constructor Create; overload;
+      function getFont(fontIndex: Integer): string;
       procedure addFonts;
       procedure removeFonts;
   end;
@@ -57,6 +63,44 @@ implementation
 
 uses
   formklock;
+
+constructor fontStore.Create; overload;
+begin
+  //  Create a string list of user friendly fonr names.
+  //  If a new font is added - add a nice name and the actual font name below
+  //  also the file name above..
+
+  _fontTypes := TStringList.Create;;
+  _fontTypes.CommaText := ('"Default", "Bar Code", "Nancy Blackett", "Semaphore",' +
+  '"Braille", "Dominoes", "Backwards", "Upside Down", "Christmas", "Christmas Card",' +
+  '"Easter Bunny", "Sweet Hearts", "Groovy Ghosties", "Gushing Meadow", "Gallaudet",' +
+  '"chintzy", "chintzys", "Cartoon Bones"');
+end;
+
+function fontStore.getFont(fontIndex: Integer): string;
+{  Return the actual font name from a user friendly font name.    }
+begin
+  case fontIndex of
+    0: Result := 'default';
+    1: Result := 'Bar Code 39';
+    2: Result := 'Nancy Blackett semaphore';
+    3: Result := 'Semaphore';
+    4: Result := 'BrailleLatin';
+    5: Result := 'KBABCDoodles';
+    6: Result := 'Backwards';
+    7: Result := 'Upside down surprise by georgia';
+    8: Result := 'Christmas';
+    9: Result := 'Christmas Card';
+    10: Result := 'RMBunny';
+    11: Result := 'Sweet Hearts BV';
+    12: Result := 'Groovy Ghosties';
+    13: Result := 'SF Gushing Meadow';
+    14: Result := 'Gallaudet';
+    15: Result := 'Chintzy CPU BRK';
+    16: Result := 'Chintzy CPU Shadow BRK';
+    17: Result := 'Cartoon Bones';
+  end;
+end;
 
 procedure fontStore.addFonts;
 {  Adds all the fonts in the list Fonts.

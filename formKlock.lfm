@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1200
+  Left = 1156
   Height = 259
-  Top = 323
+  Top = 398
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtMemo
-      TabIndex = 5
+      ActivePage = TbShtFuzzy
+      TabIndex = 0
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -220,7 +220,7 @@ object frmMain: TfrmMain
               Left = 8
               Height = 23
               Top = 8
-              Width = 96
+              Width = 100
               ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
@@ -240,23 +240,16 @@ object frmMain: TfrmMain
               TabOrder = 0
               Text = 'Fuzzy'
             end
-            object SpnEdtTimeBase: TSpinEdit
-              Left = 48
-              Height = 23
-              Top = 48
-              Width = 50
-              MinValue = 2
-              OnChange = SpnEdtTimeBaseChange
-              TabOrder = 1
-              Value = 2
-            end
-            object lblRadix: TLabel
+            object CmbBxName: TComboBox
               Left = 8
-              Height = 15
-              Top = 52
-              Width = 28
-              Caption = 'Radix'
-              ParentColor = False
+              Height = 23
+              Top = 40
+              Width = 100
+              Font.Height = -11
+              ItemHeight = 13
+              ParentFont = False
+              Style = csDropDownList
+              TabOrder = 1
             end
           end
           object Panel14: TPanel
@@ -1663,6 +1656,24 @@ object frmMain: TfrmMain
       Caption = 'Print'
       OnClick = btnMemoPrintClick
       TabOrder = 8
+    end
+    object lblRadix: TLabel
+      Left = 240
+      Height = 15
+      Top = 13
+      Width = 28
+      Caption = 'Radix'
+      ParentColor = False
+    end
+    object SpnEdtTimeBase: TSpinEdit
+      Left = 296
+      Height = 23
+      Top = 8
+      Width = 50
+      MinValue = 2
+      OnChange = SpnEdtTimeBaseChange
+      TabOrder = 9
+      Value = 2
     end
   end
   object mnuMain: TMainMenu
@@ -4069,8 +4080,8 @@ object frmMain: TfrmMain
     Enabled = False
     OnTimer = mainIdleTimerTimer
     OnStopTimer = mainIdleTimerStopTimer
-    left = 328
-    top = 184
+    left = 528
+    top = 8
   end
   object DCP_rijndael1: TDCP_rijndael
     Id = 9
