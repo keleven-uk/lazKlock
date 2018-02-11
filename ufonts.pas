@@ -74,7 +74,7 @@ begin
   _fontTypes.CommaText := ('"Default", "Bar Code", "Nancy Blackett", "Semaphore",' +
   '"Braille", "Dominoes", "Backwards", "Upside Down", "Christmas", "Christmas Card",' +
   '"Easter Bunny", "Sweet Hearts", "Groovy Ghosties", "Gushing Meadow", "Gallaudet",' +
-  '"chintzy", "chintzys", "Cartoon Bones"');
+  '"chintzy", "chintzy Shadow", "Cartoon Bones"');
 end;
 
 function fontStore.getFont(fontIndex: Integer): string;

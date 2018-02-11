@@ -2573,37 +2573,79 @@ Added the location of the configuration files to the options files, easier to us
 in the program and are now only specified in one place.
 
 .gitattributes                     |   1 +
- formKlock.lfm                      |   1 +
- formKlock.pas                      |  15 +-
- formOptions.lfm                    | 105 ++++++++++++-
- formOptions.pas                    |  83 +++++++++-
- forminfo.lfm                       |  30 ++--
- forminfo.pas                       |   4 +-
- help/Klock.chm                     | Bin 1102050 -> 1120838 bytes
- help/Klock.pdf                     | Bin 5348434 -> 5485402 bytes
- help/html/Archive.html             | 293 +++++++++++++++++++++++++++++++++++
- help/html/Global.html              |   2 +-
- help/html/History.html             |   2 +-
- help/html/Klock.html               |   2 +-
- help/html/Logging.html             |   4 +-
- help/html/Options.html             |   1 +
- help/html/OtherKlocks.html         |   2 +-
- help/html/StickyNotesandMemos.html |   2 +-
- help/html/Time.html                |   2 +-
- help/html/_toc.json                |   2 +-
- help/html/js/hndsd.min.js          |   2 +-
- help/klock.hnd                     | Bin 2347008 -> 7528448 bytes
- history.txt                        |  40 ++++-
- klock.iss                          |   4 +-
- klock.lpi                          | 309 +++++++++++++++++++------------------
- klock.lpr                          |   2 +-
- lazKlock.smproj                    | Bin 438167 -> 466548 bytes
- uarchiveutils.pas                  | 107 +++++++++++++
- uoptions.pas                       |  31 +++-
- 28 files changed, 850 insertions(+), 196 deletions(-)
+formKlock.lfm                      |   1 +
+formKlock.pas                      |  15 +-
+formOptions.lfm                    | 105 ++++++++++++-
+formOptions.pas                    |  83 +++++++++-
+forminfo.lfm                       |  30 ++--
+forminfo.pas                       |   4 +-
+help/Klock.chm                     | Bin 1102050 -> 1120838 bytes
+help/Klock.pdf                     | Bin 5348434 -> 5485402 bytes
+help/html/Archive.html             | 293 +++++++++++++++++++++++++++++++++++
+help/html/Global.html              |   2 +-
+help/html/History.html             |   2 +-
+help/html/Klock.html               |   2 +-
+help/html/Logging.html             |   4 +-
+help/html/Options.html             |   1 +
+help/html/OtherKlocks.html         |   2 +-
+help/html/StickyNotesandMemos.html |   2 +-
+help/html/Time.html                |   2 +-
+help/html/_toc.json                |   2 +-
+help/html/js/hndsd.min.js          |   2 +-
+help/klock.hnd                     | Bin 2347008 -> 7528448 bytes
+history.txt                        |  40 ++++-
+klock.iss                          |   4 +-
+klock.lpi                          | 309 +++++++++++++++++++------------------
+klock.lpr                          |   2 +-
+lazKlock.smproj                    | Bin 438167 -> 466548 bytes
+uarchiveutils.pas                  | 107 +++++++++++++
+uoptions.pas                       |  31 +++-
+28 files changed, 850 insertions(+), 196 deletions(-)
  
 Currently
 10128 lines of source code.
 5499 statements
 15.7% comment
 
+
+Build 72 [2.2.3.72]
+
+commit 70961f2593ec1ef5c728a1a9dbf6c52daf11e0e0
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Feb 9 22:06:33 2018 +0000
+
+Divided fuzzyTime between calculated time and font substution.
+    
+Added a second combo :box populated with the available fonts.
+    
+So, each time format can be displayed in each available font.
+
+Added loads of fonts. :-)
+
+fonts/Backwards.ttf        | Bin 0 -> 18924 bytes
+fonts/CartoonBones.ttf     | Bin 0 -> 1469836 bytes
+fonts/GallaudetRegular.ttf | Bin 0 -> 54360 bytes
+fonts/GushingMeadow.ttf    | Bin 0 -> 125920 bytes
+fonts/KBABCDoodles.ttf     | Bin 0 -> 71548 bytes
+fonts/UpsideDown.ttf       | Bin 0 -> 25862 bytes
+fonts/chintzy.ttf          | Bin 0 -> 30528 bytes
+fonts/chintzys.ttf         | Bin 0 -> 47972 bytes
+formKlock.lfm              |  55 +++++++++-------
+formKlock.pas              | 102 +++++++-----------------------
+history.txt                |  52 +++++++++++++++
+klock.lpi                  | 153 ++++++++++++++++++++++++---------------------
+ufonts.pas                 |  50 ++++++++++++++-
+ufuzzytime.pas             |   4 +-
+14 files changed, 238 insertions(+), 178 deletions(-)
+
+
+Build 73 [2.2.3.73]
+
+Added an extra tab - World Klock.
+This display a list of Time Zones and when selected will display the time in that time zone.
+This uses the component PascalTZ.
+
+Currently
+10171 lines of source code.
+5565 statements
+15.8% comment

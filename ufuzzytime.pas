@@ -26,8 +26,8 @@ type
     _fuzzyBase: integer;
     _fuzzyTypes: TStringList;
     _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
-    _filename: string;      //  filename of the log file
-    _dirname : string;      //  directory where the log file lives.
+    _filename: string;              //  filename of the log file
+    _dirname : string;              //  directory where the log file lives.
 
     // globally declare arrays, so can be used by more then one sub and also not re-created every call of the sub.
     const hourTxt: array [0..12] of string = ('twelve', 'one', 'two', 'three', 'four',
@@ -199,9 +199,9 @@ var
   mins: word;
   secs: word;
   mscs: word;
-  ampm: string;    //  am pm indicator, also used for afternoon or evening
-  pastTo: string;    //  return string
-  sRtn: string;    //  hour text
+  ampm: string;       //  am pm indicator, also used for afternoon or evening
+  pastTo: string;     //  return string
+  sRtn: string;       //  hour text
  begin
     DecodeTime(Time, hour, mins, secs, mscs);
     pastTo := 'past';
@@ -267,7 +267,6 @@ function FuzzyTime.unixTime: string;
 {  return UNIX epoch time                                                      }
 var
   unix: integer;
-
 begin
   unix := DateTimeToUnix(Now);
 

@@ -40,9 +40,9 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
   uMemos, uMemo, formAbout, formOptions, formLicense, UFuzzyTime, dateutils,
-  LCLIntf, LCLType, CheckLst, DCPrijndael, DCPsha256, UKlockUtils, UConversion,
-  formReminderInput, AvgLvlTree, uOptions, Windows, ULogging, ustickyNotes,
-  formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
+  LCLIntf, LCLType, CheckLst, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
+  UConversion, formReminderInput, AvgLvlTree, uOptions, Windows, ULogging,
+  ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
   formAnalogueKlock, formSmallTextKlock;
 
 type
@@ -96,8 +96,10 @@ type
     CmbBxCountdownEvent: TComboBox;
     CmbBxEventAction: TComboBox;
     CmbBxEventSystem: TComboBox;
+    CmbBxTZFonts: TComboBox;
     CmbBxTime: TComboBox;
     CmbBxName: TComboBox;
+    CmbBxTimeZones: TComboBox;
     DCP_rijndael1: TDCP_rijndael;
     DCP_sha256_1: TDCP_sha256;
     DtEdtEvent: TDateEdit;
@@ -117,6 +119,7 @@ type
     LblCountdownTime: TLabel;
     lblEvent: TLabel;
     lblfuzzy: TLabel;
+    lblTZTime: TLabel;
     LblMemoName: TLabel;
     lblRadix: TLabel;
     lblSplitLap: TLabel;
@@ -142,6 +145,9 @@ type
     Panel24: TPanel;
     Panel25: TPanel;
     Panel26: TPanel;
+    Panel27: TPanel;
+    Panel28: TPanel;
+    Panel29: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
     Panel5: TPanel;
@@ -149,11 +155,13 @@ type
     Panel7: TPanel;
     Panel8: TPanel;
     Panel9: TPanel;
+    PascalTZ1: TPascalTZ;
     RdBttnMemoEncrypt: TRadioButton;
     SpnEdtCountdown: TSpinEdit;
     SpnEdtHour: TSpinEdit;
     SpnEdtMins: TSpinEdit;
     SpnEdtTimeBase: TSpinEdit;
+    TbShtWorldKlock: TTabSheet;
     TbShtConversion: TTabSheet;
     TbShtCountdown: TTabSheet;
     TbShtEvent: TTabSheet;
@@ -291,6 +299,7 @@ type
     procedure readReminderFile;
     procedure UpdateStatusBar(KTime: TDateTime);
     procedure UpdateTime;
+    procedure UpdateWorldKlock;
     procedure setMemoButtons(mode: Boolean);
     procedure displayMemo(pos: integer);
     procedure displayEncryptedMemo;
@@ -310,7 +319,8 @@ var
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
   kLog: Logger;                 //  used to log erors, debug statements etc.
   stickies: stickyNotes;        //  used to store the Sticky Notes.
-  memorandum: Memos;            //  usrd to store memos.
+  memorandum: Memos;            //  used to store memos.
+  timeZone: TPascalTZ;          //  used for world klock time zones.
   ConversionUnits: TStrings;    //  used to hold the converions units - read from file.
   unitConvertVal: double;       //  used to hold the conversion value.
   unitConvertfactor: double;    //  used to hold the conversion factor.
@@ -334,6 +344,8 @@ implementation
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
+var
+  S : TStringList;
 begin
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 
@@ -371,6 +383,16 @@ begin
     Interval := 1000;
     Enabled := False;
   end;
+
+  s := TStringList.Create;
+  timeZone := TPascalTZ.Create;
+  timeZone.DatabasePath :='tzdata';
+  timeZone.ParseDatabaseFromDirectory('tzdata');
+
+  timeZone.GetTimeZoneNames(s, false);
+  CmbBxTimeZones.Items.AddStrings(s);
+  CmbBxTimeZones.ItemIndex := 0;
+  s.Free;
 
   stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
@@ -426,6 +448,7 @@ begin
   memorandum.Free;           //  Release the Memo store.
   userOptions.Free;          //  Release the user options .
   kLog.Free;                 //  Release the logger object.
+  timeZone.Free;             //  Release the Time Lone object.
   ConversionUnits.Free;      //  release the Conversion string list.
 end;
 
@@ -445,6 +468,9 @@ begin
 
   CmbBxName.Items := fs.fontTypes;                       //  set up font combo box.
   CmbBxName.ItemIndex := 0;
+
+  CmbBxTZFonts.Items := fs.fontTypes;                       //  set up font combo box.
+  CmbBxTZFonts.ItemIndex := 0;
 
   ft.displayFuzzy := userOptions.defaultTime;
   ft.display24Hour:= userOptions.display24Hour;
@@ -513,21 +539,28 @@ procedure TfrmMain.PageControl1Change(Sender: TObject);
 {   called when tabs is changed on the main tab control.
     Sets the appropriate information for each tab.
         0 = time
-        1 = countdown
-        2 = timer
-        3 = event
-        4 = reminder
+        1 = world klock
+        2 = countdown
+        3 = timer
+        4 = event
+        5 = reminder
+        6 = memo
+        7 = conversion
 }
 begin
   setMemoButtons(false);
 
   case PageControl1.TabIndex of
     0:
-    begin                     //  fuzzy page
+    begin                     //  fuzzy page.
       stsBrInfo.Panels.Items[4].Text := '';
       setMemoButtons(false);
     end;
-    1:
+    1:                      //  world klock.
+    begin
+
+    end;
+    2:
     begin                     //  countdown page
       if CountdownTimer.Enabled = False then
         stsBrInfo.Panels.Items[4].Text := ''
@@ -535,8 +568,8 @@ begin
         stsBrInfo.Panels.Items[4].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
       setMemoButtons(false);
     end;
-    2:
-    begin                     //  timer page
+    3:
+    begin                     //  timer page.
       stsBrInfo.Panels.Items[4].Text := '';
 
       if timerTimer.Enabled = False then
@@ -561,8 +594,8 @@ begin
       end;      //  if timerTimer.Enabled = false
       setMemoButtons(false);
     end;
-    3:
-    begin                    //  event page
+    4:
+    begin                    //  event page.
       stsBrInfo.Panels.Items[4].Text := '';
       if EventTimer.Enabled = False then
       begin   // only set display to current
@@ -578,16 +611,16 @@ begin
       end;  //  if btnEventSet.Enabled
       setMemoButtons(false);
     end;
-    4:
+    5:
     begin                    //   Reminder Page.
       readReminderFile;
       setMemoButtons(false);
     end;
-    5:                       //  memo page.
+    6:                       //  memo page.
     begin
       setMemoButtons(true);
     end;
-    6:
+    7:
     begin                       //  Conversion Page.
       checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
       readConversionUnitsFile;
@@ -650,7 +683,11 @@ begin
    end         //  if TrayIcon.Visible then
    else
    begin  //  normal display i.e. not trayicon
-     UpdateTime;
+     if PageControl1.TabIndex = 0 then        //  Display FuzzyTime.
+       UpdateTime;
+     if PageControl1.TabIndex = 1 then        //  Display World Klock.
+       UpdateWorldKlock;
+
      UpdateStatusBar(myNow);
    end;  //  if TrayIcon.Visible then
 
@@ -659,7 +696,7 @@ end;
 procedure TfrmMain.UpdateTime;
 {  Updates the time in the correct font.    }
 begin
-  lblfuzzy.Top := 4;
+  lblfuzzy.Top := 8;
   lblfuzzy.Left := 4;
   lblfuzzy.Font.Size := 22;
   lblfuzzy.AutoSize := true;
@@ -676,6 +713,25 @@ begin
     lblfuzzy.Font.Name := 'Groovy Ghosties';
 
   lblfuzzy.AdjustFontForOptimalFill;
+end;
+
+procedure TfrmMain.UpdateWorldKlock;
+{  Updates the World Klock time in the correct font.    }
+var
+  DateTime: TDateTime;
+  s: string;
+begin
+  lblTZTime.Top := 8;
+  lblTZTime.Left := 4;
+  lblTZTime.Font.Size := 22;
+  lblTZTime.AutoSize := true;
+
+  s := CmbBxTimeZones.Items[CmbBxTimeZones.ItemIndex];
+  DateTime := timeZone.GMTToLocalTime(now, s);
+  lblTZTime.Caption := DateTimeToStr(DateTime);
+  lblTZTime.Font.Name := fs.getFont(CmbBxTZFonts.ItemIndex);
+
+  lblTZTime.AdjustFontForOptimalFill;
 end;
 
 procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
@@ -734,7 +790,7 @@ procedure TfrmMain.CmbBxTimeChange(Sender: TObject);
    If index = 9 then radix time is chosen, so display choice of bases.
 }
 begin
-  klog.writeLog('Fuzzt time selected : ' + CmbBxTime.Items[CmbBxTime.ItemIndex]);
+  klog.writeLog('Fuzzy time selected : ' + CmbBxTime.Items[CmbBxTime.ItemIndex]);
 
   ft.displayFuzzy := CmbBxTime.ItemIndex;
   lblfuzzy.Caption := ft.getTime;

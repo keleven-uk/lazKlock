@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1156
+  Left = 1217
   Height = 259
-  Top = 398
+  Top = 212
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -185,12 +185,12 @@ object frmMain: TfrmMain
     ClientWidth = 688
     TabOrder = 1
     object PageControl1: TPageControl
-      Left = 16
+      Left = 9
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtFuzzy
-      TabIndex = 0
+      ActivePage = TbShtWorldKlock
+      TabIndex = 1
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -242,7 +242,7 @@ object frmMain: TfrmMain
             end
             object CmbBxName: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 40
               Width = 100
               Font.Height = -11
@@ -266,10 +266,87 @@ object frmMain: TfrmMain
               Top = 1
               Width = 510
               Align = alClient
+              AutoSize = False
+              BorderSpacing.CellAlignHorizontal = ccaCenter
+              BorderSpacing.CellAlignVertical = ccaCenter
               Caption = 'twenty-five to twelve in the evening'
               Font.Height = -24
               ParentColor = False
               ParentFont = False
+              OptimalFill = True
+            end
+          end
+        end
+      end
+      object TbShtWorldKlock: TTabSheet
+        Caption = 'World Klock'
+        ClientHeight = 102
+        ClientWidth = 658
+        object Panel27: TPanel
+          Left = 0
+          Height = 102
+          Top = 0
+          Width = 658
+          Align = alClient
+          ClientHeight = 102
+          ClientWidth = 658
+          Color = clForm
+          ParentColor = False
+          TabOrder = 0
+          object Panel28: TPanel
+            Left = 12
+            Height = 80
+            Top = 8
+            Width = 116
+            ClientHeight = 80
+            ClientWidth = 116
+            TabOrder = 0
+            object CmbBxTimeZones: TComboBox
+              Left = 8
+              Height = 23
+              Top = 8
+              Width = 100
+              Font.Height = -9
+              ItemHeight = 12
+              OnChange = CmbBxTimeChange
+              ParentFont = False
+              Style = csDropDownList
+              TabOrder = 0
+            end
+            object CmbBxTZFonts: TComboBox
+              Left = 8
+              Height = 21
+              Top = 40
+              Width = 100
+              Font.Height = -11
+              ItemHeight = 13
+              ParentFont = False
+              Style = csDropDownList
+              TabOrder = 1
+            end
+          end
+          object Panel29: TPanel
+            Left = 136
+            Height = 80
+            Top = 8
+            Width = 512
+            ClientHeight = 80
+            ClientWidth = 512
+            TabOrder = 1
+            object lblTZTime: TLabel
+              Left = 1
+              Height = 78
+              Top = 1
+              Width = 510
+              Align = alClient
+              AutoSize = False
+              BorderSpacing.CellAlignHorizontal = ccaCenter
+              BorderSpacing.CellAlignVertical = ccaCenter
+              Caption = 'twenty-five to twelve in the evening'
+              Font.Height = -24
+              ParentColor = False
+              ParentFont = False
+              OptimalFill = True
             end
           end
         end
@@ -4104,5 +4181,9 @@ object frmMain: TfrmMain
     OnTimer = tmrMemoTimer
     left = 480
     top = 8
+  end
+  object PascalTZ1: TPascalTZ
+    DetectInvalidLocalTimes = True
+    left = 600
   end
 end

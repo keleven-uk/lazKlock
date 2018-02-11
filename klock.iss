@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "71"
+#define MyAppVersion "73"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -44,7 +44,7 @@ ArchitecturesInstallIn64BitMode=x64
 ; all architectures (including Itanium,since it's capable of running 32-bit code too)
 
 [Messages]
-SetupLdrStartupMessage=This will install [%1 V2.2.3.71] on your computer.
+SetupLdrStartupMessage=This will install [%1 V2.2.3.73] on your computer.
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -66,6 +66,7 @@ Source: "sounds\*"                      ; DestDir: "{app}\sounds"    ; Flags: ig
 Source: "fonts\*"                       ; DestDir: "{app}\fonts"     ; Flags: ignoreversion
 Source: "help\*"                        ; DestDir: "{app}\help"      ; Flags: ignoreversion; Excludes: "klock.hnd"
 Source: "help\html\*"                   ; DestDir: "{app}\help\html" ; Flags: ignoreversion
+Source: "tzdata\*"                      ; DestDir: "{app}\tzdata"    ; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"                                               ; Filename: "{app}\{#MyAppExeName}"

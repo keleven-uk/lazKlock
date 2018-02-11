@@ -6,17 +6,22 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, Countdown, Timer, Event, Reminder, Conversion, Sticky Notes & Clipboard Monitor.
+Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Sticky Notes & Clipboard Monitor.
 
 Also, the time can be displayed in several ways - text, digital and analogue and binary klocks,
 
 
-Klock currently consists of over 8000 lines of Free Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
+Klock currently consists of over 10,000 lines of Free Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 
 Fuzzy Time
 
 Allows the current time to be displayed in a number of different formats.
+
+
+World Klock
+
+This display a list of Time Zones and when selected will display the time in that time zone.
 
 
 Countdown
@@ -47,6 +52,12 @@ Implements a reminder option.
 This enables for [recurring] Reminders to set up and reminders displayed to the user.  A number of pre-defined events types are already set up.
 
 
+Memo
+
+Implements a simple memo thingy.
+This will allow memo's to be entered, edited, printed and saved.  Any previously saved memos will be loaded into Klock on start-up.  The memos can be optionally encrypted and only be displayed on demand.
+
+
 Conversion
 
 Implements a simple conversion screen.
@@ -56,8 +67,7 @@ This allows the conversion between various units of weight, distance and area et
 Stick Notes
 
 Implements a simple sticky Note thingy.
-This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc.
-Klock will keep track of the notes and re-display any active notes when Klock is first launched.
+This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc.  Klock will keep track of the notes and re-display any active notes when Klock is first launched.
 
 
 
