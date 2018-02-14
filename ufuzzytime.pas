@@ -16,7 +16,7 @@ unit UFuzzyTime;
 interface
 
 uses
-  Classes, SysUtils, DateUtils, Windows, strutils, Dialogs;
+  Classes, SysUtils, DateUtils, strutils, Dialogs, uPascalTZ;
 
 type
   FuzzyTime = class
@@ -28,6 +28,9 @@ type
     _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
     _filename: string;              //  filename of the log file
     _dirname : string;              //  directory where the log file lives.
+
+    timeZone: TPascalTZ;            //  used for local and utc time, will take into
+                                    //  account time zones.
 
     // globally declare arrays, so can be used by more then one sub and also not re-created every call of the sub.
     const hourTxt: array [0..12] of string = ('twelve', 'one', 'two', 'three', 'four',
@@ -44,6 +47,7 @@ type
     function netTime: string;
     function unixTime: string;
     function utcTime: string;
+    function localTime: string;
     function swatchTime: string;
     function julianTime: string;
     function decimalTime: string;
@@ -68,6 +72,7 @@ type
     property display24Hour: boolean read _display24Hour write _display24Hour;
 
     constructor Create; overload;
+    destructor Destroy;
     function getTime: string;
   end;
 
@@ -78,6 +83,7 @@ uses
   formklock;
 
 constructor FuzzyTime.Create; overload;
+{  run on create.    }
 begin
   dirname := GetAppConfigDir(False);
   filename := dirname + 'fuzzytime_' + FormatDateTime('DDMMMYYYY', now) + '.log';
@@ -92,8 +98,20 @@ begin
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
    '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time"');
 
+  //  Load and parse the time zone data base.
+  timeZone := TPascalTZ.Create;
+  timeZone.DatabasePath :='tzdata';
+  timeZone.ParseDatabaseFromDirectory('tzdata');
+
   //writeLog('End of Create');
  end;
+
+destructor FuzzyTime.Destroy;
+{  run on destroy.    }
+begin
+  _fuzzyTypes.free;
+  timeZone.Free;
+end;
 
 procedure FuzzyTime.writeLog(message: string);
 {  write a text message to the log file.
@@ -274,13 +292,19 @@ begin
 end;
 
 function FuzzyTime.utcTime: string;
-{  returns UTC, Coordinated Universal Time - will only work in windows.
+{  returns UTC, Coordinated Universal Time, taking into acount local time zone.
    This is then encoded into a string.                                         }
-var
-  utc: TSystemTime;
 begin
-  GetSystemTime(utc);              //  Get current time in UTC
-  Result := TimeToStr(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
+  Result := TimeToStr(TimeZone.UniversalTime);
+end;
+
+function FuzzyTime.localTime: string;
+{  return local time, taking into acount local time zone.    }
+begin
+  if display24Hour then
+    Result := FormatDateTime('hh : nn : ss', TimeZone.LocalTime)
+  else
+    Result := FormatDateTime('hh : nn : ss am/pm', TimeZone.LocalTime);
 end;
 
 function FuzzyTime.swatchTime: string;
@@ -288,12 +312,10 @@ function FuzzyTime.swatchTime: string;
    Swatch time is made up of 1000 beats per day i.e. 1 beat = 0.1157 seconds.
    This is then encoded into a string.                                         }
 var
-  utc: TSystemTime;
   noOfSeconds: double;
   noOfBeats: double;
 begin
-  GetSystemTime(utc);                    //  Get current time in UTC
-  noOfSeconds := SecondOfTheDay(EncodeTime(utc.Hour, utc.Minute, utc.Second, utc.Millisecond));
+  noOfSeconds := SecondOfTheDay(TimeZone.UniversalTime);
 
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
@@ -573,8 +595,7 @@ begin
   case displayFuzzy of
     0: Result := fTime;
     1: Result := wordTime;
-    2: if display24Hour then Result := FormatDateTime('hh : nn : ss', Time)
-                        else Result := FormatDateTime('hh : nn : ss am/pm', Time);
+    2: Result := localTime;
     3: Result := netTime;
     4: Result := unixTime;
     5: Result := utcTime;

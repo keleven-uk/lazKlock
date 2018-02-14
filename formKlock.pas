@@ -24,8 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      VisualPlanit - L.E.D. control.
      DCPciphers - Encyption and Decription stuff.
      Astronomy - Moon image.
+     PascalTZ - Time Zone stuff [go to web site].
 
-     All from the Online Package manager.
+     Most from the Online Package manager.
 }
 
 { TODO : Check out Ballon Time. }
@@ -43,7 +44,7 @@ uses
   LCLIntf, LCLType, CheckLst, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
   UConversion, formReminderInput, AvgLvlTree, uOptions, Windows, ULogging,
   ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock;
+  formAnalogueKlock, formSmallTextKlock, formFloatingKlock;
 
 type
 
@@ -125,6 +126,7 @@ type
     lblSplitLap: TLabel;
     lblTimer: TLabel;
     LstBxMemoName: TListBox;
+    mnuItmFloatingTextKlock: TMenuItem;
     mnuItmMoonPhase: TMenuItem;
     MmMemoData: TMemo;
     PageControl1: TPageControl;
@@ -157,6 +159,10 @@ type
     Panel9: TPanel;
     PascalTZ1: TPascalTZ;
     RdBttnMemoEncrypt: TRadioButton;
+    SpdBtn120: TSpeedButton;
+    SpdBtn90: TSpeedButton;
+    SpdBtn60: TSpeedButton;
+    SpdBtn30: TSpeedButton;
     SpnEdtCountdown: TSpinEdit;
     SpnEdtHour: TSpinEdit;
     SpnEdtMins: TSpinEdit;
@@ -197,7 +203,7 @@ type
     Panel2: TPanel;
     PpMnTray: TPopupMenu;
     PopupNotifier1: TPopupNotifier;
-    SpeedButton1: TSpeedButton;
+    SpdBtnNewStickyNote: TSpeedButton;
     stsBrInfo: TStatusBar;
     mainTimer: TTimer;
     CountdownTimer: TTimer;
@@ -266,6 +272,7 @@ type
     procedure mnuItmDaylightSavingClick(Sender: TObject);
     procedure mnuItmEasterDatesClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
+    procedure mnuItmFloatingTextKlockClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
     procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
@@ -281,7 +288,11 @@ type
     procedure ppMnItmShowClick(Sender: TObject);
     procedure ppMnItmTimeClick(Sender: TObject);
     procedure EventTimerTimer(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpdBtnNewStickyNoteClick(Sender: TObject);
+    procedure SpdBtn120Click(Sender: TObject);
+    procedure SpdBtn90Click(Sender: TObject);
+    procedure SpdBtn60Click(Sender: TObject);
+    procedure SpdBtn30Click(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure SpnEdtHourChange(Sender: TObject);
     procedure SpnEdtMinsChange(Sender: TObject);
@@ -292,6 +303,7 @@ type
   private
     procedure DisplayMessage;
     procedure StopCountDown(Sender: TObject);
+    procedure enableSpeedButtons(mode: boolean);
     procedure SetDefaults;
     procedure resetEvent;
     procedure EventTimerStop(Sender: TObject);
@@ -384,11 +396,13 @@ begin
     Enabled := False;
   end;
 
-  s := TStringList.Create;
+  //  Load and parse the time zone data base.
   timeZone := TPascalTZ.Create;
   timeZone.DatabasePath :='tzdata';
   timeZone.ParseDatabaseFromDirectory('tzdata');
 
+  //  Load the time zones into the combo box.
+  s := TStringList.Create;
   timeZone.GetTimeZoneNames(s, false);
   CmbBxTimeZones.Items.AddStrings(s);
   CmbBxTimeZones.ItemIndex := 0;
@@ -892,7 +906,7 @@ begin
     btnCountdownStop.Enabled := True;
     CountdownTimer.Enabled := True;
     SpnEdtCountdown.Enabled := False;
-    VAL := CountdownTicks div 60;           //  in case the status message has changed
+    val := CountdownTicks div 60;           //  in case the status message has changed
     stsBrInfo.Panels.Items[4].Text := format(' Counting down from %d minute[s]', [val]);
 
     btnCountdownStart.Caption := 'Pause';
@@ -969,10 +983,12 @@ begin
   frmMain.Caption := 'Countdown';
   application.Title := 'Countdown';
   LblCountdownTime.Caption := '00:00';
+
+  enableSpeedButtons(true);
 end;
 
 procedure TfrmMain.SpnEdtCountdownChange(Sender: TObject);
-{    called when the time is entered - only allow 1 - 90 minutes.
+{    called when the time is entered - only allow 1 - 120 minutes.
 }
 var
   val: integer;                 //  used to hold value from spin edit
@@ -980,7 +996,7 @@ var
 begin
   val := SpnEdtCountdown.Value;
 
-  if (val > 0) and (val <= 90) then
+  if (val > 0) and (val <= 120) then
   begin
     LblCountdownTime.Caption := format('%2.2d:00', [val]);
     btnCountdownStart.Enabled := True;
@@ -1172,6 +1188,48 @@ begin
     EdtCountdownCommand.Enabled := False;
   end;
 end;
+
+procedure TfrmMain.SpdBtn120Click(Sender: TObject);
+{  Set and run the countdown time for 120 minutes.    }
+begin
+  SpnEdtCountdown.Value := 120;
+  btnCountdownStart.Click;
+  enableSpeedButtons(false);
+end;
+
+procedure TfrmMain.SpdBtn90Click(Sender: TObject);
+{  Set and run the countdown time for 90 minutes.    }
+begin
+  SpnEdtCountdown.Value := 90;
+  btnCountdownStart.Click;
+  enableSpeedButtons(false);
+end;
+
+procedure TfrmMain.SpdBtn60Click(Sender: TObject);
+{  Set and run the countdown time for 60 minutes.    }
+begin
+  SpnEdtCountdown.Value := 60;
+  btnCountdownStart.Click;
+  enableSpeedButtons(false);
+end;
+
+procedure TfrmMain.SpdBtn30Click(Sender: TObject);
+{  Set and run the countdown time for 60 minutes.    }
+begin
+  SpnEdtCountdown.Value := 30;
+  btnCountdownStart.Click;
+  enableSpeedButtons(false);
+end;
+
+procedure TfrmMain.enableSpeedButtons(mode: boolean);
+{  Set the enable property of the speed buttons as desired.    }
+begin
+  SpdBtn120.Enabled := mode;
+  SpdBtn90.Enabled := mode;
+  SpdBtn60.Enabled := mode;
+  SpdBtn30.Enabled := mode;
+end;
+
 //
 // *********************************************************** Timer ***********
 //
@@ -2040,6 +2098,12 @@ procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
 begin
   frmSmallTextKlock.Show;
 end;
+
+procedure TfrmMain.mnuItmFloatingTextKlockClick(Sender: TObject);
+{  Calls the Floating Text Klock'.    }
+begin
+  frmFloatingKlock.Show;
+end;
 //
 // ********************************************************* Info Menu *********
 //
@@ -2107,7 +2171,7 @@ procedure TfrmMain.BitBtnHelpClick(Sender: TObject);
 begin
   displayHelp('help\Klock.chm', '/Introduction.htm');
 end;
-procedure TfrmMain.SpeedButton1Click(Sender: TObject);
+procedure TfrmMain.SpdBtnNewStickyNoteClick(Sender: TObject);
 {  Created a new sticky note, will appear on the screen.    }
 begin
   stickies.new(userOptions.stickyColor, userOptions.stickyFont);

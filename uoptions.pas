@@ -118,6 +118,13 @@ type
     _defaultpassWord: string;             //  Memo default pass word.
     _decryptTimeOut: integer;             //  Memo decrypt Time Out.
 
+    // Floating Text Klock
+    _floatingTextScreenSave: boolean;     //  do we save from position or not.
+    _floatingTextFormTop: integer;        //  the forms top left.
+    _floatingTextFormLeft: integer;
+    _floatingTextFont: Tfont;
+    _floatingTextUseKlockFont: boolean;
+
     //Sticky Notes
     _stickyColor: TColor;                   //  Sticky Note colour.
     _stickyFont:TFont;                      //  Sticky Note Font.
@@ -208,6 +215,13 @@ type
     property smallTextFormTop: integer read _smallTextFormTop write _smallTextFormTop;
     property smallTextFormLeft: integer read _smallTextFormLeft write _smallTextFormLeft;
     property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
+
+    // Floating Text Klock
+    property floatingTextScreenSave: boolean read _floatingTextScreenSave write _floatingTextScreenSave;
+    property floatingTextFormTop: integer read _floatingTextFormTop write _floatingTextFormTop;
+    property floatingTextFormLeft: integer read _floatingTextFormLeft write _floatingTextFormLeft;
+    property floatingTextFont: TFont read _floatingTextFont write _floatingTextFont;
+    property floatingTextUseKlockFont: boolean read _floatingTextUseKlockFont write _floatingTextUseKlockFont;
 
     // Memos
     property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
@@ -412,6 +426,13 @@ begin
   smallTextFormLeft := o.smallTextFormLeft;
   smallTextTransparent := o.smallTextTransparent;
 
+  // Floating Text Klock
+  floatingTextScreenSave := o.floatingTextScreenSave;
+  floatingTextFormTop := o.floatingTextFormTop;
+  floatingTextFormLeft := o.floatingTextFormLeft;
+  floatingTextFont := o.floatingTextFont;
+  floatingTextUseKlockFont := o.floatingTextUseKlockFont;
+
   // memos
   useDefaultpassWord := o.useDefaultpassWord;
   defaultpassWord := o.defaultpassWord;
@@ -615,6 +636,23 @@ begin
       if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
     end;
 
+    // Floating Text Klock
+    PassNode := Doc.DocumentElement.FindNode('FloatingTextKlock');
+
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'floatingTextScreenSave');
+      if rtn <> 'ERROR' then floatingTextScreenSave := StrToBool(rtn);
+      rtn := readChildAttribute(PassNode, 'floatingTextForm', 'Top');
+      if rtn <> 'ERROR' then floatingTextFormTop := StrToInt(rtn);
+      rtn := readChildAttribute(PassNode, 'floatingTextFormLeft', 'Left');
+      if rtn <> 'ERROR' then floatingTextFormLeft := StrToInt(rtn);
+      rtn := readChild(PassNode, 'floatingTextFont');
+      if rtn <> 'ERROR' then floatingTextFont := StringToFont(rtn);
+      rtn := readChild(PassNode, 'floatingTextUseKlockFont');
+      if rtn <> 'ERROR' then floatingTextUseKlockFont := StrToBool(rtn);
+    end;
+
     // memos
     PassNode := Doc.DocumentElement.FindNode('Memo');
 
@@ -740,6 +778,13 @@ begin
   smallTextFormTop := 100;
   smallTextFormLeft := 100;
   smallTextTransparent := True;
+
+  // Floating Text Klock
+  _floatingTextScreenSave := true;
+  _floatingTextFormTop := 100;
+  _floatingTextFormLeft := 100;
+  _floatingTextFont := TFont.Create;
+  _floatingTextUseKlockFont := true;
 
   // memos
   useDefaultpassWord := true;
@@ -868,6 +913,16 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'smallTextScreenSave', smallTextScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'SmallTextForm', smallTextFormTop, smallTextFormLeft));
     ElementNode.AppendChild(writeBolChild(doc, 'smallTextTransparent', smallTextTransparent));
+
+    RootNode.AppendChild(ElementNode);
+
+    // Floating Text Klock
+    ElementNode := Doc.CreateElement('FloatingTextKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextScreenSave', _floatingTextScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'floatingTextForm', floatingTextFormTop, floatingTextFormLeft));
+    ElementNode.AppendChild(writeFontChild(doc, 'floatingTextFont', floatingTextFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextUseKlockFont', floatingTextUseKlockFont));
 
     RootNode.AppendChild(ElementNode);
 

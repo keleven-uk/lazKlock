@@ -27,8 +27,7 @@ function SetWindowLongA(hWnd: longint; nIndex: longint; dwNewLong: longint): lon
 
 
 {Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long }
-function GetWindowLongA(hWnd: longint; nIndex: longint): longint stdcall;
-  external 'user32';
+function GetWindowLongA(hWnd: longint; nIndex: longint): longint stdcall; external 'user32';
 
 type
 

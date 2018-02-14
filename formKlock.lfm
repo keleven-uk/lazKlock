@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1217
+  Left = 1189
   Height = 259
-  Top = 212
+  Top = 383
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtWorldKlock
-      TabIndex = 1
+      ActivePage = TbShtCountdown
+      TabIndex = 2
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -303,7 +303,7 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTimeZones: TComboBox
               Left = 8
-              Height = 23
+              Height = 20
               Top = 8
               Width = 100
               Font.Height = -9
@@ -410,7 +410,7 @@ object frmMain: TfrmMain
               Top = 8
               Width = 62
               Font.Height = -16
-              MaxValue = 90
+              MaxValue = 120
               OnChange = SpnEdtCountdownChange
               ParentFont = False
               TabOrder = 0
@@ -424,6 +424,38 @@ object frmMain: TfrmMain
               Font.Height = -35
               ParentColor = False
               ParentFont = False
+            end
+            object SpdBtn120: TSpeedButton
+              Left = 496
+              Height = 25
+              Top = 10
+              Width = 25
+              Caption = '120'
+              OnClick = SpdBtn120Click
+            end
+            object SpdBtn90: TSpeedButton
+              Left = 464
+              Height = 25
+              Top = 10
+              Width = 25
+              Caption = '90'
+              OnClick = SpdBtn90Click
+            end
+            object SpdBtn60: TSpeedButton
+              Left = 432
+              Height = 25
+              Top = 10
+              Width = 25
+              Caption = '60'
+              OnClick = SpdBtn60Click
+            end
+            object SpdBtn30: TSpeedButton
+              Left = 400
+              Height = 25
+              Top = 10
+              Width = 25
+              Caption = '30'
+              OnClick = SpdBtn30Click
             end
           end
           object Panel8: TPanel
@@ -584,16 +616,16 @@ object frmMain: TfrmMain
       object TbShtTimer: TTabSheet
         Caption = 'Timer'
         ClientHeight = 102
-        ClientWidth = 656
+        ClientWidth = 658
         object Panel1: TPanel
           Left = 0
           Height = 102
           Top = 0
-          Width = 656
+          Width = 658
           Align = alClient
           AutoSize = True
           ClientHeight = 102
-          ClientWidth = 656
+          ClientWidth = 658
           Color = clForm
           ParentColor = False
           TabOrder = 0
@@ -637,7 +669,7 @@ object frmMain: TfrmMain
             end
           end
           object Panel10: TPanel
-            Left = 166
+            Left = 167
             Height = 43
             Top = 7
             Width = 484
@@ -657,7 +689,7 @@ object frmMain: TfrmMain
             end
           end
           object Panel16: TPanel
-            Left = 166
+            Left = 167
             Height = 40
             Top = 55
             Width = 484
@@ -692,15 +724,15 @@ object frmMain: TfrmMain
       object TbShtEvent: TTabSheet
         Caption = 'Event'
         ClientHeight = 102
-        ClientWidth = 656
+        ClientWidth = 658
         object Panel5: TPanel
           Left = 0
           Height = 102
           Top = 0
-          Width = 656
+          Width = 658
           Align = alClient
           ClientHeight = 102
-          ClientWidth = 656
+          ClientWidth = 658
           Color = clForm
           ParentColor = False
           TabOrder = 0
@@ -1541,7 +1573,7 @@ object frmMain: TfrmMain
       OnClick = BitBtnHelpClick
       TabOrder = 2
     end
-    object SpeedButton1: TSpeedButton
+    object SpdBtnNewStickyNote: TSpeedButton
       Left = 376
       Height = 30
       Top = 8
@@ -1678,7 +1710,7 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000
       }
-      OnClick = SpeedButton1Click
+      OnClick = SpdBtnNewStickyNoteClick
     end
     object btnMemoNew: TButton
       Left = 16
@@ -1784,6 +1816,10 @@ object frmMain: TfrmMain
       object mnuItmSmallTextKlock: TMenuItem
         Caption = 'Small Text Klock'
         OnClick = mnuItmSmallTextKlockClick
+      end
+      object mnuItmFloatingTextKlock: TMenuItem
+        Caption = 'Floating Text Klock'
+        OnClick = mnuItmFloatingTextKlockClick
       end
     end
     object mnuInfo: TMenuItem

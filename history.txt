@@ -2649,3 +2649,67 @@ Currently
 10171 lines of source code.
 5565 statements
 15.8% comment
+
+README.md                   |   18 +-
+formKlock.lfm               |   93 +-
+formKlock.pas               |   96 +-
+help/Klock.chm              |  Bin 1120838 -> 1134124 bytes
+help/Klock.pdf              |  Bin 5485402 -> 5579909 bytes
+help/html/About.html        |    7 +-
+help/html/Archive.html      |    6 +-
+help/html/Conversion.html   |    2 +-
+help/html/Countdown.html    |    4 +-
+help/html/Credits.html      |    4 +-
+help/html/Events.html       |    2 +-
+help/html/FuzzyTime.html    |    8 +-
+help/html/Introduction.html |    2 +-
+help/html/Klock.html        |    4 +-
+help/html/Memo.html         |   10 +-
+help/html/Reminder.html     |    2 +-
+help/html/Timer.html        |    2 +-
+help/html/WorldKlock.html   |  283 +++
+help/html/_toc.json         |    2 +-
+help/html/js/hndsd.min.js   |    2 +-
+help/klock.hnd              |  Bin 7528448 -> 7761920 bytes
+history.txt                 |   98 +-
+klock.iss                   |    5 +-
+klock.lpi                   |  230 +--
+lazKlock.smproj             |  Bin 466548 -> 495083 bytes
+tzdata/CONTRIBUTING         |   79 +
+tzdata/LICENSE              |    5 +
+tzdata/Makefile             |  929 ++++++++++
+tzdata/NEWS                 | 4263 +++++++++++++++++++++++++++++++++++++++++++
+tzdata/README               |   52 +
+tzdata/africa               | 1237 +++++++++++++
+tzdata/antarctica           |  340 ++++
+tzdata/asia                 | 3142 +++++++++++++++++++++++++++++++
+tzdata/australasia          | 1793 ++++++++++++++++++
+tzdata/backward             |  128 ++
+tzdata/backzone             |  665 +++++++
+tzdata/calendars            |  173 ++
+tzdata/checklinks.awk       |   48 +
+tzdata/checktab.awk         |  177 ++
+tzdata/etcetera             |   78 +
+tzdata/europe               | 3920 +++++++++++++++++++++++++++++++++++++++
+tzdata/factory              |   10 +
+tzdata/iso3166.tab          |  274 +++
+tzdata/leap-seconds.list    |  255 +++
+tzdata/leapseconds          |   61 +
+tzdata/leapseconds.awk      |   75 +
+tzdata/northamerica         | 3431 ++++++++++++++++++++++++++++++++++
+tzdata/pacificnew           |   27 +
+tzdata/southamerica         | 1806 ++++++++++++++++++
+tzdata/systemv              |   37 +
+tzdata/theory.html          | 1096 +++++++++++
+tzdata/version              |    1 +
+tzdata/yearistype.sh        |   38 +
+tzdata/zishrink.awk         |  157 ++
+tzdata/zone.tab             |  448 +++++
+tzdata/zone1970.tab         |  382 ++++
+tzdata/zoneinfo2tdf.pl      |   52 +
+ufonts.pas                  |    2 +-
+ufuzzytime.pas              |   11 +-
+59 files changed, 25820 insertions(+), 252 deletions(-)
+
+
+Build 74 [2.2.4.74]

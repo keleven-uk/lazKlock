@@ -1,7 +1,7 @@
 object frmAnalogueKlock: TfrmAnalogueKlock
-  Left = 1437
+  Left = 1591
   Height = 248
-  Top = 165
+  Top = 68
   Width = 248
   BorderIcons = []
   BorderStyle = bsNone

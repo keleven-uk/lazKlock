@@ -35,6 +35,7 @@ type
     btnStickyNoteFont: TButton;
     btnSaveArchive: TButton;
     btnLoadArchive: TButton;
+    btnlblFloatingTextKlockFont: TButton;
     ButtonPanel1: TButtonPanel;
     ChckBxCullLogsFiles: TCheckBox;
     ChckBxLogging: TCheckBox;
@@ -49,6 +50,7 @@ type
     ChckGrpTimerSettings: TCheckGroup;
     ChckBxDefaultPassWord: TCheckBox;
     ChckLstBxArchive: TCheckListBox;
+    ChckGrpFloatingTextKlock: TCheckGroup;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
@@ -66,8 +68,10 @@ type
     GroupBox6: TGroupBox;
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
+    GroupBox9: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
+    lblFloatingTextKlockFont: TLabel;
     LblStickyNoteColour: TLabel;
     lblCullFileDays: TLabel;
     lblSettingsFileName: TLabel;
@@ -80,6 +84,7 @@ type
     TrckBrGlobalVolume: TTrackBar;
     procedure btnCullLogsClick(Sender: TObject);
     procedure btnGlobalVolumeTestClick(Sender: TObject);
+    procedure btnlblFloatingTextKlockFontClick(Sender: TObject);
     procedure btnLoadArchiveClick(Sender: TObject);
     procedure btnSaveArchiveClick(Sender: TObject);
     procedure btnStickyNoteFontClick(Sender: TObject);
@@ -89,6 +94,7 @@ type
     procedure ChckBxLoggingChange(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
@@ -101,8 +107,7 @@ type
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
-    procedure FlNmEdtLoadArchiveNameAcceptFileName(Sender: TObject;
-      Var Value: String);
+    procedure FlNmEdtLoadArchiveNameAcceptFileName(Sender: TObject; Var Value: String);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure HelpButtonClick(Sender: TObject);
@@ -219,6 +224,12 @@ begin
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
+  ChckGrpFloatingTextKlock.Checked[0] := userBacOptions.floatingTextScreenSave;
+  ChckGrpFloatingTextKlock.Checked[1] := userBacOptions.floatingTextUseKlockFont;
+
+  lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+  btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+
   ChckBxLogging.Checked := userBacOptions.logging;
   ChckBxCullLogsFiles.Checked := userBacOptions.cullLogs;
   SpnEdtCullDays.Value := userBacOptions.CullLogsDays;
@@ -299,7 +310,6 @@ procedure TfrmOptions.btnGlobalVolumeTestClick(Sender: TObject);
 begin
   doPlaySound('thepips.mp3', userBacOptions.volume);
 end;
-
 //
 //.....................................TIME ....................................
 //
@@ -410,6 +420,31 @@ procedure TfrmOptions.ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: int
 begin
   userBacOptions.smallTextScreenSave := ChckGrpSmallTextKlock.Checked[0];
   userBacOptions.smallTextTransparent := ChckGrpSmallTextKlock.Checked[1];
+end;
+//
+//...................................Floating Text KLOCK .......................
+//
+procedure TfrmOptions.ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: integer);
+{  Sets the options for the Floating Text Klock.
+
+   Index 0 - Save Screen Position.
+   Index 1 - Use Main Klock font.
+}
+begin
+  userBacOptions.floatingTextScreenSave := ChckGrpFloatingTextKlock.Checked[0];
+  userBacOptions.floatingTextUseKlockFont := ChckGrpFloatingTextKlock.Checked[1];
+
+  lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+  btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+end;
+
+procedure TfrmOptions.btnlblFloatingTextKlockFontClick(Sender: TObject);
+begin
+  if FontDialog1.Execute then
+  begin
+    lblFloatingTextKlockFont.Font := FontDialog1.Font;
+    userBacOptions.floatingTextFont := FontDialog1.Font;
+  end;
 end;
 //
 //....................................OTHER STUFF ..............................

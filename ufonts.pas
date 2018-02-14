@@ -18,7 +18,7 @@ type
   Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, KBABCDoodles,
   Backwards, UpsideDown, Christmas, rmbunny, SweetHearts, groovyGhosties,
   ChristmasCard, Hack, GushingMeadow, GallaudetRegular, chintzy, chintzys,
-  CartoonBones);
+  CartoonBones, Behistun, HieraticNumerals);
 
   fontStore = class
 
@@ -74,7 +74,7 @@ begin
   _fontTypes.CommaText := ('"Default", "Bar Code", "Nancy Blackett", "Semaphore",' +
   '"Braille", "Dominoes", "Backwards", "Upside Down", "Christmas", "Christmas Card",' +
   '"Easter Bunny", "Sweet Hearts", "Groovy Ghosties", "Gushing Meadow", "Gallaudet",' +
-  '"chintzy", "chintzy Shadow", "Cartoon Bones"');
+  '"chintzy", "chintzy Shadow", "Cartoon Bones", "Behistun", "Hieratic Numerals"');
 end;
 
 function fontStore.getFont(fontIndex: Integer): string;
@@ -99,6 +99,8 @@ begin
     15: Result := 'Chintzy CPU BRK';
     16: Result := 'Chintzy CPU Shadow BRK';
     17: Result := 'Cartoon Bones';
+    18: Result := 'Behistun';
+    19: Result := 'Hieratic Numerals';
   end;
 end;
 

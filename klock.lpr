@@ -12,7 +12,7 @@ uses
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
   formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote,
-  uMemo, uMemos, uArchiveUtils;
+  uMemo, uMemos, uArchiveUtils, formFloatingKlock;
 
 {$R *.res}
 
@@ -31,6 +31,7 @@ begin
   Application.CreateForm(TfrmBinaryKlock, frmBinaryKlock);
   Application.CreateForm(TfrmSmallTextKlock, frmSmallTextKlock);
   Application.CreateForm(TfrmStickyNote, frmStickyNote);
+  Application.CreateForm(TfrmFloatingKlock, frmFloatingKlock);
   Application.Run;
 end.
 
