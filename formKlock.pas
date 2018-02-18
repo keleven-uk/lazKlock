@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
      DCPciphers - Encyption and Decription stuff.
-     Astronomy - Moon image.
+     DelphiMoon - Moon image and Moon/Sun stuff.
      PascalTZ - Time Zone stuff [go to web site].
 
      Most from the Online Package manager.
@@ -361,7 +361,7 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 var
-  S : TStringList;
+  s : TStringList;
 begin
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 
@@ -404,7 +404,6 @@ begin
   timeZone := TPascalTZ.Create;
   timeZone.DatabasePath :='tzdata';
   timeZone.ParseDatabaseFromDirectory('tzdata');
-
   //  Load the time zones into the combo box.
   s := TStringList.Create;
   timeZone.GetTimeZoneNames(s, false);
@@ -414,7 +413,7 @@ begin
 
   stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
-  loadMemos;                     //  Load memo stoe into listbox, if any.
+  loadMemos;                     //  Load Memos store into listbox, if any.
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);

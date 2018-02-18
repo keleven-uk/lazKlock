@@ -2802,3 +2802,17 @@ Currently
 10632 lines of source code.
 5791 statements
 15.8% comment
+
+
+Build 76 [2.2.4.76]
+
+Added a Chinese info page - display Chinese new year and cycle of year.
+
+Corrected a bug in the moon/sun rise and set dates.
+
+Updated all help files.
+
+Currently
+10666 lines of source code.
+5818 statements
+15.7% comment

@@ -23,6 +23,7 @@ function getDaylightSaving(year: integer): TStringList;
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
 function getEasterDates(Year: integer): TStringList;
 function getLentDates(year: integer): TStringList;
+function getChineseDates(year: integer): TStringList;
 function getPower: TStringList;
 function getMoonStuff: TStringList;
 function getSunStuff: TStringList;
@@ -42,6 +43,7 @@ var
   r:word;
 begin
   strResults := TStringList.Create;
+
   r := GetTimezoneInformation(timezoneinfo);
 
   if r > 0 then   //  if r = 0, then error
@@ -165,6 +167,35 @@ begin
   result.add(FormatDateTime('"Lent Ends   [Easter Sunday] :: "DD MMM YYYY', lent));
 end;
 
+function getChineseDates(year: integer): TStringList;
+{  Returns the Lent dates for a given year.
+   lent start on Ash Wednesday, which is 46 days before Easter Sunday.
+}
+var
+  chinese: TChineseDate;
+  ChineseZodiac: array[TChineseZodiac] of string;
+begin
+  ChineseZodiac[ch_rat] := 'Rat';
+  ChineseZodiac[ch_ox] := 'Ox';
+  ChineseZodiac[ch_tiger] := 'Tiger';
+  ChineseZodiac[ch_rabbit] := 'Rabbit';
+  ChineseZodiac[ch_dragon] := 'Dragon';
+  ChineseZodiac[ch_snake] := 'Snake';
+  ChineseZodiac[ch_horse] := 'Horse';
+  ChineseZodiac[ch_Goat] := 'Goat';
+  ChineseZodiac[ch_monkey] := 'Monkey';
+  ChineseZodiac[ch_chicken] := 'Chicken';
+  ChineseZodiac[ch_dog] := 'Dog';
+  ChineseZodiac[ch_pig] := 'Pig';
+
+  chinese := ChineseDate(ChineseNewYear(year));
+  result := TStringList.Create;
+
+  result.add('');
+  result.add(FormatDateTime('"Chinese New year :: "DD MMM YYYY', ChineseNewYear(year)));
+  result.add('Currently the year of the ' + ChineseZodiac[chinese.yearcycle.zodiac]);
+end;
+
 function getPower: TStringList;
 {  see https://msdn.microsoft.com/en-us/library/windows/desktop/aa373232(v=vs.85).aspx  }
 var
@@ -223,7 +254,7 @@ var
   age: double;
   hour, min, sec, ms: word;
 begin
-  moonDate := now;
+  moonDate := trunc(now);
 
   result := TStringList.Create;
 
@@ -252,15 +283,15 @@ begin
   result.add('');
   result.add(format('Moon Rise = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
                      Moon_Rise(moonDate, userOptions.Latitude, userOptions.Longitude))]));
-  result.add(format('Moon Set = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
-                     Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+
   try
     age := Moon_Transit(moonDate, userOptions.Latitude, userOptions.Longitude);
     result.add(format('Moon Transit = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
   except
     result.add('The Moon stays below horizon for the whole day ');
   end;
-
+  result.add(format('Moon Set = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
+                     Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
 end;
 
 function getSunStuff: TStringList;
@@ -272,16 +303,16 @@ function getSunStuff: TStringList;
 var
   sunDate: TDateTime;
 begin
-  sunDate := TimeZone.UniversalTime;
+  sunDate := trunc(now);
 
   result := TStringList.Create;
 
   result.add(format('Sun Rise = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy ',
                      Sun_Rise(sunDate, userOptions.Latitude, userOptions.Longitude))]));
-  result.add(format('Sun Set = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
-                     Sun_Set(sunDate, userOptions.Latitude, userOptions.Longitude))]));
   result.add(format('Sun Transit = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Sun_Transit(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Sun Set = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+                     Sun_Set(sunDate, userOptions.Latitude, userOptions.Longitude))]));
   result.add('');
   result.add(format('Morning Twilight = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Morning_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));

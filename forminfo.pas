@@ -49,14 +49,14 @@ uses
 
 procedure TfrmInfo.FormShow(Sender: TObject);
 begin
-  klog.writeLog('FormInfo Show' + Info);
+  klog.writeLog('FormInfo Show ' + Info);
 
   GroupBox1.Caption := info;
 
   if info = 'Power Source' then
   begin
-    lblYear.Visible := False;
-    SpnEdtyear.Visible := False;
+    lblYear.Visible := false;
+    SpnEdtyear.Visible := false;
   end;
 
   if (info = 'Moon Stuff') then
@@ -86,6 +86,9 @@ begin
     lstBxInfo.Left := 8;
     lstBxInfo.Top := 0;
     lstBxInfo.Width := 327;
+
+    lblYear.Visible := true;
+    SpnEdtyear.Visible := true;
   end;
 
   SpnEdtyear.Value := Currentyear;
@@ -116,6 +119,7 @@ begin
       'Daylight Saving': strResults := getDaylightSaving(SpnEdtyear.Value);
       'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
       'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
+      'Chinese Year': strResults := getChineseDates(SpnEdtyear.Value);
       'Power Source': strResults := getPower;
       'Moon Stuff': strResults := getMoonStuff;
       'Sun Stuff': strResults := getSunStuff;
