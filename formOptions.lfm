@@ -1,16 +1,16 @@
 object frmOptions: TfrmOptions
-  Left = 1187
-  Height = 488
-  Top = 230
+  Left = 1201
+  Height = 510
+  Top = 91
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Options'
-  ClientHeight = 488
+  ClientHeight = 510
   ClientWidth = 620
-  Constraints.MaxHeight = 488
+  Constraints.MaxHeight = 510
   Constraints.MaxWidth = 620
-  Constraints.MinHeight = 488
+  Constraints.MinHeight = 510
   Constraints.MinWidth = 620
   OnActivate = FormActivate
   OnCreate = FormCreate
@@ -19,7 +19,7 @@ object frmOptions: TfrmOptions
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 448
+    Top = 470
     Width = 608
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
@@ -38,11 +38,11 @@ object frmOptions: TfrmOptions
   end
   object AcrdnOptions: TECAccordion
     Left = 0
-    Height = 440
+    Height = 464
     Top = 0
     Width = 616
     FullExpand = True
-    ItemIndex = 2
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,24 +55,24 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 338
+      Top = 21
       Width = 616
       Caption = 'Global'
       Order = 0
       object GroupBox1: TGroupBox
-        Left = 352
+        Left = 353
         Height = 105
         Top = 8
-        Width = 240
+        Width = 256
         Caption = 'Default Tab'
         ClientHeight = 85
-        ClientWidth = 236
+        ClientWidth = 252
         TabOrder = 0
         object CmbBxDefaulTtab: TComboBox
-          Left = 24
+          Left = 80
           Height = 23
-          Top = 16
+          Top = 8
           Width = 100
           ItemHeight = 15
           ItemIndex = 0
@@ -195,7 +195,7 @@ object frmOptions: TfrmOptions
         Left = 352
         Height = 128
         Top = 120
-        Width = 241
+        Width = 257
         AutoFill = True
         Caption = 'Holiday Fonts'
         ChildSizing.LeftRightSpacing = 6
@@ -207,7 +207,7 @@ object frmOptions: TfrmOptions
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 108
-        ClientWidth = 237
+        ClientWidth = 253
         Items.Strings = (
           '12 Days of Christams [before and after].'
           '7 Days of Easter  [before and after].'
@@ -220,6 +220,50 @@ object frmOptions: TfrmOptions
           0400000002020202
         }
       end
+      object GroupBox10: TGroupBox
+        Left = 352
+        Height = 73
+        Top = 248
+        Width = 257
+        Caption = 'Longitude / Latitude'
+        ClientHeight = 53
+        ClientWidth = 253
+        TabOrder = 5
+        object lblLongitude: TLabel
+          Left = 16
+          Height = 15
+          Top = 8
+          Width = 54
+          Caption = 'Longitude'
+          ParentColor = False
+        end
+        object lblLatitude: TLabel
+          Left = 16
+          Height = 15
+          Top = 32
+          Width = 43
+          Caption = 'Latitude'
+          ParentColor = False
+        end
+        object edtLongitude: TEdit
+          Left = 88
+          Height = 23
+          Top = 0
+          Width = 140
+          OnChange = edtLongitudeChange
+          TabOrder = 0
+          Text = '-0.1360255479812622'
+        end
+        object edtLatitude: TEdit
+          Left = 88
+          Height = 23
+          Top = 27
+          Width = 140
+          OnChange = edtLatitudeChange
+          TabOrder = 1
+          Text = '53.73168728842898'
+        end
+      end
     end
     object accItemTime: TAccordionItem
       AnchorSideLeft.Control = AcrdnOptions
@@ -230,7 +274,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 42
+      Top = 44
       Width = 616
       Caption = 'Time'
       Order = 1
@@ -350,8 +394,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 314
-      Top = 63
+      Height = 0
+      Top = 66
       Width = 616
       Caption = 'Other Klocks'
       Order = 2
@@ -526,7 +570,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 105
+      Top = 0
       Width = 616
       Caption = 'Logging'
       Order = 4
@@ -603,7 +647,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 84
+      Top = 0
       Width = 616
       Caption = 'Sticky Notes and Memo'
       Order = 3
@@ -709,7 +753,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 126
+      Top = 0
       Width = 616
       Caption = 'Archive'
       Order = 5
@@ -821,7 +865,7 @@ object frmOptions: TfrmOptions
       'ColorT=A4A0A0'
     )
     left = 152
-    top = 432
+    top = 464
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0

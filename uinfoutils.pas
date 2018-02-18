@@ -3,6 +3,12 @@ unit uInfoUtils;
 
    The daylisght saving stuff is based on this -
    http://www.delphiforfun.org/Programs/delphi_techniques/TimeZoneInfo.htm
+
+   The TStringList are create in this mudule because -
+
+       This solves the promle of not being able to free the StringList and
+       stop the memory leak.  Also stops the double creation of the stringList
+       which casues a sig fault.
 }
 
 
@@ -11,22 +17,20 @@ unit uInfoUtils;
 interface
 
 uses
-  Classes, SysUtils, windows, dateutils, dialogs, math;
+  Classes, SysUtils, windows, dateutils, dialogs, Moon, MoonComp;
 
 function getDaylightSaving(year: integer): TStringList;
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
 function getEasterDates(Year: integer): TStringList;
 function getLentDates(year: integer): TStringList;
 function getPower: TStringList;
-function getMoonPhase: TStringList;
-function getEasterSunday(year: integer): TdateTime;
-function julianTime: double;
+function getMoonStuff: TStringList;
+function getSunStuff: TStringList;
 
 implementation
 
-CONST
-  LAST_NEW_MOON = 2451549.516678;
-  SIDEREAL_PERIOD = 29.53059;
+uses
+  formklock;
 
 function getDaylightSaving(Year: integer): TStringList;
 {  Returns daylight saving stuff.    }
@@ -124,22 +128,22 @@ end;
 function getEasterDates(year: integer): TStringList;
 {  Returns the Easter dates for a given year.    }
 var
-  strResults: TStringList;
   easter: TdateTime;
 begin
-  strResults := TStringList.Create;
+  result := TStringList.Create;
 
-  easter := getEasterSunday(year);
+  easter := EasterDate(year);  //  return date of Easter Sunday.
 
-  strResults.add('');
-  strResults.add('');
-  strResults.add(format('Easter Dates for %d', [year]));
-  strResults.add('');
-  strResults.add(FormatDateTime('"Good Friday   :: "DD MMM YYYY', incDay(easter, -2)));
-  strResults.add(FormatDateTime('"Easter Sunday :: "DD MMM YYYY', easter));
-  strResults.add(FormatDateTime('"Easter Monday :: "DD MMM YYYY', incDay(easter)));
-
-  result := strResults;
+  result.add('');
+  result.add('');
+  result.add(format('Easter Dates for %d', [year]));
+  result.add('');
+  result.add(FormatDateTime('"Good Friday   :: "DD MMM YYYY', incDay(easter, -2)));
+  result.add(FormatDateTime('"Easter Sunday :: "DD MMM YYYY', easter));
+  result.add(FormatDateTime('"Easter Monday :: "DD MMM YYYY', incDay(easter, +1)));
+  result.add('');
+  result.add('');
+  result.add(FormatDateTime('"Orthodox Easter Sunday   :: "DD MMM YYYY', EasterDateJulian(year)));
 end;
 
 function getLentDates(year: integer): TStringList;
@@ -147,21 +151,18 @@ function getLentDates(year: integer): TStringList;
    lent start on Ash Wednesday, which is 46 days before Easter Sunday.
 }
 var
-  strResults: TStringList;
-  easter: TdateTime;
+  lent: TdateTime;
 begin
-  strResults := TStringList.Create;
+  result := TStringList.Create;
 
-  easter := getEasterSunday(year);
+  lent := EasterDate(year);    //  return date of Easter Sunday.
 
-  strResults.add('');
-  strResults.add('');
-  strResults.add(format('Lent Dates for %d', [year]));
-  strResults.add('');
-  strResults.add(FormatDateTime('"Lent Starts [Ash Wednesday] :: "DD MMM YYYY', incDay(easter, -46)));
-  strResults.add(FormatDateTime('"Lent Ends   [Easter Sunday] :: "DD MMM YYYY', easter));
-
-  result := strResults;
+  result.add('');
+  result.add('');
+  result.add(format('Lent Dates for %d', [year]));
+  result.add('');
+  result.add(FormatDateTime('"Lent Starts [Ash Wednesday] :: "DD MMM YYYY', incDay(lent, -46)));
+  result.add(FormatDateTime('"Lent Ends   [Easter Sunday] :: "DD MMM YYYY', lent));
 end;
 
 function getPower: TStringList;
@@ -169,10 +170,7 @@ function getPower: TStringList;
 var
   PowerStatus: TSystemPowerStatus;
 begin
-  result := TStringList.Create;   //  This solves the promle of not being able to
-                                  //  free the StringList and stop the memory leak.
-                                  //  Also stope the double creation of the stringList
-                                  //  which casues a sig fault.
+  result := TStringList.Create;
 
   if GetSystemPowerStatus(PowerStatus) then
   begin
@@ -213,110 +211,86 @@ begin
   end;
 end;
 
-function getEasterSunday(year: integer): TdateTime;
-{  Easter function after Carl Friedrich Gauss (1800). Return value
-   is the date of Easter Sunday in the given year
-   Scope: 1583 - 8702, this is set min and max on the spin control.
+function getMoonStuff: TStringList;
+{  Retuns Moon Info using DelphiMoon.
+   Works with UTC.
+
+   nb : timezone declared in formKlock.
 }
 var
-  a :  integer ;
-  b :  integer ;
-  c :  integer ;
-  d :  integer ;
-  e :  integer ;
-  f :  integer ;
-  days :  word ;
-  month :  word ;
+  moonDate: TDateTime;
+  moonPhase: TMoonPhase;
+  age: double;
+  hour, min, sec, ms: word;
 begin
-  // The Gauss formula
-  a := year mod  19 ;
-  b := year div  100 ;
-  c := (8 * b + 13) div 25 - 2 ;
-  d := b - (year div 400) - 2 ;
-  e := (19 * a + ((15 - c + d) mod 30)) mod 30;
+  moonDate := now;
 
-  if e = 28 then
-    if a> 10 then
-      e := 27
-    else if e = 29 then
-      e := 28 ;
+  result := TStringList.Create;
 
-  f := (d + 6 * e + 2 * (year mod 4) + 4 * (year mod 7) + 6) mod 7;
+  age := AgeOfMoon(moonDate);
+  DecodeTime(age, hour, min, sec, ms);
+  result.add(format('Age of the moon %d days, %d hours, %d minutes', [trunc(age), hour, min]));
+  result.add(format('Illumination of the moon = %2.1f', [Current_Phase(moonDate)]));
+  result.add(format('Distance of the moon = %.0n Km', [Moon_Distance(now)]));
 
-  if (e + f + 22) > 31  then
-  begin
-    month := 4;
-    days := ((e + f + 22) - 31);
-  end
-  else
-  begin
-    month := 3;
-    days := (e + f + 22);
-  end ;
-
-  result :=  EncodeDate (year, month, days) ;
-end;
-
-function getMoonPhase: TStringList;
-{  Determins the phase of the moon and the illuminayion.
-   This is acheived bu findinf the days differance between now and a known
-   full moon, both dates are express as jullian dates.
-   This differance is then divided by the Sidereal Period of the moon [this is
-   mean values between succseve full moons].  This gives the number of days
-   into the current moon cycle.
-   This is also used to calculate the amounbt of illumination from the moon.
-
-   Known full moon date used - 6 january 200 @ 12:24:01 [2451549.516678 Julian].
-
-   NB : accurate to plus or minus one day of moon phase and only after year 2000
-}
-VAR
-  julianToday: double;
-  julianSinceNew: double;
-  noOfNewMoons: double;
-  moonPhase: integer;
-  moonPhaseDesc: string;
-  moonIllumination: double;
-begin
-  result := TStringList.Create;   //  This solves the promle of not being able to
-                                  //  free the StringList and stop the memory leak.
-                                  //  Also stope the double creation of the stringList
-                                  //  which casues a sig fault.
-
-  julianToday := julianTime;
-  julianSinceNew := julianToday - LAST_NEW_MOON;
-  noOfNewMoons := julianSinceNew / SIDEREAL_PERIOD;
-  moonPhase := floor(frac(noOfNewMoons) * SIDEREAL_PERIOD);
+  moonPhase := Nearest_Phase(moonDate);
 
   case moonPhase of
-    0, 29: moonPhaseDesc := 'New Moon';
-    1, 2, 3, 4, 5, 6: moonPhaseDesc := 'Waxing Crescent';
-    7: moonPhaseDesc := 'First Quarter';
-    8, 9, 10, 11, 12, 13, 14: moonPhaseDesc := 'Waxing Gibbous';
-    15: moonPhaseDesc := 'Full Moon';
-    16, 17, 18, 19, 20: moonPhaseDesc := 'Waning Gibbous';
-    21: moonPhaseDesc := 'Last Quarter';
-    22, 23, 24, 25, 26, 27, 28: moonPhaseDesc := 'Waning Crescent';
+    Newmoon: result.add('Phase of the moon NewMoon');
+    WaxingCrescent: result.add('Phase of the moon Waxing Crescent');
+    FirstQuarter: result.add('Phase of the moon First Quarter');
+    WaxingGibbous: result.add('Phase of the moon Waxing Gibbous');
+    Fullmoon: result.add('Phase of the moon Full Moon');
+    WaningGibbous: result.add('Phase of the moon Waning Gibbous');
+    LastQuarter: result.add('Phase of the moon Last Quarter');
+    WaningCrescent: result.add('Phase of the moon Waning Crescent');
+  end;
+  result.add('');
+  result.add(format('Lunation of new moon = %d', [Lunation(moonDate)]));
+  result.add(format('Next Full Moon = %s', [FormatDateTime('dd/mm/yyy',Next_Phase(moonDate, FullMoon))]));
+  result.add(format('Next Blue Moon = %s', [FormatDateTime('dd/mm/yyy',Next_Blue_Moon(moonDate))]));
+  result.add('');
+  result.add(format('Moon Rise = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
+                     Moon_Rise(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Moon Set = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
+                     Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+  try
+    age := Moon_Transit(moonDate, userOptions.Latitude, userOptions.Longitude);
+    result.add(format('Moon Transit = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
+  except
+    result.add('The Moon stays below horizon for the whole day ');
   end;
 
-  moonIllumination := 0.5 * (1 + COS(moonPhase / SIDEREAL_PERIOD * 360));
-
-  result.add(format('Phase of moon a %s', [moonPhaseDesc]));
-  result.add(format('Illumination of the moon = %2.3F%%', [moonIllumination * 100]));
 end;
 
-function julianTime: double;
-{  returns Julian Date Time - will only work in windows.
-   Formulae pinched from http://en.wikipedia.org/wiki/Julian_day               }
+function getSunStuff: TStringList;
+{  Retuns Moon Info using DelphiMoon.
+   Works with UTC.
+
+   nb : timezone declared in formKlock.
+}
 var
-  day,month,year: word;
-  a,y,m: longint;
+  sunDate: TDateTime;
 begin
-  DecodeDate ( Now, year, month, day );
-  a := (14-month) div 12;
-  y := year + 4800 - a;
-  m := month + (12*a) - 3;
-  result := day + ((153*m+2) div 5) + (365*y) + (y div 4) - (y div 100) + (y div 400) - 32045.5 + frac(Now);
+  sunDate := TimeZone.UniversalTime;
+
+  result := TStringList.Create;
+
+  result.add(format('Sun Rise = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy ',
+                     Sun_Rise(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Sun Set = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+                     Sun_Set(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Sun Transit = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+                     Sun_Transit(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add('');
+  result.add(format('Morning Twilight = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+                     Morning_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Evening Twilight = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+                     Evening_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add('');
+  result.add(format('Distance of the sun = %.0n Km', [Sun_Distance(now) * 149597869]));
+
+
 end;
 
 end.

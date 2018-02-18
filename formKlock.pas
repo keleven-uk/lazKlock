@@ -126,8 +126,11 @@ type
     lblSplitLap: TLabel;
     lblTimer: TLabel;
     LstBxMemoName: TListBox;
+    mnuItmChineseYear: TMenuItem;
+    mnuItmPowerStuff: TMenuItem;
+    mnuItmSunStuff: TMenuItem;
     mnuItmFloatingTextKlock: TMenuItem;
-    mnuItmMoonPhase: TMenuItem;
+    mnuItmMoonStuff: TMenuItem;
     MmMemoData: TMemo;
     PageControl1: TPageControl;
     Panel1: TPanel;
@@ -181,7 +184,6 @@ type
     mnuItmSmallTextKlock: TMenuItem;
     mnuItmBinaryKlock: TMenuItem;
     mnuItmLEDKlock: TMenuItem;
-    mnuItmPowerSource: TMenuItem;
     mnuItmLentDates: TMenuItem;
     mnuItmEasterDates: TMenuItem;
     mnuItmDaylightSaving: TMenuItem;
@@ -269,6 +271,7 @@ type
     procedure mnuItmAnalogueKlockClick(Sender: TObject);
     procedure mnuItmAboutClick(Sender: TObject);
     procedure mnuItmBinaryKlockClick(Sender: TObject);
+    procedure mnuItmChineseYearClick(Sender: TObject);
     procedure mnuItmDaylightSavingClick(Sender: TObject);
     procedure mnuItmEasterDatesClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
@@ -277,11 +280,12 @@ type
     procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
-    procedure mnuItmMoonPhaseClick(Sender: TObject);
+    procedure mnuItmMoonStuffClick(Sender: TObject);
     procedure mnuItmNewStickyNoteClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
     procedure mnuItmSmallTextKlockClick(Sender: TObject);
+    procedure mnuItmSunStuffClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
@@ -2093,6 +2097,7 @@ procedure TfrmMain.mnuItmBinaryKlockClick(Sender: TObject);
 begin
   frmBinaryKlock.Show;
 end;
+
 procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
 {  Calls the Small Text Klock'.    }
 begin
@@ -2128,6 +2133,12 @@ begin
   frmInfo.ShowModal;
 end;
 
+procedure TfrmMain.mnuItmChineseYearClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Chinese Year';
+  frmInfo.ShowModal;
+end;
+
 procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
 {  Calls the Power Source Saving Info screen'.    }
 begin
@@ -2135,9 +2146,14 @@ begin
   frmInfo.ShowModal;
 end;
 
-procedure TfrmMain.mnuItmMoonPhaseClick(Sender: TObject);
+procedure TfrmMain.mnuItmMoonStuffClick(Sender: TObject);
 begin
-  frmInfo.Info := 'Moon Phase';
+  frmInfo.Info := 'Moon Stuff';
+  frmInfo.ShowModal;
+end;
+procedure TfrmMain.mnuItmSunStuffClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Sun Stuff';
   frmInfo.ShowModal;
 end;
 //

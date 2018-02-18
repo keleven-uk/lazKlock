@@ -65,7 +65,7 @@ object frmInfo: TfrmInfo
       MoonStyle = msColor
       Transparent = True
       Color = clBlack
-      MoonColor = clBlack
+      MoonColor = clSilver
       RotationAngle = 0
       Location.Latitude = 0
       Location.Longitude = 0

@@ -2565,11 +2565,11 @@ Date:   Thu Feb 8 21:22:29 2018 +0000
 
 Added a tab to the options firm - Archive.
 This allows the loading and saving of certain configuration files to and from a zip file.
-The configuration files will onlu apear if they exist on the system.
+The configuration files will only appear if they exist on the system.
 The location of the zip file can be selected, but a default is presented.
 A new file, uArchiveUtils, holds the helper Archive routines [called from formOptions].
 
-Added the location of the configuration files to the options files, easier to use eslewhere 
+Added the location of the configuration files to the options files, easier to use elsewhere 
 in the program and are now only specified in one place.
 
 .gitattributes                     |   1 +
@@ -2614,7 +2614,7 @@ commit 70961f2593ec1ef5c728a1a9dbf6c52daf11e0e0
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Fri Feb 9 22:06:33 2018 +0000
 
-Divided fuzzyTime between calculated time and font substution.
+Divided fuzzyTime between calculated time and font substitution.
     
 Added a second combo :box populated with the available fonts.
     
@@ -2640,6 +2640,10 @@ ufuzzytime.pas             |   4 +-
 
 
 Build 73 [2.2.3.73]
+
+commit 484542e3e514a70cf38e004312c082b5fe45c8a5
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Feb 11 21:38:40 2018 +0000
 
 Added an extra tab - World Klock.
 This display a list of Time Zones and when selected will display the time in that time zone.
@@ -2713,3 +2717,88 @@ ufuzzytime.pas              |   11 +-
 
 
 Build 74 [2.2.4.74]
+
+commit e2d67730fd28e6cb0fba31124bd1c515ba517f4f
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Feb 14 22:00:56 2018 +0000
+
+
+Added an extra klock - Floating Text Klock.  The textual display of the time seems to 
+float on the screen - all other item i.e. form is transparent.
+Added formFloatingKlock to hold this.
+
+Added the following user options for Floating Text Klock.
+  Screen Save, Form Top, Form Left, Font and use Klock Font.
+  
+Added calling menu items if formKlock.
+Added speed buttons to the cointdown tab - so the countdown can be quickly
+started with either 30, 60, 90 or 120 minutes.
+
+Added TPascalTZ to uFuzzyTime used for local and utc time, this will take into
+account time zones.
+
+Currently
+10592 lines of source code.
+5765 statements
+15.9% comment
+
+fonts/Behistun.ttf               |  Bin 0 -> 144960 bytes
+fonts/HieraticNumerals.ttf       |  Bin 0 -> 21572 bytes
+formKlock.lfm                    |   68 +-
+formKlock.pas                    |   82 ++-
+formOptions.lfm                  |   78 ++-
+formOptions.pas                  |   41 +-
+formanalogueklock.lfm            |    4 +-
+formanalogueklock.pas            |    3 +-
+formfloatingklock.lfm            |  588 +++++++++++++++++
+formfloatingklock.pas            |  245 +++++++
+help/Klock.chm                   |  Bin 1134124 -> 3788634 bytes
+help/Klock.pdf                   |  Bin 5579909 -> 6691025 bytes
+help/html/About.html             |    2 +-
+help/html/Credits.html           |    2 +-
+help/html/FloatingTextKlock.html |  271 ++++++++
+help/html/Gettinghelp.html       |    2 +-
+help/html/Global.html            |    2 +-
+help/html/History.html           | 1354 +++-----------------------------------
+help/html/Info.html              |    2 +-
+help/html/Introduction.html      |    4 +-
+help/html/Klock.html             |    6 +-
+help/html/OtherKlocks.html       |    9 +-
+help/html/SmallTextKlock.html    |    4 +-
+help/html/Time1.html             |    6 +-
+help/html/Welcome.html           |    4 +-
+help/html/_toc.json              |    2 +-
+help/html/js/hndsd.min.js        |    2 +-
+help/klock.hnd                   |  Bin 7761920 -> 4739072 bytes
+history.txt                      |   66 +-
+icons/icons8-ttf-40.png          |  Bin 0 -> 623 bytes
+klock.iss                        |    4 +-
+klock.lpi                        |  255 ++++---
+klock.lpr                        |    3 +-
+lazKlock.smproj                  |  Bin 495083 -> 525171 bytes
+ufonts.pas                       |    6 +-
+ufuzzytime.pas                   |   43 +-
+uoptions.pas                     |   55 ++
+37 files changed, 1797 insertions(+), 1416 deletions(-)
+
+
+Build 75 [2.2.4.75]
+
+Added more Moon info to the Moon info page - all from the DelphiMoon component.
+
+Added a Sun info page - with all info coming from the DephiMoon component.
+
+Added the user options for Longitude and Latitude - used in Sun/Moon rise and setting times.
+The defaults are for 10 Downing Street, London :-)
+
+Changed Julian time in uFuzzyTie to use the function from TZPaascal, instead of a calculation.
+
+Changed Easter date in uInfoUtils to use the function from TZPaascal, instead of a calculation.
+Aslo changed the moon stuff to use various function from Delphimoon instead of calculations.
+
+uKlockUtils also uses the function for Easter Sunday instead of a calling the one in uInfoUtils.
+
+Currently
+10632 lines of source code.
+5791 statements
+15.8% comment

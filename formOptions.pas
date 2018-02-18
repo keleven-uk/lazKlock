@@ -56,11 +56,14 @@ type
     AcrdnOptions: TECAccordion;
     clrBtnStickyNoteColour: TColorButton;
     ColorDialog1: TColorDialog;
+    edtLatitude: TEdit;
+    edtLongitude: TEdit;
     EdtDefaultPassWord: TEdit;
     FlNmEdtLoadArchiveName: TFileNameEdit;
     FlNmEdtSaveArchiveName: TFileNameEdit;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
+    GroupBox10: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -71,6 +74,8 @@ type
     GroupBox9: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
+    lblLongitude: TLabel;
+    lblLatitude: TLabel;
     lblFloatingTextKlockFont: TLabel;
     LblStickyNoteColour: TLabel;
     lblCullFileDays: TLabel;
@@ -107,6 +112,8 @@ type
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
+    procedure edtLatitudeChange(Sender: TObject);
+    procedure edtLongitudeChange(Sender: TObject);
     procedure FlNmEdtLoadArchiveNameAcceptFileName(Sender: TObject; Var Value: String);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -306,9 +313,21 @@ begin
 end;
 
 procedure TfrmOptions.btnGlobalVolumeTestClick(Sender: TObject);
-{  Plays a sound to chech volume.  }
+{  Plays a sound to test volume.  }
 begin
   doPlaySound('thepips.mp3', userBacOptions.volume);
+end;
+
+procedure TfrmOptions.edtLatitudeChange(Sender: TObject);
+{  Save edited latitude.    }
+begin
+  userOptions.Latitude := StrToFloat(edtLatitude.Caption);
+end;
+
+procedure TfrmOptions.edtLongitudeChange(Sender: TObject);
+{  Save edited Longitude.    }
+begin
+  userOptions.Latitude := StrToFloat(edtLongitude.Caption);
 end;
 //
 //.....................................TIME ....................................

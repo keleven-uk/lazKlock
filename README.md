@@ -8,10 +8,10 @@ The multifunction timing thingy is split into many things;
 
 Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Sticky Notes & Clipboard Monitor.
 
-Also, the time can be displayed in several ways - text, digital and analogue and binary klocks,
+Also, the time can be displayed in several ways - text, digital, analogue and binary klocks,
 
 
-Klock currently consists of over 10,000 lines of Free Pascal[Lazarus] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
+Klock currently consists of over 10,000 lines of Lazarus [Free Pascal] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 
 Fuzzy Time
@@ -26,7 +26,7 @@ This display a list of Time Zones and when selected will display the time in tha
 
 Countdown
 
-Implements a simple countdown timer [between 1 and 90 minutes].
+Implements a simple countdown timer [between 1 and 120 minutes].  
 The time for the countdown can be either entered directly of the up/down controls can be used.  The timer can be paused during countdown and stopped before the end is reached.  At the end of the countdown, either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.
 
 
@@ -66,7 +66,7 @@ This allows the conversion between various units of weight, distance and area et
 
 Stick Notes
 
-Implements a simple sticky Note thingy.
+Implements a simple sticky Note thingy.  
 This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc.  Klock will keep track of the notes and re-display any active notes when Klock is first launched.
 
 
@@ -94,7 +94,7 @@ The S represents Scroll Lock.
 The letter will be upper case if the key is activated, otherwise lower case.
 
 
-The application also contains a options screen [file / Options] which allows various options to be set.
+The application also contains a options screen [file / Options] which allows various options [over fifty] to be set.
 NB: If the option is checked to start on windows start up, it only operates for the current user.
 
 

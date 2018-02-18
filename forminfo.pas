@@ -59,7 +59,7 @@ begin
     SpnEdtyear.Visible := False;
   end;
 
-  if info = 'Moon Phase' then
+  if (info = 'Moon Stuff') then
   begin
     moonPhase.Enabled := true;
     SpnEdtYear.Visible := false;
@@ -68,6 +68,16 @@ begin
     lstBxInfo.Left := 8;
     lstBxInfo.Top := 64;
     lstBxInfo.Width := 327;
+  end
+  else if (info = 'Sun Stuff') then
+  begin
+  moonPhase.Enabled := false;
+  SpnEdtYear.Visible := false;
+  lblYear.Visible := false;
+  lstBxInfo.Height := 152;
+  lstBxInfo.Left := 8;
+  lstBxInfo.Top := 0;
+  lstBxInfo.Width := 327;
   end
   else
   begin
@@ -107,7 +117,8 @@ begin
       'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
       'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
       'Power Source': strResults := getPower;
-      'Moon Phase': strResults := getMoonPhase;
+      'Moon Stuff': strResults := getMoonStuff;
+      'Sun Stuff': strResults := getSunStuff;
     end;
 
     lstBxInfo.Items := strResults;

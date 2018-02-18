@@ -16,7 +16,7 @@ unit UFuzzyTime;
 interface
 
 uses
-  Classes, SysUtils, DateUtils, strutils, Dialogs, uPascalTZ;
+  Classes, SysUtils, DateUtils, strutils, Dialogs, uPascalTZ, Moon;
 
 type
   FuzzyTime = class
@@ -327,20 +327,9 @@ begin
 end;
 
 function FuzzyTime.julianTime: string;
-{  returns Julian Date Time - will only work in windows.     }
-var
-  jt: double;
-  day,month,year: word;
-  a,y,m: longint;
+{  returns Julian Date Time - using DelphiMoon.     }
 begin
-  DecodeDate ( Now, year, month, day );
-  a := (14-month) div 12;
-  y := year + 4800 - a;
-  m := month + (12*a) - 3;
-  jt := day + ((153*m+2) div 5) + (365*y) + (y div 4) - (y div 100) +
-               (y div 400) - 32045.5 + frac(Now);
-
-  Result := format('%7.7f', [jt]);
+  Result := format('%7.7f', [Julian_Date(now)]);
 end;
 
 function FuzzyTime.decimalTime: string;

@@ -69,6 +69,8 @@ type
     _CB_ScreenSave: boolean;        //  do we save clipboard manager position or not.
     _CB_formTop: integer;           //  the clipboard manager top left.
     _CB_formLeft: integer;
+    _Latitude: double;
+    _Longitude: double;
 
     //  Time
     _defaultTime: integer;
@@ -142,6 +144,7 @@ type
     function writeColChild(Doc: TXMLDocument; name: string; value: TColor): TDOMNode;
     function writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
     function writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
+    function writeFloatChild(Doc: TXMLDocument; name: string; value: Double): TDOMNode;
     function writeIntChildAttribute(Doc: TXMLDocument; name: string; value1: integer; value2: integer): TDOMNode;
 
   public
@@ -172,6 +175,8 @@ type
     property CB_ScreenSave: boolean read _CB_ScreenSave write _CB_ScreenSave;
     property CB_formTop: integer read _CB_formTop write _CB_formTop;
     property CB_formLeft: integer read _CB_formLeft write _CB_formLeft;
+    property Latitude: double read _Latitude write _Latitude;
+    property Longitude: double read _Longitude write _Longitude;
 
     //  Time
     property defaultTime: integer read _defaultTime write _defaultTime;
@@ -382,6 +387,8 @@ begin
   CB_screenSave := o.CB_screenSave;
   CB_formTop := o.CB_formTop;
   CB_formLeft := o.CB_formLeft;
+  Latitude := o.Latitude;
+  Longitude := o.Longitude;
 
   //  Time
   defaultTime := o.defaultTime;
@@ -530,6 +537,11 @@ begin
       if rtn <> 'ERROR' then CB_formTop := StrToInt(rtn);
       rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Left');
       if rtn <> 'ERROR' then CB_formLeft := StrToInt(rtn);
+
+      rtn := readChild(PassNode, 'Latitude');
+      if rtn <> 'ERROR' then Latitude := StrToFloat(rtn);
+      rtn := readChild(PassNode, 'Longitude');
+      if rtn <> 'ERROR' then Longitude := StrToFloat(rtn);
     end;
 
     //  Time
@@ -735,6 +747,8 @@ begin
   CB_screenSave := True;
   CB_formTop := 0;              //  the clipboard manager top left.
   CB_formLeft := 0;
+  Latitude := 51.5033640;
+  Longitude := -0.1276250;
 
   //  Time
   defaultTime := 0;
@@ -850,6 +864,9 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'monitorClipboard', monitorClipboard));
     ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave', CB_screenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'CB_formPosition', CB_formTop, CB_formLeft));
+
+    ElementNode.AppendChild(writeFloatChild(doc, 'Latitude', Latitude));
+    ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));
 
     RootNode.AppendChild(ElementNode);
 
@@ -1065,6 +1082,17 @@ var
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(BoolToStr(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
+function Options.writeFloatChild(Doc: TXMLDocument; name: string; value: Double): TDOMNode;
+{  Write a [boolean] value to a child node.    }
+var
+  ItemNode, TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(FloatToStr(value));
   ItemNode.AppendChild(TextNode);
   result := ItemNode;
 end;

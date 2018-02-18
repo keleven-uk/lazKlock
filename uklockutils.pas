@@ -10,7 +10,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils, DCPrijndael, DCPsha256;
+  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils, DCPrijndael,
+  DCPsha256, Moon;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -619,11 +620,13 @@ begin
 end;
 
 function isEaster: Boolean;
-{  Returns true if current date is within one week of Easter Sunday.    }
+{  Returns true if current date is within one week of Easter Sunday.
+   Easter date is form the DelphiMoon component.
+}
 VAR
   easter: TdateTime;
 begin
-  easter := getEasterSunday(currentYear);
+  easter := EasterDate(currentYear);  //  return date of Easter Sunday.
 
   if DaysBetween(easter, Date) < 7 then
     Result := true

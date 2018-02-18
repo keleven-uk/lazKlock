@@ -1836,13 +1836,21 @@ object frmMain: TfrmMain
         Caption = 'Lent Dates'
         OnClick = mnuItmLentDatesClick
       end
-      object mnuItmPowerSource: TMenuItem
-        Caption = 'Power Source'
-        OnClick = mnuItmPowerSourceClick
+      object mnuItmChineseYear: TMenuItem
+        Caption = 'Chinese Year'
+        OnClick = mnuItmChineseYearClick
       end
-      object mnuItmMoonPhase: TMenuItem
-        Caption = 'Moon Phase'
-        OnClick = mnuItmMoonPhaseClick
+      object mnuItmMoonStuff: TMenuItem
+        Caption = 'Moon Stuff'
+        OnClick = mnuItmMoonStuffClick
+      end
+      object mnuItmSunStuff: TMenuItem
+        Caption = 'Sun Stuff'
+        OnClick = mnuItmSunStuffClick
+      end
+      object mnuItmPowerStuff: TMenuItem
+        Caption = 'Power Stuff'
+        OnClick = mnuItmPowerSourceClick
       end
     end
     object mnuItmStickyNote: TMenuItem
