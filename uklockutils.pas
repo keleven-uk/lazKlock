@@ -10,8 +10,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock, formBinaryKlock, formSmallTextKlock, uInfoUtils, DCPrijndael,
-  DCPsha256, Moon;
+  formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record

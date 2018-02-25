@@ -389,8 +389,6 @@ begin
 
   frmClipBoard.cullTmpFiles;       //  Remove old .tmp files left over from clipboard operations.
 
-  fs.addFonts;                     //  Add custom fonts.
-
   with mainIdleTimer do            //  set up the idle timer.
   begin
     AutoEnabled := True;
@@ -452,21 +450,19 @@ begin
     userOptions.CB_formLeft := frmClipBoard.Left;
   end;
 
-  fs.removeFonts;                   //  Remove custom fonts.
-
   stickies.updateStickyNotes;
   kLog.writeLog('Updated Sticky Note File');
-
-  logFooter;
 
   fs.Free;                   //  Release the font store object.
   ft.Free;                   //  Release the fuzzy time object.
   stickies.Free;             //  Release the Sticky Note store.
   memorandum.Free;           //  Release the Memo store.
-  userOptions.Free;          //  Release the user options .
-  kLog.Free;                 //  Release the logger object.
+  userOptions.Free;          //  Release the user options.
   timeZone.Free;             //  Release the Time Lone object.
   ConversionUnits.Free;      //  release the Conversion string list.
+
+  logFooter;
+  kLog.Free;                 //  Release the logger object.
 end;
 
 procedure TfrmMain.SetDefaults;

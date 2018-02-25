@@ -72,6 +72,7 @@ end;
 constructor TClipboardListener.Create;
 begin
   inherited;
+
   if GetSupported then
   begin
     FWnd := LCLIntf.AllocateHWnd(@WindowProc);
@@ -102,18 +103,31 @@ begin
   if (Msg.msg = WM_CLIPBOARDUPDATE) and Assigned(FOnClipboardChange) then
   begin
 
-    if clipboard.HasFormat(CF_TEXT) then                                         // Text
+    if clipboard.HasFormat(CF_TEXT) then               // Text
+    begin
+      klog.writeLog('Text Selected');
       getTextData;
-
-    if clipboard.HasFormat(CF_HDROP) then                                        //  Filename or directory
+    end
+    else if clipboard.HasFormat(CF_HDROP) then              //  Filename or directory
+    begin
+      klog.writeLog('File Selected');
       getFileData;
-
-    if Clipboard.HasFormat(PredefinedClipboardFormat(pcfBitmap)) then
+    end
+    else if Clipboard.HasFormat(PredefinedClipboardFormat(pcfBitmap)) then
+    begin
+      klog.writeLog('Image Selected');
       getPicData;
+    end
+    else
+    begin
+      klog.writeLog('Clipboard else');
+      getTextData;
+    end;
 
     epoch := FormatDateTime('DD MMM YYYY hh:nn:ss', now);
 
     Msg.Result := 0;
+    klog.writeLog('Calling FOnClipboardChange');
     FOnClipboardChange(Self);
   end;
 end;
@@ -138,6 +152,7 @@ procedure TClipboardListener.getTextData;
 begin
   text := clipboard.AsText;
   category := 'Text';
+  klog.writeLog(format('TClipboardListener.getTextData : category = %s   text = %s', [category, text]));
 end;
 
 procedure TClipboardListener.getFileData;

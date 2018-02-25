@@ -220,8 +220,6 @@ var
   dirName: string;
 
 begin
-  if LstVwClipBoard.Focused then exit;
-
   if not frmClipBoard.Visible then frmClipBoard.Visible := True;
 
   if FListener.category = 'Image' then
@@ -236,6 +234,7 @@ begin
     ImgClipBoard.Picture.Bitmap := bitmap;
     bitmap.Free;
   end;
+
   if not isthere(FListener.text) then
     begin
       newItem := LstVwClipBoard.Items.Add;

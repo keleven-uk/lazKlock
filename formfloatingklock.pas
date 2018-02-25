@@ -175,9 +175,8 @@ procedure TfrmFloatingKlock.TmrFloatingTextTimer(Sender: TObject);
    this will display what ever Klock was displaying when this was called.
 }
 begin
-  lblFloatingTime.Top := 8;
+  lblFloatingTime.Top := 4;
   lblFloatingTime.Left := 4;
-  lblFloatingTime.Font.Size := 22;
   lblFloatingTime.AutoSize := true;
 
   if userOptions.floatingTextUseKlockFont then      //  if true use main form font
@@ -185,7 +184,7 @@ begin
   else                                              //  else use custom font, if set
     lblFloatingTime.Font := userOptions.floatingTextFont;
 
-  //  Guards agains the font colour being black or default,
+  //  Guards against the font colour being black or default,
   //  this would cause the label to apear transparent and not been seen.
   if (lblFloatingTime.Font.Color = clDefault) or
      (lblFloatingTime.Font.Color = clBlack) then

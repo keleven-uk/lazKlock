@@ -10,7 +10,7 @@ unit uArchiveUtils;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Zipper, dialogs, LCLType, Controls;
+  Classes, SysUtils, FileUtil, Zipper, dialogs, LCLType, Controls, Forms;
 
 function getArchiveFiles: TStringList;
 procedure saveArchive(fname: String; archiveFiles: TStringList);
@@ -41,6 +41,8 @@ begin
 
   result := TStringList.Create;
 
+  result.add('Fonts Directory');
+
   if FileExists(optionsFile) then
     result.add(optionsFile);
   if FileExists(memoFile) then
@@ -62,8 +64,8 @@ begin
 
   if fileExists(fname) then
     if QuestionDlg ('Archive File', 'Do You Really Want To overwrite the archive file',
-                     mtConfirmation, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'') = mrNo then
-                       exit;
+                     mtConfirmation, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')
+                    = mrNo then exit;
 
   archiveZip := TZipper.Create;
 

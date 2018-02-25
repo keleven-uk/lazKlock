@@ -15,22 +15,28 @@ uses
   StdCtrls, Windows, Messages, typinfo;
 
 type
-  Fonts = (BarCode39, NancyBlackett, BrailleLatin, Semaphore, KBABCDoodles,
-  Backwards, UpsideDown, Christmas, rmbunny, SweetHearts, groovyGhosties,
-  ChristmasCard, Hack, GushingMeadow, GallaudetRegular, chintzy, chintzys,
-  CartoonBones, Behistun, HieraticNumerals);
 
   fontStore = class
 
     private
       _fontTypes: TStringList;
+      _fontFiles: TstringList;
+      _fontNames: TstringList;
+      _fontDir: String;
+
+      property fontFiles: TStringList read _fontFiles write _fontFiles;
+      property fontNames: TStringList read _fontNames write _fontNames;
+      property fontDir: string read _fontDir write _fontDir;
+
+      procedure findFontFiles;
     public
       property fontTypes: TStringList read _fontTypes;
 
       constructor Create; overload;
-      function getFont(fontIndex: Integer): string;
+      destructor Destroy; override;
       procedure addFonts;
       procedure removeFonts;
+      function getFont(fontIndex: Integer): string;
   end;
 
   CONST
@@ -65,43 +71,62 @@ uses
   formklock;
 
 constructor fontStore.Create; overload;
-begin
-  //  Create a string list of user friendly fonr names.
-  //  If a new font is added - add a nice name and the actual font name below
-  //  also the file name above..
+{  When the font class is created, populate all three string lists.
 
-  _fontTypes := TStringList.Create;;
-  _fontTypes.CommaText := ('"Default", "Bar Code", "Nancy Blackett", "Semaphore",' +
-  '"Braille", "Dominoes", "Backwards", "Upside Down", "Christmas", "Christmas Card",' +
-  '"Easter Bunny", "Sweet Hearts", "Groovy Ghosties", "Gushing Meadow", "Gallaudet",' +
-  '"chintzy", "chintzy Shadow", "Cartoon Bones", "Behistun", "Hieratic Numerals"');
+      fontTypes - a list of the differnt font types.  This is a human friendly font
+                  named that is used in the drop down menus within klock.  Loaded
+                  from a text file within the font dir.
+      fontFiles - a list of the different font files, scanned from the font directory.
+      fontNames - a list of the different font names.  This it actual font name
+                 used to load the font.  Loaded form a text file within the font dir.
+
+      The text files must be updated when a new font is added to the directory
+      and MUST match.
+
+      If either one of the text files are missing, then just return the default font.
+}
+begin
+
+  fontDir := ExtractFilePath(Application.ExeName) + 'fonts\';
+
+  _fontTypes := TStringList.Create;
+  try
+    fontTypes.LoadFromFile(fontDir + 'fontTypes.txt');
+  except
+    klog.writeLog('ERROR : unable to load fontTypes.txt');
+    fontTypes.add('default')
+  end;
+
+  klog.writeLog(format('Found %d font Types in %s', [fontTypes.Count, fontDir]));
+
+  _fontNames := TStringList.Create;
+  try
+    fontNames.LoadFromFile(fontDir + 'fontNames.txt');
+  except
+    klog.writeLog('ERROR : unable to load fontNames');
+    fontNames.add('default')
+  end;
+
+  klog.writeLog(format('Found %d font Names in %s', [fontNames.Count, fontDir]));
+
+  findFontFiles;              //  Scan for font files.
+  addFonts;                   //  Add fonts to system.
+end;
+
+destructor fontStore.Destroy;
+{  Unload everything when finished with the font class.    }
+begin
+  removeFonts;               //  Remove all fonts from system.
+
+  fontFiles.Free;
+  fontTypes.Free;
+  fontNames.Free;
 end;
 
 function fontStore.getFont(fontIndex: Integer): string;
 {  Return the actual font name from a user friendly font name.    }
 begin
-  case fontIndex of
-    0: Result := 'default';
-    1: Result := 'Bar Code 39';
-    2: Result := 'Nancy Blackett semaphore';
-    3: Result := 'Semaphore';
-    4: Result := 'BrailleLatin';
-    5: Result := 'KBABCDoodles';
-    6: Result := 'Backwards';
-    7: Result := 'Upside down surprise by georgia';
-    8: Result := 'Christmas';
-    9: Result := 'Christmas Card';
-    10: Result := 'RMBunny';
-    11: Result := 'Sweet Hearts BV';
-    12: Result := 'Groovy Ghosties';
-    13: Result := 'SF Gushing Meadow';
-    14: Result := 'Gallaudet';
-    15: Result := 'Chintzy CPU BRK';
-    16: Result := 'Chintzy CPU Shadow BRK';
-    17: Result := 'Cartoon Bones';
-    18: Result := 'Behistun';
-    19: Result := 'Hieratic Numerals';
-  end;
+  result := fontNames.Strings[fontIndex];
 end;
 
 procedure fontStore.addFonts;
@@ -109,22 +134,17 @@ procedure fontStore.addFonts;
    Checks that the font file exists.
 }
 Var
- strAppPath: String;
- fontName: String;
- f: integer;
+ fontFile: String;
 begin
-    try
-    strAppPath:= ExtractFilePath(Application.ExeName) + 'fonts\';
+  try
 
-    for f := ord(low(Fonts)) to ord(high(Fonts)) do
+    for fontFile in fontFiles do
     begin
-      fontName := strAppPath + GetEnumName(TypeInfo(Fonts), f) + '.ttf';
-
-      If FileExists(fontName) Then
-        If AddFontResourceEx(PAnsiChar(fontName), FR_Private, Nil) <> 0 then
+      If FileExists(fontFile) Then
+        If AddFontResourceEx(PAnsiChar(fontFile), FR_Private, Nil) <> 0 then
           begin
             SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
-            kLog.writeLog('Adding ' + fontName);
+            kLog.writeLog('Adding ' + fontFile);
           end;
 
     end;  // for
@@ -142,22 +162,17 @@ procedure fontStore.removeFonts;
    Checks that the font file exists.
 }
 Var
- strAppPath: String;
- fontName: String;
- f: integer;
+ fontFile: String;
 begin
   try
-    strAppPath:= ExtractFilePath(Application.ExeName) + 'fonts\';
 
-    for f := ord(low(Fonts)) to ord(high(Fonts)) do
+    for fontFile in fontFiles do
     begin
-      fontName := strAppPath + GetEnumName(TypeInfo(Fonts), f) + '.ttf';
-
-      If FileExists(fontName) Then
-       If RemoveFontResourceEx(PAnsiChar(fontName), FR_Private, Nil) <> 0 then
+      If FileExists(fontFile) Then
+       If RemoveFontResourceEx(PAnsiChar(fontFile), FR_Private, Nil) <> 0 then
         begin
           SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
-          kLog.writeLog('Removing ' + fontName);
+          kLog.writeLog('Removing ' + fontFile);
         end;
 
     end;  // for
@@ -168,6 +183,15 @@ begin
     end;  //  on E:
   end;    //  try
 
+end;
+
+procedure fontStore.findFontFiles;
+{  Scans the font directory for all font files [.tff]    }
+begin
+  _fontFiles := TStringList.Create;
+  FindAllFiles(fontFiles, fontDir, '*.ttf', True);
+
+  klog.writeLog(format('Found %d font files in %s', [fontFiles.Count, fontDir]));
 end;
 
 end.
