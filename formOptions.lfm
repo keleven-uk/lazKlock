@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1201
+  Left = 1258
   Height = 510
-  Top = 91
+  Top = 56
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 616
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 2
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,7 +55,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 338
+      Height = 0
       Top = 21
       Width = 616
       Caption = 'Global'
@@ -274,7 +274,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 42
       Width = 616
       Caption = 'Time'
       Order = 1
@@ -394,14 +394,14 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 338
+      Top = 63
       Width = 616
       Caption = 'Other Klocks'
       Order = 2
       object ChckGrpAnalogueKlock: TCheckGroup
         Left = 7
-        Height = 82
+        Height = 105
         Top = 8
         Width = 185
         AutoFill = True
@@ -414,20 +414,21 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 62
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
+          'Always On Top'
         )
         OnItemClick = ChckGrpAnalogueKlockItemClick
         TabOrder = 0
         Data = {
-          0100000002
+          020000000202
         }
       end
       object ChckGrpLEDKlock: TCheckGroup
         Left = 200
-        Height = 81
+        Height = 105
         Top = 8
         Width = 185
         AutoFill = True
@@ -440,22 +441,23 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 61
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
           'Long Date Format'
+          'Always On Top'
         )
         OnItemClick = ChckGrpLEDKlockItemClick
         TabOrder = 1
         Data = {
-          020000000202
+          03000000020202
         }
       end
       object ChckGrpBinaryKlock: TCheckGroup
         Left = 7
-        Height = 82
-        Top = 96
+        Height = 105
+        Top = 120
         Width = 185
         AutoFill = True
         Caption = 'Binary Klock'
@@ -467,22 +469,23 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 62
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
           'Binary / BCD Format'
+          'Always On Top'
         )
         OnItemClick = ChckGrpBinaryKlockItemClick
         TabOrder = 2
         Data = {
-          020000000202
+          03000000020202
         }
       end
       object ChckGrpSmallTextKlock: TCheckGroup
         Left = 200
-        Height = 82
-        Top = 96
+        Height = 105
+        Top = 120
         Width = 185
         AutoFill = True
         Caption = 'Small Text Klock'
@@ -494,21 +497,22 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 62
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
           'Text Klock Transparent'
+          'Always On Top'
         )
         OnItemClick = ChckGrpSmallTextKlockItemClick
         TabOrder = 3
         Data = {
-          020000000202
+          03000000020202
         }
       end
       object ChckGrpFloatingTextKlock: TCheckGroup
         Left = 392
-        Height = 81
+        Height = 105
         Top = 8
         Width = 216
         AutoFill = True
@@ -521,25 +525,26 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 61
+        ClientHeight = 85
         ClientWidth = 212
         Items.Strings = (
           'Save Screen Position'
           'Use Main Klock Font'
+          'Always On Top'
         )
         OnItemClick = ChckGrpFloatingTextKlockItemClick
         TabOrder = 4
         Data = {
-          020000000202
+          03000000020202
         }
       end
       object GroupBox9: TGroupBox
         Left = 392
-        Height = 79
-        Top = 97
+        Height = 105
+        Top = 120
         Width = 217
         Caption = 'Floating Text Klock Font'
-        ClientHeight = 59
+        ClientHeight = 85
         ClientWidth = 213
         TabOrder = 5
         object lblFloatingTextKlockFont: TLabel

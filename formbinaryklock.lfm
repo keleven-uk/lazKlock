@@ -1,7 +1,7 @@
 object frmBinaryKlock: TfrmBinaryKlock
-  Left = 1431
+  Left = 1491
   Height = 120
-  Top = 308
+  Top = 387
   Width = 433
   BorderIcons = []
   BorderStyle = bsNone
@@ -216,6 +216,12 @@ object frmBinaryKlock: TfrmBinaryKlock
   object popUpMenuBinaryKlock: TPopupMenu
     left = 72
     top = 40
+    object MnItmAlwaysOnTop: TMenuItem
+      AutoCheck = True
+      Caption = 'Always On Top'
+      Checked = True
+      OnClick = MnItmAlwaysOnTopClick
+    end
     object MnItmBinary: TMenuItem
       AutoCheck = True
       Caption = 'Binary'

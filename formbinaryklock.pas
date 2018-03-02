@@ -30,6 +30,7 @@ type
 
   TfrmBinaryKlock = class(TForm)
     lblStatusBar: TLabel;
+    MnItmAlwaysOnTop: TMenuItem;
     MnItmNewStickNote: TMenuItem;
     MnItmBCD: TMenuItem;
     MnItmBinary: TMenuItem;
@@ -66,6 +67,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
+    procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmBCDClick(Sender: TObject);
     procedure MnItmBinaryClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
@@ -148,6 +150,12 @@ begin
     Left := userOptions.BinaryFormLeft;
     Top := userOptions.BinaryFormTop;
   end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.BinaryAlwaysOnTop;
+  if userOptions.BinaryAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
 end;
 
 procedure TfrmBinaryKlock.setShapes;
@@ -238,6 +246,18 @@ end;
 //
 // ******************************************************* Pop Up Menu *********
 //
+procedure TfrmBinaryKlock.MnItmAlwaysOnTopClick(Sender: TObject);
+{  Toggle Always On Top for the form.    }
+begin
+  if MnItmAlwaysOnTop.Checked then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  userOptions.BinaryAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+  userOptions.writeCurrentOptions;
+end;
+
 procedure TfrmBinaryKlock.MnItmAboutClick(Sender: TObject);
 begin
   frmAbout.Show;

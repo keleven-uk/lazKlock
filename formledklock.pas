@@ -17,6 +17,7 @@ type
 
   TfrmLEDKlock = class(TForm)
     LEDKlock: TVpLEDLabel;
+    MnItmAlwaysOnTop: TMenuItem;
     MnItmStickyNote: TMenuItem;
     MnItmExit: TMenuItem;
     MnItmAbout: TMenuItem;
@@ -26,6 +27,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
+    procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
     procedure MnItmStickyNoteClick(Sender: TObject);
     procedure TmrLEDKlockTimer(Sender: TObject);
@@ -77,6 +79,12 @@ begin
     Left := userOptions.LEDFormLeft;
     Top := userOptions.LEDFormTop;
   end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.LEDAlwaysOnTop;
+  if userOptions.LEDAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
 end;
 
 procedure TfrmLEDKlock.MouseHook(Sender: TObject; Msg: Cardinal);
@@ -134,6 +142,18 @@ end;
 //
 // ******************************************************* Pop Up Menu *********
 //
+procedure TfrmLEDKlock.MnItmAlwaysOnTopClick(Sender: TObject);
+{  Toggle Always On Top for the form.    }
+begin
+  if MnItmAlwaysOnTop.Checked then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  userOptions.LEDAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+  userOptions.writeCurrentOptions;
+end;
+
 procedure TfrmLEDKlock.MnItmAboutClick(Sender: TObject);
 begin
   frmAbout.Show;

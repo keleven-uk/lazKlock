@@ -59,6 +59,8 @@ type
     _stickyName: string;            //  full path to the Sticky Notes file.
     _unitsName: string;             //  full path to the Units file.
     _reminderName: string;          //  full path to the Reminder file.
+
+    //  Sart of user options.
     _runAtStartUp: boolean;         //  run Klock at windows start up - Current user only.
     _screenSave: boolean;           //  do we save Klock position or not.
     _formTop: integer;              //  the forms top left.
@@ -93,27 +95,31 @@ type
     _timerMilliSeconds: boolean;
 
     //  Analogue Klock
-    _analogueScreenSave: boolean;           //  do we save from position or not.
-    _analogueFormTop: integer;              //  the forms top left.
+    _analogueScreenSave: boolean;         //  do we save from position or not.
+    _analogueFormTop: integer;            //  the forms top left.
     _analogueFormLeft: integer;
+    _analogueAlwaysOnTop: Boolean;        //  to be always on top.
 
     // LED Klock
-    _LEDScreenSave: boolean;           //  do we save from position or not.
-    _LEDFormTop: integer;              //  the forms top left.
+    _LEDScreenSave: boolean;              //  do we save from position or not.
+    _LEDFormTop: integer;                 //  the forms top left.
     _LEDFormLeft: integer;
     _LEDlongDate: boolean;
+    _LEDAlwaysOnTop: Boolean;             //  to be always on top.
 
     // Binary Klock
     _BinaryScreenSave: boolean;           //  do we save from position or not.
     _BinaryFormTop: integer;              //  the forms top left.
     _BinaryFormLeft: integer;
     _BinaryFormat: boolean;               //  Binary or BCD format - true for binary.
+    _BinaryAlwaysOnTop: Boolean;          //  to be always on top.
 
     // Small Text Klock
     _smallTextScreenSave: boolean;        //  do we save from position or not.
     _smallTextFormTop: integer;           //  the forms top left.
     _smallTextFormLeft: integer;
     _smallTextTransparent: boolean;       //  is Small Text Klock transparent?
+    _smallAlwaysOnTop: Boolean;           //  to be always on top.
 
     // memos
     _useDefaultpassWord: boolean;         //  Memo allowed to use default pass word.
@@ -126,10 +132,11 @@ type
     _floatingTextFormLeft: integer;
     _floatingTextFont: Tfont;
     _floatingTextUseKlockFont: boolean;
+    _floatingAlwaysOnTop: Boolean;        //  to be always on top.
 
     //Sticky Notes
-    _stickyColor: TColor;                   //  Sticky Note colour.
-    _stickyFont:TFont;                      //  Sticky Note Font.
+    _stickyColor: TColor;                 //  Sticky Note colour.
+    _stickyFont:TFont;                    //  Sticky Note Font.
 
     //  Logging
     _logging: Boolean;
@@ -202,24 +209,28 @@ type
     property analogueScreenSave: boolean read _analogueScreenSave write _analogueScreenSave;
     property analogueFormTop: integer read _analogueFormTop write _analogueFormTop;
     property analogueFormLeft: integer read _analogueFormLeft write _analogueFormLeft;
+    property analogueAlwaysOnTop: boolean read _analogueAlwaysOnTop write _analogueAlwaysOnTop;
 
     // LED Kock
     property LEDScreenSave: boolean read _LEDScreenSave write _LEDScreenSave;
     property LEDFormTop: integer read _LEDFormTop write _LEDFormTop;
     property LEDFormLeft: integer read _LEDFormLeft write _LEDFormLeft;
     property LEDlongDate: boolean read _LEDlongDate write _LEDlongDate;
+    property LEDAlwaysOnTop: boolean read _LEDAlwaysOnTop write _LEDAlwaysOnTop;
 
     // Binary Kock
     property BinaryScreenSave: boolean read _BinaryScreenSave write _BinaryScreenSave;
     property BinaryFormTop: integer read _BinaryFormTop write _BinaryFormTop;
     property BinaryFormLeft: integer read _BinaryFormLeft write _BinaryFormLeft;
     property BinaryFormat: boolean read _BinaryFormat write _BinaryFormat;
+    property BinaryAlwaysOnTop: boolean read _BinaryAlwaysOnTop write _BinaryAlwaysOnTop;
 
     // Small Text Klock
     property smallTextScreenSave: boolean read _smallTextScreenSave write _smallTextScreenSave;
     property smallTextFormTop: integer read _smallTextFormTop write _smallTextFormTop;
     property smallTextFormLeft: integer read _smallTextFormLeft write _smallTextFormLeft;
     property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
+    property smallAlwaysOnTop: boolean read _smallAlwaysOnTop write _smallAlwaysOnTop;
 
     // Floating Text Klock
     property floatingTextScreenSave: boolean read _floatingTextScreenSave write _floatingTextScreenSave;
@@ -227,6 +238,7 @@ type
     property floatingTextFormLeft: integer read _floatingTextFormLeft write _floatingTextFormLeft;
     property floatingTextFont: TFont read _floatingTextFont write _floatingTextFont;
     property floatingTextUseKlockFont: boolean read _floatingTextUseKlockFont write _floatingTextUseKlockFont;
+    property floatingAlwaysOnTop: boolean read _floatingAlwaysOnTop write _floatingAlwaysOnTop;
 
     // Memos
     property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
@@ -414,24 +426,28 @@ begin
   analogueScreenSave := o.analogueScreenSave;
   analogueFormTop := o.analogueFormTop;
   analogueFormLeft := o.analogueFormLeft;
+  analogueAlwaysOnTop := o.analogueAlwaysOnTop;
 
   //  LED Klock
   LEDScreenSave := o.LEDScreenSave;
   LEDFormTop := o.LEDFormTop;
   LEDFormLeft := o.LEDFormLeft;
   LEDlongDate := o.LEDlongDate;
+  LEDAlwaysOnTop := o.LEDAlwaysOnTop;
 
   //  Binary Klock
   BinaryScreenSave := o.BinaryScreenSave;
   BinaryFormTop := o.BinaryFormTop;
   BinaryFormLeft := o.BinaryFormLeft;
   BinaryFormat := o.BinaryFormat;
+  BinaryAlwaysOnTop := o.BinaryAlwaysOnTop;
 
   // Small Text Klock
   smallTextScreenSave := o.smallTextScreenSave;
   smallTextFormTop := o.smallTextFormTop;
   smallTextFormLeft := o.smallTextFormLeft;
   smallTextTransparent := o.smallTextTransparent;
+  smallAlwaysOnTop := o.smallAlwaysOnTop;
 
   // Floating Text Klock
   floatingTextScreenSave := o.floatingTextScreenSave;
@@ -439,6 +455,7 @@ begin
   floatingTextFormLeft := o.floatingTextFormLeft;
   floatingTextFont := o.floatingTextFont;
   floatingTextUseKlockFont := o.floatingTextUseKlockFont;
+  floatingAlwaysOnTop := o.floatingAlwaysOnTop;
 
   // memos
   useDefaultpassWord := o.useDefaultpassWord;
@@ -601,6 +618,8 @@ begin
       if rtn <> 'ERROR' then analogueFormLeft := StrToInt(rtn);
       rtn := readChild(PassNode, 'analogueScreenSave');
       if rtn <> 'ERROR' then analogueScreenSave := StrToBool(rtn);
+      rtn := readChild(PassNode, 'analogueAlwaysOnTop');
+      if rtn <> 'ERROR' then analogueAlwaysOnTop := StrToBool(rtn);
     end;
 
     //  LED Klock
@@ -616,6 +635,8 @@ begin
       if rtn <> 'ERROR' then LEDScreenSave := StrToBool(rtn);
       rtn := readChild(PassNode, 'LEDlongDate');
       if rtn <> 'ERROR' then LEDlongDate := StrToBool(rtn);
+      rtn := readChild(PassNode, 'LEDAlwaysOnTop');
+      if rtn <> 'ERROR' then LEDAlwaysOnTop := StrToBool(rtn);
     end;
 
     //  Binary Klock
@@ -631,6 +652,8 @@ begin
       if rtn <> 'ERROR' then BinaryScreenSave := StrToBool(rtn);
       rtn := readChild(PassNode, 'BinaryFormat');
       if rtn <> 'ERROR' then BinaryFormat := StrToBool(rtn);
+      rtn := readChild(PassNode, 'BinaryAlwaysOnTop');
+      if rtn <> 'ERROR' then BinaryAlwaysOnTop := StrToBool(rtn);
     end;
 
     // Small Text Klock
@@ -646,6 +669,8 @@ begin
       if rtn <> 'ERROR' then smallTextScreenSave := StrToBool(rtn);
       rtn := readChild(PassNode, 'smallTextTransparent');
       if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
+      rtn := readChild(PassNode, 'smallAlwaysOnTop');
+      if rtn <> 'ERROR' then smallAlwaysOnTop := StrToBool(rtn);
     end;
 
     // Floating Text Klock
@@ -663,6 +688,8 @@ begin
       if rtn <> 'ERROR' then floatingTextFont := StringToFont(rtn);
       rtn := readChild(PassNode, 'floatingTextUseKlockFont');
       if rtn <> 'ERROR' then floatingTextUseKlockFont := StrToBool(rtn);
+      rtn := readChild(PassNode, 'floatingAlwaysOnTop');
+      if rtn <> 'ERROR' then floatingAlwaysOnTop := StrToBool(rtn);
     end;
 
     // memos
@@ -774,31 +801,36 @@ begin
   analogueScreenSave := True;
   analogueFormTop := 100;
   analogueFormLeft := 100;
+  analogueAlwaysOnTop := true;
 
   //  LED Klock
   LEDScreenSave := True;
   LEDFormTop := 100;
   LEDFormLeft := 100;
   LEDlongDate := True;
+  LEDAlwaysOnTop := true;
 
   //  Binary Klock
   BinaryScreenSave := True;
   BinaryFormTop := 100;
   BinaryFormLeft := 100;
   BinaryFormat := False;     //  default to BCD.
+  BinaryAlwaysOnTop := true;
 
   // Small Text Klock
   smallTextScreenSave := True;
   smallTextFormTop := 100;
   smallTextFormLeft := 100;
   smallTextTransparent := True;
+  smallAlwaysOnTop := true;
 
   // Floating Text Klock
-  _floatingTextScreenSave := true;
-  _floatingTextFormTop := 100;
-  _floatingTextFormLeft := 100;
-  _floatingTextFont := TFont.Create;
-  _floatingTextUseKlockFont := true;
+  floatingTextScreenSave := true;
+  floatingTextFormTop := 100;
+  floatingTextFormLeft := 100;
+  floatingTextFont := TFont.Create;
+  floatingTextUseKlockFont := true;
+  floatingAlwaysOnTop := true;
 
   // memos
   useDefaultpassWord := true;
@@ -903,6 +935,7 @@ begin
 
     ElementNode.AppendChild(writeBolChild(doc, 'analogueScreenSave', analogueScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'analogueForm', analogueFormTop, analogueFormLeft));
+    ElementNode.AppendChild(writeBolChild(doc, 'analogueAlwaysOnTop', analogueAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
@@ -912,6 +945,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave', LEDScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'LEDForm', LEDFormTop, LEDFormLeft));
     ElementNode.AppendChild(writeBolChild(doc, 'LEDlongDate', LEDlongDate));
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDAlwaysOnTop', LEDAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
@@ -921,6 +955,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'BinaryScreenSave', BinaryScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'BinaryForm', BinaryFormTop, BinaryFormLeft));
     ElementNode.AppendChild(writeBolChild(doc, 'BinaryFormat', BinaryFormat));
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryAlwaysOnTop', BinaryAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
@@ -930,6 +965,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'smallTextScreenSave', smallTextScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'SmallTextForm', smallTextFormTop, smallTextFormLeft));
     ElementNode.AppendChild(writeBolChild(doc, 'smallTextTransparent', smallTextTransparent));
+    ElementNode.AppendChild(writeBolChild(doc, 'smallAlwaysOnTop', smallAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
@@ -940,6 +976,7 @@ begin
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'floatingTextForm', floatingTextFormTop, floatingTextFormLeft));
     ElementNode.AppendChild(writeFontChild(doc, 'floatingTextFont', floatingTextFont));
     ElementNode.AppendChild(writeBolChild(doc, 'floatingTextUseKlockFont', floatingTextUseKlockFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingAlwaysOnTop', floatingAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 

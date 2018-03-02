@@ -116,8 +116,6 @@ end;
 destructor fontStore.Destroy;
 {  Unload everything when finished with the font class.    }
 begin
-  removeFonts;               //  Remove all fonts from system.
-
   fontFiles.Free;
   fontTypes.Free;
   fontNames.Free;

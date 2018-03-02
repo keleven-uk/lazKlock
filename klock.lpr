@@ -12,13 +12,18 @@ uses
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
   formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote,
-  uMemo, uMemos, uArchiveUtils, formFloatingKlock;
+  uMemo, uMemos, uArchiveUtils, formFloatingKlock, formSplashScreen;
 
 {$R *.res}
 
 begin
   Application.Title:='lazKlock';
+
   Application.Initialize;
+  frmSplashScreen := TfrmSplashScreen.Create(nil);
+  frmSplashScreen.Show;
+  frmSplashScreen.Update;
+
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmOptions, frmOptions);
   Application.CreateForm(TfrmAbout, frmAbout);
@@ -32,6 +37,10 @@ begin
   Application.CreateForm(TfrmSmallTextKlock, frmSmallTextKlock);
   Application.CreateForm(TfrmStickyNote, frmStickyNote);
   Application.CreateForm(TfrmFloatingKlock, frmFloatingKlock);
+
+  frmSplashScreen.Hide;
+  frmSplashScreen.Free;
+
   Application.Run;
 end.
 

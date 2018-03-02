@@ -44,7 +44,7 @@ uses
   LCLIntf, LCLType, CheckLst, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
   UConversion, formReminderInput, AvgLvlTree, uOptions, Windows, ULogging,
   ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock, formFloatingKlock;
+  formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen;
 
 type
 
@@ -433,7 +433,14 @@ end;
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
+
 begin
+  frmSplashScreen := TfrmSplashScreen.Create(nil);
+  frmSplashScreen.Show;
+  frmSplashScreen.Update;
+
+  logSplashFooter;                         // to populate splash screen top memo
+
   kLog.writeLog('FormKlock Closing');
 
   if userOptions.screenSave then
@@ -453,6 +460,7 @@ begin
   stickies.updateStickyNotes;
   kLog.writeLog('Updated Sticky Note File');
 
+  fs.removeFonts;            //  Remove all fonts from system.
   fs.Free;                   //  Release the font store object.
   ft.Free;                   //  Release the fuzzy time object.
   stickies.Free;             //  Release the Sticky Note store.
@@ -463,6 +471,9 @@ begin
 
   logFooter;
   kLog.Free;                 //  Release the logger object.
+
+  frmSplashScreen.Hide;
+  frmSplashScreen.Free;
 end;
 
 procedure TfrmMain.SetDefaults;

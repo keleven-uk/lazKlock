@@ -2784,6 +2784,10 @@ uoptions.pas                     |   55 ++
 
 Build 75 [2.2.4.75]
 
+commit b094cceaf4631b2c95c838e3b2f1eb9881721758
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Feb 18 15:59:16 2018 +0000
+
 Added more Moon info to the Moon info page - all from the DelphiMoon component.
 
 Added a Sun info page - with all info coming from the DephiMoon component.
@@ -2803,8 +2807,29 @@ Currently
 5791 statements
 15.8% comment
 
-
+README.md       |  10 +--
+formKlock.lfm   |  20 +++--
+formKlock.pas   |  26 ++++--
+formOptions.lfm |  94 +++++++++++++++------
+formOptions.pas |  21 ++++-
+forminfo.lfm    |   2 +-
+forminfo.pas    |  15 +++-
+help/klock.hnd  | Bin 4739072 -> 4739072 bytes
+history.txt     |  97 +++++++++++++++++++++-
+klock.lpi       | 248 +++++++++++++++++++++++++++++---------------------------
+lazKlock.smproj | Bin 525171 -> 555553 bytes
+ufuzzytime.pas  |  17 +---
+uinfoutils.pas  | 228 +++++++++++++++++++++++----------------------------
+uklockutils.pas |   9 +-
+uoptions.pas    |  28 +++++++
+15 files changed, 504 insertions(+), 311 deletions(-)
+ 
+ 
 Build 76 [2.2.4.76]
+
+commit 42cd5887a7e4959e98812979c22b2d8bb59a1042
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Feb 18 21:47:35 2018 +0000
 
 Added a Chinese info page - display Chinese new year and cycle of year.
 
@@ -2817,5 +2842,85 @@ Currently
 5818 statements
 15.7% comment
 
+formKlock.pas             |   7 +-
+forminfo.pas              |  10 ++-
+help/Klock.chm            | Bin 3788634 -> 3804774 bytes
+help/Klock.pdf            | Bin 6691025 -> 6839021 bytes
+help/html/About.html      |   8 +-
+help/html/Credits.html    |   2 +-
+help/html/Global.html     |   8 +-
+help/html/Info.html       |  26 +++---
+help/html/js/hndsd.min.js |   2 +-
+help/klock.hnd            | Bin 4739072 -> 4784128 bytes
+history.txt               |  14 ++++
+klock.iss                 |   4 +-
+klock.lpi                 | 198 ++++++++++++++++++++++------------------------
+lazKlock.smproj           | Bin 555553 -> 585999 bytes
+uinfoutils.pas            |  45 +++++++++--
+15 files changed, 188 insertions(+), 136 deletions(-)
+ 
 
 Build 77 [2.2.5.77]
+
+commit 1387927f9db9d6aee758d855fb47ebe4b8e86ed8
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Feb 25 20:45:45 2018 +0000
+
+Tidied up the font handling.  The font work flow needed three entries - one for the file name, one for the name to load the font and a third friendly version for the drop down menus.  All three where hard coded.
+
+This has been changed so that the font directory is scanned and all .ttf files are loaded.  This directory now contains two text files that contain the name to load the font [fontNames.txt] and a list of friendly names [fontTypes.txt].  These text files need to be amended when a new font is added.  But, this means a new font can be added without re-compiling Klock.
+
+Added the option to include the font directory to the archive.
+
+Currently
+10721 lines of source code.
+5799 statements
+15.8% comment
+
+fonts/fontNames.txt         |  20 +++
+fonts/fontTypes.txt         |  20 +++
+formKlock.pas               |  12 +-
+formOptions.lfm             |   4 +-
+formOptions.pas             |  24 +++-
+formclipboard.pas           |   3 +-
+formfloatingklock.pas       |   5 +-
+help/Klock.chm              | Bin 3804774 -> 3808810 bytes
+help/Klock.pdf              | Bin 6839021 -> 6845223 bytes
+help/html/Archive.html      |   8 +-
+help/html/FuzzyTime.html    |   9 ++
+help/html/History.html      |  50 ++++++++
+help/html/Introduction.html |   4 +-
+help/html/Klock.html        |   4 +-
+help/html/Welcome.html      |   4 +-
+help/html/WorldKlock.html   |   3 +
+help/html/js/hndsd.min.js   |   2 +-
+help/klock.hnd              | Bin 4784128 -> 4792320 bytes
+history.txt                 |   5 +-
+klock.iss                   |   4 +-
+klock.lpi                   | 297 +++++++++++++++++++++++++-------------------
+lazKlock.smproj             | Bin 585999 -> 616549 bytes
+uarchiveutils.pas           |   8 +-
+ufonts.pas                  | 138 +++++++++++---------
+uformclipboardutils.pas     |  25 +++-
+uklockutils.pas             |   3 +-
+26 files changed, 426 insertions(+), 226 deletions(-)
+
+
+Build 78 [2.2.5.78]
+
+I found the forms propertie FormStyle whch can be set to fsSystemStayOnTop.
+Amended the five other Klock [Analogue Klock, LED Klock, Floating Text Klock, Binary Klock and Small Text Klock] to be able to stay on top, this can be either selected from each Klocks pop up menu or set in the user options.
+
+I think Floating text Klock in Gushing Meadow font in red with stay on top enabled looks cool.
+
+
+Added a plash screen to Klock [formSplashScreen].
+This is called when the program starts and closes.  The splash screen just echo entries being made to the log file.  This is useful if a few fonts are being loaded as this slows down both starting and closing Klock.
+
+Currently
+10962 lines of source code.
+5976 statements
+15.7% comment
+
+
+

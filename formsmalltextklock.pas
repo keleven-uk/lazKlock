@@ -37,6 +37,7 @@ type
 
   TfrmSmallTextKlock = class(TForm)
     lblSmallTextKlock: TLabel;
+    MnItmAlwaysOnTop: TMenuItem;
     MnuItmNewStickyNote: TMenuItem;
     MnuItmTransparent: TMenuItem;
     MnItmClose: TMenuItem;
@@ -47,6 +48,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmCloseClick(Sender: TObject);
     procedure MnuItmAboutClick(Sender: TObject);
     procedure MnuItmNewStickyNoteClick(Sender: TObject);
@@ -157,6 +159,7 @@ begin
   {the color were going to make transparent the black that the form background is set to}
   transparency := clBlack;
 
+  MnuItmTransparent.Checked := userOptions.smallTextTransparent;
   {call the function to do it}
   if userOptions.smallTextTransparent then
     SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 1)
@@ -174,6 +177,12 @@ begin
     Left := userOptions.smallTextFormLeft;
     Top := userOptions.smallTextFormTop;
   end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.smallAlwaysOnTop;
+  if userOptions.smallAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
 end;
 
 procedure TfrmSmallTextKlock.tmrSmallTextKlockTimer(Sender: TObject);
@@ -241,6 +250,18 @@ end;
 //
 // ******************************************************* Pop Up Menu *********
 //
+procedure TfrmSmallTextKlock.MnItmAlwaysOnTopClick(Sender: TObject);
+{  Toggle Always On Top for the form.    }
+begin
+  if MnItmAlwaysOnTop.Checked then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  userOptions.smallAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+  userOptions.writeCurrentOptions;
+end;
+
 procedure TfrmSmallTextKlock.MnItmCloseClick(Sender: TObject);
 begin
   frmMain.TrayIcon.Visible := False;
@@ -274,8 +295,6 @@ procedure TfrmSmallTextKlock.MnuItmTransparentClick(Sender: TObject);
 var
   transparency: longint;
 begin
-  MnuItmTransparent.Checked := not MnuItmTransparent.Checked;
-
   transparency := clBlack;
 
   if MnuItmTransparent.Checked then
@@ -283,6 +302,8 @@ begin
   else
     SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 0);
 
+  userOptions.smallTextTransparent := MnuItmTransparent.Checked;
+  userOptions.writeCurrentOptions;
 end;
 
 //

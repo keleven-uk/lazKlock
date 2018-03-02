@@ -10,9 +10,10 @@ unit formFloatingKlock;
 
 interface
 
+//  Graphics has to come after Windows - so TBitmap.Create works.
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, LMessages,
-  Menus, StdCtrls, ExtCtrls, Windows;
+  Classes, SysUtils, FileUtil, Forms, Controls, Windows, Graphics, Dialogs,
+  LMessages, Menus, StdCtrls, ExtCtrls;
 
 const
   LWA_COLORKEY = 1;
@@ -37,9 +38,15 @@ type
 
   { TfrmFloatingKlock }
 
+  textSize = record
+    width: integer;
+    height: integer;
+  end;
+
   TfrmFloatingKlock = class(TForm)
     FontDialog1: TFontDialog;
     lblFloatingTime: TLabel;
+    MnItmAlwaysOnTop: TMenuItem;
     MnItmFont: TMenuItem;
     MnItmAbout: TMenuItem;
     MnItmNewStickNote: TMenuItem;
@@ -49,6 +56,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmFontClick(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
@@ -60,6 +68,7 @@ type
     WindowDragStarted: Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
+    function GetTextSize(AText: String; AFont: TFont): textSize;
   public
 
   end;
@@ -133,6 +142,12 @@ begin
     Left := userOptions.floatingTextFormLeft;
     Top := userOptions.floatingTextFormTop;
   end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.floatingAlwaysOnTop;
+  if userOptions.floatingAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
 end;
 
 procedure TfrmFloatingKlock.MouseHook(Sender: TObject; Msg: Cardinal);
@@ -171,8 +186,9 @@ end;
 
 procedure TfrmFloatingKlock.TmrFloatingTextTimer(Sender: TObject);
 {  Updates the time in the correct font.
-   The time details are taken from the the main Klock, that is
-   this will display what ever Klock was displaying when this was called.
+   The time details are taken from the the main Klock.
+
+   The dimensions of the form are adjusted so that the text string will fit.
 }
 begin
   lblFloatingTime.Top := 4;
@@ -192,12 +208,43 @@ begin
 
   lblFloatingTime.Caption := ft.getTime;
 
-  lblFloatingTime.AdjustFontForOptimalFill;
+  width := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
+  height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
+
+  //lblFloatingTime.AdjustFontForOptimalFill;
+end;
+
+function TfrmFloatingKlock.GetTextSize(AText: String; AFont: TFont): textSize;
+{  Returns the height and width of a text string with a given font.    }
+var
+  bmp: TBitmap;
+begin
+  bmp := TBitmap.Create;
+  try
+    bmp.Canvas.Font.Assign(AFont);
+
+    Result.width := bmp.Canvas.TextWidth(AText);
+    Result.height := bmp.Canvas.TextHeight(AText);
+  finally
+    bmp.Free;
+  end;
 end;
 
 //
 // ******************************************************* Pop Up Menu *********
 //
+procedure TfrmFloatingKlock.MnItmAlwaysOnTopClick(Sender: TObject);
+{  Toggle Always On Top for the form.    }
+begin
+  if MnItmAlwaysOnTop.Checked then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  userOptions.floatingAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+  userOptions.writeCurrentOptions;
+end;
+
 procedure TfrmFloatingKlock.MnItmAboutClick(Sender: TObject);
 {  Load the about form.    }
 begin

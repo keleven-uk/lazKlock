@@ -219,23 +219,28 @@ begin
   ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
 
   ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
+  ChckGrpAnalogueKlock.Checked[1] := userBacOptions.analogueAlwaysOnTop;
 
   ChckGrpLEDKlock.Checked[0] := userBacOptions.LEDScreenSave;
   ChckGrpLEDKlock.Checked[1] := userBacOptions.LEDlongDate ;
+  ChckGrpLEDKlock.Checked[2] := userBacOptions.LEDAlwaysOnTop;
 
   ChckGrpBinaryKlock.Checked[0] := userBacOptions.BinaryScreenSave;
   ChckGrpBinaryKlock.Checked[1] := userBacOptions.BinaryFormat;
+  ChckGrpBinaryKlock.Checked[2] := userBacOptions.BinaryAlwaysOnTop;
 
   ChckGrpSmallTextKlock.Checked[0] := userBacOptions.smallTextScreenSave;
   ChckGrpSmallTextKlock.Checked[1] := userBacOptions.smallTextTransparent;
-
-  ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
+  ChckGrpSmallTextKlock.Checked[2] := userBacOptions.smallAlwaysOnTop;
 
   ChckGrpFloatingTextKlock.Checked[0] := userBacOptions.floatingTextScreenSave;
   ChckGrpFloatingTextKlock.Checked[1] := userBacOptions.floatingTextUseKlockFont;
+  ChckGrpFloatingTextKlock.Checked[2] := userBacOptions.floatingAlwaysOnTop;
 
   lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
   btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+
+  ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
   ChckBxLogging.Checked := userBacOptions.logging;
   ChckBxCullLogsFiles.Checked := userBacOptions.cullLogs;
@@ -397,9 +402,11 @@ procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: inte
 {  Sets the options for the Analogue Klock.
 
    Index 0 - Save Screen Position.
+   Index 1 - Always On Top.
 }
 begin
   userBacOptions.analogueScreenSave := ChckGrpAnalogueKlock.Checked[0];
+  userBacOptions.analogueAlwaysOnTop := ChckGrpAnalogueKlock.Checked[1];
 end;
 //
 //.........................................LED KLOCK ...........................
@@ -408,11 +415,13 @@ procedure TfrmOptions.ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the LED Klock.
 
    Index 0 - Save Screen Position.
-   Index 1 - Long Date Format
+   Index 1 - Long Date Format.
+   Index 2 - Always On Top.
 }
 begin
    userBacOptions.LEDScreenSave := ChckGrpLEDKlock.Checked[0];
    userBacOptions.LEDlongDate := ChckGrpLEDKlock.Checked[1];
+   userBacOptions.LEDAlwaysOnTop := ChckGrpLEDKlock.Checked[2];
 end;
 //
 //......................................Binary KLOCK ...........................
@@ -422,10 +431,12 @@ procedure TfrmOptions.ChckGrpBinaryKlockItemClick(Sender: TObject; Index: intege
 
    Index 0 - Save Screen Position.
    Index 1 - Binary / BCD Format - true for Binary.
+   Index 2 - Always On Top.
 }
 begin
   userBacOptions.BinaryScreenSave := ChckGrpBinaryKlock.Checked[0];
   userBacOptions.BinaryFormat := ChckGrpBinaryKlock.Checked[1];
+  userBacOptions.BinaryAlwaysOnTop := ChckGrpBinaryKlock.Checked[2];
 end;
 //
 //......................................Small Text KLOCK .......................
@@ -435,10 +446,12 @@ procedure TfrmOptions.ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: int
 
    Index 0 - Save Screen Position.
    Index 1 - Small Text Klock Transparent.
+   Index 2 - Always On Top.
 }
 begin
   userBacOptions.smallTextScreenSave := ChckGrpSmallTextKlock.Checked[0];
   userBacOptions.smallTextTransparent := ChckGrpSmallTextKlock.Checked[1];
+  userBacOptions.smallAlwaysOnTop := ChckGrpSmallTextKlock.Checked[2];
 end;
 //
 //...................................Floating Text KLOCK .......................
@@ -448,10 +461,12 @@ procedure TfrmOptions.ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: 
 
    Index 0 - Save Screen Position.
    Index 1 - Use Main Klock font.
+   Index 2 - Always On Top.
 }
 begin
   userBacOptions.floatingTextScreenSave := ChckGrpFloatingTextKlock.Checked[0];
   userBacOptions.floatingTextUseKlockFont := ChckGrpFloatingTextKlock.Checked[1];
+  userBacOptions.floatingAlwaysOnTop := ChckGrpFloatingTextKlock.Checked[2];
 
   lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
   btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);

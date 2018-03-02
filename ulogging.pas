@@ -34,6 +34,10 @@ type
 
 implementation
 
+uses
+  formSplashScreen;
+
+
 constructor Logger.Create;
 {  Creates the logger.
    A new logfile is created each day.
@@ -78,6 +82,9 @@ begin
       append(logFile)
     else
       rewrite(logFile);
+
+    if frmSplashScreen.Active then
+      frmSplashScreen.MemoSplashScreenInfo.Lines.Add(message);
 
     writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + message);
     CloseFile(LogFile);

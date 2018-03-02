@@ -6,7 +6,6 @@ unit UKlockUtils;
 
 interface
 
-//  Graphics has to come after Windows - so TBitmap.Create works.
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
@@ -42,9 +41,9 @@ procedure applyRunAtStartUp(flag: boolean);
 procedure playChime(mode: String);
 procedure logHeader;
 procedure logFooter;
+procedure logSplashFooter;
 function getUpTime(system: string): string;
 function getWindowsVersion: string;
-function GetTextSize(AText: String; AFont: TFont): Integer;
 function isChristmas: Boolean;
 function isEaster: Boolean;
 function isValentines: Boolean;
@@ -56,7 +55,7 @@ function decrypt(s: string; pwd: string): string;
 implementation
 
 uses
-  formklock;
+  formklock, formSplashScreen;
 
 function FontToString(f: TFont): string;
 {  Produces a string representation of a given font.
@@ -504,15 +503,44 @@ begin
   {$endif}
   kLog.writeLog('App Dir : ' + ExtractFilePath(Application.ExeName));
   kLog.writeLog('............................................................');
+
+  if frmSplashScreen.Active then
+  begin
+    frmSplashScreen.lblSplashScreen.Caption := 'Starting Klock';
+    frmSplashScreen.MemoSplashScreenData.Lines.Add(userOptions.InternalName);
+    frmSplashScreen.MemoSplashScreenData.Lines.Add('User : ' + SysUtils.GetEnvironmentVariable('USERNAME'));
+    frmSplashScreen.MemoSplashScreenData.Lines.Add('PC   : ' + SysUtils.GetEnvironmentVariable('COMPUTERNAME'));
+    frmSplashScreen.MemoSplashScreenData.Lines.Add('OS   : ' + getWindowsVersion);
+    frmSplashScreen.MemoSplashScreenData.Lines.Add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
+    frmSplashScreen.MemoSplashScreenData.Lines.Add('lazKlock Version :: %s', [userOptions.fileVersion]);
+    {$ifdef WIN32}
+      frmSplashScreen.MemoSplashScreenData.Lines.Add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
+    {$else}
+      frmSplashScreen.MemoSplashScreenData.Lines.Add(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
+    {$endif}
+    frmSplashScreen.MemoSplashScreenData.Lines.Add('App Dir : ' + ExtractFilePath(Application.ExeName));
+  end;
 end;
 
 procedure logFooter;
 {  Write footer to log file.    }
 begin
-  kLog.writeLog('............................................................');
+  kLog.writeLog('..............................................................');
   kLog.writeLog('Klock has been running for ' + getUpTime('Application'));
   kLog.writeLog('Klock Ending [normaly]');
-  kLog.writeLog('............................................................');
+  klog.writeLog('Bye');
+  kLog.writeLog('..............................................................');
+end;
+
+procedure logSplashFooter;
+{  Write footer to Splash Screen.    }
+begin
+  frmSplashScreen.lblSplashScreen.Caption := 'Closing Klock';
+  frmSplashScreen.MemoSplashScreenData.Lines.Add(userOptions.InternalName);
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock has been running for ' + getUpTime('Application'));
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock Closing Down [normaly]');
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
 end;
 
 function getUpTime(system: string): string;
@@ -577,23 +605,6 @@ begin
   AProcess.Free;
 
   Result := winVer[1];
-end;
-
-function GetTextSize(AText: String; AFont: TFont): Integer;
-var
-  bmp: TBitmap;
-begin
-  Result := 0;
-  bmp := TBitmap.Create;
-  try
-    bmp.Canvas.Font.Assign(AFont);
-    //klog.writeLog(format ('text width %d :: text height %d', [bmp.Canvas.TextWidth(AText),
-    //                                                          bmp.Canvas.TextHeight(AText)]));
-
-    Result := Trunc( 22 * (490 / bmp.Canvas.TextWidth(AText)));
-  finally
-    bmp.Free;
-  end;
 end;
 
 function isChristmas: Boolean;

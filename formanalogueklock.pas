@@ -35,6 +35,7 @@ type
 
   TfrmAnalogueKlock = class(TForm)
     DTThemedClock1: TDTThemedClock;
+    MnItmAlwaysOnTop: TMenuItem;
     MnItmNewStickyNote: TMenuItem;
     MnItmAbout: TMenuItem;
     MnItmExit: TMenuItem;
@@ -43,6 +44,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MnItmAboutClick(Sender: TObject);
+    procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
     procedure MnItmNewStickyNoteClick(Sender: TObject);
 
@@ -156,10 +158,28 @@ begin
     Left := userOptions.analogueFormLeft;
     Top := userOptions.analogueFormTop;
   end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.analogueAlwaysOnTop;
+  if userOptions.analogueAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
 end;
 //
 // ******************************************************* Pop Up Menu *********
 //
+procedure TfrmAnalogueKlock.MnItmAlwaysOnTopClick(Sender: TObject);
+{  Toggle Always On Top for the form.    }
+begin
+  if MnItmAlwaysOnTop.Checked then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  userOptions.analogueAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+  userOptions.writeCurrentOptions;
+end;
+
 procedure TfrmAnalogueKlock.MnItmExitClick(Sender: TObject);
 {  When exiting the analogue klock, kill off the tray icon and restore the main klock.
 }
