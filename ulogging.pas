@@ -83,9 +83,6 @@ begin
     else
       rewrite(logFile);
 
-    if frmSplashScreen.Active then
-      frmSplashScreen.MemoSplashScreenInfo.Lines.Add(message);
-
     writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + message);
     CloseFile(LogFile);
   except

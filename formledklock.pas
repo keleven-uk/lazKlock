@@ -23,6 +23,7 @@ type
     MnItmAbout: TMenuItem;
     popUpMenuLEDKlock: TPopupMenu;
     TmrLEDKlock: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -57,6 +58,14 @@ procedure TfrmLEDKlock.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
+
+  TmrLEDKlock.Enabled := false;
+end;
+
+procedure TfrmLEDKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+{  Stop timer on close, so not running when form not in use.    }
+begin
+  TmrLEDKlock.Enabled := false;
 end;
 
 procedure TfrmLEDKlock.FormDestroy(Sender: TObject);
@@ -68,11 +77,12 @@ end;
 procedure TfrmLEDKlock.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormLEDKlock Show');
+
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
-
   frmMain.Visible := False;
-  TmrLEDKlock.Enabled := True;
+
+  TmrLEDKlock.Enabled := True;         //  Start timer.
 
   if userOptions.LEDScreenSave then
   begin

@@ -104,6 +104,28 @@ begin
   SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
 end;
 
+procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
+{  When starting the analogue klock, start the tray icon and hide the main klock.  }
+begin
+  kLog.writeLog('FormAnalogue Klock Show');
+  frmMain.TrayIcon.Visible := True;
+  frmMain.TrayIcon.Show;
+
+  frmMain.Visible := False;
+
+  if userOptions.analogueScreenSave then
+  begin
+    Left := userOptions.analogueFormLeft;
+    Top := userOptions.analogueFormTop;
+  end;
+
+  MnItmAlwaysOnTop.Checked := userOptions.analogueAlwaysOnTop;
+  if userOptions.analogueAlwaysOnTop then
+    FormStyle := fsSystemStayOnTop
+  else
+    FormStyle := fsNormal;
+end;
+
 procedure TfrmAnalogueKlock.FormDestroy(Sender: TObject);
 begin
     // To prevent possible system resource leaks
@@ -142,28 +164,6 @@ begin
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
-end;
-
-procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
-{  When starting the analogue klock, start the tray icon and hide the main klock.  }
-begin
-  kLog.writeLog('FormAnalogue Klock Show');
-  frmMain.TrayIcon.Visible := True;
-  frmMain.TrayIcon.Show;
-
-  frmMain.Visible := False;
-
-  if userOptions.analogueScreenSave then
-  begin
-    Left := userOptions.analogueFormLeft;
-    Top := userOptions.analogueFormTop;
-  end;
-
-  MnItmAlwaysOnTop.Checked := userOptions.analogueAlwaysOnTop;
-  if userOptions.analogueAlwaysOnTop then
-    FormStyle := fsSystemStayOnTop
-  else
-    FormStyle := fsNormal;
 end;
 //
 // ******************************************************* Pop Up Menu *********

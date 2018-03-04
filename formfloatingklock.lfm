@@ -8,6 +8,7 @@ object frmFloatingKlock: TfrmFloatingKlock
   ClientHeight = 110
   ClientWidth = 534
   FormStyle = fsSystemStayOnTop
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

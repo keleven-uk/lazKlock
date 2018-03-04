@@ -72,7 +72,7 @@ type
     property display24Hour: boolean read _display24Hour write _display24Hour;
 
     constructor Create; overload;
-    destructor Destroy;
+    destructor Destroy; override;
     function getTime: string;
   end;
 
@@ -111,6 +111,8 @@ destructor FuzzyTime.Destroy;
 begin
   _fuzzyTypes.free;
   timeZone.Free;
+
+  inherited;
 end;
 
 procedure FuzzyTime.writeLog(message: string);

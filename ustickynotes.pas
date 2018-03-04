@@ -39,6 +39,7 @@ type
     property stickyNotesCount: integer read _stickyNotesCount write _stickyNotesCount;
 
     constructor Create; overload;
+    destructor Destroy; override;
     procedure new(colour: TColor; font: TFont);
     procedure restoreStickyNotes;
     procedure updateStickyNotes;
@@ -66,6 +67,14 @@ begin
   stickyNotesStore := sticky.Create;
   stickyNotesStore.Sorted := true;
   stickyNotesCount := 0;
+end;
+
+destructor stickyNotes.Destroy;
+{  run on destroy.    }
+begin
+  stickyNotesStore.Free;
+
+  inherited;
 end;
 
 procedure stickyNotes.new(colour: TColor; font: TFont);

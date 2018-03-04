@@ -1560,6 +1560,10 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Build 77 [2.2.5.77]</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit 1387927f9db9d6aee758d855fb47ebe4b8e86ed8</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Sun Feb 25 20:45:45 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Tidied up the font handling. &nbsp;The font work flow needed three entries - one for the file name, one for the name to load the font and a third friendly version for the drop down menus. &nbsp;All three where hard coded.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">This has been changed so that the font directory is scanned and all .ttf files are loaded. &nbsp;This directory now contains two text files that contain the name to load the font [fontNames.txt] and a list of friendly names [fontTypes.txt]. &nbsp;These text files need to be amended when a new font is added. &nbsp;But, this means a new font can be added without re-compiling Klock.</span></p>
@@ -1570,6 +1574,41 @@
 <p class="rvps2"><span class="rvts6">10721 lines of source code.</span></p>
 <p class="rvps2"><span class="rvts6">5799 statements</span></p>
 <p class="rvps2"><span class="rvts6">15.8% comment</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 78 [2.2.5.78]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit e60600bb8e49cd12188b62e8ccbb097fb92f549f</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Fri Mar 2 16:35:32 2018 +0000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">I found the forms properties FormStyle which can be set to fsSystemStayOnTop.</span></p>
+<p class="rvps2"><span class="rvts6">Amended the five other Klock [Analogue Klock, LED Klock, Floating Text Klock, Binary Klock and Small Text Klock] to be able to stay on top, this can be either selected from each Klocks pop up menu or set in the user options.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">I think Floating text Klock in Gushing Meadow font in red with stay on top enabled looks cool.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added a splash screen to Klock [formSplashScreen].</span></p>
+<p class="rvps2"><span class="rvts6">This is called when the program starts and closes. &nbsp;The splash screen just echo entries being made to the log file. &nbsp;This is useful if a few fonts are being loaded as this slows down both starting and closing Klock.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">10962 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">5976 statements</span></p>
+<p class="rvps2"><span class="rvts6">15.7% comment</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 79 [2.3.0.79]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Started experiencing a system crash sometimes when Klock loaded. &nbsp;I think this was caused by the logging unit writing to the splash screen, &nbsp;Changed the way this was done - will monitor. &nbsp;This seemed more pronounced in the 32 bit version.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Tidied up some of the classes, introduced destructor routines to clear memory objects.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Also, on the other Klocks, set timer enable to false on form create and form close and time enable to true on form show.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">11040 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">6006 statements</span></p>
+<p class="rvps2"><span class="rvts6">15.7% comment</span></p>
 <p></p>
 <p class="rvps6" style="clear: both;"><span class="rvts10">Created with the Personal Edition of HelpNDoc: </span><a class="rvts11" href="https://www.helpndoc.com/help-authoring-tool">Full-featured multi-format Help generator</a></p>
 

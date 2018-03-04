@@ -12,6 +12,7 @@ object frmSmallTextKlock: TfrmSmallTextKlock
   Constraints.MaxWidth = 320
   Constraints.MinHeight = 220
   Constraints.MinWidth = 320
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

@@ -13,6 +13,7 @@ Also, the time can be displayed in several ways - text, digital, analogue and bi
 
 Klock currently consists of over 10,000 lines of Lazarus [Free Pascal] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
+The program starts and finishes with a Splash Screen.  This is really needed if a number of fonts are used.  The starting of Klock lengthens with the number of fonts loaded.
 
 Fuzzy Time
 
@@ -94,7 +95,7 @@ The S represents Scroll Lock.
 The letter will be upper case if the key is activated, otherwise lower case.
 
 
-The application also contains a options screen [file / Options] which allows various options [over fifty] to be set.
+The application also contains a options screen [file / Options] which allows various options [over sixty] to be set.
 NB: If the option is checked to start on windows start up, it only operates for the current user.
 
 

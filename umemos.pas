@@ -40,6 +40,7 @@ type
     property MemosCount: integer read _MemosCount write _MemosCount;
 
     constructor Create; overload;
+    destructor Destroy; override;
     procedure new(key: string; data: string; hide: boolean);
     procedure amend(id:integer; data: string; hide: boolean);
     function retrieve(id: integer): Memo;
@@ -65,6 +66,14 @@ begin
   MemosStore := keyStore.Create;
   MemosStore.Sorted := true;
   MemosCount := 0;
+end;
+
+destructor Memos.Destroy;
+{  run on destroy.    }
+begin
+  MemosStore.free;
+
+  inherited;
 end;
 
 procedure Memos.new(key: string; data: string; hide: boolean);

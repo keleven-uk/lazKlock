@@ -5,16 +5,19 @@ unit formSplashScreen;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls;
 
 type
 
   { TfrmSplashScreen }
 
   TfrmSplashScreen = class(TForm)
-    lblSplashScreen: TLabel;
+    Image1: TImage;
     MemoSplashScreenInfo: TMemo;
     MemoSplashScreenData: TMemo;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+
   private
 
   end;
@@ -28,6 +31,14 @@ implementation
 
 { TfrmSplashScreen }
 
+
+
+
+procedure TfrmSplashScreen.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+  frmSplashScreen := nil;
+end;
 
 end.
 

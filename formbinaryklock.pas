@@ -62,7 +62,8 @@ type
     Shp01: TShape;
     Shp11: TShape;
     Shp21: TShape;
-    tmrBinartKlock: TTimer;
+    tmrBinaryKlock: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -72,7 +73,7 @@ type
     procedure MnItmBinaryClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
     procedure MnItmNewStickNoteClick(Sender: TObject);
-    procedure tmrBinartKlockTimer(Sender: TObject);
+    procedure tmrBinaryKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
     WindowDragTopLeft: TPoint;
@@ -102,7 +103,7 @@ uses
 
 { TfrmBinaryKlock }
 
-procedure TfrmBinaryKlock.tmrBinartKlockTimer(Sender: TObject);
+procedure TfrmBinaryKlock.tmrBinaryKlockTimer(Sender: TObject);
 {  Called on each timer tick.    }
 begin
   if MnItmBinary.Checked then
@@ -118,7 +119,15 @@ begin
   kLog.writeLog('FormBinaryKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
 
+  tmrBinaryKlock.Enabled := false;
+
   setShapes;
+end;
+
+procedure TfrmBinaryKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
+{  Stop timer on close, so not running when form not in use.    }
+begin
+  tmrBinaryKlock.Enabled := false;
 end;
 
 procedure TfrmBinaryKlock.FormDestroy(Sender: TObject);
@@ -133,9 +142,9 @@ begin
 
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
-
   frmMain.Visible := False;
-  tmrBinartKlock.Enabled := true;
+
+  tmrBinaryKlock.Enabled := true;         //  Start timer.
 
   if userOptions.BinaryFormat then
     MnItmBinary.Checked := true
@@ -279,7 +288,7 @@ begin
   frmMain.TrayIcon.Hide;
 
   frmMain.Visible := True;
-  tmrBinartKlock.Enabled := false;
+  tmrBinaryKlock.Enabled := false;
 
   if userOptions.BinaryScreenSave then
   begin

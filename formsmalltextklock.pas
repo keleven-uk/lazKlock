@@ -45,6 +45,7 @@ type
     Panel1: TPanel;
     popUpMenuSmallTextKlock: TPopupMenu;
     tmrSmallTextKlock: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -137,11 +138,19 @@ begin
 
   Application.AddOnUserInputHandler(@MouseHook);
 
+  tmrSmallTextKlock.Enabled := false;
+
   createlabels;
 
   lblSmallTextKlock.font.Name := 'hack';
   lblSmallTextKlock.Font.Color := ON_COLOUR;
   lblSmallTextKlock.Font.size := 12;
+end;
+
+procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+{  Stop timer on close, so not running when form not in use.    }
+begin
+  tmrSmallTextKlock.Enabled := false;
 end;
 
 procedure TfrmSmallTextKlock.FormDestroy(Sender: TObject);
@@ -156,6 +165,12 @@ var
 begin
   kLog.writeLog('formSmallTextKlock Klock Show');
 
+  frmMain.TrayIcon.Visible := True;
+  frmMain.TrayIcon.Show;
+  frmMain.Visible := False;
+
+  tmrSmallTextKlock.Enabled := true;         //  Start timer.
+
   {the color were going to make transparent the black that the form background is set to}
   transparency := clBlack;
 
@@ -165,12 +180,6 @@ begin
     SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 1)
   else
     SetTranslucent(frmSmallTextKlock.Handle, transparency, 0, 0);
-
-  frmMain.TrayIcon.Visible := True;
-  frmMain.TrayIcon.Show;
-  frmMain.Visible := False;
-
-  tmrSmallTextKlock.Enabled := true;
 
   if userOptions.smallTextScreenSave then
   begin

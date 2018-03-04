@@ -12,7 +12,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Windows, Messages, typinfo;
+  StdCtrls, Windows, Messages, typinfo, UKlockUtils;
 
 type
 
@@ -119,6 +119,8 @@ begin
   fontFiles.Free;
   fontTypes.Free;
   fontNames.Free;
+
+  inherited;
 end;
 
 function fontStore.getFont(fontIndex: Integer): string;
@@ -142,7 +144,7 @@ begin
         If AddFontResourceEx(PAnsiChar(fontFile), FR_Private, Nil) <> 0 then
           begin
             SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
-            kLog.writeLog('Adding ' + fontFile);
+            logMessage('Adding ' + fontFile);  //  Write to log file and splash screen.
           end;
 
     end;  // for
@@ -170,7 +172,7 @@ begin
        If RemoveFontResourceEx(PAnsiChar(fontFile), FR_Private, Nil) <> 0 then
         begin
           SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
-          kLog.writeLog('Removing ' + fontFile);
+          logMessage('Removing ' + fontFile);  //  Write to log file and splash screen.
         end;
 
     end;  // for

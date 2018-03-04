@@ -40,6 +40,7 @@ procedure SendMCICommand(command: string);
 procedure applyRunAtStartUp(flag: boolean);
 procedure playChime(mode: String);
 procedure logHeader;
+procedure logMessage(message: string);
 procedure logFooter;
 procedure logSplashFooter;
 function getUpTime(system: string): string;
@@ -504,29 +505,41 @@ begin
   kLog.writeLog('App Dir : ' + ExtractFilePath(Application.ExeName));
   kLog.writeLog('............................................................');
 
-  if frmSplashScreen.Active then
+  if (frmSplashScreen <> nil) then
   begin
-    frmSplashScreen.lblSplashScreen.Caption := 'Starting Klock';
-    frmSplashScreen.MemoSplashScreenData.Lines.Add(userOptions.InternalName);
-    frmSplashScreen.MemoSplashScreenData.Lines.Add('User : ' + SysUtils.GetEnvironmentVariable('USERNAME'));
-    frmSplashScreen.MemoSplashScreenData.Lines.Add('PC   : ' + SysUtils.GetEnvironmentVariable('COMPUTERNAME'));
-    frmSplashScreen.MemoSplashScreenData.Lines.Add('OS   : ' + getWindowsVersion);
-    frmSplashScreen.MemoSplashScreenData.Lines.Add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
-    frmSplashScreen.MemoSplashScreenData.Lines.Add('lazKlock Version :: %s', [userOptions.fileVersion]);
+    frmSplashScreen.MemoSplashScreenData.Lines.Append(userOptions.InternalName);
+    frmSplashScreen.MemoSplashScreenData.Lines.Append('User : ' + SysUtils.GetEnvironmentVariable('USERNAME'));
+    frmSplashScreen.MemoSplashScreenData.Lines.Append('PC   : ' + SysUtils.GetEnvironmentVariable('COMPUTERNAME'));
+    frmSplashScreen.MemoSplashScreenData.Lines.Append('OS   : ' + getWindowsVersion);
+    frmSplashScreen.MemoSplashScreenData.Lines.Append(format('lazKlock Build   :: %s', [userOptions.productVersion]));
+    frmSplashScreen.MemoSplashScreenData.Lines.Append(format('lazKlock Version :: %s', [userOptions.fileVersion]));
     {$ifdef WIN32}
-      frmSplashScreen.MemoSplashScreenData.Lines.Add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
+      frmSplashScreen.MemoSplashScreenData.Lines.Append(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
     {$else}
-      frmSplashScreen.MemoSplashScreenData.Lines.Add(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
+      frmSplashScreen.MemoSplashScreenData.Lines.Append(format('Built with 64 bit Lazarus Version :: %s', [lcl_version]));
     {$endif}
-    frmSplashScreen.MemoSplashScreenData.Lines.Add('App Dir : ' + ExtractFilePath(Application.ExeName));
+    frmSplashScreen.MemoSplashScreenData.Lines.Append('App Dir : ' + ExtractFilePath(Application.ExeName));
   end;
+end;
+
+procedure logMessage(message: string);
+{  Write a message to the log file and the splash file.
+   Should only really be used when the splash screen could be open i.e. when
+   the application is starting or finishing.  Was created when there was a fault
+   logging such messages when the fonts where being loaded and removed.
+}
+begin
+  klog.writeLog(message);
+  if (frmSplashScreen <> nil) then
+    frmSplashScreen.MemoSplashScreenInfo.Lines.Add(message);
 end;
 
 procedure logFooter;
 {  Write footer to log file.    }
 begin
   kLog.writeLog('..............................................................');
-  kLog.writeLog('Klock has been running for ' + getUpTime('Application'));
+  kLog.writeLog('System has been running for ' + getUpTime('System'));
+  kLog.writeLog('Klock has been running for  ' + getUpTime('Application'));
   kLog.writeLog('Klock Ending [normaly]');
   klog.writeLog('Bye');
   kLog.writeLog('..............................................................');
@@ -535,10 +548,10 @@ end;
 procedure logSplashFooter;
 {  Write footer to Splash Screen.    }
 begin
-  frmSplashScreen.lblSplashScreen.Caption := 'Closing Klock';
   frmSplashScreen.MemoSplashScreenData.Lines.Add(userOptions.InternalName);
   frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
-  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock has been running for ' + getUpTime('Application'));
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('System has been running for ' + getUpTime('System'));
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock has been running for  ' + getUpTime('Application'));
   frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock Closing Down [normaly]');
   frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
 end;

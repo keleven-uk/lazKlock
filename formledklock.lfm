@@ -13,6 +13,7 @@ object frmLEDKlock: TfrmLEDKlock
   Constraints.MinHeight = 60
   Constraints.MinWidth = 255
   KeyPreview = True
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

@@ -2908,13 +2908,17 @@ uklockutils.pas             |   3 +-
 
 Build 78 [2.2.5.78]
 
-I found the forms propertie FormStyle whch can be set to fsSystemStayOnTop.
+commit e60600bb8e49cd12188b62e8ccbb097fb92f549f
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Fri Mar 2 16:35:32 2018 +0000
+
+I found the forms properties FormStyle which can be set to fsSystemStayOnTop.
 Amended the five other Klock [Analogue Klock, LED Klock, Floating Text Klock, Binary Klock and Small Text Klock] to be able to stay on top, this can be either selected from each Klocks pop up menu or set in the user options.
 
 I think Floating text Klock in Gushing Meadow font in red with stay on top enabled looks cool.
 
 
-Added a plash screen to Klock [formSplashScreen].
+Added a splash screen to Klock [formSplashScreen].
 This is called when the program starts and closes.  The splash screen just echo entries being made to the log file.  This is useful if a few fonts are being loaded as this slows down both starting and closing Klock.
 
 Currently
@@ -2922,5 +2926,62 @@ Currently
 5976 statements
 15.7% comment
 
+fonts/Digital Play Hollow St.ttf | Bin 0 -> 93320 bytes
+fonts/Digital Play St.ttf        | Bin 0 -> 51792 bytes
+fonts/SFDigitalReadout-Heavy.ttf | Bin 0 -> 54508 bytes
+fonts/Triad.ttf                  | Bin 0 -> 58732 bytes
+fonts/Triad_xs.ttf               | Bin 0 -> 41320 bytes
+fonts/fontNames.txt              |   8 +-
+fonts/fontTypes.txt              |   8 +-
+fonts/signs language tfb.ttf     | Bin 0 -> 55000 bytes
+formKlock.pas                    |  13 +-
+formOptions.lfm                  |  59 ++--
+formOptions.pas                  |  21 +-
+formanalogueklock.lfm            | 276 ++++++++++---------
+formanalogueklock.pas            |  20 ++
+formbinaryklock.lfm              |  10 +-
+formbinaryklock.pas              |  20 ++
+formfloatingklock.lfm            | 581 ++++++++++++++++++++-------------------
+formfloatingklock.pas            |  57 +++-
+formledklock.lfm                 | 280 ++++++++++---------
+formledklock.pas                 |  20 ++
+formsmalltextklock.lfm           | 278 ++++++++++---------
+formsmalltextklock.pas           |  25 +-
+formsplashscreen.lfm             | 180 ++++++++++++
+formsplashscreen.pas             |  33 +++
+help/Klock.chm                   | Bin 3808810 -> 3810122 bytes
+help/Klock.pdf                   | Bin 6845223 -> 6857082 bytes
+help/html/About.html             |   2 +-
+help/html/Introduction.html      |   4 +-
+help/html/Klock.html             |   4 +-
+help/html/Options.html           |   2 +-
+help/html/OtherKlocks.html       |   4 +-
+help/html/Welcome.html           |   4 +-
+help/html/js/hndsd.min.js        |   2 +-
+help/klock.hnd                   | Bin 4792320 -> 4796416 bytes
+history.txt                      | 107 ++++++-
+icons/icons8-eye-32.png          | Bin 1229 -> 0 bytes
+klock.iss                        |   4 +-
+klock.lpi                        | 291 +++++++++-----------
+klock.lpr                        |  11 +-
+lazKlock.smproj                  | Bin 616549 -> 647701 bytes
+ufonts.pas                       |   2 -
+uklockutils.pas                  |  55 ++--
+ulogging.pas                     |   7 +
+uoptions.pas                     |  59 +++-
+43 files changed, 1497 insertions(+), 950 deletions(-)
 
+
+Build 79 [2.3.0.79]
+
+Started experiencing a system crash sometimes when Klock loaded.  I think this was caused by the logging unit writing to the splash screen,  Changed the way this was done - will monitor.  This seemed more pronounced in the 32 bit version.
+
+Tidied up some of the classes, introduced destructor routines to clear memory objects.
+
+Also, on the other Klocks, set timer enable to false on form create and form close and time enable to true on form show.
+
+Currently
+11040 lines of source code.
+6006 statements
+15.7% comment
 

@@ -53,6 +53,7 @@ type
     MnItmExit: TMenuItem;
     PopupMenu1: TPopupMenu;
     TmrFloatingText: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -121,6 +122,12 @@ begin
   frmFloatingKlock.Color := clBlack;
 end;
 
+procedure TfrmFloatingKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
+{  Stop timer on close, so not running when form not in use.    }
+begin
+  TmrFloatingText.Enabled := false;
+end;
+
 procedure TfrmFloatingKlock.FormDestroy(Sender: TObject);
 begin
   // To prevent possible system resource leaks
@@ -130,12 +137,12 @@ end;
 procedure TfrmFloatingKlock.FormShow(Sender: TObject);
 begin
   kLog.writeLog('formFloatingKlock Show');
+
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
-
   frmMain.Visible := False;
 
-  TmrFloatingText.Enabled := true;
+  TmrFloatingText.Enabled := true;         //  Start timer.
 
   if userOptions.floatingTextScreenSave then
   begin
@@ -211,7 +218,7 @@ begin
   width := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
-  //lblFloatingTime.AdjustFontForOptimalFill;
+  lblFloatingTime.AdjustFontForOptimalFill;
 end;
 
 function TfrmFloatingKlock.GetTextSize(AText: String; AFont: TFont): textSize;
