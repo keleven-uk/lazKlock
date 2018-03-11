@@ -123,7 +123,7 @@ type
     procedure SpnEdtMemoTimeOutChange(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
   private
-
+    procedure readLogFiles;
   public
 
   end;
@@ -160,7 +160,6 @@ procedure TfrmOptions.FormActivate(Sender: TObject);
    See ChckGrpGlobalOptionsItemClick for what the check Global group index means.
 }
 var
-  logFiles:TStringlist;
   optnFile: String;
 begin
   kLog.writeLog('FormOptions Activate');
@@ -201,6 +200,7 @@ begin
   ChckGrpTimeOptions.Checked[2] := userBacOptions.swatchCentibeats;
   ChckGrpTimeOptions.Checked[3] := userBacOptions.fuzzyTimeBalloon;
   ChckGrpTimeOptions.Checked[4] := userBacOptions.displayIdleTime;
+  ChckGrpTimeOptions.Checked[5] := userBacOptions.fuzzyTimeVerbose;
 
   ChckGrpHolidayFonts.Checked[0] := userBacOptions.christmasFont;
   ChckGrpHolidayFonts.Checked[1] := userBacOptions.easterFont;
@@ -249,13 +249,7 @@ begin
   lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
   btnCullLogs.Visible := ChckBxCullLogsFiles.Checked;
 
-  logFiles := TstringList.Create;             //  Scan for log files and load listbox.
-    try
-    kLog.readLogFile(logFiles);
-    LstBxLogFiles.Items.Assign(logFiles) ;
-  finally
-      freeandnil(logFiles);
-  end;
+  readLogFiles;             //  Scan for log files and load listbox.
 
   edtDefaultPassWord.Caption := userBacOptions.DefaultpassWord;
   ChckBxDefaultPassWord.Checked := userBacOptions.usedefaultpassWord;
@@ -345,6 +339,7 @@ index 0 - Display using 24 hour if true, else use 12 hour
       2 - SwatchTime to display Centibeats
       3 - Display Time in balloon
       4 - Display system idle time
+      5 - Verbose Fuzzy Time.
 }
 begin
   userBacOptions.display24Hour := ChckGrpTimeOptions.Checked[0];
@@ -352,6 +347,7 @@ begin
   userBacOptions.swatchCentibeats := ChckGrpTimeOptions.Checked[2];
   userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.Checked[3];
   userBacOptions.displayIdleTime := ChckGrpTimeOptions.Checked[4];
+  userBacOptions.fuzzyTimeVerbose:= ChckGrpTimeOptions.Checked[5];
 end;
 
 procedure TfrmOptions.ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
@@ -361,7 +357,7 @@ index 0 - Sound "The Pips on the Hour"
       1 - Hourly Chimes
       2 - Half hourly Chimes
       3 - Quarter hourly Chimes
-      4 - ThreeQuarter Hourly Chimes
+      4 - Three-quarter Hourly Chimes
 }
 begin
   userBacOptions.hourPips := ChckGrpTimeChimes.Checked[0];
@@ -382,7 +378,7 @@ procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integ
     Index 0 - 12 days of Christmas [before and after]
     Index 1 - Easter Holidays [week before and after]
     Index 2 - Valentines day [on that day only]
-    Index 3 - Haloween [on that day only]
+    Index 3 - Halloween [on that day only]
 }
 begin
   userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
@@ -486,7 +482,7 @@ end;
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Timer options according to the state of the radio group.
 
-   index 0 - Timer To Show MilliSeconds
+   index 0 - Timer To Show Milliseconds
 }
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
@@ -557,22 +553,29 @@ end;
 procedure TfrmOptions.btnCullLogsClick(Sender: TObject);
 {  If enabled [cull logs is checked], then delete all logs files over due.
 }
-var
-  logFiles:TStringlist;
 begin
   if userOptions.cullLogs then         //  Removed old log files, if instructed.
   begin
     kLog.cullLogFile(userOptions.CullLogsDays);
+    LstBxLogFiles.Items.Clear;
+    readLogFiles;
+  end;
+end;
 
-    logFiles := TstringList.Create;    //  Scan for log files and load listbox.
+procedure TfrmOptions.readLogFiles;
+{  Scan for log files and load listbox.    }
+var
+  logFiles:TStringlist;
+begin
+    logFiles := TstringList.Create;
     try
       kLog.readLogFile(logFiles);
       LstBxLogFiles.Items.Assign(logFiles) ;
     finally
       freeandnil(logFiles);
     end;
-  end;
 end;
+
 {........ Pannel Buttons ......................................................}
 
 procedure TfrmOptions.CancelButtonClick(Sender: TObject);
@@ -604,11 +607,11 @@ end;
 //...................................ARCHIVE ...................................
 //
 procedure TfrmOptions.btnSaveArchiveClick(Sender: TObject);
-{  Save all files that have been clicked in the lsitbox.
+{  Save all files that have been clicked in the listbox.
    The zip file name is taken from the save file edit box.
 
    If the fonts directory is checked, the fonts have to be removed
-   for archive, Klocvk has then locked.  The added again after archive.
+   for archive, Klock has then locked.  The added again after archive.
 }
 var
   f: integer;

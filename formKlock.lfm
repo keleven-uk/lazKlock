@@ -151,7 +151,7 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.2.0'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23

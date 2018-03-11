@@ -67,7 +67,7 @@ type
     _formLeft: integer;
     _defaultTab: integer;
     _volume:String;
-    _monitorClipboard: boolean;     //  Moinitor Clipboard i.e. Klock captures all clipboard activities.
+    _monitorClipboard: boolean;     //  Monitor Clipboard i.e. Klock captures all clipboard activities.
     _CB_ScreenSave: boolean;        //  do we save clipboard manager position or not.
     _CB_formTop: integer;           //  the clipboard manager top left.
     _CB_formLeft: integer;
@@ -80,7 +80,8 @@ type
     _swatchCentibeats: boolean;
     _fuzzyTimeBalloon: boolean;
     _displayIdleTime: boolean;
-    _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
+    _fuzzyTimeVerbose: boolean;     //  Use long version of Fuzzy Time.
+    _display24Hour: boolean;        //  Display time has 24 hour if true, else 12 hour.
     _hourPips: boolean;
     _hourChimes: boolean;
     _halfChimes: boolean;
@@ -191,6 +192,7 @@ type
     property swatchCentibeats: boolean read _swatchCentibeats write _swatchCentibeats;
     property fuzzyTimeBalloon: boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
     property displayIdleTime: boolean read _displayIdleTime write _displayIdleTime;
+    property fuzzyTimeVerbose: boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
     property display24Hour: boolean read _display24Hour write _display24Hour;
     property hourPips: boolean read _hourPips write _hourPips;
     property hourChimes: boolean read _hourChimes write _hourChimes;
@@ -408,6 +410,7 @@ begin
   swatchCentibeats := o.swatchCentibeats;
   fuzzyTimeBalloon := o.fuzzyTimeBalloon;
   displayIdleTime := o.displayIdleTime;
+  fuzzyTimeVerbose := o.fuzzyTimeVerbose;
   display24Hour := o.display24Hour;
   hourPips := o.hourPips;
   hourChimes := o.hourChimes;
@@ -576,6 +579,8 @@ begin
       if rtn <> 'ERROR' then fuzzyTimeBalloon := StrToBool(rtn);
       rtn := readChild(PassNode, 'displayIdleTime');
       if rtn <> 'ERROR' then displayIdleTime := StrToBool(rtn);
+      rtn := readChild(PassNode, 'fuzzyTimeVerbose');
+      if rtn <> 'ERROR' then fuzzyTimeVerbose := StrToBool(rtn);
       rtn := readChild(PassNode, 'display24Hour');
       if rtn <> 'ERROR' then display24Hour := StrToBool(rtn);
       rtn := readChild(PassNode, 'hourPips');
@@ -783,6 +788,7 @@ begin
   swatchCentibeats := true;
   fuzzyTimeBalloon := true;
   displayIdleTime := true;
+  fuzzyTimeVerbose := true;
   display24Hour := true;
   hourPips := false;
   hourChimes := false;
@@ -910,6 +916,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'swatchCentibeats', swatchCentibeats));
     ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeBalloon', fuzzyTimeBalloon));
     ElementNode.AppendChild(writeBolChild(doc, 'displayIdleTime', displayIdleTime));
+    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeVerbose', fuzzyTimeVerbose));
     ElementNode.AppendChild(writeBolChild(doc, 'display24Hour', display24Hour));
     ElementNode.AppendChild(writeBolChild(doc, 'hourPips', hourPips));
     ElementNode.AppendChild(writeBolChild(doc, 'hourChimes', hourChimes));

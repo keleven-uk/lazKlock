@@ -2731,10 +2731,10 @@ Added the following user options for Floating Text Klock.
   Screen Save, Form Top, Form Left, Font and use Klock Font.
   
 Added calling menu items if formKlock.
-Added speed buttons to the cointdown tab - so the countdown can be quickly
+Added speed buttons to the countdown tab - so the countdown can be quickly
 started with either 30, 60, 90 or 120 minutes.
 
-Added TPascalTZ to uFuzzyTime used for local and utc time, this will take into
+Added TPascalTZ to uFuzzyTime used for local and UTC time, this will take into
 account time zones.
 
 Currently
@@ -2798,7 +2798,7 @@ The defaults are for 10 Downing Street, London :-)
 Changed Julian time in uFuzzyTie to use the function from TZPaascal, instead of a calculation.
 
 Changed Easter date in uInfoUtils to use the function from TZPaascal, instead of a calculation.
-Aslo changed the moon stuff to use various function from Delphimoon instead of calculations.
+Also changed the moon stuff to use various function from Delphimoon instead of calculations.
 
 uKlockUtils also uses the function for Easter Sunday instead of a calling the one in uInfoUtils.
 
@@ -2974,6 +2974,10 @@ uoptions.pas                     |  59 +++-
 
 Build 79 [2.3.0.79]
 
+commit 2d09414002dea88a47a6eba4cb15e8fcc2a88a8b
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Mar 4 20:17:34 2018 +0000
+
 Started experiencing a system crash sometimes when Klock loaded.  I think this was caused by the logging unit writing to the splash screen,  Changed the way this was done - will monitor.  This seemed more pronounced in the 32 bit version.
 
 Tidied up some of the classes, introduced destructor routines to clear memory objects.
@@ -2984,4 +2988,53 @@ Currently
 11040 lines of source code.
 6006 statements
 15.7% comment
+
+README.md                   |   3 +-
+formanalogueklock.pas       |  44 +++----
+formbinaryklock.lfm         |   5 +-
+formbinaryklock.pas         |  21 +++-
+formfloatingklock.lfm       |   1 +
+formfloatingklock.pas       |  13 +-
+formledklock.lfm            |   1 +
+formledklock.pas            |  14 ++-
+formsmalltextklock.lfm      |   1 +
+formsmalltextklock.pas      |  21 +++-
+formsplashscreen.lfm        | 286 +++++++++++++++++++++++++++++++++++++++++---
+formsplashscreen.pas        |  15 ++-
+help/Klock.chm              | Bin 3810122 -> 3811656 bytes
+help/Klock.pdf              | Bin 6857082 -> 6858659 bytes
+help/html/About.html        |   3 +-
+help/html/History.html      |  39 ++++++
+help/html/Introduction.html |   4 +-
+help/html/Klock.html        |   4 +-
+help/html/Welcome.html      |   4 +-
+help/html/js/hndsd.min.js   |   2 +-
+help/klock.hnd              | Bin 4796416 -> 4784128 bytes
+history.txt                 |  65 +++++++++-
+klock.iss                   |   4 +-
+klock.lpi                   | 195 ++++++++++++++----------------
+lazKlock.smproj             | Bin 647701 -> 679299 bytes
+ufonts.pas                  |   8 +-
+ufuzzytime.pas              |   4 +-
+uklockutils.pas             |  41 ++++---
+ulogging.pas                |   3 -
+umemos.pas                  |   9 ++
+ustickynotes.pas            |   9 ++
+31 files changed, 616 insertions(+), 203 deletions(-)
+
+
+Build 80 [2.3.0.80]
+
+Noticed that there was a flicker when displaying Floating text Klock.  So, amended the update time thingy so it only updated the display when the text changed and not every second.  This makes a differance when displaying fuzzyTime that changes every five minutes.  Also made this change to the main Klock, to save resources.
+
+Added an option verbose to FuzzyTime so it could add "nearly" and "just gone" to the output.
+
+General code tidy up and correcting spelling errors.
+
+Merged master and V2.
+ 
+Currently
+11075 lines of source code.
+6036 statements
+15.9% comment
 

@@ -2,13 +2,13 @@ unit UFuzzyTime;
 
 {  Kevin Scott         January 2012
 
-   returns the time as a string, depending on the value of displayFuzzy.
+   Returns the time as a string, depending on the value of displayFuzzy.
 
    displayFuzzy set to True  :: getTime returns time as five past ten.
    displayFuzzy set to False :: getTime returns time as 10:05:00.
 
-   NB :: Bar Code Time, Semaphore Time, Nancy Blackett Time & Braille Time
-   are done by font substitution.
+   If fuzzyTimeVerbose is set to true, you get nearly five past ten.
+                                         or just gone five past ten.
 }
 
 {$mode objfpc}{$H+}
@@ -25,11 +25,10 @@ type
     _displayFuzzy: integer;
     _fuzzyBase: integer;
     _fuzzyTypes: TStringList;
-    _display24Hour: boolean;        //  Disply time has 24 hour if true, else 12 hour.
-    _filename: string;              //  filename of the log file
-    _dirname : string;              //  directory where the log file lives.
+    _fuzzyTimeVerbose: boolean;     //  Use long version of Fuzzy Time.
+    _display24Hour: boolean;        //  Display time has 24 hour if true, else 12 hour.
 
-    timeZone: TPascalTZ;            //  used for local and utc time, will take into
+    timeZone: TPascalTZ;            //  used for local and UTC time, will take into
                                     //  account time zones.
 
     // globally declare arrays, so can be used by more then one sub and also not re-created every call of the sub.
@@ -62,13 +61,11 @@ type
     function getMetricTime: string;
     function getBCDTime: string;
     function getBinaryTime: string;
-    procedure writeLog(message: string);
   public
-    property filename: string read _filename write _filename;
-    property dirname: string read _dirname write _dirname;
     property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
     property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
     property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
+    property fuzzyTimeVerbose: boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
     property display24Hour: boolean read _display24Hour write _display24Hour;
 
     constructor Create; overload;
@@ -85,12 +82,6 @@ uses
 constructor FuzzyTime.Create; overload;
 {  run on create.    }
 begin
-  dirname := GetAppConfigDir(False);
-  filename := dirname + 'fuzzytime_' + FormatDateTime('DDMMMYYYY', now) + '.log';
-
-  //writeLog('............................................................');
-  //writeLog('Log Created');
-
   fuzzyBase := 2;
 
   _fuzzyTypes := TStringList.Create;
@@ -103,7 +94,6 @@ begin
   timeZone.DatabasePath :='tzdata';
   timeZone.ParseDatabaseFromDirectory('tzdata');
 
-  //writeLog('End of Create');
  end;
 
 destructor FuzzyTime.Destroy;
@@ -113,29 +103,6 @@ begin
   timeZone.Free;
 
   inherited;
-end;
-
-procedure FuzzyTime.writeLog(message: string);
-{  write a text message to the log file.
-   The logfile is created when the class is created, it should exist.
-}
-VAR
-  logFile: TextFile;
-begin
-  AssignFile(logFile, filename);
-
-  try
-    if FileExists(filename) then
-      append(logFile)
-    else
-      rewrite(logFile);
-
-    writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + message);
-    CloseFile(LogFile);
-  except
-    on E: EInOutError do
-      ShowMessage('ERROR : Appending to Log File');
-  end;
 end;
 
 function FuzzyTime.fTime: string;
@@ -152,7 +119,6 @@ var
   sRtn: string;    //  return string
   dummy: string;    //  hour text
 begin
-  //writeLog('Start of fTime');
 
   DecodeTime(Time, hour, mins, secs, mscs);
 
@@ -164,29 +130,34 @@ begin
   nrms := mins - (mins mod 5);       //  gets nearest five mins
 
   if (mins mod 5) > 2 then           // closer to next five minutes, go next
-    nrms := nrms + 5;
+    begin
+      nrms := nrms + 5;
+      if fuzzyTimeVerbose then
+        sRtn := ' nearly ';
+    end
+  else
+    if fuzzyTimeVerbose then
+      sRtn := ' just gone ' ;
 
-  //writeLog('case of fTime');
+
   case nrms of
-    0: sRtn := '';
-    5: sRtn := 'five past ';
-    10: sRtn := 'ten past ';
-    15: sRtn := 'quarter past ';
-    20: sRtn := 'twenty past ';
-    25: sRtn := 'twenty-five past ';
-    30: sRtn := 'half past ';
-    35: sRtn := 'twenty-five to ';
-    40: sRtn := 'twenty to ';
-    45: sRtn := 'quarter to ';
-    50: sRtn := 'ten to ';
-    55: sRtn := 'five to ';
-    60: sRtn := '';
+    0: sRtn += '';
+    5: sRtn += 'five past ';
+    10: sRtn += 'ten past ';
+    15: sRtn += 'quarter past ';
+    20: sRtn += 'twenty past ';
+    25: sRtn += 'twenty-five past ';
+    30: sRtn += 'half past ';
+    35: sRtn += 'twenty-five to ';
+    40: sRtn += 'twenty to ';
+    45: sRtn += 'quarter to ';
+    50: sRtn += 'ten to ';
+    55: sRtn += 'five to ';
+    60: sRtn += '';
   end;
 
   if nrms > 30 then
     hour := hour + 1;
-
-  //writeLog(format('hour = %D nrms = %D',[hour, nrms]));
 
   if (hour = 12) and (nrms = 0) then   //  fix for noon.
     ampm := ' about noon'
@@ -204,8 +175,6 @@ begin
   end;
 
   dummy := hourTxt[hour];
-
-  //writeLog('End of fTime');
 
   Result := sRtn + dummy + ampm;
 end;
@@ -545,7 +514,7 @@ end;
 function FuzzyTime.getBCDTime: string;
 {  Returns current [local] time in Binary-Coded Decimal [base 2] format.
    This is only a binary representation of the current time.
-   If below 9, still return a two bcd string i.e first digit is 0.
+   If below 9, still return a two BCD string i.e first digit is 0.
 }
 var
   hrs: word;

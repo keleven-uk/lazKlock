@@ -1,14 +1,14 @@
 unit uInfoUtils;
-{  A Set of utilitoes to gather information to display.
+{  A Set of utilities to gather information to display.
 
    The daylisght saving stuff is based on this -
    http://www.delphiforfun.org/Programs/delphi_techniques/TimeZoneInfo.htm
 
-   The TStringList are create in this mudule because -
+   The TStringList are created in this module because -
 
-       This solves the promle of not being able to free the StringList and
+       This solves the problem of not being able to free the StringList and
        stop the memory leak.  Also stops the double creation of the stringList
-       which casues a sig fault.
+       which causes a sig fault.
 }
 
 
@@ -169,7 +169,7 @@ end;
 
 function getChineseDates(year: integer): TStringList;
 {  Returns the Lent dates for a given year.
-   lent start on Ash Wednesday, which is 46 days before Easter Sunday.
+   Lent start on Ash Wednesday, which is 46 days before Easter Sunday.
 }
 var
   chinese: TChineseDate;
@@ -243,10 +243,10 @@ begin
 end;
 
 function getMoonStuff: TStringList;
-{  Retuns Moon Info using DelphiMoon.
+{  Returns Moon Info using DelphiMoon.
    Works with UTC.
 
-   nb : timezone declared in formKlock.
+   NB : timezone declared in formKlock.
 }
 var
   moonDate: TDateTime;
@@ -295,10 +295,10 @@ begin
 end;
 
 function getSunStuff: TStringList;
-{  Retuns Moon Info using DelphiMoon.
+{  Returns Moon Info using DelphiMoon.
    Works with UTC.
 
-   nb : timezone declared in formKlock.
+   NB : timezone declared in formKlock.
 }
 var
   sunDate: TDateTime;
@@ -320,7 +320,6 @@ begin
                      Evening_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));
   result.add('');
   result.add(format('Distance of the sun = %.0n Km', [Sun_Distance(now) * 149597869]));
-
 
 end;
 

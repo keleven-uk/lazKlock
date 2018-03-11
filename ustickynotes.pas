@@ -184,9 +184,9 @@ begin
     fileIn.Free;
   end;        //  try
 
-  //  if Sticky Note Count is greater then 0 and the visibale count equals 0,
-  //  then we have a file full of prevously closed Sticky Notes.
-  //  So, we clear everythng and start again.
+  //  if Sticky Note Count is greater then 0 and the visible count equals 0,
+  //  then we have a file full of previously closed Sticky Notes.
+  //  So, we clear everything and start again.
   if (stickyNotesCount > 0)  and (visableCount = 0) then
   begin
     DeleteFile(stickyNotesFile);
@@ -199,7 +199,7 @@ end;
 procedure stickyNotes.updateStickyNotes;
 {  Called by the host program to save all visible Sticky Notes.
    All forms are scanned for forms that name start with STICKY.
-   The if they are visible, their data is updated in the store,
+   If they are visible, their data is updated in the store,
    if they are not visible [they have been closed] their visible
    is set to false.
 }
@@ -209,12 +209,30 @@ var
   s: string;
   m: TMemo;
 begin
+//  var
+//  i: integer;
+//  upFormClass: string;
+//begin
+//  result := nil;
+//  upformClass := UpperCase(formClass);
+//  for i := 0 to Screen.FormCount-1 do
+//  begin
+//    if UpperCase(Screen.Forms[i].ClassName) = upFormClass then
+//    begin
+//      result := Screen.Forms[i];
+//    end;
+// end;
+
+
   for f := 0 to stickyNotesCount -1 do
   begin
     if stickyNotesStore[f].visable then
     begin
       s := 'STICKY' + intToStr(f);
       sf := screen.FindForm(s);
+
+      if not assigned(sf) then
+        ShowMessage('ERROR : Sticky note form not found');
 
       if sf.Visible then
       begin

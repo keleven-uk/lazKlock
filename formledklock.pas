@@ -98,7 +98,7 @@ begin
 end;
 
 procedure TfrmLEDKlock.MouseHook(Sender: TObject; Msg: Cardinal);
-{  Implements a dragable window.  Because the control fills the complete window
+{  Implements a draggable window.  Because the control fills the complete window
    We cant just catch the forms mouse events - so we use a global hook and
    filter out just the mouse movements.
 }

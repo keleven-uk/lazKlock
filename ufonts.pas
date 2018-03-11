@@ -73,7 +73,7 @@ uses
 constructor fontStore.Create; overload;
 {  When the font class is created, populate all three string lists.
 
-      fontTypes - a list of the differnt font types.  This is a human friendly font
+      fontTypes - a list of the different font types.  This is a human friendly font
                   named that is used in the drop down menus within klock.  Loaded
                   from a text file within the font dir.
       fontFiles - a list of the different font files, scanned from the font directory.
@@ -111,6 +111,7 @@ begin
 
   findFontFiles;              //  Scan for font files.
   addFonts;                   //  Add fonts to system.
+  klog.writeLog('End of fonts.');
 end;
 
 destructor fontStore.Destroy;
@@ -148,6 +149,7 @@ begin
           end;
 
     end;  // for
+
   except
     on E: Exception do
     begin

@@ -76,6 +76,8 @@ type
 
 var
   frmFloatingKlock: TfrmFloatingKlock;
+  nowTime: string;
+  prvTime: string;
 
 implementation
 
@@ -155,10 +157,17 @@ begin
     FormStyle := fsSystemStayOnTop
   else
     FormStyle := fsNormal;
+
+  nowTime := ft.getTime;
+  prvTime := 'Klock';     //  so times are different first time
+
+  lblFloatingTime.Top := 4;
+  lblFloatingTime.Left := 4;
+  lblFloatingTime.AutoSize := true;
 end;
 
 procedure TfrmFloatingKlock.MouseHook(Sender: TObject; Msg: Cardinal);
-{  Implements a dragable window.  Because the control fills the complete window
+{  Implements a draggable window.  Because the control fills the complete window
    We cant just catch the forms mouse events - so we use a global hook and
    filter out just the mouse movements.
 }
@@ -193,14 +202,20 @@ end;
 
 procedure TfrmFloatingKlock.TmrFloatingTextTimer(Sender: TObject);
 {  Updates the time in the correct font.
-   The time details are taken from the the main Klock.
+   The time details are taken from the main Klock.
 
    The dimensions of the form are adjusted so that the text string will fit.
 }
 begin
-  lblFloatingTime.Top := 4;
-  lblFloatingTime.Left := 4;
-  lblFloatingTime.AutoSize := true;
+
+  nowTime := ft.getTime;      //  No need to update ever second in showing
+                              //  time in words or fuzzytime etc
+                              //  i.e. time changes every one or five minutes.
+
+  if nowTime = prvTime then   //  if times are the same, no need to do owt.
+    exit
+  else
+    prvTime := nowTime;
 
   if userOptions.floatingTextUseKlockFont then      //  if true use main form font
     lblFloatingTime.Font := frmMain.lblfuzzy.font
@@ -213,7 +228,7 @@ begin
      (lblFloatingTime.Font.Color = clBlack) then
     lblFloatingTime.Font.Color := clLime;
 
-  lblFloatingTime.Caption := ft.getTime;
+  lblFloatingTime.Caption := nowTime;
 
   width := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
@@ -279,7 +294,7 @@ begin
 end;
 
 procedure TfrmFloatingKlock.MnItmFontClick(Sender: TObject);
-{  Load the font dialog and save to user options if succesfull.    }
+{  Load the font dialog and save to user options if successful.    }
 begin
   if FontDialog1.Execute then
   begin

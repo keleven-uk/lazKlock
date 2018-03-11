@@ -12,12 +12,19 @@ uses
   uOptions, formAnalogueKlock, uFonts, ULogging, UformClipBoardUtils,
   formClipBoard, uInfoUtils, formInfo, formLEDKlock, formBinaryKlock,
   formSmallTextKlock, UConversion, ustickyNote, ustickyNotes, formStickyNote,
-  uMemo, uMemos, uArchiveUtils, formFloatingKlock, formSplashScreen;
+  uMemo, uMemos, uArchiveUtils, formFloatingKlock, formSplashScreen, SysUtils;
 
 {$R *.res}
 
 begin
   Application.Title:='lazKlock';
+
+  //{$IFDEF TEST}
+  //if FileExists('heap.trc') then
+  //  DeleteFile('heap.trc');
+  //GlobalSkipIfNoLeaks := true;
+  //SetHeapTraceOutput('heap.trc');
+  //{$endif}
 
   Application.Initialize;
   frmSplashScreen := TfrmSplashScreen.Create(nil);

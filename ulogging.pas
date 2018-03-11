@@ -25,8 +25,8 @@ type
     public
       property filename: string read _filename write _filename;
       property dirname: string read _dirname write _dirname;
-      constructor Create;
 
+      constructor Create;
       procedure writeLog(message: string);
       procedure readLogFile(logFiles:TStringlist);
       procedure cullLogFile(CullLogsDays: Integer);
@@ -34,14 +34,10 @@ type
 
 implementation
 
-uses
-  formSplashScreen;
-
-
 constructor Logger.Create;
 {  Creates the logger.
    A new logfile is created each day.
-   If the logfile alreads does not exist then create else append.
+   If the logfile does not exist then create else append.
 
    GetAppConfigDir(False) -> c:\Users\<user>\AppData\Local\<app Name>\
    GetAppConfigDir(True)  -> c:\ProgramData\<app Name>\
@@ -52,16 +48,19 @@ begin
   dirname := GetAppConfigDir(False);
   filename := dirname + 'klog_' + FormatDateTime('DDMMMYYYY', now) + '.log';
 
-  AssignFile(logFile, filename);
-
   try
-    if FileExists(filename) then
-      append(logFile)
-    else
-      rewrite(logFile);
+    AssignFile(logFile, filename);
+    try
+      if FileExists(filename) then
+            append(logFile)
+          else
+            rewrite(logFile);
 
-    writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + 'Log Created');
-    CloseFile(LogFile);
+          writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + 'Log Created');
+    finally
+      CloseFile(LogFile);
+    end;
+
   except
     on E: EInOutError do
       ShowMessage('ERROR : Creating Log File');
@@ -75,16 +74,20 @@ procedure Logger.writeLog(message: string);
 VAR
   logFile: TextFile;
 begin
-  AssignFile(logFile, filename);
-
   try
-    if FileExists(filename) then
+    AssignFile(logFile, filename);
+    try
+      if FileExists(filename) then
       append(logFile)
     else
       rewrite(logFile);
 
     writeLn(LogFile, FormatDateTime('DDMMMYYYY hhnnss : ', now) + message);
-    CloseFile(LogFile);
+
+    finally
+      CloseFile(LogFile);
+    end;
+
   except
     on E: EInOutError do
       ShowMessage('ERROR : Appending to Log File');
@@ -106,26 +109,29 @@ var
   logAge:longInt;
 begin
   logFiles := TstringList.Create;
-  FindAllFiles(logFiles, GetAppConfigDir(False), '*.log', True);
 
-  for logFile in logFiles do
-    begin
-      logDate := FileDateTodateTime(FileAgeUTF8(logFile));
-      logAge := DaysBetween(Now, logDate);
+  try
+    readLogFile(logFiles);       //  read in all log files.
+    for logFile in logFiles do
+        begin
+          logDate := FileDateTodateTime(FileAgeUTF8(logFile));
+          logAge := DaysBetween(Now, logDate);
 
-      if logAge > CullLogsDays then
-      begin
-        deleteToRycycle(logFile);
-        writeLog(format('Deleting %S with age %D  %S', [logfile, logAge, FormatDateTime('DD MMM YYYY', logDate)]));
-      end;
+          if logAge > CullLogsDays then
+          begin
+            deleteToRycycle(logFile);
+            writeLog(format('Deleting %S with age %D  %S', [logfile, logAge, FormatDateTime('DD MMM YYYY', logDate)]));
+          end;
 
-    end;
+        end;  //  for logFile in logFiles do
+  finally
+    freeandnil(logFiles);
+  end;
 
-  freeandnil(logFiles);
 end;
 
 procedure Logger.deleteToRycycle(aFile: string);
-{  Delets files to the Rycycle bin.
+{  Deletes files to the Recycle bin.
     Thanks to Lush - http://forum.lazarus-ide.org/index.php?topic=12288.0
 
     FOF_ALLOWUNDO -> moves file to the bin.
@@ -137,7 +143,6 @@ procedure Logger.deleteToRycycle(aFile: string);
 
 var
   fileOpStruct: TSHFileOpStruct;
-
 begin
   with fileOpStruct do
   begin

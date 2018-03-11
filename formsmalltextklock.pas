@@ -224,7 +224,7 @@ begin
 end;
 
 procedure TfrmSmallTextKlock.MouseHook(Sender: TObject; Msg: Cardinal);
-{  Implements a dragable window.  Because the control fills the complete window
+{  Implements a draggable window.  Because the control fills the complete window
    We cant just catch the forms mouse events - so we use a global hook and
    filter out just the mouse movements.
 }
@@ -387,7 +387,7 @@ begin
     end;
     5:
     begin
-      setTWENTYFIVE;              //  Use the uper five for minutes.
+      setTWENTYFIVE;              //  Use the upper five for minutes.
       setPAST
     end;
     10:
@@ -439,7 +439,7 @@ begin
     end;
     55:
     begin
-      setTWENTYFIVE;              //  Use the uper five for minutes.
+      setTWENTYFIVE;              //  Use the upper five for minutes.
       setTO
     end;
     60:
@@ -451,7 +451,7 @@ begin
 
                           //  handle the Hours.
 
-  if nrms >30 then        //  ater half past, so increment hour.
+  if nrms >30 then        //  after half past, so increment hour.
     hour += 1;
 
    //   if the hour is 0 or 24 and no minutes - it must be midnight.

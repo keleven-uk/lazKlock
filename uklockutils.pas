@@ -274,7 +274,7 @@ end;
 
 procedure displayHelp(chm: string; topic: string);
 {  called to display a chm help file, this is passed to hh.exe.
-   I would use lhelp.exe which comes with lazarus, but sees buggy.
+   I would use lhelp.exe which comes with Lazarus, but seems buggy.
 }
 begin
   If FileExists(chm) Then
@@ -724,9 +724,9 @@ begin
 end;
 
 function decrypt(s: string; pwd: string): string;
-{  Dencrypts a stings using a pasword pwd.
-   the string must of been encypted with the same password using the above
-   encypt function.
+{  Decrypts a stings using a password pwd.
+   The string must of been encrypted with the same password using the above
+   encrypt function.
 }
 var
   Crypt: TDCP_rijndael;

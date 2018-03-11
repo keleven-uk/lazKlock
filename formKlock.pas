@@ -315,7 +315,7 @@ type
     procedure readReminderFile;
     procedure UpdateStatusBar(KTime: TDateTime);
     procedure UpdateTime;
-    procedure UpdateWorldKlock;
+    procedure UpdateWorldKlock(KTime: TDateTime);
     procedure setMemoButtons(mode: Boolean);
     procedure displayMemo(pos: integer);
     procedure displayEncryptedMemo;
@@ -333,11 +333,11 @@ var
   userOptions: Options;         //  used to hold all the user options.
   ft: FuzzyTime;                //  the object to give the different times.
   fs: fontStore;                //  used to handle custom fonts i.e. load & remove
-  kLog: Logger;                 //  used to log erors, debug statements etc.
+  kLog: Logger;                 //  used to log errors, debug statements etc.
   stickies: stickyNotes;        //  used to store the Sticky Notes.
   memorandum: Memos;            //  used to store memos.
   timeZone: TPascalTZ;          //  used for world klock time zones.
-  ConversionUnits: TStrings;    //  used to hold the converions units - read from file.
+  ConversionUnits: TStrings;    //  used to hold the conversions units - read from file.
   unitConvertVal: double;       //  used to hold the conversion value.
   unitConvertfactor: double;    //  used to hold the conversion factor.
   appStartTime: int64;          //  used by formAbout to determine how long the app has been running.
@@ -348,6 +348,8 @@ var
   popupTitle: array [0..3] of string;
   noReminder: integer;
   tick: integer = 0;
+  nowTime: string;
+  prvTime: string;
 
 implementation
 
@@ -418,16 +420,12 @@ procedure TfrmMain.FormShow(Sender: TObject);
 begin
   kLog.writeLog('FormKlock Showing');
 
-  DtEdtEvent.Date := now;
-  SpnEdtMins.Value := MinuteOf(time);
-  SpnEdtHour.Value := HourOf(time);
-  btnEventSet.Enabled := False;
-
-  SpnEdtTimeBase.Visible := False;
-  lblRadix.Visible := False;
   SetDefaults;
-  setMemoButtons(false);
+
   mainTimer.Enabled := True;        //  Now safe to enable main timer.
+
+  nowTime := ft.getTime;
+  prvTime := 'Klock';               //  so times are different first time
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -493,10 +491,21 @@ begin
   CmbBxName.Items := fs.fontTypes;                       //  set up font combo box.
   CmbBxName.ItemIndex := 0;
 
-  CmbBxTZFonts.Items := fs.fontTypes;                       //  set up font combo box.
+  CmbBxTZFonts.Items := fs.fontTypes;                    //  set up font combo box.
   CmbBxTZFonts.ItemIndex := 0;
 
+  DtEdtEvent.Date := now;                                //  set up reminder stuff.
+  SpnEdtMins.Value := MinuteOf(time);
+  SpnEdtHour.Value := HourOf(time);
+  btnEventSet.Enabled := False;
+
+  SpnEdtTimeBase.Visible := False;
+  lblRadix.Visible := False;
+
+  setMemoButtons(false);                                 //  set up memo buttons.
+
   ft.displayFuzzy := userOptions.defaultTime;
+  ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
   ft.display24Hour:= userOptions.display24Hour;
   ft.fuzzyBase := 2;
 
@@ -510,6 +519,16 @@ begin
     mainTimer.Interval := 1
   else
     mainTimer.Interval := 1000;
+
+  lblfuzzy.Top := 8;                //  defaults for fuzzy time label.
+  lblfuzzy.Left := 4;
+  lblfuzzy.Font.Size := 22;
+  lblfuzzy.AutoSize := true;
+
+  lblTZTime.Top := 8;               //  defaults for world klock time label.
+  lblTZTime.Left := 4;
+  lblTZTime.Font.Size := 22;
+  lblTZTime.AutoSize := true;
 
   klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
 end;
@@ -664,11 +683,9 @@ procedure TfrmMain.mainTimerTimer(Sender: TObject);
 }
 var
   myNow: TdateTime;
-  mySecs: integer;
   strTime: string;
 begin
   myNow := now;
-  mySecs := SecondOfTheDay(myNow);
 
   if isTime(myNow, 0) then             //  Every hour, update Sticky Notes file.
     stickies.updateStickyNotes;
@@ -690,7 +707,7 @@ begin
 
      if userOptions.fuzzyTimeBalloon then
      begin
-       if (mySecs mod 300 = 0) then
+       if isTime(myNow, 5) then
        begin  //  only display on the five minutes.
          TrayIcon.BalloonHint := strTime;
          trayIcon.ShowBalloonHint;
@@ -710,7 +727,7 @@ begin
      if PageControl1.TabIndex = 0 then        //  Display FuzzyTime.
        UpdateTime;
      if PageControl1.TabIndex = 1 then        //  Display World Klock.
-       UpdateWorldKlock;
+       UpdateWorldKlock(myNow);
 
      UpdateStatusBar(myNow);
    end;  //  if TrayIcon.Visible then
@@ -720,10 +737,15 @@ end;
 procedure TfrmMain.UpdateTime;
 {  Updates the time in the correct font.    }
 begin
-  lblfuzzy.Top := 8;
-  lblfuzzy.Left := 4;
-  lblfuzzy.Font.Size := 22;
-  lblfuzzy.AutoSize := true;
+  nowTime := ft.getTime;      //  No need to update ever secind in showing
+                              //  time in words or fuzzytime etc
+                              //  i.e. time changes every one or five minutes.
+
+  if nowTime = prvTime then   //  if times are the same, no need to do owt.
+    exit
+  else
+    prvTime := nowTime;
+
   lblfuzzy.Caption := ft.getTime;
   lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
 
@@ -739,19 +761,14 @@ begin
   lblfuzzy.AdjustFontForOptimalFill;
 end;
 
-procedure TfrmMain.UpdateWorldKlock;
+procedure TfrmMain.UpdateWorldKlock(KTime: TDateTime);
 {  Updates the World Klock time in the correct font.    }
 var
   DateTime: TDateTime;
   s: string;
 begin
-  lblTZTime.Top := 8;
-  lblTZTime.Left := 4;
-  lblTZTime.Font.Size := 22;
-  lblTZTime.AutoSize := true;
-
   s := CmbBxTimeZones.Items[CmbBxTimeZones.ItemIndex];
-  DateTime := timeZone.GMTToLocalTime(now, s);
+  DateTime := timeZone.GMTToLocalTime(KTime, s);
   lblTZTime.Caption := DateTimeToStr(DateTime);
   lblTZTime.Font.Name := fs.getFont(CmbBxTZFonts.ItemIndex);
 
@@ -1858,7 +1875,7 @@ begin
 end;
 
 procedure TfrmMain.displayEncryptedMemo;
-{  Dispaly an encrypted memo - used by edite and decypt.    }
+{  Display an encrypted memo - used by edit and decrypt.    }
 var
   m: Memo;                   //  Memo.
   passWord: string;
@@ -2211,7 +2228,7 @@ begin
 
   frmMain.Visible := True;
 
-  KillOtherKlocks;    //  if made visable from the tray, kill any other klocks that are visable.
+  KillOtherKlocks;    //  if made visible from the tray, kill any other klocks that are visible.
 
   if ppMnItmTime.Checked then
     ppMnItmTime.Checked := False;
