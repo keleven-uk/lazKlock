@@ -90,8 +90,8 @@ end;
 
 procedure readConversionUnitsFile;
 {  Loads the data file units.txt, which contains the data for the conversions
-   The file is loaded in to a global string list, this improves performance later on.
-   So this is only carried out when the conversion tab is chosen,#
+   The file is loaded into a global string list, this improves performance later on.
+   So this is only carried out when the conversion tab is chosen.
 
    i.e.
    Category, Weight
@@ -126,7 +126,7 @@ begin
   line := TStringArray.create;
 
   if mode = 'LoadUnits' then
-    frmMain.CmbBxConvertTo.Items.Clear;  //  Clear convert to - in case or reload.
+    frmMain.CmbBxConvertTo.Items.Clear;  //  Clear convert to - in case of reload.
 
   for f := 0 to ConversionUnits.Count - 1 do
   begin

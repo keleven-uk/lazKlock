@@ -119,7 +119,7 @@ object frmAbout: TfrmAbout
   }
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 8
     Height = 336
@@ -158,7 +158,7 @@ object frmAbout: TfrmAbout
       Height = 17
       Top = 96
       Width = 159
-      Caption = 'Kevin Scott  (c) 2012 - 2017'
+      Caption = 'Kevin Scott  (c) 2012 - 2018'
       Font.Height = -13
       ParentColor = False
       ParentFont = False

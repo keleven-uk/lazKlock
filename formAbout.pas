@@ -80,6 +80,7 @@ begin
   tmrUpTime.Enabled := True;
   lblAppUpTime.Caption := getUpTime('Application');
   lblSysUpTime.Caption := getUpTime('System');
+  lblProgrammer.Caption := userOptions.legalCopyright;
 
   dskFree := FloatToStrF(DiskFree(0) / 1073741824, ffFixed, 3, 2);
   dskSize := FloatToStrF(DiskSize(0) / 1073741824, ffFixed, 3, 2);
@@ -88,6 +89,7 @@ begin
   lstBxInfo.Items.add('');
   lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
   lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
+  lstBxInfo.Items.add(format('lazKlock Built :: %s', [FormatDateTime('DD/MMM/YYYY hh:nn:ss : ', now)]));
   {$ifdef WIN32}
     lstBxInfo.Items.add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
   {$else}

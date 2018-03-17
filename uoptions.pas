@@ -71,6 +71,12 @@ type
     _CB_ScreenSave: boolean;        //  do we save clipboard manager position or not.
     _CB_formTop: integer;           //  the clipboard manager top left.
     _CB_formLeft: integer;
+
+    _keepMonitorAwake: boolean;     //  do we stop the monitors going to sleep.
+    _keepMonitorAwakeF15: boolean;      //  by pressing F15.
+    _keepMonitorAwakeJiggle: boolean;   //  by jiggling the mouse.
+    _keepMonitorAwakeMinutes: Integer;  //  every n minutes.
+
     _Latitude: double;
     _Longitude: double;
 
@@ -183,6 +189,12 @@ type
     property CB_ScreenSave: boolean read _CB_ScreenSave write _CB_ScreenSave;
     property CB_formTop: integer read _CB_formTop write _CB_formTop;
     property CB_formLeft: integer read _CB_formLeft write _CB_formLeft;
+
+    property keepMonitorAwake: boolean read _keepMonitorAwake write _keepMonitorAwake;
+    property keepMonitorAwakeF15: boolean read _keepMonitorAwakeF15 write _keepMonitorAwakeF15;
+    property keepMonitorAwakeJiggle: boolean read _keepMonitorAwakeJiggle write _keepMonitorAwakeJiggle;
+    property keepMonitorAwakeMinutes: integer read _keepMonitorAwakeMinutes write _keepMonitorAwakeMinutes;
+
     property Latitude: double read _Latitude write _Latitude;
     property Longitude: double read _Longitude write _Longitude;
 
@@ -401,6 +413,12 @@ begin
   CB_screenSave := o.CB_screenSave;
   CB_formTop := o.CB_formTop;
   CB_formLeft := o.CB_formLeft;
+
+  keepMonitorAwake := o.keepMonitorAwake;
+  keepMonitorAwakeF15 := o.keepMonitorAwakeF15;
+  keepMonitorAwakeJiggle := o.keepMonitorAwakeJiggle;
+  keepMonitorAwakeMinutes := o.keepMonitorAwakeMinutes;
+
   Latitude := o.Latitude;
   Longitude := o.Longitude;
 
@@ -563,6 +581,17 @@ begin
       rtn := readChild(PassNode, 'Longitude');
       if rtn <> 'ERROR' then Longitude := StrToFloat(rtn);
     end;
+
+    //  keep Monitor Awake
+
+    rtn := readChild(PassNode, 'keepMonitorAwake');
+    if rtn <> 'ERROR' then keepMonitorAwake := StrToBool(rtn);
+    rtn := readChild(PassNode, '_keepMonitorAwakeF15');
+    if rtn <> 'ERROR' then _keepMonitorAwakeF15 := StrToBool(rtn);
+    rtn := readChild(PassNode, '_keepMonitorAwakeJiggle');
+    if rtn <> 'ERROR' then _keepMonitorAwakeJiggle := StrToBool(rtn);
+    rtn := readChild(PassNode, 'keepMonitorAwakeMinutes');
+    if rtn <> 'ERROR' then keepMonitorAwakeMinutes := StrToInt(rtn);
 
     //  Time
     PassNode := Doc.DocumentElement.FindNode('Time');
@@ -779,8 +808,15 @@ begin
   CB_screenSave := True;
   CB_formTop := 0;              //  the clipboard manager top left.
   CB_formLeft := 0;
+
   Latitude := 51.5033640;
   Longitude := -0.1276250;
+
+  //  keep Monitor Awake
+  keepMonitorAwake := false;
+  keepMonitorAwakeF15 := true;
+  keepMonitorAwakeJiggle := false;
+  keepMonitorAwakeMinutes := 10;
 
   //  Time
   defaultTime := 0;
@@ -905,6 +941,16 @@ begin
 
     ElementNode.AppendChild(writeFloatChild(doc, 'Latitude', Latitude));
     ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));
+
+    RootNode.AppendChild(ElementNode);
+
+     //  keep Monitor Awake
+    ElementNode := Doc.CreateElement('keepMonitorAwake');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwake', keepMonitorAwake));
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeF15', keepMonitorAwakeF15));
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeJiggle', keepMonitorAwakeJiggle));
+    ElementNode.AppendChild(writeIntChild(doc, 'keepMonitorAwakeMinutes', keepMonitorAwakeMinutes));
 
     RootNode.AppendChild(ElementNode);
 

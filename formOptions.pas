@@ -51,19 +51,23 @@ type
     ChckBxDefaultPassWord: TCheckBox;
     ChckLstBxArchive: TCheckListBox;
     ChckGrpFloatingTextKlock: TCheckGroup;
+    ChckBxKeepMonitorAwake: TCheckBox;
+    ChckBxUseF15: TCheckBox;
+    ChckBxJiggleMouse: TCheckBox;
     CmbBxDefaulTtab: TComboBox;
     CmbBxDefaultTime: TComboBox;
     AcrdnOptions: TECAccordion;
     clrBtnStickyNoteColour: TColorButton;
     ColorDialog1: TColorDialog;
+    EdtDefaultPassWord: TEdit;
     edtLatitude: TEdit;
     edtLongitude: TEdit;
-    EdtDefaultPassWord: TEdit;
     FlNmEdtLoadArchiveName: TFileNameEdit;
     FlNmEdtSaveArchiveName: TFileNameEdit;
     FontDialog1: TFontDialog;
     GroupBox1: TGroupBox;
     GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -74,15 +78,18 @@ type
     GroupBox9: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
-    lblLongitude: TLabel;
-    lblLatitude: TLabel;
+    lblCheckEvery: TLabel;
+    lblMinutes: TLabel;
     lblFloatingTextKlockFont: TLabel;
+    lblLatitude: TLabel;
+    lblLongitude: TLabel;
     LblStickyNoteColour: TLabel;
     lblCullFileDays: TLabel;
     lblSettingsFileName: TLabel;
     Label3: TLabel;
     LstBxLogFiles: TListBox;
     Settings: TGroupBox;
+    SpnEdtMonitorMinites: TSpinEdit;
     SpnEdtMemoTimeOut: TSpinEdit;
     SpnEdtCullDays: TSpinEdit;
     lblStickyNoteFont: TStaticText;
@@ -96,7 +103,10 @@ type
     procedure btrOptionsResetClick(Sender: TObject);
     procedure ChckBxCullLogsFilesChange(Sender: TObject);
     procedure ChckBxDefaultPassWordChange(Sender: TObject);
+    procedure ChckBxJiggleMouseChange(Sender: TObject);
+    procedure ChckBxKeepMonitorAwakeChange(Sender: TObject);
     procedure ChckBxLoggingChange(Sender: TObject);
+    procedure ChckBxUseF15Change(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: integer);
@@ -121,9 +131,11 @@ type
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
     procedure SpnEdtMemoTimeOutChange(Sender: TObject);
+    procedure SpnEdtMonitorMinitesChange(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
   private
     procedure readLogFiles;
+    procedure setKeepMonitorAwake;
   public
 
   end;
@@ -194,6 +206,12 @@ begin
   ChckGrpGlobalOptions.Checked[1] := userBacOptions.runAtStartUp;
   ChckGrpGlobalOptions.Checked[2] := userBacOptions.monitorClipboard;
   ChckGrpGlobalOptions.Checked[3] := userBacOptions.CB_ScreenSave;
+
+  ChckBxKeepMonitorAwake.Checked := userBacOptions.keepMonitorAwake;
+  chckBxUseF15.Checked := userBacOptions.keepMonitorAwakeF15;
+  ChckBxJiggleMouse.Checked := userBacOptions.keepMonitorAwakeJiggle;
+  SpnEdtMonitorMinites.Value := userBacOptions.keepMonitorAwakeMinutes;
+  setKeepMonitorAwake;
 
   ChckGrpTimeOptions.Checked[0] := userBacOptions.display24Hour;
   ChckGrpTimeOptions.Checked[1] := userBacOptions.netTimeSeconds;
@@ -294,7 +312,7 @@ procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: inte
    index 0 - Save Screen Position.
    index 1 - Run Klock on start up - HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\run
    index 2 - Monitor Clipboard.
-   index 4 - Save Screen Position [Clipboard Monitor].
+   index 3 - Save Screen Position [Clipboard Monitor].
 }
 begin
   userBacOptions.screenSave := ChckGrpGlobalOptions.Checked[0];
@@ -320,13 +338,51 @@ end;
 procedure TfrmOptions.edtLatitudeChange(Sender: TObject);
 {  Save edited latitude.    }
 begin
-  userOptions.Latitude := StrToFloat(edtLatitude.Caption);
+  userBacOptions.Latitude := StrToFloat(edtLatitude.Caption);
 end;
 
 procedure TfrmOptions.edtLongitudeChange(Sender: TObject);
 {  Save edited Longitude.    }
 begin
-  userOptions.Latitude := StrToFloat(edtLongitude.Caption);
+  userBacOptions.Latitude := StrToFloat(edtLongitude.Caption);
+end;
+
+procedure TfrmOptions.ChckBxKeepMonitorAwakeChange(Sender: TObject);
+{  Enable Keep Monitor Awake.    }
+begin
+  userBacOptions.keepMonitorAwake := ChckBxKeepMonitorAwake.Checked;
+
+  setKeepMonitorAwake;
+end;
+
+procedure TfrmOptions.ChckBxUseF15Change(Sender: TObject);
+{  Use simulate pressing F15 to keep monitor awake.    }
+begin
+  userBacOptions.keepMonitorAwakeF15 := chckBxUseF15.Checked;
+  ChckBxJiggleMouse.Checked := not chckBxUseF15.Checked;
+end;
+
+procedure TfrmOptions.ChckBxJiggleMouseChange(Sender: TObject);
+{  Use mouse movements to keep monitor awake.    }
+begin
+  userBacOptions.keepMonitorAwakeJiggle := ChckBxJiggleMouse.Checked;
+  chckBxUseF15.Checked := not ChckBxJiggleMouse.Checked;
+end;
+
+procedure TfrmOptions.SpnEdtMonitorMinitesChange(Sender: TObject);
+{  Set the time intewrval for the keep monitor awake routine.    }
+begin
+  userBacOptions.keepMonitorAwakeMinutes := SpnEdtMonitorMinites.Value;
+end;
+
+procedure TfrmOptions.setKeepMonitorAwake;
+{  if Keep Monitor Awake is use then enable options, if not disable.    }
+begin
+  ChckBxUseF15.Enabled := ChckBxKeepMonitorAwake.Checked;
+  ChckBxJiggleMouse.Enabled := ChckBxKeepMonitorAwake.Checked;
+  lblCheckEvery.Enabled := ChckBxKeepMonitorAwake.Checked;
+  SpnEdtMonitorMinites.Enabled := ChckBxKeepMonitorAwake.Checked;
+  lblMinutes.Enabled := ChckBxKeepMonitorAwake.Checked;
 end;
 //
 //.....................................TIME ....................................

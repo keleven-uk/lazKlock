@@ -205,7 +205,7 @@ begin
     StsBrClipBoard.Panels.Items[2].Text := keyResult;
 
     if userOptions.displayIdleTime then
-      StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
+      StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
     else
       StsBrClipBoard.Panels.Items[3].Text := '';
 end;

@@ -9,7 +9,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
-  formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon;
+  formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon,
+  MouseAndKeyInput, LCLType;
 
 type                    //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -30,7 +31,6 @@ function FontToString(f: TFont): string;
 function StringToFont(s: string): TFont;
 function getTextFont(f1: TFont; f2: TFont): TFont;
 function parseReminder(a: string): reminderData;
-function isTime(myNow: TdateTime; mins: integer): Boolean;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string; args: string);
@@ -45,6 +45,8 @@ procedure logFooter;
 procedure logSplashFooter;
 function getUpTime(system: string): string;
 function getWindowsVersion: string;
+function everyMinute(myNow: TdateTime; mins: integer): Boolean;
+function isMinute(myNow: TdateTime; mins: integer): Boolean;
 function isChristmas: Boolean;
 function isEaster: Boolean;
 function isValentines: Boolean;
@@ -52,11 +54,16 @@ function isHalloween: Boolean;
 procedure KillOtherKlocks;
 function encrypt(s: string; pwd: string): string;
 function decrypt(s: string; pwd: string): string;
+procedure pressF15;
+procedure jiggleMouse;
+procedure keepMonitorAwake;
+
 
 implementation
 
 uses
   formklock, formSplashScreen;
+
 
 function FontToString(f: TFont): string;
 {  Produces a string representation of a given font.
@@ -390,7 +397,6 @@ begin
   Delete(a, 1, p);
   rmndrData.active := StrToBool(active);
 
-
   y := YearOf(Now);                                  //  check if reminder passed
   if MonthOf(rmndrData.orDate) < MonthOf(Now) then   //  for this year, if it has
     y += 1;                                          //  then increment year.
@@ -455,13 +461,26 @@ begin
 
 end;
 
-function isTime(myNow: TdateTime; mins: integer): Boolean;
-{  Returns true if the time is at the hour.    }
+function isMinute(myNow: TdateTime; mins: integer): Boolean;
+{  Returns true if the current minutes match the supplied minutes.
+   i.e. true n minutes past the hour.
+}
 Var
   hour, minute, second,  millisecond: word;
 begin
   DecodeTime(myNow, hour, minute, second, millisecond);
   result := (minute = mins) and (second = 0);
+end;
+
+function everyMinute(myNow: TdateTime; mins: integer): Boolean;
+{  Returns true if the current minutes is a multiple of the supplied minute.
+   i.e. true every n minutes.
+}
+Var
+  hour, minute, second,  millisecond: word;
+begin
+  DecodeTime(myNow, hour, minute, second, millisecond);
+  result := (minute mod mins = 0) and (second = 0);
 end;
 
 procedure playChime(mode: String);
@@ -602,6 +621,7 @@ function getWindowsVersion: string;
 VAR
   AProcess: TProcess;
   winVer: TStringList;
+  tmpWinVer: string;
   tmpFileName: string;
 begin
   tmpFileName := GetTempDir(true) + 'ver.txt';
@@ -614,10 +634,12 @@ begin
 
   winVer := TStringList.Create;
   winVer.LoadFromFile(tmpFileName);
+  tmpWinVer := winVer[1];
 
   AProcess.Free;
+  winVer.Free;
 
-  Result := winVer[1];
+  Result := tmpWinVer;
 end;
 
 function isChristmas: Boolean;
@@ -627,8 +649,8 @@ VAR
   chritmasDay: TDateTime;
   currentYear: integer;
 begin
-
   DecodeDate(Date, year, month, day);
+
   if month < 7 then                       //  if in first half of year, compare
     currentYear := year - 1               //  agiinst christmas of last year.
   else
@@ -744,4 +766,36 @@ begin
 
   result := DecText;
 end;
+
+procedure pressF15;
+{  This simulates the pressing of the <CTRL F15> key.
+   This is used to keep the monitor awake i.e. not going into sleep mode.
+
+   <CTRL F15> should be reconised by most systems, but is rarely used in applications.
+}
+begin
+  klog.writeLog('Pressing <CTRL F15>');
+  KeyInput.Apply([ssCtrl]);
+  KeyInput.Press(VK_F15);                // This will simulate press of <CTRL F15> key.
+  KeyInput.Unapply([ssCtrl]);
+end;
+
+procedure jiggleMouse;
+{  This jiggles the mouse, it moves the mouse one poixel and then bacl again.
+    This is used to keep the monitor awake where <CTRL F15> can't be used.
+}
+begin
+  klog.writeLog('Jiggling Mouse');
+  MouseInput.MoveBy([], 1, 1, 0);
+  MouseInput.MoveBy([], -1, -1, 0);
+end;
+
+procedure keepMonitorAwake;
+begin
+  if userOptions.keepMonitorAwakeF15 then
+    pressF15
+  else
+    jiggleMouse;
+end;
+
 end.

@@ -3038,3 +3038,21 @@ Currently
 6036 statements
 15.9% comment
 
+
+Build 81 [2.3.0.81]
+
+Added the ability for Klock to keep a Monitor Awake, i.e. stop the system sending the display monitor to sleep.
+Klock can used to methods to achieve this.
+Klock can simulate the pressing of <CTRL F15>.  This is recognised my the OS, but does not appear on most keyboards so therefore is nut used by many programs.  If this does cause problems, the second method can be used.
+Klock can jiggle the mouse, the mouse is moved on pixel and moved back again.
+The time interval for this can also be set, this should be just under the system time out.
+
+This is configures with new user options.
+
+Simplified the logic for the idle timer.  This routine nor checks whether to keep the monitor awake or not.
+
+Currently
+11232 lines of source code.
+6132 statements
+16.0% comment
+

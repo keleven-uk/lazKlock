@@ -244,7 +244,7 @@ begin
     keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
 
   if userOptions.displayIdleTime then
-    keyResult += '  :: Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay);
+    keyResult += '  :: Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime);
 
   lblStatusBar.Caption := FormatDateTime('hh:nn:ss am/pm ', KTime) +
                           FormatDateTime(' DD MMM YYYY ', KTime) +

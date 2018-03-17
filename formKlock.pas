@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   To compile, the following components must be installed into Lazarus.
      BGRA comtorls, which installs BGRA bitmap.
+       MouseAndKeyInput, needs to be ticked to use from this package.
      EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
      DCPciphers - Encyption and Decription stuff.
@@ -47,6 +48,7 @@ uses
   formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen;
 
 type
+  FourStrings = array [0..3] of string;
 
   { TfrmMain }
 
@@ -265,7 +267,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
-    procedure mainIdleTimerStopTimer(Sender: TObject);
+    procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure MmMemoDataChange(Sender: TObject);
     procedure mnuItmAnalogueKlockClick(Sender: TObject);
@@ -344,10 +346,10 @@ var
   countdownTicks: integer;
   timerStart: TDateTime;
   timerPaused: TdateTime;
-  popupMessages: array [0..3] of string;
-  popupTitle: array [0..3] of string;
+  popupMessages: FourStrings;
+  popupTitle: FourStrings;
   noReminder: integer;
-  tick: integer = 0;
+  idleTime: TdateTime;
   nowTime: string;
   prvTime: string;
 
@@ -431,7 +433,6 @@ end;
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
-
 begin
   frmSplashScreen := TfrmSplashScreen.Create(nil);
   frmSplashScreen.Show;
@@ -543,7 +544,6 @@ var
   title: string;       //  do we need to set title?
   message: string;
 begin
-
   title := '';
   message := '';
 
@@ -597,19 +597,14 @@ begin
     0:
     begin                     //  fuzzy page.
       stsBrInfo.Panels.Items[4].Text := '';
-      setMemoButtons(false);
     end;
-    1:                      //  world klock.
-    begin
-
-    end;
+    //1:                      //  world klock.
     2:
     begin                     //  countdown page
       if CountdownTimer.Enabled = False then
         stsBrInfo.Panels.Items[4].Text := ''
       else
         stsBrInfo.Panels.Items[4].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
-      setMemoButtons(false);
     end;
     3:
     begin                     //  timer page.
@@ -635,7 +630,6 @@ begin
           end;  //  if OptionsRec.TimerMilliSeconds
         end;    //  btnTimerStart.Caption = 'Start'
       end;      //  if timerTimer.Enabled = false
-      setMemoButtons(false);
     end;
     4:
     begin                    //  event page.
@@ -652,12 +646,10 @@ begin
         stsBrInfo.Panels.Items[4].Text := format('Reminder set for %.2d:%.2d - %s', [SpnEdtHour.Value,
           SpnEdtMins.Value, DatetoStr(DtEdtEvent.Date)]);
       end;  //  if btnEventSet.Enabled
-      setMemoButtons(false);
     end;
     5:
     begin                    //   Reminder Page.
       readReminderFile;
-      setMemoButtons(false);
     end;
     6:                       //  memo page.
     begin
@@ -670,7 +662,6 @@ begin
       parseConversionUnitsFile('LoadCategory');
       parseConversionUnitsFile('LoadUnits');
       cleartextFiles;
-      setMemoButtons(false);
     end;
   end;
 
@@ -687,17 +678,17 @@ var
 begin
   myNow := now;
 
-  if isTime(myNow, 0) then             //  Every hour, update Sticky Notes file.
+  if isMinute(myNow, 0) then             //  Every hour, update Sticky Notes file.
     stickies.updateStickyNotes;
 
-  if userOptions.HourPips and isTime(myNow, 0) then
+  if userOptions.HourPips and isMinute(myNow, 0) then
     playChime('pips')
   else                                       //  only play chimes if pips turned off.
   begin
-    if userOptions.HourChimes and isTime(myNow, 0) then playChime('hour');
-    if userOptions.quarterChimes and isTime(myNow, 15) then playChime('quarter');
-    if userOptions.HalfChimes and isTime(myNow, 30) then playChime('half');
-    if userOptions.threeQuarterChimes and isTime(myNow, 45) then playChime('threequarter');
+    if userOptions.HourChimes and isMinute(myNow, 0) then playChime('hour');
+    if userOptions.quarterChimes and isMinute(myNow, 15) then playChime('quarter');
+    if userOptions.HalfChimes and isMinute(myNow, 30) then playChime('half');
+    if userOptions.threeQuarterChimes and isMinute(myNow, 45) then playChime('threequarter');
   end;
 
   if TrayIcon.Visible then
@@ -705,14 +696,11 @@ begin
      strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
      TrayIcon.Hint := strTime;
 
-     if userOptions.fuzzyTimeBalloon then
-     begin
-       if isTime(myNow, 5) then
-       begin  //  only display on the five minutes.
-         TrayIcon.BalloonHint := strTime;
-         trayIcon.ShowBalloonHint;
-         ballonTimer.Enabled := True;                  //  balloon hint time-out bug - see below.
-       end;
+     if userOptions.fuzzyTimeBalloon and everyMinute(myNow, 5) then
+     begin  //  only display on the five minutes.
+       TrayIcon.BalloonHint := strTime;
+       trayIcon.ShowBalloonHint;
+       ballonTimer.Enabled := True;                  //  balloon hint time-out bug - see below.
      end;  //  if OptionsRec.FuzzyTimeBalloon then
 
      if ppMnItmTime.Checked then
@@ -797,7 +785,7 @@ begin
     stsBrInfo.Panels.Items[2].Text := keyResult;
 
     if userOptions.displayIdleTime then
-      stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', tick / SecsPerDay)
+      stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
     else
       stsBrInfo.Panels.Items[3].Text := '';
 end;
@@ -812,16 +800,27 @@ begin
   TrayIcon.Visible := False;
   TrayIcon.Visible := True;
 end;
-
+//
+// *********************************************************** Idle Timer ******
+//
 procedure TfrmMain.mainIdleTimerTimer(Sender: TObject);
-
+{  runs when the system is idle.
+   Adds a second to the prevously create zero TDateTime.
+   Checks for, and if needed, Keeps monitor Awake.
+}
 begin
-  tick += 1;
+  idleTime := IncSecond(idleTime,1);
+
+  {  if system is idle, then keep monitor awake if required.    }
+  if userOptions.keepMonitorAwake and
+     everyMinute(idleTime, userOptions.keepMonitorAwakeMinutes) then
+    keepMonitorAwake;
 end;
 
-procedure TfrmMain.mainIdleTimerStopTimer(Sender: TObject);
+procedure TfrmMain.mainIdleTimerStartTimer(Sender: TObject);
+{  On start of system idle, creat a zero tDateTime.    }
 begin
-  tick := 0;
+  idleTime := EncodeDateTime(2018, 1, 1, 0, 0, 0, 0);
 end;
 //
 // *********************************************************** Fuzzy Time ******

@@ -4200,7 +4200,7 @@ object frmMain: TfrmMain
     AutoEnabled = True
     Enabled = False
     OnTimer = mainIdleTimerTimer
-    OnStopTimer = mainIdleTimerStopTimer
+    OnStartTimer = mainIdleTimerStartTimer
     left = 528
     top = 8
   end
