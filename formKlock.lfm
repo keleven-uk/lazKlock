@@ -1852,6 +1852,10 @@ object frmMain: TfrmMain
         Caption = 'Power Stuff'
         OnClick = mnuItmPowerSourceClick
       end
+      object mnuItmMonitorStuff: TMenuItem
+        Caption = 'Monitor Stuff'
+        OnClick = mnuItmMonitorStuffClick
+      end
     end
     object mnuItmStickyNote: TMenuItem
       Caption = 'Sticky Note'

@@ -128,6 +128,7 @@ type
     lblSplitLap: TLabel;
     lblTimer: TLabel;
     LstBxMemoName: TListBox;
+    mnuItmMonitorStuff: TMenuItem;
     mnuItmChineseYear: TMenuItem;
     mnuItmPowerStuff: TMenuItem;
     mnuItmSunStuff: TMenuItem;
@@ -282,6 +283,7 @@ type
     procedure mnuItmLEDKlockClick(Sender: TObject);
     procedure mnuItmLentDatesClick(Sender: TObject);
     procedure mnuItmLicenseClick(Sender: TObject);
+    procedure mnuItmMonitorStuffClick(Sender: TObject);
     procedure mnuItmMoonStuffClick(Sender: TObject);
     procedure mnuItmNewStickyNoteClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
@@ -2176,6 +2178,11 @@ end;
 procedure TfrmMain.mnuItmSunStuffClick(Sender: TObject);
 begin
   frmInfo.Info := 'Sun Stuff';
+  frmInfo.ShowModal;
+end;
+procedure TfrmMain.mnuItmMonitorStuffClick(Sender: TObject);
+begin
+  frmInfo.Info := 'Monitor Stuff';
   frmInfo.ShowModal;
 end;
 //

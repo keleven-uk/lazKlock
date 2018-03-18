@@ -118,18 +118,18 @@ function StringToFont(s: string): TFont;
 
    Does not yet handle errors - will there be any ;o)                                              }
 var
-  p: integer;
-  err: integer;
+  p   : integer;
+  err : integer;
   chrs: integer;
-  clr: TColor;
+  clr : TColor;
   Hght: integer;
-  nme: string;
+  nme : string;
   Ortn: integer;
-  sze: integer;
+  sze : integer;
   ptch: integer;
   qlty: integer;
 
-  fnt: TFont;
+  fnt : TFont;
   fstyles: TFontStyles;
 begin
   fnt := TFont.Create;
@@ -240,7 +240,6 @@ begin
   finally
     AProcess.Free;
   end;
-
 end;
 
 procedure abortSystemEvent;
@@ -254,7 +253,6 @@ begin
     finally
       Free;
     end;    //  with TProcess.Create(nil)
-
 end;
 
 procedure doCommandEvent(command: string; args: string);
@@ -276,7 +274,6 @@ begin
   end       //  if command <> ''
   else
     ShowMessage('Even Klock cant run with nowt!!');
-
 end;
 
 procedure displayHelp(chm: string; topic: string);
@@ -297,7 +294,6 @@ begin
   end
   else
     showmessage('ERROR :: Loading ' + chm);
-
 end;
 
 procedure doPlaySound(sound: string; volume: string);
@@ -334,7 +330,6 @@ begin
 
     //  SendMCICommand('status KlockAudio mode')               //  supposed to return status of play.
   end;
-
 end;
 
 procedure SendMCICommand(command: string);
@@ -363,10 +358,10 @@ function parseReminder(a: string): reminderData;
 var
   rmndrData: reminderData;
 
-  Name: string;
-  date: string;
+  Name  : string;
+  date  : string;
   period: string;
-  Rtype: string;
+  Rtype : string;
   active: string;
 
   p: integer;
@@ -428,10 +423,9 @@ const
   rootPath = HKEY_CURRENT_USER;
   regpath = '\Software\Microsoft\Windows\CurrentVersion\run';
 var
-  registry: TRegistry;
-  AppPath: string;
-  AppName: string;
-
+  registry  : TRegistry;
+  AppPath   : string;
+  AppName   : string;
   openResult: boolean;
 begin
   registry := TRegistry.Create;
@@ -458,7 +452,6 @@ begin
   finally
     registry.Free;
   end;  //  try
-
 end;
 
 function isMinute(myNow: TdateTime; mins: integer): Boolean;
@@ -466,9 +459,9 @@ function isMinute(myNow: TdateTime; mins: integer): Boolean;
    i.e. true n minutes past the hour.
 }
 Var
-  hour, minute, second,  millisecond: word;
+  hour, minute, second, milliSeconds: word;
 begin
-  DecodeTime(myNow, hour, minute, second, millisecond);
+  DecodeTime(Time, hour, minute, second, milliSeconds);
   result := (minute = mins) and (second = 0);
 end;
 
@@ -477,27 +470,28 @@ function everyMinute(myNow: TdateTime; mins: integer): Boolean;
    i.e. true every n minutes.
 }
 Var
-  hour, minute, second,  millisecond: word;
+  hour, minute, second, milliSeconds: word;
 begin
-  DecodeTime(myNow, hour, minute, second, millisecond);
+  DecodeTime(Time, hour, minute, second, milliSeconds);
   result := (minute mod mins = 0) and (second = 0);
 end;
 
 procedure playChime(mode: String);
+{  When called,play a requested chime.     }
 var
-  hour, minute, second,  millisecond: word;
+  hour, minute, second, milliSeconds: word;
   arg: string;
 begin
-  DecodeTime(Time, hour, minute, second, millisecond);
+  DecodeTime(Time, hour, minute, second, milliSeconds);
 
   if hour > 12 then
     hour := hour - 12;
 
   case mode of
-    'pips': arg := 'thepips.mp3';
-    'hour': arg := GetEnumName(TypeInfo(chimes), hour) + '.mp3';
-    'half': arg := 'halfchime.mp3';
-    'quarter': arg := 'quarterchime.mp3';
+    'pips'        : arg := 'thepips.mp3';
+    'hour'        : arg := GetEnumName(TypeInfo(chimes), hour) + '.mp3';
+    'half'        : arg := 'halfchime.mp3';
+    'quarter'     : arg := 'quarterchime.mp3';
     'threequarter': arg := 'threequarterchime.mp3';
   else ;
     arg := '';
@@ -586,10 +580,10 @@ function getUpTime(system: string): string;
    TODO : Need to check for roll over and account for it.
 }
 var
-  noTicks: int64;
-  noSeconds: integer;
-  noOfDays: integer;
-  noOfHours: integer;
+  noTicks    : int64;
+  noSeconds  : integer;
+  noOfDays   : integer;
+  noOfHours  : integer;
   noOfMinutes: integer;
   noOfSeconds: integer;
 begin
@@ -619,9 +613,9 @@ function getWindowsVersion: string;
    The ver command is run  into a file and then the file is read back.
 }
 VAR
-  AProcess: TProcess;
-  winVer: TStringList;
-  tmpWinVer: string;
+  AProcess   : TProcess;
+  winVer     : TStringList;
+  tmpWinVer  : string;
   tmpFileName: string;
 begin
   tmpFileName := GetTempDir(true) + 'ver.txt';
@@ -730,7 +724,7 @@ function encrypt(s: string; pwd: string): string;
    see https://forum.lazarus.freepascal.org/index.php?topic=33013.0
 }
 var
-  Crypt: TDCP_rijndael;
+  Crypt  : TDCP_rijndael;
   EncText: string;
 begin
   Crypt := TDCP_rijndael.Create(nil);
@@ -751,7 +745,7 @@ function decrypt(s: string; pwd: string): string;
    encrypt function.
 }
 var
-  Crypt: TDCP_rijndael;
+  Crypt  : TDCP_rijndael;
   DecText: string;
 begin
   Crypt := TDCP_rijndael.Create(nil);

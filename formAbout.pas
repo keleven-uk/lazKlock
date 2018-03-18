@@ -82,9 +82,6 @@ begin
   lblSysUpTime.Caption := getUpTime('System');
   lblProgrammer.Caption := userOptions.legalCopyright;
 
-  dskFree := FloatToStrF(DiskFree(0) / 1073741824, ffFixed, 3, 2);
-  dskSize := FloatToStrF(DiskSize(0) / 1073741824, ffFixed, 3, 2);
-
   lstBxInfo.Items.add(userOptions.fileDescription);
   lstBxInfo.Items.add('');
   lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));

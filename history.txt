@@ -3025,6 +3025,10 @@ ustickynotes.pas            |   9 ++
 
 Build 80 [2.3.0.80]
 
+commit 02be524ca68d5567014aadf66ea2062109472f24
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Mar 11 21:36:23 2018 +0000
+
 Noticed that there was a flicker when displaying Floating text Klock.  So, amended the update time thingy so it only updated the display when the text changed and not every second.  This makes a differance when displaying fuzzyTime that changes every five minutes.  Also made this change to the main Klock, to save resources.
 
 Added an option verbose to FuzzyTime so it could add "nearly" and "just gone" to the output.
@@ -3038,8 +3042,33 @@ Currently
 6036 statements
 15.9% comment
 
-
+formKlock.lfm          |   2 +-
+formKlock.pas          |  75 +++++++++++++++++-----------
+formOptions.lfm        |  53 ++++++++++----------
+formOptions.pas        |  39 ++++++++-------
+formfloatingklock.pas  |  29 ++++++++---
+formledklock.pas       |   2 +-
+formsmalltextklock.pas |   8 +--
+history.txt            |  59 ++++++++++++++++++++--
+klock.iss              |   4 +-
+klock.lpi              | 132 ++++++++++++++++++++++++++++++++-----------------
+klock.lpr              |   9 +++-
+lazKlock.smproj        | Bin 679299 -> 710905 bytes
+ufonts.pas             |   4 +-
+ufuzzytime.pas         |  91 +++++++++++-----------------------
+uinfoutils.pas         |  19 ++++---
+uklockutils.pas        |   8 +--
+ulogging.pas           |  73 ++++++++++++++-------------
+uoptions.pas           |  11 ++++-
+ustickynotes.pas       |  26 ++++++++--
+19 files changed, 392 insertions(+), 252 deletions(-)
+ 
+ 
 Build 81 [2.3.0.81]
+
+commit 12155d8788a9eb6b1720acd283ced68e41c3efe0
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sat Mar 17 20:03:13 2018 +0000
 
 Added the ability for Klock to keep a Monitor Awake, i.e. stop the system sending the display monitor to sleep.
 Klock can used to methods to achieve this.
@@ -3047,12 +3076,52 @@ Klock can simulate the pressing of <CTRL F15>.  This is recognised my the OS, bu
 Klock can jiggle the mouse, the mouse is moved on pixel and moved back again.
 The time interval for this can also be set, this should be just under the system time out.
 
-This is configures with new user options.
+This is configured with new user options.
 
-Simplified the logic for the idle timer.  This routine nor checks whether to keep the monitor awake or not.
+Simplified the logic for the idle timer.  This routine now checks whether to keep the monitor awake or not.
 
 Currently
 11232 lines of source code.
 6132 statements
 16.0% comment
 
+formAbout.lfm                      |   4 +-
+formAbout.pas                      |   2 +
+formKlock.lfm                      |   2 +-
+formKlock.pas                      |  71 +++++------
+formOptions.lfm                    | 218 ++++++++++++++++++++------------
+formOptions.pas                    |  68 +++++++++-
+formbinaryklock.pas                |   2 +-
+formclipboard.pas                  |   2 +-
+help/Klock.chm                     | Bin 3811656 -> 3814976 bytes
+help/Klock.pdf                     | Bin 6858659 -> 6891466 bytes
+help/html/Global.html              |   9 +-
+help/html/Help.html                |   2 +-
+help/html/Introduction.html        |   4 +-
+help/html/Klock.html               |   4 +-
+help/html/Options.html             |   2 +-
+help/html/StickyNotesandMemos.html |  11 +-
+help/html/Time.html                |   7 +-
+help/html/Welcome.html             |   4 +-
+help/html/js/hndsd.min.js          |   2 +-
+help/klock.hnd                     | Bin 4784128 -> 4771840 bytes
+history.txt                        |  18 +++
+klock.iss                          |   4 +-
+klock.lpi                          | 253 +++++++++++++++++++++++--------------
+lazKlock.smproj                    | Bin 710905 -> 743132 bytes
+uconversion.pas                    |   6 +-
+uklockutils.pas                    |  68 +++++++++-
+uoptions.pas                       |  46 +++++++
+27 files changed, 554 insertions(+), 255 deletions(-)
+ 
+ 
+Build 82 [2.3.0.82]
+ 
+Added Monitor Stuff to the Info menu.
+This shows information about all the display monitors connects to the system.
+This us gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
+ 
+Currently
+11306 lines of source code.
+6181 statements
+15.9% comment

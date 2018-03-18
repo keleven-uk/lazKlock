@@ -1,30 +1,30 @@
 object frmInfo: TfrmInfo
-  Left = 1376
+  Left = 1197
   Height = 306
-  Top = 203
-  Width = 362
+  Top = 160
+  Width = 400
   BorderStyle = bsSingle
   Caption = 'Info'
   ClientHeight = 306
-  ClientWidth = 362
+  ClientWidth = 400
   Constraints.MaxHeight = 306
-  Constraints.MaxWidth = 362
+  Constraints.MaxWidth = 400
   Constraints.MinHeight = 306
-  Constraints.MinWidth = 362
+  Constraints.MinWidth = 400
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.2.0'
   object GroupBox1: TGroupBox
     Left = 8
     Height = 216
     Top = 8
-    Width = 344
+    Width = 384
     Caption = 'Winter Time'
     ClientHeight = 196
-    ClientWidth = 340
+    ClientWidth = 380
     TabOrder = 0
     object SpnEdtYear: TSpinEdit
-      Left = 135
+      Left = 163
       Height = 23
       Top = 164
       Width = 75
@@ -36,7 +36,7 @@ object frmInfo: TfrmInfo
       Value = 2017
     end
     object lblYear: TLabel
-      Left = 56
+      Left = 80
       Height = 15
       Top = 168
       Width = 56
@@ -47,15 +47,21 @@ object frmInfo: TfrmInfo
       Left = 8
       Height = 88
       Top = 64
-      Width = 327
+      Width = 368
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -11
+      Font.Name = 'Hack'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
       ItemHeight = 0
       OnDrawItem = lstBxInfoDrawItem
       ParentColor = True
+      ParentFont = False
       Style = lbOwnerDrawFixed
       TabOrder = 1
     end
     object moonPhase: TMoon
-      Left = 135
+      Left = 168
       Height = 64
       Top = 0
       Width = 64
@@ -81,12 +87,12 @@ object frmInfo: TfrmInfo
     Left = 8
     Height = 63
     Top = 232
-    Width = 344
+    Width = 384
     ClientHeight = 43
-    ClientWidth = 340
+    ClientWidth = 380
     TabOrder = 1
     object btnClose: TButton
-      Left = 135
+      Left = 163
       Height = 25
       Top = 0
       Width = 75

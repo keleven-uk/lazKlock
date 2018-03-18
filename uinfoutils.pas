@@ -1,9 +1,6 @@
 unit uInfoUtils;
 {  A Set of utilities to gather information to display.
 
-   The daylisght saving stuff is based on this -
-   http://www.delphiforfun.org/Programs/delphi_techniques/TimeZoneInfo.htm
-
    The TStringList are created in this module because -
 
        This solves the problem of not being able to free the StringList and
@@ -17,7 +14,8 @@ unit uInfoUtils;
 interface
 
 uses
-  Classes, SysUtils, windows, dateutils, dialogs, Moon, MoonComp;
+  Classes, SysUtils, windows, dateutils, dialogs, Moon, MoonComp, ActiveX,
+  ComObj, Variants, Forms;
 
 function getDaylightSaving(year: integer): TStringList;
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
@@ -27,6 +25,9 @@ function getChineseDates(year: integer): TStringList;
 function getPower: TStringList;
 function getMoonStuff: TStringList;
 function getSunStuff: TStringList;
+function getMonitorStuff: TStringList;
+function getName(thing: OLEVariant; count: integer): string;
+
 
 implementation
 
@@ -34,25 +35,29 @@ uses
   formklock;
 
 function getDaylightSaving(Year: integer): TStringList;
-{  Returns daylight saving stuff.    }
+{  Returns daylight saving stuff.
+
+   The daylisght saving stuff is based on this -
+   http://www.delphiforfun.org/Programs/delphi_techniques/TimeZoneInfo.htm
+}
 var
-  timezoneinfo: TTimezoneinformation;
-  strResults: TStringList;
-  t:TDatetime;
-  d2:word;
-  r:word;
+  timezoneinfo       : TTimezoneinformation;
+  strResults         : TStringList;
+  dayLightSaving     : TDatetime;
+  dayLightOffSet     : word;
+  TimezoneInformation: word;
 begin
   strResults := TStringList.Create;
 
-  r := GetTimezoneInformation(timezoneinfo);
+  TimezoneInformation := GetTimezoneInformation(timezoneinfo);
 
-  if r > 0 then   //  if r = 0, then error
+  if TimezoneInformation > 0 then   //  if TimezoneInformation = 0, then error
   begin
     with timezoneinfo do
     begin
       DaylightDate.Year := year;
 
-      case r of
+      case TimezoneInformation of
         time_zone_Id_unknown:
         begin
           strResults.add('Current daylight status is unknown');
@@ -84,9 +89,9 @@ begin
         end
         else
         begin
-          d2 := getNthDSTDOW(year, wmonth, wDayOfWeek, wDay);
-          t := encodedate(year, wmonth, d2) + encodetime(whour, wminute, wsecond, wmilliseconds);
-          strResults.add(formatdatetime('"Daylight saving starts: " mmmm dd  hh:nn am/pm', t));
+          dayLightOffSet := getNthDSTDOW(year, wmonth, wDayOfWeek, wDay);
+          dayLightSaving := encodedate(year, wmonth, dayLightOffSet) + encodetime(whour, wminute, wsecond, wmilliseconds);
+          strResults.add(formatdatetime('"Daylight saving starts: " mmmm dd  hh:nn am/pm', dayLightSaving));
           strResults.Add('');
         end;   //  if (Daylightname = '')
       end;     //  with daylightdate
@@ -94,9 +99,9 @@ begin
       standarddate.Year := year;
       with standarddate do
       begin
-        d2 := getNthDSTDOW(year, wmonth, wDayOfWeek, wday);
-        t := encodedate(year, wmonth, d2) + encodetime(whour, wminute, wsecond, wmilliseconds);
-        strResults.add(formatdatetime('"Daylight saving ends: " mmmm dd  hh:nn am/pm', t));
+        dayLightOffSet := getNthDSTDOW(year, wmonth, wDayOfWeek, wday);
+        dayLightSaving := encodedate(year, wmonth, dayLightOffSet) + encodetime(whour, wminute, wsecond, wmilliseconds);
+        strResults.add(formatdatetime('"Daylight saving ends: " mmmm dd  hh:nn am/pm', dayLightSaving));
         strResults.Add('');
       end;     //  with standarddate
     end;       //  with timezoneinfo
@@ -172,7 +177,7 @@ function getChineseDates(year: integer): TStringList;
    Lent start on Ash Wednesday, which is 46 days before Easter Sunday.
 }
 var
-  chinese: TChineseDate;
+  chinese      : TChineseDate;
   ChineseZodiac: array[TChineseZodiac] of string;
 begin
   ChineseZodiac[ch_rat] := 'Rat';
@@ -249,9 +254,9 @@ function getMoonStuff: TStringList;
    NB : timezone declared in formKlock.
 }
 var
-  moonDate: TDateTime;
-  moonPhase: TMoonPhase;
-  age: double;
+  moonDate          : TDateTime;
+  moonPhase         : TMoonPhase;
+  age               : double;
   hour, min, sec, ms: word;
 begin
   moonDate := trunc(now);
@@ -261,8 +266,8 @@ begin
   age := AgeOfMoon(moonDate);
   DecodeTime(age, hour, min, sec, ms);
   result.add(format('Age of the moon %d days, %d hours, %d minutes', [trunc(age), hour, min]));
-  result.add(format('Illumination of the moon = %2.1f', [Current_Phase(moonDate)]));
-  result.add(format('Distance of the moon = %.0n Km', [Moon_Distance(now)]));
+  result.add(format('Illumination of the moon   %2.1f', [Current_Phase(moonDate)]));
+  result.add(format('Distance of the moon       %.0n Km', [Moon_Distance(now)]));
 
   moonPhase := Nearest_Phase(moonDate);
 
@@ -277,21 +282,21 @@ begin
     WaningCrescent: result.add('Phase of the moon Waning Crescent');
   end;
   result.add('');
-  result.add(format('Lunation of new moon = %d', [Lunation(moonDate)]));
-  result.add(format('Next Full Moon = %s', [FormatDateTime('dd/mm/yyy',Next_Phase(moonDate, FullMoon))]));
-  result.add(format('Next Blue Moon = %s', [FormatDateTime('dd/mm/yyy',Next_Blue_Moon(moonDate))]));
+  result.add(format('Lunation of new moon   %d', [Lunation(moonDate)]));
+  result.add(format('Next Full Moon         %s', [FormatDateTime('dd/mm/yyy',Next_Phase(moonDate, FullMoon))]));
+  result.add(format('Next Blue Moon         %s', [FormatDateTime('dd/mm/yyy',Next_Blue_Moon(moonDate))]));
   result.add('');
-  result.add(format('Moon Rise = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
-                     Moon_Rise(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Moon Rise              %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
+                                                  Moon_Rise(moonDate, userOptions.Latitude, userOptions.Longitude))]));
 
   try
     age := Moon_Transit(moonDate, userOptions.Latitude, userOptions.Longitude);
-    result.add(format('Moon Transit = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
+    result.add(format('Moon Transit           %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
   except
     result.add('The Moon stays below horizon for the whole day ');
   end;
-  result.add(format('Moon Set = %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
-                     Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+  result.add(format('Moon Set               %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
+                                                   Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
 end;
 
 function getSunStuff: TStringList;
@@ -307,20 +312,97 @@ begin
 
   result := TStringList.Create;
 
-  result.add(format('Sun Rise = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy ',
+  result.add(format('Sun Rise              %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy ',
                      Sun_Rise(sunDate, userOptions.Latitude, userOptions.Longitude))]));
-  result.add(format('Sun Transit = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+  result.add(format('Sun Transit           %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Sun_Transit(sunDate, userOptions.Latitude, userOptions.Longitude))]));
-  result.add(format('Sun Set = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+  result.add(format('Sun Set               %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Sun_Set(sunDate, userOptions.Latitude, userOptions.Longitude))]));
   result.add('');
-  result.add(format('Morning Twilight = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+  result.add(format('Morning Twilight      %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Morning_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));
-  result.add(format('Evening Twilight = %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
+  result.add(format('Evening Twilight      %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy',
                      Evening_Twilight_Civil(sunDate, userOptions.Latitude, userOptions.Longitude))]));
   result.add('');
-  result.add(format('Distance of the sun = %.0n Km', [Sun_Distance(now) * 149597869]));
+  result.add(format('Distance of the sun   %.0n Km', [Sun_Distance(now) * 149597869]));
 
+end;
+
+function getMonitorStuff: TStringList;
+{  Added Monitor Stuff to the Info menu.
+   This shows information about all the display monitors connects to the system.
+   This us gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
+
+   It is a combination of several routinnes sourced from the internet.
+   As always, thanks guys.
+}
+const
+  WbemUser            ='';
+  WbemPassword        ='';
+  WbemComputer        ='localhost';
+  wbemFlagForwardOnly = $00000020;
+var
+  FSWbemLocator : OLEVariant;
+  FWMIService   : OLEVariant;
+  FWbemObjectSet: OLEVariant;
+  FWbemObject   : OLEVariant;
+  oEnum         : IEnumvariant;
+  iValue        : LongWord;
+  count         : integer = 0;
+begin
+  result := TStringList.Create;
+
+  result.add(format('Number of displays %s', [intToStr(Screen.MonitorCount)]));
+  result.add(format('Overall Desktop size %d x %d', [screen.DesktopHeight, screen.DesktopWidth]));
+  result.add('');
+
+  FSWbemLocator := CreateOleObject('WbemScripting.SWbemLocator');
+  FWMIService   := FSWbemLocator.ConnectServer(WbemComputer, 'root\WMI', WbemUser, WbemPassword);
+  FWbemObjectSet:= FWMIService.ExecQuery('SELECT * FROM WmiMonitorID','WQL',wbemFlagForwardOnly);
+  oEnum         := IUnknown(FWbemObjectSet._NewEnum) as IEnumVariant;
+
+  while oEnum.Next(1, FWbemObject, iValue) = 0 do
+  begin
+    result.add(Format('Active                    %s', [String(FWbemObject.Active)]));
+
+    if Screen.Monitors[count].Primary then
+      result.add('Primary                   True');
+
+    result.add(Format('Instance Name             %s', [String(FWbemObject.InstanceName)]));
+
+    result.add(Format('Manufacturer Name         %s', [getName(FWbemObject.ManufacturerName, 16)]));
+    result.add(Format('Serial Number             %s', [getName(FWbemObject.SerialNumberID, 16)]));
+    result.add(Format('User Friendly Name        %s', [getName(FWbemObject.UserFriendlyName, FWbemObject.UserFriendlyNameLength)]));
+
+    result.add(format('Dispaly resolution        %d x %d', [Screen.Monitors[count].Width, Screen.Monitors[count].Height]));
+
+    result.add(Format('Week Of Manufacture       %d', [Integer(FWbemObject.WeekOfManufacture)]));
+    result.add(Format('Year Of Manufacture       %d', [Integer(FWbemObject.YearOfManufacture)]));
+
+    result.add('');
+    inc(count);
+    FWbemObject := Unassigned;
+  end;
+end;
+
+function getName(thing: OLEVariant; count: integer): string;
+{  The thing is an OLEVariant that contains a string, but held as a number
+   of characters held in ASCII format.  This routines converts each number back
+   to its ASCII charactes and return the joined string.
+}
+var
+  f: integer;
+  s: string;
+begin
+  s := '';
+  for f := 0 to count - 1 do
+  begin
+    if chr(thing[f]) in ['A' .. 'Z', 'a' .. 'z', '0' .. '9'] then
+    begin
+      s += chr(thing[f]);
+    end;
+  end;
+  result := s;
 end;
 
 end.

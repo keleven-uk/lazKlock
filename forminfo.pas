@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Spin, mooncomp, uInfoUtils, Types;
+  Spin, mooncomp, uInfoUtils, LCLType, typinfo, Windows, Moon, MouseAndKeyInput;
 
 type
 
@@ -53,45 +53,45 @@ begin
 
   GroupBox1.Caption := info;
 
-  if info = 'Power Source' then
-  begin
-    lblYear.Visible := false;
-    SpnEdtyear.Visible := false;
-  end;
-
-  if (info = 'Moon Stuff') then
-  begin
-    moonPhase.Enabled := true;
-    SpnEdtYear.Visible := false;
-    lblYear.Visible := false;
-    lstBxInfo.Height := 123;
-    lstBxInfo.Left := 8;
-    lstBxInfo.Top := 64;
-    lstBxInfo.Width := 327;
-  end
-  else if (info = 'Sun Stuff') then
-  begin
-  moonPhase.Enabled := false;
-  SpnEdtYear.Visible := false;
-  lblYear.Visible := false;
-  lstBxInfo.Height := 152;
+  lstBxInfo.Height := 182;
   lstBxInfo.Left := 8;
   lstBxInfo.Top := 0;
-  lstBxInfo.Width := 327;
-  end
-  else
-  begin
-    moonPhase.Enabled := false;
-    lstBxInfo.Height := 152;
-    lstBxInfo.Left := 8;
-    lstBxInfo.Top := 0;
-    lstBxInfo.Width := 327;
+  lstBxInfo.Width := 368;
+  // listbox can be scrolled by double width horizontally now:
+  SendMessage (lstBxInfo.Handle, LB_SETHORIZONTALEXTENT, lstBxInfo.Width * 2, 0);
 
-    lblYear.Visible := true;
-    SpnEdtyear.Visible := true;
+  case info of
+    'Power Source',
+    'Monitor Stuff':
+    begin
+      moonPhase.Enabled := false;
+      lblYear.Visible := false;
+      SpnEdtyear.Visible := false;
+
+    end;
+    'Moon Stuff':
+    begin
+      moonPhase.Enabled := true;
+      SpnEdtYear.Visible := false;
+      lblYear.Visible := false;
+      lstBxInfo.Height := 123;
+      lstBxInfo.Top := 64;
+    end;
+    'Sun Stuff':
+    begin
+      moonPhase.Enabled := false;
+      SpnEdtYear.Visible := false;
+      lblYear.Visible := false;
+    end;
+    else
+    begin
+      lstBxInfo.Height := 152;
+      moonPhase.Enabled := false;
+      lblYear.Visible := true;
+      SpnEdtyear.Visible := true;
+      SpnEdtyear.Value := Currentyear;
+    end;
   end;
-
-  SpnEdtyear.Value := Currentyear;
 
   updateInfo;
 end;
@@ -123,6 +123,7 @@ begin
       'Power Source': strResults := getPower;
       'Moon Stuff': strResults := getMoonStuff;
       'Sun Stuff': strResults := getSunStuff;
+      'Monitor Stuff': strResults := getMonitorStuff;
     end;
 
     lstBxInfo.Items := strResults;
@@ -139,7 +140,6 @@ var
 begin
   lstBxInfo.Canvas.FillRect(ARect);
   ts := lstBxInfo.Canvas.TextStyle;
-  ts.Alignment := taCenter;
   lstBxInfo.Canvas.TextRect(ARect, ARect.Left+2, ARect.Top, lstBxInfo.Items[Index], ts);
 end;
 
