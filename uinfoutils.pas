@@ -23,6 +23,7 @@ function getEasterDates(Year: integer): TStringList;
 function getLentDates(year: integer): TStringList;
 function getChineseDates(year: integer): TStringList;
 function getPower: TStringList;
+function isBitSet(AValue, ABitNumber : integer): boolean;
 function getMoonStuff: TStringList;
 function getSunStuff: TStringList;
 function getMonitorStuff: TStringList;
@@ -42,12 +43,11 @@ function getDaylightSaving(Year: integer): TStringList;
 }
 var
   timezoneinfo       : TTimezoneinformation;
-  strResults         : TStringList;
   dayLightSaving     : TDatetime;
   dayLightOffSet     : word;
   TimezoneInformation: word;
 begin
-  strResults := TStringList.Create;
+  result := TStringList.Create;
 
   TimezoneInformation := GetTimezoneInformation(timezoneinfo);
 
@@ -60,39 +60,39 @@ begin
       case TimezoneInformation of
         time_zone_Id_unknown:
         begin
-          strResults.add('Current daylight status is unknown');
-          strResults.Add('');
+          result.add('Current daylight status is unknown');
+          result.add('');
         end;
         time_zone_id_standard:
         begin
-          strResults.add('We are not currently in the daylight savings time period');
-          strResults.Add(StandardName);
-          strResults.Add('');
+          result.add('We are not currently in the daylight savings time period');
+          result.add(StandardName);
+          result.add('');
         end;
         time_zone_id_daylight:
         begin
-          strResults.add('We are currently in the daylight savings time period');
-          strResults.Add(Daylightname);
-          strResults.Add('');
+          result.add('We are currently in the daylight savings time period');
+          result.add(Daylightname);
+          result.add('');
         end;
       end;
 
-      strResults.add(format('Daylight Saving for %d', [year]));
-      strResults.Add('');
+      result.add(format('Daylight Saving for %d', [year]));
+      result.add('');
 
       with daylightdate do
       begin
         if (Daylightname = '') then
         begin
-          strResults.Add('No Daylight Saving Time information available');
-          strResults.Add('');
+          result.add('No Daylight Saving Time information available');
+          result.add('');
         end
         else
         begin
           dayLightOffSet := getNthDSTDOW(year, wmonth, wDayOfWeek, wDay);
           dayLightSaving := encodedate(year, wmonth, dayLightOffSet) + encodetime(whour, wminute, wsecond, wmilliseconds);
-          strResults.add(formatdatetime('"Daylight saving starts: " mmmm dd  hh:nn am/pm', dayLightSaving));
-          strResults.Add('');
+          result.add(formatdatetime('"Daylight saving starts: " mmmm dd  hh:nn am/pm', dayLightSaving));
+          result.add('');
         end;   //  if (Daylightname = '')
       end;     //  with daylightdate
 
@@ -101,15 +101,14 @@ begin
       begin
         dayLightOffSet := getNthDSTDOW(year, wmonth, wDayOfWeek, wday);
         dayLightSaving := encodedate(year, wmonth, dayLightOffSet) + encodetime(whour, wminute, wsecond, wmilliseconds);
-        strResults.add(formatdatetime('"Daylight saving ends: " mmmm dd  hh:nn am/pm', dayLightSaving));
-        strResults.Add('');
+        result.add(formatdatetime('"Daylight saving ends: " mmmm dd  hh:nn am/pm', dayLightSaving));
+        result.add('');
       end;     //  with standarddate
     end;       //  with timezoneinfo
   end          //  if r >
   else
-    strResults.add('Time zone information not available');
+    result.add('Time zone information not available');
 
-  result := strResults;
 end;
 
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
@@ -205,10 +204,13 @@ function getPower: TStringList;
 {  see https://msdn.microsoft.com/en-us/library/windows/desktop/aa373232(v=vs.85).aspx  }
 var
   PowerStatus: TSystemPowerStatus;
+  batteryTime : TDateTime;
+  lifeTime : double;
 begin
   result := TStringList.Create;
 
   if GetSystemPowerStatus(PowerStatus) then
+
   begin
     if powerStatus.ACLineStatus = 1 then
       result.add('Mains power online')
@@ -217,25 +219,42 @@ begin
 
     result.add('');
 
-    case powerStatus.BatteryFlag of
-      1: result.add('High — the battery capacity is at more than 66 percent');
-      2: result.add('Low — the battery capacity is at less than 33 percent');
-      4: result.add('Critical — the battery capacity is at less than five percent');
-      8: result.add('Charging');
-      128: result.add('No system battery');
-      255: result.add('Unknown status — unable to read the battery flag information');
-    end;
+    {  The battery flag can be made of several flags anded togeter.  }
+    if isBitSet(powerStatus.BatteryFlag, 0) then
+      result.add('High - the battery capacity is at more than 66 percent');
+    if isBitSet(powerStatus.BatteryFlag, 1) then
+      result.add('Low - the battery capacity is at less than 33 percent');
+    if isBitSet(powerStatus.BatteryFlag, 2) then
+      result.add('Critical - the battery capacity is at less than five percent');
+    if isBitSet(powerStatus.BatteryFlag, 3) then
+      result.add('Charging');
+    if isBitSet(powerStatus.BatteryFlag, 7) then
+      result.add('No system battery');
+    if powerStatus.BatteryFlag = 255 then
+      result.add('Unknown status - unable to read the battery flag information');
+
+    result.add('');
 
     if powerStatus.ACLineStatus = 0 then
     begin
       if powerStatus.BatteryLifePercent <> 0 then
         result.add(format('Battery Life %d %%', [powerStatus.BatteryLifePercent]));
-      if powerStatus.BatteryFullLifeTime <> 0 then
-        result.add(format('Battery Life %d secs', [powerStatus.BatteryFullLifeTime]));
-      if powerStatus.BatteryLifeTime <> 0 then
-        result.add(format('Battery Full Life %d secs', [powerStatus.BatteryFullLifeTime]));
-    end;
 
+      if powerStatus.BatteryLifeTime <> 0 then
+      begin
+        batteryTime := TimeStampToDateTime(MSecsToTimeStamp(powerStatus.BatteryLifeTime * 1000));
+        result.add(format('Battery Life %s', [FormatDateTime('hh:nn:ss', batteryTime)]));
+        lifeTime := (100 / powerStatus.BatteryLifePercent) * powerStatus.BatteryLifeTime;
+        batteryTime := TimeStampToDateTime(MSecsToTimeStamp(trunc(lifeTime * 1000)));
+        result.add(format('Battery Full Life %s', [timeToStr(batteryTime)]));
+      end;
+
+      //  Not sure of the returned value of this.
+      if powerStatus.BatteryFullLifeTime <> 0 then
+      begin
+
+      end;
+    end;
   end
   else
   begin
@@ -245,6 +264,12 @@ begin
     result.add('');
     result.add('Unable to get system power details');
   end;
+end;
+
+function isBitSet(AValue, ABitNumber : integer): boolean;
+{  Returns true if bit ABitNumber is set to in AValue.    }
+begin
+  result := odd(Avalue shr ABitNumber);
 end;
 
 function getMoonStuff: TStringList;
@@ -337,9 +362,9 @@ function getMonitorStuff: TStringList;
    As always, thanks guys.
 }
 const
-  WbemUser            ='';
-  WbemPassword        ='';
-  WbemComputer        ='localhost';
+  WbemUser            = '';
+  WbemPassword        = '';
+  WbemComputer        = 'localhost';
   wbemFlagForwardOnly = $00000020;
 var
   FSWbemLocator : OLEVariant;

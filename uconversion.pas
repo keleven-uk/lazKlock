@@ -120,7 +120,7 @@ procedure parseConversionUnitsFile(mode: string);
      SelectUnits - determines the conversion factor that matched the two combo boxes.
 }
 var
-  f: integer;
+  f   : integer;
   line: TStringArray;
 begin
   line := TStringArray.create;
@@ -130,6 +130,8 @@ begin
 
   for f := 0 to ConversionUnits.Count - 1 do
   begin
+    if ConversionUnits[f].StartsWith('#') then continue;  //  ignore comments.
+
     line := ConversionUnits[f].Split(',');
 
     case mode of
@@ -182,7 +184,7 @@ procedure cleartextFiles;
 {  Clears required edit boxes and disables the convert button.    }
 begin
   frmmain.EdtConverionResult.Text := '';
-  frmmain.EdtConverionValue.Text:= '';
+  frmmain.EdtConverionValue.Text  := '';
   frmMain.btnConverionConvert.Enabled := false;
 end;
 

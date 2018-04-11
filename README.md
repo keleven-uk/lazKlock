@@ -6,12 +6,12 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Sticky Notes & Clipboard Monitor.
+Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Biorhythm, Sticky Notes & Clipboard Monitor.
 
 Also, the time can be displayed in several ways - text, digital, analogue and binary klocks,
 
 
-Klock currently consists of over 10,000 lines of Lazarus [Free Pascal] code.  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
+Klock currently consists of over 11,000 lines of Lazarus [Free Pascal] code .  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 The program starts and finishes with a Splash Screen.  This is really needed if a number of fonts are used.  The starting of Klock lengthens with the number of fonts loaded.
 
@@ -65,6 +65,11 @@ Implements a simple conversion screen.
 This allows the conversion between various units of weight, distance and area etc.
 
 
+Biorhythm
+
+Implements a simple Biorhythm chart.
+
+
 Stick Notes
 
 Implements a simple sticky Note thingy.  
@@ -100,4 +105,5 @@ NB: If the option is checked to start on windows start up, it only operates for 
 
 
 Program partially tested on Windows 7 & 10 [both 32 & 64 bit].
+
 

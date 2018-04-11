@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1189
+  Left = 1256
   Height = 259
-  Top = 383
+  Top = 359
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -1996,7 +1996,14 @@ object frmMain: TfrmMain
         OnClick = mnuItmNewStickyNoteClick
       end
     end
-    object mnuHelp: TMenuItem
+    object MnItmBiorhythm: TMenuItem
+      Caption = 'Biorhythm'
+      object MnuItmSimpleBiorhythm: TMenuItem
+        Caption = 'Simple Biorhythm'
+        OnClick = MnuItmSimpleBiorhythmClick
+      end
+    end
+    object mnuBiorhythm: TMenuItem
       Caption = 'Help'
       object mnuItmHelp: TMenuItem
         Caption = 'Help'

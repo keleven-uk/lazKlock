@@ -3117,11 +3117,64 @@ uoptions.pas                       |  46 +++++++
  
 Build 82 [2.3.0.82]
  
+commit e94ed76b2832fd8f8d54ad81512c2bc9851c58bc
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Sun Mar 18 20:53:35 2018 +0000
+
 Added Monitor Stuff to the Info menu.
 This shows information about all the display monitors connects to the system.
-This us gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
+This is gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
  
 Currently
-11306 lines of source code.
+11312 lines of source code.
 6181 statements
-15.9% comment
+16.0% comment
+
+formAbout.pas   |   3 -
+formKlock.lfm   |   4 +
+formKlock.pas   |   7 ++
+forminfo.lfm    |  38 ++++----
+forminfo.pas    |  76 +++++++--------
+history.txt     |  75 ++++++++++++++-
+klock.iss       |   4 +-
+klock.lpi       | 287 ++++++++++++++++++++++----------------------------------
+lazKlock.smproj | Bin 743132 -> 775543 bytes
+uinfoutils.pas  | 160 +++++++++++++++++++++++--------
+uklockutils.pas |  70 +++++++-------
+11 files changed, 412 insertions(+), 312 deletions(-)
+
+
+Build 83 [2.3.1.83]
+
+Updated tzdata to latest version [2018d].
+
+Implemented a simple Biorhythm chart, the start date is held in the user
+options.  The chart is called via a menu option of the main Klock form.
+
+Tidied up some code in uInfoutils.pas, so that the returned stringLists are
+correctly handled - closed when not needed.
+
+Started to make the code pretty :-)
+ 
+Currently
+11501 lines of source code.
+6249 statements
+15.9% 
+
+
+Build 83 [2.3.1.84]
+
+The about, and Licence, Info forms are now created when needed and not at the start of the app.
+Trying to do the same with the time forms - but the ones with transparancy seem a problem.
+Simplified the calling of the info forms.
+
+More changes to Power stuff when rinning on a lap top.  It now shows more meaningfull times for 
+battery use, but not quite the same as is shown in the windowsa system tray.
+
+More code made to loop pretty.
+
+Currently
+11534 lines of source code.
+6253 statements
+16.0% 
+

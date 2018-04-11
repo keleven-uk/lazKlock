@@ -15,13 +15,15 @@ type
   { TfrmInfo }
 
   TfrmInfo = class(TForm)
-    btnClose: TButton;
-    GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
-    lblYear: TLabel;
-    lstBxInfo: TListBox;
-    moonPhase: TMoon;
+
+    btnClose  : TButton;
+    GroupBox1 : TGroupBox;
+    GroupBox2 : TGroupBox;
+    lblYear   : TLabel;
+    lstBxInfo : TListBox;
+    moonPhase : TMoon;
     SpnEdtYear: TSpinEdit;
+
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
@@ -54,9 +56,10 @@ begin
   GroupBox1.Caption := info;
 
   lstBxInfo.Height := 182;
-  lstBxInfo.Left := 8;
-  lstBxInfo.Top := 0;
-  lstBxInfo.Width := 368;
+  lstBxInfo.Left   := 8;
+  lstBxInfo.Top    := 0;
+  lstBxInfo.Width  := 368;
+
   // listbox can be scrolled by double width horizontally now:
   SendMessage (lstBxInfo.Handle, LB_SETHORIZONTALEXTENT, lstBxInfo.Width * 2, 0);
 
@@ -64,32 +67,32 @@ begin
     'Power Source',
     'Monitor Stuff':
     begin
-      moonPhase.Enabled := false;
-      lblYear.Visible := false;
+      moonPhase.Enabled  := false;
+      lblYear.Visible    := false;
       SpnEdtyear.Visible := false;
 
     end;
     'Moon Stuff':
     begin
-      moonPhase.Enabled := true;
+      moonPhase.Enabled  := true;
       SpnEdtYear.Visible := false;
-      lblYear.Visible := false;
-      lstBxInfo.Height := 123;
-      lstBxInfo.Top := 64;
+      lblYear.Visible    := false;
+      lstBxInfo.Height   := 123;
+      lstBxInfo.Top      := 64;
     end;
     'Sun Stuff':
     begin
-      moonPhase.Enabled := false;
+      moonPhase.Enabled  := false;
       SpnEdtYear.Visible := false;
-      lblYear.Visible := false;
+      lblYear.Visible    := false;
     end;
     else
     begin
-      lstBxInfo.Height := 152;
-      moonPhase.Enabled := false;
-      lblYear.Visible := true;
+      lstBxInfo.Height   := 152;
+      moonPhase.Enabled  := false;
+      lblYear.Visible    := true;
       SpnEdtyear.Visible := true;
-      SpnEdtyear.Value := Currentyear;
+      SpnEdtyear.Value   := Currentyear;
     end;
   end;
 
@@ -117,13 +120,13 @@ begin
   try
     case Info of
       'Daylight Saving': strResults := getDaylightSaving(SpnEdtyear.Value);
-      'Easter Dates': strResults := getEasterDates(SpnEdtyear.Value);
-      'Lent Dates': strResults := getLentDates(SpnEdtyear.Value);
-      'Chinese Year': strResults := getChineseDates(SpnEdtyear.Value);
-      'Power Source': strResults := getPower;
-      'Moon Stuff': strResults := getMoonStuff;
-      'Sun Stuff': strResults := getSunStuff;
-      'Monitor Stuff': strResults := getMonitorStuff;
+      'Easter Dates'   : strResults := getEasterDates(SpnEdtyear.Value);
+      'Lent Dates'     : strResults := getLentDates(SpnEdtyear.Value);
+      'Chinese Year'   : strResults := getChineseDates(SpnEdtyear.Value);
+      'Power Source'   : strResults := getPower;
+      'Moon Stuff'     : strResults := getMoonStuff;
+      'Sun Stuff'      : strResults := getSunStuff;
+      'Monitor Stuff'  : strResults := getMonitorStuff;
     end;
 
     lstBxInfo.Items := strResults;

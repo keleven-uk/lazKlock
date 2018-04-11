@@ -13,13 +13,14 @@ type
   { TfrmLicense }
 
   TfrmLicense = class(TForm)
-    btnLicense: TButton;
-    lblComments: TLabel;
+    btnLicense  : TButton;
+    lblComments : TLabel;
     lblCopyRight: TLabel;
-    lblVersion: TLabel;
-    mmoLicence: TMemo;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    lblVersion  : TLabel;
+    mmoLicence  : TMemo;
+    Panel1      : TPanel;
+    Panel2      : TPanel;
+
     procedure btnLicenseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -64,9 +65,9 @@ begin
     end;
   end;
 
-  lblComments.Caption := format('%s :: %s', [userOptions.productName, userOptions.fileDescription]);
+  lblComments.Caption  := format('%s :: %s', [userOptions.productName, userOptions.fileDescription]);
   lblCopyRight.Caption := userOptions.legalCopyright;
-  lblVersion.Caption := format('%s Version :: %s', [userOptions.productName, userOptions.fileVersion]);
+  lblVersion.Caption   := format('%s Version :: %s', [userOptions.productName, userOptions.fileVersion]);
 end;
 
 end.

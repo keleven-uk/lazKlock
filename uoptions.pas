@@ -44,110 +44,112 @@ type
   private
     _dirName: string;
     //  Global
-    _Comments: string;
-    _companyName: string;
-    _fileDescription: string;
-    _fileVersion: string;
-    _InternalName: string;
-    _legalCopyright: string;
+    _Comments        : string;
+    _companyName     : string;
+    _fileDescription : string;
+    _fileVersion     : string;
+    _InternalName    : string;
+    _legalCopyright  : string;
     _originalFileName: string;
-    _productName: string;
-    _productVersion: string;
+    _productName     : string;
+    _productVersion  : string;
 
-    _optionsName: string;           //  full path to the options file.
-    _memoName: string;              //  full path to the memo file.
-    _stickyName: string;            //  full path to the Sticky Notes file.
-    _unitsName: string;             //  full path to the Units file.
-    _reminderName: string;          //  full path to the Reminder file.
+    _optionsName : string;              //  full path to the options file.
+    _memoName    : string;              //  full path to the memo file.
+    _stickyName  : string;              //  full path to the Sticky Notes file.
+    _unitsName   : string;              //  full path to the Units file.
+    _reminderName: string;              //  full path to the Reminder file.
 
     //  Sart of user options.
-    _runAtStartUp: boolean;         //  run Klock at windows start up - Current user only.
-    _screenSave: boolean;           //  do we save Klock position or not.
-    _formTop: integer;              //  the forms top left.
-    _formLeft: integer;
-    _defaultTab: integer;
-    _volume:String;
-    _monitorClipboard: boolean;     //  Monitor Clipboard i.e. Klock captures all clipboard activities.
-    _CB_ScreenSave: boolean;        //  do we save clipboard manager position or not.
-    _CB_formTop: integer;           //  the clipboard manager top left.
-    _CB_formLeft: integer;
+    _runAtStartUp    : boolean;         //  run Klock at windows start up - Current user only.
+    _screenSave      : boolean;         //  do we save Klock position or not.
+    _formTop         : integer;         //  the forms top left.
+    _formLeft        : integer;
+    _defaultTab      : integer;
+    _volume          :String;
+    _monitorClipboard: boolean;         //  Monitor Clipboard i.e. Klock captures all clipboard activities.
+    _CB_ScreenSave   : boolean;         //  do we save clipboard manager position or not.
+    _CB_formTop      : integer;         //  the clipboard manager top left.
+    _CB_formLeft     : integer;
 
-    _keepMonitorAwake: boolean;     //  do we stop the monitors going to sleep.
-    _keepMonitorAwakeF15: boolean;      //  by pressing F15.
-    _keepMonitorAwakeJiggle: boolean;   //  by jiggling the mouse.
+    _keepMonitorAwake       : boolean;  //  do we stop the monitors going to sleep.
+    _keepMonitorAwakeF15    : boolean;  //  by pressing F15.
+    _keepMonitorAwakeJiggle : boolean;  //  by jiggling the mouse.
     _keepMonitorAwakeMinutes: Integer;  //  every n minutes.
 
-    _Latitude: double;
+    _Latitude : double;
     _Longitude: double;
 
+    _birthdate: TDateTime;              //  Birthday of user - used in biorythms.
+
     //  Time
-    _defaultTime: integer;
-    _netTimeSeconds: boolean;
-    _swatchCentibeats: boolean;
-    _fuzzyTimeBalloon: boolean;
-    _displayIdleTime: boolean;
-    _fuzzyTimeVerbose: boolean;     //  Use long version of Fuzzy Time.
-    _display24Hour: boolean;        //  Display time has 24 hour if true, else 12 hour.
-    _hourPips: boolean;
-    _hourChimes: boolean;
-    _halfChimes: boolean;
-    _quarterChimes: boolean;
+    _defaultTime       : integer;
+    _netTimeSeconds    : boolean;
+    _swatchCentibeats  : boolean;
+    _fuzzyTimeBalloon  : boolean;
+    _displayIdleTime   : boolean;
+    _fuzzyTimeVerbose  : boolean;       //  Use long version of Fuzzy Time.
+    _display24Hour     : boolean;       //  Display time has 24 hour if true, else 12 hour.
+    _hourPips          : boolean;
+    _hourChimes        : boolean;
+    _halfChimes        : boolean;
+    _quarterChimes     : boolean;
     _threeQuarterChimes: boolean;
-    _christmasFont: boolean;
-    _easterFont: boolean;
-    _valentinesFont: boolean;
-    _haloweenFont: boolean;
+    _christmasFont     : boolean;
+    _easterFont        : boolean;
+    _valentinesFont    : boolean;
+    _haloweenFont      : boolean;
 
     //  Timer
     _timerMilliSeconds: boolean;
 
     //  Analogue Klock
-    _analogueScreenSave: boolean;         //  do we save from position or not.
-    _analogueFormTop: integer;            //  the forms top left.
-    _analogueFormLeft: integer;
-    _analogueAlwaysOnTop: Boolean;        //  to be always on top.
+    _analogueScreenSave : boolean;      //  do we save from position or not.
+    _analogueFormTop    : integer;      //  the forms top left.
+    _analogueFormLeft   : integer;
+    _analogueAlwaysOnTop: Boolean;      //  to be always on top.
 
     // LED Klock
-    _LEDScreenSave: boolean;              //  do we save from position or not.
-    _LEDFormTop: integer;                 //  the forms top left.
-    _LEDFormLeft: integer;
-    _LEDlongDate: boolean;
-    _LEDAlwaysOnTop: Boolean;             //  to be always on top.
+    _LEDScreenSave : boolean;           //  do we save from position or not.
+    _LEDFormTop    : integer;           //  the forms top left.
+    _LEDFormLeft   : integer;
+    _LEDlongDate   : boolean;
+    _LEDAlwaysOnTop: Boolean;           //  to be always on top.
 
     // Binary Klock
-    _BinaryScreenSave: boolean;           //  do we save from position or not.
-    _BinaryFormTop: integer;              //  the forms top left.
-    _BinaryFormLeft: integer;
-    _BinaryFormat: boolean;               //  Binary or BCD format - true for binary.
-    _BinaryAlwaysOnTop: Boolean;          //  to be always on top.
+    _BinaryScreenSave : boolean;        //  do we save from position or not.
+    _BinaryFormTop    : integer;        //  the forms top left.
+    _BinaryFormLeft   : integer;
+    _BinaryFormat     : boolean;        //  Binary or BCD format - true for binary.
+    _BinaryAlwaysOnTop: Boolean;        //  to be always on top.
 
     // Small Text Klock
-    _smallTextScreenSave: boolean;        //  do we save from position or not.
-    _smallTextFormTop: integer;           //  the forms top left.
-    _smallTextFormLeft: integer;
-    _smallTextTransparent: boolean;       //  is Small Text Klock transparent?
-    _smallAlwaysOnTop: Boolean;           //  to be always on top.
+    _smallTextScreenSave : boolean;     //  do we save from position or not.
+    _smallTextFormTop    : integer;     //  the forms top left.
+    _smallTextFormLeft   : integer;
+    _smallTextTransparent: boolean;     //  is Small Text Klock transparent?
+    _smallAlwaysOnTop    : Boolean;     //  to be always on top.
 
     // memos
-    _useDefaultpassWord: boolean;         //  Memo allowed to use default pass word.
-    _defaultpassWord: string;             //  Memo default pass word.
-    _decryptTimeOut: integer;             //  Memo decrypt Time Out.
+    _useDefaultpassWord: boolean;       //  Memo allowed to use default pass word.
+    _defaultpassWord   : string;        //  Memo default pass word.
+    _decryptTimeOut    : integer;       //  Memo decrypt Time Out.
 
     // Floating Text Klock
-    _floatingTextScreenSave: boolean;     //  do we save from position or not.
-    _floatingTextFormTop: integer;        //  the forms top left.
-    _floatingTextFormLeft: integer;
-    _floatingTextFont: Tfont;
+    _floatingTextScreenSave  : boolean; //  do we save from position or not.
+    _floatingTextFormTop     : integer; //  the forms top left.
+    _floatingTextFormLeft    : integer;
+    _floatingTextFont        : Tfont;
     _floatingTextUseKlockFont: boolean;
-    _floatingAlwaysOnTop: Boolean;        //  to be always on top.
+    _floatingAlwaysOnTop     : Boolean; //  to be always on top.
 
     //Sticky Notes
-    _stickyColor: TColor;                 //  Sticky Note colour.
-    _stickyFont:TFont;                    //  Sticky Note Font.
+    _stickyColor: TColor;               //  Sticky Note colour.
+    _stickyFont :TFont;                 //  Sticky Note Font.
 
     //  Logging
-    _logging: Boolean;
-    _cullLogs: Boolean;
+    _logging     : Boolean;
+    _cullLogs    : Boolean;
     _CullLogsDays: integer;
 
     procedure checkDirectory;
@@ -155,6 +157,7 @@ type
     Function readChildAttribute(PassNode: TDOMNode;  name: string; attribute: string): string;
     function writeStrChild(Doc: TXMLDocument; name: string; value: string): TDOMNode;
     function writeFontChild(Doc: TXMLDocument; name: string; value: Tfont): TDOMNode;
+    function writeDateChild(Doc: TXMLDocument; name: string; value: TDateTime): TDOMNode;
     function writeColChild(Doc: TXMLDocument; name: string; value: TColor): TDOMNode;
     function writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
     function writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
@@ -163,66 +166,68 @@ type
 
   public
     //  Global - file stuff
-    property Comments: string read _Comments write _Comments;
-    property companyName: string read _companyName write _companyName;
-    property fileDescription: string read _fileDescription write _fileDescription;
-    property fileVersion: string read _fileVersion write _fileVersion;
-    property InternalName: string read _InternalName write _InternalName;
-    property legalCopyright: string read _legalCopyright write _legalCopyright;
+    property Comments        : string read _Comments write _Comments;
+    property companyName     : string read _companyName write _companyName;
+    property fileDescription : string read _fileDescription write _fileDescription;
+    property fileVersion     : string read _fileVersion write _fileVersion;
+    property InternalName    : string read _InternalName write _InternalName;
+    property legalCopyright  : string read _legalCopyright write _legalCopyright;
     property originalFileName: string read _originalFileName write _originalFileName;
-    property productName: string read _productName write _productName;
-    property productVersion: string read _productVersion write _productVersion;
+    property productName     : string read _productName write _productName;
+    property productVersion  : string read _productVersion write _productVersion;
 
     //  Global - other stuff
-    property optionsName: string read _optionsName write _optionsName;
-    property memoName: string read _memoName write _memoName;
-    property stickyName: string read _stickyName write _stickyName;
-    property unitsName: string read _unitsName write _unitsName;
-    property reminderName: string read _reminderName write _reminderName;
-    property runAtStartUp: boolean read _runAtStartUp write _runAtStartUp;
-    property screenSave: boolean read _screenSave write _screenSave;
-    property formTop: integer read _formTop write _formTop;
-    property formLeft: integer read _formLeft write _formLeft;
-    property defaultTab: integer read _defaultTab write _defaultTab;
-    property volume: string read _volume write _volume;
+    property optionsName     : string  read _optionsName write _optionsName;
+    property memoName        : string  read _memoName write _memoName;
+    property stickyName      : string  read _stickyName write _stickyName;
+    property unitsName       : string  read _unitsName write _unitsName;
+    property reminderName    : string  read _reminderName write _reminderName;
+    property runAtStartUp    : boolean read _runAtStartUp write _runAtStartUp;
+    property screenSave      : boolean read _screenSave write _screenSave;
+    property formTop         : integer read _formTop write _formTop;
+    property formLeft        : integer read _formLeft write _formLeft;
+    property defaultTab      : integer read _defaultTab write _defaultTab;
+    property volume          : string  read _volume write _volume;
     property monitorClipboard: boolean read _monitorClipboard write _monitorClipboard;
-    property CB_ScreenSave: boolean read _CB_ScreenSave write _CB_ScreenSave;
-    property CB_formTop: integer read _CB_formTop write _CB_formTop;
-    property CB_formLeft: integer read _CB_formLeft write _CB_formLeft;
+    property CB_ScreenSave   : boolean read _CB_ScreenSave write _CB_ScreenSave;
+    property CB_formTop      : integer read _CB_formTop write _CB_formTop;
+    property CB_formLeft     : integer read _CB_formLeft write _CB_formLeft;
 
-    property keepMonitorAwake: boolean read _keepMonitorAwake write _keepMonitorAwake;
-    property keepMonitorAwakeF15: boolean read _keepMonitorAwakeF15 write _keepMonitorAwakeF15;
-    property keepMonitorAwakeJiggle: boolean read _keepMonitorAwakeJiggle write _keepMonitorAwakeJiggle;
+    property keepMonitorAwake       : boolean read _keepMonitorAwake write _keepMonitorAwake;
+    property keepMonitorAwakeF15    : boolean read _keepMonitorAwakeF15 write _keepMonitorAwakeF15;
+    property keepMonitorAwakeJiggle : boolean read _keepMonitorAwakeJiggle write _keepMonitorAwakeJiggle;
     property keepMonitorAwakeMinutes: integer read _keepMonitorAwakeMinutes write _keepMonitorAwakeMinutes;
 
-    property Latitude: double read _Latitude write _Latitude;
+    property Latitude : double read _Latitude write _Latitude;
     property Longitude: double read _Longitude write _Longitude;
 
+    property birthdate: TDateTime read _birthdate write _birthdate;
+
     //  Time
-    property defaultTime: integer read _defaultTime write _defaultTime;
-    property netTimeSeconds: boolean read _netTimeSeconds write _netTimeSeconds;
-    property swatchCentibeats: boolean read _swatchCentibeats write _swatchCentibeats;
-    property fuzzyTimeBalloon: boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
-    property displayIdleTime: boolean read _displayIdleTime write _displayIdleTime;
-    property fuzzyTimeVerbose: boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
-    property display24Hour: boolean read _display24Hour write _display24Hour;
-    property hourPips: boolean read _hourPips write _hourPips;
-    property hourChimes: boolean read _hourChimes write _hourChimes;
-    property halfChimes: boolean read _halfChimes write _halfChimes;
-    property quarterChimes: boolean read _quarterChimes write _quarterChimes;
+    property defaultTime       : integer read _defaultTime write _defaultTime;
+    property netTimeSeconds    : boolean read _netTimeSeconds write _netTimeSeconds;
+    property swatchCentibeats  : boolean read _swatchCentibeats write _swatchCentibeats;
+    property fuzzyTimeBalloon  : boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
+    property displayIdleTime   : boolean read _displayIdleTime write _displayIdleTime;
+    property fuzzyTimeVerbose  : boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
+    property display24Hour     : boolean read _display24Hour write _display24Hour;
+    property hourPips          : boolean read _hourPips write _hourPips;
+    property hourChimes        : boolean read _hourChimes write _hourChimes;
+    property halfChimes        : boolean read _halfChimes write _halfChimes;
+    property quarterChimes     : boolean read _quarterChimes write _quarterChimes;
     property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
-    property christmasFont: boolean read _christmasFont write _christmasFont;
-    property easterFont: boolean read _easterFont write _easterFont;
-    property valentinesFont: boolean read _valentinesFont write _valentinesFont;
-    property haloweenFont: boolean read _haloweenFont write _haloweenFont;
+    property christmasFont     : boolean read _christmasFont write _christmasFont;
+    property easterFont        : boolean read _easterFont write _easterFont;
+    property valentinesFont    : boolean read _valentinesFont write _valentinesFont;
+    property haloweenFont      : boolean read _haloweenFont write _haloweenFont;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
 
     // Analogue Kock
-    property analogueScreenSave: boolean read _analogueScreenSave write _analogueScreenSave;
-    property analogueFormTop: integer read _analogueFormTop write _analogueFormTop;
-    property analogueFormLeft: integer read _analogueFormLeft write _analogueFormLeft;
+    property analogueScreenSave : boolean read _analogueScreenSave write _analogueScreenSave;
+    property analogueFormTop    : integer read _analogueFormTop write _analogueFormTop;
+    property analogueFormLeft   : integer read _analogueFormLeft write _analogueFormLeft;
     property analogueAlwaysOnTop: boolean read _analogueAlwaysOnTop write _analogueAlwaysOnTop;
 
     // LED Kock
@@ -233,39 +238,39 @@ type
     property LEDAlwaysOnTop: boolean read _LEDAlwaysOnTop write _LEDAlwaysOnTop;
 
     // Binary Kock
-    property BinaryScreenSave: boolean read _BinaryScreenSave write _BinaryScreenSave;
-    property BinaryFormTop: integer read _BinaryFormTop write _BinaryFormTop;
-    property BinaryFormLeft: integer read _BinaryFormLeft write _BinaryFormLeft;
-    property BinaryFormat: boolean read _BinaryFormat write _BinaryFormat;
+    property BinaryScreenSave : boolean read _BinaryScreenSave write _BinaryScreenSave;
+    property BinaryFormTop    : integer read _BinaryFormTop write _BinaryFormTop;
+    property BinaryFormLeft   : integer read _BinaryFormLeft write _BinaryFormLeft;
+    property BinaryFormat     : boolean read _BinaryFormat write _BinaryFormat;
     property BinaryAlwaysOnTop: boolean read _BinaryAlwaysOnTop write _BinaryAlwaysOnTop;
 
     // Small Text Klock
-    property smallTextScreenSave: boolean read _smallTextScreenSave write _smallTextScreenSave;
-    property smallTextFormTop: integer read _smallTextFormTop write _smallTextFormTop;
-    property smallTextFormLeft: integer read _smallTextFormLeft write _smallTextFormLeft;
+    property smallTextScreenSave : boolean read _smallTextScreenSave write _smallTextScreenSave;
+    property smallTextFormTop    : integer read _smallTextFormTop write _smallTextFormTop;
+    property smallTextFormLeft   : integer read _smallTextFormLeft write _smallTextFormLeft;
     property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
-    property smallAlwaysOnTop: boolean read _smallAlwaysOnTop write _smallAlwaysOnTop;
+    property smallAlwaysOnTop    : boolean read _smallAlwaysOnTop write _smallAlwaysOnTop;
 
     // Floating Text Klock
-    property floatingTextScreenSave: boolean read _floatingTextScreenSave write _floatingTextScreenSave;
-    property floatingTextFormTop: integer read _floatingTextFormTop write _floatingTextFormTop;
-    property floatingTextFormLeft: integer read _floatingTextFormLeft write _floatingTextFormLeft;
-    property floatingTextFont: TFont read _floatingTextFont write _floatingTextFont;
+    property floatingTextScreenSave  : boolean read _floatingTextScreenSave write _floatingTextScreenSave;
+    property floatingTextFormTop     : integer read _floatingTextFormTop write _floatingTextFormTop;
+    property floatingTextFormLeft    : integer read _floatingTextFormLeft write _floatingTextFormLeft;
+    property floatingTextFont        : TFont   read _floatingTextFont write _floatingTextFont;
     property floatingTextUseKlockFont: boolean read _floatingTextUseKlockFont write _floatingTextUseKlockFont;
-    property floatingAlwaysOnTop: boolean read _floatingAlwaysOnTop write _floatingAlwaysOnTop;
+    property floatingAlwaysOnTop     : boolean read _floatingAlwaysOnTop write _floatingAlwaysOnTop;
 
     // Memos
     property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
-    property defaultpassWord: string read _defaultpassWord write _defaultpassWord;
-    property decryptTimeOut: integer read _decryptTimeOut write _decryptTimeOut;
+    property defaultpassWord   : string  read _defaultpassWord write _defaultpassWord;
+    property decryptTimeOut    : integer read _decryptTimeOut write _decryptTimeOut;
 
     //Sticky Notes
     property stickyColor: TColor read _stickyColor write _stickyColor;
-    property stickyFont: TFont read _stickyFont write _stickyFont;
+    property stickyFont : TFont  read _stickyFont write _stickyFont;
 
     //  Logging
-    property logging: boolean read _logging write _logging;
-    property cullLogs: boolean read _cullLogs write _cullLogs;
+    property logging     : boolean read _logging write _logging;
+    property cullLogs    : boolean read _cullLogs write _cullLogs;
     property CullLogsDays: integer read _CullLogsDays write _CullLogsDays;
 
     constructor Create; overload;
@@ -290,26 +295,26 @@ type
   }
 
   private
-    _comments: string;
-    _companyName: string;
-    _fileDescription: string;
-    _fileVersion: string;
-    _InternalName: string;
-    _legalCopyright: string;
+    _comments        : string;
+    _companyName     : string;
+    _fileDescription : string;
+    _fileVersion     : string;
+    _InternalName    : string;
+    _legalCopyright  : string;
     _originalFileName: string;
-    _productName: string;
-    _productVersion: string;
+    _productName     : string;
+    _productVersion  : string;
 
   public
-    property fileComments: string read _comments write _comments;
-    property fileCompanyName: string read _companyName write _companyName;
-    property fileFileDescription: string read _fileDescription write _fileDescription;
-    property fileFileVersion: string read _fileVersion write _fileVersion;
-    property fileInternalName: string read _InternalName write _InternalName;
-    property fileLegalCopyright: string read _legalCopyright write _legalCopyright;
+    property fileComments        : string read _comments write _comments;
+    property fileCompanyName     : string read _companyName write _companyName;
+    property fileFileDescription : string read _fileDescription write _fileDescription;
+    property fileFileVersion     : string read _fileVersion write _fileVersion;
+    property fileInternalName    : string read _InternalName write _InternalName;
+    property fileLegalCopyright  : string read _legalCopyright write _legalCopyright;
     property fileOriginalFileName: string read _originalFileName write _originalFileName;
-    property fileProductName: string read _productName write _productName;
-    property fileProductVersion: string read _productVersion write _productVersion;
+    property fileProductName     : string read _productName write _productName;
+    property fileProductVersion  : string read _productVersion write _productVersion;
 
     procedure GetFileInfo;
   end;
@@ -387,109 +392,111 @@ procedure Options.Assign(o: Options);
 }
 begin
   //  Global - file stuff
-  Comments := o.Comments;
-  companyName := o.companyName;
-  fileDescription := o.fileDescription;
-  fileVersion := o.fileVersion;
-  InternalName := o.InternalName;
-  legalCopyright := o.legalCopyright;
+  Comments         := o.Comments;
+  companyName      := o.companyName;
+  fileDescription  := o.fileDescription;
+  fileVersion      := o.fileVersion;
+  InternalName     := o.InternalName;
+  legalCopyright   := o.legalCopyright;
   originalFileName := o.originalFileName;
-  productName := o.productName;
-  productVersion := o.productVersion;
+  productName      := o.productName;
+  productVersion   := o.productVersion;
 
   //  Global - other stuff
-  optionsName := o.optionsName;
-  memoName := o.memoName;
-  stickyName := o.stickyName;
-  unitsName := o.unitsName;
-  reminderName := o.reminderName;
-  runAtStartUp := o.runAtStartUp;
-  screenSave := o.screenSave;
-  formTop := o.formTop;
-  formLeft := o.formLeft;
-  defaultTab := o.defaultTab;
-  volume := o.volume;
+  optionsName      := o.optionsName;
+  memoName         := o.memoName;
+  stickyName       := o.stickyName;
+  unitsName        := o.unitsName;
+  reminderName     := o.reminderName;
+  runAtStartUp     := o.runAtStartUp;
+  screenSave       := o.screenSave;
+  formTop          := o.formTop;
+  formLeft         := o.formLeft;
+  defaultTab       := o.defaultTab;
+  volume           := o.volume;
   monitorClipboard := o.monitorClipboard;
-  CB_screenSave := o.CB_screenSave;
-  CB_formTop := o.CB_formTop;
-  CB_formLeft := o.CB_formLeft;
+  CB_screenSave    := o.CB_screenSave;
+  CB_formTop       := o.CB_formTop;
+  CB_formLeft      := o.CB_formLeft;
 
-  keepMonitorAwake := o.keepMonitorAwake;
-  keepMonitorAwakeF15 := o.keepMonitorAwakeF15;
-  keepMonitorAwakeJiggle := o.keepMonitorAwakeJiggle;
+  keepMonitorAwake        := o.keepMonitorAwake;
+  keepMonitorAwakeF15     := o.keepMonitorAwakeF15;
+  keepMonitorAwakeJiggle  := o.keepMonitorAwakeJiggle;
   keepMonitorAwakeMinutes := o.keepMonitorAwakeMinutes;
 
-  Latitude := o.Latitude;
+  Latitude  := o.Latitude;
   Longitude := o.Longitude;
 
+  birthdate := o.birthdate;
+
   //  Time
-  defaultTime := o.defaultTime;
-  netTimeSeconds := o.netTimeSeconds;
-  swatchCentibeats := o.swatchCentibeats;
-  fuzzyTimeBalloon := o.fuzzyTimeBalloon;
-  displayIdleTime := o.displayIdleTime;
-  fuzzyTimeVerbose := o.fuzzyTimeVerbose;
-  display24Hour := o.display24Hour;
-  hourPips := o.hourPips;
-  hourChimes := o.hourChimes;
-  halfChimes := o.halfChimes;
-  quarterChimes := o.quarterChimes;
+  defaultTime        := o.defaultTime;
+  netTimeSeconds     := o.netTimeSeconds;
+  swatchCentibeats   := o.swatchCentibeats;
+  fuzzyTimeBalloon   := o.fuzzyTimeBalloon;
+  displayIdleTime    := o.displayIdleTime;
+  fuzzyTimeVerbose   := o.fuzzyTimeVerbose;
+  display24Hour      := o.display24Hour;
+  hourPips           := o.hourPips;
+  hourChimes         := o.hourChimes;
+  halfChimes         := o.halfChimes;
+  quarterChimes      := o.quarterChimes;
   threeQuarterChimes := o.threeQuarterChimes;
-  christmasFont := o.christmasFont;
-  easterFont := o.easterFont;
-  valentinesFont := o.valentinesFont;
-  haloweenFont := o.haloweenFont;
+  christmasFont      := o.christmasFont;
+  easterFont         := o.easterFont;
+  valentinesFont     := o.valentinesFont;
+  haloweenFont       := o.haloweenFont;
 
   //  Timer
   timerMilliSeconds := o.timerMilliSeconds;
 
   //  Analogue Klock
-  analogueScreenSave := o.analogueScreenSave;
-  analogueFormTop := o.analogueFormTop;
-  analogueFormLeft := o.analogueFormLeft;
+  analogueScreenSave  := o.analogueScreenSave;
+  analogueFormTop     := o.analogueFormTop;
+  analogueFormLeft    := o.analogueFormLeft;
   analogueAlwaysOnTop := o.analogueAlwaysOnTop;
 
   //  LED Klock
-  LEDScreenSave := o.LEDScreenSave;
-  LEDFormTop := o.LEDFormTop;
-  LEDFormLeft := o.LEDFormLeft;
-  LEDlongDate := o.LEDlongDate;
+  LEDScreenSave  := o.LEDScreenSave;
+  LEDFormTop     := o.LEDFormTop;
+  LEDFormLeft    := o.LEDFormLeft;
+  LEDlongDate    := o.LEDlongDate;
   LEDAlwaysOnTop := o.LEDAlwaysOnTop;
 
   //  Binary Klock
-  BinaryScreenSave := o.BinaryScreenSave;
-  BinaryFormTop := o.BinaryFormTop;
-  BinaryFormLeft := o.BinaryFormLeft;
-  BinaryFormat := o.BinaryFormat;
+  BinaryScreenSave  := o.BinaryScreenSave;
+  BinaryFormTop     := o.BinaryFormTop;
+  BinaryFormLeft    := o.BinaryFormLeft;
+  BinaryFormat      := o.BinaryFormat;
   BinaryAlwaysOnTop := o.BinaryAlwaysOnTop;
 
   // Small Text Klock
-  smallTextScreenSave := o.smallTextScreenSave;
-  smallTextFormTop := o.smallTextFormTop;
-  smallTextFormLeft := o.smallTextFormLeft;
+  smallTextScreenSave  := o.smallTextScreenSave;
+  smallTextFormTop     := o.smallTextFormTop;
+  smallTextFormLeft    := o.smallTextFormLeft;
   smallTextTransparent := o.smallTextTransparent;
-  smallAlwaysOnTop := o.smallAlwaysOnTop;
+  smallAlwaysOnTop     := o.smallAlwaysOnTop;
 
   // Floating Text Klock
-  floatingTextScreenSave := o.floatingTextScreenSave;
-  floatingTextFormTop := o.floatingTextFormTop;
-  floatingTextFormLeft := o.floatingTextFormLeft;
-  floatingTextFont := o.floatingTextFont;
+  floatingTextScreenSave   := o.floatingTextScreenSave;
+  floatingTextFormTop      := o.floatingTextFormTop;
+  floatingTextFormLeft     := o.floatingTextFormLeft;
+  floatingTextFont         := o.floatingTextFont;
   floatingTextUseKlockFont := o.floatingTextUseKlockFont;
-  floatingAlwaysOnTop := o.floatingAlwaysOnTop;
+  floatingAlwaysOnTop      := o.floatingAlwaysOnTop;
 
   // memos
   useDefaultpassWord := o.useDefaultpassWord;
-  defaultpassWord := o.defaultpassWord;
-  decryptTimeOut := o.decryptTimeOut;
+  defaultpassWord    := o.defaultpassWord;
+  decryptTimeOut     := o.decryptTimeOut;
 
   //Sticky Notes
   stickyColor := o.stickyColor;
-  stickyFont := o.stickyFont;
+  stickyFont  := o.stickyFont;
 
   //  Logging
-  logging := o.logging;
-  cullLogs := o.cullLogs;
+  logging      := o.logging;
+  cullLogs     := o.cullLogs;
   CullLogsDays := o.CullLogsDays;
 end;
 
@@ -507,25 +514,25 @@ procedure Options.readOptions;
    NOTE : This cures the missing child problem, BUT NOT the missing node.
 }
 var
-  fvi: myFileVersionInfo;
+  fvi     : myFileVersionInfo;
   PassNode: TDOMNode;
-  Doc: TXMLDocument;
-  rtn: string;
+  Doc     : TXMLDocument;
+  rtn     : string;
 begin
   try
     //  retrieve file info i.e build numner etc.
     fvi := myFileVersionInfo.Create;
     fvi.GetFileInfo;
 
-    Comments := fvi.fileComments;
-    companyName := fvi.fileCompanyName;
-    fileDescription := fvi.fileFileDescription;
-    fileVersion := fvi.fileFileVersion;
-    InternalName := fvi.fileInternalName;
-    legalCopyright := fvi.fileLegalCopyright;
+    Comments         := fvi.fileComments;
+    companyName      := fvi.fileCompanyName;
+    fileDescription  := fvi.fileFileDescription;
+    fileVersion      := fvi.fileFileVersion;
+    InternalName     := fvi.fileInternalName;
+    legalCopyright   := fvi.fileLegalCopyright;
     originalFileName := fvi.fileOriginalFileName;
-    productName := fvi.fileProductName;
-    productVersion := fvi.fileProductVersion;
+    productName      := fvi.fileProductName;
+    productVersion   := fvi.fileProductVersion;
 
     try
       // Read in xml file from disk
@@ -580,6 +587,9 @@ begin
       if rtn <> 'ERROR' then Latitude := StrToFloat(rtn);
       rtn := readChild(PassNode, 'Longitude');
       if rtn <> 'ERROR' then Longitude := StrToFloat(rtn);
+
+      rtn := readChild(PassNode, 'BirthDay');
+      if rtn <> 'ERROR' then birthdate := StrToDate(rtn);
     end;
 
     //  keep Monitor Awake
@@ -783,109 +793,111 @@ begin
   fvi.GetFileInfo;
 
   // Global
-  Comments := fvi.fileComments;
-  companyName := fvi.fileCompanyName;
-  fileDescription := fvi.fileFileDescription;
-  fileVersion := fvi.fileFileVersion;
-  InternalName := fvi.fileInternalName;
-  legalCopyright := fvi.fileLegalCopyright;
+  Comments         := fvi.fileComments;
+  companyName      := fvi.fileCompanyName;
+  fileDescription  := fvi.fileFileDescription;
+  fileVersion      := fvi.fileFileVersion;
+  InternalName     := fvi.fileInternalName;
+  legalCopyright   := fvi.fileLegalCopyright;
   originalFileName := fvi.fileOriginalFileName;
-  productName := fvi.fileProductName;
-  productVersion := fvi.fileProductVersion;
+  productName      := fvi.fileProductName;
+  productVersion   := fvi.fileProductVersion;
 
   //  optionsName set up in create
-  memoName := GetAppConfigDir(False) + 'Memo.bin';
-  stickyName := GetAppConfigDir(False) + 'StickyNotes.bin';
-  unitsName := GetAppConfigDir(False) + 'Units.txt';
-  reminderName := GetAppConfigDir(False) + 'kReminder.txt';
-  runAtStartUp := false;
-  screenSave := True;
-  formTop := 100;              //  the forms top left.
-  formLeft := 100;
-  defaultTab := 0;
-  volume := '123';
+  memoName         := GetAppConfigDir(False) + 'Memo.bin';
+  stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
+  unitsName        := GetAppConfigDir(False) + 'Units.txt';
+  reminderName     := GetAppConfigDir(False) + 'kReminder.txt';
+  runAtStartUp     := false;
+  screenSave       := True;
+  formTop          := 100;            //  the forms top left.
+  formLeft         := 100;
+  defaultTab       := 0;
+  volume           := '123';
   monitorClipboard := True;
-  CB_screenSave := True;
-  CB_formTop := 0;              //  the clipboard manager top left.
-  CB_formLeft := 0;
+  CB_screenSave    := True;
+  CB_formTop       := 0;              //  the clipboard manager top left.
+  CB_formLeft      := 0;
 
-  Latitude := 51.5033640;
+  Latitude  := 51.5033640;
   Longitude := -0.1276250;
 
+  birthdate := encodeDate(1958, 04, 02);
+
   //  keep Monitor Awake
-  keepMonitorAwake := false;
-  keepMonitorAwakeF15 := true;
-  keepMonitorAwakeJiggle := false;
+  keepMonitorAwake        := false;
+  keepMonitorAwakeF15     := true;
+  keepMonitorAwakeJiggle  := false;
   keepMonitorAwakeMinutes := 10;
 
   //  Time
-  defaultTime := 0;
-  netTimeSeconds := true;
-  swatchCentibeats := true;
-  fuzzyTimeBalloon := true;
-  displayIdleTime := true;
-  fuzzyTimeVerbose := true;
-  display24Hour := true;
-  hourPips := false;
-  hourChimes := false;
-  halfChimes := false;
-  quarterChimes := false;
+  defaultTime        := 0;
+  netTimeSeconds     := true;
+  swatchCentibeats   := true;
+  fuzzyTimeBalloon   := true;
+  displayIdleTime    := true;
+  fuzzyTimeVerbose   := true;
+  display24Hour      := true;
+  hourPips           := false;
+  hourChimes         := false;
+  halfChimes         := false;
+  quarterChimes      := false;
   threeQuarterChimes := false;
-  christmasFont := true;
-  easterFont := true;
-  valentinesFont := true;
-  haloweenFont := true;
+  christmasFont      := true;
+  easterFont         := true;
+  valentinesFont     := true;
+  haloweenFont       := true;
 
   //  Timer
   timerMilliSeconds := True;
 
   //  Analogue Klock
-  analogueScreenSave := True;
-  analogueFormTop := 100;
-  analogueFormLeft := 100;
+  analogueScreenSave  := True;
+  analogueFormTop     := 100;
+  analogueFormLeft    := 100;
   analogueAlwaysOnTop := true;
 
   //  LED Klock
-  LEDScreenSave := True;
-  LEDFormTop := 100;
-  LEDFormLeft := 100;
-  LEDlongDate := True;
+  LEDScreenSave  := True;
+  LEDFormTop     := 100;
+  LEDFormLeft    := 100;
+  LEDlongDate    := True;
   LEDAlwaysOnTop := true;
 
   //  Binary Klock
-  BinaryScreenSave := True;
-  BinaryFormTop := 100;
-  BinaryFormLeft := 100;
-  BinaryFormat := False;     //  default to BCD.
+  BinaryScreenSave  := True;
+  BinaryFormTop     := 100;
+  BinaryFormLeft    := 100;
+  BinaryFormat      := False;     //  default to BCD.
   BinaryAlwaysOnTop := true;
 
   // Small Text Klock
-  smallTextScreenSave := True;
-  smallTextFormTop := 100;
-  smallTextFormLeft := 100;
+  smallTextScreenSave  := True;
+  smallTextFormTop     := 100;
+  smallTextFormLeft    := 100;
   smallTextTransparent := True;
-  smallAlwaysOnTop := true;
+  smallAlwaysOnTop     := true;
 
   // Floating Text Klock
-  floatingTextScreenSave := true;
-  floatingTextFormTop := 100;
-  floatingTextFormLeft := 100;
-  floatingTextFont := TFont.Create;
+  floatingTextScreenSave   := true;
+  floatingTextFormTop      := 100;
+  floatingTextFormLeft     := 100;
+  floatingTextFont         := TFont.Create;
   floatingTextUseKlockFont := true;
-  floatingAlwaysOnTop := true;
+  floatingAlwaysOnTop      := true;
 
   // memos
   useDefaultpassWord := true;
-  defaultpassWord := 'klock';
-  decryptTimeOut := 30;
+  defaultpassWord    := 'klock';
+  decryptTimeOut     := 30;
 
   //Sticky Notes
   stickyColor := clYellow;
-  stickyFont := TFont.Create;
+  stickyFont  := TFont.Create;
 
   //  Logging
-  logging := True;
-  cullLogs := False;
+  logging      := True;
+  cullLogs     := False;
   CullLogsDays := 14;
 end;
 
@@ -895,9 +907,10 @@ procedure Options.writeCurrentOptions;
    The file info is re-read, in case is has changed
 }
 var
-  Doc: TXMLDocument;
-  RootNode, ElementNode: TDOMNode;
-  fvi: myFileVersionInfo;
+  Doc        : TXMLDocument;
+  RootNode   : TDOMNode;
+  ElementNode: TDOMNode;
+  fvi        : myFileVersionInfo;
 begin
   try
     //  retrieve file info i.e build numner etc.
@@ -941,6 +954,8 @@ begin
 
     ElementNode.AppendChild(writeFloatChild(doc, 'Latitude', Latitude));
     ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));
+
+    ElementNode.AppendChild(writeDateChild(doc, 'BirthDay', birthdate));
 
     RootNode.AppendChild(ElementNode);
 
@@ -1089,15 +1104,15 @@ begin
   try
     FileVerInfo.ReadFileInfo;
 
-    fileComments := FileVerInfo.VersionStrings.Values['Comments'];
-    fileCompanyName := FileVerInfo.VersionStrings.Values['CompanyName'];
-    fileFileDescription := FileVerInfo.VersionStrings.Values['FileDescription'];
-    fileFileVersion := FileVerInfo.VersionStrings.Values['FileVersion'];
-    fileInternalName := FileVerInfo.VersionStrings.Values['InternalName'];
-    fileLegalCopyright := FileVerInfo.VersionStrings.Values['LegalCopyright'];
+    fileComments         := FileVerInfo.VersionStrings.Values['Comments'];
+    fileCompanyName      := FileVerInfo.VersionStrings.Values['CompanyName'];
+    fileFileDescription  := FileVerInfo.VersionStrings.Values['FileDescription'];
+    fileFileVersion      := FileVerInfo.VersionStrings.Values['FileVersion'];
+    fileInternalName     := FileVerInfo.VersionStrings.Values['InternalName'];
+    fileLegalCopyright   := FileVerInfo.VersionStrings.Values['LegalCopyright'];
     fileOriginalFileName := FileVerInfo.VersionStrings.Values['OriginalFilename'];
-    fileProductName := FileVerInfo.VersionStrings.Values['ProductName'];
-    fileProductVersion := FileVerInfo.VersionStrings.Values['ProductVersion'];
+    fileProductName      := FileVerInfo.VersionStrings.Values['ProductName'];
+    fileProductVersion   := FileVerInfo.VersionStrings.Values['ProductVersion'];
   finally
     FileVerInfo.Free;
   end;
@@ -1135,7 +1150,8 @@ end;
 function Options.writeStrChild(Doc: TXMLDocument; name: string; value: string): TDOMNode;
 {  Write a [string] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(WideString(value));
@@ -1146,7 +1162,8 @@ end;
 function Options.writeColChild(Doc: TXMLDocument; name: string; value: TColor): TDOMNode;
 {  Write a [string] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(ColorToString(value));
@@ -1157,7 +1174,8 @@ end;
 function Options.writeFontChild(Doc: TXMLDocument; name: string; value: TFont): TDOMNode;
 {  Write a [font] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(FontToString(value));
@@ -1165,10 +1183,23 @@ begin
   result := ItemNode;
 end;
 
+function Options.writeDateChild(Doc: TXMLDocument; name: string; value: TDateTime): TDOMNode;
+{  Write a [font] value to a child node.    }
+var
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
+begin
+  ItemNode := Doc.CreateElement(name);
+  TextNode := Doc.CreateTextNode(DateTimeToStr(value));
+  ItemNode.AppendChild(TextNode);
+  result := ItemNode;
+end;
+
 function Options.writeBolChild(Doc: TXMLDocument; name: string; value: boolean): TDOMNode;
 {  Write a [boolean] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(BoolToStr(value));
@@ -1179,7 +1210,8 @@ end;
 function Options.writeFloatChild(Doc: TXMLDocument; name: string; value: Double): TDOMNode;
 {  Write a [boolean] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(FloatToStr(value));
@@ -1190,7 +1222,8 @@ end;
 function Options.writeIntChild(Doc: TXMLDocument; name: string; value: integer): TDOMNode;
 {  Write a [integer] value to a child node.    }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TextNode := Doc.CreateTextNode(IntToStr(value));
@@ -1205,7 +1238,8 @@ function Options.writeIntChildAttribute(Doc: TXMLDocument; name: string; value1:
    So, this routine is hard coded for form position until i can fix.
 }
 var
-  ItemNode, TextNode: TDOMNode;
+  ItemNode: TDOMNode;
+  TextNode: TDOMNode;
 begin
   ItemNode := Doc.CreateElement(name);
   TDOMElement(ItemNode).SetAttribute('Top', IntToStr(value1));

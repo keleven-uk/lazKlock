@@ -2,7 +2,7 @@ unit formOptions;
 
 {  This form allows the amendment of all user options.
    The user options are held in the class Options which is held in uOptions.pas.
-   The main user options is created withing formKlock.pas when the application is first started.
+   The main user options is created with in formKlock.pas when the application is first started.
    This unit creates a secondary options objects to hold changes made wile the form is active.
    If OK is pressed the secondary options object with the changes are copied to the main
    options and the form is closed.
@@ -23,77 +23,82 @@ type
   { TfrmOptions }
 
   TfrmOptions = class(TForm)
-    accItemGlobal: TAccordionItem;
-    accItemLogging: TAccordionItem;
-    accItemTime: TAccordionItem;
-    accItemOtherKlocks: TAccordionItem;
-    accItemStickyMemo: TAccordionItem;
-    accItemArchive: TAccordionItem;
-    btrOptionsReset: TButton;
-    btnGlobalVolumeTest: TButton;
-    btnCullLogs: TButton;
-    btnStickyNoteFont: TButton;
-    btnSaveArchive: TButton;
-    btnLoadArchive: TButton;
+
+    AcrdnOptions               : TECAccordion;
+    accItemGlobal              : TAccordionItem;
+    accItemLogging             : TAccordionItem;
+    accItemTime                : TAccordionItem;
+    accItemOtherKlocks         : TAccordionItem;
+    accItemStickyMemo          : TAccordionItem;
+    accItemArchive             : TAccordionItem;
+    btrOptionsReset            : TButton;
+    btnGlobalVolumeTest        : TButton;
+    btnCullLogs                : TButton;
+    btnStickyNoteFont          : TButton;
+    btnSaveArchive             : TButton;
+    btnLoadArchive             : TButton;
     btnlblFloatingTextKlockFont: TButton;
-    ButtonPanel1: TButtonPanel;
-    ChckBxCullLogsFiles: TCheckBox;
-    ChckBxLogging: TCheckBox;
-    ChckGrpTimeOptions: TCheckGroup;
-    ChckGrpGlobalOptions: TCheckGroup;
-    ChckGrpTimeChimes: TCheckGroup;
-    ChckGrpAnalogueKlock: TCheckGroup;
-    ChckGrpHolidayFonts: TCheckGroup;
-    ChckGrpLEDKlock: TCheckGroup;
-    ChckGrpBinaryKlock: TCheckGroup;
-    ChckGrpSmallTextKlock: TCheckGroup;
-    ChckGrpTimerSettings: TCheckGroup;
-    ChckBxDefaultPassWord: TCheckBox;
-    ChckLstBxArchive: TCheckListBox;
-    ChckGrpFloatingTextKlock: TCheckGroup;
-    ChckBxKeepMonitorAwake: TCheckBox;
-    ChckBxUseF15: TCheckBox;
-    ChckBxJiggleMouse: TCheckBox;
-    CmbBxDefaulTtab: TComboBox;
-    CmbBxDefaultTime: TComboBox;
-    AcrdnOptions: TECAccordion;
-    clrBtnStickyNoteColour: TColorButton;
-    ColorDialog1: TColorDialog;
-    EdtDefaultPassWord: TEdit;
-    edtLatitude: TEdit;
-    edtLongitude: TEdit;
-    FlNmEdtLoadArchiveName: TFileNameEdit;
-    FlNmEdtSaveArchiveName: TFileNameEdit;
-    FontDialog1: TFontDialog;
-    GroupBox1: TGroupBox;
-    GroupBox10: TGroupBox;
-    GroupBox11: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
-    GroupBox5: TGroupBox;
-    GroupBox6: TGroupBox;
-    GroupBox7: TGroupBox;
-    GroupBox8: TGroupBox;
-    GroupBox9: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    lblCheckEvery: TLabel;
-    lblMinutes: TLabel;
-    lblFloatingTextKlockFont: TLabel;
-    lblLatitude: TLabel;
-    lblLongitude: TLabel;
-    LblStickyNoteColour: TLabel;
-    lblCullFileDays: TLabel;
-    lblSettingsFileName: TLabel;
-    Label3: TLabel;
-    LstBxLogFiles: TListBox;
-    Settings: TGroupBox;
-    SpnEdtMonitorMinites: TSpinEdit;
-    SpnEdtMemoTimeOut: TSpinEdit;
-    SpnEdtCullDays: TSpinEdit;
-    lblStickyNoteFont: TStaticText;
-    TrckBrGlobalVolume: TTrackBar;
+    ButtonPanel1               : TButtonPanel;
+    ChckGrpTimeOptions         : TCheckGroup;
+    ChckGrpGlobalOptions       : TCheckGroup;
+    ChckGrpTimeChimes          : TCheckGroup;
+    ChckGrpAnalogueKlock       : TCheckGroup;
+    ChckGrpHolidayFonts        : TCheckGroup;
+    ChckGrpLEDKlock            : TCheckGroup;
+    ChckGrpBinaryKlock         : TCheckGroup;
+    ChckGrpSmallTextKlock      : TCheckGroup;
+    ChckGrpTimerSettings       : TCheckGroup;
+    ChckGrpFloatingTextKlock   : TCheckGroup;
+    ChckLstBxArchive           : TCheckListBox;
+    ChckBxDefaultPassWord      : TCheckBox;
+    ChckBxCullLogsFiles        : TCheckBox;
+    ChckBxLogging              : TCheckBox;
+    ChckBxKeepMonitorAwake     : TCheckBox;
+    ChckBxUseF15               : TCheckBox;
+    ChckBxJiggleMouse          : TCheckBox;
+    CmbBxDefaulTtab            : TComboBox;
+    CmbBxDefaultTime           : TComboBox;
+    clrBtnStickyNoteColour     : TColorButton;
+    ColorDialog1               : TColorDialog;
+    DtEdtBirthDate             : TDateEdit;
+    EdtDefaultPassWord         : TEdit;
+    edtLatitude                : TEdit;
+    edtLongitude               : TEdit;
+    FlNmEdtLoadArchiveName     : TFileNameEdit;
+    FlNmEdtSaveArchiveName     : TFileNameEdit;
+    FontDialog1                : TFontDialog;
+    GroupBox1                  : TGroupBox;
+    GroupBox10                 : TGroupBox;
+    GroupBox11                 : TGroupBox;
+    GroupBox12                 : TGroupBox;
+    GroupBox2                  : TGroupBox;
+    GroupBox3                  : TGroupBox;
+    GroupBox4                  : TGroupBox;
+    GroupBox5                  : TGroupBox;
+    GroupBox6                  : TGroupBox;
+    GroupBox7                  : TGroupBox;
+    GroupBox8                  : TGroupBox;
+    Settings                   : TGroupBox;
+    GroupBox9                  : TGroupBox;
+    Label1                     : TLabel;
+    Label2                     : TLabel;
+    lblBirthDate               : TLabel;
+    lblCheckEvery              : TLabel;
+    lblMinutes                 : TLabel;
+    lblFloatingTextKlockFont   : TLabel;
+    lblLatitude                : TLabel;
+    lblLongitude               : TLabel;
+    LblStickyNoteColour        : TLabel;
+    lblCullFileDays            : TLabel;
+    lblSettingsFileName        : TLabel;
+    Label3                     : TLabel;
+    LstBxLogFiles              : TListBox;
+    SpnEdtMonitorMinites       : TSpinEdit;
+    SpnEdtMemoTimeOut          : TSpinEdit;
+    SpnEdtCullDays             : TSpinEdit;
+    lblStickyNoteFont          : TStaticText;
+    TrckBrGlobalVolume         : TTrackBar;
+
     procedure btnCullLogsClick(Sender: TObject);
     procedure btnGlobalVolumeTestClick(Sender: TObject);
     procedure btnlblFloatingTextKlockFontClick(Sender: TObject);
@@ -121,6 +126,7 @@ type
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
+    procedure DtEdtBirthDateChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
     procedure edtLatitudeChange(Sender: TObject);
     procedure edtLongitudeChange(Sender: TObject);
@@ -142,7 +148,7 @@ type
 
 
 var
-  frmOptions: TfrmOptions;
+  frmOptions    : TfrmOptions;
   userBacOptions: Options;          //  holds all the user options.
 
 implementation
@@ -161,7 +167,10 @@ procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormOptions Create');
 
+
+  //  Before userBacOptions is assigned, so use userOptions.
   lblSettingsFileName.Caption := userOptions.optionsName;
+  DtEdtBirthDate.Date         := userOptions.birthdate;
 end;
 
 procedure TfrmOptions.FormActivate(Sender: TObject);
@@ -260,31 +269,36 @@ begin
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
-  ChckBxLogging.Checked := userBacOptions.logging;
+  ChckBxLogging.Checked       := userBacOptions.logging;
   ChckBxCullLogsFiles.Checked := userBacOptions.cullLogs;
-  SpnEdtCullDays.Value := userBacOptions.CullLogsDays;
-  SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
-  lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
-  btnCullLogs.Visible := ChckBxCullLogsFiles.Checked;
+  SpnEdtCullDays.Value        := userBacOptions.CullLogsDays;
+  SpnEdtCullDays.Visible      := ChckBxCullLogsFiles.Checked;
+  lblCullFileDays.Visible     := ChckBxCullLogsFiles.Checked;
+  btnCullLogs.Visible         := ChckBxCullLogsFiles.Checked;
 
   readLogFiles;             //  Scan for log files and load listbox.
 
-  edtDefaultPassWord.Caption := userBacOptions.DefaultpassWord;
+  edtDefaultPassWord.Caption    := userBacOptions.DefaultpassWord;
   ChckBxDefaultPassWord.Checked := userBacOptions.usedefaultpassWord;
-  edtDefaultPassWord.Visible := ChckBxDefaultPassWord.Checked;
-  SpnEdtMemoTimeOut.Value := userBacOptions.decryptTimeOut;
+  edtDefaultPassWord.Visible    := ChckBxDefaultPassWord.Checked;
+  SpnEdtMemoTimeOut.Value       := userBacOptions.decryptTimeOut;
 
-  LblStickyNoteColour.Font.Color := userBacOptions.stickyColor;
+  LblStickyNoteColour.Font.Color     := userBacOptions.stickyColor;
   clrBtnStickyNoteColour.ButtonColor := userBacOptions.stickyColor;
-  lblStickyNoteFont.Font := userBacOptions.stickyFont;
+  lblStickyNoteFont.Font             := userBacOptions.stickyFont;
 
-  btnSaveArchive.Enabled := false;
-  btnLoadArchive.Enabled := false;
+  btnSaveArchive.Enabled            := false;
+  btnLoadArchive.Enabled            := false;
   FlNmEdtSaveArchiveName.InitialDir := GetAppConfigDir(False);
-  FlNmEdtSaveArchiveName.FileName := format('%sKlock_%s.zip', [GetAppConfigDir(False),
+  FlNmEdtSaveArchiveName.FileName   := format('%sKlock_%s.zip', [GetAppConfigDir(False),
                                                               FormatDateTime('DDMMMYYYY', now)]);
   FlNmEdtLoadArchiveName.FileName := '';
-  ChckLstBxArchive.Items := getArchiveFiles;
+  ChckLstBxArchive.Items          := getArchiveFiles;
+
+  //  when the date is accepted on a TDateEdit, it runs a form activate for some reasin.
+  //  So we set the values here.
+  userBacOptions.birthdate := DtEdtBirthDate.Date;
+  lblBirthDate.Caption     := format('Current BirthDate set to - %s', [DateTimeToStr(DtEdtBirthDate.Date)]);
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -295,7 +309,6 @@ procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
 begin
   userOptions.writeDefaultOptions;
 end;
-
 //............................ Options Routines ................................
 //
 //...................................GLOBAL ....................................
@@ -315,10 +328,10 @@ procedure TfrmOptions.ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: inte
    index 3 - Save Screen Position [Clipboard Monitor].
 }
 begin
-  userBacOptions.screenSave := ChckGrpGlobalOptions.Checked[0];
-  userBacOptions.runAtStartUp := ChckGrpGlobalOptions.Checked[1];
+  userBacOptions.screenSave       := ChckGrpGlobalOptions.Checked[0];
+  userBacOptions.runAtStartUp     := ChckGrpGlobalOptions.Checked[1];
   userBacOptions.monitorClipboard := ChckGrpGlobalOptions.Checked[2];
-  userBacOptions.CB_ScreenSave := ChckGrpGlobalOptions.Checked[3];
+  userBacOptions.CB_ScreenSave    := ChckGrpGlobalOptions.Checked[3];
 end;
 
 procedure TfrmOptions.TrckBrGlobalVolumeChange(Sender: TObject);
@@ -359,14 +372,14 @@ procedure TfrmOptions.ChckBxUseF15Change(Sender: TObject);
 {  Use simulate pressing F15 to keep monitor awake.    }
 begin
   userBacOptions.keepMonitorAwakeF15 := chckBxUseF15.Checked;
-  ChckBxJiggleMouse.Checked := not chckBxUseF15.Checked;
+  ChckBxJiggleMouse.Checked          := not chckBxUseF15.Checked;
 end;
 
 procedure TfrmOptions.ChckBxJiggleMouseChange(Sender: TObject);
 {  Use mouse movements to keep monitor awake.    }
 begin
   userBacOptions.keepMonitorAwakeJiggle := ChckBxJiggleMouse.Checked;
-  chckBxUseF15.Checked := not ChckBxJiggleMouse.Checked;
+  chckBxUseF15.Checked                  := not ChckBxJiggleMouse.Checked;
 end;
 
 procedure TfrmOptions.SpnEdtMonitorMinitesChange(Sender: TObject);
@@ -378,11 +391,11 @@ end;
 procedure TfrmOptions.setKeepMonitorAwake;
 {  if Keep Monitor Awake is use then enable options, if not disable.    }
 begin
-  ChckBxUseF15.Enabled := ChckBxKeepMonitorAwake.Checked;
-  ChckBxJiggleMouse.Enabled := ChckBxKeepMonitorAwake.Checked;
-  lblCheckEvery.Enabled := ChckBxKeepMonitorAwake.Checked;
+  ChckBxUseF15.Enabled         := ChckBxKeepMonitorAwake.Checked;
+  ChckBxJiggleMouse.Enabled    := ChckBxKeepMonitorAwake.Checked;
+  lblCheckEvery.Enabled        := ChckBxKeepMonitorAwake.Checked;
   SpnEdtMonitorMinites.Enabled := ChckBxKeepMonitorAwake.Checked;
-  lblMinutes.Enabled := ChckBxKeepMonitorAwake.Checked;
+  lblMinutes.Enabled           := ChckBxKeepMonitorAwake.Checked;
 end;
 //
 //.....................................TIME ....................................
@@ -398,12 +411,12 @@ index 0 - Display using 24 hour if true, else use 12 hour
       5 - Verbose Fuzzy Time.
 }
 begin
-  userBacOptions.display24Hour := ChckGrpTimeOptions.Checked[0];
-  userBacOptions.netTimeSeconds := ChckGrpTimeOptions.Checked[1];
+  userBacOptions.display24Hour    := ChckGrpTimeOptions.Checked[0];
+  userBacOptions.netTimeSeconds   := ChckGrpTimeOptions.Checked[1];
   userBacOptions.swatchCentibeats := ChckGrpTimeOptions.Checked[2];
   userBacOptions.fuzzyTimeBalloon := ChckGrpTimeOptions.Checked[3];
-  userBacOptions.displayIdleTime := ChckGrpTimeOptions.Checked[4];
-  userBacOptions.fuzzyTimeVerbose:= ChckGrpTimeOptions.Checked[5];
+  userBacOptions.displayIdleTime  := ChckGrpTimeOptions.Checked[4];
+  userBacOptions.fuzzyTimeVerbose := ChckGrpTimeOptions.Checked[5];
 end;
 
 procedure TfrmOptions.ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
@@ -416,10 +429,10 @@ index 0 - Sound "The Pips on the Hour"
       4 - Three-quarter Hourly Chimes
 }
 begin
-  userBacOptions.hourPips := ChckGrpTimeChimes.Checked[0];
-  userBacOptions.hourChimes := ChckGrpTimeChimes.Checked[1];
-  userBacOptions.halfChimes := ChckGrpTimeChimes.Checked[2];
-  userBacOptions.quarterChimes := ChckGrpTimeChimes.Checked[3];
+  userBacOptions.hourPips           := ChckGrpTimeChimes.Checked[0];
+  userBacOptions.hourChimes         := ChckGrpTimeChimes.Checked[1];
+  userBacOptions.halfChimes         := ChckGrpTimeChimes.Checked[2];
+  userBacOptions.quarterChimes      := ChckGrpTimeChimes.Checked[3];
   userBacOptions.threeQuarterChimes := ChckGrpTimeChimes.Checked[4];
 
   ChckGrpTimeChimes.CheckEnabled[1] := not ChckGrpTimeChimes.Checked[0];
@@ -437,10 +450,10 @@ procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integ
     Index 3 - Halloween [on that day only]
 }
 begin
-  userBacOptions.christmasFont := ChckGrpHolidayFonts.Checked[0];
-  userBacOptions.easterFont := ChckGrpHolidayFonts.Checked[1];
+  userBacOptions.christmasFont  := ChckGrpHolidayFonts.Checked[0];
+  userBacOptions.easterFont     := ChckGrpHolidayFonts.Checked[1];
   userBacOptions.valentinesFont := ChckGrpHolidayFonts.Checked[2];
-  userBacOptions.haloweenFont := ChckGrpHolidayFonts.Checked[3];
+  userBacOptions.haloweenFont   := ChckGrpHolidayFonts.Checked[3];
 end;
 
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
@@ -457,7 +470,7 @@ procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: inte
    Index 1 - Always On Top.
 }
 begin
-  userBacOptions.analogueScreenSave := ChckGrpAnalogueKlock.Checked[0];
+  userBacOptions.analogueScreenSave  := ChckGrpAnalogueKlock.Checked[0];
   userBacOptions.analogueAlwaysOnTop := ChckGrpAnalogueKlock.Checked[1];
 end;
 //
@@ -471,8 +484,8 @@ procedure TfrmOptions.ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
    Index 2 - Always On Top.
 }
 begin
-   userBacOptions.LEDScreenSave := ChckGrpLEDKlock.Checked[0];
-   userBacOptions.LEDlongDate := ChckGrpLEDKlock.Checked[1];
+   userBacOptions.LEDScreenSave  := ChckGrpLEDKlock.Checked[0];
+   userBacOptions.LEDlongDate    := ChckGrpLEDKlock.Checked[1];
    userBacOptions.LEDAlwaysOnTop := ChckGrpLEDKlock.Checked[2];
 end;
 //
@@ -486,8 +499,8 @@ procedure TfrmOptions.ChckGrpBinaryKlockItemClick(Sender: TObject; Index: intege
    Index 2 - Always On Top.
 }
 begin
-  userBacOptions.BinaryScreenSave := ChckGrpBinaryKlock.Checked[0];
-  userBacOptions.BinaryFormat := ChckGrpBinaryKlock.Checked[1];
+  userBacOptions.BinaryScreenSave  := ChckGrpBinaryKlock.Checked[0];
+  userBacOptions.BinaryFormat      := ChckGrpBinaryKlock.Checked[1];
   userBacOptions.BinaryAlwaysOnTop := ChckGrpBinaryKlock.Checked[2];
 end;
 //
@@ -501,9 +514,9 @@ procedure TfrmOptions.ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: int
    Index 2 - Always On Top.
 }
 begin
-  userBacOptions.smallTextScreenSave := ChckGrpSmallTextKlock.Checked[0];
+  userBacOptions.smallTextScreenSave  := ChckGrpSmallTextKlock.Checked[0];
   userBacOptions.smallTextTransparent := ChckGrpSmallTextKlock.Checked[1];
-  userBacOptions.smallAlwaysOnTop := ChckGrpSmallTextKlock.Checked[2];
+  userBacOptions.smallAlwaysOnTop     := ChckGrpSmallTextKlock.Checked[2];
 end;
 //
 //...................................Floating Text KLOCK .......................
@@ -516,11 +529,11 @@ procedure TfrmOptions.ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: 
    Index 2 - Always On Top.
 }
 begin
-  userBacOptions.floatingTextScreenSave := ChckGrpFloatingTextKlock.Checked[0];
+  userBacOptions.floatingTextScreenSave   := ChckGrpFloatingTextKlock.Checked[0];
   userBacOptions.floatingTextUseKlockFont := ChckGrpFloatingTextKlock.Checked[1];
-  userBacOptions.floatingAlwaysOnTop := ChckGrpFloatingTextKlock.Checked[2];
+  userBacOptions.floatingAlwaysOnTop      := ChckGrpFloatingTextKlock.Checked[2];
 
-  lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+  lblFloatingTextKlockFont.Enabled    := not(ChckGrpFloatingTextKlock.Checked[1]);
   btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
 end;
 
@@ -528,7 +541,7 @@ procedure TfrmOptions.btnlblFloatingTextKlockFontClick(Sender: TObject);
 begin
   if FontDialog1.Execute then
   begin
-    lblFloatingTextKlockFont.Font := FontDialog1.Font;
+    lblFloatingTextKlockFont.Font   := FontDialog1.Font;
     userBacOptions.floatingTextFont := FontDialog1.Font;
   end;
 end;
@@ -545,12 +558,12 @@ begin
 end;
 
 //
-//................................... Sticky Notes and Memos ...................
+//................... Sticky Notes, Memo, Monitor Sleeping and BirthDate .......
 //
 procedure TfrmOptions.ChckBxDefaultPassWordChange(Sender: TObject);
 begin
   userBacOptions.useDefaultpassWord := ChckBxDefaultPassWord.Checked;
-  edtDefaultPassWord.Visible := ChckBxDefaultPassWord.Checked;
+  edtDefaultPassWord.Visible        := ChckBxDefaultPassWord.Checked;
 end;
 
 procedure TfrmOptions.EdtDefaultPassWordExit(Sender: TObject);
@@ -569,7 +582,7 @@ procedure TfrmOptions.clrBtnStickyNoteColourColorChanged(Sender: TObject);
    Sets the label and button colour to the chosen colour.
 }
 begin
-  LblStickyNoteColour.Font.Color := clrBtnStickyNoteColour.ButtonColor;
+  LblStickyNoteColour.Font.Color     := clrBtnStickyNoteColour.ButtonColor;
   clrBtnStickyNoteColour.ButtonColor := clrBtnStickyNoteColour.ButtonColor;
 
   userBacOptions.stickyColor := clrBtnStickyNoteColour.ButtonColor;
@@ -579,9 +592,16 @@ procedure TfrmOptions.btnStickyNoteFontClick(Sender: TObject);
 begin
    if FontDialog1.Execute then
    begin
-     lblStickyNoteFont.Font := FontDialog1.Font;
+     lblStickyNoteFont.Font    := FontDialog1.Font;
      userBacOptions.stickyFont := FontDialog1.Font;
    end;
+end;
+
+procedure TfrmOptions.DtEdtBirthDateChange(Sender: TObject);
+{  Allow user to enter thier birthDate.    }
+begin
+  //  when the date is accepted on a TDateEdit, it runs a form activate for some reasin.
+  //  So we set the values there.
 end;
 //
 //...................................LOGGING ...................................
@@ -595,13 +615,13 @@ end;
 procedure TfrmOptions.ChckBxCullLogsFilesChange(Sender: TObject);
 {  Only show cull days if log culling is enabled.    }
 begin
-  SpnEdtCullDays.Visible := ChckBxCullLogsFiles.Checked;
+  SpnEdtCullDays.Visible  := ChckBxCullLogsFiles.Checked;
   lblCullFileDays.Visible := ChckBxCullLogsFiles.Checked;
-  btnCullLogs.Visible := ChckBxCullLogsFiles.Checked;
+  btnCullLogs.Visible     := ChckBxCullLogsFiles.Checked;
 
   if ChckBxCullLogsFiles.Checked then
   begin
-    userBacOptions.cullLogs := ChckBxCullLogsFiles.Checked;
+    userBacOptions.cullLogs     := ChckBxCullLogsFiles.Checked;
     userBacOptions.CullLogsDays := SpnEdtCullDays.Value;
   end;
 end;
@@ -670,8 +690,8 @@ procedure TfrmOptions.btnSaveArchiveClick(Sender: TObject);
    for archive, Klock has then locked.  The added again after archive.
 }
 var
-  f: integer;
-  files: TStringList;
+  f           : integer;
+  files       : TStringList;
   theFontFiles: TStringList;
   fontsRemoved: boolean;
 begin
@@ -711,7 +731,7 @@ procedure TfrmOptions.ChckLstBxArchiveClickCheck(Sender: TObject);
    If the count is not 0 then enable the save button.
 }
 var
-  f: integer;
+  f    : integer;
   count: integer;
 begin
   count := 0;

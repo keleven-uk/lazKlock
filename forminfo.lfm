@@ -1,7 +1,7 @@
 object frmInfo: TfrmInfo
-  Left = 1197
+  Left = 944
   Height = 306
-  Top = 160
+  Top = 21
   Width = 400
   BorderStyle = bsSingle
   Caption = 'Info'
@@ -13,7 +13,7 @@ object frmInfo: TfrmInfo
   Constraints.MinWidth = 400
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '1.7'
   object GroupBox1: TGroupBox
     Left = 8
     Height = 216
@@ -39,7 +39,7 @@ object frmInfo: TfrmInfo
       Left = 80
       Height = 15
       Top = 168
-      Width = 56
+      Width = 57
       Caption = 'Select Year'
       ParentColor = False
     end

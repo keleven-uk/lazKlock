@@ -13,22 +13,23 @@ type
   { TfrmAbout }
 
   TfrmAbout = class(TForm)
-    btnAboutExit: TButton;
-    btnAboutMSinfo: TButton;
-    Image1: TImage;
-    lblAppUpTime: TLabel;
-    lblSysUpTime: TLabel;
-    lblApplicationUpTime: TLabel;
-    lblSystemUpTime: TLabel;
-    lblProgrammer: TLabel;
+    btnAboutExit         : TButton;
+    btnAboutMSinfo       : TButton;
+    Image1               : TImage;
+    lblAppUpTime         : TLabel;
+    lblSysUpTime         : TLabel;
+    lblApplicationUpTime : TLabel;
+    lblSystemUpTime      : TLabel;
+    lblProgrammer        : TLabel;
     lblProgramDescription: TLabel;
-    lblProgramName: TLabel;
-    LstBxInfo: TListBox;
-    LstBxDiscSpace: TListBox;
-    Panel1: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    TmrUpTime: TTimer;
+    lblProgramName       : TLabel;
+    LstBxInfo            : TListBox;
+    LstBxDiscSpace       : TListBox;
+    Panel1               : TPanel;
+    Panel2               : TPanel;
+    Panel3               : TPanel;
+    TmrUpTime            : TTimer;
+
     procedure btnAboutExitClick(Sender: TObject);
     procedure btnAboutMSinfoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -77,9 +78,9 @@ var
 begin
   kLog.writeLog('FormAbout Create');
 
-  tmrUpTime.Enabled := True;
-  lblAppUpTime.Caption := getUpTime('Application');
-  lblSysUpTime.Caption := getUpTime('System');
+  tmrUpTime.Enabled     := True;
+  lblAppUpTime.Caption  := getUpTime('Application');
+  lblSysUpTime.Caption  := getUpTime('System');
   lblProgrammer.Caption := userOptions.legalCopyright;
 
   lstBxInfo.Items.add(userOptions.fileDescription);

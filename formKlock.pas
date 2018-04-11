@@ -45,7 +45,8 @@ uses
   LCLIntf, LCLType, CheckLst, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
   UConversion, formReminderInput, AvgLvlTree, uOptions, Windows, ULogging,
   ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen;
+  formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen,
+  formBiorhythm;
 
 type
   FourStrings = array [0..3] of string;
@@ -128,6 +129,8 @@ type
     lblSplitLap: TLabel;
     lblTimer: TLabel;
     LstBxMemoName: TListBox;
+    MnuItmSimpleBiorhythm: TMenuItem;
+    MnItmBiorhythm: TMenuItem;
     mnuItmMonitorStuff: TMenuItem;
     mnuItmChineseYear: TMenuItem;
     mnuItmPowerStuff: TMenuItem;
@@ -202,7 +205,7 @@ type
     mnuItmHelp: TMenuItem;
     mnuItmAbout: TMenuItem;
     mnuItmExit: TMenuItem;
-    mnuHelp: TMenuItem;
+    mnuBiorhythm: TMenuItem;
     mnuFile: TMenuItem;
     mnuMain: TMainMenu;
     Panel2: TPanel;
@@ -288,6 +291,7 @@ type
     procedure mnuItmNewStickyNoteClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
     procedure mnuItmPowerSourceClick(Sender: TObject);
+    procedure MnuItmSimpleBiorhythmClick(Sender: TObject);
     procedure mnuItmSmallTextKlockClick(Sender: TObject);
     procedure mnuItmSunStuffClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
@@ -324,6 +328,7 @@ type
     procedure displayMemo(pos: integer);
     procedure displayEncryptedMemo;
     procedure loadMemos;
+    procedure callInfo(mode: string);
   public
 
   end;
@@ -929,6 +934,7 @@ var
   val: integer;
 
 begin
+  enableSpeedButtons(false);
   if btnCountdownStart.Caption = 'Start' then
   begin
     btnCountdownStop.Enabled := True;
@@ -1098,6 +1104,7 @@ begin
   //  should be okay, already validated [if time is changed will be revalidated]
   countdownTicks := SpnEdtCountdown.Value * 60;
 
+  enableSpeedButtons(true);
 end;
 
 procedure TfrmMain.btnCountdownShutdownAbortClick(Sender: TObject);
@@ -2085,11 +2092,17 @@ procedure TfrmMain.mnuItmExitClick(Sender: TObject);
 begin
   Close;
 end;
-
+//
+// ********************************************************* Help Menu *********
+//
+//  The About and License forms are created when needed and not at app start.
+//
 procedure TfrmMain.mnuItmAboutClick(Sender: TObject);
 {  Calls the About screen.    }
 begin
-  frmAbout.ShowModal;
+  frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+  frmAbout.ShowModal;                 //frmAbout is displayed
+  FreeAndNil(frmAbout);               //frmAbout is released
 end;
 
 procedure TfrmMain.mnuItmHelpClick(Sender: TObject);
@@ -2101,7 +2114,9 @@ end;
 procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
 {  Calls the License screen.    }
 begin
+  frmLicense := TfrmLicense.Create(Nil);
   frmLicense.ShowModal;
+  FreeAndNil(frmLicense);
 end;
 //
 // ********************************************************* Time Menu *********
@@ -2136,54 +2151,69 @@ end;
 //
 // ********************************************************* Info Menu *********
 //
+
 procedure TfrmMain.mnuItmDaylightSavingClick(Sender: TObject);
 {  Calls the Daylight Saving Info screen'.    }
 begin
-  frmInfo.Info := 'Daylight Saving';
-  frmInfo.ShowModal;
+  callInfo('Daylight Saving');
 end;
 
 procedure TfrmMain.mnuItmEasterDatesClick(Sender: TObject);
 {  Calls the Easter Dates Info screen'.    }
 begin
-  frmInfo.Info := 'Easter Dates';
-  frmInfo.ShowModal;
+  callInfo('Easter Dates');
 end;
 
 procedure TfrmMain.mnuItmLentDatesClick(Sender: TObject);
 {  Calls the Lent Dates Info screen'.    }
 begin
-  frmInfo.Info := 'Lent Dates';
-  frmInfo.ShowModal;
+  callInfo('Lent Dates');
 end;
 
 procedure TfrmMain.mnuItmChineseYearClick(Sender: TObject);
 begin
-  frmInfo.Info := 'Chinese Year';
-  frmInfo.ShowModal;
+  callInfo('Chinese Year');
 end;
 
 procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
 {  Calls the Power Source Saving Info screen'.    }
 begin
-  frmInfo.Info := 'Power Source';
-  frmInfo.ShowModal;
+  callInfo('Power Source');
 end;
 
 procedure TfrmMain.mnuItmMoonStuffClick(Sender: TObject);
+{  Calls the Moon Stuffg Info screen'.    }
 begin
-  frmInfo.Info := 'Moon Stuff';
-  frmInfo.ShowModal;
+  callInfo('Moon Stuff');
 end;
 procedure TfrmMain.mnuItmSunStuffClick(Sender: TObject);
+{  Calls the Sun Stuffg Info screen'.    }
 begin
-  frmInfo.Info := 'Sun Stuff';
-  frmInfo.ShowModal;
+  callInfo('Sun Stuff');
 end;
 procedure TfrmMain.mnuItmMonitorStuffClick(Sender: TObject);
+{  Calls the Monitor Stuffg Info screen'.    }
 begin
-  frmInfo.Info := 'Monitor Stuff';
+  callInfo('Monitor Stuff');
+end;
+procedure TfrmMain.callInfo(mode: string);
+{  Calls the actual info form, passing to mode.    }
+begin
+  frmInfo      := TfrmInfo.Create(Nil);
+  frmInfo.Info := mode;
   frmInfo.ShowModal;
+  FreeAndNil(frmInfo);
+end;
+
+//
+// ************************************************** Biorhythm Menu ***********
+//
+procedure TfrmMain.MnuItmSimpleBiorhythmClick(Sender: TObject);
+{  Display a simple Biorhythm chart, using the Birth date set up user options.
+   NB  This form is not shown model.
+}
+begin
+  frmBiorhythm.Show;
 end;
 //
 // ************************************************** Sticky Note Menu *********

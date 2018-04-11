@@ -12,13 +12,13 @@ uses
   formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon,
   MouseAndKeyInput, LCLType;
 
-type                    //  used to hold the parsed data for a reminder.
+type                     //  used to hold the parsed data for a reminder.
   reminderData = record
-    message: string;    //  the formatted message for the reminder.
-    orDate: TDateTime;  //  date of original event.
-    rmDate: TDateTime;  //  date of next reminder due.
-    period: integer;    //  period of reminder in months.
-    toGo: double;       //  days to go for reminder.
+    message: string;     //  the formatted message for the reminder.
+    orDate : TDateTime;  //  date of original event.
+    rmDate : TDateTime;  //  date of next reminder due.
+    period : integer;    //  period of reminder in months.
+    toGo   : double;     //  days to go for reminder.
     active: boolean;
   end;
 
@@ -182,15 +182,15 @@ begin
   if Pos('U', s) <> 0 then
     include(fstyles, fsUnderline);
 
-  fnt.Charset := chrs;                     //  Character set of font
-  fnt.Color := clr;                        //  colour of font
-  fnt.Height := Hght;                      //  height of font
-  fnt.Name := nme;                         //  name of font
+  fnt.Charset     := chrs;                 //  Character set of font
+  fnt.Color       := clr;                  //  colour of font
+  fnt.Height      := Hght;                 //  height of font
+  fnt.Name        := nme;                  //  name of font
   fnt.Orientation := Ortn;                 //  orientation of font
-  fnt.Size := sze;                         //  size of font
-  fnt.Pitch := TFontPitch(ptch);           //  pitch of font
-  fnt.Quality := TFontQuality(qlty);       //  quality of font
-  fnt.Style := fstyles;
+  fnt.Size        := sze;                  //  size of font
+  fnt.Pitch       := TFontPitch(ptch);     //  pitch of font
+  fnt.Quality     := TFontQuality(qlty);   //  quality of font
+  fnt.Style       := fstyles;
 
   Result := fnt;
 end;
@@ -234,7 +234,7 @@ begin
   end;
 
   try
-    AProcess.Options := [poWaitOnExit];
+    AProcess.Options    := [poWaitOnExit];
     AProcess.Executable := 'shutdown';
     AProcess.Execute;
   finally
@@ -409,9 +409,9 @@ begin
   rmndrData.toGo := DaySpan(Now, rmndrData.rmDate);
 
   case Rtype of
-    ' Wedding': rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
+    ' Wedding' : rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
     ' Birthday': rmndrData.message := format('%s has a Birthday, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
-    ' Motor': rmndrData.message := format('%s , in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
+    ' Motor'   : rmndrData.message := format('%s , in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
   end;
 
   Result := rmndrData;
@@ -421,16 +421,16 @@ procedure applyRunAtStartUp(flag: boolean);
 
 const
   rootPath = HKEY_CURRENT_USER;
-  regpath = '\Software\Microsoft\Windows\CurrentVersion\run';
+  regpath  = '\Software\Microsoft\Windows\CurrentVersion\run';
 var
   registry  : TRegistry;
   AppPath   : string;
   AppName   : string;
   openResult: boolean;
 begin
-  registry := TRegistry.Create;
+  registry         := TRegistry.Create;
   registry.RootKey := rootpath;
-  registry.Access := KEY_WRITE;
+  registry.Access  := KEY_WRITE;
 
   AppPath := Application.ExeName;
   AppName := ExtractFileName(AppPath);
@@ -461,7 +461,7 @@ function isMinute(myNow: TdateTime; mins: integer): Boolean;
 Var
   hour, minute, second, milliSeconds: word;
 begin
-  DecodeTime(Time, hour, minute, second, milliSeconds);
+  DecodeTime(myNow, hour, minute, second, milliSeconds);
   result := (minute = mins) and (second = 0);
 end;
 
@@ -472,7 +472,7 @@ function everyMinute(myNow: TdateTime; mins: integer): Boolean;
 Var
   hour, minute, second, milliSeconds: word;
 begin
-  DecodeTime(Time, hour, minute, second, milliSeconds);
+  DecodeTime(myNow, hour, minute, second, milliSeconds);
   result := (minute mod mins = 0) and (second = 0);
 end;
 
@@ -596,12 +596,12 @@ begin
 
   noSeconds := noTicks div 1000;                  //  1000 ticks per second.
 
-  noOfDays := noSeconds div 86400;
-  noSeconds := noSeconds - (noOfDays * 86400);
-  noOfHours := noSeconds div 3600;
-  noSeconds := noSeconds - (noOfHours * 3600);
+  noOfDays    := noSeconds div 86400;
+  noSeconds   := noSeconds - (noOfDays * 86400);
+  noOfHours   := noSeconds div 3600;
+  noSeconds   := noSeconds - (noOfHours * 3600);
   noOfMinutes := noSeconds div 60;
-  noSeconds := noSeconds - (noOfMinutes * 60);
+  noSeconds   := noSeconds - (noOfMinutes * 60);
   NoOfSeconds := noSeconds;
 
   Result := format('%d days : %d hours : %d mins : %d secs', [noOfDays, noOfHours, noOfMinutes, noOfSeconds]);
@@ -620,8 +620,8 @@ VAR
 begin
   tmpFileName := GetTempDir(true) + 'ver.txt';
 
-  AProcess := TProcess.Create(nil);
-  AProcess.Options := [poWaitOnExit, poUsePipes];
+  AProcess            := TProcess.Create(nil);
+  AProcess.Options    := [poWaitOnExit, poUsePipes];
   AProcess.Executable := 'CMD ';
   AProcess.Parameters.Add('/C ver >' + tmpFileName);
   AProcess.Execute;

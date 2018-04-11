@@ -16,11 +16,11 @@ uses
   LMessages, Menus, StdCtrls, ExtCtrls;
 
 const
-  LWA_COLORKEY = 1;
-  LWA_ALPHA = 2;
-  LWA_BOTH = 3;
+  LWA_COLORKEY  = 1;
+  LWA_ALPHA     = 2;
+  LWA_BOTH      = 3;
   WS_EX_LAYERED = $80000;
-  GWL_EXSTYLE = -20;
+  GWL_EXSTYLE   = -20;
 
 {Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal Color As Long, ByVal X As Byte, ByVal alpha As Long) As Boolean }
 function SetLayeredWindowAttributes(hWnd: longint; Color: longint; X: byte; alpha: longint): bool stdcall; external 'USER32';
@@ -39,20 +39,21 @@ type
   { TfrmFloatingKlock }
 
   textSize = record
-    width: integer;
+    width : integer;
     height: integer;
   end;
 
   TfrmFloatingKlock = class(TForm)
-    FontDialog1: TFontDialog;
-    lblFloatingTime: TLabel;
-    MnItmAlwaysOnTop: TMenuItem;
-    MnItmFont: TMenuItem;
-    MnItmAbout: TMenuItem;
+    FontDialog1      : TFontDialog;
+    lblFloatingTime  : TLabel;
+    MnItmAlwaysOnTop : TMenuItem;
+    MnItmFont        : TMenuItem;
+    MnItmAbout       : TMenuItem;
     MnItmNewStickNote: TMenuItem;
-    MnItmExit: TMenuItem;
-    PopupMenu1: TPopupMenu;
-    TmrFloatingText: TTimer;
+    MnItmExit        : TMenuItem;
+    PopupMenu1       : TPopupMenu;
+    TmrFloatingText  : TTimer;
+
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -65,8 +66,8 @@ type
     procedure TmrFloatingTextTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
-    WindowDragTopLeft: TPoint;
-    WindowDragStarted: Boolean;
+    WindowDragTopLeft : TPoint;
+    WindowDragStarted : Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
     function GetTextSize(AText: String; AFont: TFont): textSize;
@@ -141,15 +142,16 @@ begin
   kLog.writeLog('formFloatingKlock Show');
 
   frmMain.TrayIcon.Visible := True;
+  frmMain.Visible          := False;
   frmMain.TrayIcon.Show;
-  frmMain.Visible := False;
+
 
   TmrFloatingText.Enabled := true;         //  Start timer.
 
   if userOptions.floatingTextScreenSave then
   begin
     Left := userOptions.floatingTextFormLeft;
-    Top := userOptions.floatingTextFormTop;
+    Top  := userOptions.floatingTextFormTop;
   end;
 
   MnItmAlwaysOnTop.Checked := userOptions.floatingAlwaysOnTop;
@@ -161,8 +163,8 @@ begin
   nowTime := ft.getTime;
   prvTime := 'Klock';     //  so times are different first time
 
-  lblFloatingTime.Top := 4;
-  lblFloatingTime.Left := 4;
+  lblFloatingTime.Top      := 4;
+  lblFloatingTime.Left     := 4;
   lblFloatingTime.AutoSize := true;
 end;
 
@@ -180,7 +182,7 @@ begin
     if WindowDragStarted then
       begin
         Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
-        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+        Top  := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
       end;
   end;
 
@@ -193,8 +195,8 @@ begin
   { MouseDown - Code to drag the main window using the mouse}
   if msg = LM_LBUTTONDOWN then
   begin
-    WindowDragStarted := True;
-    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragStarted   := True;
+    WindowDragMousePos  := Mouse.CursorPos;
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
@@ -207,7 +209,6 @@ procedure TfrmFloatingKlock.TmrFloatingTextTimer(Sender: TObject);
    The dimensions of the form are adjusted so that the text string will fit.
 }
 begin
-
   nowTime := ft.getTime;      //  No need to update ever second in showing
                               //  time in words or fuzzytime etc
                               //  i.e. time changes every one or five minutes.
@@ -224,13 +225,13 @@ begin
 
   //  Guards against the font colour being black or default,
   //  this would cause the label to apear transparent and not been seen.
-  if (lblFloatingTime.Font.Color = clDefault) or
-     (lblFloatingTime.Font.Color = clBlack) then
-    lblFloatingTime.Font.Color := clLime;
+  if (lblFloatingTime.Font.Color  = clDefault) or
+     (lblFloatingTime.Font.Color  = clBlack) then
+      lblFloatingTime.Font.Color := clLime;
 
   lblFloatingTime.Caption := nowTime;
 
-  width := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
+  width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
   lblFloatingTime.AdjustFontForOptimalFill;
@@ -245,7 +246,7 @@ begin
   try
     bmp.Canvas.Font.Assign(AFont);
 
-    Result.width := bmp.Canvas.TextWidth(AText);
+    Result.width  := bmp.Canvas.TextWidth(AText);
     Result.height := bmp.Canvas.TextHeight(AText);
   finally
     bmp.Free;
@@ -286,7 +287,7 @@ begin
   if userOptions.floatingTextScreenSave then
   begin
     userOptions.floatingTextFormLeft := Left;
-    userOptions.floatingTextFormTop := Top;
+    userOptions.floatingTextFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
 
@@ -299,6 +300,13 @@ begin
   if FontDialog1.Execute then
   begin
     userOptions.floatingTextFont := FontDialog1.Font;
+    lblFloatingTime.Font         := FontDialog1.Font;   //  so the new fone is used at once.
+
+    width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
+    height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
+
+    lblFloatingTime.AdjustFontForOptimalFill;
+
     userOptions.writeCurrentOptions;
   end;
 end;

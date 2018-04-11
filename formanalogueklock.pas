@@ -12,11 +12,11 @@ uses
   Graphics, Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, Windows, LMessages;
 
 const
-  LWA_COLORKEY = 1;
-  LWA_ALPHA = 2;
-  LWA_BOTH = 3;
+  LWA_COLORKEY  = 1;
+  LWA_ALPHA     = 2;
+  LWA_BOTH      = 3;
   WS_EX_LAYERED = $80000;
-  GWL_EXSTYLE = -20;
+  GWL_EXSTYLE   = -20;
 
 {Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal Color As Long, ByVal X As Byte, ByVal alpha As Long) As Boolean }
 function SetLayeredWindowAttributes(hWnd: longint; Color: longint; X: byte; alpha: longint): bool stdcall; external 'USER32';
@@ -34,12 +34,13 @@ type
   { TfrmAnalogueKlock }
 
   TfrmAnalogueKlock = class(TForm)
-    DTThemedClock1: TDTThemedClock;
-    MnItmAlwaysOnTop: TMenuItem;
-    MnItmNewStickyNote: TMenuItem;
-    MnItmAbout: TMenuItem;
-    MnItmExit: TMenuItem;
+    DTThemedClock1        : TDTThemedClock;
+    MnItmAlwaysOnTop      : TMenuItem;
+    MnItmNewStickyNote    : TMenuItem;
+    MnItmAbout            : TMenuItem;
+    MnItmExit             : TMenuItem;
     popUpMenuAnalogueKlock: TPopupMenu;
+
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -50,8 +51,8 @@ type
 
   private
     WindowDragMousePos: TPoint;
-    WindowDragTopLeft: TPoint;
-    WindowDragStarted: Boolean;
+    WindowDragTopLeft : TPoint;
+    WindowDragStarted : Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
   public
@@ -97,7 +98,7 @@ begin
 
   Application.AddOnUserInputHandler(@MouseHook);
 
-  {the color were going to make transparent the red that the form background is set to}
+  {the color were going to make transparent the black that the form background is set to}
   transparency := clBlack;
 
   {call the function to do it}
@@ -146,7 +147,7 @@ begin
     if WindowDragStarted then
       begin
         Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
-        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+        Top  := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
       end;
   end;
 
@@ -159,8 +160,8 @@ begin
   { MouseDown - Code to drag the main window using the mouse}
   if msg = LM_LBUTTONDOWN then
   begin
-    WindowDragStarted := True;
-    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragStarted   := True;
+    WindowDragMousePos  := Mouse.CursorPos;
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
@@ -192,7 +193,7 @@ begin
   if userOptions.analogueScreenSave then
   begin
     userOptions.analogueFormLeft := Left;
-    userOptions.analogueFormTop := Top;
+    userOptions.analogueFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
 
