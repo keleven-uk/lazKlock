@@ -10,7 +10,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
   formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon,
-  MouseAndKeyInput, LCLType;
+  MouseAndKeyInput, LCLType, formFloatingKlock;
 
 type                     //  used to hold the parsed data for a reminder.
   reminderData = record
@@ -19,7 +19,7 @@ type                     //  used to hold the parsed data for a reminder.
     rmDate : TDateTime;  //  date of next reminder due.
     period : integer;    //  period of reminder in months.
     toGo   : double;     //  days to go for reminder.
-    active: boolean;
+    active : boolean;
   end;
 
   //  Used for hour chimes file name.  Zero not used, inserted as a dummy to keep count correct.
@@ -140,7 +140,7 @@ begin
   //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                   //  colour of font
+  p   := Pos(':', s);                                //  colour of font
   clr := StringToColor(copy(s, 0, p - 1));
   Delete(s, 1, p);
 
@@ -149,7 +149,7 @@ begin
   //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  name of font
+  p   := Pos(':', s);                                //  name of font
   nme := copy(s, 0, p - 1);
   Delete(s, 1, p);
 
@@ -266,7 +266,7 @@ begin
       try
         Executable := command;
         Parameters.Add(args);
-        Options := Options + [poWaitOnExit];
+        //Options := Options + [poWaitOnExit];
         Execute;
       finally
         Free;
@@ -367,16 +367,16 @@ var
   p: integer;
   y: integer;
 begin
-  p := Pos(',', a);                                  //  name of reminder
+  p    := Pos(',', a);                               //  name of reminder
   Name := copy(a, 0, p - 1);
   Delete(a, 1, p);
 
-  p := Pos(',', a);                                  //  date of reminder
+  p     := Pos(',', a);                              //  date of reminder
   date := copy(a, 0, p - 1);
   Delete(a, 1, p);
   rmndrData.orDate := StrToDate(date);
 
-  p := Pos(',', a);                                  //  period of reminder
+  p      := Pos(',', a);                             //  period of reminder
   period := copy(a, 0, p - 1);
   Delete(a, 1, p);
   if period = ' Yearly' then
@@ -384,7 +384,7 @@ begin
   else
     rmndrData.period := 1;
 
-  p := Pos(',', a);                                  //  type of reminder
+  p     := Pos(',', a);                              //  type of reminder
   Rtype := copy(a, 0, p - 1);
   Delete(a, 1, p);
 
@@ -702,18 +702,11 @@ end;
 procedure KillOtherKlocks;
 {  Kill any other klocks that are visible.    }
 begin
-  if frmAnalogueKlock.Visible then
-    frmAnalogueKlock.Visible := False;
-
-  if frmLEDKlock.Visible then
-    frmLEDKlock.Visible := False;
-
-  if frmBinaryKlock.Visible then
-    frmBinaryKlock.Visible := False;
-
-  if frmSmallTextKlock.Visible then
-    frmSmallTextKlock.Visible := False;
-
+  if frmAnalogueKlock.Visible  then frmAnalogueKlock.Visible  := False;
+  if frmLEDKlock.Visible       then frmLEDKlock.Visible       := False;
+  if frmBinaryKlock.Visible    then frmBinaryKlock.Visible    := False;
+  if frmSmallTextKlock.Visible then frmSmallTextKlock.Visible := False;
+  if frmFloatingKlock.Visible  then frmFloatingKlock.Visible  := false;
 end;
 //
 //...................................... encrypt and decrypt ...................

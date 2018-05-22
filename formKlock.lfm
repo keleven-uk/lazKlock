@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtCountdown
-      TabIndex = 2
+      ActivePage = TbShtTimer
+      TabIndex = 3
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -1999,8 +1999,12 @@ object frmMain: TfrmMain
     object MnItmBiorhythm: TMenuItem
       Caption = 'Biorhythm'
       object MnuItmSimpleBiorhythm: TMenuItem
-        Caption = 'Simple Biorhythm'
+        Caption = 'Simple Biorhythms'
         OnClick = MnuItmSimpleBiorhythmClick
+      end
+      object MnuItmEnhancedBiorhythm: TMenuItem
+        Caption = 'Enhanced Biorhythms'
+        OnClick = MnuItmEnhancedBiorhythmClick
       end
     end
     object mnuBiorhythm: TMenuItem

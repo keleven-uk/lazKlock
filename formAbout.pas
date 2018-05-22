@@ -71,10 +71,12 @@ end;
 
 procedure TfrmAbout.FormCreate(Sender: TObject);
 var
-  dskSize: string;
-  dskFree: string;
-  message: string;
-  i: integer;
+  dskSize  : string;
+  dskFree  : string;
+  message  : string;
+  cmpDate  : string;
+  cmpUkDate: string;
+  i        : integer;
 begin
   kLog.writeLog('FormAbout Create');
 
@@ -83,11 +85,19 @@ begin
   lblSysUpTime.Caption  := getUpTime('System');
   lblProgrammer.Caption := userOptions.legalCopyright;
 
+  //  {$I %DATE%} returns the compile date, but in american [ignores local date format]
+  //  So, we string slice it to give good old english date format.
+  cmpDate               := {$I %DATE%};
+  cmpUkDate             := format('%s/%s/%s', [copy(cmpDate, 9, 2),
+                                               copy(cmpDate, 6, 2),
+                                               copy(cmpDate, 1, 4)]);
+
   lstBxInfo.Items.add(userOptions.fileDescription);
   lstBxInfo.Items.add('');
   lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
   lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
-  lstBxInfo.Items.add(format('lazKlock Built :: %s', [FormatDateTime('DD/MMM/YYYY hh:nn:ss : ', now)]));
+  lstBxInfo.Items.add(format('lazBiorhythms Built   :: %s', [cmpUkDate + ' @ ' + {$I %TIME%}]));
+
   {$ifdef WIN32}
     lstBxInfo.Items.add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));
   {$else}

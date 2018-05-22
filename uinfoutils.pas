@@ -112,23 +112,24 @@ begin
 end;
 
 function GetNthDSTDOW(Y,M,DST_DOW,N:word):integer;
-{For Year "Y" and Month "M"  and DayOfWeek "DST_DOW", return the day of month for "DST_DOW" number "N"}
-{If  N  is larger than the number of DST_DOW's in the month, return the day of the last one}
-{If Y, M, or N are otherwise invalid, return 0}
+{  For Year "Y" and Month "M"  and DayOfWeek "DST_DOW", return the day of month for "DST_DOW" number "N"
+   If  N  is larger than the number of DST_DOW's in the month, return the day of the last one
+   If Y, M, or N are otherwise invalid, return 0
+}
 var
   dt:TDateTime;
   NdayDom, maxdays:integer;
 begin
-  if TryEncodeDate(y,m,1,dt) and (n>0) then {get date of first of month}
+  if TryEncodeDate(y,m,1,dt) and (n>0) then //  get date of first of month
   begin
     if n>5 then n:=5;
-    NdayDOM:=8+DST_DOW-DayOfTheWeek(dt);  {1st DST_DOW Day of Month}
-    result:=NdayDOM+7*(n-1);
-    maxdays:=daysinMonth(dt);
+    NdayDOM := 8+DST_DOW-DayOfTheWeek(dt);  //  1st DST_DOW Day of Month
+    result  := NdayDOM+7*(n-1);
+    maxdays := daysinMonth(dt);
     If result>maxdays  then
     repeat dec(Result,7) until Result<=Maxdays;
   end
-  else result:=0;
+  else result := 0;
 end;
 
 function getEasterDates(year: integer): TStringList;
@@ -137,7 +138,6 @@ var
   easter: TdateTime;
 begin
   result := TStringList.Create;
-
   easter := EasterDate(year);  //  return date of Easter Sunday.
 
   result.add('');
@@ -160,8 +160,7 @@ var
   lent: TdateTime;
 begin
   result := TStringList.Create;
-
-  lent := EasterDate(year);    //  return date of Easter Sunday.
+  lent   := EasterDate(year);    //  return date of Easter Sunday.
 
   result.add('');
   result.add('');
@@ -179,21 +178,21 @@ var
   chinese      : TChineseDate;
   ChineseZodiac: array[TChineseZodiac] of string;
 begin
-  ChineseZodiac[ch_rat] := 'Rat';
-  ChineseZodiac[ch_ox] := 'Ox';
-  ChineseZodiac[ch_tiger] := 'Tiger';
-  ChineseZodiac[ch_rabbit] := 'Rabbit';
-  ChineseZodiac[ch_dragon] := 'Dragon';
-  ChineseZodiac[ch_snake] := 'Snake';
-  ChineseZodiac[ch_horse] := 'Horse';
-  ChineseZodiac[ch_Goat] := 'Goat';
-  ChineseZodiac[ch_monkey] := 'Monkey';
+  ChineseZodiac[ch_rat]     := 'Rat';
+  ChineseZodiac[ch_ox]      := 'Ox';
+  ChineseZodiac[ch_tiger]   := 'Tiger';
+  ChineseZodiac[ch_rabbit]  := 'Rabbit';
+  ChineseZodiac[ch_dragon]  := 'Dragon';
+  ChineseZodiac[ch_snake]   := 'Snake';
+  ChineseZodiac[ch_horse]   := 'Horse';
+  ChineseZodiac[ch_Goat]    := 'Goat';
+  ChineseZodiac[ch_monkey]  := 'Monkey';
   ChineseZodiac[ch_chicken] := 'Chicken';
-  ChineseZodiac[ch_dog] := 'Dog';
-  ChineseZodiac[ch_pig] := 'Pig';
+  ChineseZodiac[ch_dog]     := 'Dog';
+  ChineseZodiac[ch_pig]     := 'Pig';
 
   chinese := ChineseDate(ChineseNewYear(year));
-  result := TStringList.Create;
+  result  := TStringList.Create;
 
   result.add('');
   result.add(FormatDateTime('"Chinese New year :: "DD MMM YYYY', ChineseNewYear(year)));
@@ -244,15 +243,11 @@ begin
       begin
         batteryTime := TimeStampToDateTime(MSecsToTimeStamp(powerStatus.BatteryLifeTime * 1000));
         result.add(format('Battery Life %s', [FormatDateTime('hh:nn:ss', batteryTime)]));
-        lifeTime := (100 / powerStatus.BatteryLifePercent) * powerStatus.BatteryLifeTime;
+
+        //  will calculate expected battery life - don't beleive returned values.
+        lifeTime    := (100 / powerStatus.BatteryLifePercent) * powerStatus.BatteryLifeTime;
         batteryTime := TimeStampToDateTime(MSecsToTimeStamp(trunc(lifeTime * 1000)));
         result.add(format('Battery Full Life %s', [timeToStr(batteryTime)]));
-      end;
-
-      //  Not sure of the returned value of this.
-      if powerStatus.BatteryFullLifeTime <> 0 then
-      begin
-
       end;
     end;
   end
@@ -297,13 +292,13 @@ begin
   moonPhase := Nearest_Phase(moonDate);
 
   case moonPhase of
-    Newmoon: result.add('Phase of the moon NewMoon');
+    Newmoon       : result.add('Phase of the moon NewMoon');
     WaxingCrescent: result.add('Phase of the moon Waxing Crescent');
-    FirstQuarter: result.add('Phase of the moon First Quarter');
-    WaxingGibbous: result.add('Phase of the moon Waxing Gibbous');
-    Fullmoon: result.add('Phase of the moon Full Moon');
-    WaningGibbous: result.add('Phase of the moon Waning Gibbous');
-    LastQuarter: result.add('Phase of the moon Last Quarter');
+    FirstQuarter  : result.add('Phase of the moon First Quarter');
+    WaxingGibbous : result.add('Phase of the moon Waxing Gibbous');
+    Fullmoon      : result.add('Phase of the moon Full Moon');
+    WaningGibbous : result.add('Phase of the moon Waning Gibbous');
+    LastQuarter   : result.add('Phase of the moon Last Quarter');
     WaningCrescent: result.add('Phase of the moon Waning Crescent');
   end;
   result.add('');
@@ -316,12 +311,12 @@ begin
 
   try
     age := Moon_Transit(moonDate, userOptions.Latitude, userOptions.Longitude);
-    result.add(format('Moon Transit           %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
+    result.add(format('Moon Transit         %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss', age)]));
   except
     result.add('The Moon stays below horizon for the whole day ');
   end;
   result.add(format('Moon Set               %s', [FormatDateTime('dd/mm/yyyy  hh:mm:ss',
-                                                   Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
+                                                  Moon_Set(moonDate, userOptions.Latitude, userOptions.Longitude))]));
 end;
 
 function getSunStuff: TStringList;
@@ -334,8 +329,7 @@ var
   sunDate: TDateTime;
 begin
   sunDate := trunc(now);
-
-  result := TStringList.Create;
+  result  := TStringList.Create;
 
   result.add(format('Sun Rise              %s', [FormatDateTime('hh:mm:ss  dd/mm/yyyy ',
                      Sun_Rise(sunDate, userOptions.Latitude, userOptions.Longitude))]));

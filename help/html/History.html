@@ -3214,7 +3214,7 @@
 <p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
 <p class="rvps2"><span class="rvts6">Date: &nbsp; Sun Mar 11 21:36:23 2018 +0000</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Noticed that there was a flicker when displaying Floating text Klock. &nbsp;So, amended the update time thingy so it only updated the display when the text changed and not every second. &nbsp;This makes a differance when displaying fuzzyTime that changes every five minutes. &nbsp;Also made this change to the main Klock, to save resources.</span></p>
+<p class="rvps2"><span class="rvts6">Noticed that there was a flicker when displaying Floating text Klock. &nbsp;So, amended the update time thingy so it only updated the display when the text changed and not every second. &nbsp;This makes a difference when displaying fuzzyTime that changes every five minutes. &nbsp;Also made this change to the main Klock, to save resources.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Added an option verbose to FuzzyTime so it could add "nearly" and "just gone" to the output.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -3331,21 +3331,122 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Build 83 [2.3.1.83]</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">commit e79dea6c7d3a4f043190562f30ed061719d3758a</span></p>
+<p class="rvps2"><span class="rvts6">Author: Kevin Scott &lt;github@keleven.co.uk&gt;</span></p>
+<p class="rvps2"><span class="rvts6">Date: &nbsp; Wed Apr 11 22:04:18 2018 +0100</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Updated tzdata to latest version [2018d].</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Implemented a simple Biorhythm chart, the start date is held in the user</span></p>
 <p class="rvps2"><span class="rvts6">options. &nbsp;The chart is called via a menu option of the main Klock form.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Tidied up some code in uInfoutils.pas, so that the returned stringLists are</span></p>
-<p class="rvps2"><span class="rvts6">correctly handled - closed when not needed.</span></p>
+<p class="rvps2"><span class="rvts6">correctly handled - closed when not needed</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Started to make the code pretty :-)</span></p>
-<p class="rvps2"><span class="rvts6"> </span></p>
+<p class="rvps2"><span class="rvts6">The about, and Licence, Info forms are now created when needed and not at the start of the app.</span></p>
+<p class="rvps2"><span class="rvts6">Trying to do the same with the time forms - but the ones with transparency seem a problem.</span></p>
+<p class="rvps2"><span class="rvts6">Simplified the calling of the info forms.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">More changes to Power stuff when running on a lap top. &nbsp;It now shows more meaningful times for </span></p>
+<p class="rvps2"><span class="rvts6">battery use, but not quite the same as is shown in the windows system tray.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">More code made to look pretty.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Currently</span></p>
-<p class="rvps2"><span class="rvts6">11501 lines of source code.</span></p>
-<p class="rvps2"><span class="rvts6">6249 statements</span></p>
-<p class="rvps2"><span class="rvts6">15.9% comment</span></p>
+<p class="rvps2"><span class="rvts6">11534 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">6253 statements</span></p>
+<p class="rvps2"><span class="rvts6">16.0% </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">README.md &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 10 +-</span></p>
+<p class="rvps2"><span class="rvts6">formAbout.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 37 +-</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 13 +-</span></p>
+<p class="rvps2"><span class="rvts6">formKlock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 68 +-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 45 +-</span></p>
+<p class="rvps2"><span class="rvts6">formOptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;276 +--</span></p>
+<p class="rvps2"><span class="rvts6">formanalogueklock.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">formanalogueklock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 33 +-</span></p>
+<p class="rvps2"><span class="rvts6">formbiorhythm.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 90 +</span></p>
+<p class="rvps2"><span class="rvts6">formbiorhythm.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 97 ++</span></p>
+<p class="rvps2"><span class="rvts6">formfloatingklock.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 66 +-</span></p>
+<p class="rvps2"><span class="rvts6">forminfo.lfm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;8 +-</span></p>
+<p class="rvps2"><span class="rvts6">forminfo.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 59 +-</span></p>
+<p class="rvps2"><span class="rvts6">formlicense.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 17 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.chm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 3814976 -&gt; 3861238 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/Klock.pdf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 6891466 -&gt; 7134690 bytes</span></p>
+<p class="rvps2"><span class="rvts6">help/html/About.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;7 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Archive.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/{StickyNote.html =&gt; Biorhythm.html} &nbsp; &nbsp; &nbsp;| &nbsp; 59 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/ClipboardMonitor.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Conversion.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Countdown.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;5 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Credits.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Events.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/File.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/FuzzyTime.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Global.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Help.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/History.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 1752 ++++++++++++++++++-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Info.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;5 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Introduction.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Klock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;6 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Logging.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Memo.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 10 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Menu.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/OtherKlocks.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Reminder.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/StickyNote1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 35 +-</span></p>
+<p class="rvps2"><span class="rvts6">....html =&gt; StickyNotesStickyNotesMemoMonito.html} | &nbsp; 19 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Time1.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Timer.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/Welcome.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/WorldKlock.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/_toc.json &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/html/js/hndsd.min.js &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">help/klock.hnd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;Bin 4771840 -&gt; 4956160 bytes</span></p>
+<p class="rvps2"><span class="rvts6">history.txt &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 59 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.iss &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpi &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;247 ++-</span></p>
+<p class="rvps2"><span class="rvts6">klock.lpr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 17 +-</span></p>
+<p class="rvps2"><span class="rvts6">lazKlock.smproj &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;Bin 775543 -&gt; 841493 bytes</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/CONTRIBUTING &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 12 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/Makefile &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;123 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/NEWS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;145 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/africa &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 57 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/antarctica &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;3 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/asia &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;177 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/australasia &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;114 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/backzone &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 48 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/checktab.awk &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;9 +</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/europe &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 84 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/northamerica &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 27 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/southamerica &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;430 +++--</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/theory.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 1793 +++++++++++---------</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/ziguard.awk &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 62 +</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/zishrink.awk &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/zone.tab &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;2 +-</span></p>
+<p class="rvps2"><span class="rvts6">tzdata/zone1970.tab &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;4 +-</span></p>
+<p class="rvps2"><span class="rvts6">uconversion.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp;6 +-</span></p>
+<p class="rvps2"><span class="rvts6">uinfoutils.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; 95 +-</span></p>
+<p class="rvps2"><span class="rvts6">uklockutils.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; 58 +-</span></p>
+<p class="rvps2"><span class="rvts6">uoptions.pas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp;658 +++----</span></p>
+<p class="rvps2"><span class="rvts6">75 files changed, 4954 insertions(+), 2063 deletions(-)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Build 84 [2.3.1.84]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Added a call to the enhanced version of Biorhythms to menu.</span></p>
+<p class="rvps2"><span class="rvts6">This is a separate github project.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Corrected a bug with compile time in formAbout.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Corrected a bug with writing default options in uOptions.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Currently</span></p>
+<p class="rvps2"><span class="rvts6">11552 lines of source code.</span></p>
+<p class="rvps2"><span class="rvts6">6265 statements</span></p>
+<p class="rvps2"><span class="rvts6">16.0% comment</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
 <p class="rvps6" style="clear: both;"><span class="rvts10">Created with the Personal Edition of HelpNDoc: </span><a class="rvts11" href="https://www.helpndoc.com/help-authoring-tool">Full-featured multi-format Help generator</a></p>

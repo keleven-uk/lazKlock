@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "83"
+#define MyAppVersion "84"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -44,7 +44,7 @@ ArchitecturesInstallIn64BitMode=x64
 ; all architectures (including Itanium,since it's capable of running 32-bit code too)
 
 [Messages]
-SetupLdrStartupMessage=This will install [%1 V2.3.1.83] on your computer.
+SetupLdrStartupMessage=This will install [%1 V2.3.1.84] on your computer.
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -57,16 +57,17 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 ; installs either klock_x64 or klock_x86 - but names them lazKlock.exe
 [Files]
-Source: "lazKlock_32.exe"               ; DestDir: "{app}"           ; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
-Source: "lazKlock_64.exe"               ; DestDir: "{app}"           ; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
-Source: "help.txt"                      ; DestDir: "{app}"           ; Flags: ignoreversion
-Source: "history.txt"                   ; DestDir: "{app}"           ; Flags: ignoreversion
-Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"           ; Flags: ignoreversion
-Source: "sounds\*"                      ; DestDir: "{app}\sounds"    ; Flags: ignoreversion
-Source: "fonts\*"                       ; DestDir: "{app}\fonts"     ; Flags: ignoreversion
-Source: "help\*"                        ; DestDir: "{app}\help"      ; Flags: ignoreversion; Excludes: "klock.hnd"
-Source: "help\html\*"                   ; DestDir: "{app}\help\html" ; Flags: ignoreversion
-Source: "tzdata\*"                      ; DestDir: "{app}\tzdata"    ; Flags: ignoreversion
+Source: "lazKlock_32.exe"               ; DestDir: "{app}"               ; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
+Source: "lazKlock_64.exe"               ; DestDir: "{app}"               ; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
+Source: "help.txt"                      ; DestDir: "{app}"               ; Flags: ignoreversion
+Source: "history.txt"                   ; DestDir: "{app}"               ; Flags: ignoreversion
+Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"               ; Flags: ignoreversion
+Source: "sounds\*"                      ; DestDir: "{app}\sounds"        ; Flags: ignoreversion
+Source: "fonts\*"                       ; DestDir: "{app}\fonts"         ; Flags: ignoreversion
+Source: "help\*"                        ; DestDir: "{app}\help"          ; Flags: ignoreversion; Excludes: "klock.hnd"
+Source: "help\html\*"                   ; DestDir: "{app}\help\html"     ; Flags: ignoreversion
+Source: "tzdata\*"                      ; DestDir: "{app}\tzdata"        ; Flags: ignoreversion
+Source: "lazBiorhythms\*"               ; DestDir: "{app}\lazBiorhythms" ; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"                                               ; Filename: "{app}\{#MyAppExeName}"

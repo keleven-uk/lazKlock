@@ -54,172 +54,174 @@ type
   { TfrmMain }
 
   TfrmMain = class(TForm)
-    BitBtnHide: TBitBtn;
-    BitBtnClose: TBitBtn;
-    BitBtnHelp: TBitBtn;
-    btnConverionConvert: TButton;
-    btnConversionAddUnits: TButton;
-    btnCountdownLoadCommand: TButton;
-    btnCountdownLoadSound: TButton;
+    BitBtnHide               : TBitBtn;
+    BitBtnClose              : TBitBtn;
+    BitBtnHelp               : TBitBtn;
+    btnConverionConvert      : TButton;
+    btnConversionAddUnits    : TButton;
+    btnCountdownLoadCommand  : TButton;
+    btnCountdownLoadSound    : TButton;
     btnCountdownShutdownAbort: TButton;
-    btnCountdownStart: TButton;
-    btnCountdownStop: TButton;
-    btnEventAbort: TButton;
-    btnEventClear: TButton;
-    btnEventLoadCommand: TButton;
-    btnEventrLoadSound: TButton;
-    btnEventSet: TButton;
-    btnEventTestSound: TButton;
-    btnMemoDecrypt: TButton;
-    btnMemoNew: TButton;
-    btnMemoAdd: TButton;
-    btnMemoClear: TButton;
-    btnMemoEdit: TButton;
-    btnMemoDelete: TButton;
-    btnMemoPrint: TButton;
-    btnReminderDelete: TButton;
-    btnReminderEdit: TButton;
-    btnReminderNew: TButton;
-    btnSoundTest: TButton;
-    btnTimerClear: TButton;
-    btnTimerSplit: TButton;
-    btnTimerStart: TButton;
-    btnTimerStop: TButton;
-    chckBxCountdownCommand: TCheckBox;
-    chckBxCountdownEvent: TCheckBox;
-    chckBxCountdownReminder: TCheckBox;
-    chckBxCountdownSound: TCheckBox;
-    ChckBxEventCommand: TCheckBox;
-    ChckBxEventReminder: TCheckBox;
-    ChckBxEventSound: TCheckBox;
-    ChckBxEventSystem: TCheckBox;
-    ChckLstBxReminder: TCheckListBox;
-    CmbBxCategory: TComboBox;
-    CmbBxConvertTo: TComboBox;
-    CmbBxCountdownAction: TComboBox;
-    CmbBxCountdownEvent: TComboBox;
-    CmbBxEventAction: TComboBox;
-    CmbBxEventSystem: TComboBox;
-    CmbBxTZFonts: TComboBox;
-    CmbBxTime: TComboBox;
-    CmbBxName: TComboBox;
-    CmbBxTimeZones: TComboBox;
-    DCP_rijndael1: TDCP_rijndael;
-    DCP_sha256_1: TDCP_sha256;
-    DtEdtEvent: TDateEdit;
-    edtConverionResult: TEdit;
-    edtConverionValue: TEdit;
-    EdtCountdownCommand: TEdit;
-    EdtCountdownReminder: TEdit;
-    EdtCountdownSound: TEdit;
-    EdtEventCommand: TEdit;
-    EdtEventSound: TEdit;
-    EdtEventText: TEdit;
-    edtMemoKey: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    LblCountdownTime: TLabel;
-    lblEvent: TLabel;
-    lblfuzzy: TLabel;
-    lblTZTime: TLabel;
-    LblMemoName: TLabel;
-    lblRadix: TLabel;
-    lblSplitLap: TLabel;
-    lblTimer: TLabel;
-    LstBxMemoName: TListBox;
-    MnuItmSimpleBiorhythm: TMenuItem;
-    MnItmBiorhythm: TMenuItem;
-    mnuItmMonitorStuff: TMenuItem;
-    mnuItmChineseYear: TMenuItem;
-    mnuItmPowerStuff: TMenuItem;
-    mnuItmSunStuff: TMenuItem;
-    mnuItmFloatingTextKlock: TMenuItem;
-    mnuItmMoonStuff: TMenuItem;
-    MmMemoData: TMemo;
-    PageControl1: TPageControl;
-    Panel1: TPanel;
-    Panel10: TPanel;
-    Panel11: TPanel;
-    Panel12: TPanel;
-    Panel13: TPanel;
-    Panel14: TPanel;
-    Panel15: TPanel;
-    Panel16: TPanel;
-    Panel17: TPanel;
-    Panel18: TPanel;
-    Panel19: TPanel;
-    Panel20: TPanel;
-    Panel21: TPanel;
-    Panel22: TPanel;
-    Panel24: TPanel;
-    Panel25: TPanel;
-    Panel26: TPanel;
-    Panel27: TPanel;
-    Panel28: TPanel;
-    Panel29: TPanel;
-    Panel3: TPanel;
-    Panel4: TPanel;
-    Panel5: TPanel;
-    Panel6: TPanel;
-    Panel7: TPanel;
-    Panel8: TPanel;
-    Panel9: TPanel;
-    PascalTZ1: TPascalTZ;
-    RdBttnMemoEncrypt: TRadioButton;
-    SpdBtn120: TSpeedButton;
-    SpdBtn90: TSpeedButton;
-    SpdBtn60: TSpeedButton;
-    SpdBtn30: TSpeedButton;
-    SpnEdtCountdown: TSpinEdit;
-    SpnEdtHour: TSpinEdit;
-    SpnEdtMins: TSpinEdit;
-    SpnEdtTimeBase: TSpinEdit;
-    TbShtWorldKlock: TTabSheet;
-    TbShtConversion: TTabSheet;
-    TbShtCountdown: TTabSheet;
-    TbShtEvent: TTabSheet;
-    TbShtFuzzy: TTabSheet;
-    TbShtMemo: TTabSheet;
-    TbShtReminder: TTabSheet;
-    TbShtTimer: TTabSheet;
-    mainIdleTimer: TIdleTimer;
-    mnuItmNewStickyNote: TMenuItem;
-    mnuItmStickyNote: TMenuItem;
-    mnuItmSmallTextKlock: TMenuItem;
-    mnuItmBinaryKlock: TMenuItem;
-    mnuItmLEDKlock: TMenuItem;
-    mnuItmLentDates: TMenuItem;
-    mnuItmEasterDates: TMenuItem;
-    mnuItmDaylightSaving: TMenuItem;
-    mnuInfo: TMenuItem;
-    mnuTime: TMenuItem;
-    mnuItmAnalogueKlock: TMenuItem;
-    Panel23: TPanel;
-    ppMnItmTime: TMenuItem;
-    ppMnItmExit: TMenuItem;
-    ppMnItmShow: TMenuItem;
-    mnuItmLicense: TMenuItem;
-    mnuItmOptions: TMenuItem;
-    mnuItmHelp: TMenuItem;
-    mnuItmAbout: TMenuItem;
-    mnuItmExit: TMenuItem;
-    mnuBiorhythm: TMenuItem;
-    mnuFile: TMenuItem;
-    mnuMain: TMainMenu;
-    Panel2: TPanel;
-    PpMnTray: TPopupMenu;
-    PopupNotifier1: TPopupNotifier;
-    SpdBtnNewStickyNote: TSpeedButton;
-    stsBrInfo: TStatusBar;
-    mainTimer: TTimer;
-    CountdownTimer: TTimer;
-    EventTimer: TTimer;
-    tmrMemo: TTimer;
-    timerTimer: TTimer;
-    ballonTimer: TTimer;
-    TrayIcon: TTrayIcon;
+    btnCountdownStart        : TButton;
+    btnCountdownStop         : TButton;
+    btnEventAbort            : TButton;
+    btnEventClear            : TButton;
+    btnEventLoadCommand      : TButton;
+    btnEventrLoadSound       : TButton;
+    btnEventSet              : TButton;
+    btnEventTestSound        : TButton;
+    btnMemoDecrypt           : TButton;
+    btnMemoNew               : TButton;
+    btnMemoAdd               : TButton;
+    btnMemoClear             : TButton;
+    btnMemoEdit              : TButton;
+    btnMemoDelete            : TButton;
+    btnMemoPrint             : TButton;
+    btnReminderDelete        : TButton;
+    btnReminderEdit          : TButton;
+    btnReminderNew           : TButton;
+    btnSoundTest             : TButton;
+    btnTimerClear            : TButton;
+    btnTimerSplit            : TButton;
+    btnTimerStart            : TButton;
+    btnTimerStop             : TButton;
+    chckBxCountdownCommand   : TCheckBox;
+    chckBxCountdownEvent     : TCheckBox;
+    chckBxCountdownReminder  : TCheckBox;
+    chckBxCountdownSound     : TCheckBox;
+    ChckBxEventCommand       : TCheckBox;
+    ChckBxEventReminder      : TCheckBox;
+    ChckBxEventSound         : TCheckBox;
+    ChckBxEventSystem        : TCheckBox;
+    ChckLstBxReminder        : TCheckListBox;
+    CmbBxCategory            : TComboBox;
+    CmbBxConvertTo           : TComboBox;
+    CmbBxCountdownAction     : TComboBox;
+    CmbBxCountdownEvent      : TComboBox;
+    CmbBxEventAction         : TComboBox;
+    CmbBxEventSystem         : TComboBox;
+    CmbBxTZFonts             : TComboBox;
+    CmbBxTime                : TComboBox;
+    CmbBxName                : TComboBox;
+    CmbBxTimeZones           : TComboBox;
+    DCP_rijndael1            : TDCP_rijndael;
+    DCP_sha256_1             : TDCP_sha256;
+    DtEdtEvent               : TDateEdit;
+    edtConverionResult       : TEdit;
+    edtConverionValue        : TEdit;
+    EdtCountdownCommand      : TEdit;
+    EdtCountdownReminder     : TEdit;
+    EdtCountdownSound        : TEdit;
+    EdtEventCommand          : TEdit;
+    EdtEventSound            : TEdit;
+    EdtEventText             : TEdit;
+    edtMemoKey               : TEdit;
+    Label1                   : TLabel;
+    Label2                   : TLabel;
+    Label3                   : TLabel;
+    Label4                   : TLabel;
+    LblCountdownTime         : TLabel;
+    lblEvent                 : TLabel;
+    lblfuzzy                 : TLabel;
+    lblTZTime                : TLabel;
+    LblMemoName              : TLabel;
+    lblRadix                 : TLabel;
+    lblSplitLap              : TLabel;
+    lblTimer                 : TLabel;
+    LstBxMemoName            : TListBox;
+    MmMemoData               : TMemo;
+    PascalTZ1                : TPascalTZ;
+    RdBttnMemoEncrypt        : TRadioButton;
+    SpdBtn120                : TSpeedButton;
+    SpdBtn90                 : TSpeedButton;
+    SpdBtn60                 : TSpeedButton;
+    SpdBtn30                 : TSpeedButton;
+    SpnEdtCountdown          : TSpinEdit;
+    SpnEdtHour               : TSpinEdit;
+    SpnEdtMins               : TSpinEdit;
+    SpnEdtTimeBase           : TSpinEdit;
+    PageControl1             : TPageControl;
+    TbShtWorldKlock          : TTabSheet;
+    TbShtConversion          : TTabSheet;
+    TbShtCountdown           : TTabSheet;
+    TbShtEvent               : TTabSheet;
+    TbShtFuzzy               : TTabSheet;
+    TbShtMemo                : TTabSheet;
+    TbShtReminder            : TTabSheet;
+    TbShtTimer               : TTabSheet;
+    MnuItmEnhancedBiorhythm  : TMenuItem;
+    MnuItmSimpleBiorhythm    : TMenuItem;
+    MnItmBiorhythm           : TMenuItem;
+    mnuItmMonitorStuff       : TMenuItem;
+    mnuItmChineseYear        : TMenuItem;
+    mnuItmPowerStuff         : TMenuItem;
+    mnuItmSunStuff           : TMenuItem;
+    mnuItmFloatingTextKlock  : TMenuItem;
+    mnuItmMoonStuff          : TMenuItem;
+    mnuItmNewStickyNote      : TMenuItem;
+    mnuItmStickyNote         : TMenuItem;
+    mnuItmSmallTextKlock     : TMenuItem;
+    mnuItmBinaryKlock        : TMenuItem;
+    mnuItmLEDKlock           : TMenuItem;
+    mnuItmLentDates          : TMenuItem;
+    mnuItmEasterDates        : TMenuItem;
+    mnuItmDaylightSaving     : TMenuItem;
+    mnuInfo                  : TMenuItem;
+    mnuTime                  : TMenuItem;
+    mnuItmAnalogueKlock      : TMenuItem;
+    ppMnItmTime              : TMenuItem;
+    ppMnItmExit              : TMenuItem;
+    ppMnItmShow              : TMenuItem;
+    mnuItmLicense            : TMenuItem;
+    mnuItmOptions            : TMenuItem;
+    mnuItmHelp               : TMenuItem;
+    mnuItmAbout              : TMenuItem;
+    mnuItmExit               : TMenuItem;
+    mnuBiorhythm             : TMenuItem;
+    mnuFile                  : TMenuItem;
+    mnuMain                  : TMainMenu;
+    Panel1                   : TPanel;
+    Panel2                   : TPanel;
+    Panel3                   : TPanel;
+    Panel4                   : TPanel;
+    Panel5                   : TPanel;
+    Panel6                   : TPanel;
+    Panel7                   : TPanel;
+    Panel8                   : TPanel;
+    Panel9                   : TPanel;
+    Panel10                  : TPanel;
+    Panel11                  : TPanel;
+    Panel12                  : TPanel;
+    Panel13                  : TPanel;
+    Panel14                  : TPanel;
+    Panel15                  : TPanel;
+    Panel16                  : TPanel;
+    Panel17                  : TPanel;
+    Panel18                  : TPanel;
+    Panel19                  : TPanel;
+    Panel20                  : TPanel;
+    Panel21                  : TPanel;
+    Panel22                  : TPanel;
+    Panel23                  : TPanel;
+    Panel24                  : TPanel;
+    Panel25                  : TPanel;
+    Panel26                  : TPanel;
+    Panel27                  : TPanel;
+    Panel28                  : TPanel;
+    Panel29                  : TPanel;
+    PpMnTray                 : TPopupMenu;
+    PopupNotifier1           : TPopupNotifier;
+    SpdBtnNewStickyNote      : TSpeedButton;
+    stsBrInfo                : TStatusBar;
+    mainIdleTimer            : TIdleTimer;
+    mainTimer                : TTimer;
+    CountdownTimer           : TTimer;
+    EventTimer               : TTimer;
+    tmrMemo                  : TTimer;
+    timerTimer               : TTimer;
+    ballonTimer              : TTimer;
+    TrayIcon                 : TTrayIcon;
+
     procedure ballonTimerTimer(Sender: TObject);
     procedure BitBtnCloseClick(Sender: TObject);
     procedure BitBtnHelpClick(Sender: TObject);
@@ -280,6 +282,7 @@ type
     procedure mnuItmChineseYearClick(Sender: TObject);
     procedure mnuItmDaylightSavingClick(Sender: TObject);
     procedure mnuItmEasterDatesClick(Sender: TObject);
+    procedure MnuItmEnhancedBiorhythmClick(Sender: TObject);
     procedure mnuItmExitClick(Sender: TObject);
     procedure mnuItmFloatingTextKlockClick(Sender: TObject);
     procedure mnuItmHelpClick(Sender: TObject);
@@ -337,28 +340,28 @@ CONST
   PASSWORD = 'KLOCK';          //  Default password used to decypt memos.
 
 var
-  frmMain: TfrmMain;
-  rmndrStore: TAvgLvlTree;      //  used to store all the reminders.
-  userOptions: Options;         //  used to hold all the user options.
-  ft: FuzzyTime;                //  the object to give the different times.
-  fs: fontStore;                //  used to handle custom fonts i.e. load & remove
-  kLog: Logger;                 //  used to log errors, debug statements etc.
-  stickies: stickyNotes;        //  used to store the Sticky Notes.
-  memorandum: Memos;            //  used to store memos.
-  timeZone: TPascalTZ;          //  used for world klock time zones.
-  ConversionUnits: TStrings;    //  used to hold the conversions units - read from file.
-  unitConvertVal: double;       //  used to hold the conversion value.
-  unitConvertfactor: double;    //  used to hold the conversion factor.
-  appStartTime: int64;          //  used by formAbout to determine how long the app has been running.
-  countdownTicks: integer;
-  timerStart: TDateTime;
-  timerPaused: TdateTime;
-  popupMessages: FourStrings;
-  popupTitle: FourStrings;
-  noReminder: integer;
-  idleTime: TdateTime;
-  nowTime: string;
-  prvTime: string;
+  frmMain          : TfrmMain;
+  rmndrStore       : TAvgLvlTree; //  used to store all the reminders.
+  userOptions      : Options;     //  used to hold all the user options.
+  ft               : FuzzyTime;   //  the object to give the different times.
+  fs               : fontStore;   //  used to handle custom fonts i.e. load & remove
+  kLog             : Logger;      //  used to log errors, debug statements etc.
+  stickies         : stickyNotes; //  used to store the Sticky Notes.
+  memorandum       : Memos;       //  used to store memos.
+  timeZone         : TPascalTZ;   //  used for world klock time zones.
+  ConversionUnits  : TStrings;    //  used to hold the conversions units - read from file.
+  unitConvertVal   : double;      //  used to hold the conversion value.
+  unitConvertfactor: double;      //  used to hold the conversion factor.
+  appStartTime     : int64;       //  used by formAbout to determine how long the app has been running.
+  countdownTicks   : integer;
+  timerStart       : TDateTime;
+  timerPaused      : TdateTime;
+  popupMessages    : FourStrings;
+  popupTitle       : FourStrings;
+  noReminder       : integer;
+  idleTime         : TdateTime;
+  nowTime          : string;
+  prvTime          : string;
 
 implementation
 
@@ -382,18 +385,16 @@ begin
   mainTimer.Enabled := False;  //  disable main timer until all options and fuzzy time are set up.
 
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
-  EdtEventSound.Text := 'alarm-fatal.mp3';
+  EdtEventSound.Text     := 'alarm-fatal.mp3';
 
-  noReminder := 0;
-  appStartTime := GetTickCount64;  //  tick count when application starts.
-
-  rmndrStore := TAvgLvlTree.Create;
-  ft := FuzzyTime.Create;
-  fs := fontStore.Create;
-
+  appStartTime    := GetTickCount64;  //  tick count when application starts.
+  noReminder      := 0;
+  ft              := FuzzyTime.Create;
+  fs              := fontStore.Create;
+  rmndrStore      := TAvgLvlTree.Create;
   ConversionUnits := TStringList.Create;
-  stickies := stickyNotes.Create;
-  memorandum := Memos.Create;
+  stickies        := stickyNotes.Create;
+  memorandum      := Memos.Create;
 
   if userOptions.cullLogs then     //  Removed old log files, if instructed.
     kLog.cullLogFile(userOptions.CullLogsDays);
@@ -402,18 +403,20 @@ begin
 
   with mainIdleTimer do            //  set up the idle timer.
   begin
-    AutoEnabled := True;
+    AutoEnabled    := True;
     AutoStartEvent := itaOnIdle;
-    AutoEndEvent := itaOnUserInput;
-    Interval := 1000;
-    Enabled := False;
+    AutoEndEvent   := itaOnUserInput;
+    Interval       := 1000;
+    Enabled        := False;
   end;
 
   //  Load and parse the time zone data base.
-  timeZone := TPascalTZ.Create;
-  timeZone.DatabasePath :='tzdata';
+  kLog.writeLog('Load and parse the time zone data base.');
+  timeZone              := TPascalTZ.Create;
+  timeZone.DatabasePath := 'tzdata';
   timeZone.ParseDatabaseFromDirectory('tzdata');
   //  Load the time zones into the combo box.
+  kLog.writeLog('Load the time zones into the combo box');
   s := TStringList.Create;
   timeZone.GetTimeZoneNames(s, false);
   CmbBxTimeZones.Items.AddStrings(s);
@@ -451,7 +454,7 @@ begin
 
   if userOptions.screenSave then
   begin
-    userOptions.formTop := frmMain.Top;
+    userOptions.formTop  := frmMain.Top;
     userOptions.formLeft := frmMain.Left;
     userOptions.writeCurrentOptions;
   end;
@@ -459,7 +462,7 @@ begin
   //  if clipboard manager active, we need to save its position - if needed.
   if userOptions.CB_ScreenSave then
   begin
-    userOptions.CB_formTop := frmClipBoard.Top;
+    userOptions.CB_formTop  := frmClipBoard.Top;
     userOptions.CB_formLeft := frmClipBoard.Left;
   end;
 
@@ -493,33 +496,33 @@ begin
 
   PageControl1.TabIndex := userOptions.defaultTab;
 
-  CmbBxTime.Items := ft.fuzzyTypes;                      //  set up time combo box.
+  CmbBxTime.Items     := ft.fuzzyTypes;                 //  set up time combo box.
   CmbBxTime.ItemIndex := userOptions.defaultTime;
 
-  CmbBxName.Items := fs.fontTypes;                       //  set up font combo box.
+  CmbBxName.Items     := fs.fontTypes;                  //  set up font combo box.
   CmbBxName.ItemIndex := 0;
 
-  CmbBxTZFonts.Items := fs.fontTypes;                    //  set up font combo box.
+  CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
   CmbBxTZFonts.ItemIndex := 0;
 
-  DtEdtEvent.Date := now;                                //  set up reminder stuff.
-  SpnEdtMins.Value := MinuteOf(time);
-  SpnEdtHour.Value := HourOf(time);
+  DtEdtEvent.Date     := now;                           //  set up reminder stuff.
+  SpnEdtMins.Value    := MinuteOf(time);
+  SpnEdtHour.Value    := HourOf(time);
   btnEventSet.Enabled := False;
 
   SpnEdtTimeBase.Visible := False;
-  lblRadix.Visible := False;
+  lblRadix.Visible       := False;
 
   setMemoButtons(false);                                 //  set up memo buttons.
 
-  ft.displayFuzzy := userOptions.defaultTime;
+  ft.displayFuzzy     := userOptions.defaultTime;
   ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
-  ft.display24Hour:= userOptions.display24Hour;
-  ft.fuzzyBase := 2;
+  ft.display24Hour    := userOptions.display24Hour;
+  ft.fuzzyBase        := 2;
 
   if userOptions.screenSave then
   begin
-    frmMain.Top := userOptions.formTop;
+    frmMain.Top  := userOptions.formTop;
     frmMain.Left := userOptions.formLeft;
   end;
 
@@ -528,15 +531,15 @@ begin
   else
     mainTimer.Interval := 1000;
 
-  lblfuzzy.Top := 8;                //  defaults for fuzzy time label.
-  lblfuzzy.Left := 4;
+  lblfuzzy.Top       := 8;                //  defaults for fuzzy time label.
+  lblfuzzy.Left      := 4;
   lblfuzzy.Font.Size := 22;
-  lblfuzzy.AutoSize := true;
+  lblfuzzy.AutoSize  := true;
 
-  lblTZTime.Top := 8;               //  defaults for world klock time label.
-  lblTZTime.Left := 4;
+  lblTZTime.Top       := 8;               //  defaults for world klock time label.
+  lblTZTime.Left      := 4;
   lblTZTime.Font.Size := 22;
-  lblTZTime.AutoSize := true;
+  lblTZTime.AutoSize  := true;
 
   klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
 end;
@@ -551,7 +554,7 @@ var
   title: string;       //  do we need to set title?
   message: string;
 begin
-  title := '';
+  title   := '';
   message := '';
 
   for f := 0 to 3 do
@@ -571,7 +574,7 @@ begin
     ShowAtPos(100, 100);
     Color := clyellow;
     Title := title;
-    Text := message;
+    Text  := message;
 
     if (Visible = False) then  // if not currently shown, show
       Visible := True;
@@ -2214,6 +2217,28 @@ procedure TfrmMain.MnuItmSimpleBiorhythmClick(Sender: TObject);
 }
 begin
   frmBiorhythm.Show;
+end;
+
+procedure TfrmMain.MnuItmEnhancedBiorhythmClick(Sender: TObject);
+{  Displays an enhanced version of the Biorhythm chart, this allows the rhyms
+   of two user to be displayed on one chart.  Also, a secdondary series
+   of plots can be displayed.
+
+   This is an external application which is called - can be either 32 or 64 bit
+   depending upon calling application.
+}
+VAR
+  dirName : string;
+  fileName: String;
+begin
+  dirName := ExtractFilePath(Application.ExeName);
+  {$ifdef WIN32}
+    fileName := dirName +'\LazBiorhythms\LazBiorhythms_32.exe';
+  {$else}
+    fileName := dirName +'\LazBiorhythms\LazBiorhythms_64.exe';
+  {$endif}
+
+  doCommandEvent(fileName, '');
 end;
 //
 // ************************************************** Sticky Note Menu *********

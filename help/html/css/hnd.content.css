@@ -112,11 +112,16 @@ span.rvts20
 }
 span.rvts21
 {
+ font-family: 'Lucida Calligraphy';
+ color: #000000;
+}
+span.rvts22
+{
  font-size: 22pt;
  font-family: 'Lucida Calligraphy';
  text-decoration: underline;
 }
-span.rvts22
+span.rvts23
 {
  font-weight: bold;
 }

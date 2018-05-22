@@ -19,16 +19,17 @@ type
 
   TfrmClipBoard = class(TForm)
     btnClpBrdClearClipboard: TButton;
-    btnClpBrdClearMonitor: TButton;
-    btnClpBrdLoad: TButton;
-    btnClpBrdSave: TButton;
-    btnClpBrdClose: TButton;
-    ImgClipBoard: TImage;
-    LstVwClipBoard: TListView;
-    Panel1: TPanel;
-    Panel2: TPanel;
-    StsBrClipBoard: TStatusBar;
-    Timer1: TTimer;
+    btnClpBrdClearMonitor  : TButton;
+    btnClpBrdLoad          : TButton;
+    btnClpBrdSave          : TButton;
+    btnClpBrdClose         : TButton;
+    ImgClipBoard           : TImage;
+    LstVwClipBoard         : TListView;
+    Panel1                 : TPanel;
+    Panel2                 : TPanel;
+    StsBrClipBoard         : TStatusBar;
+    Timer1                 : TTimer;
+
     procedure btnClpBrdClearClipboardClick(Sender: TObject);
     procedure btnClpBrdClearMonitorClick(Sender: TObject);
     procedure btnClpBrdCloseClick(Sender: TObject);
@@ -99,7 +100,7 @@ procedure TfrmClipBoard.FormShow(Sender: TObject);
 begin
   if userOptions.CB_ScreenSave then
   begin
-    Top := userOptions.CB_formTop;
+    Top  := userOptions.CB_formTop;
     Left := userOptions.CB_formLeft;
     userOptions.writeCurrentOptions;
   end;
@@ -166,14 +167,10 @@ procedure TfrmClipBoard.LstVwClipBoardCustomDrawSubItem(
   Sender: TCustomListView; Item: TListItem; SubItem: Integer;
   State: TCustomDrawState; var DefaultDraw: Boolean);
 begin
-  if Item.caption = 'Text' then
-    Sender.Canvas.Font.Color := clRed;
-  if Item.caption = 'File' then
-    Sender.Canvas.Font.Color := clgreen;
-  if Item.caption = 'Dir' then
-    Sender.Canvas.Font.Color := clolive;
-  if Item.caption = 'Image' then
-    Sender.Canvas.Font.Color := clblue;
+  if Item.caption = 'Text'  then Sender.Canvas.Font.Color := clRed;
+  if Item.caption = 'File'  then Sender.Canvas.Font.Color := clgreen;
+  if Item.caption = 'Dir'   then Sender.Canvas.Font.Color := clolive;
+  if Item.caption = 'Image' then Sender.Canvas.Font.Color := clblue;
 end;
 //
 //....................................... Timer ...............................
@@ -189,12 +186,9 @@ VAR
   keyResult: string;
 begin
   keyResult := ' cns ';
-    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-      keyResult[2] := 'C';
-    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-      keyResult[3] := 'N';
-    if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-      keyResult[4] := 'S';
+    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
+    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
+    if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
 
     if userOptions.display24Hour then
       StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
@@ -216,7 +210,7 @@ procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);
 }
 var
   newItem: TListItem;
-  bitmap: TBitmap;
+  bitmap : TBitmap;
   dirName: string;
 
 begin
@@ -224,7 +218,7 @@ begin
 
   if FListener.category = 'Image' then
   begin
-    dirname  := GetTempFileName(GetAppConfigDir(False), 'Klock');
+    dirname        := GetTempFileName(GetAppConfigDir(False), 'Klock');
     FListener.text := dirname;
     FListener.image.SaveToFile(dirname);
     bitmap := TBitmap.Create;
@@ -237,7 +231,7 @@ begin
 
   if not isthere(FListener.text) then
     begin
-      newItem := LstVwClipBoard.Items.Add;
+      newItem         := LstVwClipBoard.Items.Add;
       newItem.Caption := FListener.category;
       newItem.SubItems.add(FListener.epoch);
       newItem.SubItems.add(FListener.text);
@@ -248,9 +242,9 @@ procedure TfrmClipBoard.cullTmpFiles;
 {  Will delete [to recycle bin] all log files older then a 10 days.  }
 var
   tmpFiles:TStringlist;
-  tmpFile: string;
-  tmpDate:TDateTime;
-  tmpAge:longInt;
+  tmpFile : string;
+  tmpDate :TDateTime;
+  tmpAge  :longInt;
 begin
   tmpFiles := TstringList.Create;
   FindAllFiles(tmpFiles, GetAppConfigDir(False), '*.tmp', True);
@@ -258,7 +252,7 @@ begin
   for tmpFile in tmpFiles do
     begin
       tmpDate := FileDateTodateTime(FileAgeUTF8(tmpFile));
-      tmpAge := DaysBetween(Now, tmpDate);
+      tmpAge  := DaysBetween(Now, tmpDate);
 
       if tmpAge > 10 then
       begin
@@ -287,10 +281,10 @@ var
 begin
   with fileOpStruct do
   begin
-    Wnd := frmMain.Handle;      //  Hmm, seems to need a handle of the main form.
-    wFunc := FO_DELETE;
-    pFrom := PChar(aFile + #0#0);
-    pTo := nil;
+    Wnd           := frmMain.Handle;   //  Hmm, seems to need a handle of the main form.
+    wFunc         := FO_DELETE;
+    pFrom         := PChar(aFile + #0#0);
+    pTo           := nil;
     hNameMappings := nil;
 
     fFlags := FOF_ALLOWUNDO;                    //  Use recycle bin.
@@ -315,9 +309,9 @@ function TfrmClipBoard.isThere(s: string): boolean;
    the entry being entered again when the lixtview is clicked.
 }
 var
-  Item: TListItem;
-  f: integer;
-  max: integer;
+  Item : TListItem;
+  f    : integer;
+  max  : integer;
   found: boolean = false;
 begin
   max := LstVwClipBoard.Items.Count;

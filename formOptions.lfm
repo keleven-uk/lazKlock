@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1289
+  Left = 1258
   Height = 510
-  Top = 161
+  Top = 85
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -42,7 +42,7 @@ object frmOptions: TfrmOptions
     Top = 0
     Width = 616
     FullExpand = True
-    ItemIndex = 3
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -55,8 +55,8 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 0
-      Top = 0
+      Height = 338
+      Top = 21
       Width = 616
       Caption = 'Global'
       Order = 0
@@ -230,7 +230,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 42
       Width = 616
       Caption = 'Time'
       Order = 1
@@ -396,7 +396,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
       Height = 0
-      Top = 0
+      Top = 63
       Width = 616
       Caption = 'Other Klocks'
       Order = 2
@@ -652,7 +652,7 @@ object frmOptions: TfrmOptions
       AnchorSideBottom.Control = AcrdnOptions
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 338
+      Height = 0
       Top = 84
       Width = 616
       Caption = 'Sticky Notes, Memo, Monitor Sleeping and BirthDate'

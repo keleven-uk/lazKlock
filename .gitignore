@@ -34,3 +34,6 @@ lib/
 
 # VI backup files.
 *.*~
+
+# lazBiorhythms directory - seperate project on github.
+lazBiorhythms/

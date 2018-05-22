@@ -77,8 +77,8 @@ type
 
 var
   frmFloatingKlock: TfrmFloatingKlock;
-  nowTime: string;
-  prvTime: string;
+  nowTime         : string;
+  prvTime         : string;
 
 implementation
 

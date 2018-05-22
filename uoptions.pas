@@ -593,6 +593,7 @@ begin
     end;
 
     //  keep Monitor Awake
+    PassNode := Doc.DocumentElement.FindNode('keepMonitorAwake');
 
     rtn := readChild(PassNode, 'keepMonitorAwake');
     if rtn <> 'ERROR' then keepMonitorAwake := StrToBool(rtn);
@@ -1184,7 +1185,7 @@ begin
 end;
 
 function Options.writeDateChild(Doc: TXMLDocument; name: string; value: TDateTime): TDOMNode;
-{  Write a [font] value to a child node.    }
+{  Write a [date] value to a child node.    }
 var
   ItemNode: TDOMNode;
   TextNode: TDOMNode;

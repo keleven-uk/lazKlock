@@ -3029,7 +3029,7 @@ commit 02be524ca68d5567014aadf66ea2062109472f24
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Sun Mar 11 21:36:23 2018 +0000
 
-Noticed that there was a flicker when displaying Floating text Klock.  So, amended the update time thingy so it only updated the display when the text changed and not every second.  This makes a differance when displaying fuzzyTime that changes every five minutes.  Also made this change to the main Klock, to save resources.
+Noticed that there was a flicker when displaying Floating text Klock.  So, amended the update time thingy so it only updated the display when the text changed and not every second.  This makes a difference when displaying fuzzyTime that changes every five minutes.  Also made this change to the main Klock, to save resources.
 
 Added an option verbose to FuzzyTime so it could add "nearly" and "just gone" to the output.
 
@@ -3123,7 +3123,7 @@ Date:   Sun Mar 18 20:53:35 2018 +0000
 
 Added Monitor Stuff to the Info menu.
 This shows information about all the display monitors connects to the system.
-This is gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
+This is gathered from Lazarus Tscreen and the WMI system [probably only windows then].
  
 Currently
 11312 lines of source code.
@@ -3146,35 +3146,119 @@ uklockutils.pas |  70 +++++++-------
 
 Build 83 [2.3.1.83]
 
+commit e79dea6c7d3a4f043190562f30ed061719d3758a
+Author: Kevin Scott <github@keleven.co.uk>
+Date:   Wed Apr 11 22:04:18 2018 +0100
+
 Updated tzdata to latest version [2018d].
 
 Implemented a simple Biorhythm chart, the start date is held in the user
 options.  The chart is called via a menu option of the main Klock form.
 
 Tidied up some code in uInfoutils.pas, so that the returned stringLists are
-correctly handled - closed when not needed.
-
-Started to make the code pretty :-)
- 
-Currently
-11501 lines of source code.
-6249 statements
-15.9% 
-
-
-Build 83 [2.3.1.84]
+correctly handled - closed when not needed
 
 The about, and Licence, Info forms are now created when needed and not at the start of the app.
-Trying to do the same with the time forms - but the ones with transparancy seem a problem.
+Trying to do the same with the time forms - but the ones with transparency seem a problem.
 Simplified the calling of the info forms.
 
-More changes to Power stuff when rinning on a lap top.  It now shows more meaningfull times for 
-battery use, but not quite the same as is shown in the windowsa system tray.
+More changes to Power stuff when running on a lap top.  It now shows more meaningful times for 
+battery use, but not quite the same as is shown in the windows system tray.
 
-More code made to loop pretty.
+More code made to look pretty.
 
 Currently
 11534 lines of source code.
 6253 statements
 16.0% 
 
+README.md                                          |   10 +-
+formAbout.pas                                      |   37 +-
+formKlock.lfm                                      |   13 +-
+formKlock.pas                                      |   68 +-
+formOptions.lfm                                    |   45 +-
+formOptions.pas                                    |  276 +--
+formanalogueklock.lfm                              |    2 +-
+formanalogueklock.pas                              |   33 +-
+formbiorhythm.lfm                                  |   90 +
+formbiorhythm.pas                                  |   97 ++
+formfloatingklock.pas                              |   66 +-
+forminfo.lfm                                       |    8 +-
+forminfo.pas                                       |   59 +-
+formlicense.pas                                    |   17 +-
+help/Klock.chm                                     |  Bin 3814976 -> 3861238 bytes
+help/Klock.pdf                                     |  Bin 6891466 -> 7134690 bytes
+help/html/About.html                               |    7 +-
+help/html/Archive.html                             |    2 +-
+help/html/{StickyNote.html => Biorhythm.html}      |   59 +-
+help/html/ClipboardMonitor.html                    |    2 +-
+help/html/Conversion.html                          |    2 +-
+help/html/Countdown.html                           |    5 +-
+help/html/Credits.html                             |    2 +-
+help/html/Events.html                              |    6 +-
+help/html/File.html                                |    2 +-
+help/html/FuzzyTime.html                           |    2 +-
+help/html/Global.html                              |    2 +-
+help/html/Help.html                                |    6 +-
+help/html/History.html                             | 1752 ++++++++++++++++++-
+help/html/Info.html                                |    5 +-
+help/html/Introduction.html                        |    4 +-
+help/html/Klock.html                               |    6 +-
+help/html/Logging.html                             |    4 +-
+help/html/Memo.html                                |   10 +-
+help/html/Menu.html                                |    2 +-
+help/html/OtherKlocks.html                         |    4 +-
+help/html/Reminder.html                            |    2 +-
+help/html/StickyNote1.html                         |   35 +-
+....html => StickyNotesStickyNotesMemoMonito.html} |   19 +-
+help/html/Time.html                                |    2 +-
+help/html/Time1.html                               |    2 +-
+help/html/Timer.html                               |    2 +-
+help/html/Welcome.html                             |    4 +-
+help/html/WorldKlock.html                          |    2 +-
+help/html/_toc.json                                |    2 +-
+help/html/js/hndsd.min.js                          |    2 +-
+help/klock.hnd                                     |  Bin 4771840 -> 4956160 bytes
+history.txt                                        |   59 +-
+klock.iss                                          |    4 +-
+klock.lpi                                          |  247 ++-
+klock.lpr                                          |   17 +-
+lazKlock.smproj                                    |  Bin 775543 -> 841493 bytes
+tzdata/CONTRIBUTING                                |   12 +-
+tzdata/Makefile                                    |  123 +-
+tzdata/NEWS                                        |  145 +-
+tzdata/africa                                      |   57 +-
+tzdata/antarctica                                  |    3 +-
+tzdata/asia                                        |  177 +-
+tzdata/australasia                                 |  114 +-
+tzdata/backzone                                    |   48 +-
+tzdata/checktab.awk                                |    9 +
+tzdata/europe                                      |   84 +-
+tzdata/northamerica                                |   27 +-
+tzdata/southamerica                                |  430 +++--
+tzdata/theory.html                                 | 1793 +++++++++++---------
+tzdata/version                                     |    2 +-
+tzdata/ziguard.awk                                 |   62 +
+tzdata/zishrink.awk                                |    4 +-
+tzdata/zone.tab                                    |    2 +-
+tzdata/zone1970.tab                                |    4 +-
+uconversion.pas                                    |    6 +-
+uinfoutils.pas                                     |   95 +-
+uklockutils.pas                                    |   58 +-
+uoptions.pas                                       |  658 +++----
+75 files changed, 4954 insertions(+), 2063 deletions(-)
+
+
+Build 84 [2.3.1.84]
+
+Added a call to the enhanced version of Biorhythms to menu.
+This is a separate github project.
+
+Corrected a bug with compile time in formAbout.
+
+Corrected a bug with writing default options in uOptions.
+
+Currently
+11552 lines of source code.
+6265 statements
+16.0% comment

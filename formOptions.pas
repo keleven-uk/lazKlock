@@ -308,6 +308,7 @@ procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
 }
 begin
   userOptions.writeDefaultOptions;
+  UserOptions.writeCurrentOptions;
 end;
 //............................ Options Routines ................................
 //
