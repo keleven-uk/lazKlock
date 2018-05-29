@@ -97,7 +97,7 @@ begin
     fontTypes.add('default')
   end;
 
-  klog.writeLog(format('Found %d font Types in %s', [fontTypes.Count, fontDir]));
+  logMessage(format('Found %d font Types in %s', [fontTypes.Count, fontDir]));
 
   _fontNames := TStringList.Create;
   try
@@ -107,7 +107,7 @@ begin
     fontNames.add('default')
   end;
 
-  klog.writeLog(format('Found %d font Names in %s', [fontNames.Count, fontDir]));
+  logMessage(format('Found %d font Names in %s', [fontNames.Count, fontDir]));
 
   findFontFiles;              //  Scan for font files.
   addFonts;                   //  Add fonts to system.
@@ -193,7 +193,7 @@ begin
   _fontFiles := TStringList.Create;
   FindAllFiles(fontFiles, fontDir, '*.ttf', True);
 
-  klog.writeLog(format('Found %d font files in %s', [fontFiles.Count, fontDir]));
+  logMessage(format('Found %d font files in %s', [fontFiles.Count, fontDir]));
 end;
 
 end.

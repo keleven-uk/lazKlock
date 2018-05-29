@@ -30,14 +30,12 @@ var
   memoFile: String;
   stickyFile: String;
   unitsFile: String;
-  reminderFile: String;
 
 begin
   optionsFile := userOptions.optionsName;
   memoFile := userOptions.memoName;
   stickyFile := userOptions.stickyName;
   unitsFile := userOptions.unitsName;
-  reminderFile := userOptions.reminderName;
 
   result := TStringList.Create;
 
@@ -51,8 +49,6 @@ begin
     result.add(stickyFile);
   if FileExists(unitsFile) then
     result.add(unitsFile);
-  if FileExists(reminderFile) then
-    result.add(reminderFile);
 end;
 
 procedure saveArchive(fname: String; archiveFiles: TStringList);

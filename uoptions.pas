@@ -58,7 +58,6 @@ type
     _memoName    : string;              //  full path to the memo file.
     _stickyName  : string;              //  full path to the Sticky Notes file.
     _unitsName   : string;              //  full path to the Units file.
-    _reminderName: string;              //  full path to the Reminder file.
 
     //  Sart of user options.
     _runAtStartUp    : boolean;         //  run Klock at windows start up - Current user only.
@@ -181,7 +180,6 @@ type
     property memoName        : string  read _memoName write _memoName;
     property stickyName      : string  read _stickyName write _stickyName;
     property unitsName       : string  read _unitsName write _unitsName;
-    property reminderName    : string  read _reminderName write _reminderName;
     property runAtStartUp    : boolean read _runAtStartUp write _runAtStartUp;
     property screenSave      : boolean read _screenSave write _screenSave;
     property formTop         : integer read _formTop write _formTop;
@@ -407,7 +405,6 @@ begin
   memoName         := o.memoName;
   stickyName       := o.stickyName;
   unitsName        := o.unitsName;
-  reminderName     := o.reminderName;
   runAtStartUp     := o.runAtStartUp;
   screenSave       := o.screenSave;
   formTop          := o.formTop;
@@ -564,8 +561,6 @@ begin
       if rtn <> 'ERROR' then stickyName := ansistring(rtn);
       rtn := readChild(PassNode, 'unitsName');
       if rtn <> 'ERROR' then unitsName := ansistring(rtn);
-      rtn := readChild(PassNode, 'reminderName');
-      if rtn <> 'ERROR' then reminderName := ansistring(rtn);
       rtn := readChild(PassNode, 'runAtStartUp');
       if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
       rtn := readChild(PassNode, 'screenSave');
@@ -808,7 +803,6 @@ begin
   memoName         := GetAppConfigDir(False) + 'Memo.bin';
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';
-  reminderName     := GetAppConfigDir(False) + 'kReminder.txt';
   runAtStartUp     := false;
   screenSave       := True;
   formTop          := 100;            //  the forms top left.
@@ -943,7 +937,6 @@ begin
     ElementNode.AppendChild(writeStrChild(doc, 'memoName', memoName));
     ElementNode.AppendChild(writeStrChild(doc, 'stickyName', stickyName));
     ElementNode.AppendChild(writeStrChild(doc, 'unitsName', unitsName));
-    ElementNode.AppendChild(writeStrChild(doc, 'reminderName', reminderName));
     ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp', runAtStartUp));
     ElementNode.AppendChild(writeBolChild(doc, 'screenSave', screenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'formPosition', formTop, formLeft));

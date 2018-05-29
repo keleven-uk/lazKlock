@@ -12,16 +12,7 @@ uses
   formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon,
   MouseAndKeyInput, LCLType, formFloatingKlock;
 
-type                     //  used to hold the parsed data for a reminder.
-  reminderData = record
-    message: string;     //  the formatted message for the reminder.
-    orDate : TDateTime;  //  date of original event.
-    rmDate : TDateTime;  //  date of next reminder due.
-    period : integer;    //  period of reminder in months.
-    toGo   : double;     //  days to go for reminder.
-    active : boolean;
-  end;
-
+type
   //  Used for hour chimes file name.  Zero not used, inserted as a dummy to keep count correct.
   chimes = (zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve);
 var
@@ -30,7 +21,6 @@ var
 function FontToString(f: TFont): string;
 function StringToFont(s: string): TFont;
 function getTextFont(f1: TFont; f2: TFont): TFont;
-function parseReminder(a: string): reminderData;
 procedure doSystemEvent(event: integer);
 procedure abortSystemEvent;
 procedure doCommandEvent(command: string; args: string);
@@ -345,76 +335,6 @@ begin
     mciGetErrorString(returnValue, errorMessage, 255);
     ShowMessage(errorMessage);
   end;
-end;
-
-function parseReminder(a: string): reminderData;
-{  a is a string containing the Reminder, comma delimited.
-   pos 0 = name
-       1 = date
-       2 = period [Yearly/Monthly]
-       3 = type[Wedding/Birthday/Motor/One Off/Other
-       4 = active[-1/0]
-}
-var
-  rmndrData: reminderData;
-
-  Name  : string;
-  date  : string;
-  period: string;
-  Rtype : string;
-  active: string;
-
-  p: integer;
-  y: integer;
-begin
-  p    := Pos(',', a);                               //  name of reminder
-  Name := copy(a, 0, p - 1);
-  Delete(a, 1, p);
-
-  p     := Pos(',', a);                              //  date of reminder
-  date := copy(a, 0, p - 1);
-  Delete(a, 1, p);
-  rmndrData.orDate := StrToDate(date);
-
-  p      := Pos(',', a);                             //  period of reminder
-  period := copy(a, 0, p - 1);
-  Delete(a, 1, p);
-  if period = ' Yearly' then
-    rmndrData.period := 12
-  else
-    rmndrData.period := 1;
-
-  p     := Pos(',', a);                              //  type of reminder
-  Rtype := copy(a, 0, p - 1);
-  Delete(a, 1, p);
-
-  active := a;                                      //  is reminder active
-  Delete(a, 1, p);
-  rmndrData.active := StrToBool(active);
-
-  y := YearOf(Now);                                  //  check if reminder passed
-  if MonthOf(rmndrData.orDate) < MonthOf(Now) then   //  for this year, if it has
-    y += 1;                                          //  then increment year.
-
-  if (MonthOf(rmndrData.orDate) = MonthOf(Now)) and  //  if this month, check the
-    (Dayof(rmndrData.orDate) < Dayof(Now)) then     //  if the day has passed
-    y += 1;
-
-  rmndrData.rmDate := EncodeDateTime(y,
-    MonthOf(rmndrData.orDate),
-    DayOf(rmndrData.orDate),
-    0, 0, 0, 0);
-
-
-  rmndrData.toGo := DaySpan(Now, rmndrData.rmDate);
-
-  case Rtype of
-    ' Wedding' : rmndrData.message := format('%s have a wedding anniversary, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
-    ' Birthday': rmndrData.message := format('%s has a Birthday, in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
-    ' Motor'   : rmndrData.message := format('%s , in %3.f days [%s]', [Name, rmndrData.toGo, DateToStr(rmndrData.rmDate)]);
-  end;
-
-  Result := rmndrData;
 end;
 
 procedure applyRunAtStartUp(flag: boolean);

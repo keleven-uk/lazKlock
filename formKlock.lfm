@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1256
+  Left = 1066
   Height = 259
-  Top = 359
+  Top = 530
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -151,7 +151,7 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '1.8.4.0'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtTimer
-      TabIndex = 3
+      ActivePage = TbShtReminder
+      TabIndex = 4
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -721,8 +721,8 @@ object frmMain: TfrmMain
           end
         end
       end
-      object TbShtEvent: TTabSheet
-        Caption = 'Event'
+      object TbShtReminder: TTabSheet
+        Caption = 'Reminder'
         ClientHeight = 102
         ClientWidth = 658
         object Panel5: TPanel
@@ -744,24 +744,24 @@ object frmMain: TfrmMain
             ClientHeight = 88
             ClientWidth = 96
             TabOrder = 0
-            object btnEventSet: TButton
+            object btnReminderSet: TButton
               Left = 8
               Height = 25
               Top = 10
               Width = 75
               Caption = 'Set'
               Enabled = False
-              OnClick = btnEventSetClick
+              OnClick = btnReminderSetClick
               TabOrder = 0
             end
-            object btnEventClear: TButton
+            object btnReminderClear: TButton
               Left = 8
               Height = 25
               Top = 50
               Width = 75
               Caption = 'Clear'
               Enabled = False
-              OnClick = btnEventClearClick
+              OnClick = btnReminderClearClick
               TabOrder = 1
             end
           end
@@ -773,26 +773,26 @@ object frmMain: TfrmMain
             ClientHeight = 43
             ClientWidth = 532
             TabOrder = 1
-            object lblEvent: TLabel
+            object lblReminder: TLabel
               Left = 16
               Height = 32
               Top = 4
-              Width = 140
-              Caption = 'Event not set'
+              Width = 183
+              Caption = 'Reminder not set'
               Font.Height = -24
               ParentColor = False
               ParentFont = False
             end
-            object SpnEdtMins: TSpinEdit
+            object SpnReminderMins: TSpinEdit
               Left = 384
               Height = 23
               Top = 8
               Width = 50
               MaxValue = 59
-              OnChange = SpnEdtMinsChange
+              OnChange = SpnReminderMinsChange
               TabOrder = 0
             end
-            object DtEdtEvent: TDateEdit
+            object DtReminderEvent: TDateEdit
               Left = 440
               Height = 25
               Top = 8
@@ -839,17 +839,17 @@ object frmMain: TfrmMain
               NumGlyphs = 1
               Font.Height = -13
               MaxLength = 0
-              OnChange = DtEdtEventChange
+              OnChange = DtReminderEventChange
               ParentFont = False
               TabOrder = 1
             end
-            object SpnEdtHour: TSpinEdit
+            object SpnReminderHour: TSpinEdit
               Left = 328
               Height = 23
               Top = 8
               Width = 50
               MaxValue = 23
-              OnChange = SpnEdtHourChange
+              OnChange = SpnReminderHourChange
               TabOrder = 2
             end
           end
@@ -861,10 +861,10 @@ object frmMain: TfrmMain
             ClientHeight = 40
             ClientWidth = 532
             TabOrder = 2
-            object CmbBxEventAction: TComboBox
+            object CmbBxReminderAction: TComboBox
               Left = 8
               Height = 23
-              Top = 8
+              Top = 7
               Width = 80
               ItemHeight = 15
               ItemIndex = 0
@@ -874,21 +874,21 @@ object frmMain: TfrmMain
                 'System'
                 'Command'
               )
-              OnChange = CmbBxEventActionChange
+              OnChange = CmbBxReminderActionChange
               Style = csDropDownList
               TabOrder = 0
               Text = 'Sound'
             end
-            object ChckBxEventSound: TCheckBox
+            object ChckBxReminderSound: TCheckBox
               Left = 104
               Height = 19
               Top = 8
               Width = 54
               Caption = 'Sound'
-              OnChange = ChckBxEventSoundChange
+              OnChange = ChckBxReminderSoundChange
               TabOrder = 1
             end
-            object EdtEventSound: TEdit
+            object EdtReminderSound: TEdit
               Left = 168
               Height = 23
               Top = 8
@@ -896,37 +896,36 @@ object frmMain: TfrmMain
               Enabled = False
               TabOrder = 2
             end
-            object btnEventrLoadSound: TButton
+            object btnReminderLoadSound: TButton
               Left = 328
               Height = 24
               Top = 8
               Width = 50
               Caption = '...'
               Enabled = False
-              OnClick = btnEventrLoadSoundClick
               TabOrder = 3
             end
-            object btnEventTestSound: TButton
+            object btnReminderTestSound: TButton
               Left = 384
               Height = 24
               Top = 8
               Width = 50
               Caption = 'Test'
               Enabled = False
-              OnClick = btnEventTestSoundClick
+              OnClick = btnReminderTestSoundClick
               TabOrder = 4
             end
-            object ChckBxEventReminder: TCheckBox
+            object ChckBxReminderReminder: TCheckBox
               Left = 104
               Height = 19
               Top = 8
               Width = 71
               Caption = 'Reminder'
-              OnChange = ChckBxEventReminderChange
+              OnChange = ChckBxReminderReminderChange
               TabOrder = 5
               Visible = False
             end
-            object EdtEventText: TEdit
+            object EdtReminderText: TEdit
               Left = 176
               Height = 23
               Top = 9
@@ -936,17 +935,17 @@ object frmMain: TfrmMain
               Text = 'Reminding you now, Sir!'
               Visible = False
             end
-            object ChckBxEventSystem: TCheckBox
+            object ChckBxReminderSystem: TCheckBox
               Left = 104
               Height = 19
               Top = 9
               Width = 58
               Caption = 'System'
-              OnChange = ChckBxEventSystemChange
+              OnChange = ChckBxReminderSystemChange
               TabOrder = 7
               Visible = False
             end
-            object CmbBxEventSystem: TComboBox
+            object CmbBxReminderSystem: TComboBox
               Left = 168
               Height = 23
               Top = 9
@@ -963,17 +962,17 @@ object frmMain: TfrmMain
               TabOrder = 8
               Visible = False
             end
-            object ChckBxEventCommand: TCheckBox
+            object ChckBxReminderCommand: TCheckBox
               Left = 100
               Height = 19
               Top = 8
               Width = 77
               Caption = 'Command'
-              OnChange = ChckBxEventCommandChange
+              OnChange = ChckBxReminderCommandChange
               TabOrder = 9
               Visible = False
             end
-            object EdtEventCommand: TEdit
+            object EdtReminderCommand: TEdit
               Left = 176
               Height = 23
               Top = 8
@@ -982,97 +981,25 @@ object frmMain: TfrmMain
               TabOrder = 10
               Visible = False
             end
-            object btnEventLoadCommand: TButton
+            object btnReminderLoadCommand: TButton
               Left = 470
               Height = 24
               Top = 8
               Width = 50
               Caption = '...'
               Enabled = False
-              OnClick = btnEventLoadCommandClick
               TabOrder = 11
               Visible = False
             end
-            object btnEventAbort: TButton
+            object btnReminderAbort: TButton
               Left = 470
               Height = 24
               Top = 7
               Width = 50
               Caption = 'Abort'
-              OnClick = btnEventAbortClick
+              OnClick = btnReminderAbortClick
               TabOrder = 12
               Visible = False
-            end
-          end
-        end
-      end
-      object TbShtReminder: TTabSheet
-        Caption = 'Reminder'
-        ClientHeight = 102
-        ClientWidth = 658
-        object Panel17: TPanel
-          Left = 0
-          Height = 102
-          Top = 0
-          Width = 658
-          Align = alClient
-          ClientHeight = 102
-          ClientWidth = 658
-          Color = clForm
-          ParentColor = False
-          TabOrder = 0
-          object Panel18: TPanel
-            Left = 12
-            Height = 88
-            Top = 8
-            Width = 96
-            ClientHeight = 88
-            ClientWidth = 96
-            TabOrder = 0
-            object btnReminderNew: TButton
-              Left = 8
-              Height = 20
-              Top = 8
-              Width = 75
-              Caption = 'New'
-              OnClick = btnReminderNewClick
-              TabOrder = 0
-            end
-            object btnReminderEdit: TButton
-              Left = 8
-              Height = 20
-              Top = 34
-              Width = 75
-              Caption = 'Edit'
-              Enabled = False
-              TabOrder = 1
-            end
-            object btnReminderDelete: TButton
-              Left = 8
-              Height = 20
-              Top = 58
-              Width = 75
-              Caption = 'Delete'
-              Enabled = False
-              TabOrder = 2
-            end
-          end
-          object Panel19: TPanel
-            Left = 116
-            Height = 88
-            Top = 8
-            Width = 532
-            ClientHeight = 88
-            ClientWidth = 532
-            TabOrder = 1
-            object ChckLstBxReminder: TCheckListBox
-              Left = 8
-              Height = 72
-              Top = 8
-              Width = 520
-              Color = clForm
-              ItemHeight = 0
-              TabOrder = 0
             end
           end
         end
@@ -2026,14 +1953,14 @@ object frmMain: TfrmMain
   object mainTimer: TTimer
     Enabled = False
     OnTimer = mainTimerTimer
-    left = 288
+    left = 312
     top = 184
   end
   object CountdownTimer: TTimer
     Enabled = False
     OnTimer = CountdownTimerTimer
-    left = 248
-    top = 184
+    left = 264
+    top = 168
   end
   object PopupNotifier1: TPopupNotifier
     Color = clSilver
@@ -2053,11 +1980,11 @@ object frmMain: TfrmMain
     Enabled = False
     OnTimer = timerTimerTimer
     left = 208
-    top = 184
+    top = 168
   end
-  object EventTimer: TTimer
+  object ReminderTimer: TTimer
     Enabled = False
-    OnTimer = EventTimerTimer
+    OnTimer = ReminderTimerTimer
     left = 168
     top = 184
   end

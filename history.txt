@@ -3251,6 +3251,10 @@ uoptions.pas                                       |  658 +++----
 
 Build 84 [2.3.1.84]
 
+commit 4700fa88ef2593800a7c86f0deb85ab15262250b
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue May 22 21:47:25 2018 +0100
+
 Added a call to the enhanced version of Biorhythms to menu.
 This is a separate github project.
 
@@ -3258,7 +3262,66 @@ Corrected a bug with compile time in formAbout.
 
 Corrected a bug with writing default options in uOptions.
 
+Merged into master.
+
 Currently
 11552 lines of source code.
 6265 statements
 16.0% comment
+
+.gitignore                                      |   3 +
+.history.txt.swp                                | Bin 16384 -> 0 bytes
+formAbout.pas                                   |  20 +-
+formKlock.lfm                                   |  10 +-
+formKlock.pas                                   | 473 +++++++++++++-----------
+formOptions.lfm                                 |  16 +-
+formOptions.pas                                 |   1 +
+formclipboard.pas                               |  72 ++--
+formfloatingklock.lfm                           |   2 +-
+formfloatingklock.pas                           |   4 +-
+help/Klock.chm                                  | Bin 3861238 -> 3909362 bytes
+help/Klock.pdf                                  | Bin 7134690 -> 7588297 bytes
+help/html/About.html                            |   2 +-
+help/html/Archive.html                          |  10 +-
+help/html/Biorhythm.html                        |  21 +-
+help/html/Global.html                           |   6 +-
+help/html/Help.html                             |   2 +-
+help/html/History.html                          | 115 +++++-
+help/html/Introduction.html                     |   4 +-
+help/html/Klock.html                            |   4 +-
+help/html/Statusbar.html                        |   2 +-
+help/html/StickyNotesStickyNotesMemoMonito.html |   8 +-
+help/html/SystemTray.html                       |   2 +-
+help/html/Thingymabobs.html                     |   1 -
+help/html/Time.html                             |  12 +-
+help/html/Welcome.html                          |   4 +-
+help/html/css/hnd.content.css                   |   7 +-
+help/html/js/hndsd.min.js                       |   2 +-
+help/klock.hnd                                  | Bin 4956160 -> 5050368 bytes
+history.txt                                     | 118 +++++-
+klock.iss                                       |  25 +-
+klock.lpi                                       | 184 +++++----
+lazKlock.smproj                                 | Bin 841493 -> 841681 bytes
+uinfoutils.pas                                  |  74 ++--
+uklockutils.pas                                 |  35 +-
+uoptions.pas                                    |   3 +-
+36 files changed, 754 insertions(+), 488 deletions(-)
+
+
+Build 85 [2.4.0.85]
+
+The current Reminder tab had a couple [many] bugs and did not really work and
+needed re-writing really.  Also the naming of the Reminder and Event tabs was
+not really correct.
+
+So, I have deleted the Reminder tab and all associated code.
+I have renamed the Events tab to Reminder - This tab is about a single one off
+prompt at a given time so suits the name Reminder and not Events.
+
+A new Events tab will be written, hopefully more suited to the job.
+
+Currently
+11393 lines of source code.
+6154 statements
+15.9% comment
+
