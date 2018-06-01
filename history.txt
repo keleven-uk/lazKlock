@@ -10,78 +10,6 @@ Most of the GUI structure is complete.
 
 Countdown page complete.
 
-.gitignore                     |  33 ++
-GNU GENERAL PUBLIC LICENSE.txt | 674 +++++++++++++++++++++++++++++++++++++++++
-blue-letters/!.ico             | Bin 0 -> 119149 bytes
-blue-letters/A.ico             | Bin 0 -> 133106 bytes
-blue-letters/B.ico             | Bin 0 -> 130770 bytes
-blue-letters/C.ico             | Bin 0 -> 136698 bytes
-blue-letters/D.ico             | Bin 0 -> 129097 bytes
-blue-letters/Dot.ico           | Bin 0 -> 118524 bytes
-blue-letters/E.ico             | Bin 0 -> 124688 bytes
-blue-letters/F.ico             | Bin 0 -> 124147 bytes
-blue-letters/G.ico             | Bin 0 -> 135767 bytes
-blue-letters/H.ico             | Bin 0 -> 126025 bytes
-blue-letters/I.ico             | Bin 0 -> 120077 bytes
-blue-letters/J.ico             | Bin 0 -> 126758 bytes
-blue-letters/K.ico             | Bin 0 -> 132202 bytes
-blue-letters/L.ico             | Bin 0 -> 123843 bytes
-blue-letters/M.ico             | Bin 0 -> 132420 bytes
-blue-letters/N.ico             | Bin 0 -> 128936 bytes
-blue-letters/O.ico             | Bin 0 -> 135070 bytes
-blue-letters/P.ico             | Bin 0 -> 127568 bytes
-blue-letters/Q.ico             | Bin 0 -> 138504 bytes
-blue-letters/Question.ico      | Bin 0 -> 122752 bytes
-blue-letters/R.ico             | Bin 0 -> 131815 bytes
-blue-letters/S.ico             | Bin 0 -> 138950 bytes
-blue-letters/T.ico             | Bin 0 -> 123861 bytes
-blue-letters/U.ico             | Bin 0 -> 126431 bytes
-blue-letters/V.ico             | Bin 0 -> 133394 bytes
-blue-letters/W.ico             | Bin 0 -> 137393 bytes
-blue-letters/X.ico             | Bin 0 -> 133641 bytes
-blue-letters/Y.ico             | Bin 0 -> 130920 bytes
-blue-letters/Z.ico             | Bin 0 -> 129292 bytes
-blue-letters/readme.txt        |  26 ++
-blue-letters/sA.ico            | Bin 0 -> 894 bytes
-blue-letters/sB.ico            | Bin 0 -> 894 bytes
-blue-letters/sC.ico            | Bin 0 -> 894 bytes
-blue-letters/sD.ico            | Bin 0 -> 894 bytes
-info.txt                       |  15 +
-klock.ico                      | Bin 0 -> 3262 bytes
-klock.lpi                      | 268 ++++++++++++++++
-klock.lpr                      |  22 ++
-random/random1.ico             | Bin 0 -> 151787 bytes
-random/random10.ico            | Bin 0 -> 161228 bytes
-random/random11.ico            | Bin 0 -> 179933 bytes
-random/random12.ico            | Bin 0 -> 173332 bytes
-random/random2.ico             | Bin 0 -> 161370 bytes
-random/random3.ico             | Bin 0 -> 154710 bytes
-random/random4.ico             | Bin 0 -> 176679 bytes
-random/random5.ico             | Bin 0 -> 132648 bytes
-random/random6.ico             | Bin 0 -> 149826 bytes
-random/random7.ico             | Bin 0 -> 155776 bytes
-random/random8.ico             | Bin 0 -> 156516 bytes
-random/random9.ico             | Bin 0 -> 151106 bytes
-random/readme.txt              |  17 ++
-sounds/alarm-fatal.wav         | Bin 0 -> 1359604 bytes
-sounds/chimes.wav              | Bin 0 -> 55776 bytes
-sounds/chord.wav               | Bin 0 -> 97016 bytes
-sounds/ding.wav                | Bin 0 -> 80856 bytes
-sounds/notify.wav              | Bin 0 -> 119384 bytes
-sounds/recycle.wav             | Bin 0 -> 25434 bytes
-sounds/ringin.wav              | Bin 0 -> 10026 bytes
-sounds/ringout.wav             | Bin 0 -> 5212 bytes
-sounds/start.wav               | Bin 0 -> 1192 bytes
-sounds/tada.wav                | Bin 0 -> 171100 bytes
-uabout.lfm                     | 204 +++++++++++++
-uabout.pas                     |  62 ++++
-uhelp.lfm                      | 159 ++++++++++
-uhelp.pas                      |  68 +++++
-uklock.lfm                     | 376 +++++++++++++++++++++++
-uklock.pas                     | 295 ++++++++++++++++++
-uoptions.lfm                   |  42 +++
-uoptions.pas                   |  47 +++
-71 files changed, 2308 insertions(+)
 
 Build 2
 
@@ -95,64 +23,6 @@ Changed icon to clock.ico
 
 Changed message to popup notification.
 
-blue-letters/!.ico        |  Bin 119149 -> 0 bytes
-blue-letters/A.ico        |  Bin 133106 -> 0 bytes
-blue-letters/B.ico        |  Bin 130770 -> 0 bytes
-blue-letters/C.ico        |  Bin 136698 -> 0 bytes
-blue-letters/D.ico        |  Bin 129097 -> 0 bytes
-blue-letters/Dot.ico      |  Bin 118524 -> 0 bytes
-blue-letters/E.ico        |  Bin 124688 -> 0 bytes
-blue-letters/F.ico        |  Bin 124147 -> 0 bytes
-blue-letters/G.ico        |  Bin 135767 -> 0 bytes
-blue-letters/H.ico        |  Bin 126025 -> 0 bytes
-blue-letters/I.ico        |  Bin 120077 -> 0 bytes
-blue-letters/J.ico        |  Bin 126758 -> 0 bytes
-blue-letters/K.ico        |  Bin 132202 -> 0 bytes
-blue-letters/L.ico        |  Bin 123843 -> 0 bytes
-blue-letters/M.ico        |  Bin 132420 -> 0 bytes
-blue-letters/N.ico        |  Bin 128936 -> 0 bytes
-blue-letters/O.ico        |  Bin 135070 -> 0 bytes
-blue-letters/P.ico        |  Bin 127568 -> 0 bytes
-blue-letters/Q.ico        |  Bin 138504 -> 0 bytes
-blue-letters/Question.ico |  Bin 122752 -> 0 bytes
-blue-letters/R.ico        |  Bin 131815 -> 0 bytes
-blue-letters/S.ico        |  Bin 138950 -> 0 bytes
-blue-letters/T.ico        |  Bin 123861 -> 0 bytes
-blue-letters/U.ico        |  Bin 126431 -> 0 bytes
-blue-letters/V.ico        |  Bin 133394 -> 0 bytes
-blue-letters/W.ico        |  Bin 137393 -> 0 bytes
-blue-letters/X.ico        |  Bin 133641 -> 0 bytes
-blue-letters/Y.ico        |  Bin 130920 -> 0 bytes
-blue-letters/Z.ico        |  Bin 129292 -> 0 bytes
-blue-letters/readme.txt   |   26 -
-blue-letters/sA.ico       |  Bin 894 -> 0 bytes
-blue-letters/sB.ico       |  Bin 894 -> 0 bytes
-blue-letters/sC.ico       |  Bin 894 -> 0 bytes
-blue-letters/sD.ico       |  Bin 894 -> 0 bytes
-clock.ico                 |  Bin 0 -> 67646 bytes
-info.txt                  |   10 +-
-klock.ico                 |  Bin 3262 -> 67646 bytes
-klock.lpi                 |  129 ++-
-random/random1.ico        |  Bin 151787 -> 0 bytes
-random/random10.ico       |  Bin 161228 -> 0 bytes
-random/random11.ico       |  Bin 179933 -> 0 bytes
-random/random12.ico       |  Bin 173332 -> 0 bytes
-random/random2.ico        |  Bin 161370 -> 0 bytes
-random/random3.ico        |  Bin 154710 -> 0 bytes
-random/random4.ico        |  Bin 176679 -> 0 bytes
-random/random5.ico        |  Bin 132648 -> 0 bytes
-random/random6.ico        |  Bin 149826 -> 0 bytes
-random/random7.ico        |  Bin 155776 -> 0 bytes
-random/random8.ico        |  Bin 156516 -> 0 bytes
-random/random9.ico        |  Bin 151106 -> 0 bytes
-random/readme.txt         |   17 -
-uabout.lfm                |   30 +-
-uabout.pas                |    2 +-
-uhelp.lfm                 |    6 +-
-uhelp.pas                 |    2 +-
-uklock.lfm                | 2268 +++++++++++++++++++++++++++++++++++++++++++--
-uklock.pas                |   92 +-
-57 files changed, 2361 insertions(+), 221 deletions(-)
 
 Build 3
 
@@ -164,10 +34,6 @@ Timer page completed.
 
 Reminder page started.
 
-klock.lpi  | 91 +++++++++++++++++++++++++++++++++-----------------------------
-uklock.lfm | 66 +++++++++++++++++++++++++++++++++++++++------
-uklock.pas | 62 +++++++++++++++++++++++++++++++++++++-----
-3 files changed, 163 insertions(+), 56 deletions(-
 
 Build 4
 
@@ -179,12 +45,6 @@ Fuzzy time page completed.
 
 Still working on reminder page.
 
-klock.lpi      | 100 +++++++++++++++++++----------------
-klock.lpr      |   2 +-
-ufuzzytime.pas | 153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-uklock.lfm     | 161 +++++++++++++++++++++++++++++++++++++++++++--------------
-uklock.pas     |  64 +++++++++++++++++++----
-5 files changed, 386 insertions(+), 94 deletions(-
 
 Build 5
 
@@ -198,16 +58,6 @@ Added logic to change status bar on page change.
 
 Tidied up code.
 
- info.txt     |   6 +-
- klock.lpi    |  99 +++++++-------
- uabout.lfm   |  10 +-
- uabout.pas   |   2 +-
- uhelp.lfm    |   9 +-
- uhelp.pas    |   8 +-
- uklock.lfm   |  41 ++++--
- uklock.pas   | 417 +++++++++++++++++++++++++++++++++++------------------------
- uoptions.lfm |   4 +-
- 9 files changed, 352 insertions(+), 244 deletions(-)
 
 Build 6
 
@@ -220,18 +70,6 @@ All four pages now work - maybe an issue with reminders.
 Added option record, that is passed between option form and the main form.
 Added first option - colour of the main labels.
 
-history.txt        |  37 +++++++++++++
-klock.iss          |  54 +++++++++++++++++++
-klock.lpi          | 152 ++++++++++++++++++++++++++++-------------------------
-klock.lpr          |   2 +-
-uabout.lfm         |   4 +-
-uhelp.lfm          |   4 +-
-uklock.lfm         |  59 +++++++++++++--------
-uklock.pas         |  38 ++++++++++++--
-uoptions.lfm       |  69 +++++++++++++++++-------
-uoptions.pas       |  71 +++++++++++++++++++++++--
-uoptionsrecord.pas |  32 +++++++++++
-11 files changed, 399 insertions(+), 123 deletions(-
 
 Build 7
 
@@ -242,18 +80,6 @@ Date:   Thu Sep 29 21:29:35 2016 +0100
 Added NET & UNIX time to fuzzypage.
 Added extra buttons to the radio group.
 
-info.txt       |   6 +--
-klock.lpi      | 160 ++++++++++++++++++++++++++++++---------------------------
-klock.lpr      |   2 +-
-uabout.pas     |   2 +-
-ufuzzytime.pas |  66 ++++++++++++++++++------
-uhelp.lfm      |   4 +-
-uhelp.pas      |   5 +-
-uklock.lfm     |  30 ++++++++---
-uklock.pas     |  35 ++++++++-----
-uoptions.lfm   |   4 +-
-uoptions.pas   |   2 +-
-11 files changed, 191 insertions(+), 125 deletions(-)
 
 Build 8
 
@@ -265,15 +91,6 @@ Corrected bugs in fuzzytime & net time.
 
 Added UTC time.
 
-klock.iss      |   4 +-
-klock.lpi      | 140 ++++++++++++++++++++++++++++-----------------------------
-uabout.lfm     |   4 +-
-ufuzzytime.pas |  19 ++++++--
-uhelp.lfm      |   4 +-
-uklock.lfm     |  11 ++---
-uklock.pas     |   4 ++
-uoptions.lfm   |   4 +-
-8 files changed, 104 insertions(+), 86 deletions(-)
 
 Build 9
 
@@ -285,17 +102,6 @@ Changed the way to select the time format from a radio group to a combo box.
 
 Added Swatch time.
 
-history.txt    |  54 +++++++++++++++++++--------
-info.txt       |   6 +--
-klock.lpi      | 116 ++++++++++++++++++++++++++++-----------------------------
-uabout.pas     |   2 +-
-ufuzzytime.pas |  42 ++++++++++++++++-----
-uhelp.pas      |   2 +-
-uklock.lfm     |  37 +++++++-----------
-uklock.pas     |  22 ++++++-----
-uoptions.lfm   |   4 +-
-uoptions.pas   |   2 +-
-10 files changed, 164 insertions(+), 123 deletions(-
 
 Build 10
 
@@ -309,16 +115,6 @@ minutes.  Still working on the logic to make it work in 24 hours and 60 minutes.
 
 Also added a date picker to the reminder page.
 
-info.txt       |   6 +--
-klock.lpi      | 126 ++++++++++++++++++++++++++---------------------------
-uabout.lfm     |  28 ++++++------
-uabout.pas     |   2 +-
-ufuzzytime.pas |  21 ++++++++-
-uhelp.lfm      |   4 +-
-uhelp.pas      |   2 +-
-uklock.lfm     | 134 +++++++++++++++++++++++++++++++++------------------------
-uklock.pas     |  73 ++++++++++++++++---------------
-9 files changed, 218 insertions(+), 178 deletions(-)
 
 Build 11
 
@@ -333,13 +129,6 @@ Also added a date picker and added the date into the reminder logic.
 
 Added a clear button to the reminder page, to cancel the running reminder.
 
-info.txt   |   6 +--
-klock.lpi  | 120 +++++++++++++++++++++++++++-----------------------------
-uabout.pas |   2 +-
-uhelp.pas  |   2 +-
-uklock.lfm |  96 +++++++++++++++++++++++++--------------------
-uklock.pas | 129 +++++++++++++++++++++++++++++++++++++++----------------------
-6 files changed, 201 insertions(+), 154 deletions(-
 
 Build 12
 
@@ -349,12 +138,6 @@ Date:   Thu Sep 29 21:59:53 2016 +0100
 
 Tidied up the code for the radio group - select time.
 
-info.txt   |  6 +++---
-klock.lpi  | 20 ++++++++++----------
-uabout.pas |  2 +-
-uhelp.pas  |  2 +-
-uklock.pas | 48 ++++++++++++++----------------------------------
-5 files changed, 29 insertions(+), 49 deletions(-)
 
 Build 13
 
@@ -368,19 +151,6 @@ application more sleek - I think it looks better.
 Added a new form for the license [same as the help form], hangs off the help menu.
 Help & Licence forms now load their text from text files.
 
-help.txt     |  71 ++++++++++++++++++++++++
-info.txt     |   6 +-
-klock.lpi    | 126 ++++++++++++++++++++++++------------------
-klock.lpr    |   4 +-
-uabout.pas   |   2 +-
-uhelp.lfm    |   4 +-
-uhelp.pas    |  18 +-----
-uklock.lfm   | 175 ++++++++++++++++++++++++++++++-----------------------------
-uklock.pas   |  22 +++++++-
-ulicense.lfm |  53 ++++++++++++++++++
-ulicense.pas |  54 ++++++++++++++++++
-11 files changed, 373 insertions(+), 162 deletions(-)
-
 
 Build 14
 
@@ -393,17 +163,6 @@ Added split time button to time page.
 Removed the function ItoS, which converted integer to two digit strings
 and use internal format functions instead.
 
-help.txt     |  38 ++++++++++++++++----
-history.txt  |  38 ++++++++++++++++----
-info.txt     |   6 ++--
-klock.lpi    | 113 ++++++++++++++++++++++++++++++-----------------------------
-uabout.lfm   |   6 ++--
-uabout.pas   |   6 ++--
-uhelp.pas    |   2 +-
-uklock.lfm   |  44 ++++++++++++++++++-----
-uklock.pas   |  66 ++++++++++++++++++++++------------
-ulicense.pas |   2 +-
-10 files changed, 211 insertions(+), 110 deletions(-)
 
 Build 15
 
@@ -415,19 +174,6 @@ Added try..except clause to all file operations.
 
 Another attempt to fix noon bug in fuzzytime.
 
-help.txt       | 32 +++++++++++++++++--
-info.txt       |  8 ++---
-klock.lpi      | 97 ++++++++++++++++++++++++++++------------------------------
-uabout.lfm     |  6 ++--
-uabout.pas     |  2 +-
-ufuzzytime.pas | 11 ++++---
-uhelp.lfm      |  6 ++--
-uhelp.pas      | 14 +++++++--
-uklock.lfm     | 16 +++++-----
-ulicense.lfm   |  6 ++--
-ulicense.pas   | 14 +++++++--
-uoptions.lfm   |  9 +++---
-12 files changed, 134 insertions(+), 87 deletions(-)
 
 Build 16
 
@@ -437,42 +183,12 @@ Date:   Thu Sep 29 22:27:24 2016 +0100
 
 Recompiled to check for Lazarus 0.9.30.4
 
-history.txt  | 12 ++++++++++++
-info.txt     |  8 ++++----
-klock.iss    |  8 ++++----
-klock.lpi    | 10 +++++-----
-uabout.lfm   | 26 +++++++++++++-------------
-uabout.pas   |  2 +-
-uhelp.lfm    |  2 +-
-uhelp.pas    |  2 +-
-ulicense.lfm |  2 +-
-ulicense.pas |  2 +-
-10 files changed, 43 insertions(+), 31 deletions(-)
-
-Build 17
-
-commit 7d528975e17fb50a1b14fc38e5a585c25bcd2a38
-Author: Kevin Scott <lazKlock@keleven.co.uk>
-Date:   Thu Sep 29 22:28:56 2016 +0100
 
 Licence window made read only - thanks Zach.
 Reminders can now not be set in the past - thanks Zach.
 
 Start of code for saving options in a .ini file.
 
-info.txt     |   9 +--
-klock.ini    |  21 ++++++
-klock.lpi    | 172 +++++++++++++++++++++++----------------------
-uabout.lfm   |  24 +++----
-uabout.pas   |   2 +-
-uhelp.pas    |   2 +-
-uklock.lfm   |  11 +--
-uklock.pas   |  49 +++++++++----
-ulicense.lfm |   1 +
-ulicense.pas |   2 +-
-uoptions.lfm | 222 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
-uoptions.pas | 153 +++++++++++++++++++++++++++++++++++-----
-12 files changed, 500 insertions(+), 168 deletions(-)
 
 Build 18
 
@@ -484,13 +200,6 @@ Further work completed on the .ini file
 
 Extended the GUI on the options screen.
 
-klock.ini    |   3 +-
-klock.lpi    |  94 +++++++++++-----------
-uklock.lfm   |  72 ++++++++---------
-uklock.pas   |   6 +-
-uoptions.lfm | 259 +++++++++++++++++++++++++++++++++--------------------------
-uoptions.pas |  70 ++++++++++------
-6 files changed, 280 insertions(+), 224 deletions(-)
 
 Build 19
 
@@ -504,17 +213,6 @@ Timer can now run either second / milli seconds.
 Default page control can now be set.
 Both saved to ini file.
 
-info.txt     |   6 +--
-klock.ini    |  11 ++---
-klock.lpi    | 140 +++++++++++++++++++++++++++++------------------------------
-uabout.pas   |   4 +-
-uhelp.pas    |   2 +-
-uklock.lfm   |  46 ++++++++++----------
-uklock.pas   |  47 ++++++++++++++------
-ulicense.pas |   2 +-
-uoptions.lfm |  25 ++++++-----
-uoptions.pas | 127 ++++++++++++++++++++++++++++++++++-------------------
-10 files changed, 232 insertions(+), 178 deletions(-)
 
 Build 20
 
@@ -524,12 +222,6 @@ Date:   Thu Sep 29 22:43:24 2016 +0100
 
 All modules now load version info from options record.
 
-info.txt     |   6 +--
-klock.lpi    | 120 +++++++++++++++++++++++++++++------------------------------
-uhelp.pas    |   4 +-
-ulicense.pas |   4 +-
-uoptions.pas |  11 +++---
-5 files changed, 73 insertions(+), 72 deletions(-)
 
 Build 21
 
@@ -542,14 +234,6 @@ FontToString - enables font information to be saved to the ini file.
 
 Added code to save and load fonts from the ini file - to be tested.
 
-klock.ini        |   7 ++-
-klock.lpi        | 153 +++++++++++++++++++++++++----------------------
-klock.lpr        |   2 +-
-uklock.pas       |  31 +++++++---
-uoptions.lfm     |  38 +++++++++++-
-uoptions.pas     | 177 ++++++++++++++++++++++++++++++++++++++++++++++++-------
-uoptionutils.pas | 164 +++++++++++++++++++++++++++++++++++++++++++++++++++
-7 files changed, 466 insertions(+), 106 deletions(-)
 
 Build 22
 
@@ -562,11 +246,6 @@ Further work on font options.
 Removal of colour buttons in the options screen.  The colour can be
 changed in the font page, so making these buttons redundant.
 
-klock.ini    |  22 ++++++------
-klock.lpi    | 115 +++++++++++++++++++++++++++++------------------------------
-uoptions.lfm |  34 ++++++++++--------
-uoptions.pas |  57 +++++++++++++++++++++++------
-4 files changed, 134 insertions(+), 94 deletions(-)
 
 Build 23
 
@@ -580,17 +259,6 @@ Finished font stuff.
 
 Will save screen position if desired.
 
-info.txt         |  12 ++--
-klock.ini        |  22 ++++---
-klock.iss        |   7 ++-
-klock.lpi        | 117 ++++++++++++++++++------------------
-uhelp.lfm        |   4 +-
-uklock.lfm       |  47 ++++++++-------
-uklock.pas       |  53 ++++++++--------
-uoptions.lfm     | 164 +++++++++++++++++++++-----------------------------
-uoptions.pas     | 179 +++++++++++++++++--------------------------------------
-uoptionutils.pas |  15 +----
-10 files changed, 255 insertions(+), 365 deletions(-)
 
 Build 24
 
@@ -609,19 +277,6 @@ Added option for countdown to trigger sound, event command or pop up message.
             event is a system event i.e. PC shut down or reboot.
             command is the ability to run an external application.
 
-info.txt       |  14 ++--
-klock.ini      |  11 ++-
-klock.lpi      | 146 +++++++++++++++++-----------------
-uabout.lfm     |  35 +++++---
-uabout.pas     |   1 +
-ufuzzytime.pas |  28 +++++--
-uhelp.pas      |   1 +
-uklock.lfm     | 160 ++++++++++++++++++++++++++++++-------
-uklock.pas     | 246 +++++++++++++++++++++++++++++++++++++++++++++++++++------
-ulicense.pas   |   1 +
-uoptions.lfm   | 213 +++++++++++++++++++++++++++++++++----------------
-uoptions.pas   | 180 +++++++++++++++++++++++++++--------------
-12 files changed, 757 insertions(+), 279 deletions(-)
 
 
 Build 25
@@ -649,18 +304,6 @@ Finally got around to the case statement, converted most nested IF statements.
 
 Added Julian Time - needs checking.
 
-help.txt                            |   2 +-
-info.txt                            |   8 +-
-klock.ini                           |  10 +-
-klock.lpi                           | 141 ++++-----
-klock.lpr                           |   2 +-
-ufuzzytime.pas                      | 108 +++----
-uklock.lfm                          | 228 ++++++++++++---
-uklock.pas                          | 551 ++++++++++++++++++++++++------------
-uoptionutils.pas => uklockutils.pas | 101 ++++++-
-uoptions.lfm                        | 128 +++------
-uoptions.pas                        |  39 ++-
-11 files changed, 842 insertions(+), 476 deletions(-)
 
 Build 26
 
@@ -673,13 +316,6 @@ Added Decimal Time.
 Added Hexadecimal Time.
 Added Binary Time.
 
-info.txt       |   9 ++--
-klock.lpi      | 143 ++++++++++++++++++++++++++++-----------------------------
-ufuzzytime.pas | 116 ++++++++++++++++++++++++++++++++++++++++------
-uklock.lfm     |  41 +++++++++--------
-uoptions.lfm   |  42 +++++++++--------
-uoptions.pas   |   2 +-
-6 files changed, 222 insertions(+), 131 deletions(-)
 
 Build 27
 
@@ -692,13 +328,6 @@ Use GetAppConfigDir, it retrieves the correct place to store the ini file.
 Store in something like c:\Users\user\AppData\local\kloc\ in Windows 7.
 And c:\D&S\usr\Local Settings\Application Data|Klock\ on Windows XP.
 
-history.txt  | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-info.txt     |  6 ++--
-klock.ini    |  4 +--
-klock.iss    |  7 +++--
-klock.lpi    | 32 ++++++++++++---------
-uoptions.pas |  8 ++++--
-6 files changed, 126 insertions(+), 24 deletions(-)
 
 Build 28
 
@@ -711,15 +340,6 @@ Removed local Klock.ini, not now needed - will create on start up.
 Problem with the screen position of main form after options screen closed
     - Corrected [thanks Zach].
 
-info.txt       |  10 ++--
-klock.ini      |  25 ----------
-klock.lpi      | 146 ++++++++++++++++++++++++++++-----------------------------
-ufuzzytime.pas |  18 +++----
-uklock.lfm     |  83 ++++++++++++++++++++------------
-uklock.pas     |  25 +++++++++-
-uoptions.lfm   |  36 +++++++-------
-uoptions.pas   |   2 +-
-8 files changed, 185 insertions(+), 160 deletions(-)
 
 Build 29
 
@@ -730,12 +350,6 @@ Date:   Fri Sep 30 22:03:36 2016 +0100
 Corrected bug; Setting the date on the reminder did not enable the set
 button - the time needed changing as well - [thanks Zach].
 
-info.txt     |   8 ++---
-klock.lpi    | 108 +++++++++++++++++++++++++++++------------------------------
-uklock.lfm   |   6 ++--
-uklock.pas   |  26 +++++++-------
-uoptions.pas |   2 +-
-5 files changed, 75 insertions(+), 75 deletions(-)
 
 Build 30
 
@@ -755,13 +369,6 @@ array to hold different messages from time, countdown and reminder.
 
 Added some new comments to procedures [which where their all the time ;o)]
 
-klock.iss    |   46 +-
-klock.lpi    |  116 +--
-uklock.lfm   | 2226 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
-uklock.pas   |  276 ++++++--
-uoptions.lfm |   75 +-
-uoptions.pas |   29 +-
-6 files changed, 2580 insertions(+), 188 deletions(-)
 
 Build 31
 
@@ -774,10 +381,6 @@ Recompiled to check for lazarus 1.0 RC1 [although showing 0.9.31 in about box].
 Also turned off generate debugging info GDN in linking options.
 This creates a lot smaller executable.
 
-klock.lpi    | 18 +++++++++++++-----
-uoptions.lfm | 46 +++++++++++++++++++++++-----------------------
-uoptions.pas |  2 +-
-3 files changed, 37 insertions(+), 29 deletions(-)
 
 Build 32
 
@@ -794,16 +397,6 @@ displayed in the system tray, switch to normal mode - allows the abort button to
 
 Added a display to the status bar that indicates the status of the cap, numlock & scroll lock [in real time].
 
-help.txt     | 101 ++++++++------------------------------
-info.txt     |  15 ------
-klock.lpi    | 144 ++++++++++++++++++++++++++++--------------------------
-uhelp.lfm    |  26 +++++-----
-uklock.lfm   |  50 +++++++++----------
-uklock.pas   | 156 +++++++++++++++++++++++++++++------------------------------
-ulicense.lfm |   6 +--
-uoptions.lfm |  36 +++++++-------
-uoptions.pas |   2 +-
-9 files changed, 232 insertions(+), 304 deletions(-)
 
 Build 33
 
@@ -825,21 +418,6 @@ Added logic to load csv file and display date on reminder tab.
 There is a bug with lcl, the pop-up notifier timeout does not seem to work.
 Added a timer, that will kill the notifier after ten seconds.
 
-kReminder.txt      |  16 ++
-klock.lpi          | 201 ++++++++++---------
-klock.lpr          |   3 +-
-ufuzzytime.pas     |   2 +-
-uhelp.lfm          |   6 +-
-uhelp.pas          |   2 +-
-uklock.lfm         | 227 +++++++++++++++-------
-uklock.pas         | 557 +++++++++++++++++++++++++++++++----------------------
-uklockutils.pas    | 252 ++++++++++++++++--------
-ulicense.lfm       |   6 +-
-uoptions.lfm       |  55 +++---
-uoptions.pas       | 115 ++++++-----
-ureminderinput.lfm | 193 +++++++++++++++++++
-ureminderinput.pas | 175 +++++++++++++++++
-14 files changed, 1256 insertions(+), 554 deletions(-)
 
 Build 34
 
@@ -851,10 +429,6 @@ Converted SVN repository to GIT.  Uploaded this to GitHub.
 
 Recompiled to check for Lazarus 1.6 [showing 1.6.0.4 in about box].
 
-LICENSE     | 479 +++++++++++++++++++++++++++++
-README.md   |  76 +++++
-history.txt | 981 ++++++++++++++++++++++++++++++++++++++++++++++++------------
-3 files changed, 1344 insertions(+), 192 deletions(-)
 
 Build 35
 
@@ -885,24 +459,6 @@ Currently
 1549 statements
 14.6% comments
 
-uabout.lfm => formAbout.lfm                 |  38 +++----
-uabout.pas => formAbout.pas                 |   4 +-
-uhelp.lfm => formHelp.lfm                   |   2 +-
-uhelp.pas => formHelp.pas                   |   4 +-
-uklock.lfm => formKlock.lfm                 |   0
-uklock.pas => formKlock.pas                 |  20 ++--
-ulicense.lfm => formLicense.lfm             |   2 +-
-uoptions.lfm => formOptions.lfm             |   4 +-
-uoptions.pas => formOptions.pas             |   2 +-
-ulicense.pas => formlicense.pas             |   4 +-
-ureminderinput.lfm => formreminderinput.lfm |  39 +++----
-ureminderinput.pas => formreminderinput.pas |   2 +-
-klock.lpi                                   | 168 +++++++++++-----------------
-klock.lpr                                   |   4 +-
-klock.xml                                   |   4 +
-ufuzzytime.pas                              |   2 +-
-uklockutils.pas                             |   2 +-
-17 files changed, 133 insertions(+), 168 deletions(-)
 
 ***************************************************** Version 2 ************
 
@@ -927,18 +483,6 @@ Currently
 1802 statements
 15.5% comments
 
-formKlock.lfm          |    6 +-
-formKlock.pas          |   57 +-
-formOptions.lfm        |    2 +-
-formreminderinput.lfm  |    6 +-
-history.txt            | 1364 +++++++++++++++++++++++++-----------------------
-klock.iss              |    8 +-
-klock.lpi              |  141 +++--
-klock.lpr              |    3 +-
-lazKlock.smproj        |  Bin 0 -> 10684 bytes
-powered_by_lazarus.png |  Bin 0 -> 15189 bytes
-uoptions.pas           |  467 +++++++++++++++++
-11 files changed, 1310 insertions(+), 744 deletions(-)
 
 Build 38 [2.0.0.38]
 
@@ -963,19 +507,6 @@ Currently
 1856 statements
 16.0% comment
 
-GNU GENERAL PUBLIC LICENSE.txt | 880 ++++++++++-------------------------------
-formAbout.lfm                  | 652 ++++++++++++++++++++++++++++--
-formAbout.pas                  | 114 +++++-
-formHelp.lfm                   |  47 ++-
-formHelp.pas                   |  24 +-
-formKlock.pas                  |  44 ++-
-formLicense.lfm                |  64 ++-
-formlicense.pas                |  13 +-
-history.txt                    |  35 +-
-klock.iss                      |   4 +-
-klock.lpi                      | 160 ++++----
-lazKlock.smproj                | Bin 10684 -> 21721 bytes
-12 files changed, 1166 insertions(+), 871 deletions(-)
 
 Build 39 [2.0.0.39]
 
@@ -994,19 +525,6 @@ Currently
 1615 statements
 16.4% comment
 
-clock.ico       | Bin 67646 -> 0 bytes
-formAbout.pas   |   2 +-
-formKlock.pas   |  21 +--
-formOptions.lfm | 319 +-------------------------------------
-formOptions.pas | 465 +-------------------------------------------------------
-formlicense.pas |   2 +-
-history.txt     |  36 +++++
-klock.iss       |  10 +-
-klock.lpi       | 153 ++++++++++---------
-lazKlock.smproj | Bin 21721 -> 32884 bytes
-ufuzzytime.pas  |  12 +-
-uoptions.pas    |  11 ++
-12 files changed, 149 insertions(+), 882 deletions(-)
 
 Build 40 [2.0.0.40]
 
@@ -1033,19 +551,6 @@ Currently
 1738 statements
 17.4% comment
 
-formKlock.lfm      |  17 ++--
-formKlock.pas      |  57 ++++++------
-formOptions.lfm    | 258 +++++++++++++++++++++++++++++++++++++++++++++++++----
-formOptions.pas    | 167 +++++++++++++++++++++++++++++++---
-history.txt        |  31 +++++++
-klock.lpi          | 203 ++++++++++++++++++++++-------------------
-klock.lpr          |   5 +-
-lazKlock.smproj    | Bin 32884 -> 41764 bytes
-ufuzzytime.pas     |  38 +++++---
-uklockutils.pas    |  42 ++++++++-
-options.pas       | 178 ++++++++++++++++++++++++------------
-uoptionsrecord.pas |  32 -------
-12 files changed, 762 insertions(+), 266 deletions(-)
 
 Build 41 [2.0.0.41]
 
@@ -1062,18 +567,6 @@ Added to main Klock to display the idle time.
 
 Added percent Time to FuzzyTime.
 
-formKlock.lfm         |  19 ++++-
-formKlock.pas         |  48 +++++++++--
-formOptions.lfm       |  13 +--
-formanalogueklock.lfm |  78 ++++++++++++++++++
-formanalogueklock.pas | 162 +++++++++++++++++++++++++++++++++++++
-history.txt           |  45 ++++++++++-
-klock.lpi             | 216 ++++++++++++++++++++++++++++----------------------
-klock.lpr             |   3 +-
-lazKlock.smproj       | Bin 41764 -> 51298 bytes
-ufuzzytime.pas        |  21 ++++-
-uoptions.pas          |  61 +++++++++++++-
-11 files changed, 549 insertions(+), 117 deletions(-)
 
 Build 42 [2.0.0.42]
 
@@ -1087,13 +580,6 @@ Also, having problems passing parameter's with spaces, removed for now.
 
 Corrected bug where if no action was selected, an index out of bounds could be created.
 
-formAbout.pas   |   2 +-
-formKlock.lfm   |  12 ++---
-formKlock.pas   |  16 ++++---
-history.txt     |  27 ++++++++++++
-klock.lpi       | 134 ++++++++++++++++++++++++++++----------------------------
-uklockutils.pas |  52 +++++++++++-----------
-6 files changed, 136 insertions(+), 107 deletions(-)
 
 Build 43 [2.0.0.43]
 
@@ -1112,21 +598,6 @@ Currently
 1874 statements
 16.7% comment
 
-formAbout.pas         |  53 ++-
-formHelp.pas          |  12 +-
-formKlock.pas         | 961 +++++++++++++++++++++++++++-----------------------
-formOptions.lfm       |   2 +-
-formOptions.pas       |  53 ++-
-formanalogueklock.pas |  76 ++--
-formlicense.pas       |  12 +-
-formreminderinput.pas |  73 ++--
-help.txt              |   6 +-
-klock.lpi             | 139 ++++----
-klock.lpr             |  25 +-
-ufuzzytime.pas        | 333 ++++++++---------
-uklockutils.pas       | 115 +++---
-uoptions.pas          | 951 +++++++++++++++++++++++++------------------------
-14 files changed, 1451 insertions(+), 1360 deletions(-)
 
 Build 44 [2.0.1.44]
 
@@ -1157,54 +628,6 @@ Currently
 2120 statements
 16.4% comment
 
-fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
-fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
-fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
-fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
-fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
-formKlock.lfm                |  12 ++-
-formKlock.pas                | 240 ++++++++++++++++++++++++++-----------------
-formOptions.lfm              | 158 +++++++++++++++++++++++-----
-formOptions.pas              | 116 ++++++++++++++++++---
-formanalogueklock.pas        |   1 +
-history.txt                  |  56 +++++++++-
-klock.iss                    |   2 +-
-klock.lpi                    | 229 ++++++++++++++++++++---------------------
-klock.lpr                    |   2 +-
-klock.xml                    |   4 -
-lazKlock.smproj              | Bin 51298 -> 61875 bytes
-sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
-sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
-sounds/chimes.wav            | Bin 55776 -> 0 bytes
-sounds/chord.wav             | Bin 97016 -> 0 bytes
-sounds/ding.wav              | Bin 80856 -> 0 bytes
-sounds/eight.mp3             | Bin 0 -> 979530 bytes
-sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
-sounds/five.mp3              | Bin 0 -> 801223 bytes
-sounds/four.mp3              | Bin 0 -> 739385 bytes
-sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
-sounds/nine.mp3              | Bin 0 -> 1040899 bytes
-sounds/notify.wav            | Bin 119384 -> 0 bytes
-sounds/one.mp3               | Bin 0 -> 559035 bytes
-sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
-sounds/recycle.wav           | Bin 25434 -> 0 bytes
-sounds/ringin.wav            | Bin 10026 -> 0 bytes
-sounds/ringout.wav           | Bin 5212 -> 0 bytes
-sounds/seven.mp3             | Bin 0 -> 919940 bytes
-sounds/six.mp3               | Bin 0 -> 862013 bytes
-sounds/start.wav             | Bin 1192 -> 0 bytes
-sounds/tada.wav              | Bin 171100 -> 0 bytes
-sounds/ten.mp3               | Bin 0 -> 1101951 bytes
-sounds/thepips.mp3           | Bin 0 -> 40874 bytes
-sounds/three.mp3             | Bin 0 -> 679164 bytes
-sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
-sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
-sounds/two.mp3               | Bin 0 -> 620614 bytes
-ufonts.pas                   |  69 +++++++++++++
-ufuzzytime.pas               |  43 +++-----
-uklockutils.pas              | 130 +++++++++++++++++++++--
-uoptions.pas                 |  84 +++++++++++++++
-47 files changed, 843 insertions(+), 303 deletions(-)
 
 Build 45 [2.0.1.45]
 
@@ -1237,23 +660,6 @@ Currently
 2199 statements
 16.7% comment
 
-formKlock.lfm         | 5994 ++++++++++++++++---------------------------------
-formKlock.pas         |   78 +-
-formOptions.lfm       |  105 +-
-formOptions.pas       |   58 +-
-formanalogueklock.pas |    1 +
-history.txt           |   82 +-
-klock.ico             |  Bin 67646 -> 0 bytes
-klock.lpi             |  212 +-
-klock.lpr             |    9 +-
-lazKlock.smproj       |  Bin 61875 -> 73456 bytes
-time-13-128.ico       |  Bin 0 -> 67646 bytes
-ufuzzytime.pas        |   41 +-
-uklockutils.pas       |   44 +-
-uloggerutils.pas      |   90 +
-uoptions.pas          |  374 ++-
-uoptionsutils.pas     |   99 +
-16 files changed, 2749 insertions(+), 4438 deletions(-)
 
 Build 46 [2.0.1.46]
 
@@ -1265,25 +671,6 @@ Added formCipboard and uformClipboardUtils which implements a clipboard manager.
 
 Added various options for the clipboard manages to formOptions and uOptions.
 
-README.md               |  18 ++--
-formKlock.lfm           |   1 -
-formKlock.pas           |  13 ++-
-formOptions.lfm         |  50 +++++----
-formOptions.pas         |  15 +++
-formanalogueklock.lfm   |   8 +-
-formanalogueklock.pas   |   3 +-
-formclipboard.lfm       | 140 ++++++++++++++++++++++++
-formclipboard.pas       | 241 +++++++++++++++++++++++++++++++++++++++++
-help.txt                |  43 +++++---
-history.txt             |  55 +++++++++-
-klock.ico               | Bin 0 -> 67646 bytes
-klock.iss               |   5 +-
-klock.lpi               | 279 +++++++++++++++++++++++++++---------------------
-klock.lpr               |   5 +-
-lazKlock.smproj         | Bin 73456 -> 100949 bytes
-uformclipboardutils.pas | 244 ++++++++++++++++++++++++++++++++++++++++++
-uoptions.pas            |  26 ++++-
-18 files changed, 966 insertions(+), 180 deletions(-)
 
 /*******************************************************************************************************/
 
@@ -1320,14 +707,6 @@ Currently
 1851 statements
 17.2% comment
 
-formAbout.pas   |   2 +-
-formKlock.lfm   |   2 +-
-formKlock.pas   |  16 ++-
-history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
-klock.iss       |   2 +-
-klock.lpi       |  53 ++++----
-uklockutils.pas |  29 ++--
-7 files changed, 388 insertions(+), 117 deletions(-)
 
 Build 48 [2.1.2.48]
 
@@ -1347,14 +726,6 @@ Currently
 1863 statements
 16.7% comment
 
-formAbout.pas   |   2 +-
-formKlock.lfm   |   2 +-
-formKlock.pas   |  16 ++-
-history.txt     | 401 +++++++++++++++++++++++++++++++++++++++++++++++---------
-klock.iss       |   2 +-
-klock.lpi       |  53 ++++----
-uklockutils.pas |  29 ++--
-7 files changed, 388 insertions(+), 117 deletions(-)
 
 Build 49 [2.1.3.49]
 
@@ -1385,54 +756,6 @@ Currently
 2113 statements
 16.4% comment
 
-fonts/BarCode39.ttf          | Bin 0 -> 22492 bytes
-fonts/BrailleLatin.ttf       | Bin 0 -> 30204 bytes
-fonts/Hack-Regular.ttf       | Bin 0 -> 394336 bytes
-fonts/NancyBlackett.ttf      | Bin 0 -> 41836 bytes
-fonts/Semaphore.ttf          | Bin 0 -> 12344 bytes
-formHelp.pas                 |  12 +-
-formKlock.lfm                |   7 +-
-formKlock.pas                | 284 ++++++++++++++++++++++++++-----------------
-formOptions.lfm              | 139 ++++++++++++++++++---
-formOptions.pas              | 125 ++++++++++++++++---
-formanalogueklock.pas        |  29 ++---
-history.txt                  |  53 +++++++-
-klock.iss                    |   6 +-
-klock.lpi                    | 195 +++++++++++++++--------------
-klock.lpr                    |   2 +-
-lazKlock.smproj              | Bin 61799 -> 83961 bytes
-sounds/alarm-fatal.mp3       | Bin 0 -> 311378 bytes
-sounds/alarm-fatal.wav       | Bin 1359604 -> 0 bytes
-sounds/chimes.wav            | Bin 55776 -> 0 bytes
-sounds/chord.wav             | Bin 97016 -> 0 bytes
-sounds/ding.wav              | Bin 80856 -> 0 bytes
-sounds/eight.mp3             | Bin 0 -> 979530 bytes
-sounds/eleven.mp3            | Bin 0 -> 1162381 bytes
-sounds/five.mp3              | Bin 0 -> 801223 bytes
-sounds/four.mp3              | Bin 0 -> 739385 bytes
-sounds/halfchime.mp3         | Bin 0 -> 319514 bytes
-sounds/nine.mp3              | Bin 0 -> 1040899 bytes
-sounds/notify.wav            | Bin 119384 -> 0 bytes
-sounds/one.mp3               | Bin 0 -> 559035 bytes
-sounds/quarterchime.mp3      | Bin 0 -> 241462 bytes
-sounds/recycle.wav           | Bin 25434 -> 0 bytes
-sounds/ringin.wav            | Bin 10026 -> 0 bytes
-sounds/ringout.wav           | Bin 5212 -> 0 bytes
-sounds/seven.mp3             | Bin 0 -> 919940 bytes
-sounds/six.mp3               | Bin 0 -> 862013 bytes
-sounds/start.wav             | Bin 1192 -> 0 bytes
-sounds/tada.wav              | Bin 171100 -> 0 bytes
-sounds/ten.mp3               | Bin 0 -> 1101951 bytes
-sounds/thepips.mp3           | Bin 0 -> 40874 bytes
-sounds/three.mp3             | Bin 0 -> 679164 bytes
-sounds/threequarterchime.mp3 | Bin 0 -> 383064 bytes
-sounds/twelve.mp3            | Bin 0 -> 1223752 bytes
-sounds/two.mp3               | Bin 0 -> 620614 bytes
-ufonts.pas                   |  78 ++++++++++++
-ufuzzytime.pas               |  42 +++----
-uklockutils.pas              | 156 +++++++++++++++++++-----
-uoptions.pas                 |  90 +++++++++++++-
-47 files changed, 895 insertions(+), 323 deletions(-)
 
 Build 50 [2.1.3.50]
 
@@ -1454,23 +777,6 @@ Currently
 2051 statements
 16.9% comment
 
-formAbout.pas     |    4 +-
-formKlock.lfm     | 9364 ++++++++++++++++++++++++++---------------------------
-formKlock.pas     |   15 +-
-formOptions.lfm   |    4 +-
-formOptions.pas   |    7 +-
-history.txt       |   57 +-
-klock.ico         |  Bin 67646 -> 67646 bytes
-klock.iss         |    6 +-
-klock.lpi         |  172 +-
-klock.lpr         |    2 +-
-lazKlock.smproj   |  Bin 83961 -> 96029 bytes
-time-13-128.ico   |  Bin 0 -> 67646 bytes
-ufuzzytime.pas    |   38 +-
-uklockutils.pas   |   39 +-
-uoptions.pas      |  285 +-
-uoptionsutils.pas |  100 +
-16 files changed, 5059 insertions(+), 5034 deletions(-)
 
 Build 51 [2.1.3.51]
 
@@ -1508,27 +814,6 @@ Currently
 2228 statements
 17.2% comment
 
-formAbout.lfm         |  41 ++++++-----
-formAbout.pas         |  44 ++----------
-formHelp.pas          |   2 +
-formKlock.pas         | 160 +++++++++++++++++++----------------------
-formLicense.lfm       |   2 +-
-formOptions.lfm       |  78 ++++++++++++++++++--
-formOptions.pas       |  55 ++++++++++++++-
-formanalogueklock.pas |   3 +
-formlicense.pas       |   2 +
-formreminderinput.lfm |   2 +-
-formreminderinput.pas |   7 ++
-history.txt           |  73 ++++++++++++++++++-
-klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
-klock.lpr             |   2 +-
-lazKlock.smproj       | Bin 96029 -> 108871 bytes
-ufonts.pas            |  98 +++++++++++++++++++-------
-uklockutils.pas       |  97 ++++++++++++++++++++++++-
-ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
-uoptions.pas          |  93 ++++++++++++++++--------
-uoptionsutils.pas     |   3 -
-20 files changed, 805 insertions(+), 304 deletions(-)
 
 Build 52 [2.1.3.52]
 
@@ -1546,27 +831,6 @@ Currently
 2517 statements
 16.6% comment
 
-formAbout.lfm         |  41 ++++++-----
-formAbout.pas         |  44 ++----------
-formHelp.pas          |   2 +
-formKlock.pas         | 160 +++++++++++++++++++----------------------
-formLicense.lfm       |   2 +-
-formOptions.lfm       |  78 ++++++++++++++++++--
-formOptions.pas       |  55 ++++++++++++++-
-formanalogueklock.pas |   3 +
-formlicense.pas       |   2 +
-formreminderinput.lfm |   2 +-
-formreminderinput.pas |   7 ++
-history.txt           |  73 ++++++++++++++++++-
-klock.lpi             | 192 +++++++++++++++++++++++++-------------------------
-klock.lpr             |   2 +-
-lazKlock.smproj       | Bin 96029 -> 108871 bytes
-ufonts.pas            |  98 +++++++++++++++++++-------
-uklockutils.pas       |  97 ++++++++++++++++++++++++-
-ulogging.pas          | 155 ++++++++++++++++++++++++++++++++++++++++
-uoptions.pas          |  93 ++++++++++++++++--------
-uoptionsutils.pas     |   3 -
-20 files changed, 805 insertions(+), 304 deletions(-)
 
 /*******************************************************************************************************/
 Klock has now caught up to the point before the corruption.
@@ -1593,21 +857,6 @@ Currently
 2903 statements
 15.8% comment
 
-formAbout.lfm   |  43 ++++++----
-formAbout.pas   |   2 +
-formKlock.lfm   |  25 +++++-
-formKlock.pas   |  67 +++++++++++++---
-formOptions.lfm |   4 +-
-forminfo.lfm    | 106 ++++++++++++++++++++++++
-forminfo.pas    | 118 +++++++++++++++++++++++++++
-history.txt     |  28 ++++++-
-klock.iss       |   2 +-
-klock.lpi       | 210 +++++++++++++++++++++++++++---------------------
-klock.lpr       |   3 +-
-ufuzzytime.pas  | 233 ++++++++++++++++++++++++++++++++++++++++++++---------
-uinfoutils.pas  | 245 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-uklockutils.pas |   1 +
-14 files changed, 920 insertions(+), 167 deletions(-)
 
 Build 54 [2.1.4.54]
 
@@ -1643,28 +892,6 @@ Currently
 2984 statements
 15.7% comment
 
-fonts/Christmas.ttf   |  Bin 0 -> 57012 bytes
-formAbout.lfm         |   79 +-
-formAbout.pas         |   38 +-
-formKlock.lfm         |  166 ++--
-formKlock.pas         |   47 +-
-formOptions.lfm       |   36 +-
-formOptions.pas       |   15 +-
-formanalogueklock.pas |    7 -
-formclipboard.lfm     |    5 +
-formclipboard.pas     |   26 +-
-forminfo.lfm          |   70 +-
-forminfo.pas          |   58 +-
-history.txt           | 2243 +++++++++++++++++++++++++------------------------
-klock.iss             |    2 +-
-klock.lpi             |  228 ++---
-lazKlock.smproj       |  Bin 123852 -> 140380 bytes
-ufonts.pas            |    6 +-
-ufuzzytime.pas        |   51 +-
-uinfoutils.pas        |   13 +-
-uklockutils.pas       |   35 +-
-uoptions.pas          |    6 +
-21 files changed, 1636 insertions(+), 1495 deletions(-)
 
 Build 55 [2.1.4.55]
 
@@ -1687,24 +914,6 @@ Currently
 3091 statements
 15.8% comment
 
-formKlock.lfm         |   8 +-
-formKlock.pas         |  42 +++++---
-formOptions.lfm       |  43 +++++++--
-formOptions.pas       |  29 ++++--
-formanalogueklock.lfm |   6 +-
-formanalogueklock.pas |  12 +--
-formclipboard.lfm     |   5 +
-formclipboard.pas     |  23 +++--
-formledklock.lfm      |  45 +++++++++
-formledklock.pas      | 146 ++++++++++++++++++++++++++++
-history.txt           |  49 ++++++++++
-klock.iss             |   2 +-
-klock.lpi             | 258 ++++++++++++++++++++++++++++----------------------
-klock.lpr             |   3 +-
-lazKlock.smproj       | Bin 140380 -> 174874 bytes
-ufuzzytime.pas        |  51 +++++++++-
-uoptions.pas          |  34 +++++++
-17 files changed, 592 insertions(+), 164 deletions(-)
 
 Build 56 [2.1.4.56]
 
@@ -1734,26 +943,6 @@ Currently
 3437 statements
 15.4% comment
 
-formAbout.pas         |   6 +-
- formKlock.lfm         |   8 +-
- formKlock.pas         |  10 +-
- formOptions.lfm       |  42 ++++-
- formOptions.pas       |  54 ++++--
- formanalogueklock.lfm |  16 +-
- formanalogueklock.pas |  81 +++++----
- formbinaryklock.lfm   | 249 ++++++++++++++++++++++++++
- formbinaryklock.pas   | 472 ++++++++++++++++++++++++++++++++++++++++++++++++++
- formledklock.lfm      |  16 +-
- formledklock.pas      |  24 ++-
- history.txt           |  71 ++++++--
- klock.iss             |   2 +-
- klock.lpi             | 296 +++++++++----------------------
- klock.lpr             |   4 +-
- lazKlock.smproj       | Bin 174874 -> 193883 bytes
- uklockutils.pas       |  16 +-
- uoptions.pas          |  60 ++++++-
- uoptionsutils.pas     |   2 +-
- 19 files changed, 1108 insertions(+), 321 deletions(-)
 
 Build 57 [2.1.4.57]
 
@@ -1763,21 +952,6 @@ Date:   Thu Dec 28 13:47:14 2017 +0000
 
     Developing Small Text Klock.
 
-fonts/{Hack-Regular.ttf => Hack.ttf} |  Bin
-formKlock.lfm                        |    8 +-
-formKlock.pas                        |    8 +-
-formOptions.lfm                      |   31 +-
-formOptions.pas                      |   22 +-
-formledklock.lfm                     |    4 +-
-formsmalltextklock.lfm               |   58 ++
-formsmalltextklock.pas               | 1033 ++++++++++++++++++++++++++++++++++
-history.txt                          |   25 +
-klock.lpi                            |  214 +++++--
-klock.lpr                            |    3 +-
-ufonts.pas                           |    2 +-
-uklockutils.pas                      |   11 +-
-uoptions.pas                         |   45 +-
-14 files changed, 1411 insertions(+), 53 deletions(-)
 
 Build 58 [2.1.4.58]
 
@@ -1803,14 +977,6 @@ Currently
 4140 statements
 14.1% comment
 
-formKlock.lfm          |   4 +-
-formOptions.lfm        |   4 +-
-formbinaryklock.lfm    |   8 ++-
-formledklock.lfm       |   4 +-
-formsmalltextklock.lfm |  23 ++++++---
-formsmalltextklock.pas |  23 ++++++++-
-klock.lpi              | 132 +++++++++++++++++++++++++------------------------
-7 files changed, 116 insertions(+), 82 deletions(-)
 
 Build 58 [2.1.4.58]
 
@@ -1831,151 +997,6 @@ Currently
 7600 lines of source code.
 4116 statements
 14.2% comment
-
-README.md                                          |   14 +-
-formHelp.lfm                                       |  185 --
-formHelp.pas                                       |   72 -
-formKlock.pas                                      |   17 +-
-formOptions.lfm                                    |    5 +-
-formOptions.pas                                    |   18 +-
-help.txt                                           |   42 +-
-help/Klock.chm                                     |  Bin 0 -> 864090 bytes
-help/Klock.pdf                                     |  Bin 0 -> 4115286 bytes
-help/html/About.html                               |  338 ++++
-help/html/AnalogueKlock.html                       |  282 +++
-help/html/BinaryKlock.html                         |  290 +++
-help/html/ClipboardMonitor.html                    |  285 +++
-help/html/Countdown.html                           |  292 +++
-help/html/Credits.html                             |  298 +++
-help/html/Events.html                              |  278 +++
-help/html/Events1.html                             |  268 +++
-help/html/ExtraKlock.html                          |  284 +++
-help/html/File.html                                |  278 +++
-help/html/FuzzyTime.html                           |  278 +++
-help/html/GettingStarted.html                      |  269 +++
-help/html/Gettinghelp.html                         |  272 +++
-help/html/Global.html                              |  294 +++
-help/html/Help.html                                |  282 +++
-help/html/History.html                             | 2075 ++++++++++++++++++++
-help/html/Info.html                                |  298 +++
-help/html/Introduction.html                        |  296 +++
-help/html/Klock.html                               |  296 +++
-help/html/LEDKlock.html                            |  283 +++
-help/html/License.html                             |  749 +++++++
-help/html/Logging.html                             |  274 +++
-help/html/Menu.html                                |  277 +++
-help/html/Options.html                             |  284 +++
-help/html/OtherKlocks.html                         |  279 +++
-help/html/OtherStuff.html                          |  282 +++
-help/html/Reminder.html                            |  279 +++
-help/html/SmallTextKlock.html                      |  284 +++
-help/html/Statusbar.html                           |  289 +++
-help/html/SystemTray.html                          |  289 +++
-help/html/Systemrequirements.html                  |  273 +++
-help/html/Thingymabobs.html                        |  278 +++
-help/html/Time.html                                |  290 +++
-help/html/Time1.html                               |  278 +++
-help/html/Timer.html                               |  277 +++
-help/html/Welcome.html                             |  289 +++
-help/html/WorldKlock.html                          |  276 +++
-help/html/_keywords.json                           |    1 +
-help/html/_toc.json                                |    1 +
-help/html/_translations.js                         |   11 +
-help/html/css/effects.min.css                      |    5 +
-help/html/css/hnd.content.css                      |  183 ++
-help/html/css/layout.min.css                       |    5 +
-help/html/css/print.min.css                        |    5 +
-help/html/css/theme-dark-blue.min.css              |    5 +
-help/html/css/theme-dark-green.min.css             |    5 +
-help/html/css/theme-dark-orange.min.css            |    5 +
-help/html/css/theme-dark-purple.min.css            |    5 +
-help/html/css/theme-light-blue.min.css             |    5 +
-help/html/css/theme-light-green.min.css            |    5 +
-help/html/css/theme-light-orange.min.css           |    5 +
-help/html/css/theme-light-purple.min.css           |    5 +
-help/html/js/app.min.js                            |    6 +
-help/html/js/hndsd.min.js                          |    1 +
-help/html/js/hndse.min.js                          |    6 +
-.../bootstrap-3.3.6/css/bootstrap-theme.min.css    |    5 +
-.../vendors/bootstrap-3.3.6/css/bootstrap.min.css  |    5 +
-.../css/ie10-viewport-bug-workaround.css           |   15 +
-.../fonts/glyphicons-halflings-regular.eot         |  Bin 0 -> 20127 bytes
-.../fonts/glyphicons-halflings-regular.svg         |  288 +++
-.../fonts/glyphicons-halflings-regular.ttf         |  Bin 0 -> 45404 bytes
-.../fonts/glyphicons-halflings-regular.woff        |  Bin 0 -> 23424 bytes
-.../fonts/glyphicons-halflings-regular.woff2       |  Bin 0 -> 18028 bytes
-.../vendors/bootstrap-3.3.6/js/bootstrap.min.js    |    7 +
-.../js/ie10-viewport-bug-workaround.js             |   23 +
-help/html/vendors/fastclick-1.0.6/fastclick.min.js |   11 +
-help/html/vendors/headroom-0.9.3/headroom.min.js   |    7 +
-.../vendors/headroom-0.9.3/jquery.headroom.min.js  |    7 +
-help/html/vendors/helpndoc-5/icons/0.png           |  Bin 0 -> 291 bytes
-help/html/vendors/helpndoc-5/icons/1.png           |  Bin 0 -> 266 bytes
-help/html/vendors/helpndoc-5/icons/10.png          |  Bin 0 -> 244 bytes
-help/html/vendors/helpndoc-5/icons/11.png          |  Bin 0 -> 262 bytes
-help/html/vendors/helpndoc-5/icons/12.png          |  Bin 0 -> 328 bytes
-help/html/vendors/helpndoc-5/icons/13.png          |  Bin 0 -> 327 bytes
-help/html/vendors/helpndoc-5/icons/14.png          |  Bin 0 -> 343 bytes
-help/html/vendors/helpndoc-5/icons/15.png          |  Bin 0 -> 344 bytes
-help/html/vendors/helpndoc-5/icons/16.png          |  Bin 0 -> 261 bytes
-help/html/vendors/helpndoc-5/icons/17.png          |  Bin 0 -> 277 bytes
-help/html/vendors/helpndoc-5/icons/18.png          |  Bin 0 -> 250 bytes
-help/html/vendors/helpndoc-5/icons/19.png          |  Bin 0 -> 275 bytes
-help/html/vendors/helpndoc-5/icons/2.png           |  Bin 0 -> 332 bytes
-help/html/vendors/helpndoc-5/icons/20.png          |  Bin 0 -> 249 bytes
-help/html/vendors/helpndoc-5/icons/21.png          |  Bin 0 -> 276 bytes
-help/html/vendors/helpndoc-5/icons/22.png          |  Bin 0 -> 299 bytes
-help/html/vendors/helpndoc-5/icons/23.png          |  Bin 0 -> 293 bytes
-help/html/vendors/helpndoc-5/icons/24.png          |  Bin 0 -> 286 bytes
-help/html/vendors/helpndoc-5/icons/25.png          |  Bin 0 -> 313 bytes
-help/html/vendors/helpndoc-5/icons/26.png          |  Bin 0 -> 296 bytes
-help/html/vendors/helpndoc-5/icons/27.png          |  Bin 0 -> 304 bytes
-help/html/vendors/helpndoc-5/icons/28.png          |  Bin 0 -> 309 bytes
-help/html/vendors/helpndoc-5/icons/29.png          |  Bin 0 -> 329 bytes
-help/html/vendors/helpndoc-5/icons/3.png           |  Bin 0 -> 283 bytes
-help/html/vendors/helpndoc-5/icons/30.png          |  Bin 0 -> 338 bytes
-help/html/vendors/helpndoc-5/icons/31.png          |  Bin 0 -> 363 bytes
-help/html/vendors/helpndoc-5/icons/32.png          |  Bin 0 -> 288 bytes
-help/html/vendors/helpndoc-5/icons/33.png          |  Bin 0 -> 310 bytes
-help/html/vendors/helpndoc-5/icons/34.png          |  Bin 0 -> 256 bytes
-help/html/vendors/helpndoc-5/icons/35.png          |  Bin 0 -> 294 bytes
-help/html/vendors/helpndoc-5/icons/36.png          |  Bin 0 -> 314 bytes
-help/html/vendors/helpndoc-5/icons/37.png          |  Bin 0 -> 304 bytes
-help/html/vendors/helpndoc-5/icons/38.png          |  Bin 0 -> 285 bytes
-help/html/vendors/helpndoc-5/icons/39.png          |  Bin 0 -> 319 bytes
-help/html/vendors/helpndoc-5/icons/4.png           |  Bin 0 -> 211 bytes
-help/html/vendors/helpndoc-5/icons/40.png          |  Bin 0 -> 320 bytes
-help/html/vendors/helpndoc-5/icons/41.png          |  Bin 0 -> 335 bytes
-help/html/vendors/helpndoc-5/icons/5.png           |  Bin 0 -> 255 bytes
-help/html/vendors/helpndoc-5/icons/6.png           |  Bin 0 -> 229 bytes
-help/html/vendors/helpndoc-5/icons/7.png           |  Bin 0 -> 273 bytes
-help/html/vendors/helpndoc-5/icons/8.png           |  Bin 0 -> 242 bytes
-help/html/vendors/helpndoc-5/icons/9.png           |  Bin 0 -> 266 bytes
-help/html/vendors/html5shiv-3.7.2/html5shiv.min.js |    4 +
-help/html/vendors/jquery-1.11.3/jquery.min.js      |    6 +
-help/html/vendors/jstree-3.3.2/jstree.min.js       |    6 +
-.../jstree-3.3.2/themes/default-dark/32px.png      |  Bin 0 -> 1562 bytes
-.../jstree-3.3.2/themes/default-dark/40px.png      |  Bin 0 -> 5717 bytes
-.../jstree-3.3.2/themes/default-dark/style.css     | 1112 +++++++++++
-.../jstree-3.3.2/themes/default-dark/style.min.css |    1 +
-.../jstree-3.3.2/themes/default-dark/throbber.gif  |  Bin 0 -> 1720 bytes
-.../vendors/jstree-3.3.2/themes/default/32px.png   |  Bin 0 -> 3121 bytes
-.../vendors/jstree-3.3.2/themes/default/40px.png   |  Bin 0 -> 1880 bytes
-.../vendors/jstree-3.3.2/themes/default/style.css  | 1068 ++++++++++
-.../jstree-3.3.2/themes/default/style.min.css      |    1 +
-.../jstree-3.3.2/themes/default/throbber.gif       |  Bin 0 -> 1720 bytes
-help/html/vendors/markjs-8.8.3/jquery.mark.min.js  |    7 +
-help/html/vendors/respond-1.4.2/respond.min.js     |    5 +
-help/html/vendors/uri-1.18.9/uri.min.js            |  114 ++
-help/klock.hnd                                     |  Bin 0 -> 49463296 bytes
-history.txt                                        |   69 +-
-klock.iss                                          |   20 +-
-klock.lpi                                          |  206 +-
-klock.lpr                                          |    3 +-
-lazKlock.smproj                                    |  Bin 193883 -> 215570 bytes
-uklockutils.pas                                    |   28 +-
-uoptions.pas                                       |   13 +-
-143 files changed, 16008 insertions(+), 423 deletions(-)
 
 
 Build 59 [2.2.0.59]
@@ -2003,10 +1024,6 @@ when happy is all is okay.
 
 This also becomes V2.2 and will create a working branch of v2.
 
-history.txt     | 186 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-lazKlock.smproj | Bin 215570 -> 237081 bytes
-2 files changed, 186 insertions(+)
-
 
 Build 60 [2.2.0.60]
 
@@ -2031,41 +1048,6 @@ Currently
 4185 statements
 14.6% comment
 
-fonts/rmbunny.ttf               | Bin 0 -> 150424 bytes
-formKlock.pas                   |  33 +++--
-formOptions.lfm                 |  28 +++--
-formOptions.pas                 |  33 ++++-
-formbinaryklock.lfm             |  60 ++++-----
-formbinaryklock.pas             | 148 +++++++++++-----------
-formclipboard.lfm               |   2 +
-formclipboard.pas               |  49 +++++++-
-forminfo.pas                    |   1 -
-formsmalltextklock.pas          |  26 ++--
-help/Klock.chm                  | Bin 864090 -> 870264 bytes
-help/Klock.pdf                  | Bin 4115286 -> 4112582 bytes
-help/html/About.html            |   2 +-
-help/html/ClipboardMonitor.html |   2 +
-help/html/Credits.html          |   2 +-
-help/html/Gettinghelp.html      |   2 +-
-help/html/Global.html           |   2 +-
-help/html/History.html          | 214 +++++++++++++++++++++++++++++++
-help/html/Introduction.html     |   4 +-
-help/html/Klock.html            |   4 +-
-help/html/Logging.html          |   3 +-
-help/html/Welcome.html          |   4 +-
-help/html/js/hndsd.min.js       |   2 +-
-help/klock.hnd                  | Bin 49463296 -> 49524736 bytes
-history.txt                     |  24 ++++
-klock.iss                       |   2 +-
-klock.lpi                       | 272 +++++++++++++++++++++-------------------
-lazKlock.smproj                 | Bin 237081 -> 258836 bytes
-ufonts.pas                      |   6 +-
-ufuzzytime.pas                  |   4 +-
-uklockutils.pas                 |  54 ++++++--
-ulogging.pas                    |  12 +-
-uoptions.pas                    |  14 ++-
-33 files changed, 704 insertions(+), 305 deletions(-)
-
 
 Build 61 [2.2.1.61]
 
@@ -2086,62 +1068,6 @@ Currently
 4339 statements
 14.9% comment
 
-README.md                                      |  27 ++-
-formKlock.lfm                                  | 139 +++++++++++-
-formKlock.pas                                  | 110 +++++++++-
-help/Klock.chm                                 | Bin 870264 -> 914620 bytes
-help/Klock.pdf                                 | Bin 4112582 -> 4475682 bytes
-help/html/About.html                           |  17 +-
-help/html/AnalogueKlock.html                   |   2 +-
-help/html/BinaryKlock.html                     |   2 +-
-help/html/ClipboardMonitor.html                |   4 +-
-help/html/{WorldKlock.html => Conversion.html} |  42 ++--
-help/html/Countdown.html                       |   4 +-
-help/html/Credits.html                         |   2 +-
-help/html/Events.html                          |   4 +-
-help/html/Events1.html                         | 268 -----------------------
-help/html/ExtraKlock.html                      | 284 ------------------------
-help/html/File.html                            |   2 +-
-help/html/FuzzyTime.html                       |   4 +-
-help/html/GettingStarted.html                  |   2 +-
-help/html/Gettinghelp.html                     |   2 +-
-help/html/Global.html                          |   2 +-
-help/html/Help.html                            |   2 +-
-help/html/History.html                         |  83 +++++--
-help/html/Info.html                            |   2 +-
-help/html/Introduction.html                    |  18 +-
-help/html/Klock.html                           |  20 +-
-help/html/LEDKlock.html                        |   2 +-
-help/html/License.html                         |   2 +-
-help/html/Logging.html                         |   2 +-
-help/html/Menu.html                            |   2 +-
-help/html/Options.html                         |   2 +-
-help/html/OtherKlocks.html                     |   2 +-
-help/html/OtherStuff.html                      |   2 +-
-help/html/Reminder.html                        |   6 +-
-help/html/SmallTextKlock.html                  |   2 +-
-help/html/Statusbar.html                       |   2 +-
-help/html/SystemTray.html                      |   2 +-
-help/html/Systemrequirements.html              |   2 +-
-help/html/Thingymabobs.html                    |   2 +-
-help/html/Time.html                            |   2 +-
-help/html/Time1.html                           |   2 +-
-help/html/Timer.html                           |   4 +-
-help/html/Welcome.html                         |  14 +-
-help/html/_toc.json                            |   2 +-
-help/html/css/hnd.content.css                  |  16 +-
-help/html/js/hndsd.min.js                      |   2 +-
-help/klock.hnd                                 | Bin 49524736 -> 1839104 bytes
-history.txt                                    |  55 +++++
-klock.iss                                      |  20 +-
-klock.lpi                                      | 288 ++++++++++++-------------
-klock.lpr                                      |   2 +-
-lazKlock.smproj                                | Bin 258836 -> 281546 bytes
-uconversion.pas                                | 184 ++++++++++++++++
-uklockutils.pas                                |   8 +-
-ulogging.pas                                   |   1 -
-54 files changed, 823 insertions(+), 849 deletions(-)
-
 
 Build 62 [2.2.1.62]
 
@@ -2157,16 +1083,6 @@ now if the old options file was not deleted and error was generated.
 
 Also, removed uOptinsUtils and moved the helper routines into
 the main options class.
-
-formKlock.lfm           |   9 +-
-formKlock.pas           |   1 -
-history.txt             | 103 +++++++++++++++---
-klock.lpi               | 172 +++++++++++++++---------------
-klock.lpr               |   6 +-
-uformclipboardutils.pas |   4 +-
-uoptions.pas            | 276 ++++++++++++++++++++++++++++++++++++++----------
-uoptionsutils.pas       |  97 -----------------
-8 files changed, 406 insertions(+), 262 deletions(-)
 
 
 Build 63 [2.2.2.63]
@@ -2189,23 +1105,6 @@ Currently
 4777 statements
 15.4% comment
 
-formKlock.lfm       |   7 ++
-formKlock.pas       |  27 ++++-
-formOptions.lfm     |   6 +-
-formOptions.pas     |   1 +
-formbinaryklock.pas |   4 +-
-formledklock.pas    |   4 +-
-formstickynote.lfm  |  82 +++++++++++++++
-formstickynote.pas  | 105 +++++++++++++++++++
-history.txt         |  33 ++++++
-klock.iss           |   4 +-
-klock.lpi           | 229 ++++++++++++++++++++++++----------------
-klock.lpr           |   3 +-
-lazKlock.smproj     | Bin 281546 -> 305920 bytes
-ustickynote.pas     | 297 ++++++++++++++++++++++++++++++++++++++++++++++++++++
-ustickynotes.pas    | 251 ++++++++++++++++++++++++++++++++++++++++++++
-15 files changed, 946 insertions(+), 107 deletions(-)
-
 
 Build 64 [2.2.2.64]
 
@@ -2226,51 +1125,6 @@ Currently
 4830 statements
 15.3% comment
 
-README.md                       |   11 +-
-formKlock.lfm                   | 2748 ++++++++++-----------------------------
-formKlock.pas                   |   46 +-
-formstickynote.lfm              |  141 ++
-formstickynote.pas              |    7 +
-help/Klock.chm                  |  Bin 914620 -> 1014404 bytes
-help/Klock.pdf                  |  Bin 4475682 -> 4807268 bytes
-help/html/About.html            |   11 +-
-help/html/ClipboardMonitor.html |    4 +-
-help/html/Conversion.html       |    2 +-
-help/html/Countdown.html        |    4 +-
-help/html/Credits.html          |    7 +-
-help/html/Events.html           |    6 +-
-help/html/File.html             |    2 +-
-help/html/FuzzyTime.html        |    2 +-
-help/html/Help.html             |    4 +-
-help/html/History.html          |  151 ++-
-help/html/Info.html             |    4 +-
-help/html/Introduction.html     |    4 +-
-help/html/Klock.html            |    6 +-
-help/html/Menu.html             |    3 +-
-help/html/Reminder.html         |    4 +-
-help/html/StickyNote.html       |  299 +++++
-help/html/StickyNote1.html      |  272 ++++
-help/html/Thingymabobs.html     |    3 +
-help/html/Time1.html            |    2 +-
-help/html/Timer.html            |    2 +-
-help/html/Welcome.html          |    4 +-
-help/html/_toc.json             |    2 +-
-help/html/js/hndsd.min.js       |    2 +-
-help/klock.hnd                  |  Bin 1839104 -> 2228224 bytes
-history.txt                     |   36 +
-icons/icons8-clock-32.png       |  Bin 0 -> 730 bytes
-icons/icons8-delete-40.png      |  Bin 0 -> 1841 bytes
-icons/icons8-help-32.png        |  Bin 0 -> 645 bytes
-icons/icons8-hide-50.png        |  Bin 0 -> 1989 bytes
-icons/icons8-note-32.png        |  Bin 0 -> 403 bytes
-klock.ico                       |  Bin 67646 -> 4286 bytes
-klock.iss                       |    6 +-
-klock.lpi                       |  161 +--
-lazKlock.smproj                 |  Bin 305920 -> 330666 bytes
-time-13-128.ico                 |  Bin 67646 -> 0 bytes
-ufuzzytime.pas                  |   72 +-
-43 files changed, 1802 insertions(+), 2226 deletions(-)
-
 
 Build 65 [2.2.2.65]
 
@@ -2290,49 +1144,6 @@ Currently
 8952 lines of source code.
 4861 statements
 15.2% comment
-
-formAbout.lfm                          |   1 +
-formAbout.pas                          |   8 +-
-formKlock.lfm                          |   9 +-
-formKlock.pas                          |  15 +-
-formLicense.lfm                        |   1 +
-formOptions.lfm                        |  79 ++---
-formOptions.pas                        |  20 +-
-formanalogueklock.lfm                  | 335 +++++++++++++++++-
-formanalogueklock.pas                  |  52 ++-
-formbinaryklock.lfm                    | 611 ++++++++++++++++++++++++++++++++-
-formbinaryklock.pas                    |  77 ++---
-formclipboard.pas                      |  13 +-
-forminfo.lfm                           |   1 +
-forminfo.pas                           |   7 +
-formledklock.lfm                       | 335 +++++++++++++++++-
-f77cd4cae59 uOormledklock.pas                       |  17 +
-formlicense.pas                        |   6 +
-formreminderinput.lfm                  |   1 +
-formreminderinput.pas                  |  74 ++--
-formsmalltextklock.lfm                 | 466 ++++++++++++++++++++++++-
-formsmalltextklock.pas                 |  20 +-
-formstickynote.lfm                     |   1 +
-formstickynote.pas                     |  12 +-
-help.txt                               |  76 ----
-help/klock.hnd                         | Bin 2228224 -> 2232320 bytes
-history.txt                            |  56 ++-
-icons/icons8-about-32.png              | Bin 0 -> 776 bytes
-icons/icons8-binary-file-32.png        | Bin 0 -> 717 bytes
-icons/icons8-binary-file-filled-32.png | Bin 0 -> 653 bytes
-icons/icons8-eye-32.png                | Bin 0 -> 1229 bytes
-kReminder.txt                          |  16 -
-klock.iss                              |   4 +-
-klock.lpi                              | 253 +++++++-------
-klock.xml                              |   4 -
-lazKlock.smproj                        | Bin 330666 -> 356088 bytes
-uconversion.pas                        |   7 +-
-uFonts.pas                             |   1 +
-uformclipboardutils.pas                |   5 +-
-ufuzzytime.pas                         |  17 +-
-uklockutils.pas                        |  16 +-
-uoptions.pas                           |  54 +--
-41 files changed, 2197 insertions(+), 473 deletions(-)
 
 
 Build 66 [2.2.3.66]
@@ -2378,33 +1189,6 @@ Currently
 5132 statements
 15.7% comment
 
-formAbout.lfm          |   3 +-
-formAbout.pas          |   6 -
-formKlock.lfm          |  24 +++-
-formKlock.pas          | 310 ++++++++++++++++++++++++++++++++++---------------
-formLicense.lfm        |   1 -
-formOptions.lfm        |   1 -
-formOptions.pas        |   6 -
-formanalogueklock.lfm  |   1 -
-formanalogueklock.pas  |   6 -
-formbinaryklock.lfm    |   1 -
-formbinaryklock.pas    |   6 -
-forminfo.lfm           |   3 +-
-forminfo.pas           |  27 ++---
-formledklock.lfm       |   1 -
-formledklock.pas       |   6 -
-formlicense.pas        |   6 -
-formsmalltextklock.lfm |   1 -
-formsmalltextklock.pas |   7 --
-history.txt            |  43 ++++++-
-klock.iss              |   4 +-
-klock.lpi              | 296 +++++++++++++++++++++++++---------------------
-uconversion.pas        |   4 +-
-uinfoutils.pas         |  44 +++----
-uklockutils.pas        |  48 +++++++-
-umemos.pas             |  26 ++++-
-25 files changed, 550 insertions(+), 331 deletions(-)
-
 
 Build 69 [2.2.3.69]
 
@@ -2433,76 +1217,6 @@ Currently
 5287 statements
 15.8% comment
 
-fonts/SweetHearts.TTF             | Bin 0 -> 36520 bytes
-formKlock.lfm                     |  12 +-
-formKlock.pas                     |  33 ++--
-formOptions.lfm                   | 147 ++++++++++++++-
-formOptions.pas                   |  67 +++++++
-formanalogueklock.pas             |   2 +-
-formbinaryklock.pas               |   2 +-
-forminfo.lfm                      |  26 ++-
-forminfo.pas                      |  25 ++-
-formledklock.pas                  |   2 +-
-formsmalltextklock.pas            |   2 +-
-formstickynote.lfm                |   1 +
-formstickynote.pas                |   8 +-
-help/Klock.chm                    | Bin 1014404 -> 1094002 bytes
-help/Klock.pdf                    | Bin 4807268 -> 5317846 bytes
-help/html/About.html              |  13 +-
-help/html/AnalogueKlock.html      |   4 +-
-help/html/BinaryKlock.html        |  10 +-
-help/html/ClipboardMonitor.html   |   2 +-
-help/html/Conversion.html         |   6 +-
-help/html/Countdown.html          |   6 +-
-help/html/Credits.html            |  15 +-
-help/html/Events.html             |  12 +-
-help/html/File.html               |   2 +-
-help/html/FuzzyTime.html          |   4 +-
-help/html/GettingStarted.html     |   2 +-
-help/html/Gettinghelp.html        |   2 +-
-help/html/Global.html             |   8 +-
-help/html/Help.html               |   2 +-
-help/html/History.html            |   2 +-
-help/html/Info.html               |  14 +-
-help/html/Introduction.html       |  12 +-
-help/html/Klock.html              |  14 +-
-help/html/LEDKlock.html           |   4 +-
-help/html/License.html            |   2 +-
-help/html/Logging.html            |   4 +-
-help/html/Memo.html               | 301 ++++++++++++++++++++++++++++++
-help/html/Menu.html               |   2 +-
-help/html/Options.html            |   2 +-
-help/html/OtherKlocks.html        |   2 +-
-help/html/OtherStuff.html         |   6 +-
-help/html/Reminder.html           |   8 +-
-help/html/SmallTextKlock.html     |   4 +-
-help/html/Statusbar.html          |   4 +-
-help/html/StickyNote.html         |   4 +-
-help/html/StickyNote1.html        |   4 +-
-help/html/SystemTray.html         |   4 +-
-help/html/Systemrequirements.html |   2 +-
-help/html/Thingymabobs.html       |   3 +-
-help/html/Time.html               |   6 +-
-help/html/Time1.html              |   2 +-
-help/html/Timer.html              |   4 +-
-help/html/Welcome.html            |  12 +-
-help/html/_toc.json               |   2 +-
-help/html/css/hnd.content.css     |  30 ++-
-help/html/js/hndsd.min.js         |   2 +-
-help/klock.hnd                    | Bin 2232320 -> 2347008 bytes
-history.txt                       |  57 +++++-
-klock.iss                         |   4 +-
-klock.lpi                         | 374 +++++++++++++++++++++-----------------
-lazKlock.smproj                   | Bin 356088 -> 410472 bytes
-ufonts.pas                        |   3 +-
-ufuzzytime.pas                    |  22 +--
-uinfoutils.pas                    |  70 ++++++-
-uklockutils.pas                   |  15 +-
-ulogging.pas                      |   4 +-
-uoptions.pas                      | 103 ++++++++++-
-ustickynotes.pas                  |  69 +++----
-68 files changed, 1221 insertions(+), 371 deletions(-)
-
 
 Build 70 [2.2.3.70]
 
@@ -2525,37 +1239,6 @@ Currently
 5351 statements
 15.7% comment
 
-fonts/ChristmasCard.ttf                            | Bin 0 -> 50792 bytes
-fonts/groovyGhosties.ttf                           | Bin 0 -> 142052 bytes
-formKlock.pas                                      |  31 ++-
-formOptions.lfm                                    |  14 +-
-formOptions.pas                                    |   8 +-
-help/Klock.chm                                     | Bin 1094002 -> 1102050 bytes
-help/Klock.pdf                                     | Bin 5317846 -> 5348434 bytes
-help/html/About.html                               |   2 +-
-help/html/Credits.html                             |   2 +-
-help/html/Global.html                              |   2 +-
-help/html/History.html                             | 285 ++++++++++++++++++++-
-help/html/Klock.html                               |   2 +-
-help/html/Logging.html                             |   4 +-
-help/html/Memo.html                                |   2 +
-help/html/Options.html                             |   2 +-
-help/html/OtherKlocks.html                         |   4 +-
-.../{OtherStuff.html => StickyNotesandMemos.html}  |  26 +-
-help/html/Time.html                                |   8 +-
-help/html/_toc.json                                |   2 +-
-help/html/js/hndsd.min.js                          |   2 +-
-help/klock.hnd                                     | Bin 2347008 -> 2347008 bytes
-history.txt                                        |  93 +++++++
-klock.iss                                          |   4 +-
-klock.lpi                                          | 139 +++++-----
-lazKlock.smproj                                    | Bin 410472 -> 438167 bytes
-ufonts.pas                                         |   2 +-
-ufuzzytime.pas                                     |   6 +-
-uklockutils.pas                                    |  28 ++
-uoptions.pas                                       |  40 ++-
-29 files changed, 583 insertions(+), 125 deletions(-)
-
 
 Build 71 [2.2.3.71]
 
@@ -2572,36 +1255,6 @@ A new file, uArchiveUtils, holds the helper Archive routines [called from formOp
 Added the location of the configuration files to the options files, easier to use elsewhere 
 in the program and are now only specified in one place.
 
-.gitattributes                     |   1 +
-formKlock.lfm                      |   1 +
-formKlock.pas                      |  15 +-
-formOptions.lfm                    | 105 ++++++++++++-
-formOptions.pas                    |  83 +++++++++-
-forminfo.lfm                       |  30 ++--
-forminfo.pas                       |   4 +-
-help/Klock.chm                     | Bin 1102050 -> 1120838 bytes
-help/Klock.pdf                     | Bin 5348434 -> 5485402 bytes
-help/html/Archive.html             | 293 +++++++++++++++++++++++++++++++++++
-help/html/Global.html              |   2 +-
-help/html/History.html             |   2 +-
-help/html/Klock.html               |   2 +-
-help/html/Logging.html             |   4 +-
-help/html/Options.html             |   1 +
-help/html/OtherKlocks.html         |   2 +-
-help/html/StickyNotesandMemos.html |   2 +-
-help/html/Time.html                |   2 +-
-help/html/_toc.json                |   2 +-
-help/html/js/hndsd.min.js          |   2 +-
-help/klock.hnd                     | Bin 2347008 -> 7528448 bytes
-history.txt                        |  40 ++++-
-klock.iss                          |   4 +-
-klock.lpi                          | 309 +++++++++++++++++++------------------
-klock.lpr                          |   2 +-
-lazKlock.smproj                    | Bin 438167 -> 466548 bytes
-uarchiveutils.pas                  | 107 +++++++++++++
-uoptions.pas                       |  31 +++-
-28 files changed, 850 insertions(+), 196 deletions(-)
- 
 Currently
 10128 lines of source code.
 5499 statements
@@ -2622,22 +1275,6 @@ So, each time format can be displayed in each available font.
 
 Added loads of fonts. :-)
 
-fonts/Backwards.ttf        | Bin 0 -> 18924 bytes
-fonts/CartoonBones.ttf     | Bin 0 -> 1469836 bytes
-fonts/GallaudetRegular.ttf | Bin 0 -> 54360 bytes
-fonts/GushingMeadow.ttf    | Bin 0 -> 125920 bytes
-fonts/KBABCDoodles.ttf     | Bin 0 -> 71548 bytes
-fonts/UpsideDown.ttf       | Bin 0 -> 25862 bytes
-fonts/chintzy.ttf          | Bin 0 -> 30528 bytes
-fonts/chintzys.ttf         | Bin 0 -> 47972 bytes
-formKlock.lfm              |  55 +++++++++-------
-formKlock.pas              | 102 +++++++-----------------------
-history.txt                |  52 +++++++++++++++
-klock.lpi                  | 153 ++++++++++++++++++++++++---------------------
-ufonts.pas                 |  50 ++++++++++++++-
-ufuzzytime.pas             |   4 +-
-14 files changed, 238 insertions(+), 178 deletions(-)
-
 
 Build 73 [2.2.3.73]
 
@@ -2653,67 +1290,6 @@ Currently
 10171 lines of source code.
 5565 statements
 15.8% comment
-
-README.md                   |   18 +-
-formKlock.lfm               |   93 +-
-formKlock.pas               |   96 +-
-help/Klock.chm              |  Bin 1120838 -> 1134124 bytes
-help/Klock.pdf              |  Bin 5485402 -> 5579909 bytes
-help/html/About.html        |    7 +-
-help/html/Archive.html      |    6 +-
-help/html/Conversion.html   |    2 +-
-help/html/Countdown.html    |    4 +-
-help/html/Credits.html      |    4 +-
-help/html/Events.html       |    2 +-
-help/html/FuzzyTime.html    |    8 +-
-help/html/Introduction.html |    2 +-
-help/html/Klock.html        |    4 +-
-help/html/Memo.html         |   10 +-
-help/html/Reminder.html     |    2 +-
-help/html/Timer.html        |    2 +-
-help/html/WorldKlock.html   |  283 +++
-help/html/_toc.json         |    2 +-
-help/html/js/hndsd.min.js   |    2 +-
-help/klock.hnd              |  Bin 7528448 -> 7761920 bytes
-history.txt                 |   98 +-
-klock.iss                   |    5 +-
-klock.lpi                   |  230 +--
-lazKlock.smproj             |  Bin 466548 -> 495083 bytes
-tzdata/CONTRIBUTING         |   79 +
-tzdata/LICENSE              |    5 +
-tzdata/Makefile             |  929 ++++++++++
-tzdata/NEWS                 | 4263 +++++++++++++++++++++++++++++++++++++++++++
-tzdata/README               |   52 +
-tzdata/africa               | 1237 +++++++++++++
-tzdata/antarctica           |  340 ++++
-tzdata/asia                 | 3142 +++++++++++++++++++++++++++++++
-tzdata/australasia          | 1793 ++++++++++++++++++
-tzdata/backward             |  128 ++
-tzdata/backzone             |  665 +++++++
-tzdata/calendars            |  173 ++
-tzdata/checklinks.awk       |   48 +
-tzdata/checktab.awk         |  177 ++
-tzdata/etcetera             |   78 +
-tzdata/europe               | 3920 +++++++++++++++++++++++++++++++++++++++
-tzdata/factory              |   10 +
-tzdata/iso3166.tab          |  274 +++
-tzdata/leap-seconds.list    |  255 +++
-tzdata/leapseconds          |   61 +
-tzdata/leapseconds.awk      |   75 +
-tzdata/northamerica         | 3431 ++++++++++++++++++++++++++++++++++
-tzdata/pacificnew           |   27 +
-tzdata/southamerica         | 1806 ++++++++++++++++++
-tzdata/systemv              |   37 +
-tzdata/theory.html          | 1096 +++++++++++
-tzdata/version              |    1 +
-tzdata/yearistype.sh        |   38 +
-tzdata/zishrink.awk         |  157 ++
-tzdata/zone.tab             |  448 +++++
-tzdata/zone1970.tab         |  382 ++++
-tzdata/zoneinfo2tdf.pl      |   52 +
-ufonts.pas                  |    2 +-
-ufuzzytime.pas              |   11 +-
-59 files changed, 25820 insertions(+), 252 deletions(-)
 
 
 Build 74 [2.2.4.74]
@@ -2742,45 +1318,6 @@ Currently
 5765 statements
 15.9% comment
 
-fonts/Behistun.ttf               |  Bin 0 -> 144960 bytes
-fonts/HieraticNumerals.ttf       |  Bin 0 -> 21572 bytes
-formKlock.lfm                    |   68 +-
-formKlock.pas                    |   82 ++-
-formOptions.lfm                  |   78 ++-
-formOptions.pas                  |   41 +-
-formanalogueklock.lfm            |    4 +-
-formanalogueklock.pas            |    3 +-
-formfloatingklock.lfm            |  588 +++++++++++++++++
-formfloatingklock.pas            |  245 +++++++
-help/Klock.chm                   |  Bin 1134124 -> 3788634 bytes
-help/Klock.pdf                   |  Bin 5579909 -> 6691025 bytes
-help/html/About.html             |    2 +-
-help/html/Credits.html           |    2 +-
-help/html/FloatingTextKlock.html |  271 ++++++++
-help/html/Gettinghelp.html       |    2 +-
-help/html/Global.html            |    2 +-
-help/html/History.html           | 1354 +++-----------------------------------
-help/html/Info.html              |    2 +-
-help/html/Introduction.html      |    4 +-
-help/html/Klock.html             |    6 +-
-help/html/OtherKlocks.html       |    9 +-
-help/html/SmallTextKlock.html    |    4 +-
-help/html/Time1.html             |    6 +-
-help/html/Welcome.html           |    4 +-
-help/html/_toc.json              |    2 +-
-help/html/js/hndsd.min.js        |    2 +-
-help/klock.hnd                   |  Bin 7761920 -> 4739072 bytes
-history.txt                      |   66 +-
-icons/icons8-ttf-40.png          |  Bin 0 -> 623 bytes
-klock.iss                        |    4 +-
-klock.lpi                        |  255 ++++---
-klock.lpr                        |    3 +-
-lazKlock.smproj                  |  Bin 495083 -> 525171 bytes
-ufonts.pas                       |    6 +-
-ufuzzytime.pas                   |   43 +-
-uoptions.pas                     |   55 ++
-37 files changed, 1797 insertions(+), 1416 deletions(-)
-
 
 Build 75 [2.2.4.75]
 
@@ -2807,23 +1344,6 @@ Currently
 5791 statements
 15.8% comment
 
-README.md       |  10 +--
-formKlock.lfm   |  20 +++--
-formKlock.pas   |  26 ++++--
-formOptions.lfm |  94 +++++++++++++++------
-formOptions.pas |  21 ++++-
-forminfo.lfm    |   2 +-
-forminfo.pas    |  15 +++-
-help/klock.hnd  | Bin 4739072 -> 4739072 bytes
-history.txt     |  97 +++++++++++++++++++++-
-klock.lpi       | 248 +++++++++++++++++++++++++++++---------------------------
-lazKlock.smproj | Bin 525171 -> 555553 bytes
-ufuzzytime.pas  |  17 +---
-uinfoutils.pas  | 228 +++++++++++++++++++++++----------------------------
-uklockutils.pas |   9 +-
-uoptions.pas    |  28 +++++++
-15 files changed, 504 insertions(+), 311 deletions(-)
- 
  
 Build 76 [2.2.4.76]
 
@@ -2842,23 +1362,6 @@ Currently
 5818 statements
 15.7% comment
 
-formKlock.pas             |   7 +-
-forminfo.pas              |  10 ++-
-help/Klock.chm            | Bin 3788634 -> 3804774 bytes
-help/Klock.pdf            | Bin 6691025 -> 6839021 bytes
-help/html/About.html      |   8 +-
-help/html/Credits.html    |   2 +-
-help/html/Global.html     |   8 +-
-help/html/Info.html       |  26 +++---
-help/html/js/hndsd.min.js |   2 +-
-help/klock.hnd            | Bin 4739072 -> 4784128 bytes
-history.txt               |  14 ++++
-klock.iss                 |   4 +-
-klock.lpi                 | 198 ++++++++++++++++++++++------------------------
-lazKlock.smproj           | Bin 555553 -> 585999 bytes
-uinfoutils.pas            |  45 +++++++++--
-15 files changed, 188 insertions(+), 136 deletions(-)
- 
 
 Build 77 [2.2.5.77]
 
@@ -2876,34 +1379,6 @@ Currently
 10721 lines of source code.
 5799 statements
 15.8% comment
-
-fonts/fontNames.txt         |  20 +++
-fonts/fontTypes.txt         |  20 +++
-formKlock.pas               |  12 +-
-formOptions.lfm             |   4 +-
-formOptions.pas             |  24 +++-
-formclipboard.pas           |   3 +-
-formfloatingklock.pas       |   5 +-
-help/Klock.chm              | Bin 3804774 -> 3808810 bytes
-help/Klock.pdf              | Bin 6839021 -> 6845223 bytes
-help/html/Archive.html      |   8 +-
-help/html/FuzzyTime.html    |   9 ++
-help/html/History.html      |  50 ++++++++
-help/html/Introduction.html |   4 +-
-help/html/Klock.html        |   4 +-
-help/html/Welcome.html      |   4 +-
-help/html/WorldKlock.html   |   3 +
-help/html/js/hndsd.min.js   |   2 +-
-help/klock.hnd              | Bin 4784128 -> 4792320 bytes
-history.txt                 |   5 +-
-klock.iss                   |   4 +-
-klock.lpi                   | 297 +++++++++++++++++++++++++-------------------
-lazKlock.smproj             | Bin 585999 -> 616549 bytes
-uarchiveutils.pas           |   8 +-
-ufonts.pas                  | 138 +++++++++++---------
-uformclipboardutils.pas     |  25 +++-
-uklockutils.pas             |   3 +-
-26 files changed, 426 insertions(+), 226 deletions(-)
 
 
 Build 78 [2.2.5.78]
@@ -2926,51 +1401,6 @@ Currently
 5976 statements
 15.7% comment
 
-fonts/Digital Play Hollow St.ttf | Bin 0 -> 93320 bytes
-fonts/Digital Play St.ttf        | Bin 0 -> 51792 bytes
-fonts/SFDigitalReadout-Heavy.ttf | Bin 0 -> 54508 bytes
-fonts/Triad.ttf                  | Bin 0 -> 58732 bytes
-fonts/Triad_xs.ttf               | Bin 0 -> 41320 bytes
-fonts/fontNames.txt              |   8 +-
-fonts/fontTypes.txt              |   8 +-
-fonts/signs language tfb.ttf     | Bin 0 -> 55000 bytes
-formKlock.pas                    |  13 +-
-formOptions.lfm                  |  59 ++--
-formOptions.pas                  |  21 +-
-formanalogueklock.lfm            | 276 ++++++++++---------
-formanalogueklock.pas            |  20 ++
-formbinaryklock.lfm              |  10 +-
-formbinaryklock.pas              |  20 ++
-formfloatingklock.lfm            | 581 ++++++++++++++++++++-------------------
-formfloatingklock.pas            |  57 +++-
-formledklock.lfm                 | 280 ++++++++++---------
-formledklock.pas                 |  20 ++
-formsmalltextklock.lfm           | 278 ++++++++++---------
-formsmalltextklock.pas           |  25 +-
-formsplashscreen.lfm             | 180 ++++++++++++
-formsplashscreen.pas             |  33 +++
-help/Klock.chm                   | Bin 3808810 -> 3810122 bytes
-help/Klock.pdf                   | Bin 6845223 -> 6857082 bytes
-help/html/About.html             |   2 +-
-help/html/Introduction.html      |   4 +-
-help/html/Klock.html             |   4 +-
-help/html/Options.html           |   2 +-
-help/html/OtherKlocks.html       |   4 +-
-help/html/Welcome.html           |   4 +-
-help/html/js/hndsd.min.js        |   2 +-
-help/klock.hnd                   | Bin 4792320 -> 4796416 bytes
-history.txt                      | 107 ++++++-
-icons/icons8-eye-32.png          | Bin 1229 -> 0 bytes
-klock.iss                        |   4 +-
-klock.lpi                        | 291 +++++++++-----------
-klock.lpr                        |  11 +-
-lazKlock.smproj                  | Bin 616549 -> 647701 bytes
-ufonts.pas                       |   2 -
-uklockutils.pas                  |  55 ++--
-ulogging.pas                     |   7 +
-uoptions.pas                     |  59 +++-
-43 files changed, 1497 insertions(+), 950 deletions(-)
-
 
 Build 79 [2.3.0.79]
 
@@ -2988,39 +1418,6 @@ Currently
 11040 lines of source code.
 6006 statements
 15.7% comment
-
-README.md                   |   3 +-
-formanalogueklock.pas       |  44 +++----
-formbinaryklock.lfm         |   5 +-
-formbinaryklock.pas         |  21 +++-
-formfloatingklock.lfm       |   1 +
-formfloatingklock.pas       |  13 +-
-formledklock.lfm            |   1 +
-formledklock.pas            |  14 ++-
-formsmalltextklock.lfm      |   1 +
-formsmalltextklock.pas      |  21 +++-
-formsplashscreen.lfm        | 286 +++++++++++++++++++++++++++++++++++++++++---
-formsplashscreen.pas        |  15 ++-
-help/Klock.chm              | Bin 3810122 -> 3811656 bytes
-help/Klock.pdf              | Bin 6857082 -> 6858659 bytes
-help/html/About.html        |   3 +-
-help/html/History.html      |  39 ++++++
-help/html/Introduction.html |   4 +-
-help/html/Klock.html        |   4 +-
-help/html/Welcome.html      |   4 +-
-help/html/js/hndsd.min.js   |   2 +-
-help/klock.hnd              | Bin 4796416 -> 4784128 bytes
-history.txt                 |  65 +++++++++-
-klock.iss                   |   4 +-
-klock.lpi                   | 195 ++++++++++++++----------------
-lazKlock.smproj             | Bin 647701 -> 679299 bytes
-ufonts.pas                  |   8 +-
-ufuzzytime.pas              |   4 +-
-uklockutils.pas             |  41 ++++---
-ulogging.pas                |   3 -
-umemos.pas                  |   9 ++
-ustickynotes.pas            |   9 ++
-31 files changed, 616 insertions(+), 203 deletions(-)
 
 
 Build 80 [2.3.0.80]
@@ -3042,27 +1439,6 @@ Currently
 6036 statements
 15.9% comment
 
-formKlock.lfm          |   2 +-
-formKlock.pas          |  75 +++++++++++++++++-----------
-formOptions.lfm        |  53 ++++++++++----------
-formOptions.pas        |  39 ++++++++-------
-formfloatingklock.pas  |  29 ++++++++---
-formledklock.pas       |   2 +-
-formsmalltextklock.pas |   8 +--
-history.txt            |  59 ++++++++++++++++++++--
-klock.iss              |   4 +-
-klock.lpi              | 132 ++++++++++++++++++++++++++++++++-----------------
-klock.lpr              |   9 +++-
-lazKlock.smproj        | Bin 679299 -> 710905 bytes
-ufonts.pas             |   4 +-
-ufuzzytime.pas         |  91 +++++++++++-----------------------
-uinfoutils.pas         |  19 ++++---
-uklockutils.pas        |   8 +--
-ulogging.pas           |  73 ++++++++++++++-------------
-uoptions.pas           |  11 ++++-
-ustickynotes.pas       |  26 ++++++++--
-19 files changed, 392 insertions(+), 252 deletions(-)
- 
  
 Build 81 [2.3.0.81]
 
@@ -3085,35 +1461,6 @@ Currently
 6132 statements
 16.0% comment
 
-formAbout.lfm                      |   4 +-
-formAbout.pas                      |   2 +
-formKlock.lfm                      |   2 +-
-formKlock.pas                      |  71 +++++------
-formOptions.lfm                    | 218 ++++++++++++++++++++------------
-formOptions.pas                    |  68 +++++++++-
-formbinaryklock.pas                |   2 +-
-formclipboard.pas                  |   2 +-
-help/Klock.chm                     | Bin 3811656 -> 3814976 bytes
-help/Klock.pdf                     | Bin 6858659 -> 6891466 bytes
-help/html/Global.html              |   9 +-
-help/html/Help.html                |   2 +-
-help/html/Introduction.html        |   4 +-
-help/html/Klock.html               |   4 +-
-help/html/Options.html             |   2 +-
-help/html/StickyNotesandMemos.html |  11 +-
-help/html/Time.html                |   7 +-
-help/html/Welcome.html             |   4 +-
-help/html/js/hndsd.min.js          |   2 +-
-help/klock.hnd                     | Bin 4784128 -> 4771840 bytes
-history.txt                        |  18 +++
-klock.iss                          |   4 +-
-klock.lpi                          | 253 +++++++++++++++++++++++--------------
-lazKlock.smproj                    | Bin 710905 -> 743132 bytes
-uconversion.pas                    |   6 +-
-uklockutils.pas                    |  68 +++++++++-
-uoptions.pas                       |  46 +++++++
-27 files changed, 554 insertions(+), 255 deletions(-)
- 
  
 Build 82 [2.3.0.82]
  
@@ -3129,19 +1476,6 @@ Currently
 11312 lines of source code.
 6181 statements
 16.0% comment
-
-formAbout.pas   |   3 -
-formKlock.lfm   |   4 +
-formKlock.pas   |   7 ++
-forminfo.lfm    |  38 ++++----
-forminfo.pas    |  76 +++++++--------
-history.txt     |  75 ++++++++++++++-
-klock.iss       |   4 +-
-klock.lpi       | 287 ++++++++++++++++++++++----------------------------------
-lazKlock.smproj | Bin 743132 -> 775543 bytes
-uinfoutils.pas  | 160 +++++++++++++++++++++++--------
-uklockutils.pas |  70 +++++++-------
-11 files changed, 412 insertions(+), 312 deletions(-)
 
 
 Build 83 [2.3.1.83]
@@ -3172,82 +1506,6 @@ Currently
 6253 statements
 16.0% 
 
-README.md                                          |   10 +-
-formAbout.pas                                      |   37 +-
-formKlock.lfm                                      |   13 +-
-formKlock.pas                                      |   68 +-
-formOptions.lfm                                    |   45 +-
-formOptions.pas                                    |  276 +--
-formanalogueklock.lfm                              |    2 +-
-formanalogueklock.pas                              |   33 +-
-formbiorhythm.lfm                                  |   90 +
-formbiorhythm.pas                                  |   97 ++
-formfloatingklock.pas                              |   66 +-
-forminfo.lfm                                       |    8 +-
-forminfo.pas                                       |   59 +-
-formlicense.pas                                    |   17 +-
-help/Klock.chm                                     |  Bin 3814976 -> 3861238 bytes
-help/Klock.pdf                                     |  Bin 6891466 -> 7134690 bytes
-help/html/About.html                               |    7 +-
-help/html/Archive.html                             |    2 +-
-help/html/{StickyNote.html => Biorhythm.html}      |   59 +-
-help/html/ClipboardMonitor.html                    |    2 +-
-help/html/Conversion.html                          |    2 +-
-help/html/Countdown.html                           |    5 +-
-help/html/Credits.html                             |    2 +-
-help/html/Events.html                              |    6 +-
-help/html/File.html                                |    2 +-
-help/html/FuzzyTime.html                           |    2 +-
-help/html/Global.html                              |    2 +-
-help/html/Help.html                                |    6 +-
-help/html/History.html                             | 1752 ++++++++++++++++++-
-help/html/Info.html                                |    5 +-
-help/html/Introduction.html                        |    4 +-
-help/html/Klock.html                               |    6 +-
-help/html/Logging.html                             |    4 +-
-help/html/Memo.html                                |   10 +-
-help/html/Menu.html                                |    2 +-
-help/html/OtherKlocks.html                         |    4 +-
-help/html/Reminder.html                            |    2 +-
-help/html/StickyNote1.html                         |   35 +-
-....html => StickyNotesStickyNotesMemoMonito.html} |   19 +-
-help/html/Time.html                                |    2 +-
-help/html/Time1.html                               |    2 +-
-help/html/Timer.html                               |    2 +-
-help/html/Welcome.html                             |    4 +-
-help/html/WorldKlock.html                          |    2 +-
-help/html/_toc.json                                |    2 +-
-help/html/js/hndsd.min.js                          |    2 +-
-help/klock.hnd                                     |  Bin 4771840 -> 4956160 bytes
-history.txt                                        |   59 +-
-klock.iss                                          |    4 +-
-klock.lpi                                          |  247 ++-
-klock.lpr                                          |   17 +-
-lazKlock.smproj                                    |  Bin 775543 -> 841493 bytes
-tzdata/CONTRIBUTING                                |   12 +-
-tzdata/Makefile                                    |  123 +-
-tzdata/NEWS                                        |  145 +-
-tzdata/africa                                      |   57 +-
-tzdata/antarctica                                  |    3 +-
-tzdata/asia                                        |  177 +-
-tzdata/australasia                                 |  114 +-
-tzdata/backzone                                    |   48 +-
-tzdata/checktab.awk                                |    9 +
-tzdata/europe                                      |   84 +-
-tzdata/northamerica                                |   27 +-
-tzdata/southamerica                                |  430 +++--
-tzdata/theory.html                                 | 1793 +++++++++++---------
-tzdata/version                                     |    2 +-
-tzdata/ziguard.awk                                 |   62 +
-tzdata/zishrink.awk                                |    4 +-
-tzdata/zone.tab                                    |    2 +-
-tzdata/zone1970.tab                                |    4 +-
-uconversion.pas                                    |    6 +-
-uinfoutils.pas                                     |   95 +-
-uklockutils.pas                                    |   58 +-
-uoptions.pas                                       |  658 +++----
-75 files changed, 4954 insertions(+), 2063 deletions(-)
-
 
 Build 84 [2.3.1.84]
 
@@ -3269,44 +1527,6 @@ Currently
 6265 statements
 16.0% comment
 
-.gitignore                                      |   3 +
-.history.txt.swp                                | Bin 16384 -> 0 bytes
-formAbout.pas                                   |  20 +-
-formKlock.lfm                                   |  10 +-
-formKlock.pas                                   | 473 +++++++++++++-----------
-formOptions.lfm                                 |  16 +-
-formOptions.pas                                 |   1 +
-formclipboard.pas                               |  72 ++--
-formfloatingklock.lfm                           |   2 +-
-formfloatingklock.pas                           |   4 +-
-help/Klock.chm                                  | Bin 3861238 -> 3909362 bytes
-help/Klock.pdf                                  | Bin 7134690 -> 7588297 bytes
-help/html/About.html                            |   2 +-
-help/html/Archive.html                          |  10 +-
-help/html/Biorhythm.html                        |  21 +-
-help/html/Global.html                           |   6 +-
-help/html/Help.html                             |   2 +-
-help/html/History.html                          | 115 +++++-
-help/html/Introduction.html                     |   4 +-
-help/html/Klock.html                            |   4 +-
-help/html/Statusbar.html                        |   2 +-
-help/html/StickyNotesStickyNotesMemoMonito.html |   8 +-
-help/html/SystemTray.html                       |   2 +-
-help/html/Thingymabobs.html                     |   1 -
-help/html/Time.html                             |  12 +-
-help/html/Welcome.html                          |   4 +-
-help/html/css/hnd.content.css                   |   7 +-
-help/html/js/hndsd.min.js                       |   2 +-
-help/klock.hnd                                  | Bin 4956160 -> 5050368 bytes
-history.txt                                     | 118 +++++-
-klock.iss                                       |  25 +-
-klock.lpi                                       | 184 +++++----
-lazKlock.smproj                                 | Bin 841493 -> 841681 bytes
-uinfoutils.pas                                  |  74 ++--
-uklockutils.pas                                 |  35 +-
-uoptions.pas                                    |   3 +-
-36 files changed, 754 insertions(+), 488 deletions(-)
-
 
 Build 85 [2.4.0.85]
 
@@ -3319,6 +1539,29 @@ I have renamed the Events tab to Reminder - This tab is about a single one off
 prompt at a given time so suits the name Reminder and not Events.
 
 A new Events tab will be written, hopefully more suited to the job.
+
+Compiled with Lazarus 1.8.4.
+
+Currently
+11393 lines of source code.
+6154 statements
+15.9% comment
+
+
+Build 86 [2.4.0.86]
+
+Deleted formReminderInput - Not now used.
+
+Combined the event handler routine for the four speed buttons on the countdown
+tab into one generic handler routine.  These buttons provide pre-determined
+minute intervals - 30, 60, 90 and 120 minutes.
+
+Combined all the event handlers for the menu's and front panel buttons into one
+generic event handler.
+
+Even more code tiding.
+
+Ran source against a spell checker.
 
 Currently
 11393 lines of source code.

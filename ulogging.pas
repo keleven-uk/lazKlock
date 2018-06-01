@@ -2,7 +2,7 @@ unit ULogging;
 {  A simple logging class.
 
    kLog := Logger.Create; - to start.
-   kLog.writeLog(message: string); - to wirite a log message.
+   kLog.writeLog(message: string); - to write a log message.
 }
 {$mode objfpc}{$H+}
 
@@ -15,16 +15,16 @@ type
   Logger = class
 
     private
-      _filename: string;      //  filename of the log file
-      _dirname : string;      //  directory where the log file lives.
-      _handle : QWord;        //  handle of main form.
+      _filename: string;       //  filename of the log file
+      _dirname : string;       //  directory where the log file lives.
+      _handle  : QWord;        //  handle of main form.
 
       property handle: QWord read _handle write _handle;
 
       procedure deleteToRycycle(aFile: string);
     public
       property filename: string read _filename write _filename;
-      property dirname: string read _dirname write _dirname;
+      property dirname : string read _dirname  write _dirname;
 
       constructor Create;
       procedure writeLog(message: string);
@@ -45,7 +45,7 @@ constructor Logger.Create;
 VAR
   logFile: TextFile;
 begin
-  dirname := GetAppConfigDir(False);
+  dirname  := GetAppConfigDir(False);
   filename := dirname + 'klog_' + FormatDateTime('DDMMMYYYY', now) + '.log';
 
   try
@@ -104,9 +104,9 @@ procedure Logger.cullLogFile(CullLogsDays: Integer);
 {  Will delete [to recycle bin] all log files older then a specified time, if switched on.  }
 var
   logFiles:TStringlist;
-  logFile: string;
-  logDate:TDateTime;
-  logAge:longInt;
+  logFile : string;
+  logDate :TDateTime;
+  logAge  :longInt;
 begin
   logFiles := TstringList.Create;
 
@@ -115,7 +115,7 @@ begin
     for logFile in logFiles do
         begin
           logDate := FileDateTodateTime(FileAgeUTF8(logFile));
-          logAge := DaysBetween(Now, logDate);
+          logAge  := DaysBetween(Now, logDate);
 
           if logAge > CullLogsDays then
           begin
@@ -146,10 +146,10 @@ var
 begin
   with fileOpStruct do
   begin
-    Wnd := handle;
-    wFunc := FO_DELETE;
-    pFrom := PChar(aFile + #0#0);
-    pTo := nil;
+    Wnd           := handle;
+    wFunc         := FO_DELETE;
+    pFrom         := PChar(aFile + #0#0);
+    pTo           := nil;
     hNameMappings := nil;
 
     fFlags := FOF_ALLOWUNDO;                    //  Use recycle bin.

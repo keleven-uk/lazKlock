@@ -22,11 +22,11 @@ type
       _fontTypes: TStringList;
       _fontFiles: TstringList;
       _fontNames: TstringList;
-      _fontDir: String;
+      _fontDir  : String;
 
       property fontFiles: TStringList read _fontFiles write _fontFiles;
       property fontNames: TStringList read _fontNames write _fontNames;
-      property fontDir: string read _fontDir write _fontDir;
+      property fontDir  : string      read _fontDir   write _fontDir;
 
       procedure findFontFiles;
     public

@@ -12,13 +12,13 @@ uses
   ExtCtrls, StdCtrls, LCLType, LCLIntf, LMessages;
 
 const
-  LWA_COLORKEY = 1;
-  LWA_ALPHA = 2;
-  LWA_BOTH = 3;
+  LWA_COLORKEY  = 1;
+  LWA_ALPHA     = 2;
+  LWA_BOTH      = 3;
   WS_EX_LAYERED = $80000;
-  GWL_EXSTYLE = -20;
-  ON_COLOUR = clLIME;
-  OFF_COLOUR = clGray;
+  GWL_EXSTYLE   = -20;
+  ON_COLOUR     = clLIME;
+  OFF_COLOUR    = clGray;
 
 {Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal Color As Long, ByVal X As Byte, ByVal alpha As Long) As Boolean }
 function SetLayeredWindowAttributes(hWnd: longint; Color: longint; X: byte; alpha: longint): bool stdcall; external 'USER32';
@@ -36,15 +36,16 @@ type
   { TfrmSmallTextKlock }
 
   TfrmSmallTextKlock = class(TForm)
-    lblSmallTextKlock: TLabel;
-    MnItmAlwaysOnTop: TMenuItem;
-    MnuItmNewStickyNote: TMenuItem;
-    MnuItmTransparent: TMenuItem;
-    MnItmClose: TMenuItem;
-    MnuItmAbout: TMenuItem;
-    Panel1: TPanel;
+    lblSmallTextKlock      : TLabel;
+    MnItmAlwaysOnTop       : TMenuItem;
+    MnuItmNewStickyNote    : TMenuItem;
+    MnuItmTransparent      : TMenuItem;
+    MnItmClose             : TMenuItem;
+    MnuItmAbout            : TMenuItem;
+    Panel1                 : TPanel;
     popUpMenuSmallTextKlock: TPopupMenu;
-    tmrSmallTextKlock: TTimer;
+    tmrSmallTextKlock      : TTimer;
+
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -57,8 +58,8 @@ type
     procedure tmrSmallTextKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
-    WindowDragTopLeft: TPoint;
-    WindowDragStarted: Boolean;
+    WindowDragTopLeft : TPoint;
+    WindowDragStarted : Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
     procedure UpdateStatusBar(KTime: TDateTime);
@@ -142,9 +143,9 @@ begin
 
   createlabels;
 
-  lblSmallTextKlock.font.Name := 'hack';
+  lblSmallTextKlock.font.Name  := 'hack';
   lblSmallTextKlock.Font.Color := ON_COLOUR;
-  lblSmallTextKlock.Font.size := 12;
+  lblSmallTextKlock.Font.size  := 12;
 end;
 
 procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -184,7 +185,7 @@ begin
   if userOptions.smallTextScreenSave then
   begin
     Left := userOptions.smallTextFormLeft;
-    Top := userOptions.smallTextFormTop;
+    Top  := userOptions.smallTextFormTop;
   end;
 
   MnItmAlwaysOnTop.Checked := userOptions.smallAlwaysOnTop;
@@ -211,12 +212,9 @@ VAR
   keyResult: string;
 begin
   keyResult := ' cns ';
-  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-    keyResult := StringReplace(keyResult, 'c', 'C', [rfReplaceAll]);
-  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-    keyResult := StringReplace(keyResult, 'n', 'N', [rfReplaceAll]);
-  if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-    keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult := StringReplace(keyResult, 'c', 'C', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult := StringReplace(keyResult, 'n', 'N', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_SCROLL) <>  0 then keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
 
   lblSmallTextKlock.Caption := FormatDateTime('hh:nn:ss am/pm ', KTime) +
                                FormatDateTime(' DD MMM YYYY ', KTime) +
@@ -237,7 +235,7 @@ begin
     if WindowDragStarted then
       begin
         Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
-        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+        Top  := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
       end;
   end;
 
@@ -250,8 +248,8 @@ begin
   { MouseDown - Code to drag the main window using the mouse}
   if msg = LM_LBUTTONDOWN then
   begin
-    WindowDragStarted := True;
-    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragStarted   := True;
+    WindowDragMousePos  := Mouse.CursorPos;
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
@@ -276,13 +274,13 @@ begin
   frmMain.TrayIcon.Visible := False;
   frmMain.TrayIcon.Hide;
 
-  frmMain.Visible := True;
+  frmMain.Visible           := True;
   tmrSmallTextKlock.Enabled := False;
 
   if userOptions.smallTextScreenSave then
   begin
     userOptions.smallTextFormLeft := Left;
-    userOptions.smallTextFormTop := Top;
+    userOptions.smallTextFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
 
@@ -330,14 +328,14 @@ begin
       MyLabels[g, f] := TLabel.Create(frmSmallTextKlock);
       with MyLabels[g, f] do
       begin
-        name := 'lbl' + intToStr(g)+ intToStr(f);
+        name      := 'lbl' + intToStr(g)+ intToStr(f);
         font.Name := 'Hack';
         font.Size := 16;
-        caption := Chr(ord('A') + Random(26));
-        left := 4 + (f * 15);
-        top := 4 + (g * 22);
-        visible := true;
-        parent := frmSmallTextKlock;
+        caption   := Chr(ord('A') + Random(26));
+        left      := 4 + (f * 15);
+        top       := 4 + (g * 22);
+        visible   := true;
+        parent    := frmSmallTextKlock;
       end;  //  with MyLabels[f] do
     end;    //  for f := 0 to 19 do
   end;      //  for g := 0 to 7 do
@@ -362,7 +360,7 @@ end;
 procedure TfrmSmallTextKlock.setTime;
 Var
   hour, minute, second,  millisecond: word;
-  am: boolean;
+  am  : boolean;
   nrms: integer;
 begin
   DecodeTime(Time, hour, minute, second, millisecond);
@@ -497,16 +495,16 @@ begin
      end;
 
      case hour of                        //  determine the hour.
-       0: setTWELVE;
-       1: setONE;
-       2: setTWO;
-       3: setTHREE;
-       4: setFOUR;
-       5: setFIVE;
-       6: setSIX;
-       7: setSEVEN;
-       8: setEIGHT;
-       9: setNINE;
+       0 : setTWELVE;
+       1 : setONE;
+       2 : setTWO;
+       3 : setTHREE;
+       4 : setFOUR;
+       5 : setFIVE;
+       6 : setSIX;
+       7 : setSEVEN;
+       8 : setEIGHT;
+       9 : setNINE;
        10: setTEN;
        11: setELEVEN;
        12: setTWELVE;
@@ -519,576 +517,576 @@ procedure TfrmSmallTextKlock.setIN;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl50') as TLabel;
+  tmplbl            := FindComponent('lbl50') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl51') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl51') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setON;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl56') as TLabel;
+  tmplbl            := FindComponent('lbl56') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl57') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl57') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setNOON;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl513') as TLabel;
+  tmplbl            := FindComponent('lbl513') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl514') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl514') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl515') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl515') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl515') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl515') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setTHE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl53') as TLabel;
+  tmplbl            := FindComponent('lbl53') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl54') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl54') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
-  tmplbl := FindComponent('lbl55') as TLabel;
+  tmpLbl.Caption    := 'H';
+  tmplbl            := FindComponent('lbl55') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setAFTER;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl58') as TLabel;
+  tmplbl            := FindComponent('lbl58') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'A';
-  tmplbl := FindComponent('lbl59') as TLabel;
+  tmpLbl.Caption    := 'A';
+  tmplbl            := FindComponent('lbl59') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'F';
-  tmplbl := FindComponent('lbl510') as TLabel;
+  tmpLbl.Caption    := 'F';
+  tmplbl            := FindComponent('lbl510') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl511') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl511') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl512') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl512') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
+  tmpLbl.Caption    := 'R';
 end;
 
 procedure TfrmSmallTextKlock.setEVENING;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl70') as TLabel;
+  tmplbl            := FindComponent('lbl70') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl71') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl71') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl72') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl72') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl73') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl73') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl74') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl74') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl75') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl75') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl76') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl76') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'G';
+  tmpLbl.Caption    := 'G';
 end;
 
 procedure TfrmSmallTextKlock.setMORNING;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl66') as TLabel;
+  tmplbl            := FindComponent('lbl66') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'M';
-  tmplbl := FindComponent('lbl67') as TLabel;
+  tmpLbl.Caption    := 'M';
+  tmplbl            := FindComponent('lbl67') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl68') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl68') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
-  tmplbl := FindComponent('lbl69') as TLabel;
+  tmpLbl.Caption    := 'R';
+  tmplbl            := FindComponent('lbl69') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl610') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl610') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl611') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl611') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl612') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl612') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'G';
+  tmpLbl.Caption    := 'G';
 end;
 
 procedure TfrmSmallTextKlock.setMIDNIGHT;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl712') as TLabel;
+  tmplbl            := FindComponent('lbl712') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'M';
-  tmplbl := FindComponent('lbl713') as TLabel;
+  tmpLbl.Caption    := 'M';
+  tmplbl            := FindComponent('lbl713') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl714') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl714') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'D';
-  tmplbl := FindComponent('lbl715') as TLabel;
+  tmpLbl.Caption    := 'D';
+  tmplbl            := FindComponent('lbl715') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl716') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl716') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl717') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl717') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'G';
-  tmplbl := FindComponent('lbl718') as TLabel;
+  tmpLbl.Caption    := 'G';
+  tmplbl            := FindComponent('lbl718') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
-  tmplbl := FindComponent('lbl719') as TLabel;
+  tmpLbl.Caption    := 'H';
+  tmplbl            := FindComponent('lbl719') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
+  tmpLbl.Caption    := 'T';
 end;
 
 procedure TfrmSmallTextKlock.setNINE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl40') as TLabel;
+  tmplbl            := FindComponent('lbl40') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl41') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl41') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl42') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl42') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl43') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl43') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setELEVEN;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl44') as TLabel;
+  tmplbl            := FindComponent('lbl44') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl45') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl45') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'L';
-  tmplbl := FindComponent('lbl46') as TLabel;
+  tmpLbl.Caption    := 'L';
+  tmplbl            := FindComponent('lbl46') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl47') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl47') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl48') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl48') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl49') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl49') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setTWELVE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl410') as TLabel;
+  tmplbl            := FindComponent('lbl410') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl411') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl411') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'W';
-  tmplbl := FindComponent('lbl412') as TLabel;
+  tmpLbl.Caption    := 'W';
+  tmplbl            := FindComponent('lbl412') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl413') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl413') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'L';
-  tmplbl := FindComponent('lbl414') as TLabel;
+  tmpLbl.Caption    := 'L';
+  tmplbl            := FindComponent('lbl414') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl415') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl415') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setISH;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl416') as TLabel;
+  tmplbl            := FindComponent('lbl416') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl417') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl417') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'S';
-  tmplbl := FindComponent('lbl418') as TLabel;
+  tmpLbl.Caption    := 'S';
+  tmplbl            := FindComponent('lbl418') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
+  tmpLbl.Caption    := 'H';
 end;
 
 procedure TfrmSmallTextKlock.setFIVE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl30') as TLabel;
+  tmplbl            := FindComponent('lbl30') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'F';
-  tmplbl := FindComponent('lbl31') as TLabel;
+  tmpLbl.Caption    := 'F';
+  tmplbl            := FindComponent('lbl31') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl32') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl32') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl33') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl33') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setSIX;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl34') as TLabel;
+  tmplbl            := FindComponent('lbl34') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'S';
-  tmplbl := FindComponent('lbl35') as TLabel;
+  tmpLbl.Caption    := 'S';
+  tmplbl            := FindComponent('lbl35') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl36') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl36') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'X';
+  tmpLbl.Caption    := 'X';
 end;
 
 procedure TfrmSmallTextKlock.setSEVEN;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl37') as TLabel;
+  tmplbl            := FindComponent('lbl37') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'S';
-  tmplbl := FindComponent('lbl38') as TLabel;
+  tmpLbl.Caption    := 'S';
+  tmplbl            := FindComponent('lbl38') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl39') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl39') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl310') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl310') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl311') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl311') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
+  tmpLbl.Caption    := 'V';
 end;
 
 procedure TfrmSmallTextKlock.setEIGHT;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl312') as TLabel;
+  tmplbl            := FindComponent('lbl312') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl313') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl313') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl314') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl314') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'G';
-  tmplbl := FindComponent('lbl315') as TLabel;
+  tmpLbl.Caption    := 'G';
+  tmplbl            := FindComponent('lbl315') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
-  tmplbl := FindComponent('lbl316') as TLabel;
+  tmpLbl.Caption    := 'H';
+  tmplbl            := FindComponent('lbl316') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
+  tmpLbl.Caption    := 'T';
 end;
 
 procedure TfrmSmallTextKlock.setTEN;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl317') as TLabel;
+  tmplbl            := FindComponent('lbl317') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl318') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl318') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl319') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl319') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setPAST;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl20') as TLabel;
+  tmplbl            := FindComponent('lbl20') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'P';
-  tmplbl := FindComponent('lbl21') as TLabel;
+  tmpLbl.Caption    := 'P';
+  tmplbl            := FindComponent('lbl21') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'A';
-  tmplbl := FindComponent('lbl22') as TLabel;
+  tmpLbl.Caption    := 'A';
+  tmplbl            := FindComponent('lbl22') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'S';
-  tmplbl := FindComponent('lbl23') as TLabel;
+  tmpLbl.Caption    := 'S';
+  tmplbl            := FindComponent('lbl23') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
+  tmpLbl.Caption    := 'T';
 end;
 
 procedure TfrmSmallTextKlock.setONE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl25') as TLabel;
+  tmplbl            := FindComponent('lbl25') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl26') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl26') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl27') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl27') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setTWO;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl27') as TLabel;
+  tmplbl            := FindComponent('lbl27') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl28') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl28') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'W';
-  tmplbl := FindComponent('lbl29') as TLabel;
+  tmpLbl.Caption    := 'W';
+  tmplbl            := FindComponent('lbl29') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
+  tmpLbl.Caption    := 'O';
 end;
 
 procedure TfrmSmallTextKlock.setTHREE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl210') as TLabel;
+  tmplbl            := FindComponent('lbl210') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl211') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl211') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
-  tmplbl := FindComponent('lbl212') as TLabel;
+  tmpLbl.Caption    := 'H';
+  tmplbl            := FindComponent('lbl212') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
-  tmplbl := FindComponent('lbl213') as TLabel;
+  tmpLbl.Caption    := 'R';
+  tmplbl            := FindComponent('lbl213') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl214') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl214') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setFOUR;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl215') as TLabel;
+  tmplbl            := FindComponent('lbl215') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'F';
-  tmplbl := FindComponent('lbl216') as TLabel;
+  tmpLbl.Caption    := 'F';
+  tmplbl            := FindComponent('lbl216') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl217') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl217') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'U';
-  tmplbl := FindComponent('lbl218') as TLabel;
+  tmpLbl.Caption    := 'U';
+  tmplbl            := FindComponent('lbl218') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
+  tmpLbl.Caption    := 'R';
 end;
 
 procedure TfrmSmallTextKlock.setTWENTY;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl10') as TLabel;
+  tmplbl            := FindComponent('lbl10') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl11') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl11') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'W';
-  tmplbl := FindComponent('lbl12') as TLabel;
+  tmpLbl.Caption    := 'W';
+  tmplbl            := FindComponent('lbl12') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl13') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl13') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
-  tmplbl := FindComponent('lbl14') as TLabel;
+  tmpLbl.Caption    := 'N';
+  tmplbl            := FindComponent('lbl14') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl15') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl15') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'Y';
+  tmpLbl.Caption    := 'Y';
 end;
 
 procedure TfrmSmallTextKlock.setTWENTYFIVE;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl16') as TLabel;
+  tmplbl            := FindComponent('lbl16') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'F';
-  tmplbl := FindComponent('lbl17') as TLabel;
+  tmpLbl.Caption    := 'F';
+  tmplbl            := FindComponent('lbl17') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl18') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl18') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'V';
-  tmplbl := FindComponent('lbl19') as TLabel;
+  tmpLbl.Caption    := 'V';
+  tmplbl            := FindComponent('lbl19') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
+  tmpLbl.Caption    := 'E';
 end;
 
 procedure TfrmSmallTextKlock.setABOUT;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl110') as TLabel;
+  tmplbl            := FindComponent('lbl110') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'A';
-  tmplbl := FindComponent('lbl111') as TLabel;
+  tmpLbl.Caption    := 'A';
+  tmplbl            := FindComponent('lbl111') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'B';
-  tmplbl := FindComponent('lbl112') as TLabel;
+  tmpLbl.Caption    := 'B';
+  tmplbl            := FindComponent('lbl112') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
-  tmplbl := FindComponent('lbl113') as TLabel;
+  tmpLbl.Caption    := 'O';
+  tmplbl            := FindComponent('lbl113') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'U';
-  tmplbl := FindComponent('lbl114') as TLabel;
+  tmpLbl.Caption    := 'U';
+  tmplbl            := FindComponent('lbl114') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
+  tmpLbl.Caption    := 'T';
 end;
 
 procedure TfrmSmallTextKlock.setTO;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl115') as TLabel;
+  tmplbl            := FindComponent('lbl115') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl116') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl116') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'O';
+  tmpLbl.Caption    := 'O';
 end;
 
 procedure TfrmSmallTextKlock.setIT;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl00') as TLabel;
+  tmplbl            := FindComponent('lbl00') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl01') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl01') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
+  tmpLbl.Caption    := 'T';
 end;
 
 procedure TfrmSmallTextKlock.setIS;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl03') as TLabel;
+  tmplbl            := FindComponent('lbl03') as TLabel;
   tmpLbl.Font.Color := clLIME;
-  tmpLbl.Caption := 'I';
-  tmplbl := FindComponent('lbl04') as TLabel;
+  tmpLbl.Caption    := 'I';
+  tmplbl            := FindComponent('lbl04') as TLabel;
   tmpLbl.Font.Color := clLIME;
-  tmpLbl.Caption := 'S';
+  tmpLbl.Caption    := 'S';
 end;
 
 procedure TfrmSmallTextKlock.setTENM;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl06') as TLabel;
+  tmplbl            := FindComponent('lbl06') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl07') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl07') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl08') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl08') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'N';
+  tmpLbl.Caption    := 'N';
 end;
 
 procedure TfrmSmallTextKlock.setHALF;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl09') as TLabel;
+  tmplbl            := FindComponent('lbl09') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'H';
-  tmplbl := FindComponent('lbl010') as TLabel;
+  tmpLbl.Caption    := 'H';
+  tmplbl            := FindComponent('lbl010') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'A';
-  tmplbl := FindComponent('lbl011') as TLabel;
+  tmpLbl.Caption    := 'A';
+  tmplbl            := FindComponent('lbl011') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'L';
-  tmplbl := FindComponent('lbl012') as TLabel;
+  tmpLbl.Caption    := 'L';
+  tmplbl            := FindComponent('lbl012') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'F';
+  tmpLbl.Caption    := 'F';
 end;
 
 procedure TfrmSmallTextKlock.setQUARTER;
 VAR
   tmpLbl: TLabel;
 begin
-  tmplbl := FindComponent('lbl013') as TLabel;
+  tmplbl            := FindComponent('lbl013') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'Q';
-  tmplbl := FindComponent('lbl014') as TLabel;
+  tmpLbl.Caption    := 'Q';
+  tmplbl            := FindComponent('lbl014') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'U';
-  tmplbl := FindComponent('lbl015') as TLabel;
+  tmpLbl.Caption    := 'U';
+  tmplbl            := FindComponent('lbl015') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
-  tmplbl := FindComponent('lbl016') as TLabel;
+  tmpLbl.Caption    := 'R';
+  tmplbl            := FindComponent('lbl016') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'T';
-  tmplbl := FindComponent('lbl017') as TLabel;
+  tmpLbl.Caption    := 'T';
+  tmplbl            := FindComponent('lbl017') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'E';
-  tmplbl := FindComponent('lbl018') as TLabel;
+  tmpLbl.Caption    := 'E';
+  tmplbl            := FindComponent('lbl018') as TLabel;
   tmpLbl.Font.Color := ON_COLOUR;
-  tmpLbl.Caption := 'R';
+  tmpLbl.Caption    := 'R';
 end;
 
 end.

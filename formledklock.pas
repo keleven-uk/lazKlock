@@ -1,6 +1,6 @@
 unit formLEDKlock;
 
-{  Implements a L.E.D. Klock using the L.E.D. Component from Visual Palnit.
+{  Implements a L.E.D. Klock using the L.E.D. Component from Visual Planit.
 }
 
 {$mode objfpc}{$H+}
@@ -111,7 +111,7 @@ begin
     if WindowDragStarted then
       begin
         Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
-        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+        Top  := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
       end;
   end;
 
@@ -124,8 +124,8 @@ begin
   { MouseDown - Code to drag the main window using the mouse}
   if msg = LM_LBUTTONDOWN then
   begin
-    WindowDragStarted := True;
-    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragStarted   := True;
+    WindowDragMousePos  := Mouse.CursorPos;
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
@@ -179,13 +179,13 @@ begin
   frmMain.TrayIcon.Visible := False;
   frmMain.TrayIcon.Hide;
 
-  frmMain.Visible := True;
+  frmMain.Visible     := True;
   TmrLEDKlock.Enabled := False;
 
   if userOptions.analogueScreenSave then
   begin
     userOptions.LEDFormLeft := Left;
-    userOptions.LEDFormTop := Top;
+    userOptions.LEDFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
 

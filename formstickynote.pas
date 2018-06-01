@@ -17,14 +17,15 @@ type
 
    TfrmStickyNote = class(TForm)
     ColorDialog1: TColorDialog;
-    FontDialog1: TFontDialog;
-    Memo: TMemo;
-    MntmSave: TMenuItem;
-    MnItmClose: TMenuItem;
-    MnItmFont: TMenuItem;
-    MntmColour: TMenuItem;
-    PopupMenu1: TPopupMenu;
-    tmrSticky: TTimer;
+    FontDialog1 : TFontDialog;
+    Memo        : TMemo;
+    MntmSave    : TMenuItem;
+    MnItmClose  : TMenuItem;
+    MnItmFont   : TMenuItem;
+    MntmColour  : TMenuItem;
+    PopupMenu1  : TPopupMenu;
+    tmrSticky   : TTimer;
+
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -63,7 +64,7 @@ begin
 end;
 
 procedure TfrmStickyNote.FormDestroy(Sender: TObject);
-{  After the Sticky Note has been destoyes [almost] update the Stick Note File.    }
+{  After the Sticky Note has been destroyed [almost] update the Stick Note File.    }
 begin
   stickies.updateStickyNotes;
 end;
@@ -81,13 +82,13 @@ end;
 procedure TfrmStickyNote.MemoMouseEnter(Sender: TObject);
 begin
   tmrSticky.Enabled := false;
-  AlphaBlend := false;
-  AlphaBlendValue := 255;
+  AlphaBlend        := false;
+  AlphaBlendValue   := 255;
 end;
 
 procedure TfrmStickyNote.MemoMouseLeave(Sender: TObject);
 begin
-  AlphaBlend := true;
+  AlphaBlend        := true;
   tmrSticky.Enabled := true;
 end;
 
@@ -108,14 +109,12 @@ end;
 
 procedure TfrmStickyNote.MnItmFontClick(Sender: TObject);
 begin
-  if fontDialog1.Execute then
-    Memo.Font := fontDialog1.Font;
+  if fontDialog1.Execute then Memo.Font := fontDialog1.Font;
 end;
 
 procedure TfrmStickyNote.MntmColourClick(Sender: TObject);
 begin
-  if colorDialog1.Execute then
-    Memo.color := colorDialog1.Color;
+  if colorDialog1.Execute then Memo.color := colorDialog1.Color;
 end;
 
 procedure TfrmStickyNote.MntmSaveClick(Sender: TObject);

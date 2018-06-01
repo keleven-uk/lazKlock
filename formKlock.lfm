@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1066
+  Left = 1209
   Height = 259
-  Top = 530
+  Top = 315
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtReminder
-      TabIndex = 4
+      ActivePage = TbShtCountdown
+      TabIndex = 2
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -431,7 +431,7 @@ object frmMain: TfrmMain
               Top = 10
               Width = 25
               Caption = '120'
-              OnClick = SpdBtn120Click
+              OnClick = spdBtnClick
             end
             object SpdBtn90: TSpeedButton
               Left = 464
@@ -439,7 +439,7 @@ object frmMain: TfrmMain
               Top = 10
               Width = 25
               Caption = '90'
-              OnClick = SpdBtn90Click
+              OnClick = spdBtnClick
             end
             object SpdBtn60: TSpeedButton
               Left = 432
@@ -447,7 +447,7 @@ object frmMain: TfrmMain
               Top = 10
               Width = 25
               Caption = '60'
-              OnClick = SpdBtn60Click
+              OnClick = spdBtnClick
             end
             object SpdBtn30: TSpeedButton
               Left = 400
@@ -455,7 +455,7 @@ object frmMain: TfrmMain
               Top = 10
               Width = 25
               Caption = '30'
-              OnClick = SpdBtn30Click
+              OnClick = spdBtnClick
             end
           end
           object Panel8: TPanel
@@ -1289,7 +1289,7 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000000000000000
         000000000000
       }
-      OnClick = BitBtnHideClick
+      OnClick = mnuItmClick
       TabOrder = 0
     end
     object BitBtnClose: TBitBtn
@@ -1356,7 +1356,7 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000
       }
-      OnClick = BitBtnCloseClick
+      OnClick = mnuItmClick
       TabOrder = 1
     end
     object BitBtnHelp: TBitBtn
@@ -1497,7 +1497,7 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000
       }
-      OnClick = BitBtnHelpClick
+      OnClick = mnuItmClick
       TabOrder = 2
     end
     object SpdBtnNewStickyNote: TSpeedButton
@@ -1637,7 +1637,7 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000
       }
-      OnClick = SpdBtnNewStickyNoteClick
+      OnClick = mnuItmClick
     end
     object btnMemoNew: TButton
       Left = 16
@@ -1723,65 +1723,65 @@ object frmMain: TfrmMain
       end
       object mnuItmExit: TMenuItem
         Caption = 'Exit'
-        OnClick = mnuItmExitClick
+        OnClick = mnuItmClick
       end
     end
     object mnuTime: TMenuItem
       Caption = 'Time'
       object mnuItmAnalogueKlock: TMenuItem
         Caption = 'Analogue Klock'
-        OnClick = mnuItmAnalogueKlockClick
+        OnClick = mnuItmClick
       end
       object mnuItmLEDKlock: TMenuItem
         Caption = 'LED Klock'
-        OnClick = mnuItmLEDKlockClick
+        OnClick = mnuItmClick
       end
       object mnuItmBinaryKlock: TMenuItem
         Caption = 'Binary Klock'
-        OnClick = mnuItmBinaryKlockClick
+        OnClick = mnuItmClick
       end
       object mnuItmSmallTextKlock: TMenuItem
         Caption = 'Small Text Klock'
-        OnClick = mnuItmSmallTextKlockClick
+        OnClick = mnuItmClick
       end
       object mnuItmFloatingTextKlock: TMenuItem
         Caption = 'Floating Text Klock'
-        OnClick = mnuItmFloatingTextKlockClick
+        OnClick = mnuItmClick
       end
     end
     object mnuInfo: TMenuItem
       Caption = 'Info'
       object mnuItmDaylightSaving: TMenuItem
         Caption = 'Daylight Saving'
-        OnClick = mnuItmDaylightSavingClick
+        OnClick = mnuItmClick
       end
       object mnuItmEasterDates: TMenuItem
         Caption = 'Easter Dates'
-        OnClick = mnuItmEasterDatesClick
+        OnClick = mnuItmClick
       end
       object mnuItmLentDates: TMenuItem
         Caption = 'Lent Dates'
-        OnClick = mnuItmLentDatesClick
+        OnClick = mnuItmClick
       end
       object mnuItmChineseYear: TMenuItem
         Caption = 'Chinese Year'
-        OnClick = mnuItmChineseYearClick
+        OnClick = mnuItmClick
       end
       object mnuItmMoonStuff: TMenuItem
         Caption = 'Moon Stuff'
-        OnClick = mnuItmMoonStuffClick
+        OnClick = mnuItmClick
       end
       object mnuItmSunStuff: TMenuItem
         Caption = 'Sun Stuff'
-        OnClick = mnuItmSunStuffClick
+        OnClick = mnuItmClick
       end
       object mnuItmPowerStuff: TMenuItem
         Caption = 'Power Stuff'
-        OnClick = mnuItmPowerSourceClick
+        OnClick = mnuItmClick
       end
       object mnuItmMonitorStuff: TMenuItem
         Caption = 'Monitor Stuff'
-        OnClick = mnuItmMonitorStuffClick
+        OnClick = mnuItmClick
       end
     end
     object mnuItmStickyNote: TMenuItem
@@ -1920,33 +1920,33 @@ object frmMain: TfrmMain
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        OnClick = mnuItmNewStickyNoteClick
+        OnClick = mnuItmClick
       end
     end
     object MnItmBiorhythm: TMenuItem
       Caption = 'Biorhythm'
       object MnuItmSimpleBiorhythm: TMenuItem
         Caption = 'Simple Biorhythms'
-        OnClick = MnuItmSimpleBiorhythmClick
+        OnClick = mnuItmClick
       end
       object MnuItmEnhancedBiorhythm: TMenuItem
         Caption = 'Enhanced Biorhythms'
-        OnClick = MnuItmEnhancedBiorhythmClick
+        OnClick = mnuItmClick
       end
     end
     object mnuBiorhythm: TMenuItem
       Caption = 'Help'
       object mnuItmHelp: TMenuItem
         Caption = 'Help'
-        OnClick = mnuItmHelpClick
+        OnClick = mnuItmClick
       end
       object mnuItmLicense: TMenuItem
         Caption = 'License'
-        OnClick = mnuItmLicenseClick
+        OnClick = mnuItmClick
       end
       object mnuItmAbout: TMenuItem
         Caption = 'About'
-        OnClick = mnuItmAboutClick
+        OnClick = mnuItmClick
       end
     end
   end
@@ -4128,7 +4128,6 @@ object frmMain: TfrmMain
     end
     object ppMnItmExit: TMenuItem
       Caption = 'Exit'
-      OnClick = mnuItmExitClick
     end
   end
   object ballonTimer: TTimer

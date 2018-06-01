@@ -19,7 +19,7 @@ object frmBinaryKlock: TfrmBinaryKlock
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = popUpMenuBinaryKlock
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.4.0'
   object Shp00: TShape
     Left = 0
     Height = 25

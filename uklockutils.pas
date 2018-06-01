@@ -163,14 +163,10 @@ begin
   //if err = 0 then klog.writeLog(format('StringToFont error : %d', [err]));
   Delete(s, 1, p);
 
-  if Pos('B', s) <> 0 then
-    include(fstyles, fsBold);
-  if Pos('I', s) <> 0 then
-    include(fstyles, fsItalic);
-  if Pos('S', s) <> 0 then
-    include(fstyles, fsStrikeOut);
-  if Pos('U', s) <> 0 then
-    include(fstyles, fsUnderline);
+  if Pos('B', s) <> 0 then include(fstyles, fsBold);
+  if Pos('I', s) <> 0 then include(fstyles, fsItalic);
+  if Pos('S', s) <> 0 then include(fstyles, fsStrikeOut);
+  if Pos('U', s) <> 0 then include(fstyles, fsUnderline);
 
   fnt.Charset     := chrs;                 //  Character set of font
   fnt.Color       := clr;                  //  colour of font

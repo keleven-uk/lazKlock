@@ -186,22 +186,22 @@ VAR
   keyResult: string;
 begin
   keyResult := ' cns ';
-    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
-    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
-    if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
+  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
+  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
+  if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
 
-    if userOptions.display24Hour then
-      StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
-    else
-      StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
+  if userOptions.display24Hour then
+    StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
+  else
+    StsBrClipBoard.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
 
-    StsBrClipBoard.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
-    StsBrClipBoard.Panels.Items[2].Text := keyResult;
+  StsBrClipBoard.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
+  StsBrClipBoard.Panels.Items[2].Text := keyResult;
 
-    if userOptions.displayIdleTime then
-      StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
-    else
-      StsBrClipBoard.Panels.Items[3].Text := '';
+  if userOptions.displayIdleTime then
+    StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
+  else
+    StsBrClipBoard.Panels.Items[3].Text := '';
 end;
 
 procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);

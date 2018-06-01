@@ -9,9 +9,9 @@ unit uMemos;
    new - creates a new Memo and places it in the store.
          It can then be edited and/or deleted when not needed.
 
-   amend - Amends a memo - but only the body text and the encypt flag.
+   amend - Amends a memo - but only the body text and the encrypt flag.
 
-   restoreMemo - Should be run on starrt up.
+   restoreMemo - Should be run on start up.
                  It restore all memos to the memo store.
 
    savememos - Saves the memos to a binary file.  Called by new and amend.
@@ -31,7 +31,7 @@ type
   Memos = class
 
   private
-    _MemosFile: string;
+    _MemosFile : string;
     _MemosCount: integer;
 
     property MemosFile: string read _MemosFile write _MemosFile;
@@ -62,10 +62,10 @@ implementation
 constructor Memos.Create; overload;
 {  set up some variables on create.    }
 begin
-  MemosFile := GetAppConfigDir(False) + 'Memo.bin';
-  MemosStore := keyStore.Create;
+  MemosFile         := GetAppConfigDir(False) + 'Memo.bin';
+  MemosStore        := keyStore.Create;
   MemosStore.Sorted := true;
-  MemosCount := 0;
+  MemosCount        := 0;
 end;
 
 destructor Memos.Destroy;
@@ -87,9 +87,9 @@ begin
   MemosCount := MemosCount + 1;
   m := Memo.Create(MemosCount);
 
-  m.name := key;
-  m.id := MemosCount;
-  m.body := data;
+  m.name    := key;
+  m.id      := MemosCount;
+  m.body    := data;
   m.encrypt := hide;
 
   MemosStore.Add(MemosCount, m);
@@ -98,11 +98,11 @@ begin
 end;
 
 procedure Memos.amend(id:integer; data: string; hide: boolean);
-{  Amends a memo - but only the body text and the encypt flag.
+{  Amends a memo - but only the body text and the encrypt flag.
    The memo store is then saved to file.
 }
 begin
-  MemosStore.Data[id].body := data;
+  MemosStore.Data[id].body    := data;
   MemosStore.Data[id].encrypt := hide;
 
   saveMemos;
@@ -113,9 +113,9 @@ function Memos.retrieve(id: integer): Memo;
 VAR
   m: Memo;                   //  Memo.
 begin
-  m := Memo.Create(0);
-  m.name := MemosStore.Data[id].name;
-  m.body := MemosStore.Data[id].body;
+  m         := Memo.Create(0);
+  m.name    := MemosStore.Data[id].name;
+  m.body    := MemosStore.Data[id].body;
   m.encrypt := MemosStore.Data[id].encrypt;
 
   result := m
@@ -126,7 +126,7 @@ procedure Memos.Remove(pos: integer);
 var
   r: integer;
 begin
-  r := MemosStore.Remove(pos);
+  r          := MemosStore.Remove(pos);
   MemosCount := MemosCount - 1;
   saveMemos;
 end;
@@ -162,8 +162,8 @@ var
 begin
   MemosCount := 0;
 
-  if not fileExists(memosFile) then exit;     //  file not there then exit
-  if fileSize(memosFile) = 0 then exit;       //  empty file then exit.
+  if not fileExists(memosFile) then exit;       //  file not there then exit
+  if fileSize(memosFile) = 0   then exit;       //  empty file then exit.
 
   fileIn := TFileStream.Create(memosFile, fmOpenRead or fmShareDenyWrite);
 

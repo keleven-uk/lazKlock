@@ -18,16 +18,16 @@ type
   stickyNote = class
 
   private
-    _body: string;         //  Body text of the Sticky Note.
-    _id: integer;          //  unique id of the Sticky Note.
+    _body: string;             //  Body text of the Sticky Note.
+    _id  : integer;            //  unique id of the Sticky Note.
 
-    _height: integer;      //  Height of the Sticky Note.
-    _left: integer;        //  Left of the Sticky Note.
-    _top: integer;         //  Top of the Sticky Note.
-    _width: integer;       //  Width of the Sticky Note.
-    _visable: Boolean;     //  true id the Sticky note is visible on the screen.
-    _colour: TColor;       //  colour of the Sticky Note.
-    _font: TFont;          //  font of the Sticky Note.
+    _height : integer;         //  Height of the Sticky Note.
+    _left   : integer;         //  Left of the Sticky Note.
+    _top    : integer;         //  Top of the Sticky Note.
+    _width  : integer;         //  Width of the Sticky Note.
+    _visable: Boolean;         //  true id the Sticky note is visible on the screen.
+    _colour : TColor;          //  colour of the Sticky Note.
+    _font   : TFont;           //  font of the Sticky Note.
 
     procedure error(Const msg : string);
     function FontToString(f: TFont): string;
@@ -36,13 +36,13 @@ type
     property body: string read _body write _body;
     property id: integer read _id write _id;
 
-    property height: integer read _height write _height;
-    property left: integer read _left write _left;
-    property top: integer read _top write _top;
-    property width: integer read _width write _width;
+    property height : integer read _height  write _height;
+    property left   : integer read _left    write _left;
+    property top    : integer read _top     write _top;
+    property width  : integer read _width   write _width;
     property visable: Boolean read _visable write _visable;
-    property colour: Tcolor read _colour write _colour;
-    property font: TFont read _font write _font;
+    property colour : Tcolor  read _colour  write _colour;
+    property font   : TFont   read _font    write _font;
 
     constructor Create(sn_id: integer); overload;
     constructor Create(fsOut: TFileStream); overload;
@@ -59,18 +59,14 @@ constructor stickyNote.Create(sn_id: integer);
 begin
   id := sn_id;
 
-  body := '';
-  height := 0;
-  left := 0;
-  top := 0;
-  width := 0;
+  body    := '';
+  height  := 0;
+  left    := 0;
+  top     := 0;
+  width   := 0;
   visable := true;
-  colour := clYellow;
+  colour  := clYellow;
 
-  //  TFont.create = (Handle: 0; Height: 0; Pitch: fpDefault; Style: [];
-  //                  Charset: DEFAULT_CHARSET; Quality: fqDefault;
-  //                  Name: 'default'; Orientation: 0);
-  //  font also includes the font colour.
   font := TFont.Create;
 end;
 
@@ -84,8 +80,8 @@ constructor stickyNote.Create(fsOut: TFileStream);
 }
 var
   Len1: Cardinal = 0;
-  sBdy:string;
-  iID: integer = 0;
+  sBdy: string;
+  iID : integer = 0;
   iHgt: integer = 0;
   iLft: integer = 0;
   iTop: integer = 0;
@@ -116,15 +112,15 @@ begin
     fsOut.ReadBuffer(sFnt[1], len1);
 
     body := sBdy;
-    id := iID;
+    id   := iID;
 
-    height := iHgt;
-    left := iLft;
-    top := iTop;
-    width := iWdh;
+    height  := iHgt;
+    left    := iLft;
+    top     := iTop;
+    width   := iWdh;
     visable := bVsb;
-    colour := cClr;
-    font := StringToFont(sFnt);
+    colour  := cClr;
+    font    := StringToFont(sFnt);
   except
     error('Error on Sticky Note Read');
   end;
@@ -140,21 +136,21 @@ var
 begin
   try
     Len1 := Length(body);
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
+    fsOut.WriteBuffer(Len1,    SizeOf(Len1));
     fsOut.WriteBuffer(body[1], Len1);
 
-    fsOut.WriteBuffer(id, sizeof(id));
+    fsOut.WriteBuffer(id,      sizeof(id));
 
-    fsOut.WriteBuffer(height, sizeof(height));
-    fsOut.WriteBuffer(left, sizeof(left));
-    fsOut.WriteBuffer(top, sizeof(top));
-    fsOut.WriteBuffer(width, sizeof(width));
+    fsOut.WriteBuffer(height,  sizeof(height));
+    fsOut.WriteBuffer(left,    sizeof(left));
+    fsOut.WriteBuffer(top,     sizeof(top));
+    fsOut.WriteBuffer(width,   sizeof(width));
     fsOut.WriteBuffer(visable, sizeof(visable));
-    fsOut.WriteBuffer(colour, sizeof(colour));
+    fsOut.WriteBuffer(colour,  sizeof(colour));
 
     sFnt := FontToString(font);
     Len1 := Length(sFnt);
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
+    fsOut.WriteBuffer(Len1,    SizeOf(Len1));
     fsOut.WriteBuffer(sFnt[1], Len1);
   except
     error('Error on Sticky Note Write');
@@ -222,48 +218,48 @@ function stickyNote.StringToFont(s: string): TFont;
 
    Does not yet handle errors - will there be any ;o)                                              }
 var
-  p: integer;
-  err: integer;
+  p   : integer;
+  err : integer;
   chrs: integer;
-  clr: TColor;
+  clr : TColor;
   Hght: integer;
-  nme: string;
+  nme : string;
   Ortn: integer;
-  sze: integer;
+  sze : integer;
   ptch: integer;
   qlty: integer;
 
-  fnt: TFont;
+  fnt    : TFont;
   fstyles: TFontStyles;
 begin
-  fnt := TFont.Create;
+  fnt     := TFont.Create;
   fstyles := [];             //  empty set ??
 
-  p := Pos(':', s);                                   //  Character set of font
+  p := Pos(':', s);                                 //  Character set of font
   val(copy(s, 0, p - 1), chrs, err);
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                   //  colour of font
+  p   := Pos(':', s);                               //  colour of font
   clr := StringToColor(copy(s, 0, p - 1));
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  height of font
+  p := Pos(':', s);                                 //  height of font
   val(copy(s, 0, p - 1), Hght, err);
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  name of font
+  p   := Pos(':', s);                               //  name of font
   nme := copy(s, 0, p - 1);
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  orientation of font
+  p := Pos(':', s);                                 //  orientation of font
   val(copy(s, 0, p - 1), Ortn, err);
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  size of font
+  p := Pos(':', s);                                 //  size of font
   val(copy(s, 0, p - 1), sze, err);
   Delete(s, 1, p);
 
-  p := Pos(':', s);                                  //  pitch of font
+  p := Pos(':', s);                                 //  pitch of font
   val(copy(s, 0, p - 1), ptch, err);
   Delete(s, 1, p);
 
@@ -271,24 +267,20 @@ begin
   val(copy(s, 0, p - 1), qlty, err);
   Delete(s, 1, p);
 
-  if Pos('B', s) <> 0 then
-    include(fstyles, fsBold);
-  if Pos('I', s) <> 0 then
-    include(fstyles, fsItalic);
-  if Pos('S', s) <> 0 then
-    include(fstyles, fsStrikeOut);
-  if Pos('U', s) <> 0 then
-    include(fstyles, fsUnderline);
+  if Pos('B', s) <> 0 then include(fstyles, fsBold);
+  if Pos('I', s) <> 0 then include(fstyles, fsItalic);
+  if Pos('S', s) <> 0 then include(fstyles, fsStrikeOut);
+  if Pos('U', s) <> 0 then include(fstyles, fsUnderline);
 
-  fnt.Charset := chrs;                     //  Character set of font
-  fnt.Color := clr;                        //  colour of font
-  fnt.Height := Hght;                      //  height of font
-  fnt.Name := nme;                         //  name of font
+  fnt.Charset     := chrs;                 //  Character set of font
+  fnt.Color       := clr;                  //  colour of font
+  fnt.Height      := Hght;                 //  height of font
+  fnt.Name        := nme;                  //  name of font
   fnt.Orientation := Ortn;                 //  orientation of font
-  fnt.Size := sze;                         //  size of font
-  fnt.Pitch := TFontPitch(ptch);           //  pitch of font
-  fnt.Quality := TFontQuality(qlty);       //  quality of font
-  fnt.Style := fstyles;
+  fnt.Size        := sze;                  //  size of font
+  fnt.Pitch       := TFontPitch(ptch);     //  pitch of font
+  fnt.Quality     := TFontQuality(qlty);   //  quality of font
+  fnt.Style       := fstyles;
 
   Result := fnt;
 end;

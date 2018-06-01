@@ -23,14 +23,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
        MouseAndKeyInput, needs to be ticked to use from this package.
      EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
-     DCPciphers - Encyption and Decription stuff.
+     DCPciphers - Encryption and Decryption stuff.
      DelphiMoon - Moon image and Moon/Sun stuff.
      PascalTZ - Time Zone stuff [go to web site].
 
      Most from the Online Package manager.
 }
 
-{ TODO : Check out Ballon Time. }
+{ TODO : Check out Balloon Time. }
 { TODO : Check out Reminders. }
 { TODO : Look at up time in formAbout. }
 
@@ -42,11 +42,10 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
   uMemos, uMemo, formAbout, formOptions, formLicense, UFuzzyTime, dateutils,
-  LCLIntf, LCLType, CheckLst, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
-  UConversion, formReminderInput, AvgLvlTree, uOptions, Windows, ULogging,
-  ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
-  formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen,
-  formBiorhythm;
+  LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
+  UConversion, AvgLvlTree, uOptions, Windows, ULogging, ustickyNotes, formInfo,
+  Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
+  formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm;
 
 type
   FourStrings = array [0..3] of string;
@@ -215,9 +214,6 @@ type
     TrayIcon                 : TTrayIcon;
 
     procedure ballonTimerTimer(Sender: TObject);
-    procedure BitBtnCloseClick(Sender: TObject);
-    procedure BitBtnHelpClick(Sender: TObject);
-    procedure BitBtnHideClick(Sender: TObject);
     procedure btnConverionConvertClick(Sender: TObject);
     procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
@@ -267,38 +263,15 @@ type
     procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure MmMemoDataChange(Sender: TObject);
-    procedure mnuItmAnalogueKlockClick(Sender: TObject);
-    procedure mnuItmAboutClick(Sender: TObject);
-    procedure mnuItmBinaryKlockClick(Sender: TObject);
-    procedure mnuItmChineseYearClick(Sender: TObject);
-    procedure mnuItmDaylightSavingClick(Sender: TObject);
-    procedure mnuItmEasterDatesClick(Sender: TObject);
-    procedure MnuItmEnhancedBiorhythmClick(Sender: TObject);
-    procedure mnuItmExitClick(Sender: TObject);
-    procedure mnuItmFloatingTextKlockClick(Sender: TObject);
-    procedure mnuItmHelpClick(Sender: TObject);
-    procedure mnuItmLEDKlockClick(Sender: TObject);
-    procedure mnuItmLentDatesClick(Sender: TObject);
-    procedure mnuItmLicenseClick(Sender: TObject);
-    procedure mnuItmMonitorStuffClick(Sender: TObject);
-    procedure mnuItmMoonStuffClick(Sender: TObject);
-    procedure mnuItmNewStickyNoteClick(Sender: TObject);
+    procedure mnuItmClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
-    procedure mnuItmPowerSourceClick(Sender: TObject);
-    procedure MnuItmSimpleBiorhythmClick(Sender: TObject);
-    procedure mnuItmSmallTextKlockClick(Sender: TObject);
-    procedure mnuItmSunStuffClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
     procedure ppMnItmShowClick(Sender: TObject);
     procedure ppMnItmTimeClick(Sender: TObject);
     procedure ReminderTimerTimer(Sender: TObject);
-    procedure SpdBtnNewStickyNoteClick(Sender: TObject);
-    procedure SpdBtn120Click(Sender: TObject);
-    procedure SpdBtn90Click(Sender: TObject);
-    procedure SpdBtn60Click(Sender: TObject);
-    procedure SpdBtn30Click(Sender: TObject);
+    procedure spdBtnClick(Sender: TObject);
     procedure SpnEdtCountdownChange(Sender: TObject);
     procedure SpnReminderHourChange(Sender: TObject);
     procedure SpnReminderMinsChange(Sender: TObject);
@@ -322,6 +295,8 @@ type
     procedure displayEncryptedMemo;
     procedure loadMemos;
     procedure callInfo(mode: string);
+    procedure EnhancedBiorhythmClick;
+
   public
 
   end;
@@ -681,9 +656,9 @@ begin
     playChime('pips')
   else                                       //  only play chimes if pips turned off.
   begin
-    if userOptions.HourChimes and isMinute(myNow, 0) then playChime('hour');
-    if userOptions.quarterChimes and isMinute(myNow, 15) then playChime('quarter');
-    if userOptions.HalfChimes and isMinute(myNow, 30) then playChime('half');
+    if userOptions.HourChimes         and isMinute(myNow, 0)  then playChime('hour');
+    if userOptions.quarterChimes      and isMinute(myNow, 15) then playChime('quarter');
+    if userOptions.HalfChimes         and isMinute(myNow, 30) then playChime('half');
     if userOptions.threeQuarterChimes and isMinute(myNow, 45) then playChime('threequarter');
   end;
 
@@ -721,7 +696,7 @@ end;
 procedure TfrmMain.UpdateTime;
 {  Updates the time in the correct font.    }
 begin
-  nowTime := ft.getTime;      //  No need to update ever secind in showing
+  nowTime := ft.getTime;      //  No need to update ever second in showing
                               //  time in words or fuzzytime etc
                               //  i.e. time changes every one or five minutes.
 
@@ -733,14 +708,10 @@ begin
   lblfuzzy.Caption := ft.getTime;
   lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
 
-  if userOptions.christmasFont and isChristmas then
-    lblfuzzy.Font.Name := 'Christmas'
-  else if userOptions.easterFont and isEaster then
-    lblfuzzy.Font.Name := 'RMBunny'
-  else if userOptions.valentinesFont and isValentines then
-    lblfuzzy.Font.Name := 'Sweet Hearts BV'
-  else if userOptions.haloweenFont and isHalloween then
-    lblfuzzy.Font.Name := 'Groovy Ghosties';
+  if userOptions.christmasFont       and isChristmas  then lblfuzzy.Font.Name := 'Christmas'
+  else if userOptions.easterFont     and isEaster     then lblfuzzy.Font.Name := 'RMBunny'
+  else if userOptions.valentinesFont and isValentines then lblfuzzy.Font.Name := 'Sweet Hearts BV'
+  else if userOptions.haloweenFont   and isHalloween  then lblfuzzy.Font.Name := 'Groovy Ghosties';
 
   lblfuzzy.AdjustFontForOptimalFill;
 end;
@@ -765,12 +736,9 @@ VAR
   keyResult: string;
 begin
   keyResult := ' cns ';
-    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-      keyResult[2] := 'C';
-    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-      keyResult[3] := 'N';
-    if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-      keyResult[4] := 'S';
+    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
+    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
+    if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
 
     if userOptions.display24Hour then
       stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
@@ -801,7 +769,7 @@ end;
 //
 procedure TfrmMain.mainIdleTimerTimer(Sender: TObject);
 {  runs when the system is idle.
-   Adds a second to the prevously create zero TDateTime.
+   Adds a second to the previously create zero TDateTime.
    Checks for, and if needed, Keeps monitor Awake.
 }
 begin
@@ -1212,34 +1180,27 @@ begin
   end;
 end;
 
-procedure TfrmMain.SpdBtn120Click(Sender: TObject);
-{  Set and run the countdown time for 120 minutes.    }
-begin
-  SpnEdtCountdown.Value := 120;
-  btnCountdownStart.Click;
-  enableSpeedButtons(false);
-end;
+procedure Tfrmmain.spdBtnClick(Sender: TObject);
+{  Set and run the countdown time.
 
-procedure TfrmMain.SpdBtn90Click(Sender: TObject);
-{  Set and run the countdown time for 90 minutes.    }
+   A generic handler for the countdown speed buttons.
+   Each button is named spdBtnNNN, where NNN is the time interval in minutes.
+}
+VAR
+  tmpButton: TSpeedButton;
+  btnName  : string;
+  btnValue : integer;
 begin
-  SpnEdtCountdown.Value := 90;
-  btnCountdownStart.Click;
-  enableSpeedButtons(false);
-end;
+  //  if not called by a click on a speed button then exit.
+  if not (Sender is TSpeedButton) then Exit;
 
-procedure TfrmMain.SpdBtn60Click(Sender: TObject);
-{  Set and run the countdown time for 60 minutes.    }
-begin
-  SpnEdtCountdown.Value := 60;
-  btnCountdownStart.Click;
-  enableSpeedButtons(false);
-end;
+  //  create a temp speed button and assign to caller.
+  tmpButton := TSpeedButton(Sender);
+  btnName   := tmpButton.Name;
+  Delete(btnName, 1, 6);            //  delete spdBtn from start of name.
+  btnValue  := strToInt(btnName);
 
-procedure TfrmMain.SpdBtn30Click(Sender: TObject);
-{  Set and run the countdown time for 60 minutes.    }
-begin
-  SpnEdtCountdown.Value := 30;
+  SpnEdtCountdown.Value := btnValue;
   btnCountdownStart.Click;
   enableSpeedButtons(false);
 end;
@@ -1429,7 +1390,7 @@ end;
 procedure Tfrmmain.ReminderTimerStop(Sender: TObject);
 {  Called when the reminder date/time is passed - calls any actions required.    }
 begin
-  ReminderTimer.Enabled := False;
+  ReminderTimer.Enabled  := False;
   btnReminderSet.Enabled := False;
 
   if ChckBxReminderSound.Checked then
@@ -1731,20 +1692,20 @@ end;
 procedure TfrmMain.btnMemoNewClick(Sender: TObject);
 {  Add a new memo.    }
 begin
-  edtMemoKey.Enabled := true;
+  edtMemoKey.Enabled  := true;
   edtMemoKey.ReadOnly := false;
-  edtMemoKey.Text := '';
+  edtMemoKey.Text     := '';
   edtMemoKey.SetFocus;
 
-  btnMemoClear.Visible := true;
+  btnMemoClear.Visible      := true;
   RdBttnMemoEncrypt.Enabled := true;
-  MmMemoData.Enabled := true;
-  MmMemoData.ReadOnly := false;
-  MmMemoData.Text := '';
+  MmMemoData.Enabled        := true;
+  MmMemoData.ReadOnly       := false;
+  MmMemoData.Text           := '';
 
-  btnMemoEdit.Visible := false;
+  btnMemoEdit.Visible   := false;
   btnMemoDelete.Visible := false;
-  btnMemoPrint.Visible := false;
+  btnMemoPrint.Visible  := false;
 end;
 
 procedure TfrmMain.btnMemoPrintClick(Sender: TObject);
@@ -1778,20 +1739,20 @@ begin
 end;
 
 procedure TfrmMain.btnMemoEditClick(Sender: TObject);
-{  Edit a selected memo and resave file.    }
+{  Edit a selected memo and re save file.    }
 var
   passWord: string;
 begin
-  btnMemoNew.Visible := false;
+  btnMemoNew.Visible    := false;
   btnMemoDelete.Visible := false;
-  btnMemoPrint.Visible := false;
+  btnMemoPrint.Visible  := false;
 
   if btnMemoEdit.Caption = 'Edit' then          //  Edit memo.
   begin
     klog.writeLog(format('Editing memo at pos %d', [LstBxMemoName.ItemIndex]));
-    MmMemoData.ReadOnly := false;
-    btnMemoEdit.Caption := 'Save';
-    btnMemoClear.Visible := true;
+    MmMemoData.ReadOnly       := false;
+    btnMemoEdit.Caption       := 'Save';
+    btnMemoClear.Visible      := true;
     RdBttnMemoEncrypt.Enabled := true;
     if RdBttnMemoEncrypt.checked then
       displayEncryptedMemo;   //  no timer on edit.
@@ -1799,8 +1760,8 @@ begin
   else                                          //  save memo
   begin
     klog.writeLog(format('Saving memo at pos %d', [LstBxMemoName.ItemIndex]));
-    MmMemoData.ReadOnly := true;
-    btnMemoEdit.Caption := 'Edit';
+    MmMemoData.ReadOnly  := true;
+    btnMemoEdit.Caption  := 'Edit';
     btnMemoClear.Visible := false;
 
     if RdBttnMemoEncrypt.checked then
@@ -1827,10 +1788,10 @@ begin
   m := Memo.Create(0);
   m := memorandum.retrieve(LstBxMemoName.ItemIndex);
 
-  btnMemoNew.Visible := false;
+  btnMemoNew.Visible    := false;
   btnMemoDelete.Visible := false;
-  btnMemoPrint.Visible := false;
-  btnMemoEdit.Visible := false;
+  btnMemoPrint.Visible  := false;
+  btnMemoEdit.Visible   := false;
 
   //  Use a InputQuery instead of passWordbox because we can detect
   //  if the user selects cancel.
@@ -1919,8 +1880,8 @@ end;
 procedure TfrmMain.displayMemo(pos: integer);
 {  Display a memo at position pos.
    If the memo count is zero i.e. no memos - then just exit.
-   If the memo is encypted, the display the Decrypt button.
-   If the memo is encypted, then display 'Secret' instead of the encrypted text.
+   If the memo is encrypted, the display the Decrypt button.
+   If the memo is encrypted, then display 'Secret' instead of the encrypted text.
 }
 VAR
   m: Memo;                   //  Memo.
@@ -1929,17 +1890,17 @@ begin
   m := Memo.Create(0);
   m := memorandum.retrieve(pos);
 
-  edtMemoKey.Text := m.name;
+  edtMemoKey.Text           := m.name;
   RdBttnMemoEncrypt.Checked := m.encrypt;
 
   if m.encrypt then
   begin
-    MmMemoData.Text := 'Shhh it''s a secret';
+    MmMemoData.Text        := 'Shhh it''s a secret';
     btnMemoDecrypt.visible := true
   end
   else
   begin
-    MmMemoData.Text := m.body;
+    MmMemoData.Text        := m.body;
     btnMemoDecrypt.visible := false;
   end;
 end;
@@ -1950,7 +1911,7 @@ begin
   btnMemoNew.Visible     := mode;
   btnMemoAdd.Visible     := false;
   btnMemoClear.Visible   := false;
-  btnMemoDecrypt.visible := false;       //  Always hiden, unless needed.
+  btnMemoDecrypt.visible := false;       //  Always hidden, unless needed.
 
   btnMemoEdit.Caption := 'Edit';
 
@@ -1993,18 +1954,18 @@ end;
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 {  if clicked, call the option screen, reapply options after.    }
 var
-  frmTop: integer;
+  frmTop : integer;
   frmLeft: integer;
-  res: integer;         //  return value from option screen.
+  res    : integer;         //  return value from option screen.
 begin
   if userOptions.screenSave then
   begin
-    userOptions.formTop := frmMain.Top;
+    userOptions.formTop  := frmMain.Top;
     userOptions.formLeft := frmMain.Left;
   end
   else
   begin
-    frmTop := frmMain.Top;    //  return to same place, after option screen.
+    frmTop  := frmMain.Top;    //  return to same place, after option screen.
     frmLeft := frmMain.Left;
   end;
 
@@ -2015,122 +1976,99 @@ begin
 
   if not userOptions.screenSave then
   begin  //  not done in SetDefaults
-    frmMain.Top := frmTop;
+    frmMain.Top  := frmTop;
     frmMain.Left := frmLeft;
   end;
 end;
+//
+// ********************************************************* Menu Items *********
+//
+procedure TfrmMain.mnuItmClick(Sender: TObject);
+{  A generic click routine called by each menu item.
+   Also called by the TbitBtn and TSpeedButton on front panel.
 
-procedure TfrmMain.mnuItmExitClick(Sender: TObject);
-{  Close the program.
-   Called by button panel exit, main menu exit and tray icon pop up menu exit.
+   The action of the menu is determined from the menu item name.
 }
+VAR
+  tmpMenuItem: TMenuItem;
+  tmpBitBtn  : TBitBtn;
+  tmpSpeedBtn: TSpeedButton;
+  itemName   : string;
 begin
-  Close;
-end;
-//
-// ********************************************************* Help Menu *********
-//
-//  The About and License forms are created when needed and not at app start.
-//
-procedure TfrmMain.mnuItmAboutClick(Sender: TObject);
-{  Calls the About screen.    }
-begin
-  frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
-  frmAbout.ShowModal;                 //frmAbout is displayed
-  FreeAndNil(frmAbout);               //frmAbout is released
+  itemName := '';
+
+  //  create a temp item and assign to caller.
+  if (Sender is TMenuItem) then
+  begin
+    tmpMenuItem := TMenuItem(Sender);
+    itemName    := tmpMenuItem.Name;
+  end
+  else if (Sender is TBitBtn) then
+  begin
+    tmpBitBtn := TBitBtn(Sender);
+    itemName  := tmpBitBtn.Name;
+  end
+  else if (Sender is TSpeedButton) then
+  begin
+    tmpSpeedBtn := TSpeedButton(Sender);
+    itemName    := tmpSpeedBtn.Name;
+  end;
+
+  if itemName = '' then exit;    //  not called by a TMenuItem, TSpeedButton or TBitBtn.
+
+  case itemName of
+    // ********************************************************* Front Pannel ******
+    'BitBtnHide':  //  if clicked will hide the main form and display the tray icon.
+    begin
+      TrayIcon.Visible := True;
+      TrayIcon.Show;
+
+      frmMain.Visible := False;
+    end;
+    // ********************************************************* File Menu *********
+    'mnuItmExit',
+    'BitBtnClose' : close;
+    // ********************************************************* Help Menu *********
+    'mnuItmHelp',
+    'BitBtnHelp' : displayHelp('help\Klock.chm', '/Introduction.htm');  //  Calls the Help file.
+    'mnuItmAbout':                                                      //  Calls the About screen.
+    begin
+      frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+      frmAbout.ShowModal;                 //frmAbout is displayed
+      FreeAndNil(frmAbout);               //frmAbout is released
+    end;
+    'mnuItmLicense':                                                      //  Calls the License screen.
+    begin
+      frmLicense := TfrmLicense.Create(Nil);
+      frmLicense.ShowModal;
+      FreeAndNil(frmLicense);
+    end;
+    // ********************************************************* Time Menu *********
+    'mnuItmAnalogueKlock'    : frmAnalogueKlock.Show;           //  Calls the Analogue Klock.
+    'mnuItmLEDKlock'         : frmLEDKlock.Show;                //  Calls the LED Klock.
+    'mnuItmBinaryKlock'      : frmBinaryKlock.Show;             //  Calls the Binary Klock.
+    'mnuItmSmallTextKlock'   : frmSmallTextKlock.Show;          //  Calls the Small Text Klock.
+    // ********************************************************* Info Menu *********
+    'mnuItmFloatingTextKlock': frmFloatingKlock.Show;           //  Calls the Floating Text Klock.
+    'mnuItmDaylightSaving'   : callInfo('Daylight Saving');     //  Calls the Daylight Saving Info screen.
+    'mnuItmEasterDates'      : callInfo('Easter Dates');        //  Calls the Easter Dates Info screen.
+    'mnuItmLentDates'        : callInfo('Lent Dates');          //  Calls the Lent Dates Info screen.
+    'mnuItmChineseYear'      : callInfo('Chinese Year');        //  Calls the Chinese Year Info screen.
+    'mnuItmMoonStuff'        : callInfo('Moon Stuff');          //  Calls the Moon Stuff Info screen.
+    'mnuItmSunStuff'         : callInfo('Sun Stuff');           //  Calls the Sun Stuff Info screen.
+    'mnuItmPowerStuff'       : callInfo('Power Source');        //  Calls the Power Source Saving Info screen.
+    'mnuItmMonitorStuff'     : callInfo('Monitor Stuff');       //  Calls the Monitor Stuff Info screen.
+    // ************************************************** Sticky Note Menu *********
+    'SpdBtnNewStickyNote',                                      //  Creates a new sticky note, will appear on the screen.
+    'mnuItmNewStickyNote'    : stickies.new(userOptions.stickyColor, userOptions.stickyFont);
+    // ************************************************** Biorhythm Menu ***********
+    //  Display a simple Biorhythm chart, using the Birth date set up in user options.
+    //  NB  This form is not shown model.
+    'MnuItmSimpleBiorhythm'  : frmBiorhythm.Show;
+    'MnuItmEnhancedBiorhythm': EnhancedBiorhythmClick;
+  end;
 end;
 
-procedure TfrmMain.mnuItmHelpClick(Sender: TObject);
-{  Calls the Help file.    }
-begin
-  displayHelp('help\Klock.chm', '/Introduction.htm');
-end;
-
-procedure TfrmMain.mnuItmLicenseClick(Sender: TObject);
-{  Calls the License screen.    }
-begin
-  frmLicense := TfrmLicense.Create(Nil);
-  frmLicense.ShowModal;
-  FreeAndNil(frmLicense);
-end;
-//
-// ********************************************************* Time Menu *********
-//
-procedure TfrmMain.mnuItmAnalogueKlockClick(Sender: TObject);
-{  Calls the Analogue Klock'.    }
-begin
-  frmAnalogueKlock.Show;
-end;
-procedure TfrmMain.mnuItmLEDKlockClick(Sender: TObject);
-{  Calls the LED Klock'.    }
-begin
-  frmLEDKlock.Show;
-end;
-procedure TfrmMain.mnuItmBinaryKlockClick(Sender: TObject);
-{  Calls the Binary Klock'.    }
-begin
-  frmBinaryKlock.Show;
-end;
-
-procedure TfrmMain.mnuItmSmallTextKlockClick(Sender: TObject);
-{  Calls the Small Text Klock'.    }
-begin
-  frmSmallTextKlock.Show;
-end;
-
-procedure TfrmMain.mnuItmFloatingTextKlockClick(Sender: TObject);
-{  Calls the Floating Text Klock'.    }
-begin
-  frmFloatingKlock.Show;
-end;
-//
-// ********************************************************* Info Menu *********
-//
-
-procedure TfrmMain.mnuItmDaylightSavingClick(Sender: TObject);
-{  Calls the Daylight Saving Info screen'.    }
-begin
-  callInfo('Daylight Saving');
-end;
-
-procedure TfrmMain.mnuItmEasterDatesClick(Sender: TObject);
-{  Calls the Easter Dates Info screen'.    }
-begin
-  callInfo('Easter Dates');
-end;
-
-procedure TfrmMain.mnuItmLentDatesClick(Sender: TObject);
-{  Calls the Lent Dates Info screen'.    }
-begin
-  callInfo('Lent Dates');
-end;
-
-procedure TfrmMain.mnuItmChineseYearClick(Sender: TObject);
-begin
-  callInfo('Chinese Year');
-end;
-
-procedure TfrmMain.mnuItmPowerSourceClick(Sender: TObject);
-{  Calls the Power Source Saving Info screen'.    }
-begin
-  callInfo('Power Source');
-end;
-
-procedure TfrmMain.mnuItmMoonStuffClick(Sender: TObject);
-{  Calls the Moon Stuffg Info screen'.    }
-begin
-  callInfo('Moon Stuff');
-end;
-procedure TfrmMain.mnuItmSunStuffClick(Sender: TObject);
-{  Calls the Sun Stuffg Info screen'.    }
-begin
-  callInfo('Sun Stuff');
-end;
-procedure TfrmMain.mnuItmMonitorStuffClick(Sender: TObject);
-{  Calls the Monitor Stuffg Info screen'.    }
-begin
-  callInfo('Monitor Stuff');
-end;
 procedure TfrmMain.callInfo(mode: string);
 {  Calls the actual info form, passing to mode.    }
 begin
@@ -2140,18 +2078,7 @@ begin
   FreeAndNil(frmInfo);
 end;
 
-//
-// ************************************************** Biorhythm Menu ***********
-//
-procedure TfrmMain.MnuItmSimpleBiorhythmClick(Sender: TObject);
-{  Display a simple Biorhythm chart, using the Birth date set up user options.
-   NB  This form is not shown model.
-}
-begin
-  frmBiorhythm.Show;
-end;
-
-procedure TfrmMain.MnuItmEnhancedBiorhythmClick(Sender: TObject);
+procedure TfrmMain.EnhancedBiorhythmClick;
 {  Displays an enhanced version of the Biorhythm chart, this allows the rhyms
    of two user to be displayed on one chart.  Also, a secdondary series
    of plots can be displayed.
@@ -2171,42 +2098,6 @@ begin
   {$endif}
 
   doCommandEvent(fileName, '');
-end;
-//
-// ************************************************** Sticky Note Menu *********
-//
-procedure TfrmMain.mnuItmNewStickyNoteClick(Sender: TObject);
-{  Created a new sticky note, will appear on the screen.    }
-begin
-  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
-end;
-//
-// ********************************************************* ButtonPannel ******
-//
-procedure TfrmMain.BitBtnHideClick(Sender: TObject);
-{  if clicked will hide the main form and display the tray icon.    }
-begin
-  TrayIcon.Visible := True;
-  TrayIcon.Show;
-
-  frmMain.Visible := False;
-end;
-
-procedure TfrmMain.BitBtnCloseClick(Sender: TObject);
-{  if clicked will hide the main form and display the tray icon.    }
-begin
-  close;
-end;
-
-procedure TfrmMain.BitBtnHelpClick(Sender: TObject);
-{  Calls the Help file.    }
-begin
-  displayHelp('help\Klock.chm', '/Introduction.htm');
-end;
-procedure TfrmMain.SpdBtnNewStickyNoteClick(Sender: TObject);
-{  Created a new sticky note, will appear on the screen.    }
-begin
-  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 //
 // ******************************************************* pop menu ************
@@ -2235,8 +2126,8 @@ begin
   if ppMnItmTime.Checked then
   begin
     ppMnItmTime.Checked := False;
-    popupTitle[1] := '';
-    popupMessages[0] := '';
+    popupTitle[1]       := '';
+    popupMessages[0]    := '';
     DisplayMessage;
   end
   else
@@ -2251,7 +2142,7 @@ var
 begin
   for f := 0 to 3 do
   begin
-    popupTitle[f] := '';
+    popupTitle[f]    := '';
     popupMessages[f] := '';
   end;
 
@@ -2269,7 +2160,7 @@ var
 begin
   for f := 1 to 3 do
   begin
-    popupTitle[f] := '';
+    popupTitle[f]    := '';
     popupMessages[f] := '';
   end;
 

@@ -19,18 +19,18 @@ type
   memo = class
 
   private
-    _name: string;         //  Body text of the Memo.
-    _id: integer;          //  unique id of the Memo.
+    _name: string;           //  Body text of the Memo.
+    _id  : integer;          //  unique id of the Memo.
 
-    _body: string;         //  memo text..
-    _encrypt: Boolean;     //  Is the Memo encypted.
+    _body   : string;        //  memo text..
+    _encrypt: Boolean;       //  Is the Memo encrypted.
 
     procedure error(Const msg : string);
   public
-    property name: string read _name write _name;
-    property id: integer read _id write _id;
+    property name: string  read _name write _name;
+    property id  : integer read _id   write _id;
 
-    property body: string read _body write _body;
+    property body   : string  read _body    write _body;
     property encrypt: Boolean read _encrypt write _encrypt;
 
     constructor Create(sn_id: integer); overload;
@@ -48,8 +48,8 @@ constructor memo.Create(sn_id: integer);
 begin
   id := sn_id;
 
-  name := '';
-  body := '';
+  name    := '';
+  body    := '';
   encrypt := false;
 end;
 
@@ -63,9 +63,9 @@ constructor memo.Create(fsOut: TFileStream);
 }
 var
   Len1: Cardinal = 0;
-  sNme:string;
-  sBdy:string;
-  iID: integer = 0;
+  sNme: string;
+  sBdy: string;
+  iID : integer = 0;
   bEnc: boolean = true;
 begin
 
@@ -84,11 +84,11 @@ begin
     fsOut.ReadBuffer(bEnc, sizeof(bEnc));   //  read encrypt;
 
     body := sBdy;
-    id := iID;
+    id   := iID;
 
     name := sNme;
     body := sBdy;
-    id := iID;
+    id   := iID;
     encrypt := bEnc;
   except
     error('Error on Sticky Note Read');

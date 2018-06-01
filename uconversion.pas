@@ -183,8 +183,8 @@ end;
 procedure cleartextFiles;
 {  Clears required edit boxes and disables the convert button.    }
 begin
-  frmmain.EdtConverionResult.Text := '';
-  frmmain.EdtConverionValue.Text  := '';
+  frmmain.EdtConverionResult.Text     := '';
+  frmmain.EdtConverionValue.Text      := '';
   frmMain.btnConverionConvert.Enabled := false;
 end;
 

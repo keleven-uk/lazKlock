@@ -13,9 +13,10 @@ type
   { TfrmSplashScreen }
 
   TfrmSplashScreen = class(TForm)
-    Image1: TImage;
+    Image1              : TImage;
     MemoSplashScreenInfo: TMemo;
     MemoSplashScreenData: TMemo;
+
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
 
   private

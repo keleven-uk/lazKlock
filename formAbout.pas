@@ -85,8 +85,8 @@ begin
   lblSysUpTime.Caption  := getUpTime('System');
   lblProgrammer.Caption := userOptions.legalCopyright;
 
-  //  {$I %DATE%} returns the compile date, but in american [ignores local date format]
-  //  So, we string slice it to give good old english date format.
+  //  {$I %DATE%} returns the compile date, but in American [ignores local date format]
+  //  So, we string slice it to give good old English date format.
   cmpDate               := {$I %DATE%};
   cmpUkDate             := format('%s/%s/%s', [copy(cmpDate, 9, 2),
                                                copy(cmpDate, 6, 2),

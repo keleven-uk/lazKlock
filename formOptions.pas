@@ -126,7 +126,6 @@ type
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
-    procedure DtEdtBirthDateChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
     procedure edtLatitudeChange(Sender: TObject);
     procedure edtLongitudeChange(Sender: TObject);
@@ -217,9 +216,9 @@ begin
   ChckGrpGlobalOptions.Checked[3] := userBacOptions.CB_ScreenSave;
 
   ChckBxKeepMonitorAwake.Checked := userBacOptions.keepMonitorAwake;
-  chckBxUseF15.Checked := userBacOptions.keepMonitorAwakeF15;
-  ChckBxJiggleMouse.Checked := userBacOptions.keepMonitorAwakeJiggle;
-  SpnEdtMonitorMinites.Value := userBacOptions.keepMonitorAwakeMinutes;
+  chckBxUseF15.Checked           := userBacOptions.keepMonitorAwakeF15;
+  ChckBxJiggleMouse.Checked      := userBacOptions.keepMonitorAwakeJiggle;
+  SpnEdtMonitorMinites.Value     := userBacOptions.keepMonitorAwakeMinutes;
   setKeepMonitorAwake;
 
   ChckGrpTimeOptions.Checked[0] := userBacOptions.display24Hour;
@@ -264,7 +263,7 @@ begin
   ChckGrpFloatingTextKlock.Checked[1] := userBacOptions.floatingTextUseKlockFont;
   ChckGrpFloatingTextKlock.Checked[2] := userBacOptions.floatingAlwaysOnTop;
 
-  lblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
+  lblFloatingTextKlockFont.Enabled    := not(ChckGrpFloatingTextKlock.Checked[1]);
   btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
 
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
@@ -295,7 +294,7 @@ begin
   FlNmEdtLoadArchiveName.FileName := '';
   ChckLstBxArchive.Items          := getArchiveFiles;
 
-  //  when the date is accepted on a TDateEdit, it runs a form activate for some reasin.
+  //  when the date is accepted on a TDateEdit, it runs a form activate for some reason.
   //  So we set the values here.
   userBacOptions.birthdate := DtEdtBirthDate.Date;
   lblBirthDate.Caption     := format('Current BirthDate set to - %s', [DateTimeToStr(DtEdtBirthDate.Date)]);
@@ -596,13 +595,6 @@ begin
      lblStickyNoteFont.Font    := FontDialog1.Font;
      userBacOptions.stickyFont := FontDialog1.Font;
    end;
-end;
-
-procedure TfrmOptions.DtEdtBirthDateChange(Sender: TObject);
-{  Allow user to enter thier birthDate.    }
-begin
-  //  when the date is accepted on a TDateEdit, it runs a form activate for some reasin.
-  //  So we set the values there.
 end;
 //
 //...................................LOGGING ...................................

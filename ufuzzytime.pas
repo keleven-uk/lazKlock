@@ -62,11 +62,11 @@ type
     function getBCDTime: string;
     function getBinaryTime: string;
   public
-    property displayFuzzy: integer read _displayFuzzy write _displayFuzzy;
-    property fuzzyBase: integer read _fuzzyBase write _fuzzyBase;
-    property fuzzyTypes: TStringList read _fuzzyTypes;                    //  read only.
-    property fuzzyTimeVerbose: boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
-    property display24Hour: boolean read _display24Hour write _display24Hour;
+    property displayFuzzy    : integer     read _displayFuzzy     write _displayFuzzy;
+    property fuzzyBase       : integer     read _fuzzyBase        write _fuzzyBase;
+    property fuzzyTypes      : TStringList read _fuzzyTypes;                    //  read only.
+    property fuzzyTimeVerbose: boolean     read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
+    property display24Hour   : boolean     read _display24Hour    write _display24Hour;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -110,13 +110,13 @@ function FuzzyTime.fTime: string;
    But rounds to the nearest five minutes.
 }
 var
-  hour: word;
-  mins: word;
-  secs: word;
-  mscs: word;
-  nrms: word;      //  nearest five minutes
-  ampm: string;    //  am pm indicator, also used for afternoon or evening
-  sRtn: string;    //  return string
+  hour : word;
+  mins : word;
+  secs : word;
+  mscs : word;
+  nrms : word;      //  nearest five minutes
+  ampm : string;    //  am pm indicator, also used for afternoon or evening
+  sRtn : string;    //  return string
   dummy: string;    //  hour text
 begin
 
@@ -141,8 +141,8 @@ begin
 
 
   case nrms of
-    0: sRtn += '';
-    5: sRtn += 'five past ';
+    0 : sRtn += '';
+    5 : sRtn += 'five past ';
     10: sRtn += 'ten past ';
     15: sRtn += 'quarter past ';
     20: sRtn += 'twenty past ';
@@ -156,8 +156,7 @@ begin
     60: sRtn += '';
   end;
 
-  if nrms > 30 then
-    hour := hour + 1;
+  if nrms > 30 then hour := hour + 1;
 
   if (hour = 12) and (nrms = 0) then   //  fix for noon.
     ampm := ' about noon'
@@ -184,22 +183,22 @@ function FuzzyTime.wordTime: string;
    But uses the exact minute.
 }
 var
-  hour: word;
-  mins: word;
-  secs: word;
-  mscs: word;
-  ampm: string;       //  am pm indicator, also used for afternoon or evening
-  pastTo: string;     //  return string
-  sRtn: string;       //  hour text
+  hour  : word;
+  mins  : word;
+  secs  : word;
+  mscs  : word;
+  ampm  : string;       //  am pm indicator, also used for afternoon or evening
+  pastTo: string;       //  return string
+  sRtn  : string;       //  hour text
  begin
     DecodeTime(Time, hour, mins, secs, mscs);
     pastTo := 'past';
 
     if mins > 30 then
     begin
-      hour := hour + 1;
+      hour   := hour + 1;
       pastTo := 'to';
-      mins := 60 - mins;
+      mins   := 60 - mins;
     end;
 
     if hour < 12 then
@@ -214,12 +213,12 @@ var
       end;
 
     case mins of
-      0: sRtn := format('%s Oclock %s', [hourTxt[hour], ampm]);
-      1: sRtn := format('%s minute %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
-      2..9: sRtn := format('%s minutes %s %s %s', [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
-      10..20: sRtn := format('%s minutes %s %s %s', [tensTxt[mins - 9], pastTo, hourTxt[hour], ampm ]);
+      0     : sRtn := format('%s Oclock %s',              [hourTxt[hour], ampm]);
+      1     : sRtn := format('%s minute %s %s %s',        [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
+      2..9  : sRtn := format('%s minutes %s %s %s',       [unitsTxt[mins], pastTo, hourTxt[hour], ampm ]);
+      10..20: sRtn := format('%s minutes %s %s %s',       [tensTxt[mins - 9], pastTo, hourTxt[hour], ampm ]);
       21..29: sRtn := format('twenty%s minutes %s %s %s', [unitsTxt[mins mod 10], pastTo, hourTxt[hour], ampm ]);
-      30: sRtn := format('thirty minutes %s %s %s', [pastTo, hourTxt[hour], ampm ]);
+      30    : sRtn := format('thirty minutes %s %s %s',   [pastTo, hourTxt[hour], ampm ]);
     end;
 
     Result := sRtn;
@@ -263,7 +262,7 @@ begin
 end;
 
 function FuzzyTime.utcTime: string;
-{  returns UTC, Coordinated Universal Time, taking into acount local time zone.
+{  returns UTC, Coordinated Universal Time, taking into account local time zone.
    This is then encoded into a string.                                         }
 begin
   Result := TimeToStr(TimeZone.UniversalTime);
@@ -313,12 +312,12 @@ var
 
   secs: integer;
   mins: integer;
-  hrs: integer;
+  hrs : integer;
 begin
   noOfSeconds := SecondOfTheDay(Time);
   noOfDecSecs := round(noOfSeconds * (100000 / 84600));  // a decimal second is
                                                          // smaller then a normal second
-  hrs := noOfDecSecs div 10000;
+  hrs  := noOfDecSecs div 10000;
   mins := (noOfDecSecs - hrs * 10000) div 100;
   secs := noOfDecSecs mod 100;
 
@@ -429,19 +428,19 @@ function FuzzyTime.getDblTime: string;
 {  returns current time as a float, in the format hh.mm.
    a bit klunky - needs a rewrite, when i know how                             }
 var
-  hour: word;
-  min: word;
-  sec: word;
-  msec: word;
+  hour : word;
+  min  : word;
+  sec  : word;
+  msec : word;
   fhour: double;
-  fmin: double;
-  fsec: double;
+  fmin : double;
+  fsec : double;
 begin
   DecodeTime(time, hour, min, sec, msec);
 
   fhour := hour;
-  fmin := min / 100;
-  fsec := sec / 10000;
+  fmin  := min / 100;
+  fsec  := sec / 10000;
 
   Result := FloatToStr(fhour + fmin + fsec);
 end;
@@ -457,8 +456,8 @@ var
   mins: word;
   secs: word;
   msec: word;
-  m: double;
-  s: double;
+  m   : double;
+  s   : double;
 begin
   DecodeTime(time, hour, mins, secs, msec);
 
@@ -476,10 +475,10 @@ function FuzzyTime.getMetricTime: string;
    Only Kilo-seconds are used here.
 }
 var
-  noOfSeconds: longword;
+  noOfSeconds : longword;
   noOfKSeconds: double;
 begin
-  noOfSeconds := SecondOfTheDay(Time);
+  noOfSeconds  := SecondOfTheDay(Time);
   noOfKSeconds := noOfSeconds / 1000;
 
   Result := format('%0.3f Kilo-Seconds', [noOfKSeconds]);
@@ -553,16 +552,16 @@ function FuzzyTime.getTime: string;
 begin
 
   case displayFuzzy of
-    0: Result := fTime;
-    1: Result := wordTime;
-    2: Result := localTime;
-    3: Result := netTime;
-    4: Result := unixTime;
-    5: Result := utcTime;
-    6: Result := swatchTime;
-    7: Result := julianTime;
-    8: Result := decimalTime;
-    9: Result := hexTime;
+    0 : Result := fTime;
+    1 : Result := wordTime;
+    2 : Result := localTime;
+    3 : Result := netTime;
+    4 : Result := unixTime;
+    5 : Result := utcTime;
+    6 : Result := swatchTime;
+    7 : Result := julianTime;
+    8 : Result := decimalTime;
+    9 : Result := hexTime;
     10: Result := radixTime;
     11: Result := percentTime;
     12: Result := getDblTime;
@@ -588,37 +587,37 @@ begin
         50 .. 60:
           begin
             roman := roman + 'L';
-            time := time - 50;
+            time  := time - 50;
           end;
         40 .. 49:
           begin
             roman := roman + 'XL';
-            time := time - 40;
+            time  := time - 40;
           end;
         10 .. 39:
           begin
             roman := roman + 'X';
-            time := time - 10;
+            time  := time - 10;
           end;
         9:
           begin
             roman := roman + 'IX';
-            time := time - 9;
+            time  := time - 9;
           end;
         5 .. 8:
           begin
             roman := roman + 'V';
-            time := time - 5;
+            time  := time - 5;
           end;
         4:
           begin
             roman := roman + 'IV';
-            time := time - 4;
+            time  := time - 4;
           end;
         1 .. 3:
           begin
             roman := roman + 'I';
-            time := time - 1;
+            time  := time - 1;
           end;
         0: roman := '';
       End;

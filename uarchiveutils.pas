@@ -41,14 +41,10 @@ begin
 
   result.add('Fonts Directory');
 
-  if FileExists(optionsFile) then
-    result.add(optionsFile);
-  if FileExists(memoFile) then
-    result.add(memoFile);
-  if FileExists(stickyFile) then
-    result.add(stickyFile);
-  if FileExists(unitsFile) then
-    result.add(unitsFile);
+  if FileExists(optionsFile) then result.add(optionsFile);
+  if FileExists(memoFile)    then result.add(memoFile);
+  if FileExists(stickyFile)  then result.add(stickyFile);
+  if FileExists(unitsFile)   then result.add(unitsFile);
 end;
 
 procedure saveArchive(fname: String; archiveFiles: TStringList);

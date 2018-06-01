@@ -65,7 +65,7 @@ type
     _formTop         : integer;         //  the forms top left.
     _formLeft        : integer;
     _defaultTab      : integer;
-    _volume          :String;
+    _volume          : String;
     _monitorClipboard: boolean;         //  Monitor Clipboard i.e. Klock captures all clipboard activities.
     _CB_ScreenSave   : boolean;         //  do we save clipboard manager position or not.
     _CB_formTop      : integer;         //  the clipboard manager top left.
@@ -165,110 +165,110 @@ type
 
   public
     //  Global - file stuff
-    property Comments        : string read _Comments write _Comments;
-    property companyName     : string read _companyName write _companyName;
-    property fileDescription : string read _fileDescription write _fileDescription;
-    property fileVersion     : string read _fileVersion write _fileVersion;
-    property InternalName    : string read _InternalName write _InternalName;
-    property legalCopyright  : string read _legalCopyright write _legalCopyright;
+    property Comments        : string read _Comments         write _Comments;
+    property companyName     : string read _companyName      write _companyName;
+    property fileDescription : string read _fileDescription  write _fileDescription;
+    property fileVersion     : string read _fileVersion      write _fileVersion;
+    property InternalName    : string read _InternalName     write _InternalName;
+    property legalCopyright  : string read _legalCopyright   write _legalCopyright;
     property originalFileName: string read _originalFileName write _originalFileName;
-    property productName     : string read _productName write _productName;
-    property productVersion  : string read _productVersion write _productVersion;
+    property productName     : string read _productName      write _productName;
+    property productVersion  : string read _productVersion   write _productVersion;
 
     //  Global - other stuff
-    property optionsName     : string  read _optionsName write _optionsName;
-    property memoName        : string  read _memoName write _memoName;
-    property stickyName      : string  read _stickyName write _stickyName;
-    property unitsName       : string  read _unitsName write _unitsName;
-    property runAtStartUp    : boolean read _runAtStartUp write _runAtStartUp;
-    property screenSave      : boolean read _screenSave write _screenSave;
-    property formTop         : integer read _formTop write _formTop;
-    property formLeft        : integer read _formLeft write _formLeft;
-    property defaultTab      : integer read _defaultTab write _defaultTab;
-    property volume          : string  read _volume write _volume;
+    property optionsName     : string  read _optionsName      write _optionsName;
+    property memoName        : string  read _memoName         write _memoName;
+    property stickyName      : string  read _stickyName       write _stickyName;
+    property unitsName       : string  read _unitsName        write _unitsName;
+    property runAtStartUp    : boolean read _runAtStartUp     write _runAtStartUp;
+    property screenSave      : boolean read _screenSave       write _screenSave;
+    property formTop         : integer read _formTop          write _formTop;
+    property formLeft        : integer read _formLeft         write _formLeft;
+    property defaultTab      : integer read _defaultTab       write _defaultTab;
+    property volume          : string  read _volume           write _volume;
     property monitorClipboard: boolean read _monitorClipboard write _monitorClipboard;
-    property CB_ScreenSave   : boolean read _CB_ScreenSave write _CB_ScreenSave;
-    property CB_formTop      : integer read _CB_formTop write _CB_formTop;
-    property CB_formLeft     : integer read _CB_formLeft write _CB_formLeft;
+    property CB_ScreenSave   : boolean read _CB_ScreenSave    write _CB_ScreenSave;
+    property CB_formTop      : integer read _CB_formTop       write _CB_formTop;
+    property CB_formLeft     : integer read _CB_formLeft      write _CB_formLeft;
 
-    property keepMonitorAwake       : boolean read _keepMonitorAwake write _keepMonitorAwake;
-    property keepMonitorAwakeF15    : boolean read _keepMonitorAwakeF15 write _keepMonitorAwakeF15;
-    property keepMonitorAwakeJiggle : boolean read _keepMonitorAwakeJiggle write _keepMonitorAwakeJiggle;
+    property keepMonitorAwake       : boolean read _keepMonitorAwake        write _keepMonitorAwake;
+    property keepMonitorAwakeF15    : boolean read _keepMonitorAwakeF15     write _keepMonitorAwakeF15;
+    property keepMonitorAwakeJiggle : boolean read _keepMonitorAwakeJiggle  write _keepMonitorAwakeJiggle;
     property keepMonitorAwakeMinutes: integer read _keepMonitorAwakeMinutes write _keepMonitorAwakeMinutes;
 
-    property Latitude : double read _Latitude write _Latitude;
+    property Latitude : double read _Latitude  write _Latitude;
     property Longitude: double read _Longitude write _Longitude;
 
     property birthdate: TDateTime read _birthdate write _birthdate;
 
     //  Time
-    property defaultTime       : integer read _defaultTime write _defaultTime;
-    property netTimeSeconds    : boolean read _netTimeSeconds write _netTimeSeconds;
-    property swatchCentibeats  : boolean read _swatchCentibeats write _swatchCentibeats;
-    property fuzzyTimeBalloon  : boolean read _fuzzyTimeBalloon write _fuzzyTimeBalloon;
-    property displayIdleTime   : boolean read _displayIdleTime write _displayIdleTime;
-    property fuzzyTimeVerbose  : boolean read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
-    property display24Hour     : boolean read _display24Hour write _display24Hour;
-    property hourPips          : boolean read _hourPips write _hourPips;
-    property hourChimes        : boolean read _hourChimes write _hourChimes;
-    property halfChimes        : boolean read _halfChimes write _halfChimes;
-    property quarterChimes     : boolean read _quarterChimes write _quarterChimes;
+    property defaultTime       : integer read _defaultTime        write _defaultTime;
+    property netTimeSeconds    : boolean read _netTimeSeconds     write _netTimeSeconds;
+    property swatchCentibeats  : boolean read _swatchCentibeats   write _swatchCentibeats;
+    property fuzzyTimeBalloon  : boolean read _fuzzyTimeBalloon   write _fuzzyTimeBalloon;
+    property displayIdleTime   : boolean read _displayIdleTime    write _displayIdleTime;
+    property fuzzyTimeVerbose  : boolean read _fuzzyTimeVerbose   write _fuzzyTimeVerbose;
+    property display24Hour     : boolean read _display24Hour      write _display24Hour;
+    property hourPips          : boolean read _hourPips           write _hourPips;
+    property hourChimes        : boolean read _hourChimes         write _hourChimes;
+    property halfChimes        : boolean read _halfChimes         write _halfChimes;
+    property quarterChimes     : boolean read _quarterChimes      write _quarterChimes;
     property threeQuarterChimes: boolean read _threeQuarterChimes write _threeQuarterChimes;
-    property christmasFont     : boolean read _christmasFont write _christmasFont;
-    property easterFont        : boolean read _easterFont write _easterFont;
-    property valentinesFont    : boolean read _valentinesFont write _valentinesFont;
-    property haloweenFont      : boolean read _haloweenFont write _haloweenFont;
+    property christmasFont     : boolean read _christmasFont      write _christmasFont;
+    property easterFont        : boolean read _easterFont         write _easterFont;
+    property valentinesFont    : boolean read _valentinesFont     write _valentinesFont;
+    property haloweenFont      : boolean read _haloweenFont       write _haloweenFont;
 
     //  Timer
     property timerMilliSeconds: boolean read _timerMilliSeconds write _timerMilliSeconds;
 
     // Analogue Kock
-    property analogueScreenSave : boolean read _analogueScreenSave write _analogueScreenSave;
-    property analogueFormTop    : integer read _analogueFormTop write _analogueFormTop;
-    property analogueFormLeft   : integer read _analogueFormLeft write _analogueFormLeft;
+    property analogueScreenSave : boolean read _analogueScreenSave  write _analogueScreenSave;
+    property analogueFormTop    : integer read _analogueFormTop     write _analogueFormTop;
+    property analogueFormLeft   : integer read _analogueFormLeft    write _analogueFormLeft;
     property analogueAlwaysOnTop: boolean read _analogueAlwaysOnTop write _analogueAlwaysOnTop;
 
     // LED Kock
-    property LEDScreenSave: boolean read _LEDScreenSave write _LEDScreenSave;
-    property LEDFormTop: integer read _LEDFormTop write _LEDFormTop;
-    property LEDFormLeft: integer read _LEDFormLeft write _LEDFormLeft;
-    property LEDlongDate: boolean read _LEDlongDate write _LEDlongDate;
+    property LEDScreenSave : boolean read _LEDScreenSave  write _LEDScreenSave;
+    property LEDFormTop    : integer read _LEDFormTop     write _LEDFormTop;
+    property LEDFormLeft   : integer read _LEDFormLeft    write _LEDFormLeft;
+    property LEDlongDate   : boolean read _LEDlongDate    write _LEDlongDate;
     property LEDAlwaysOnTop: boolean read _LEDAlwaysOnTop write _LEDAlwaysOnTop;
 
     // Binary Kock
-    property BinaryScreenSave : boolean read _BinaryScreenSave write _BinaryScreenSave;
-    property BinaryFormTop    : integer read _BinaryFormTop write _BinaryFormTop;
-    property BinaryFormLeft   : integer read _BinaryFormLeft write _BinaryFormLeft;
-    property BinaryFormat     : boolean read _BinaryFormat write _BinaryFormat;
+    property BinaryScreenSave : boolean read _BinaryScreenSave  write _BinaryScreenSave;
+    property BinaryFormTop    : integer read _BinaryFormTop     write _BinaryFormTop;
+    property BinaryFormLeft   : integer read _BinaryFormLeft    write _BinaryFormLeft;
+    property BinaryFormat     : boolean read _BinaryFormat      write _BinaryFormat;
     property BinaryAlwaysOnTop: boolean read _BinaryAlwaysOnTop write _BinaryAlwaysOnTop;
 
     // Small Text Klock
-    property smallTextScreenSave : boolean read _smallTextScreenSave write _smallTextScreenSave;
-    property smallTextFormTop    : integer read _smallTextFormTop write _smallTextFormTop;
-    property smallTextFormLeft   : integer read _smallTextFormLeft write _smallTextFormLeft;
+    property smallTextScreenSave : boolean read _smallTextScreenSave  write _smallTextScreenSave;
+    property smallTextFormTop    : integer read _smallTextFormTop     write _smallTextFormTop;
+    property smallTextFormLeft   : integer read _smallTextFormLeft    write _smallTextFormLeft;
     property smallTextTransparent: boolean read _smallTextTransparent write _smallTextTransparent;
-    property smallAlwaysOnTop    : boolean read _smallAlwaysOnTop write _smallAlwaysOnTop;
+    property smallAlwaysOnTop    : boolean read _smallAlwaysOnTop     write _smallAlwaysOnTop;
 
     // Floating Text Klock
-    property floatingTextScreenSave  : boolean read _floatingTextScreenSave write _floatingTextScreenSave;
-    property floatingTextFormTop     : integer read _floatingTextFormTop write _floatingTextFormTop;
-    property floatingTextFormLeft    : integer read _floatingTextFormLeft write _floatingTextFormLeft;
-    property floatingTextFont        : TFont   read _floatingTextFont write _floatingTextFont;
+    property floatingTextScreenSave  : boolean read _floatingTextScreenSave   write _floatingTextScreenSave;
+    property floatingTextFormTop     : integer read _floatingTextFormTop      write _floatingTextFormTop;
+    property floatingTextFormLeft    : integer read _floatingTextFormLeft     write _floatingTextFormLeft;
+    property floatingTextFont        : TFont   read _floatingTextFont         write _floatingTextFont;
     property floatingTextUseKlockFont: boolean read _floatingTextUseKlockFont write _floatingTextUseKlockFont;
-    property floatingAlwaysOnTop     : boolean read _floatingAlwaysOnTop write _floatingAlwaysOnTop;
+    property floatingAlwaysOnTop     : boolean read _floatingAlwaysOnTop      write _floatingAlwaysOnTop;
 
     // Memos
     property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
-    property defaultpassWord   : string  read _defaultpassWord write _defaultpassWord;
-    property decryptTimeOut    : integer read _decryptTimeOut write _decryptTimeOut;
+    property defaultpassWord   : string  read _defaultpassWord    write _defaultpassWord;
+    property decryptTimeOut    : integer read _decryptTimeOut     write _decryptTimeOut;
 
     //Sticky Notes
     property stickyColor: TColor read _stickyColor write _stickyColor;
-    property stickyFont : TFont  read _stickyFont write _stickyFont;
+    property stickyFont : TFont  read _stickyFont  write _stickyFont;
 
     //  Logging
-    property logging     : boolean read _logging write _logging;
-    property cullLogs    : boolean read _cullLogs write _cullLogs;
+    property logging     : boolean read _logging      write _logging;
+    property cullLogs    : boolean read _cullLogs     write _cullLogs;
     property CullLogsDays: integer read _CullLogsDays write _CullLogsDays;
 
     constructor Create; overload;
@@ -304,15 +304,15 @@ type
     _productVersion  : string;
 
   public
-    property fileComments        : string read _comments write _comments;
-    property fileCompanyName     : string read _companyName write _companyName;
-    property fileFileDescription : string read _fileDescription write _fileDescription;
-    property fileFileVersion     : string read _fileVersion write _fileVersion;
-    property fileInternalName    : string read _InternalName write _InternalName;
-    property fileLegalCopyright  : string read _legalCopyright write _legalCopyright;
+    property fileComments        : string read _comments         write _comments;
+    property fileCompanyName     : string read _companyName      write _companyName;
+    property fileFileDescription : string read _fileDescription  write _fileDescription;
+    property fileFileVersion     : string read _fileVersion      write _fileVersion;
+    property fileInternalName    : string read _InternalName     write _InternalName;
+    property fileLegalCopyright  : string read _legalCopyright   write _legalCopyright;
     property fileOriginalFileName: string read _originalFileName write _originalFileName;
-    property fileProductName     : string read _productName write _productName;
-    property fileProductVersion  : string read _productVersion write _productVersion;
+    property fileProductName     : string read _productName      write _productName;
+    property fileProductVersion  : string read _productVersion   write _productVersion;
 
     procedure GetFileInfo;
   end;

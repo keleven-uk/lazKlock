@@ -21,10 +21,10 @@ type
     FOnClipboardChange: TNotifyEvent;
     FWnd: HWND;
 
-    _text: string;                   //  the data on the clipboard.
-    _category: string;               //  The category of the data [text, file, dir].
-    _epoch: string;                  //  The date added.
-    _image: TBitmap;
+    _text    : string;                   //  the data on the clipboard.
+    _category: string;                   //  The category of the data [text, file, dir].
+    _epoch   : string;                   //  The date added.
+    _image   : TBitmap;
 
     class function GetSupported: Boolean; static;
     procedure WindowProc(var Msg: TMessage);
@@ -41,10 +41,10 @@ type
     procedure CopyImageToClipboard(FileList: string);
 
     property OnClipboardChange: TNotifyEvent read FOnClipboardChange write FOnClipboardChange;
-    property text: string read _text write _text;
-    property category: string read _category write _category;
-    property epoch: string read _epoch write _epoch;
-    property image: TBitmap read _image write _image;
+    property text             : string       read _text              write _text;
+    property category         : string       read _category          write _category;
+    property epoch            : string       read _epoch             write _epoch;
+    property image            : TBitmap      read _image             write _image;
 
     class property Supported: Boolean read GetSupported;
   end;
@@ -63,7 +63,7 @@ var
   HUser32: HMODULE;
 begin
   HUser32 := GetModuleHandle(user32);
-  Pointer(AddClipboardFormatListener) := GetProcAddress(HUser32, 'AddClipboardFormatListener');
+  Pointer(AddClipboardFormatListener)    := GetProcAddress(HUser32, 'AddClipboardFormatListener');
   Pointer(RemoveClipboardFormatListener) := GetProcAddress(HUser32, 'RemoveClipboardFormatListener');
 end;
 
@@ -150,7 +150,7 @@ end;
 procedure TClipboardListener.getTextData;
 {  Sets the text values.    }
 begin
-  text := clipboard.AsText;
+  text     := clipboard.AsText;
   category := 'Text';
   klog.writeLog(format('TClipboardListener.getTextData : category = %s   text = %s', [category, text]));
 end;
@@ -159,10 +159,11 @@ procedure TClipboardListener.getFileData;
 {  Retrieves the actual filename, using pointer black magic.    }
 var
   hDropHandle: HDROP;
-  iCount, iIndex: Integer;
-  iLength: Integer;
-  szBuffer: PChar;
-  filename: string;
+  iCount     : Integer;
+  iIndex     : Integer;
+  iLength    : Integer;
+  szBuffer   : PChar;
+  filename   : string;
 begin
   OpenClipboard(0);                                                          // lock clipboard
   hDropHandle := GetClipboardData(CF_HDROP);                                 // get drop handle from the clipboard
@@ -171,7 +172,7 @@ begin
   iCount := DragQueryFile(hDropHandle, $FFFFFFFF, nil, 0);
   for iIndex := 0 to iCount - 1 do
   begin
-    iLength := DragQueryFile(hDropHandle, iIndex, nil, 0);                   // get length of filename
+    iLength  := DragQueryFile(hDropHandle, iIndex, nil, 0);                  // get length of filename
     szBuffer := StrAlloc(iLength + 1);                                       // allocate the memory, the #0 is not included in "iLength"
     try
       if DragQueryFile(hDropHandle, iIndex, szBuffer, iLength + 1) > 0 then  // get filename
@@ -202,20 +203,16 @@ procedure TClipboardListener.CopyToClipboard(Item: TListItem);
    Error should be trapped but not logged.}
 begin
   category := Item.Caption;
-  epoch := Item.SubItems.Strings[0];
-  text := Item.SubItems.Strings[1];
+  epoch    := Item.SubItems.Strings[0];
+  text     := Item.SubItems.Strings[1];
 
-  if category = 'Text' then
-    clipboard.AsText := text;
+  if category = 'Text' then clipboard.AsText := text;
 
-  if category = 'File' then
-    if FileExists(text) then CopyFileToClipboard(text) ;
+  if category = 'File' then if FileExists(text) then CopyFileToClipboard(text) ;
 
-  if category = 'Dir' then
-    if DirectoryExists(text) then CopyFileToClipboard(text);
+  if category = 'Dir' then if DirectoryExists(text) then CopyFileToClipboard(text);
 
-  if category = 'Image' then
-    if FileExists(text) then CopyImageToClipboard(text);
+  if category = 'Image' then if FileExists(text) then CopyImageToClipboard(text);
 
   EmptyClipboard;
 end;
@@ -237,9 +234,10 @@ var
   hGlobal: THandle;
   iLen: integer;
 begin
-  iLen := Length(FileList) + 2;
+  iLen     := Length(FileList) + 2;
   FileList := FileList + #0#0;
-  hGlobal := GlobalAlloc(GMEM_SHARE or GMEM_MOVEABLE or GMEM_ZEROINIT, SizeOf(TDropFiles) + iLen);
+  hGlobal  := GlobalAlloc(GMEM_SHARE or GMEM_MOVEABLE or GMEM_ZEROINIT, SizeOf(TDropFiles) + iLen);
+
   if (hGlobal = 0) then
     raise Exception.Create('Could not allocate memory.');
   begin

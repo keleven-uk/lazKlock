@@ -29,40 +29,41 @@ type
   { TfrmBinaryKlock }
 
   TfrmBinaryKlock = class(TForm)
-    lblStatusBar: TLabel;
-    MnItmAlwaysOnTop: TMenuItem;
-    MnItmNewStickNote: TMenuItem;
-    MnItmBCD: TMenuItem;
-    MnItmBinary: TMenuItem;
-    MnItmExit: TMenuItem;
-    MnItmAbout: TMenuItem;
-    PnlStatusbar: TPanel;
+    lblStatusBar        : TLabel;
+    MnItmAlwaysOnTop    : TMenuItem;
+    MnItmNewStickNote   : TMenuItem;
+    MnItmBCD            : TMenuItem;
+    MnItmBinary         : TMenuItem;
+    MnItmExit           : TMenuItem;
+    MnItmAbout          : TMenuItem;
+    PnlStatusbar        : TPanel;
     popUpMenuBinaryKlock: TPopupMenu;
-    Shp00: TShape;
-    Shp31: TShape;
-    Shp41: TShape;
-    Shp51: TShape;
-    Shp02: TShape;
-    Shp12: TShape;
-    Shp22: TShape;
-    Shp32: TShape;
-    Shp42: TShape;
-    Shp52: TShape;
-    Shp03: TShape;
-    Shp10: TShape;
-    Shp13: TShape;
-    Shp23: TShape;
-    Shp33: TShape;
-    Shp43: TShape;
-    Shp53: TShape;
-    Shp20: TShape;
-    Shp30: TShape;
-    Shp40: TShape;
-    Shp50: TShape;
-    Shp01: TShape;
-    Shp11: TShape;
-    Shp21: TShape;
-    tmrBinaryKlock: TTimer;
+    Shp00               : TShape;
+    Shp31               : TShape;
+    Shp41               : TShape;
+    Shp51               : TShape;
+    Shp02               : TShape;
+    Shp12               : TShape;
+    Shp22               : TShape;
+    Shp32               : TShape;
+    Shp42               : TShape;
+    Shp52               : TShape;
+    Shp03               : TShape;
+    Shp10               : TShape;
+    Shp13               : TShape;
+    Shp23               : TShape;
+    Shp33               : TShape;
+    Shp43               : TShape;
+    Shp53               : TShape;
+    Shp20               : TShape;
+    Shp30               : TShape;
+    Shp40               : TShape;
+    Shp50               : TShape;
+    Shp01               : TShape;
+    Shp11               : TShape;
+    Shp21               : TShape;
+    tmrBinaryKlock      : TTimer;
+
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -157,7 +158,7 @@ begin
   begin
     klog.writeLog('Setting Binary Klock screen position');
     Left := userOptions.BinaryFormLeft;
-    Top := userOptions.BinaryFormTop;
+    Top  := userOptions.BinaryFormTop;
   end;
 
   MnItmAlwaysOnTop.Checked := userOptions.BinaryAlwaysOnTop;
@@ -207,7 +208,7 @@ begin
     if WindowDragStarted then
       begin
         Left := WindowDragTopLeft.X + (Mouse.CursorPos.X - WindowDragMousePos.X);
-        Top := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
+        Top  := WindowDragTopLeft.Y + (Mouse.CursorPos.Y - WindowDragMousePos.Y);
       end;
   end;
 
@@ -220,8 +221,8 @@ begin
   { MouseDown - Code to drag the main window using the mouse}
   if msg = LM_LBUTTONDOWN then
   begin
-    WindowDragStarted := True;
-    WindowDragMousePos := Mouse.CursorPos;
+    WindowDragStarted   := True;
+    WindowDragMousePos  := Mouse.CursorPos;
     WindowDragTopLeft.X := Left;
     WindowDragTopLeft.Y := Top;
   end;
@@ -236,12 +237,9 @@ VAR
   keyResult: string;
 begin
   keyResult := ' :: cns ';
-  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then
-    keyResult := StringReplace(keyResult, 'c', 'C', [rfReplaceAll]);
-  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then
-    keyResult := StringReplace(keyResult, 'n', 'N', [rfReplaceAll]);
-  if LCLIntf.GetKeyState(VK_SCROLL) <> 0 then
-    keyResult := StringReplace(keyResult, 's', 'S', [rfReplaceAll]);
+  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[5] := 'C';
+  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[6] := 'N';
+  if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[7] := 'S';
 
   if userOptions.displayIdleTime then
     keyResult += '  :: Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime);
@@ -294,7 +292,7 @@ begin
   begin
     klog.writeLog('Saving Binary Klock screen position');
     userOptions.BinaryFormLeft := Left;
-    userOptions.BinaryFormTop := Top;
+    userOptions.BinaryFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
 
@@ -336,14 +334,14 @@ end;
 procedure TfrmBinaryKlock.decodeBinaryTime;
 {  Parses the binary string and turns on or off the required L.E.D's.    }
 var
-  f : integer;
+  f        : integer;
   tmpButton: TShape;
-  sl: TstringList;
+  sl       : TstringList;
 begin
-  sl := TstringList.Create;
-  sl.StrictDelimiter:=true;
-  sl.LineBreak:=' ';
-  sl.text := binaryTime;
+  sl                 := TstringList.Create;
+  sl.StrictDelimiter :=true;
+  sl.LineBreak       :=' ';
+  sl.text            := binaryTime;
 
   for f := 0 to 5 do
   begin
@@ -420,14 +418,14 @@ end;
 procedure TfrmBinaryKlock.decodeBCDTime;
 {  Parses the binary string and turns on or off the required L.E.D's.    }
 var
-  f : integer;
+  f       : integer;
   tmpShape: TShape;
-  sl: TstringList;
+  sl      : TstringList;
 begin
-  sl := TstringList.Create;
-  sl.StrictDelimiter:=true;
-  sl.LineBreak:=' ';
-  sl.text := BCDTime;
+  sl                 := TstringList.Create;
+  sl.StrictDelimiter :=true;
+  sl.LineBreak       :=' ';
+  sl.text            := BCDTime;
 
   for f := 1 to 4 do
   begin

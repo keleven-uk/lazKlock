@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, tachartlazaruspkg, formklock,
-  formOptions, uFuzzyTime, formReminderInput,
+  formOptions, uFuzzyTime,
   formAnalogueKlock, SysUtils, UformClipBoardUtils, formClipBoard,
   formLEDKlock, formBinaryKlock, formSmallTextKlock, formStickyNote,
   formFloatingKlock, formSplashScreen, formBiorhythm;
@@ -31,7 +31,6 @@ begin
   frmSplashScreen.Update;
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmOptions, frmOptions);
-  Application.CreateForm(TfrmReminderInput, frmReminderInput);
   Application.CreateForm(TfrmAnalogueKlock, frmAnalogueKlock);
   Application.CreateForm(TfrmClipBoard, frmClipBoard);
   Application.CreateForm(TfrmLEDKlock, frmLEDKlock);
