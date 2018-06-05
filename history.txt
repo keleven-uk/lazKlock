@@ -1564,7 +1564,24 @@ Even more code tiding.
 Ran source against a spell checker.
 
 Currently
-11393 lines of source code.
-6154 statements
-15.9% comment
+11062 lines of source code.
+6093 statements
+16.0% comment
+
+
+Build 87 [2.4.1.87]
+
+Switched on Hi-Dpi aware.
+
+Added two new units - uEvent.pas and uEvents.pas.
+Events is a little like a memo, but with a date.  These can be one off or
+recurring and Klock will alert you when they due.
+All of the GUI element for Events in place.
+Code for the New, Clear and add buttons written.
+Need to test, before continuing.
+
+Currently
+11062 lines of source code.
+6093 statements
+16.0% comment
 

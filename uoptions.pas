@@ -55,6 +55,7 @@ type
     _productVersion  : string;
 
     _optionsName : string;              //  full path to the options file.
+    _eventName   : string;              //  full path to the event file.
     _memoName    : string;              //  full path to the memo file.
     _stickyName  : string;              //  full path to the Sticky Notes file.
     _unitsName   : string;              //  full path to the Units file.
@@ -177,6 +178,7 @@ type
 
     //  Global - other stuff
     property optionsName     : string  read _optionsName      write _optionsName;
+    property eventName       : string  read _eventName        write _eventName;
     property memoName        : string  read _memoName         write _memoName;
     property stickyName      : string  read _stickyName       write _stickyName;
     property unitsName       : string  read _unitsName        write _unitsName;
@@ -402,6 +404,7 @@ begin
 
   //  Global - other stuff
   optionsName      := o.optionsName;
+  eventName        := o.eventName;
   memoName         := o.memoName;
   stickyName       := o.stickyName;
   unitsName        := o.unitsName;
@@ -555,6 +558,8 @@ begin
 
       rtn := readChild(PassNode, 'optionsName');
       if rtn <> 'ERROR' then optionsName := ansistring(rtn);
+      rtn := readChild(PassNode, 'eventName');
+      if rtn <> 'ERROR' then eventName := ansistring(rtn);
       rtn := readChild(PassNode, 'memoName');
       if rtn <> 'ERROR' then memoName := ansistring(rtn);
       rtn := readChild(PassNode, 'stickyName');
@@ -800,6 +805,7 @@ begin
   productVersion   := fvi.fileProductVersion;
 
   //  optionsName set up in create
+  eventName        := GetAppConfigDir(False) + 'Event.bin';
   memoName         := GetAppConfigDir(False) + 'Memo.bin';
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';

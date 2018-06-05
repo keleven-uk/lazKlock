@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1209
+  Left = 1212
   Height = 259
-  Top = 315
+  Top = 234
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtCountdown
-      TabIndex = 2
+      ActivePage = TbShtEvents
+      TabIndex = 5
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -1004,6 +1004,122 @@ object frmMain: TfrmMain
           end
         end
       end
+      object TbShtEvents: TTabSheet
+        Caption = 'Events'
+        ClientHeight = 102
+        ClientWidth = 658
+        object Panel17: TPanel
+          Left = 0
+          Height = 102
+          Top = 0
+          Width = 658
+          Align = alClient
+          ClientHeight = 102
+          ClientWidth = 658
+          Color = clForm
+          ParentColor = False
+          TabOrder = 0
+          object Panel18: TPanel
+            Left = 8
+            Height = 88
+            Top = 8
+            Width = 234
+            ClientHeight = 88
+            ClientWidth = 234
+            TabOrder = 0
+            object LstBxEvents: TListBox
+              Left = 8
+              Height = 72
+              Top = 8
+              Width = 216
+              ItemHeight = 0
+              TabOrder = 0
+            end
+          end
+          object ScrollBox2: TScrollBox
+            Left = 248
+            Height = 88
+            Top = 8
+            Width = 400
+            HorzScrollBar.Page = 372
+            VertScrollBar.Page = 84
+            ClientHeight = 84
+            ClientWidth = 379
+            TabOrder = 1
+            object Label5: TLabel
+              Left = 8
+              Height = 15
+              Top = 6
+              Width = 64
+              Caption = 'Event Name'
+              ParentColor = False
+            end
+            object edtEventName: TEdit
+              Left = 8
+              Height = 23
+              Top = 24
+              Width = 80
+              OnChange = edtEventNameChange
+              TabOrder = 0
+            end
+            object dtEdtEventDate: TDateEdit
+              Left = 128
+              Height = 23
+              Top = 24
+              Width = 103
+              CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+              DateOrder = doNone
+              ButtonWidth = 23
+              NumGlyphs = 1
+              MaxLength = 0
+              OnChange = dtEdtEventDateChange
+              TabOrder = 1
+              Text = 'dtEdtEventDate'
+            end
+            object Label6: TLabel
+              Left = 128
+              Height = 15
+              Top = 6
+              Width = 56
+              Caption = 'Event Date'
+              ParentColor = False
+            end
+            object Label7: TLabel
+              Left = 272
+              Height = 15
+              Top = 6
+              Width = 57
+              Caption = 'Event Type'
+              ParentColor = False
+            end
+            object cmbBxEventType: TComboBox
+              Left = 272
+              Height = 23
+              Top = 24
+              Width = 100
+              ItemHeight = 15
+              TabOrder = 2
+              Text = 'cmbBxEventType'
+            end
+            object mEventNotes: TMemo
+              Left = 8
+              Height = 90
+              Top = 70
+              Width = 364
+              ScrollBars = ssAutoBoth
+              TabOrder = 3
+            end
+            object Label8: TLabel
+              Left = 8
+              Height = 15
+              Top = 54
+              Width = 63
+              Caption = 'Event Notes'
+              ParentColor = False
+            end
+          end
+        end
+      end
       object TbShtMemo: TTabSheet
         Caption = 'Memo'
         ClientHeight = 102
@@ -1704,17 +1820,71 @@ object frmMain: TfrmMain
     object SpnEdtTimeBase: TSpinEdit
       Left = 296
       Height = 23
-      Top = 8
+      Top = 5
       Width = 50
       MinValue = 2
       OnChange = SpnEdtTimeBaseChange
       TabOrder = 9
       Value = 2
     end
+    object btnEventNew: TButton
+      Left = 16
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'New'
+      OnClick = btnEventNewClick
+      TabOrder = 10
+    end
+    object btnEventAdd: TButton
+      Left = 128
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Add'
+      OnClick = btnEventAddClick
+      TabOrder = 11
+    end
+    object btnEventClear: TButton
+      Left = 72
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Clear'
+      OnClick = btnEventClearClick
+      TabOrder = 12
+    end
+    object btnEventEdit: TButton
+      Left = 184
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Edit'
+      OnClick = btnMemoEditClick
+      TabOrder = 13
+    end
+    object btnEventDelete: TButton
+      Left = 240
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Delete'
+      OnClick = btnMemoDeleteClick
+      TabOrder = 14
+    end
+    object btnEventPrint: TButton
+      Left = 296
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Print'
+      OnClick = btnMemoPrintClick
+      TabOrder = 15
+    end
   end
   object mnuMain: TMainMenu
     left = 128
-    top = 184
+    top = 208
     object mnuFile: TMenuItem
       Caption = 'File'
       object mnuItmOptions: TMenuItem
@@ -1953,14 +2123,14 @@ object frmMain: TfrmMain
   object mainTimer: TTimer
     Enabled = False
     OnTimer = mainTimerTimer
-    left = 312
-    top = 184
+    left = 296
+    top = 211
   end
   object CountdownTimer: TTimer
     Enabled = False
     OnTimer = CountdownTimerTimer
-    left = 264
-    top = 168
+    left = 256
+    top = 208
   end
   object PopupNotifier1: TPopupNotifier
     Color = clSilver
@@ -1974,19 +2144,19 @@ object frmMain: TfrmMain
     Visible = False
     OnClose = PopupNotifier1Close
     left = 48
-    top = 184
+    top = 211
   end
   object timerTimer: TTimer
     Enabled = False
     OnTimer = timerTimerTimer
-    left = 208
-    top = 168
+    left = 216
+    top = 208
   end
   object ReminderTimer: TTimer
     Enabled = False
     OnTimer = ReminderTimerTimer
     left = 168
-    top = 184
+    top = 208
   end
   object TrayIcon: TTrayIcon
     BalloonFlags = bfInfo
@@ -4113,11 +4283,11 @@ object frmMain: TfrmMain
     Hint = '"klock"'
     OnDblClick = TrayIconDblClick
     left = 8
-    top = 184
+    top = 208
   end
   object PpMnTray: TPopupMenu
     left = 88
-    top = 184
+    top = 208
     object ppMnItmShow: TMenuItem
       Caption = 'Show'
       OnClick = ppMnItmShowClick
@@ -4134,41 +4304,42 @@ object frmMain: TfrmMain
     Enabled = False
     Interval = 10000
     OnTimer = ballonTimerTimer
-    left = 8
-    top = 152
+    left = 336
+    top = 208
   end
   object mainIdleTimer: TIdleTimer
     AutoEnabled = True
     Enabled = False
     OnTimer = mainIdleTimerTimer
     OnStartTimer = mainIdleTimerStartTimer
-    left = 528
-    top = 8
+    left = 488
+    top = 208
   end
   object DCP_rijndael1: TDCP_rijndael
     Id = 9
     Algorithm = 'Rijndael'
     MaxKeySize = 256
     BlockSize = 128
-    left = 384
-    top = 184
+    left = 376
+    top = 211
   end
   object DCP_sha256_1: TDCP_sha256
     Id = 28
     Algorithm = 'SHA256'
     HashSize = 256
-    left = 440
-    top = 184
+    left = 416
+    top = 208
   end
   object tmrMemo: TTimer
     Enabled = False
     Interval = 30000
     OnTimer = tmrMemoTimer
-    left = 480
-    top = 8
+    left = 448
+    top = 211
   end
   object PascalTZ1: TPascalTZ
     DetectInvalidLocalTimes = True
-    left = 600
+    left = 520
+    top = 208
   end
 end

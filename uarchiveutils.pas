@@ -27,21 +27,24 @@ function getArchiveFiles: TStringList;
 }
 var
   optionsFile: String;
-  memoFile: String;
-  stickyFile: String;
-  unitsFile: String;
+  eventFile  : String;
+  memoFile   : String;
+  stickyFile : String;
+  unitsFile  : String;
 
 begin
   optionsFile := userOptions.optionsName;
-  memoFile := userOptions.memoName;
-  stickyFile := userOptions.stickyName;
-  unitsFile := userOptions.unitsName;
+  eventFile   := userOptions.eventName;
+  memoFile    := userOptions.memoName;
+  stickyFile  := userOptions.stickyName;
+  unitsFile   := userOptions.unitsName;
 
   result := TStringList.Create;
 
   result.add('Fonts Directory');
 
   if FileExists(optionsFile) then result.add(optionsFile);
+  if FileExists(eventFile)   then result.add(eventFile);
   if FileExists(memoFile)    then result.add(memoFile);
   if FileExists(stickyFile)  then result.add(stickyFile);
   if FileExists(unitsFile)   then result.add(unitsFile);

@@ -8,14 +8,14 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, tachartlazaruspkg, formklock,
-  formOptions, uFuzzyTime,
-  formAnalogueKlock, SysUtils, UformClipBoardUtils, formClipBoard,
-  formLEDKlock, formBinaryKlock, formSmallTextKlock, formStickyNote,
+  formOptions, uFuzzyTime, formAnalogueKlock, SysUtils, UformClipBoardUtils,
+  formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock, formStickyNote,
   formFloatingKlock, formSplashScreen, formBiorhythm;
 
 {$R *.res}
 
 begin
+  Application.Scaled:=True;
   Application.Title:='lazKlock';
 
   //{$IFDEF TEST}

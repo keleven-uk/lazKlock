@@ -19,7 +19,7 @@ type
   memo = class
 
   private
-    _name: string;           //  Body text of the Memo.
+    _name: string;           //  name of the Memo.
     _id  : integer;          //  unique id of the Memo.
 
     _body   : string;        //  memo text..
@@ -42,8 +42,8 @@ type
 implementation
 
 constructor memo.Create(sn_id: integer);
-{  Creates a new stick note.
-   The header, body and id of the sticky note has to be specified.
+{  Creates a new memo.
+
 }
 begin
   id := sn_id;
@@ -54,11 +54,11 @@ begin
 end;
 
 constructor memo.Create(fsOut: TFileStream);
-{  Creates a new stick note.
+{  Creates a new memo.
    A filestream has to be specified, the sticky notes is then created
    from date read from the filestream.
 
-   If the filestream is empty a blank stick Note is returned.
+   If the filestream is empty a blank memo is returned.
    An exception is raised if there is an error on write.
 }
 var

@@ -33,6 +33,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 { TODO : Check out Balloon Time. }
 { TODO : Check out Reminders. }
 { TODO : Look at up time in formAbout. }
+{ TODO : Combine onChange routins in both memo and events }
 
 {$mode objfpc}{$H+}
 
@@ -42,8 +43,8 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
   uMemos, uMemo, formAbout, formOptions, formLicense, UFuzzyTime, dateutils,
-  LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils,
-  UConversion, AvgLvlTree, uOptions, Windows, ULogging, ustickyNotes, formInfo,
+  LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils, uEvent,
+  uEvents, UConversion, uOptions, Windows, ULogging, ustickyNotes, formInfo,
   Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
   formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm;
 
@@ -63,6 +64,12 @@ type
     btnCountdownShutdownAbort: TButton;
     btnCountdownStart        : TButton;
     btnCountdownStop         : TButton;
+    btnEventAdd              : TButton;
+    btnEventClear            : TButton;
+    btnEventDelete           : TButton;
+    btnEventEdit             : TButton;
+    btnEventNew              : TButton;
+    btnEventPrint            : TButton;
     btnReminderAbort         : TButton;
     btnReminderClear         : TButton;
     btnReminderLoadCommand   : TButton;
@@ -93,6 +100,7 @@ type
     CmbBxConvertTo           : TComboBox;
     CmbBxCountdownAction     : TComboBox;
     CmbBxCountdownEvent      : TComboBox;
+    cmbBxEventType           : TComboBox;
     CmbBxReminderAction      : TComboBox;
     CmbBxReminderSystem      : TComboBox;
     CmbBxTZFonts             : TComboBox;
@@ -101,12 +109,14 @@ type
     CmbBxTimeZones           : TComboBox;
     DCP_rijndael1            : TDCP_rijndael;
     DCP_sha256_1             : TDCP_sha256;
+    dtEdtEventDate           : TDateEdit;
     DtReminderEvent          : TDateEdit;
     edtConverionResult       : TEdit;
     edtConverionValue        : TEdit;
     EdtCountdownCommand      : TEdit;
     EdtCountdownReminder     : TEdit;
     EdtCountdownSound        : TEdit;
+    edtEventName             : TEdit;
     EdtReminderCommand       : TEdit;
     EdtReminderSound         : TEdit;
     EdtReminderText          : TEdit;
@@ -115,6 +125,10 @@ type
     Label2                   : TLabel;
     Label3                   : TLabel;
     Label4                   : TLabel;
+    Label5                   : TLabel;
+    Label6                   : TLabel;
+    Label7                   : TLabel;
+    Label8                   : TLabel;
     LblCountdownTime         : TLabel;
     lblReminder              : TLabel;
     lblfuzzy                 : TLabel;
@@ -123,10 +137,13 @@ type
     lblRadix                 : TLabel;
     lblSplitLap              : TLabel;
     lblTimer                 : TLabel;
+    LstBxEvents              : TListBox;
     LstBxMemoName            : TListBox;
+    mEventNotes              : TMemo;
     MmMemoData               : TMemo;
     PascalTZ1                : TPascalTZ;
     RdBttnMemoEncrypt        : TRadioButton;
+    ScrollBox2               : TScrollBox;
     SpdBtn120                : TSpeedButton;
     SpdBtn90                 : TSpeedButton;
     SpdBtn60                 : TSpeedButton;
@@ -136,6 +153,7 @@ type
     SpnReminderMins          : TSpinEdit;
     SpnEdtTimeBase           : TSpinEdit;
     PageControl1             : TPageControl;
+    TbShtEvents              : TTabSheet;
     TbShtWorldKlock          : TTabSheet;
     TbShtConversion          : TTabSheet;
     TbShtCountdown           : TTabSheet;
@@ -190,6 +208,8 @@ type
     Panel14                  : TPanel;
     Panel15                  : TPanel;
     Panel16                  : TPanel;
+    Panel17                  : TPanel;
+    Panel18                  : TPanel;
     Panel20                  : TPanel;
     Panel21                  : TPanel;
     Panel22                  : TPanel;
@@ -216,6 +236,9 @@ type
     procedure ballonTimerTimer(Sender: TObject);
     procedure btnConverionConvertClick(Sender: TObject);
     procedure btnConversionAddUnitsClick(Sender: TObject);
+    procedure btnEventAddClick(Sender: TObject);
+    procedure btnEventClearClick(Sender: TObject);
+    procedure btnEventNewClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
     procedure btnMemoDecryptClick(Sender: TObject);
@@ -253,8 +276,10 @@ type
     procedure CmbBxTimeChange(Sender: TObject);
     procedure CmbBxCountdownActionChange(Sender: TObject);
     procedure CountdownTimerTimer(Sender: TObject);
+    procedure dtEdtEventDateChange(Sender: TObject);
     procedure DtReminderEventChange(Sender: TObject);
     procedure edtConverionValueChange(Sender: TObject);
+    procedure edtEventNameChange(Sender: TObject);
     procedure edtMemoKeyChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -291,8 +316,11 @@ type
     procedure UpdateTime;
     procedure UpdateWorldKlock(KTime: TDateTime);
     procedure setMemoButtons(mode: Boolean);
+    procedure setEventButtons(mode: Boolean);
+    procedure displayEvent(pos: integer);
     procedure displayMemo(pos: integer);
     procedure displayEncryptedMemo;
+    procedure loadevents;
     procedure loadMemos;
     procedure callInfo(mode: string);
     procedure EnhancedBiorhythmClick;
@@ -306,13 +334,13 @@ CONST
 
 var
   frmMain          : TfrmMain;
-  rmndrStore       : TAvgLvlTree; //  used to store all the reminders.
   userOptions      : Options;     //  used to hold all the user options.
   ft               : FuzzyTime;   //  the object to give the different times.
   fs               : fontStore;   //  used to handle custom fonts i.e. load & remove
   kLog             : Logger;      //  used to log errors, debug statements etc.
   stickies         : stickyNotes; //  used to store the Sticky Notes.
   memorandum       : Memos;       //  used to store memos.
+  ev               : Events;      //  used to store events.
   timeZone         : TPascalTZ;   //  used for world klock time zones.
   ConversionUnits  : TStrings;    //  used to hold the conversions units - read from file.
   unitConvertVal   : double;      //  used to hold the conversion value.
@@ -323,7 +351,6 @@ var
   timerPaused      : TdateTime;
   popupMessages    : FourStrings;
   popupTitle       : FourStrings;
-  noReminder       : integer;
   idleTime         : TdateTime;
   nowTime          : string;
   prvTime          : string;
@@ -353,10 +380,9 @@ begin
   EdtReminderSound.Text  := 'alarm-fatal.mp3';
 
   appStartTime    := GetTickCount64;  //  tick count when application starts.
-  noReminder      := 0;
   ft              := FuzzyTime.Create;
   fs              := fontStore.Create;
-  rmndrStore      := TAvgLvlTree.Create;
+  ev              := Events.Create;
   ConversionUnits := TStringList.Create;
   stickies        := stickyNotes.Create;
   memorandum      := Memos.Create;
@@ -392,6 +418,9 @@ begin
   stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
   loadMemos;                     //  Load Memos store into listbox, if any.
+
+  ev.restoreEvents;              //  Reload Events into memo store, if any.
+  loadEvents;                    //  Load Events store into listbox, if any.
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -438,6 +467,7 @@ begin
   fs.removeFonts;            //  Remove all fonts from system.
   fs.Free;                   //  Release the font store object.
   ft.Free;                   //  Release the fuzzy time object.
+  ev.Free;                   //  Release the events store object.
   stickies.Free;             //  Release the Sticky Note store.
   memorandum.Free;           //  Release the Memo store.
   userOptions.Free;          //  Release the user options.
@@ -471,6 +501,9 @@ begin
   CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
   CmbBxTZFonts.ItemIndex := 0;
 
+  cmbBxEventType.items.Add('Birthday');
+  cmbBxEventType.ItemIndex := 0;
+
   DtReminderEvent.Date   := now;                       //  set up reminder stuff.
   SpnReminderMins.Value  := MinuteOf(time);
   SpnReminderHour.Value  := HourOf(time);
@@ -480,6 +513,7 @@ begin
   lblRadix.Visible       := False;
 
   setMemoButtons(false);                                 //  set up memo buttons.
+  setEventButtons(false);                                //  set up event buttons.
 
   ft.displayFuzzy     := userOptions.defaultTime;
   ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
@@ -622,11 +656,16 @@ begin
           SpnReminderMins.Value, DatetoStr(DtReminderEvent.Date)]);
       end;  //  if btnReminderSet.Enabled
     end;
-    5:                       //  memo page.
+    5:                       //  events page
+    begin
+      setEventButtons(true);
+      dtEdtEventDate.Date:= 0;
+    end;
+    6:                       //  memo page.
     begin
       setMemoButtons(true);
     end;
-    6:
+    7:
     begin                       //  Conversion Page.
       checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
       readConversionUnitsFile;
@@ -1105,7 +1144,6 @@ begin
   application.Title        := message;
   frmMain.Caption          := 'Countdown :: ' + message;
 end;
-
 
 procedure TfrmMain.btnSoundTestClick(Sender: TObject);
 {  Called to test the sound file.    }
@@ -1638,6 +1676,147 @@ begin
   doPlaySound(EdtReminderSound.Text, userOptions.volume);
 end;
 //
+// *********************************************************** Events **********
+//
+procedure TfrmMain.setEventButtons(mode: Boolean);
+{  Configure the Event buttons and Event fields.    }
+begin
+  btnEventNew.Visible     := mode;
+  btnEventAdd.Visible     := false;
+  btnEventClear.Visible   := false;
+
+  edtEventName.Enabled   := false;
+  edtEventName.ReadOnly  := true;
+  dtEdtEventDate.Enabled := false;
+  cmbBxEventType.Enabled := false;
+  mEventNotes.Enabled    := false;
+  mEventNotes.ReadOnly   := false;
+  mEventNotes.Text       := '';
+
+  btnEventEdit.Caption := 'Edit';
+
+  if (PageControl1.TabIndex = 5) and (LstBxEvents.Items.Count <> 0)then
+  begin
+    btnEventEdit.Visible       := true;
+    btnEventDelete.Visible     := true;
+    btnEventPrint.Visible      := true;
+    LstBxEvents.Selected[0] := true;
+    //displayMemo(0);                    //  Display the first memo, if exists.
+  end
+  else
+  begin                                //  No memos, don't need the buttons yet.
+    btnEventEdit.Visible       := false;
+    btnEventDelete.Visible     := false;
+    btnEventPrint.Visible      := false;
+  end;
+
+end;
+
+procedure TfrmMain.btnEventNewClick(Sender: TObject);
+{  Add a new event.    }
+begin
+  edtEventName.Enabled  := true;
+  edtEventName.ReadOnly := false;
+  edtEventName.Text     := '';
+  edtEventName.SetFocus;
+
+  btnEventClear.Visible  := true;
+  dtEdtEventDate.Enabled := true;
+  cmbBxEventType.Enabled := true;
+  mEventNotes.Enabled    := true;
+  mEventNotes.ReadOnly   := false;
+  mEventNotes.Text       := '';
+
+  btnEventEdit.Visible   := false;
+  btnEventDelete.Visible := false;
+  btnEventPrint.Visible  := false;
+end;
+
+procedure TfrmMain.btnEventClearClick(Sender: TObject);
+{  Clear all fields and return to new mode.    }
+begin
+  edtEventName.Text        := '';
+  dtEdtEventDate.date      := 0;
+  cmbBxEventType.ItemIndex := 0;
+
+  setEventButtons(true);
+end;
+
+procedure TfrmMain.btnEventAddClick(Sender: TObject);
+{  Add a event to the store.
+   This is achieved by calling event store new function and
+   passing in the data.  The listbox is then re-populated.
+   The eventCount is one more then the actual count.
+}
+VAR
+  sdate: string;
+begin
+  klog.writeLog('Adding event');
+
+  sdate := DateToStr(dtEdtEventDate.date);
+  ev.new(edtEventName.Text, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text);
+  loadevents;
+  seteventButtons(true);
+end;
+
+procedure TfrmMain.loadevents;
+{ Load the contents of the memo file into the listbox.    }
+var
+  f: integer;
+begin
+  klog.writeLog(format('Loading %d memos', [ev.EventsCount]));
+  LstBxEvents.Clear;
+  for f := 0 to ev.EventsCount -1 do
+  begin
+    displayEvent(f);
+    LstBxEvents.Items.Add(edtEventName.Text);
+  end;
+end;
+
+procedure TfrmMain.displayEvent(pos: integer);
+{  Display a event at position pos.
+   If the event count is zero i.e. no events - then just exit.
+}
+VAR
+  e: Event;                   //  Event.
+  d: TDate;
+begin
+  if ev.EventsCount = 0 then exit;
+
+  e := Event.Create(0);
+  e := ev.retrieve(pos);
+
+  d := StrToDate(e.date);
+
+  edtEventName.Text        := e.name;
+  dtEdtEventDate.date      := d;
+  cmbBxEventType.ItemIndex := e.etype;
+  mEventNotes.Text         := e.notes;
+
+  e.Free;
+end;
+
+procedure TfrmMain.edtEventNameChange(Sender: TObject);
+{  makes the add button visible when both name and date contain text.
+
+   Was also being fired when loading a previous event.
+   Since the Clear button is made visible when the new button
+   is clicked, this used as a flag to indicate a new event is being added
+   and not a previous event being displayed.
+
+   NB : A date of 0 is 1/1/1989 - so an event can not be set for that date.
+}
+begin
+ if (edtEventName.Text <> '') and (dtEdtEventDate.Date <> 0) then
+   btnEventAdd.Visible := btnEventClear.Visible;
+end;
+
+procedure TfrmMain.dtEdtEventDateChange(Sender: TObject);
+begin
+ if (edtEventName.Text <> '') and (dtEdtEventDate.Date <> 0) then
+   btnEventAdd.Visible := btnEventClear.Visible;
+end;
+//
 // *********************************************************** Conversion ******
 //
 procedure TfrmMain.CmbBxCategoryChange(Sender: TObject);
@@ -1809,6 +1988,8 @@ begin
 
     MmMemoData.Text := decrypt(m.body, passWord);
   end;  //  if InputQuery('Memo Password',
+
+  m.Free;
 end;
 
 procedure TfrmMain.btnMemoAddClick(Sender: TObject);
@@ -1903,6 +2084,8 @@ begin
     MmMemoData.Text        := m.body;
     btnMemoDecrypt.visible := false;
   end;
+
+  m.Free;
 end;
 
 procedure TfrmMain.setMemoButtons(mode: Boolean);
@@ -1915,7 +2098,7 @@ begin
 
   btnMemoEdit.Caption := 'Edit';
 
-  if (PageControl1.TabIndex = 5) and (memorandum.MemosCount <> 0) then
+  if (PageControl1.TabIndex = 6) and (memorandum.MemosCount <> 0) then
   begin
     btnMemoEdit.Visible       := true;
     btnMemoDelete.Visible     := true;
