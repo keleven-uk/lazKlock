@@ -11,7 +11,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   ComCtrls, StdCtrls, UformClipBoardUtils, LCLIntf, LCLType, Clipbrd, dateUtils,
-  LazFileUtils, ShellApi;
+  LazFileUtils, ShellApi, lcl;
 
 type
 
@@ -30,11 +30,7 @@ type
     StsBrClipBoard         : TStatusBar;
     Timer1                 : TTimer;
 
-    procedure btnClpBrdClearClipboardClick(Sender: TObject);
-    procedure btnClpBrdClearMonitorClick(Sender: TObject);
-    procedure btnClpBrdCloseClick(Sender: TObject);
-    procedure btnClpBrdLoadClick(Sender: TObject);
-    procedure btnClpBrdSaveClick(Sender: TObject);
+    procedure btnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -70,29 +66,37 @@ uses
 //
 //....................................... Form Stuff ...........................
 //
-procedure TfrmClipBoard.FormClose(Sender: TObject; var CloseAction: TCloseAction
-  );
+procedure TfrmClipBoard.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+{  Run on form close, but don't want to close form when top X is clicked.
+   Form should disappear, but still be available.
+}
 begin
   kLog.writeLog('formClipBoard Close');
 
   if userOptions.CB_ScreenSave then
   begin
-    userOptions.CB_formTop := Top;
+    userOptions.CB_formTop  := Top;
     userOptions.CB_formLeft := Left;
     userOptions.writeCurrentOptions;
   end;
-  CloseAction := caFree;
+  CloseAction          := caNone;
+  frmClipBoard.Visible := false;
 end;
 
 procedure TfrmClipBoard.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('formClipBoard Create');
-  FListener := TClipboardListener.Create;
+
+  DoubleBuffered                := true;
+  StsBrClipBoard.DoubleBuffered := true;
+
+  FListener                   := TClipboardListener.Create;
   FListener.OnClipboardChange := @ClipboardChanged;
 end;
 
 procedure TfrmClipBoard.FormDestroy(Sender: TObject);
 begin
+  kLog.writeLog('formClipBoard Destroy');
   FListener.Free;
 end;
 
@@ -113,59 +117,73 @@ end;
 //
 //....................................... Buttons ..............................
 //
-procedure TfrmClipBoard.btnClpBrdClearMonitorClick(Sender: TObject);
+procedure TfrmClipBoard.btnClick(Sender: TObject);
+{  Generic click procedure for the main buttons.
+}
+VAR
+  btnName: string;
 begin
-  lstVwClipBoard.Clear;
-end;
+  if not (Sender is TButton) then exit;
 
-procedure TfrmClipBoard.btnClpBrdCloseClick(Sender: TObject);
-begin
-    close;
-end;
+  btnName  := TButton(Sender).Name;
 
-procedure TfrmClipBoard.btnClpBrdLoadClick(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmClipBoard.btnClpBrdSaveClick(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmClipBoard.btnClpBrdClearClipboardClick(Sender: TObject);
-begin
-  clipboard.Clear;
+  case btnName of
+    'btnClpBrdClearMonitor'  : lstVwClipBoard.Clear;
+    'btnClpBrdClearClipboard': clipboard.Clear;
+    'btnClpBrdLoad'          : FListener.loadCSV;
+    'btnClpBrdSave'          : FListener.saveCSV(LstVwClipBoard.Items);
+    'btnClpBrdClose'         : frmClipBoard.Visible := false;
+  end;  //  case of btnName of
 end;
 //
 //....................................... ListView .............................
 //
 procedure TfrmClipBoard.LstVwClipBoardClick(Sender: TObject);
-{  When a row of the listview is clicked, pass that row to the clipboard.    }
+{  When a row of the listview is clicked, pass that row to the clipboard.
+   If the item is either image or a file, check that the file exists.
+}
 var
-  item: TListItem;
-  bitmap: TBitmap;
+  item   : TListItem;
+  bitmap : TBitmap;
+  itmtext: string;
 begin
-  item := LstVwClipBoard.Selected;
+  item    := LstVwClipBoard.Selected;
+  itmtext := Item.SubItems.Strings[1];
 
   if Item.Caption = 'Image' then
   begin
-    bitmap := TBitmap.Create;
-    bitmap.LoadFromFile(Item.SubItems.Strings[1]);
-    bitmap.Canvas.StretchDraw(rect(0, 0, ImgClipBoard.Width, ImgClipBoard.Height), bitmap);
-    bitmap.SetSize(ImgClipBoard.Width, ImgClipBoard.Height);
-    ImgClipBoard.Picture.Bitmap := bitmap;
-    bitmap.Free;
-  end
+    if fileExists(itmtext) then  //  Does the image exist.
+    begin
+      bitmap := TBitmap.Create;
+      bitmap.LoadFromFile(itmtext);
+      bitmap.Canvas.StretchDraw(rect(0, 0, ImgClipBoard.Width, ImgClipBoard.Height), bitmap);
+      bitmap.SetSize(ImgClipBoard.Width, ImgClipBoard.Height);
+      ImgClipBoard.Picture.Bitmap := bitmap;
+      bitmap.Free;
+    end else
+    begin
+      ImgClipBoard.Picture.Clear;
+      Item.SubItems.Strings[1] := 'Image Deleted : ' + itmtext;
+    end;  //  if fileExists(Item.SubItems.Strings[1] then
+  end     //  if Item.Caption = 'Image'
   else
     ImgClipBoard.Picture.Clear;
 
+  if Item.Caption = 'File' then
+  begin
+    if not fileExists(Item.SubItems.Strings[1]) then  //  Does the file exist.
+    begin
+      Item.SubItems.Strings[1] := 'File Deleted : ' + itmtext;
+    end;  //  if not fileExists(Item.SubItems.Strings[1]) then
+  end;    //  if Item.Caption = 'File' then
+
+  if isthere(FListener.text) then exit;
   FListener.CopyToClipboard(item);
 end;
 
 procedure TfrmClipBoard.LstVwClipBoardCustomDrawSubItem(
   Sender: TCustomListView; Item: TListItem; SubItem: Integer;
-  State: TCustomDrawState; var DefaultDraw: Boolean);
+  State : TCustomDrawState; var DefaultDraw: Boolean);
 begin
   if Item.caption = 'Text'  then Sender.Canvas.Font.Color := clRed;
   if Item.caption = 'File'  then Sender.Canvas.Font.Color := clgreen;
@@ -202,6 +220,7 @@ begin
     StsBrClipBoard.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
   else
     StsBrClipBoard.Panels.Items[3].Text := '';
+
 end;
 
 procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);
@@ -214,6 +233,8 @@ var
   dirName: string;
 
 begin
+  if isthere(FListener.text) then exit;
+
   if not frmClipBoard.Visible then frmClipBoard.Visible := True;
 
   if FListener.category = 'Image' then
@@ -229,13 +250,11 @@ begin
     bitmap.Free;
   end;
 
-  if not isthere(FListener.text) then
-    begin
-      newItem         := LstVwClipBoard.Items.Add;
-      newItem.Caption := FListener.category;
-      newItem.SubItems.add(FListener.epoch);
-      newItem.SubItems.add(FListener.text);
-    end;
+  newItem         := LstVwClipBoard.Items.Add;
+  newItem.Caption := FListener.category;
+  newItem.SubItems.add(FListener.epoch);
+  newItem.SubItems.add(FListener.text);
+
 end;
 
 procedure TfrmClipBoard.cullTmpFiles;
@@ -306,7 +325,7 @@ function TfrmClipBoard.isThere(s: string): boolean;
    over and every item is checked in turn.
 
    This not only stops duplicate entries, but also stops the annoyance of
-   the entry being entered again when the lixtview is clicked.
+   the entry being entered again when the listview is clicked.
 }
 var
   Item : TListItem;

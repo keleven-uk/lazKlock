@@ -11,7 +11,7 @@ interface
 
 uses
   SysUtils, Windows, LCLIntf, Classes, Clipbrd, dialogs, LazFileUtils, StdCtrls, ComCtrls,
-  shlobj, LCLType, Graphics;
+  shlobj, LCLType, Graphics, Controls;
 
 type
   { TClipboardListener }
@@ -39,6 +39,8 @@ type
     procedure CopyToClipboard(Item: TListItem);
     procedure CopyFileToClipboard(FileList: string);
     procedure CopyImageToClipboard(FileList: string);
+    procedure loadCSV;
+    procedure saveCSV(data: TListItems);
 
     property OnClipboardChange: TNotifyEvent read FOnClipboardChange write FOnClipboardChange;
     property text             : string       read _text              write _text;
@@ -53,6 +55,11 @@ implementation
 
 uses
   formklock, formClipBoard;
+
+CONST
+  LF    = '^*';
+  CR    = '^%';
+  COMMA = '^&';
 
 var
   AddClipboardFormatListener: function(Wnd: HWND): BOOL; stdcall;
@@ -105,29 +112,24 @@ begin
 
     if clipboard.HasFormat(CF_TEXT) then               // Text
     begin
-      klog.writeLog('Text Selected');
       getTextData;
     end
     else if clipboard.HasFormat(CF_HDROP) then              //  Filename or directory
     begin
-      klog.writeLog('File Selected');
       getFileData;
     end
     else if Clipboard.HasFormat(PredefinedClipboardFormat(pcfBitmap)) then
     begin
-      klog.writeLog('Image Selected');
       getPicData;
     end
     else
     begin
-      klog.writeLog('Clipboard else');
       getTextData;
     end;
 
     epoch := FormatDateTime('DD MMM YYYY hh:nn:ss', now);
 
     Msg.Result := 0;
-    klog.writeLog('Calling FOnClipboardChange');
     FOnClipboardChange(Self);
   end;
 end;
@@ -141,6 +143,7 @@ begin
   Bitmap.LoadFromClipboardFormat(PredefinedClipboardFormat(pcfBitmap));
   image := bitmap;
   category := 'Image';
+  text     := '';
 
   //  This causes an Project lazKlock raised exception class 'External: SIGSEGV' ERROR.
   //  Not sure why at the moment.
@@ -152,7 +155,6 @@ procedure TClipboardListener.getTextData;
 begin
   text     := clipboard.AsText;
   category := 'Text';
-  klog.writeLog(format('TClipboardListener.getTextData : category = %s   text = %s', [category, text]));
 end;
 
 procedure TClipboardListener.getFileData;
@@ -251,8 +253,128 @@ begin
     CloseClipboard;
    end;
 end;
+//
+//------------------------------------------- CSV stuff ------------------------
+//
+procedure TClipboardListener.loadCSV;
+{  Populates the clipboard listview form a csv file.
 
+   The three fields of the csv file are extracted using string splicing.
+   I know this is a bit klunky, but theirs only three and will be only three.
 
+   A extension of .clip is suggested, but can be changed.
+
+   TODO : this procedure directly talks to the listview, maybe should not.
+}
+VAR
+  newItem: TListItem;
+  csvFile: TextFile;
+  csvLine: string;
+  itmCat : string;
+  itmDate: string;
+  itmData: string;
+  itmPos : integer;
+begin
+  with TOpenDialog.Create(frmClipBoard) do
+  begin
+    filter     := '*.clip';
+    InitialDir := GetAppConfigDir(False);
+    Title      := 'Choose a Clipboard file to Load';
+    if Execute then
+    begin
+      AssignFile(csvFile, fileName.ToLower);
+      try
+        // Open the file for reading
+        reset(csvFile);
+
+        frmClipBoard.LstVwClipBoard.Items.Clear;
+
+        // Keep reading lines until the end of the file is reached
+        while not eof(csvFile) do
+        begin
+          readln(csvFile, csvLine);
+
+          itmpos := Pos(',', csvLine);
+          itmCat := copy(csvLine, 0, itmpos - 1);
+          Delete(csvLine, 1, itmpos);
+
+          itmpos := Pos(',', csvLine);
+          itmDate := copy(csvLine, 0, itmpos - 1);
+          Delete(csvLine, 1, itmpos);
+
+          itmData := csvLine;
+
+          //  Return the data back to original.
+          //  All special markers for linefeed, carriage return and comma
+          //  are replaced with the original meaning.
+          itmData := StringReplace(itmData, LF   , #10, [rfReplaceAll]);
+          itmData := StringReplace(itmData, CR   , #13, [rfReplaceAll]);
+          itmData := StringReplace(itmData, COMMA, ',', [rfReplaceAll]);
+
+          newItem         := frmClipBoard.LstVwClipBoard.Items.Add;;
+          newItem.Caption := itmCat;
+          newItem.SubItems.add(itmDate);
+          newItem.SubItems.add(itmData);
+
+        end;  //  while not eof(csvFile) do
+      finally
+        CloseFile(csvFile);
+      end;  //  try
+    end;    //  if Execute then
+  end;      //  with TOpenDialog.Create(frmClipBoard) do
+end;
+
+procedure TClipboardListener.saveCSV(data: TListItems);
+{  Saves the contents of the clipboard viewer to a file.
+   The data is save as a csv file.
+
+   A extension of .clip is suggested, but can be changed.
+}
+VAR
+  itemCount: integer;
+  itemData : string;
+  cleanData: string;
+  csvFile  : TextFile;
+  f        : integer;
+begin
+  with TSaveDialog.Create(frmClipBoard) do
+  begin
+    filter     := '*.clip';
+    InitialDir := GetAppConfigDir(False);
+    Title      := 'Choose a Clipboard file To save to';
+    if Execute then
+    begin
+      AssignFile(csvFile, fileName.ToLower);
+      try
+        rewrite(csvFile);
+        itemCount := data.Count - 1;
+
+        for f := 0 to itemCount do
+        begin
+          cleanData := data.Item[f].SubItems.Strings[1];
+
+          //  replace each linefeed, carriage return and comma with
+          //  a special marker, so the data is not save on multiple
+          //  lines and extra commas will upset the load procedure.
+          cleanData := StringReplace(cleanData, #10, LF   , [rfReplaceAll]);
+          cleanData := StringReplace(cleanData, #13, CR   , [rfReplaceAll]);
+          cleanData := StringReplace(cleanData, ',', COMMA, [rfReplaceAll]);
+
+          itemData := format('%s,%s,%s', [data.Item[f].Caption,
+                                          data.Item[f].SubItems.Strings[0],
+                                          cleanData]);
+
+          writeLn(csvFile, itemData);
+        end;  //  for f := 0 to itemCount do
+      finally
+        CloseFile(csvFile);
+      end;    //  try
+    end;      //  if Execute then
+  end;        //  with TSaveDialog.Create(frmClipBoard) do
+end;
+//
+//
+//
 initialization
   InitClipboardFormatListener;
 end.

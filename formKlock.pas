@@ -148,6 +148,7 @@ type
     SpdBtn90                 : TSpeedButton;
     SpdBtn60                 : TSpeedButton;
     SpdBtn30                 : TSpeedButton;
+    SpdBtnClipboard          : TSpeedButton;
     SpnEdtCountdown          : TSpinEdit;
     SpnReminderHour          : TSpinEdit;
     SpnReminderMins          : TSpinEdit;
@@ -421,6 +422,9 @@ begin
 
   ev.restoreEvents;              //  Reload Events into memo store, if any.
   loadEvents;                    //  Load Events store into listbox, if any.
+
+  DoubleBuffered := true;
+  stsBrInfo.DoubleBuffered := true;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -433,6 +437,8 @@ begin
 
   nowTime := ft.getTime;
   prvTime := 'Klock';               //  so times are different first time
+
+  frmClipBoard.DoubleBuffered   := true;
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -442,6 +448,10 @@ begin
   frmSplashScreen := TfrmSplashScreen.Create(nil);
   frmSplashScreen.Show;
   frmSplashScreen.Update;
+
+  Visible := False;
+
+  if frmClipBoard.Visible then frmClipBoard.Visible := false;
 
   logSplashFooter;                         // to populate splash screen top memo
 
@@ -774,23 +784,27 @@ procedure TfrmMain.UpdateStatusBar(KTime: TDateTime);
 VAR
   keyResult: string;
 begin
+  stsBrInfo.BeginUpdate;
+
   keyResult := ' cns ';
-    if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
-    if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
-    if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
+  if LCLIntf.GetKeyState(VK_CAPITAL) <> 0 then keyResult[2] := 'C';
+  if LCLIntf.GetKeyState(VK_NUMLOCK) <> 0 then keyResult[3] := 'N';
+  if LCLIntf.GetKeyState(VK_SCROLL)  <> 0 then keyResult[4] := 'S';
 
-    if userOptions.display24Hour then
-      stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
-    else
-      stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
+  if userOptions.display24Hour then
+    stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss', KTime)
+  else
+    stsBrInfo.Panels.Items[0].Text := FormatDateTime('hh:nn:ss am/pm', KTime);
 
-    stsBrInfo.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
-    stsBrInfo.Panels.Items[2].Text := keyResult;
+  stsBrInfo.Panels.Items[1].Text := FormatDateTime('DD MMM YYYY', KTime);
+  stsBrInfo.Panels.Items[2].Text := keyResult;
 
-    if userOptions.displayIdleTime then
-      stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
-    else
-      stsBrInfo.Panels.Items[3].Text := '';
+  if userOptions.displayIdleTime then
+    stsBrInfo.Panels.Items[3].Text := 'Idle Time :: ' + FormatDateTime('hh:nn:ss', idleTime)
+  else
+    stsBrInfo.Panels.Items[3].Text := '';
+
+  stsBrInfo.EndUpdate;
 end;
 
 procedure TfrmMain.ballonTimerTimer(Sender: TObject);
@@ -1225,16 +1239,14 @@ procedure Tfrmmain.spdBtnClick(Sender: TObject);
    Each button is named spdBtnNNN, where NNN is the time interval in minutes.
 }
 VAR
-  tmpButton: TSpeedButton;
   btnName  : string;
   btnValue : integer;
 begin
   //  if not called by a click on a speed button then exit.
   if not (Sender is TSpeedButton) then Exit;
 
-  //  create a temp speed button and assign to caller.
-  tmpButton := TSpeedButton(Sender);
-  btnName   := tmpButton.Name;
+  //  Must be a TSpeedButton, grab name.
+  btnName := TSpeedButton(Sender).Name;
   Delete(btnName, 1, 6);            //  delete spdBtn from start of name.
   btnValue  := strToInt(btnName);
 
@@ -1962,7 +1974,7 @@ procedure TfrmMain.displayEncryptedMemo;
 {  Display an encrypted memo - used by edit and decrypt.    }
 var
   m: Memo;                   //  Memo.
-  passWord: string;
+  passWord: string = '';
 begin
   m := Memo.Create(0);
   m := memorandum.retrieve(LstBxMemoName.ItemIndex);
@@ -1999,7 +2011,7 @@ procedure TfrmMain.btnMemoAddClick(Sender: TObject);
    The memoCount is one more then the actual count.
 }
 var
-  passWord: string;
+  passWord: string = '';
 begin
   klog.writeLog('Adding memo');
   if RdBttnMemoEncrypt.checked then
@@ -2170,32 +2182,20 @@ procedure TfrmMain.mnuItmClick(Sender: TObject);
 {  A generic click routine called by each menu item.
    Also called by the TbitBtn and TSpeedButton on front panel.
 
-   The action of the menu is determined from the menu item name.
+   The action of the menu is determined from the item name.
 }
 VAR
-  tmpMenuItem: TMenuItem;
-  tmpBitBtn  : TBitBtn;
-  tmpSpeedBtn: TSpeedButton;
   itemName   : string;
 begin
   itemName := '';
 
-  //  create a temp item and assign to caller.
+  //  set the appropiate name.
   if (Sender is TMenuItem) then
-  begin
-    tmpMenuItem := TMenuItem(Sender);
-    itemName    := tmpMenuItem.Name;
-  end
+    itemName := TMenuItem(Sender).Name
   else if (Sender is TBitBtn) then
-  begin
-    tmpBitBtn := TBitBtn(Sender);
-    itemName  := tmpBitBtn.Name;
-  end
+    itemName := TBitBtn(Sender).Name
   else if (Sender is TSpeedButton) then
-  begin
-    tmpSpeedBtn := TSpeedButton(Sender);
-    itemName    := tmpSpeedBtn.Name;
-  end;
+    itemName := TSpeedButton(Sender).Name;
 
   if itemName = '' then exit;    //  not called by a TMenuItem, TSpeedButton or TBitBtn.
 
@@ -2241,6 +2241,8 @@ begin
     'mnuItmSunStuff'         : callInfo('Sun Stuff');           //  Calls the Sun Stuff Info screen.
     'mnuItmPowerStuff'       : callInfo('Power Source');        //  Calls the Power Source Saving Info screen.
     'mnuItmMonitorStuff'     : callInfo('Monitor Stuff');       //  Calls the Monitor Stuff Info screen.
+    // ************************************************** Clipboard manager ********
+    'SpdBtnClipboard'        : frmClipBoard.Visible := true;
     // ************************************************** Sticky Note Menu *********
     'SpdBtnNewStickyNote',                                      //  Creates a new sticky note, will appear on the screen.
     'mnuItmNewStickyNote'    : stickies.new(userOptions.stickyColor, userOptions.stickyFont);

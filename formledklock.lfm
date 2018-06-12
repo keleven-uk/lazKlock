@@ -18,7 +18,7 @@ object frmLEDKlock: TfrmLEDKlock
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = popUpMenuLEDKlock
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.9.0.0'
   object LEDKlock: TVpLEDLabel
     Left = 0
     Height = 60
@@ -32,12 +32,12 @@ object frmLEDKlock: TfrmLEDKlock
   end
   object TmrLEDKlock: TTimer
     OnTimer = TmrLEDKlockTimer
-    left = 144
-    top = 32
+    Left = 144
+    Top = 32
   end
   object popUpMenuLEDKlock: TPopupMenu
-    left = 80
-    top = 32
+    Left = 80
+    Top = 32
     object MnItmAlwaysOnTop: TMenuItem
       AutoCheck = True
       Caption = 'Always On Top'

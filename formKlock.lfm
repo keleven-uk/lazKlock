@@ -1,12 +1,12 @@
 object frmMain: TfrmMain
-  Left = 1212
+  Left = 1182
   Height = 259
-  Top = 234
+  Top = 317
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Klock'
-  ClientHeight = 239
+  ClientHeight = 240
   ClientWidth = 705
   Constraints.MinWidth = 620
   Icon.Data = {
@@ -151,18 +151,17 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '1.9.0.0'
   object stsBrInfo: TStatusBar
     Left = 0
-    Height = 23
-    Top = 216
+    Height = 20
+    Top = 220
     Width = 705
     Panels = <    
       item
         Width = 70
       end    
       item
-        Bevel = pbRaised
         Width = 75
       end    
       item
@@ -189,8 +188,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtEvents
-      TabIndex = 5
+      ActivePage = TbShtCountdown
+      TabIndex = 2
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -218,10 +217,10 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTime: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 8
               Width = 100
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Fuzzy'
@@ -303,11 +302,11 @@ object frmMain: TfrmMain
             TabOrder = 0
             object CmbBxTimeZones: TComboBox
               Left = 8
-              Height = 20
+              Height = 19
               Top = 8
               Width = 100
               Font.Height = -9
-              ItemHeight = 12
+              ItemHeight = 11
               OnChange = CmbBxTimeChange
               ParentFont = False
               Style = csDropDownList
@@ -353,15 +352,15 @@ object frmMain: TfrmMain
       end
       object TbShtCountdown: TTabSheet
         Caption = 'Countdown'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 658
         object Panel3: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 658
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 658
           Color = clForm
           ParentColor = False
@@ -406,7 +405,7 @@ object frmMain: TfrmMain
             TabOrder = 1
             object SpnEdtCountdown: TSpinEdit
               Left = 8
-              Height = 29
+              Height = 27
               Top = 8
               Width = 62
               Font.Height = -16
@@ -417,9 +416,9 @@ object frmMain: TfrmMain
             end
             object LblCountdownTime: TLabel
               Left = 96
-              Height = 47
+              Height = 42
               Top = 0
-              Width = 84
+              Width = 88
               Caption = '00:00'
               Font.Height = -35
               ParentColor = False
@@ -468,16 +467,16 @@ object frmMain: TfrmMain
             TabOrder = 2
             object chckBxCountdownSound: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 54
+              Width = 50
               Caption = 'Sound'
               OnChange = chckBxCountdownSoundChange
               TabOrder = 0
             end
             object EdtCountdownSound: TEdit
               Left = 168
-              Height = 23
+              Height = 21
               Top = 8
               Width = 150
               Enabled = False
@@ -507,10 +506,10 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownAction: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 8
               Width = 80
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Sound'
@@ -525,9 +524,9 @@ object frmMain: TfrmMain
             end
             object chckBxCountdownEvent: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 58
+              Width = 55
               Caption = 'System'
               OnChange = chckBxCountdownEventChange
               TabOrder = 5
@@ -535,9 +534,9 @@ object frmMain: TfrmMain
             end
             object chckBxCountdownReminder: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 71
+              Width = 65
               Caption = 'Reminder'
               OnChange = chckBxCountdownReminderChange
               TabOrder = 6
@@ -545,7 +544,7 @@ object frmMain: TfrmMain
             end
             object EdtCountdownReminder: TEdit
               Left = 176
-              Height = 23
+              Height = 21
               Top = 8
               Width = 288
               Enabled = False
@@ -555,11 +554,11 @@ object frmMain: TfrmMain
             end
             object CmbBxCountdownEvent: TComboBox
               Left = 168
-              Height = 23
+              Height = 21
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 15
+              ItemHeight = 13
               Items.Strings = (
                 'Shut Down PC'
                 'Restart PC'
@@ -582,9 +581,9 @@ object frmMain: TfrmMain
             end
             object chckBxCountdownCommand: TCheckBox
               Left = 100
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 77
+              Width = 67
               Caption = 'Command'
               OnChange = chckBxCountdownCommandChange
               TabOrder = 10
@@ -592,7 +591,7 @@ object frmMain: TfrmMain
             end
             object EdtCountdownCommand: TEdit
               Left = 176
-              Height = 23
+              Height = 21
               Top = 8
               Width = 288
               Enabled = False
@@ -723,15 +722,15 @@ object frmMain: TfrmMain
       end
       object TbShtReminder: TTabSheet
         Caption = 'Reminder'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 658
         object Panel5: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 658
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 658
           Color = clForm
           ParentColor = False
@@ -775,7 +774,7 @@ object frmMain: TfrmMain
             TabOrder = 1
             object lblReminder: TLabel
               Left = 16
-              Height = 32
+              Height = 29
               Top = 4
               Width = 183
               Caption = 'Reminder not set'
@@ -785,7 +784,7 @@ object frmMain: TfrmMain
             end
             object SpnReminderMins: TSpinEdit
               Left = 384
-              Height = 23
+              Height = 21
               Top = 8
               Width = 50
               MaxValue = 59
@@ -794,7 +793,7 @@ object frmMain: TfrmMain
             end
             object DtReminderEvent: TDateEdit
               Left = 440
-              Height = 25
+              Height = 24
               Top = 8
               Width = 80
               CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
@@ -845,7 +844,7 @@ object frmMain: TfrmMain
             end
             object SpnReminderHour: TSpinEdit
               Left = 328
-              Height = 23
+              Height = 21
               Top = 8
               Width = 50
               MaxValue = 23
@@ -863,10 +862,10 @@ object frmMain: TfrmMain
             TabOrder = 2
             object CmbBxReminderAction: TComboBox
               Left = 8
-              Height = 23
+              Height = 21
               Top = 7
               Width = 80
-              ItemHeight = 15
+              ItemHeight = 13
               ItemIndex = 0
               Items.Strings = (
                 'Sound'
@@ -881,16 +880,16 @@ object frmMain: TfrmMain
             end
             object ChckBxReminderSound: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 54
+              Width = 50
               Caption = 'Sound'
               OnChange = ChckBxReminderSoundChange
               TabOrder = 1
             end
             object EdtReminderSound: TEdit
               Left = 168
-              Height = 23
+              Height = 21
               Top = 8
               Width = 150
               Enabled = False
@@ -917,9 +916,9 @@ object frmMain: TfrmMain
             end
             object ChckBxReminderReminder: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 71
+              Width = 65
               Caption = 'Reminder'
               OnChange = ChckBxReminderReminderChange
               TabOrder = 5
@@ -927,7 +926,7 @@ object frmMain: TfrmMain
             end
             object EdtReminderText: TEdit
               Left = 176
-              Height = 23
+              Height = 21
               Top = 9
               Width = 280
               Enabled = False
@@ -937,9 +936,9 @@ object frmMain: TfrmMain
             end
             object ChckBxReminderSystem: TCheckBox
               Left = 104
-              Height = 19
+              Height = 17
               Top = 9
-              Width = 58
+              Width = 55
               Caption = 'System'
               OnChange = ChckBxReminderSystemChange
               TabOrder = 7
@@ -947,11 +946,11 @@ object frmMain: TfrmMain
             end
             object CmbBxReminderSystem: TComboBox
               Left = 168
-              Height = 23
+              Height = 21
               Top = 9
               Width = 150
               Enabled = False
-              ItemHeight = 15
+              ItemHeight = 13
               Items.Strings = (
                 'Shutdown PC'
                 'Restart PC'
@@ -964,9 +963,9 @@ object frmMain: TfrmMain
             end
             object ChckBxReminderCommand: TCheckBox
               Left = 100
-              Height = 19
+              Height = 17
               Top = 8
-              Width = 77
+              Width = 67
               Caption = 'Command'
               OnChange = ChckBxReminderCommandChange
               TabOrder = 9
@@ -974,7 +973,7 @@ object frmMain: TfrmMain
             end
             object EdtReminderCommand: TEdit
               Left = 176
-              Height = 23
+              Height = 21
               Top = 8
               Width = 280
               Enabled = False
@@ -1006,15 +1005,15 @@ object frmMain: TfrmMain
       end
       object TbShtEvents: TTabSheet
         Caption = 'Events'
-        ClientHeight = 102
+        ClientHeight = 104
         ClientWidth = 658
         object Panel17: TPanel
           Left = 0
-          Height = 102
+          Height = 104
           Top = 0
           Width = 658
           Align = alClient
-          ClientHeight = 102
+          ClientHeight = 104
           ClientWidth = 658
           Color = clForm
           ParentColor = False
@@ -1044,19 +1043,19 @@ object frmMain: TfrmMain
             HorzScrollBar.Page = 372
             VertScrollBar.Page = 84
             ClientHeight = 84
-            ClientWidth = 379
+            ClientWidth = 380
             TabOrder = 1
             object Label5: TLabel
               Left = 8
-              Height = 15
+              Height = 13
               Top = 6
-              Width = 64
+              Width = 58
               Caption = 'Event Name'
               ParentColor = False
             end
             object edtEventName: TEdit
               Left = 8
-              Height = 23
+              Height = 21
               Top = 24
               Width = 80
               OnChange = edtEventNameChange
@@ -1064,7 +1063,7 @@ object frmMain: TfrmMain
             end
             object dtEdtEventDate: TDateEdit
               Left = 128
-              Height = 23
+              Height = 21
               Top = 24
               Width = 103
               CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
@@ -1078,26 +1077,26 @@ object frmMain: TfrmMain
             end
             object Label6: TLabel
               Left = 128
-              Height = 15
+              Height = 13
               Top = 6
-              Width = 56
+              Width = 54
               Caption = 'Event Date'
               ParentColor = False
             end
             object Label7: TLabel
               Left = 272
-              Height = 15
+              Height = 13
               Top = 6
-              Width = 57
+              Width = 55
               Caption = 'Event Type'
               ParentColor = False
             end
             object cmbBxEventType: TComboBox
               Left = 272
-              Height = 23
+              Height = 21
               Top = 24
               Width = 100
-              ItemHeight = 15
+              ItemHeight = 13
               TabOrder = 2
               Text = 'cmbBxEventType'
             end
@@ -1111,9 +1110,9 @@ object frmMain: TfrmMain
             end
             object Label8: TLabel
               Left = 8
-              Height = 15
+              Height = 13
               Top = 54
-              Width = 63
+              Width = 59
               Caption = 'Event Notes'
               ParentColor = False
             end
@@ -1272,20 +1271,20 @@ object frmMain: TfrmMain
             end
             object CmbBxCategory: TComboBox
               Left = 96
-              Height = 23
+              Height = 21
               Top = 10
               Width = 216
-              ItemHeight = 15
+              ItemHeight = 13
               OnChange = CmbBxCategoryChange
               Style = csDropDownList
               TabOrder = 0
             end
             object CmbBxConvertTo: TComboBox
               Left = 96
-              Height = 23
+              Height = 21
               Top = 48
               Width = 216
-              ItemHeight = 15
+              ItemHeight = 13
               OnChange = CmbBxConvertToChange
               Style = csDropDownList
               TabOrder = 1
@@ -1409,7 +1408,7 @@ object frmMain: TfrmMain
       TabOrder = 0
     end
     object BitBtnClose: TBitBtn
-      Left = 512
+      Left = 520
       Height = 30
       Top = 8
       Width = 75
@@ -1476,7 +1475,7 @@ object frmMain: TfrmMain
       TabOrder = 1
     end
     object BitBtnHelp: TBitBtn
-      Left = 424
+      Left = 440
       Height = 30
       Top = 8
       Width = 75
@@ -1617,7 +1616,7 @@ object frmMain: TfrmMain
       TabOrder = 2
     end
     object SpdBtnNewStickyNote: TSpeedButton
-      Left = 376
+      Left = 360
       Height = 30
       Top = 8
       Width = 30
@@ -1811,15 +1810,15 @@ object frmMain: TfrmMain
     end
     object lblRadix: TLabel
       Left = 240
-      Height = 15
+      Height = 13
       Top = 13
-      Width = 28
+      Width = 27
       Caption = 'Radix'
       ParentColor = False
     end
     object SpnEdtTimeBase: TSpinEdit
       Left = 296
-      Height = 23
+      Height = 21
       Top = 5
       Width = 50
       MinValue = 2
@@ -1881,10 +1880,134 @@ object frmMain: TfrmMain
       OnClick = btnMemoPrintClick
       TabOrder = 15
     end
+    object SpdBtnClipboard: TSpeedButton
+      Left = 400
+      Height = 30
+      Top = 8
+      Width = 30
+      Glyph.Data = {
+        460E0000424D460E00000000000036000000280000001E0000001E0000000100
+        200000000000100E000064000000640000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00005498C5CE5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396
+        C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396
+        C2FF5396C2FF5396C2FF5396C2FF5396C2FF5396C2FF559AC6CC000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005396C2FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF76C2F5FF5396C2FF00000000000000000000000000000000000000000000
+        000000000000000000005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2
+        F5FF898B88FF8F7966FF8F7966FF8F7966FF8F7966FF8F7966FF8F7966FF8F79
+        66FF8F7966FF898B89FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396
+        C2FF000000000000000000000000000000000000000000000000000000000000
+        00005396C2FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF8F7966FF8F79
+        66FF8F7966FF8F7966FF8F7966FF8F7966FF8F7966FF8F7966FF8F7966FF8F79
+        66FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF000000000000
+        00000000000000000000000000000000000000000000000000005396C2FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF76C2F5FF8F7966FF8F7966FF8F7966FF8E79
+        67FE8D7969F88D7969F88F7968FE8F7966FF8F7966FF8F7966FF76C2F5FF76C2
+        F5FF76C2F5FF76C2F5FF76C2F5FF5396C2FF0000000000000000000000000000
+        0000000000000000000000000000000000005498C4CB5396C2FF5396C2FF5396
+        C2FF5396C2FF5396C2FF8F7966FF8F7966FF8F7966FF8D7A6AF69177663C9077
+        673E8D7B6BF48F7966FF8F7966FF8F7966FF5396C2FF5396C2FF5396C2FF5396
+        C2FF5396C2FF5598C5C900000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000000000000008F7966E28F7868408F7864428F7966E00000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000009079654C8E7966DE8F7966DD8D79674A00000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000000
+      }
+      OnClick = mnuItmClick
+    end
   end
   object mnuMain: TMainMenu
-    left = 128
-    top = 208
+    Left = 128
+    Top = 208
     object mnuFile: TMenuItem
       Caption = 'File'
       object mnuItmOptions: TMenuItem
@@ -2123,14 +2246,14 @@ object frmMain: TfrmMain
   object mainTimer: TTimer
     Enabled = False
     OnTimer = mainTimerTimer
-    left = 296
-    top = 211
+    Left = 296
+    Top = 211
   end
   object CountdownTimer: TTimer
     Enabled = False
     OnTimer = CountdownTimerTimer
-    left = 256
-    top = 208
+    Left = 256
+    Top = 208
   end
   object PopupNotifier1: TPopupNotifier
     Color = clSilver
@@ -2143,20 +2266,20 @@ object frmMain: TfrmMain
     Title = 'Klock'
     Visible = False
     OnClose = PopupNotifier1Close
-    left = 48
-    top = 211
+    Left = 48
+    Top = 211
   end
   object timerTimer: TTimer
     Enabled = False
     OnTimer = timerTimerTimer
-    left = 216
-    top = 208
+    Left = 216
+    Top = 208
   end
   object ReminderTimer: TTimer
     Enabled = False
     OnTimer = ReminderTimerTimer
-    left = 168
-    top = 208
+    Left = 168
+    Top = 208
   end
   object TrayIcon: TTrayIcon
     BalloonFlags = bfInfo
@@ -4282,12 +4405,12 @@ object frmMain: TfrmMain
     }
     Hint = '"klock"'
     OnDblClick = TrayIconDblClick
-    left = 8
-    top = 208
+    Left = 8
+    Top = 208
   end
   object PpMnTray: TPopupMenu
-    left = 88
-    top = 208
+    Left = 88
+    Top = 208
     object ppMnItmShow: TMenuItem
       Caption = 'Show'
       OnClick = ppMnItmShowClick
@@ -4304,42 +4427,42 @@ object frmMain: TfrmMain
     Enabled = False
     Interval = 10000
     OnTimer = ballonTimerTimer
-    left = 336
-    top = 208
+    Left = 336
+    Top = 208
   end
   object mainIdleTimer: TIdleTimer
     AutoEnabled = True
     Enabled = False
     OnTimer = mainIdleTimerTimer
     OnStartTimer = mainIdleTimerStartTimer
-    left = 488
-    top = 208
+    Left = 488
+    Top = 208
   end
   object DCP_rijndael1: TDCP_rijndael
     Id = 9
     Algorithm = 'Rijndael'
     MaxKeySize = 256
     BlockSize = 128
-    left = 376
-    top = 211
+    Left = 376
+    Top = 211
   end
   object DCP_sha256_1: TDCP_sha256
     Id = 28
     Algorithm = 'SHA256'
     HashSize = 256
-    left = 416
-    top = 208
+    Left = 416
+    Top = 208
   end
   object tmrMemo: TTimer
     Enabled = False
     Interval = 30000
     OnTimer = tmrMemoTimer
-    left = 448
-    top = 211
+    Left = 448
+    Top = 211
   end
   object PascalTZ1: TPascalTZ
     DetectInvalidLocalTimes = True
-    left = 520
-    top = 208
+    Left = 520
+    Top = 208
   end
 end

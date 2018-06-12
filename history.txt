@@ -1581,7 +1581,22 @@ Code for the New, Clear and add buttons written.
 Need to test, before continuing.
 
 Currently
-11062 lines of source code.
-6093 statements
-16.0% comment
+11564 lines of source code.
+6333 statements
+16.2% comment
+
+
+Build 88 [2.4.1.88]
+
+Finally added code to load and save the contents of the clipboard managed to
+CSV files. The code resides in uClipboardUtils.
+Fixed a bug with the Clipboard manager, if an image was clicked in the list it
+could be duplicated.
+Also, added a generic click procedure for the buttons in the Clipboard Manager.
+Added a speed button to the from of Klock that calls up the Clipboard manager.
+
+Currently
+11708 lines of source code.
+6421 statements
+16.4% comment
 

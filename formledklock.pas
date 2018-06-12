@@ -59,6 +59,7 @@ begin
   kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
 
+  frmLEDKlock.DoubleBuffered := true;
   TmrLEDKlock.Enabled := false;
 end;
 
