@@ -26,7 +26,7 @@ type
     constructor Create; overload;
     destructor Destroy; override;
     procedure new(key: string; date: string; etype: integer; data: string);
-    procedure amend(id:integer; data: string);
+    procedure amend(id:integer; itmDate: string; itmdata: string);
     function retrieve(id: integer): Event;
     procedure restoreEvents;
     procedure saveEvents;
@@ -80,12 +80,13 @@ begin
   saveEvents;
 end;
 
-procedure Events.amend(id:integer; data: string);
-{  Amends a memo - but only the body text and the encrypt flag.
-   The memo store is then saved to file.
+procedure Events.amend(id:integer; itmDate: string; itmdata: string);
+{  Amends a event - the date abd bodt etxt can be amended.
+   The event store is then saved to file.
 }
 begin
-  EventsStore.Data[id].notes    := data;
+  EventsStore.Data[id].date  := itmdate;
+  EventsStore.Data[id].notes := itmdata;
 
   saveEvents;
 end;

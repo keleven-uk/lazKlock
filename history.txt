@@ -1600,3 +1600,9 @@ Currently
 6421 statements
 16.4% comment
 
+
+Build 89 [2.4.1.89]
+
+Added event delete and event edit procedures.
+Added event list box click event.
+Also changed event amend to allow amendments of date as well as text.

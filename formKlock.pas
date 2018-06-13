@@ -239,6 +239,8 @@ type
     procedure btnConversionAddUnitsClick(Sender: TObject);
     procedure btnEventAddClick(Sender: TObject);
     procedure btnEventClearClick(Sender: TObject);
+    procedure btnEventDeleteClick(Sender: TObject);
+    procedure btnEventEditClick(Sender: TObject);
     procedure btnEventNewClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
@@ -285,6 +287,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure LstBxEventsClick(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
     procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
@@ -1693,9 +1696,9 @@ end;
 procedure TfrmMain.setEventButtons(mode: Boolean);
 {  Configure the Event buttons and Event fields.    }
 begin
-  btnEventNew.Visible     := mode;
-  btnEventAdd.Visible     := false;
-  btnEventClear.Visible   := false;
+  btnEventNew.Visible   := mode;
+  btnEventAdd.Visible   := false;
+  btnEventClear.Visible := false;
 
   edtEventName.Enabled   := false;
   edtEventName.ReadOnly  := true;
@@ -1709,14 +1712,14 @@ begin
 
   if (PageControl1.TabIndex = 5) and (LstBxEvents.Items.Count <> 0)then
   begin
-    btnEventEdit.Visible       := true;
-    btnEventDelete.Visible     := true;
-    btnEventPrint.Visible      := true;
+    btnEventEdit.Visible    := true;
+    btnEventDelete.Visible  := true;
+    btnEventPrint.Visible   := true;
     LstBxEvents.Selected[0] := true;
-    //displayMemo(0);                    //  Display the first memo, if exists.
+    displayEvent(0);                   //  Display the first event, if exists.
   end
   else
-  begin                                //  No memos, don't need the buttons yet.
+  begin                                //  No events, don't need the buttons yet.
     btnEventEdit.Visible       := false;
     btnEventDelete.Visible     := false;
     btnEventPrint.Visible      := false;
@@ -1776,12 +1779,55 @@ procedure TfrmMain.loadevents;
 var
   f: integer;
 begin
-  klog.writeLog(format('Loading %d memos', [ev.EventsCount]));
+  klog.writeLog(format('Loading %d events', [ev.EventsCount]));
   LstBxEvents.Clear;
   for f := 0 to ev.EventsCount -1 do
   begin
     displayEvent(f);
     LstBxEvents.Items.Add(edtEventName.Text);
+  end;
+end;
+
+procedure TfrmMain.btnEventDeleteClick(Sender: TObject);
+begin
+  if QuestionDlg ('Event Delete',
+                  'Do You Really Want To Delete This Event',
+                   mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
+  begin
+    klog.writeLog(format('Deleting event at pos %d', [LstBxEvents.ItemIndex]));
+    ev.Remove(LstBxEvents.ItemIndex);
+    loadevents;
+    seteventButtons(true);
+  end;
+end;
+
+procedure TfrmMain.btnEventEditClick(Sender: TObject);
+VAR
+  sdate: string;
+begin
+  btnEventNew.Visible    := false;
+  btnEventDelete.Visible := false;
+  btnEventPrint.Visible  := false;
+
+  if btnEventEdit.Caption = 'Edit' then          //  Edit Event.
+  begin
+    klog.writeLog(format('Editing Event at pos %d', [LstBxEvents.ItemIndex]));
+    mEventNotes.Enabled    := true;
+    mEventNotes.ReadOnly   := false;
+    dtEdtEventDate.Enabled := true;
+    btnEventEdit.Caption  := 'Save';
+    btnEventClear.Visible := true;
+  end
+  else                                          //  save Event.
+  begin
+    klog.writeLog(format('Saving Event at pos %d', [LstBxEvents.ItemIndex]));
+    mEventNotes.ReadOnly  := true;
+    btnEventEdit.Caption  := 'Edit';
+    btnEventClear.Visible := false;
+
+    sdate := DateToStr(dtEdtEventDate.date);
+    ev.amend(LstBxEvents.ItemIndex, sdate, mEventNotes.Text);
+    seteventButtons(true);
   end;
 end;
 
@@ -1824,9 +1870,17 @@ begin
 end;
 
 procedure TfrmMain.dtEdtEventDateChange(Sender: TObject);
+{  We now have an event name and an event date, so enable the event add button.
+}
 begin
  if (edtEventName.Text <> '') and (dtEdtEventDate.Date <> 0) then
    btnEventAdd.Visible := btnEventClear.Visible;
+end;
+
+procedure TfrmMain.LstBxEventsClick(Sender: TObject);
+{  Display the item clicked.  }
+begin
+  displayEvent(LstBxEvents.ItemIndex);
 end;
 //
 // *********************************************************** Conversion ******
@@ -1919,7 +1973,7 @@ end;
 procedure TfrmMain.btnMemoDeleteClick(Sender: TObject);
 begin
   if QuestionDlg ('Memo Delete',
-                  'Do You Reallt Want To Delete This memo',
+                  'Do You Really Want To Delete This memo',
                    mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
   begin
     klog.writeLog(format('Deleting memo at pos %d', [LstBxMemoName.ItemIndex]));

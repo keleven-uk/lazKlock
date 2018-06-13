@@ -24,9 +24,9 @@
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="4"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="88"/>
+      <BuildNr Value="89"/>
       <Language Value="0809"/>
-      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="88"/>
+      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="89"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -96,12 +96,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
-        <TopLine Value="1242"/>
-        <CursorPos X="40" Y="1248"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="1694"/>
+        <CursorPos X="25" Y="1699"/>
         <UsageCount Value="202"/>
         <Bookmarks Count="2">
-          <Item0 Y="1693"/>
-          <Item1 Y="2034" ID="1"/>
+          <Item0 Y="1696"/>
+          <Item1 X="2" Y="1885" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -288,10 +289,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formClipBoard"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="60"/>
-        <CursorPos Y="72"/>
+        <TopLine Value="142"/>
+        <CursorPos X="75" Y="124"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -499,7 +499,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="24"/>
         <CursorPos X="14" Y="30"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="199"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -512,7 +512,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos X="46" Y="57"/>
-        <UsageCount Value="175"/>
+        <UsageCount Value="178"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\delphimoon\moon.pas"/>
@@ -563,7 +563,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="5"/>
         <CursorPos X="18" Y="40"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="137"/>
       </Unit52>
       <Unit53>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\mouseandkeyinput\mouseandkeyinput.pas"/>
@@ -617,7 +617,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="9"/>
         <CursorPos X="44" Y="64"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="71"/>
       </Unit59>
       <Unit60>
         <Filename Value="uevent.pas"/>
@@ -626,7 +626,7 @@
         <EditorIndex Value="11"/>
         <TopLine Value="97"/>
         <CursorPos X="44" Y="120"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
       </Unit60>
       <Unit61>
@@ -634,9 +634,9 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEvents"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="76"/>
-        <CursorPos X="41" Y="124"/>
-        <UsageCount Value="48"/>
+        <TopLine Value="61"/>
+        <CursorPos X="58" Y="84"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
       </Unit61>
       <Unit62>
@@ -652,124 +652,124 @@
     </OtherDefines>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uformclipboardutils.pas"/>
-        <Caret Line="340" Column="24" TopLine="311"/>
+        <Filename Value="formclipboard.pas"/>
+        <Caret Line="331" Column="78" TopLine="307"/>
       </Position1>
       <Position2>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="129" Column="13" TopLine="112"/>
+        <Caret Line="333" Column="20" TopLine="307"/>
       </Position2>
       <Position3>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="133" Column="14" TopLine="115"/>
+        <Caret Line="235" Column="11" TopLine="221"/>
       </Position3>
       <Position4>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="135" Column="8" TopLine="117"/>
+        <Caret Line="57" Column="24" TopLine="43"/>
       </Position4>
       <Position5>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="38" Column="15" TopLine="32"/>
+        <Caret Line="147" Column="3" TopLine="126"/>
       </Position5>
       <Position6>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="145" TopLine="26"/>
+        <Caret Line="334" Column="56" TopLine="310"/>
       </Position6>
       <Position7>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="143" Column="3" TopLine="135"/>
+        <Caret Line="179" Column="4" TopLine="145"/>
       </Position7>
       <Position8>
         <Filename Value="formclipboard.pas"/>
-        <Caret Line="117" TopLine="109"/>
+        <Caret Line="57" TopLine="54"/>
       </Position8>
       <Position9>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="2192" Column="30" TopLine="2185"/>
+        <Filename Value="formclipboard.pas"/>
+        <Caret Line="177" Column="41" TopLine="157"/>
       </Position9>
       <Position10>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="2196" Column="37" TopLine="2176"/>
+        <Caret Line="1690" TopLine="1679"/>
       </Position10>
       <Position11>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="1977" Column="24" TopLine="1972"/>
+        <Caret Line="1693" TopLine="1679"/>
       </Position11>
       <Position12>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="2014" Column="24" TopLine="1976"/>
+        <Caret Line="2034" TopLine="2013"/>
       </Position12>
       <Position13>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="1245" Column="3" TopLine="1229"/>
+        <Caret Line="1785" Column="42" TopLine="1785"/>
       </Position13>
       <Position14>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="2185" Column="50" TopLine="2178"/>
+        <Caret Line="445" TopLine="436"/>
       </Position14>
       <Position15>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="144" Column="18" TopLine="135"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1837" TopLine="1808"/>
       </Position15>
       <Position16>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="317" Column="31" TopLine="304"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2062" Column="3" TopLine="2059"/>
       </Position16>
       <Position17>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="50" Column="14" TopLine="30"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1838" Column="37" TopLine="1807"/>
       </Position17>
       <Position18>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="231" Column="29" TopLine="219"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1936" TopLine="1861"/>
       </Position18>
       <Position19>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="333" Column="46" TopLine="306"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1819" Column="61" TopLine="1778"/>
       </Position19>
       <Position20>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="331" Column="78" TopLine="307"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1797" Column="67" TopLine="1763"/>
       </Position20>
       <Position21>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="333" Column="20" TopLine="307"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1800" Column="13" TopLine="1770"/>
       </Position21>
       <Position22>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="235" Column="11" TopLine="221"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1932" Column="3" TopLine="1909"/>
       </Position22>
       <Position23>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="57" Column="24" TopLine="43"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1966" TopLine="1961"/>
       </Position23>
       <Position24>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="147" Column="3" TopLine="126"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1822" Column="90" TopLine="1797"/>
       </Position24>
       <Position25>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="334" Column="56" TopLine="310"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1814" Column="8" TopLine="1793"/>
       </Position25>
       <Position26>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="57" Column="4" TopLine="91"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1815" Column="35" TopLine="1795"/>
       </Position26>
       <Position27>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="179" Column="4" TopLine="145"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1814" Column="62" TopLine="1795"/>
       </Position27>
       <Position28>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="57" TopLine="54"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1822" Column="8" TopLine="1801"/>
       </Position28>
       <Position29>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="177" Column="41" TopLine="157"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1825" Column="37" TopLine="1804"/>
       </Position29>
       <Position30>
-        <Filename Value="formclipboard.pas"/>
-        <Caret Line="153" Column="32" TopLine="172"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1820" TopLine="1798"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
