@@ -470,8 +470,10 @@ begin
   //  if clipboard manager active, we need to save its position - if needed.
   if userOptions.CB_ScreenSave then
   begin
+    klog.writeLog(format('TfrmMain.FormClose : writing TfrmClipBoard position %d %d', [frmClipBoard.Top, frmClipBoard.Left]));
     userOptions.CB_formTop  := frmClipBoard.Top;
     userOptions.CB_formLeft := frmClipBoard.Left;
+    userOptions.writeCurrentOptions;
   end;
 
   stickies.updateStickyNotes;

@@ -1606,3 +1606,15 @@ Build 89 [2.4.1.89]
 Added event delete and event edit procedures.
 Added event list box click event.
 Also changed event amend to allow amendments of date as well as text.
+
+
+Build 89 [2.4.1.89]
+
+Corrected bug, Clipboard manager not saving screen position.
+Another attempt at fixing the duplicate image entries in the clipboard list.
+Added logic to check if image or file had been deleted, when clicked in list.
+
+Currently
+11776 lines of source code.
+6458 statements
+16.4% comment

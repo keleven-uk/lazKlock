@@ -47,7 +47,6 @@ type
     property category         : string       read _category          write _category;
     property epoch            : string       read _epoch             write _epoch;
     property image            : TBitmap      read _image             write _image;
-
     class property Supported: Boolean read GetSupported;
   end;
 
@@ -140,8 +139,8 @@ var
   bitmap: TBitmap;
 begin
   bitmap := TBitmap.Create;
-  Bitmap.LoadFromClipboardFormat(PredefinedClipboardFormat(pcfBitmap));
-  image := bitmap;
+  bitmap.LoadFromClipboardFormat(PredefinedClipboardFormat(pcfBitmap));
+  image    := bitmap;
   category := 'Image';
   text     := '';
 

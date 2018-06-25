@@ -75,6 +75,7 @@ begin
 
   if userOptions.CB_ScreenSave then
   begin
+    klog.writeLog('TfrmClipBoard.FormClose : writing TfrmClipBoard position');
     userOptions.CB_formTop  := Top;
     userOptions.CB_formLeft := Left;
     userOptions.writeCurrentOptions;
@@ -147,10 +148,14 @@ var
   bitmap : TBitmap;
   itmtext: string;
 begin
-  item    := LstVwClipBoard.Selected;
-  itmtext := Item.SubItems.Strings[1];
+  if LstVwClipBoard.ItemIndex = -1 then exit;
 
-  if Item.Caption = 'Image' then
+  item    := LstVwClipBoard.Selected;
+  itmtext := Item.SubItems.Strings[1];  //  clicked on a non valid entry.
+
+
+  //  if image and not already tagged as deleted.
+  if (Item.Caption = 'Image') and (LeftStr(itmtext, 15) <> 'Image Deleted :')then
   begin
     if fileExists(itmtext) then  //  Does the image exist.
     begin
@@ -169,16 +174,17 @@ begin
   else
     ImgClipBoard.Picture.Clear;
 
-  if Item.Caption = 'File' then
+  //  if file and not already tagged as deleted.
+  if (Item.Caption = 'File') and (LeftStr(itmtext, 14) <> 'File Deleted :') then
   begin
-    if not fileExists(Item.SubItems.Strings[1]) then  //  Does the file exist.
+    if not fileExists(itmtext) then  //  Does the file exist.
     begin
       Item.SubItems.Strings[1] := 'File Deleted : ' + itmtext;
     end;  //  if not fileExists(Item.SubItems.Strings[1]) then
   end;    //  if Item.Caption = 'File' then
 
-  if isthere(FListener.text) then exit;
   FListener.CopyToClipboard(item);
+
 end;
 
 procedure TfrmClipBoard.LstVwClipBoardCustomDrawSubItem(
@@ -226,6 +232,9 @@ end;
 procedure TfrmClipBoard.ClipboardChanged(Sender: TObject);
 {  Called by the Clipboard Listener.
    The contents of the clipboard are added to the listview, if not already present.
+
+   If a new image, itemindex should be 0, if already in the list then itemindex
+   should be it's place in the list and we can ignore.
 }
 var
   newItem: TListItem;
@@ -233,6 +242,8 @@ var
   dirName: string;
 
 begin
+  klog.writeLog(format('item indes = %d', [LstVwClipBoard.ItemIndex]));
+  if (FListener.category = 'Image') and (LstVwClipBoard.ItemIndex <> -1) then exit;
   if isthere(FListener.text) then exit;
 
   if not frmClipBoard.Visible then frmClipBoard.Visible := True;
@@ -255,6 +266,7 @@ begin
   newItem.SubItems.add(FListener.epoch);
   newItem.SubItems.add(FListener.text);
 
+  LstVwClipBoard.ItemIndex := -1;  //  clear the item index of the list.
 end;
 
 procedure TfrmClipBoard.cullTmpFiles;
