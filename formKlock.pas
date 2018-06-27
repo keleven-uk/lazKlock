@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
   To compile, the following components must be installed into Lazarus.
-     BGRA comtorls, which installs BGRA bitmap.
+     BGRA controls, which installs BGRA bitmap.
        MouseAndKeyInput, needs to be ticked to use from this package.
      EC-contols - Eye Candy - used for the Accordion on the options screen.
      VisualPlanit - L.E.D. control.
@@ -31,7 +31,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 }
 
 { TODO : Check out Balloon Time. }
-{ TODO : Check out Reminders. }
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routins in both memo and events }
 
@@ -516,7 +515,7 @@ begin
   CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
   CmbBxTZFonts.ItemIndex := 0;
 
-  cmbBxEventType.items.Add('Birthday');
+  cmbBxEventType.Items.LoadFromFile('EventTypes.txt');
   cmbBxEventType.ItemIndex := 0;
 
   DtReminderEvent.Date   := now;                       //  set up reminder stuff.
@@ -611,11 +610,13 @@ procedure TfrmMain.PageControl1Change(Sender: TObject);
         2 = countdown
         3 = timer
         4 = reminder
-        5 = memo
-        6 = conversion
+        5 = Events
+        6 = memo
+        7 = conversion
 }
 begin
   setMemoButtons(false);
+  setEventButtons(false);
 
   case PageControl1.TabIndex of
     0:
@@ -674,7 +675,6 @@ begin
     5:                       //  events page
     begin
       setEventButtons(true);
-      dtEdtEventDate.Date:= 0;
     end;
     6:                       //  memo page.
     begin
@@ -1727,6 +1727,7 @@ begin
     btnEventPrint.Visible      := false;
   end;
 
+  btnEventPrint.Enabled := false;       //  enable when print fuction is completed.
 end;
 
 procedure TfrmMain.btnEventNewClick(Sender: TObject);
@@ -1739,6 +1740,7 @@ begin
 
   btnEventClear.Visible  := true;
   dtEdtEventDate.Enabled := true;
+  dtEdtEventDate.Date    := today;
   cmbBxEventType.Enabled := true;
   mEventNotes.Enabled    := true;
   mEventNotes.ReadOnly   := false;
@@ -1753,7 +1755,7 @@ procedure TfrmMain.btnEventClearClick(Sender: TObject);
 {  Clear all fields and return to new mode.    }
 begin
   edtEventName.Text        := '';
-  dtEdtEventDate.date      := 0;
+  dtEdtEventDate.date      := today;
   cmbBxEventType.ItemIndex := 0;
 
   setEventButtons(true);
@@ -1777,17 +1779,25 @@ begin
 end;
 
 procedure TfrmMain.loadevents;
-{ Load the contents of the memo file into the listbox.    }
+{ Load the contents of the events file into the listbox.    }
 var
   f: integer;
 begin
   klog.writeLog(format('Loading %d events', [ev.EventsCount]));
+
   LstBxEvents.Clear;
+  edtEventName.Clear;
+  dtEdtEventDate.Clear;
+  mEventNotes.Clear;
+
   for f := 0 to ev.EventsCount -1 do
   begin
     displayEvent(f);
     LstBxEvents.Items.Add(edtEventName.Text);
   end;
+
+  LstBxEvents.ItemIndex := 0;
+  displayEvent(0);
 end;
 
 procedure TfrmMain.btnEventDeleteClick(Sender: TObject);
@@ -1817,18 +1827,17 @@ begin
     mEventNotes.Enabled    := true;
     mEventNotes.ReadOnly   := false;
     dtEdtEventDate.Enabled := true;
+    cmbBxEventType.Enabled := true;
     btnEventEdit.Caption  := 'Save';
     btnEventClear.Visible := true;
   end
   else                                          //  save Event.
   begin
     klog.writeLog(format('Saving Event at pos %d', [LstBxEvents.ItemIndex]));
-    mEventNotes.ReadOnly  := true;
     btnEventEdit.Caption  := 'Edit';
-    btnEventClear.Visible := false;
 
     sdate := DateToStr(dtEdtEventDate.date);
-    ev.amend(LstBxEvents.ItemIndex, sdate, mEventNotes.Text);
+    ev.amend(LstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text);
     seteventButtons(true);
   end;
 end;
@@ -1849,7 +1858,7 @@ begin
   d := StrToDate(e.date);
 
   edtEventName.Text        := e.name;
-  dtEdtEventDate.date      := d;
+  dtEdtEventDate.Date      := d;
   cmbBxEventType.ItemIndex := e.etype;
   mEventNotes.Text         := e.notes;
 
@@ -2190,6 +2199,8 @@ begin
 
   edtMemoKey.ReadOnly := true;
   edtMemoKey.Enabled  := false;
+
+  btnMemoPrint.Enabled := false;       //  enable when print fuction is completed.
 end;
 
 procedure TfrmMain.tmrMemoTimer(Sender: TObject);

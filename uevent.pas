@@ -82,9 +82,9 @@ begin
     SetLength(sDte, Len1);
     fsOut.ReadBuffer(sDte[1], len1);
 
-    fsOut.ReadBuffer(iTyp, sizeof(iID));     //  read type.
+    fsOut.ReadBuffer(iTyp, sizeof(iTyp));   //  read type.
 
-    fsout.ReadBuffer(Len1, Sizeof(Len1));    //  read notes
+    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read notes
     SetLength(sNte, Len1);
     fsOut.ReadBuffer(sNte[1], len1);
 
@@ -95,7 +95,7 @@ begin
     etype := iTyp;
     notes := sNte;
   except
-    error('Error on Sticky Note Read');
+    error('Error on Events Read');
   end;
 end;
 
@@ -117,13 +117,13 @@ begin
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(date[1], Len1);
 
-    fsOut.WriteBuffer(id, sizeof(etype));      //  write type.
+    fsOut.WriteBuffer(etype, sizeof(etype));   //  write type.
 
     Len1 := Length(notes);                     //  write notes
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(notes[1], Len1);
   except
-    error('Error on Sticky Note Write');
+    error('Error on Events Write');
   end;
 End;
 

@@ -129,6 +129,13 @@ procedure TfrmFloatingKlock.FormClose(Sender: TObject;  var CloseAction: TCloseA
 {  Stop timer on close, so not running when form not in use.    }
 begin
   TmrFloatingText.Enabled := false;
+
+  if userOptions.floatingTextScreenSave then
+  begin
+    userOptions.floatingTextFormLeft := Left;
+    userOptions.floatingTextFormTop  := Top;
+    userOptions.writeCurrentOptions;
+  end;
 end;
 
 procedure TfrmFloatingKlock.FormDestroy(Sender: TObject);
@@ -283,13 +290,6 @@ begin
   frmMain.Visible := True;
 
   TmrFloatingText.Enabled := false;
-
-  if userOptions.floatingTextScreenSave then
-  begin
-    userOptions.floatingTextFormLeft := Left;
-    userOptions.floatingTextFormTop  := Top;
-    userOptions.writeCurrentOptions;
-  end;
 
   close;
 end;

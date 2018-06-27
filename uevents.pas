@@ -26,7 +26,7 @@ type
     constructor Create; overload;
     destructor Destroy; override;
     procedure new(key: string; date: string; etype: integer; data: string);
-    procedure amend(id:integer; itmDate: string; itmdata: string);
+    procedure amend(id:integer; itmDate: string; itmType: integer; itmData: string);
     function retrieve(id: integer): Event;
     procedure restoreEvents;
     procedure saveEvents;
@@ -80,13 +80,14 @@ begin
   saveEvents;
 end;
 
-procedure Events.amend(id:integer; itmDate: string; itmdata: string);
+procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: string);
 {  Amends a event - the date abd bodt etxt can be amended.
    The event store is then saved to file.
 }
 begin
-  EventsStore.Data[id].date  := itmdate;
-  EventsStore.Data[id].notes := itmdata;
+  EventsStore.Data[id].date  := itmDate;
+  EventsStore.Data[id].etype := itmType;
+  EventsStore.Data[id].notes := itmData;
 
   saveEvents;
 end;

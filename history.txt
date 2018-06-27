@@ -1607,8 +1607,13 @@ Added event delete and event edit procedures.
 Added event list box click event.
 Also changed event amend to allow amendments of date as well as text.
 
+Currently
+11784 lines of source code.
+6466 statements
+16.4% comment
 
-Build 89 [2.4.1.89]
+
+Build 90 [2.4.1.90]
 
 Corrected bug, Clipboard manager not saving screen position.
 Another attempt at fixing the duplicate image entries in the clipboard list.
@@ -1617,4 +1622,24 @@ Added logic to check if image or file had been deleted, when clicked in list.
 Currently
 11776 lines of source code.
 6458 statements
+16.4% comment
+
+
+Build 91 [2.4.1.91]
+
+Created EventTypes.txt, which is loaded at start up to provides the different
+event types - will allow customisation later.
+
+Corrected a bug with setting the event buttons in frmKlock.
+Corrected a bug where the event type was not being passed out of frmKlock.
+Tidied up the event code in frmKlock.
+
+Corrected a bug where the event type was not being correctly saved in
+uEvent.
+
+Amended the amend procedure in uEvents if handle event types correctly.
+
+Currently
+11788 lines of source code.
+6466 statements
 16.4% comment
