@@ -134,20 +134,11 @@ begin
 
 procedure stickyNotes.Remove(pos: integer);
 {  Remove a Sticky Note from the store at a given position.
-
-   Seems to be a problem with either .remove or .delete.
-   Both give me a list out of bounds error, even though the
-   argument passed in is valid i.e. 0 < pos < stickyNotesStore.Count
-
-   Added a visible parameter to Sticky note has a work around.
 }
-var
-  r: integer;
 begin
-  for r := 0 to stickyNotesStore.Count -1 do
-    showMessage(intToStr(stickyNotesStore.Keys[r]));
-
-  r := stickyNotesStore.Remove(pos);
+  stickyNotesStore.Remove(pos);
+  stickyNotesCount := stickyNotesCount - 1;
+  updateStickyNotes;
 end;
 
 procedure stickyNotes.restoreStickyNotes;

@@ -123,10 +123,8 @@ end;
 
 procedure Memos.Remove(pos: integer);
 {  Remove a memo from the store at a given position.    }
-var
-  r: integer;
 begin
-  r          := MemosStore.Remove(pos);
+  MemosStore.Remove(pos);
   MemosCount := MemosCount - 1;
   saveMemos;
 end;

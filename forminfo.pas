@@ -26,8 +26,7 @@ type
 
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
-      ARect: TRect; State: TOwnerDrawState);
+    procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure SpnEdtYearChange(Sender: TObject);
   private
     _info: string;
@@ -135,8 +134,7 @@ begin
   end;
 end;
 
-procedure TfrmInfo.lstBxInfoDrawItem(Control: TWinControl; Index: Integer;
-  ARect: TRect; State: TOwnerDrawState);
+procedure TfrmInfo.lstBxInfoDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
 {  Centers the text.    }
 var
   ts: TTextStyle;

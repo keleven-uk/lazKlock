@@ -122,7 +122,8 @@ begin
     colour  := cClr;
     font    := StringToFont(sFnt);
   except
-    error('Error on Sticky Note Read');
+    on E: Exception do
+      error('Error on Sticky Note Read' + LineEnding + E.Message);
   end;
 end;
 
@@ -153,7 +154,8 @@ begin
     fsOut.WriteBuffer(Len1,    SizeOf(Len1));
     fsOut.WriteBuffer(sFnt[1], Len1);
   except
-    error('Error on Sticky Note Write');
+    on E: Exception do
+      error('Error on Sticky Note Write' + LineEnding + E.Message);
   end;
 End;
 

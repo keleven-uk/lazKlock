@@ -95,6 +95,7 @@ type
     ChckBxReminderReminder   : TCheckBox;
     ChckBxReminderSound      : TCheckBox;
     ChckBxReminderSystem     : TCheckBox;
+    ChckBxEventFloating      : TCheckBox;
     CmbBxCategory            : TComboBox;
     CmbBxConvertTo           : TComboBox;
     CmbBxCountdownAction     : TComboBox;
@@ -422,6 +423,7 @@ begin
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
   loadMemos;                     //  Load Memos store into listbox, if any.
 
+  //ev.updateEvents;               //  Update due dates.
   ev.restoreEvents;              //  Reload Events into memo store, if any.
   loadEvents;                    //  Load Events store into listbox, if any.
 
@@ -703,8 +705,11 @@ var
 begin
   myNow := now;
 
-  if isMinute(myNow, 0) then             //  Every hour, update Sticky Notes file.
-    stickies.updateStickyNotes;
+  if isMinute(myNow, 0) then        //  Every hour
+  begin
+    stickies.updateStickyNotes;     //  Update Sticky Notes file.
+    //ev.updateEvents;                //  Update due dates.
+  end;
 
   if userOptions.HourPips and isMinute(myNow, 0) then
     playChime('pips')
@@ -1702,13 +1707,14 @@ begin
   btnEventAdd.Visible   := false;
   btnEventClear.Visible := false;
 
-  edtEventName.Enabled   := false;
-  edtEventName.ReadOnly  := true;
-  dtEdtEventDate.Enabled := false;
-  cmbBxEventType.Enabled := false;
-  mEventNotes.Enabled    := false;
-  mEventNotes.ReadOnly   := false;
-  mEventNotes.Text       := '';
+  edtEventName.Enabled        := false;
+  edtEventName.ReadOnly       := true;
+  dtEdtEventDate.Enabled      := false;
+  cmbBxEventType.Enabled      := false;
+  ChckBxEventFloating.Enabled := false;
+  mEventNotes.Enabled         := false;
+  mEventNotes.ReadOnly        := false;
+  mEventNotes.Text            := '';
 
   btnEventEdit.Caption := 'Edit';
 
@@ -1738,13 +1744,14 @@ begin
   edtEventName.Text     := '';
   edtEventName.SetFocus;
 
-  btnEventClear.Visible  := true;
-  dtEdtEventDate.Enabled := true;
-  dtEdtEventDate.Date    := today;
-  cmbBxEventType.Enabled := true;
-  mEventNotes.Enabled    := true;
-  mEventNotes.ReadOnly   := false;
-  mEventNotes.Text       := '';
+  btnEventClear.Visible       := true;
+  dtEdtEventDate.Enabled      := true;
+  dtEdtEventDate.Date         := today;
+  cmbBxEventType.Enabled      := true;
+  ChckBxEventFloating.Enabled := true;
+  mEventNotes.Enabled         := true;
+  mEventNotes.ReadOnly        := false;
+  mEventNotes.Text            := '';
 
   btnEventEdit.Visible   := false;
   btnEventDelete.Visible := false;
@@ -1773,12 +1780,12 @@ begin
   klog.writeLog('Adding event');
 
   sdate := DateToStr(dtEdtEventDate.date);
-  ev.new(edtEventName.Text, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text);
-  loadevents;
+  ev.new(edtEventName.Text, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+  loadEvents;
   seteventButtons(true);
 end;
 
-procedure TfrmMain.loadevents;
+procedure TfrmMain.loadEvents;
 { Load the contents of the events file into the listbox.    }
 var
   f: integer;
@@ -1796,7 +1803,6 @@ begin
     LstBxEvents.Items.Add(edtEventName.Text);
   end;
 
-  LstBxEvents.ItemIndex := 0;
   displayEvent(0);
 end;
 
@@ -1824,12 +1830,13 @@ begin
   if btnEventEdit.Caption = 'Edit' then          //  Edit Event.
   begin
     klog.writeLog(format('Editing Event at pos %d', [LstBxEvents.ItemIndex]));
-    mEventNotes.Enabled    := true;
-    mEventNotes.ReadOnly   := false;
-    dtEdtEventDate.Enabled := true;
-    cmbBxEventType.Enabled := true;
-    btnEventEdit.Caption  := 'Save';
-    btnEventClear.Visible := true;
+    mEventNotes.Enabled         := true;
+    mEventNotes.ReadOnly        := false;
+    ChckBxEventFloating.Enabled := true;
+    dtEdtEventDate.Enabled      := true;
+    cmbBxEventType.Enabled      := true;
+    btnEventEdit.Caption        := 'Save';
+    btnEventClear.Visible       := true;
   end
   else                                          //  save Event.
   begin
@@ -1837,7 +1844,7 @@ begin
     btnEventEdit.Caption  := 'Edit';
 
     sdate := DateToStr(dtEdtEventDate.date);
-    ev.amend(LstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text);
+    ev.amend(LstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
     seteventButtons(true);
   end;
 end;
@@ -1857,10 +1864,11 @@ begin
 
   d := StrToDate(e.date);
 
-  edtEventName.Text        := e.name;
-  dtEdtEventDate.Date      := d;
-  cmbBxEventType.ItemIndex := e.etype;
-  mEventNotes.Text         := e.notes;
+  edtEventName.Text           := e.name;
+  dtEdtEventDate.Date         := d;
+  cmbBxEventType.ItemIndex    := e.etype;
+  ChckBxEventFloating.Checked := e.float;
+  mEventNotes.Text            := e.notes;
 
   e.Free;
 end;

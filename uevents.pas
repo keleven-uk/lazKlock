@@ -25,10 +25,11 @@ type
 
     constructor Create; overload;
     destructor Destroy; override;
-    procedure new(key: string; date: string; etype: integer; data: string);
-    procedure amend(id:integer; itmDate: string; itmType: integer; itmData: string);
+    procedure new(key: string; date: string; etype: integer; data: string; floating: Boolean);
+    procedure amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
     function retrieve(id: integer): Event;
     procedure restoreEvents;
+    procedure updateEvents;
     procedure saveEvents;
     procedure Remove(pos: integer);
   end;
@@ -58,7 +59,7 @@ begin
   inherited;
 end;
 
-procedure Events.new(key: string; date: string; etype: integer; data: string);
+procedure Events.new(key: string; date: string; etype: integer; data: string; floating: Boolean);
 {  Creates a new Events.  This is called from the host program.
    A new Events is created and added to the store.
    The Events store is then saved to file.
@@ -74,13 +75,14 @@ begin
   e.date  := date;
   e.etype := etype;
   e.notes := data;
+  e.float := floating;
 
   EventsStore.Add(EventsCount, e);
 
   saveEvents;
 end;
 
-procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: string);
+procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
 {  Amends a event - the date abd bodt etxt can be amended.
    The event store is then saved to file.
 }
@@ -88,6 +90,7 @@ begin
   EventsStore.Data[id].date  := itmDate;
   EventsStore.Data[id].etype := itmType;
   EventsStore.Data[id].notes := itmData;
+  EventsStore.Data[id].float := itmFloat;
 
   saveEvents;
 end;
@@ -103,16 +106,15 @@ begin
   e.date  := EventsStore.Data[id].date;
   e.etype := EventsStore.Data[id].etype;
   e.notes := EventsStore.Data[id].notes;
+  e.float := EventsStore.Data[id].float;
 
   result := e
 end;
 
 procedure Events.Remove(pos: integer);
 {  Remove a Event from the store at a given position.    }
-var
-  r: integer;
 begin
-  r           := EventsStore.Remove(pos);
+  EventsStore.Remove(pos);
   EventsCount := EventsCount - 1;
   saveEvents;
 end;
@@ -166,6 +168,24 @@ begin
    finally
     fileIn.Free;
   end;        //  try
+
+end;
+
+procedure Events.updateEvents;
+{  For each event, calculate the due interval.
+   interval_short = due interval in days.
+   interval_long  = due interval in days and time.
+}
+var
+  f       : integer;
+begin
+  for f := 0 to EventsCount - 1 do
+  begin
+    EventsStore.Data[f].interval_long  := EventsStore.Data[f].name + 'short';
+    EventsStore.Data[f].interval_short := EventsStore.Data[f].name + 'long';
+  end;
+
+  saveEvents;
 
 end;
 

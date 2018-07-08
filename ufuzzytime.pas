@@ -41,6 +41,8 @@ type
     const unitsTxt: array [0..12] of string = ('zero', 'one', 'two', 'three', 'four',
                     'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve');
 
+    CONST NO_LEAP_SECONDS = 37;
+
     function fTime: string;
     function wordTime: string;
     function netTime: string;
@@ -61,6 +63,8 @@ type
     function getMetricTime: string;
     function getBCDTime: string;
     function getBinaryTime: string;
+    function getMarsSolDate: string;
+    function getCoordinatedMarsTime: string;
   public
     property displayFuzzy    : integer     read _displayFuzzy     write _displayFuzzy;
     property fuzzyBase       : integer     read _fuzzyBase        write _fuzzyBase;
@@ -87,7 +91,8 @@ begin
   _fuzzyTypes := TStringList.Create;
   _fuzzyTypes.CommaText := ('"Fuzzy Time", "Word Time", "Local Time", "NET Time", "Unix Time", "UTC Time",' +
    '"Swatch Time", "Julian Time", "Decimal Time", "Hex Time", "Radix Time", "Percent Time", "Double Time",'  +
-   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time"');
+   '"Roman Time", "Morse Time", "Flow Time", "Metric Time", "Binary Time", "BCD Time", "Mars Sol Date", ' +
+   '"Coordinated Mars Time"');
 
   //  Load and parse the time zone data base.
   timeZone := TPascalTZ.Create;
@@ -322,7 +327,7 @@ begin
   secs := noOfDecSecs mod 100;
 
 
-  Result := format('%2.d:%2.d:%2.d', [hrs, mins, secs]);
+  Result := format(' %2.d:%2.d:%2.d', [hrs, mins, secs]);
 end;
 
 function FuzzyTime.hexTime: string;
@@ -548,6 +553,42 @@ begin
   Result := format('%s:%s:%s', [shrs, smin, ssec]);
 end;
 
+function FuzzyTime.getMarsSolDate: string;
+{  Returns the current [UTC] time as Mars Sol Date.
+   as http://jtauber.github.io/mars-clock
+}
+VAR
+  noOfSecs: double;
+  noOfDays: double;
+begin
+  noOfSecs := SecondsBetween( Encodedate(2000, 1, 6), TimeZone.UniversalTime) + NO_LEAP_SECONDS;
+  noOfDays := noOfSecs / 86400;
+
+  Result := format('%6.5f', [(noOfDays / 1.027491252) + 44796.0 - 0.00096]);
+end;
+
+function FuzzyTime.getCoordinatedMarsTime: string;
+{
+  Returns the current [UTC] time as Coordinated Mars Time.
+  as http://jtauber.github.io/mars-clock/
+}
+VAR
+  marsSolDate        : double;
+  CoordinatedMarsTime: double;
+  hour               : integer;
+  mins               : double; //  use double, so we can use mins to 2DP to work out secs.
+  secs               : integer;
+begin
+  marsSolDate := StrtoFloat(getMarsSolDate) * 24;
+  CoordinatedMarsTime := marsSolDate - Int(marsSolDate / 24.0) * 24;
+
+  hour := trunc(CoordinatedMarsTime);
+  mins := trunc((CoordinatedMarsTime - hour) * 100) / 100;     // mins to 2 decimal places.
+  secs := trunc((CoordinatedMarsTime - hour - mins) * 3600);
+
+  result := format(' %2.d:%2.d:%2.d',[hour, trunc(mins * 60), secs]);
+end;
+
 function FuzzyTime.getTime: string;
 begin
 
@@ -571,6 +612,8 @@ begin
     16: Result := getMetricTime;
     17: Result := getBinaryTime;
     18: Result := getBCDTime;
+    19: Result := getMarsSolDate;
+    20: Result := getCoordinatedMarsTime;
   end;
 
 end;

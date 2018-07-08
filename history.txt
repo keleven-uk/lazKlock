@@ -1643,3 +1643,23 @@ Currently
 11788 lines of source code.
 6466 statements
 16.4% comment
+
+
+Build 91 [2.4.1.91]
+
+Continuing with event thingy.
+Added float, interval_short & interval_long properties to the event class.
+Amended to load and save routines to include the float properties in event.
+Amended the new and amend routines to include the float properties in events.
+
+Added an update routing the events class that will calculate both
+interval_short and interval_long [not yet complete].  This routine is called
+upon a new event been added and on every hour form the main Klock.
+
+Added MarsSelDate & CoordinatedMarsTime to uFuxxyTime.
+
+Currently
+11881 lines of source code.
+6512 statements
+16.4% comment
+

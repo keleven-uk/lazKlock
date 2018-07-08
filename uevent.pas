@@ -22,6 +22,10 @@ type
     _date : string;           //  Event date.
     _type : integer;          //  Event type.
     _notes: string;           //  Event notes.
+    _float: boolean;          //  shall event be added to floating test?
+
+    _interval_short: string;  //  interval to go to event in days.
+    _interval_long : string;  //  interval to go to event in days, hours, minutes and seconds.
 
   procedure error(Const msg : string);
   public
@@ -31,6 +35,10 @@ type
     property date : string  read _date  write _date;
     property etype: integer read _type  write _type;
     property notes: string  read _notes write _notes;
+    property float: boolean read _float write _float;
+
+    property interval_short: string  read _interval_short write _interval_short;
+    property interval_long : string  read _interval_long  write _interval_long;
 
     constructor Create(sn_id: integer); overload;
     constructor Create(fsOut: TFileStream); overload;
@@ -49,7 +57,11 @@ begin
   name  := '';
   date  := '';
   etype := 0;
-  notes := ''
+  notes := '';
+  float := false;
+
+  interval_short := '';
+  interval_long  := '';
 end;
 
 constructor Event.Create(fsOut: TFileStream);
@@ -62,11 +74,12 @@ constructor Event.Create(fsOut: TFileStream);
 }
 var
   Len1: Cardinal = 0;
-  sNme: string;
+  sNme: string  = '';
   iID : integer = 0;
-  sDte: string;
+  sDte: string  = '';
   iTyp: integer = 0;
-  sNte: string;
+  sNte: string  = '';
+  bFlt: boolean = false;
 begin
 
   try
@@ -88,19 +101,28 @@ begin
     SetLength(sNte, Len1);
     fsOut.ReadBuffer(sNte[1], len1);
 
+    fsOut.ReadBuffer(bFlt, sizeof(bFlt));   //  read floating.
+
+    //  don't need to read long and short intervals - thay are calculated
+
     name := sNme;
     id   := iID;
 
     date  := sDte;
     etype := iTyp;
     notes := sNte;
+    float := bFlt;
+
+    interval_short := '';
+    interval_long  := '';
   except
-    error('Error on Events Read');
+    on E: Exception do
+      error('Error on Events Read' + LineEnding + E.Message);
   end;
 end;
 
 procedure Event.saveToFile(fsOut: TFileStream);
-{  Save a sticky note to the specified filestream.
+{  Save a event to the specified filestream.
    An exception is raised if there is an error on write.
 }
 var
@@ -122,8 +144,13 @@ begin
     Len1 := Length(notes);                     //  write notes
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(notes[1], Len1);
+
+    fsOut.WriteBuffer(float, sizeof(float));   //  write type.
+
+    //  don't need to write long and short intervals - thay are calculated
   except
-    error('Error on Events Write');
+    on E: Exception do
+      error('Error on Events Write' + LineEnding + E.Message);
   end;
 End;
 

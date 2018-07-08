@@ -242,7 +242,6 @@ var
   dirName: string;
 
 begin
-  klog.writeLog(format('item indes = %d', [LstVwClipBoard.ItemIndex]));
   if (FListener.category = 'Image') and (LstVwClipBoard.ItemIndex <> -1) then exit;
   if isthere(FListener.text) then exit;
 

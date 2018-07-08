@@ -55,7 +55,7 @@ end;
 
 constructor memo.Create(fsOut: TFileStream);
 {  Creates a new memo.
-   A filestream has to be specified, the sticky notes is then created
+   A filestream has to be specified, the memo is then created
    from date read from the filestream.
 
    If the filestream is empty a blank memo is returned.
@@ -91,12 +91,13 @@ begin
     id   := iID;
     encrypt := bEnc;
   except
-    error('Error on Sticky Note Read');
+    on E: Exception do
+      error('Error on Memo Read' + LineEnding + E.Message);
   end;
 end;
 
 procedure memo.saveToFile(fsOut: TFileStream);
-{  Save a sticky note to the specified filestream.
+{  Save a memo to the specified filestream.
    An exception is raised if there is an error on write.
 }
 var
@@ -115,7 +116,8 @@ begin
     fsOut.WriteBuffer(encrypt, sizeof(encrypt));
 
   except
-    error('Error on Sticky Note Write');
+    on E: Exception do
+      error('Error on Memo Write' + LineEnding + E.Message);
   end;
 End;
 
