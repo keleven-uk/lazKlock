@@ -1530,6 +1530,10 @@ Currently
 
 Build 85 [2.4.0.85]
 
+commit b1d2fedaaad3da057af3d1163cae905445c1e659
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue May 29 22:48:52 2018 +0100
+
 The current Reminder tab had a couple [many] bugs and did not really work and
 needed re-writing really.  Also the naming of the Reminder and Event tabs was
 not really correct.
@@ -1549,6 +1553,10 @@ Currently
 
 
 Build 86 [2.4.0.86]
+
+commit d623a7fecabd19599c5a6ffc7f74bb8ca26723cd
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Fri Jun 1 21:39:08 2018 +0100
 
 Deleted formReminderInput - Not now used.
 
@@ -1571,6 +1579,10 @@ Currently
 
 Build 87 [2.4.1.87]
 
+commit 3055fca201b0d1fd4f265a8607e0a7f086a4ff8c
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Jun 5 22:31:38 2018 +0100
+
 Switched on Hi-Dpi aware.
 
 Added two new units - uEvent.pas and uEvents.pas.
@@ -1588,6 +1600,10 @@ Currently
 
 Build 88 [2.4.1.88]
 
+commit a8a52ddf513304f41b155dbd6e27fc72175cb78a
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Jun 12 23:09:45 2018 +0100
+
 Finally added code to load and save the contents of the clipboard managed to
 CSV files. The code resides in uClipboardUtils.
 Fixed a bug with the Clipboard manager, if an image was clicked in the list it
@@ -1603,6 +1619,10 @@ Currently
 
 Build 89 [2.4.1.89]
 
+commit 80427f2287bb6a899da3500c876cb0b614aaf149
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Wed Jun 13 22:57:07 2018 +0100
+
 Added event delete and event edit procedures.
 Added event list box click event.
 Also changed event amend to allow amendments of date as well as text.
@@ -1615,6 +1635,10 @@ Currently
 
 Build 90 [2.4.1.90]
 
+commit 2900bd48731a06d19eb8fc154eb2b17bbc3c5b21
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Jun 25 21:54:00 2018 +0100
+
 Corrected bug, Clipboard manager not saving screen position.
 Another attempt at fixing the duplicate image entries in the clipboard list.
 Added logic to check if image or file had been deleted, when clicked in list.
@@ -1626,6 +1650,10 @@ Currently
 
 
 Build 91 [2.4.1.91]
+
+commit 847df91841c788e66925a0adee212569343c2ebd
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Wed Jun 27 21:41:05 2018 +0100
 
 Created EventTypes.txt, which is loaded at start up to provides the different
 event types - will allow customisation later.
@@ -1645,7 +1673,11 @@ Currently
 16.4% comment
 
 
-Build 91 [2.4.1.91]
+Build 92 [2.4.1.92]
+
+commit 65d172ca01964af122f619ba3aecd12c030f6b04
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sun Jul 8 21:14:25 2018 +0100
 
 Continuing with event thingy.
 Added float, interval_short & interval_long properties to the event class.
@@ -1656,10 +1688,26 @@ Added an update routing the events class that will calculate both
 interval_short and interval_long [not yet complete].  This routine is called
 upon a new event been added and on every hour form the main Klock.
 
-Added MarsSelDate & CoordinatedMarsTime to uFuxxyTime.
+Added MarsSelDate & CoordinatedMarsTime to uFuzzyTime.
 
 Currently
 11881 lines of source code.
 6512 statements
 16.4% comment
+
+
+Build 93 [2.4.1.93]
+
+Continuing with event thingy.
+Completed the work on due intervals.
+Also, added to the events class, a number of aged dates [stages].  If the due interval falls between these stages, a prompt is displayed to the user.
+Also, added properties to the events class for stages 1 to 3 and accompanying
+messages.  These are hard coded at the moment, but will be options.
+
+Removed the fonts directory from the archive routines.
+
+Currently
+11938 lines of source code.
+6557 statements
+16.5% comment
 

@@ -156,7 +156,6 @@ begin
 
   if userOptions.BinaryScreenSave then
   begin
-    klog.writeLog('Setting Binary Klock screen position');
     Left := userOptions.BinaryFormLeft;
     Top  := userOptions.BinaryFormTop;
   end;
@@ -175,7 +174,6 @@ procedure TfrmBinaryKlock.setShapes;
 begin
   if MnItmBinary.Checked then
   begin
-    klog.writeLog('Binary Klock');
     Shp03.Visible := false;
     Shp13.Visible := false;
     Shp23.Visible := false;
@@ -290,7 +288,6 @@ begin
 
   if userOptions.BinaryScreenSave then
   begin
-    klog.writeLog('Saving Binary Klock screen position');
     userOptions.BinaryFormLeft := Left;
     userOptions.BinaryFormTop  := Top;
     userOptions.writeCurrentOptions;

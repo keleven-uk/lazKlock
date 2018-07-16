@@ -678,42 +678,20 @@ end;
 procedure TfrmOptions.btnSaveArchiveClick(Sender: TObject);
 {  Save all files that have been clicked in the listbox.
    The zip file name is taken from the save file edit box.
-
-   If the fonts directory is checked, the fonts have to be removed
-   for archive, Klock has then locked.  The added again after archive.
 }
 var
-  f           : integer;
-  files       : TStringList;
-  theFontFiles: TStringList;
-  fontsRemoved: boolean;
+  f    : integer;
+  files: TStringList;
 begin
-  fontsRemoved := false;
   files := TStringList.Create;
 
   try
     for f := 0 to ChckLstBxArchive.Items.Count - 1 do
       if ChckLstBxArchive.Checked[f] then
-        if ChckLstBxArchive.Items.Strings[f] = 'Fonts Directory' then
-          begin
-            klog.writeLog('*** Removing Fonts For Archive ***');
-            fontsRemoved := true;
-            fs.removeFonts;
-            theFontFiles := TStringList.Create;
-            try
-              FindAllFiles(theFontFiles, ExtractFilePath(Application.ExeName) + 'fonts');
-              files.AddStrings(theFontFiles);
-            finally
-              theFontFiles.Free;
-            end;  //  end of try
-          end     //  if ChckLstBxArchive.Items.Strings[f] = 'Fonts Directory' then
-        else
-          files.Add(ChckLstBxArchive.Items.Strings[f]);
+        files.Add(ChckLstBxArchive.Items.Strings[f]);
 
     saveArchive(FlNmEdtSaveArchiveName.FileName, files);
   finally
-    if fontsRemoved then  //  Fonts where archived, so need re-loading.
-      fs.addFonts;
     files.free;
   end;
 end;

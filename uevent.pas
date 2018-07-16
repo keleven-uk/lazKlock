@@ -10,7 +10,7 @@ unit uEvent;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, Dialogs;
 
 type
   Event = class
@@ -24,8 +24,8 @@ type
     _notes: string;           //  Event notes.
     _float: boolean;          //  shall event be added to floating test?
 
-    _interval_short: string;  //  interval to go to event in days.
-    _interval_long : string;  //  interval to go to event in days, hours, minutes and seconds.
+    _dueShort: string;       //  interval to go to event in days.
+    _dueLong : string;       //  interval to go to event in days and time.
 
   procedure error(Const msg : string);
   public
@@ -37,8 +37,8 @@ type
     property notes: string  read _notes write _notes;
     property float: boolean read _float write _float;
 
-    property interval_short: string  read _interval_short write _interval_short;
-    property interval_long : string  read _interval_long  write _interval_long;
+    property dueShort: string  read _dueShort write _dueShort;
+    property dueLong : string  read _dueLong  write _dueLong;
 
     constructor Create(sn_id: integer); overload;
     constructor Create(fsOut: TFileStream); overload;
@@ -60,8 +60,8 @@ begin
   notes := '';
   float := false;
 
-  interval_short := '';
-  interval_long  := '';
+  dueShort := '';
+  dueLong  := '';
 end;
 
 constructor Event.Create(fsOut: TFileStream);
@@ -103,7 +103,7 @@ begin
 
     fsOut.ReadBuffer(bFlt, sizeof(bFlt));   //  read floating.
 
-    //  don't need to read long and short intervals - thay are calculated
+    //  don't need to read due interval - thay are calculated
 
     name := sNme;
     id   := iID;
@@ -113,8 +113,8 @@ begin
     notes := sNte;
     float := bFlt;
 
-    interval_short := '';
-    interval_long  := '';
+    dueShort := '';
+    dueLong  := '';
   except
     on E: Exception do
       error('Error on Events Read' + LineEnding + E.Message);
@@ -147,7 +147,7 @@ begin
 
     fsOut.WriteBuffer(float, sizeof(float));   //  write type.
 
-    //  don't need to write long and short intervals - thay are calculated
+    //  don't need to write due interval - thay are calculated
   except
     on E: Exception do
       error('Error on Events Write' + LineEnding + E.Message);

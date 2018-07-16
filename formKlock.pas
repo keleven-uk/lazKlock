@@ -423,9 +423,7 @@ begin
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
   loadMemos;                     //  Load Memos store into listbox, if any.
 
-  //ev.updateEvents;               //  Update due dates.
-  ev.restoreEvents;              //  Reload Events into memo store, if any.
-  loadEvents;                    //  Load Events store into listbox, if any.
+  ev.restoreEvents;              //  Reload Events into event store, if any.
 
   DoubleBuffered := true;
   stsBrInfo.DoubleBuffered := true;
@@ -471,7 +469,6 @@ begin
   //  if clipboard manager active, we need to save its position - if needed.
   if userOptions.CB_ScreenSave then
   begin
-    klog.writeLog(format('TfrmMain.FormClose : writing TfrmClipBoard position %d %d', [frmClipBoard.Top, frmClipBoard.Left]));
     userOptions.CB_formTop  := frmClipBoard.Top;
     userOptions.CB_formLeft := frmClipBoard.Left;
     userOptions.writeCurrentOptions;
@@ -531,10 +528,18 @@ begin
   setMemoButtons(false);                                 //  set up memo buttons.
   setEventButtons(false);                                //  set up event buttons.
 
+  //  set up defaults for fuzzyTime.
   ft.displayFuzzy     := userOptions.defaultTime;
   ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
   ft.display24Hour    := userOptions.display24Hour;
   ft.fuzzyBase        := 2;
+
+  //  set up the aged days for event prompts [will be user options].
+  ev.stage1 := 30;
+  ev.stage2 := 10;
+  ev.stage3 := 1;
+  ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
+  loadEvents;                       //  Load Events store into listbox, if any.
 
   if userOptions.screenSave then
   begin
@@ -708,7 +713,7 @@ begin
   if isMinute(myNow, 0) then        //  Every hour
   begin
     stickies.updateStickyNotes;     //  Update Sticky Notes file.
-    //ev.updateEvents;                //  Update due dates.
+    ev.updateEvents;                //  Update due dates.
   end;
 
   if userOptions.HourPips and isMinute(myNow, 0) then
@@ -726,14 +731,14 @@ begin
      strTime := CmbBxTime.Items.Strings[CmbBxTime.ItemIndex] + ' time :: ' + ft.getTime;
      TrayIcon.Hint := strTime;
 
-     if userOptions.fuzzyTimeBalloon and everyMinute(myNow, 5) then
+     if userOptions.fuzzyTimeBalloon and everyMinute(myNow, 10) then
      begin  //  only display on the five minutes.
        TrayIcon.BalloonHint := strTime;
        trayIcon.ShowBalloonHint;
        ballonTimer.Enabled := True;                  //  balloon hint time-out bug - see below.
      end;  //  if OptionsRec.FuzzyTimeBalloon then
 
-     if ppMnItmTime.Checked then
+     if ppMnItmTime.Checked and isMinute(myNow, 10) then
      begin
        popupTitle[0]    := 'Time';
        popupMessages[0] := strTime;
@@ -1777,11 +1782,14 @@ procedure TfrmMain.btnEventAddClick(Sender: TObject);
 VAR
   sdate: string;
 begin
-  klog.writeLog('Adding event');
-
   sdate := DateToStr(dtEdtEventDate.date);
+
+  if mEventNotes.Text = '' then mEventNotes.Text := ' ';
   ev.new(edtEventName.Text, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+
+  ev.updateEvents;
   loadEvents;
+
   seteventButtons(true);
 end;
 
@@ -1799,8 +1807,8 @@ begin
 
   for f := 0 to ev.EventsCount -1 do
   begin
+    LstBxEvents.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
     displayEvent(f);
-    LstBxEvents.Items.Add(edtEventName.Text);
   end;
 
   displayEvent(0);
@@ -1812,7 +1820,6 @@ begin
                   'Do You Really Want To Delete This Event',
                    mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
   begin
-    klog.writeLog(format('Deleting event at pos %d', [LstBxEvents.ItemIndex]));
     ev.Remove(LstBxEvents.ItemIndex);
     loadevents;
     seteventButtons(true);
@@ -1829,7 +1836,6 @@ begin
 
   if btnEventEdit.Caption = 'Edit' then          //  Edit Event.
   begin
-    klog.writeLog(format('Editing Event at pos %d', [LstBxEvents.ItemIndex]));
     mEventNotes.Enabled         := true;
     mEventNotes.ReadOnly        := false;
     ChckBxEventFloating.Enabled := true;
@@ -1840,7 +1846,6 @@ begin
   end
   else                                          //  save Event.
   begin
-    klog.writeLog(format('Saving Event at pos %d', [LstBxEvents.ItemIndex]));
     btnEventEdit.Caption  := 'Edit';
 
     sdate := DateToStr(dtEdtEventDate.date);
@@ -1869,6 +1874,9 @@ begin
   cmbBxEventType.ItemIndex    := e.etype;
   ChckBxEventFloating.Checked := e.float;
   mEventNotes.Text            := e.notes;
+
+  LstBxEvents.Items[pos] := e.dueShort;  //  Amend the listbox entry to include the days due.
+  LstBxEvents.ItemIndex  := pos;
 
   e.Free;
 end;

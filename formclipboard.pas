@@ -75,7 +75,6 @@ begin
 
   if userOptions.CB_ScreenSave then
   begin
-    klog.writeLog('TfrmClipBoard.FormClose : writing TfrmClipBoard position');
     userOptions.CB_formTop  := Top;
     userOptions.CB_formLeft := Left;
     userOptions.writeCurrentOptions;

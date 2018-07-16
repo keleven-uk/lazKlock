@@ -9,7 +9,7 @@ interface
 
 uses
   Classes, SysUtils, uEvent, fgl, Forms, Dialogs, Graphics, StdCtrls,
-  ExtCtrls, LCLType, LCLIntf, Controls, Menus, FileUtil;
+  ExtCtrls, LCLType, LCLIntf, Controls, Menus, FileUtil, dateUtils;
 
 type
   Events = class
@@ -17,11 +17,24 @@ type
   private
     _EventsFile : string;
     _EventsCount: integer;
+    _stage1     : integer;
+    _stage2     : integer;
+    _stage3     : integer;
+    _stage1Mess : string;
+    _stage2Mess : string;
+    _stage3Mess : string;
 
     property EventsFile: string read _EventsFile write _EventsFile;
-
+    function checkStages(age: integer): integer;
+    procedure actionEvent(pos: integer; stage: integer);
   public
     property EventsCount: integer read _EventsCount write _EventsCount;
+    property stage1     : integer read _stage1      write _stage1;
+    property stage2     : integer read _stage2      write _stage2;
+    property stage3     : integer read _stage3      write _stage3;
+    property stage1Mess : string  read _stage1Mess  write _stage1Mess;
+    property stage2Mess : string  read _stage2Mess  write _stage2Mess;
+    property stage3Mess : string  read _stage3Mess  write _stage3Mess;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -42,6 +55,9 @@ VAR
 
 implementation
 
+uses
+  formklock;
+
 constructor Events.Create; overload;
 {  set up some variables on create.    }
 begin
@@ -49,6 +65,14 @@ begin
   EventsStore        := keyStore.Create;
   EventsStore.Sorted := true;
   EventsCount        := 0;
+
+  stage1 := 5;
+  stage2 := 10;
+  stage3 := 20;
+
+  stage1Mess := 'is realy soon';
+  stage2Mess := 'Will very soon be here';
+  stage3Mess := 'will soon be here';
 end;
 
 destructor Events.Destroy;
@@ -65,17 +89,20 @@ procedure Events.new(key: string; date: string; etype: integer; data: string; fl
    The Events store is then saved to file.
 }
 VAR
-  e: Event;                   //  Memo.
+  e: Event;                   //  Event.
 begin
   EventsCount := EventsCount + 1;
+
   e := Event.Create(EventsCount);
 
-  e.name  := key;
-  e.id    := EventsCount;
-  e.date  := date;
-  e.etype := etype;
-  e.notes := data;
-  e.float := floating;
+  e.name      := key;
+  e.id        := EventsCount;
+  e.date      := date;
+  e.etype     := etype;
+  e.notes     := data;
+  e.float     := floating;
+  e.dueShort := '';
+  e.dueLong  := '';
 
   EventsStore.Add(EventsCount, e);
 
@@ -83,7 +110,7 @@ begin
 end;
 
 procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
-{  Amends a event - the date abd bodt etxt can be amended.
+{  Amends an event - the date and body text can be amended.
    The event store is then saved to file.
 }
 begin
@@ -100,13 +127,15 @@ function Events.retrieve(id: integer): Event;
 VAR
   e: Event;                   //  Events.
 begin
-  e       := Event.Create(0);
-  e.name  := EventsStore.Data[id].name;
-  e.id    := EventsStore.Data[id].id;
-  e.date  := EventsStore.Data[id].date;
-  e.etype := EventsStore.Data[id].etype;
-  e.notes := EventsStore.Data[id].notes;
-  e.float := EventsStore.Data[id].float;
+  e          := Event.Create(0);
+  e.name     := EventsStore.Data[id].name;
+  e.id       := EventsStore.Data[id].id;
+  e.date     := EventsStore.Data[id].date;
+  e.etype    := EventsStore.Data[id].etype;
+  e.notes    := EventsStore.Data[id].notes;
+  e.float    := EventsStore.Data[id].float;
+  e.dueShort := EventsStore.Data[id].dueShort;
+  e.dueLong  := EventsStore.Data[id].dueLong;
 
   result := e
 end;
@@ -125,6 +154,8 @@ var
   fileOut: TFileStream;
   f      : integer;
 begin
+  if EventsCount = 0 then exit;
+
   fileOut := TFileStream.Create(EventsFile, fmCreate or fmShareDenyWrite);
 
   try
@@ -134,7 +165,6 @@ begin
       EventsStore.Data[f].saveToFile(fileOut);
       except
         on E: EInOutError do
-        ShowMessage('ERROR : Writing Event file');
       end;
     end;
   finally
@@ -168,25 +198,77 @@ begin
    finally
     fileIn.Free;
   end;        //  try
-
 end;
 
 procedure Events.updateEvents;
 {  For each event, calculate the due interval.
-   interval_short = due interval in days.
-   interval_long  = due interval in days and time.
+   dueInterval = due interval in days.
+
+   If the the event is a birthday or wedding anniversary, then the original year shoud
+   of been used - so we substitute the current year to calculate the days due.
+   If the event has already happended, then increment the year.
+
+   todo :: needs to check for event type i.e. if type of motor is passed then the days due should be negative.
 }
 var
-  f       : integer;
+  f : integer;
+  eventDate: TDateTime;
+  subsDate : TDateTime;
+  dueTime  : TDateTime;
+  dueTimef : string;
+  dueDays  : integer = 0;
+  stage    : integer;
+
 begin
+  if EventsCount = 0 then exit;
+
   for f := 0 to EventsCount - 1 do
   begin
-    EventsStore.Data[f].interval_long  := EventsStore.Data[f].name + 'short';
-    EventsStore.Data[f].interval_short := EventsStore.Data[f].name + 'long';
-  end;
+    eventDate := StrToDate(EventsStore.Data[f].date);
+    dueTime   := now - Tomorrow;                                       //  Start of tomorrow i.e. midnight tonight.
+    dueTimef  := FormatDateTime('hh:nn:ss', DueTime);                  //  time due as formated string.
+
+    if eventDate > Today then                                          //  an upcoming event
+      dueDays := DaysBetween(Today, eventDate);
+
+    if eventDate < Today then                                          //  an event with an original year.
+      begin
+        subsDate := RecodeYear(eventDate, YearOf(Today));              //  substitutute current year.
+        if subsDate < Today then subsDate := Incyear(subsDate);        //  is event before today? then inc year
+        dueDays := DaysBetween(Today, subsDate);                       //  days due.
+      end;
+
+    stage := checkStages(dueDays);
+    klog.writeLog(format('event %d, duedays %d, stage %d', [f, dueDays, stage]));
+    if stage <> 0 then actionEvent(f, stage);
+
+    if dueDays = 0 then                                                //  event must be today.
+      EventsStore.Data[f].dueShort := format('%s is today', [EventsStore.Data[f].name])
+    else
+      EventsStore.Data[f].dueShort := format('%s in %d days', [EventsStore.Data[f].name, dueDays]);
+
+  end;  //  for f := 0 to EventsCount - 1 do
 
   saveEvents;
+end;
 
+function Events.checkStages(age: integer): integer;
+{  Checks if the days due falls between the age bands, if it does the return
+   the number of the stage.  If the event is not due, then return 0.
+}
+begin
+  klog.writeLog('age = ' + intToStr(age));
+
+  if (age < stage1) then exit(1);
+  if (age < stage2) then exit(2);
+  if (age < stage3) then exit(3);
+  if (age > stage3) then exit(0);     //  event is not due.
+end;
+
+procedure Events.actionEvent(pos: integer; stage: integer);
+
+begin
+   showMessage(EventsStore.Data[pos].name + stage1Mess);
 end;
 
 end.

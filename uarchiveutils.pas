@@ -41,8 +41,6 @@ begin
 
   result := TStringList.Create;
 
-  result.add('Fonts Directory');
-
   if FileExists(optionsFile) then result.add(optionsFile);
   if FileExists(eventFile)   then result.add(eventFile);
   if FileExists(memoFile)    then result.add(memoFile);

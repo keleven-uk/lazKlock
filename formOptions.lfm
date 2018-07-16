@@ -15,11 +15,11 @@ object frmOptions: TfrmOptions
   OnActivate = FormActivate
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  LCLVersion = '1.8.4.0'
   object ButtonPanel1: TButtonPanel
     Left = 6
-    Height = 31
-    Top = 473
+    Height = 34
+    Top = 470
     Width = 608
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
@@ -48,16 +48,6 @@ object frmOptions: TfrmOptions
     SelectedFontOptions.FontStyles = [fsBold]
     Style = easButton
     object accItemGlobal: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideTop.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      AnchorSideBottom.Control = AcrdnOptions
-      AnchorSideBottom.Side = asrBottom
-      Left = 0
-      Height = 338
-      Top = 21
-      Width = 616
       Caption = 'Global'
       Order = 0
       object GroupBox1: TGroupBox
@@ -66,15 +56,15 @@ object frmOptions: TfrmOptions
         Top = 8
         Width = 256
         Caption = 'Default Tab'
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 252
         TabOrder = 0
         object CmbBxDefaulTtab: TComboBox
           Left = 80
-          Height = 21
+          Height = 23
           Top = 8
           Width = 100
-          ItemHeight = 13
+          ItemHeight = 15
           ItemIndex = 0
           Items.Strings = (
             'Fuzzy Time'
@@ -94,22 +84,22 @@ object frmOptions: TfrmOptions
         Top = 8
         Width = 337
         Caption = 'Settings'
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 333
         TabOrder = 1
         object Label1: TLabel
           Left = 8
-          Height = 13
+          Height = 15
           Top = 8
-          Width = 115
+          Width = 123
           Caption = 'User Settings Saved in -'
           ParentColor = False
         end
         object lblSettingsFileName: TLabel
           Left = 8
-          Height = 13
+          Height = 15
           Top = 32
-          Width = 284
+          Width = 314
           Caption = 'c:\Users\<user>\AppData\Local\<app Name>\Options.xml'
           ParentColor = False
         end
@@ -124,9 +114,9 @@ object frmOptions: TfrmOptions
         end
         object Label3: TLabel
           Left = 8
-          Height = 13
+          Height = 15
           Top = 56
-          Width = 156
+          Width = 166
           Caption = 'Reset to system default settings'
           ParentColor = False
         end
@@ -146,7 +136,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 110
+        ClientHeight = 108
         ClientWidth = 333
         Items.Strings = (
           'Save Screen Position. '
@@ -166,7 +156,7 @@ object frmOptions: TfrmOptions
         Top = 248
         Width = 601
         Caption = 'Volume'
-        ClientHeight = 55
+        ClientHeight = 53
         ClientWidth = 597
         TabOrder = 3
         object btnGlobalVolumeTest: TButton
@@ -206,7 +196,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 110
+        ClientHeight = 108
         ClientWidth = 253
         Items.Strings = (
           '12 Days of Christams [before and after].'
@@ -222,13 +212,6 @@ object frmOptions: TfrmOptions
       end
     end
     object accItemTime: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 0
-      Width = 616
       Caption = 'Time'
       Order = 1
       object ChckGrpTimeOptions: TCheckGroup
@@ -246,7 +229,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 142
+        ClientHeight = 140
         ClientWidth = 285
         Items.Strings = (
           'Display 24 Hour Klock [uncheck for 12 hour]'
@@ -268,15 +251,15 @@ object frmOptions: TfrmOptions
         Top = 184
         Width = 288
         Caption = 'Default Time'
-        ClientHeight = 46
+        ClientHeight = 44
         ClientWidth = 284
         TabOrder = 1
         object CmbBxDefaultTime: TComboBox
           Left = 96
-          Height = 21
+          Height = 23
           Top = 8
           Width = 100
-          ItemHeight = 13
+          ItemHeight = 15
           OnChange = CmbBxDefaultTimeChange
           ParentColor = True
           TabOrder = 0
@@ -298,7 +281,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 142
+        ClientHeight = 140
         ClientWidth = 300
         Items.Strings = (
           'Sound "The Pips" on the Hour'
@@ -328,7 +311,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 43
         ClientWidth = 300
         Items.Strings = (
           'Timer To Show MilliSeconds'
@@ -345,28 +328,28 @@ object frmOptions: TfrmOptions
         Top = 256
         Width = 289
         Caption = 'Longitude / Latitude'
-        ClientHeight = 55
+        ClientHeight = 53
         ClientWidth = 285
         TabOrder = 4
         object lblLongitude: TLabel
           Left = 16
-          Height = 13
+          Height = 15
           Top = 8
-          Width = 47
+          Width = 54
           Caption = 'Longitude'
           ParentColor = False
         end
         object lblLatitude: TLabel
           Left = 16
-          Height = 13
+          Height = 15
           Top = 32
-          Width = 39
+          Width = 43
           Caption = 'Latitude'
           ParentColor = False
         end
         object edtLongitude: TEdit
           Left = 96
-          Height = 21
+          Height = 23
           Top = 0
           Width = 160
           OnChange = edtLongitudeChange
@@ -375,7 +358,7 @@ object frmOptions: TfrmOptions
         end
         object edtLatitude: TEdit
           Left = 96
-          Height = 21
+          Height = 23
           Top = 27
           Width = 160
           OnChange = edtLatitudeChange
@@ -385,13 +368,6 @@ object frmOptions: TfrmOptions
       end
     end
     object accItemOtherKlocks: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 0
-      Width = 616
       Caption = 'Other Klocks'
       Order = 2
       object ChckGrpAnalogueKlock: TCheckGroup
@@ -409,7 +385,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
@@ -436,7 +412,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
@@ -464,7 +440,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
@@ -492,7 +468,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 181
         Items.Strings = (
           'Save Screen Position'
@@ -520,7 +496,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 212
         Items.Strings = (
           'Save Screen Position'
@@ -539,14 +515,14 @@ object frmOptions: TfrmOptions
         Top = 120
         Width = 217
         Caption = 'Floating Text Klock Font'
-        ClientHeight = 87
+        ClientHeight = 85
         ClientWidth = 213
         TabOrder = 5
         object lblFloatingTextKlockFont: TLabel
           Left = 8
-          Height = 13
+          Height = 15
           Top = 17
-          Width = 115
+          Width = 126
           Caption = 'Floating Text Klock Font'
           ParentColor = False
         end
@@ -562,13 +538,6 @@ object frmOptions: TfrmOptions
       end
     end
     object accItemLogging: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 0
-      Width = 616
       Caption = 'Logging'
       Order = 4
       object GroupBox4: TGroupBox
@@ -577,30 +546,30 @@ object frmOptions: TfrmOptions
         Top = 16
         Width = 185
         Caption = 'Settings'
-        ClientHeight = 286
+        ClientHeight = 284
         ClientWidth = 181
         TabOrder = 0
         object ChckBxLogging: TCheckBox
           Left = 8
-          Height = 17
+          Height = 19
           Top = 8
-          Width = 91
+          Width = 99
           Caption = 'Logging In Use'
           OnChange = ChckBxLoggingChange
           TabOrder = 0
         end
         object ChckBxCullLogsFiles: TCheckBox
           Left = 8
-          Height = 17
+          Height = 19
           Top = 40
-          Width = 81
+          Width = 90
           Caption = 'Cull Log Files'
           OnChange = ChckBxCullLogsFilesChange
           TabOrder = 1
         end
         object SpnEdtCullDays: TSpinEdit
           Left = 8
-          Height = 21
+          Height = 23
           Top = 72
           Width = 50
           ParentColor = True
@@ -609,9 +578,9 @@ object frmOptions: TfrmOptions
         end
         object lblCullFileDays: TLabel
           Left = 73
-          Height = 13
+          Height = 15
           Top = 77
-          Width = 24
+          Width = 25
           Caption = 'Days'
           ParentColor = False
         end
@@ -636,13 +605,6 @@ object frmOptions: TfrmOptions
       end
     end
     object accItemStickyMemo: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 0
-      Width = 616
       Caption = 'Sticky Notes, Memo, Monitor Sleeping and BirthDate'
       Order = 3
       object GroupBox5: TGroupBox
@@ -651,7 +613,7 @@ object frmOptions: TfrmOptions
         Top = 8
         Width = 292
         Caption = 'Stick Notes'
-        ClientHeight = 102
+        ClientHeight = 100
         ClientWidth = 288
         TabOrder = 0
         object clrBtnStickyNoteColour: TColorButton
@@ -667,9 +629,9 @@ object frmOptions: TfrmOptions
         end
         object LblStickyNoteColour: TLabel
           Left = 31
-          Height = 13
+          Height = 15
           Top = 24
-          Width = 88
+          Width = 99
           Caption = 'Sticky Note Colour'
           ParentColor = False
         end
@@ -697,21 +659,21 @@ object frmOptions: TfrmOptions
         Top = 8
         Width = 292
         Caption = 'Memos'
-        ClientHeight = 102
+        ClientHeight = 100
         ClientWidth = 288
         TabOrder = 1
         object ChckBxDefaultPassWord: TCheckBox
           Left = 16
-          Height = 17
+          Height = 19
           Top = 16
-          Width = 125
+          Width = 133
           Caption = 'Use Default Password'
           OnChange = ChckBxDefaultPassWordChange
           TabOrder = 0
         end
         object EdtDefaultPassWord: TEdit
           Left = 160
-          Height = 21
+          Height = 23
           Top = 16
           Width = 120
           OnExit = EdtDefaultPassWordExit
@@ -720,15 +682,15 @@ object frmOptions: TfrmOptions
         end
         object Label2: TLabel
           Left = 17
-          Height = 13
+          Height = 15
           Top = 64
-          Width = 115
+          Width = 132
           Caption = 'Memo Decrypt Time Out'
           ParentColor = False
         end
         object SpnEdtMemoTimeOut: TSpinEdit
           Left = 160
-          Height = 21
+          Height = 23
           Top = 56
           Width = 56
           MaxValue = 120
@@ -743,39 +705,39 @@ object frmOptions: TfrmOptions
         Top = 136
         Width = 289
         Caption = 'Keep Monitor Awake'
-        ClientHeight = 133
+        ClientHeight = 131
         ClientWidth = 285
         TabOrder = 2
         object ChckBxKeepMonitorAwake: TCheckBox
           Left = 9
-          Height = 17
+          Height = 19
           Top = 8
-          Width = 118
+          Width = 130
           Caption = 'Keep Monitor Awake'
           OnChange = ChckBxKeepMonitorAwakeChange
           TabOrder = 0
         end
         object ChckBxUseF15: TCheckBox
           Left = 9
-          Height = 17
+          Height = 19
           Top = 36
-          Width = 59
+          Width = 60
           Caption = 'Use F15'
           OnChange = ChckBxUseF15Change
           TabOrder = 1
         end
         object ChckBxJiggleMouse: TCheckBox
           Left = 9
-          Height = 17
+          Height = 19
           Top = 64
-          Width = 81
+          Width = 89
           Caption = 'Jiggle Mouse'
           OnChange = ChckBxJiggleMouseChange
           TabOrder = 2
         end
         object SpnEdtMonitorMinites: TSpinEdit
           Left = 89
-          Height = 21
+          Height = 23
           Top = 88
           Width = 50
           OnChange = SpnEdtMonitorMinitesChange
@@ -784,17 +746,17 @@ object frmOptions: TfrmOptions
         end
         object lblCheckEvery: TLabel
           Left = 9
-          Height = 13
+          Height = 15
           Top = 96
-          Width = 60
+          Width = 64
           Caption = 'Check every'
           ParentColor = False
         end
         object lblMinutes: TLabel
           Left = 152
-          Height = 13
+          Height = 15
           Top = 96
-          Width = 37
+          Width = 43
           Caption = 'minutes'
           ParentColor = False
         end
@@ -805,12 +767,12 @@ object frmOptions: TfrmOptions
         Top = 136
         Width = 292
         Caption = 'Birth Date'
-        ClientHeight = 133
+        ClientHeight = 131
         ClientWidth = 288
         TabOrder = 3
         object DtEdtBirthDate: TDateEdit
           Left = 96
-          Height = 21
+          Height = 23
           Top = 56
           Width = 103
           CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
@@ -822,22 +784,15 @@ object frmOptions: TfrmOptions
         end
         object lblBirthDate: TLabel
           Left = 24
-          Height = 13
+          Height = 15
           Top = 16
-          Width = 126
+          Width = 135
           Caption = 'Current BirthDate set to - '
           ParentColor = False
         end
       end
     end
     object accItemArchive: TAccordionItem
-      AnchorSideLeft.Control = AcrdnOptions
-      AnchorSideRight.Control = AcrdnOptions
-      AnchorSideRight.Side = asrBottom
-      Left = 0
-      Height = 0
-      Top = 0
-      Width = 616
       Caption = 'Archive'
       Order = 5
       object GroupBox7: TGroupBox
@@ -846,7 +801,7 @@ object frmOptions: TfrmOptions
         Top = 8
         Width = 600
         Caption = 'Save Archive'
-        ClientHeight = 206
+        ClientHeight = 204
         ClientWidth = 596
         TabOrder = 0
         object ChckLstBxArchive: TCheckListBox
@@ -860,7 +815,7 @@ object frmOptions: TfrmOptions
         end
         object FlNmEdtSaveArchiveName: TFileNameEdit
           Left = 8
-          Height = 21
+          Height = 23
           Top = 176
           Width = 488
           FileName = 'FlNmEdtSaveArchiveName'
@@ -890,12 +845,12 @@ object frmOptions: TfrmOptions
         Top = 240
         Width = 600
         Caption = 'Load Archive'
-        ClientHeight = 55
+        ClientHeight = 53
         ClientWidth = 596
         TabOrder = 1
         object FlNmEdtLoadArchiveName: TFileNameEdit
           Left = 8
-          Height = 21
+          Height = 23
           Top = 16
           Width = 488
           FileName = 'FlNmEdtLoadArchiveName'
@@ -947,13 +902,13 @@ object frmOptions: TfrmOptions
       'ColorS=F0FBFF'
       'ColorT=A4A0A0'
     )
-    Left = 152
-    Top = 464
+    left = 152
+    top = 464
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0
     MaxFontSize = 0
-    Left = 216
-    Top = 464
+    left = 216
+    top = 464
   end
 end
