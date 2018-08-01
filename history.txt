@@ -1711,3 +1711,20 @@ Currently
 6557 statements
 16.5% comment
 
+
+Build 94 [2.4.1.94]
+
+Continuing with event thingy.
+Added a new form, formEvent.  This is generated when an event is due to inform
+the user.  The idea is that when a pre-determined due interval is reached
+before the event, the user will be reminded.  There should be three such
+intervals and will be user defined - but are hard coded at the moment.
+Changes to Event and Events to check for stages and generate the reminders.
+Changes to formKlock to set up stages.
+
+NB : needs to be tested.
+
+Currently
+12208 lines of source code.
+6689 statements
+16.4% comment

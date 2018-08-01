@@ -10,7 +10,7 @@ uses
   Forms, runtimetypeinfocontrols, lazcontrols, tachartlazaruspkg, formklock,
   formOptions, uFuzzyTime, formAnalogueKlock, SysUtils, UformClipBoardUtils,
   formClipBoard, formLEDKlock, formBinaryKlock, formSmallTextKlock, formStickyNote,
-  formFloatingKlock, formSplashScreen, formBiorhythm;
+  formFloatingKlock, formSplashScreen, formBiorhythm, formEvent;
 
 {$R *.res}
 
@@ -42,6 +42,7 @@ begin
 
   frmSplashScreen.Hide;
   frmSplashScreen.Free;
+  Application.CreateForm(TfrmEvent, frmEvent);
   Application.Run;
 end.
 

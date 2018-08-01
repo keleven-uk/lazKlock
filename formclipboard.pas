@@ -294,7 +294,7 @@ begin
 end;
 
 procedure TfrmClipBoard.deleteToRycycle(aFile: string);
-{  Deletes files to the Rycycle bin.
+{  Deletes files to the Recycle bin.
     Thanks to Lush - http://forum.lazarus-ide.org/index.php?topic=12288.0
 
     FOF_ALLOWUNDO -> moves file to the bin.

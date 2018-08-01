@@ -32,7 +32,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 { TODO : Check out Balloon Time. }
 { TODO : Look at up time in formAbout. }
-{ TODO : Combine onChange routins in both memo and events }
+{ TODO : Combine onChange routines in both memo and events }
 
 {$mode objfpc}{$H+}
 
@@ -474,6 +474,9 @@ begin
     userOptions.writeCurrentOptions;
   end;
 
+  ev.killEvents;
+  klog.writeLog('Killing Events');
+
   stickies.updateStickyNotes;
   kLog.writeLog('Updated Sticky Note File');
 
@@ -535,9 +538,9 @@ begin
   ft.fuzzyBase        := 2;
 
   //  set up the aged days for event prompts [will be user options].
-  ev.stage1 := 30;
+  ev.stage1 := 5;
   ev.stage2 := 10;
-  ev.stage3 := 1;
+  ev.stage3 := 20;
   ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
   loadEvents;                       //  Load Events store into listbox, if any.
 
@@ -562,7 +565,7 @@ begin
   lblTZTime.Font.Size := 22;
   lblTZTime.AutoSize  := true;
 
-  klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
+  klog.writeLog(format('Main timer interval set to %D milliseconds', [mainTimer.Interval]));
 end;
 
 procedure TfrmMain.DisplayMessage;
@@ -884,7 +887,7 @@ begin
   else
     mainTimer.Interval := 1000;
 
-  klog.writeLog(format('Main timer inerval set to %D milliseconds', [mainTimer.Interval]));
+  klog.writeLog(format('Main timer interval set to %D milliseconds', [mainTimer.Interval]));
 end;
 
 procedure TfrmMain.SpnEdtTimeBaseChange(Sender: TObject);
@@ -1738,7 +1741,7 @@ begin
     btnEventPrint.Visible      := false;
   end;
 
-  btnEventPrint.Enabled := false;       //  enable when print fuction is completed.
+  btnEventPrint.Enabled := false;       //  enable when print function is completed.
 end;
 
 procedure TfrmMain.btnEventNewClick(Sender: TObject);
@@ -2039,7 +2042,7 @@ begin
     if RdBttnMemoEncrypt.checked then
     begin
       passWord := PasswordBox('Memo Password',
-                              'Input a password to encypt memo, or return to use default.');
+                              'Input a password to encrypt memo, or return to use default.');
 
       if passWord = '' then   //  if password is blank then use default.
         passWord := PASSWORD;

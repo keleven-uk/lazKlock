@@ -1,0 +1,35 @@
+object frmEvent: TfrmEvent
+  Left = 1382
+  Height = 30
+  Top = 527
+  Width = 320
+  AlphaBlend = True
+  BorderIcons = []
+  BorderStyle = bsNone
+  Caption = 'Event'
+  ClientHeight = 30
+  ClientWidth = 320
+  FormStyle = fsStayOnTop
+  OnClick = FormClick
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnMouseEnter = FormMouseEnter
+  OnMouseLeave = FormMouseLeave
+  LCLVersion = '1.8.4.0'
+  object lblEvent: TLabel
+    Left = 16
+    Height = 30
+    Top = 0
+    Width = 276
+    Caption = 'Staceys Birthday is really soon'
+    Font.Height = -21
+    ParentColor = False
+    ParentFont = False
+  end
+  object tmrEvent: TTimer
+    OnTimer = tmrEventTimer
+    left = 272
+    top = 8
+  end
+end
