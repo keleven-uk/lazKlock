@@ -24,9 +24,9 @@
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="4"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="94"/>
+      <BuildNr Value="95"/>
       <Language Value="0809"/>
-      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="94"/>
+      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="95"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -79,7 +79,7 @@
         <PackageName Value="LCL"/>
       </Item11>
     </RequiredPackages>
-    <Units Count="64">
+    <Units Count="61">
       <Unit0>
         <Filename Value="klock.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -94,12 +94,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
-        <TopLine Value="533"/>
-        <CursorPos Y="539"/>
+        <TopLine Value="2286"/>
+        <CursorPos X="32" Y="2304"/>
         <UsageCount Value="202"/>
         <Bookmarks Count="2">
-          <Item0 Y="1711"/>
-          <Item1 X="2" Y="1915" ID="1"/>
+          <Item0 Y="1717"/>
+          <Item1 X="2" Y="1941" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -107,7 +107,7 @@
       <Unit2>
         <Filename Value="info.txt"/>
         <CursorPos X="16" Y="2"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="155"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit2>
       <Unit3>
@@ -128,7 +128,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="64" Y="20"/>
-        <UsageCount Value="182"/>
+        <UsageCount Value="180"/>
       </Unit4>
       <Unit5>
         <Filename Value="formOptions.pas"/>
@@ -136,30 +136,32 @@
         <ComponentName Value="frmOptions"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="260"/>
-        <CursorPos X="53" Y="295"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="703"/>
+        <CursorPos X="71" Y="708"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="C:\lazarus\lcl\comctrls.pp"/>
         <UnitName Value="ComCtrls"/>
         <TopLine Value="790"/>
         <CursorPos X="3" Y="559"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit6>
       <Unit7>
         <Filename Value="ucountdown.pas"/>
         <UnitName Value="Ucountdown"/>
         <CursorPos Y="12"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\lcl\lclclasses.pp"/>
         <UnitName Value="LCLClasses"/>
         <TopLine Value="74"/>
         <CursorPos Y="94"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit8>
       <Unit9>
         <Filename Value="ufuzzytime.pas"/>
@@ -174,7 +176,7 @@
         <Filename Value="uoptionsrecord.pas"/>
         <UnitName Value="UOptionsRecord"/>
         <CursorPos Y="25"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
       </Unit10>
       <Unit11>
         <Filename Value="formlicense.pas"/>
@@ -197,12 +199,6 @@
         <UsageCount Value="200"/>
       </Unit12>
       <Unit13>
-        <Filename Value="C:\lazarus\lcl\lclintf.pas"/>
-        <UnitName Value="LCLIntf"/>
-        <TopLine Value="205"/>
-        <UsageCount Value="1"/>
-      </Unit13>
-      <Unit14>
         <Filename Value="formreminderinput.pas"/>
         <ComponentName Value="frmReminderInput"/>
         <HasResources Value="True"/>
@@ -210,26 +206,26 @@
         <UnitName Value="formReminderInput"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="4"/>
-        <UsageCount Value="201"/>
-      </Unit14>
-      <Unit15>
+        <UsageCount Value="199"/>
+      </Unit13>
+      <Unit14>
         <Filename Value="uoptions.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uOptions"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="521"/>
-        <CursorPos X="72" Y="543"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="143"/>
+        <CursorPos X="78" Y="151"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
-      </Unit15>
-      <Unit16>
+      </Unit14>
+      <Unit15>
         <Filename Value="uoptionsutils.pas"/>
         <UnitName Value="uOptionsUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="6" Y="17"/>
-        <UsageCount Value="49"/>
-      </Unit16>
-      <Unit17>
+        <UsageCount Value="47"/>
+      </Unit15>
+      <Unit16>
         <Filename Value="formanalogueklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmAnalogueKlock"/>
@@ -240,8 +236,8 @@
         <TopLine Value="172"/>
         <CursorPos X="34" Y="196"/>
         <UsageCount Value="200"/>
-      </Unit17>
-      <Unit18>
+      </Unit16>
+      <Unit17>
         <Filename Value="ufonts.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uFonts"/>
@@ -249,15 +245,15 @@
         <TopLine Value="119"/>
         <CursorPos Y="160"/>
         <UsageCount Value="200"/>
-      </Unit18>
-      <Unit19>
+      </Unit17>
+      <Unit18>
         <Filename Value="uloggerutils.pas"/>
         <UnitName Value="uLoggerUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="9" Y="85"/>
-        <UsageCount Value="5"/>
-      </Unit19>
-      <Unit20>
+        <UsageCount Value="3"/>
+      </Unit18>
+      <Unit19>
         <Filename Value="ulogging.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ULogging"/>
@@ -265,8 +261,8 @@
         <TopLine Value="28"/>
         <CursorPos X="70" Y="59"/>
         <UsageCount Value="205"/>
-      </Unit20>
-      <Unit21>
+      </Unit19>
+      <Unit20>
         <Filename Value="uformclipboardutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UformClipBoardUtils"/>
@@ -274,28 +270,29 @@
         <TopLine Value="6"/>
         <CursorPos X="39" Y="208"/>
         <UsageCount Value="200"/>
-      </Unit21>
-      <Unit22>
+      </Unit20>
+      <Unit21>
         <Filename Value="formclipboard.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmClipBoard"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formClipBoard"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="46"/>
-        <CursorPos Y="60"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="100"/>
+        <CursorPos X="4" Y="121"/>
         <UsageCount Value="200"/>
-      </Unit22>
-      <Unit23>
+        <Loaded Value="True"/>
+      </Unit21>
+      <Unit22>
         <Filename Value="uinfoutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uInfoUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="332"/>
         <UsageCount Value="200"/>
-      </Unit23>
-      <Unit24>
+      </Unit22>
+      <Unit23>
         <Filename Value="forminfo.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmInfo"/>
@@ -306,21 +303,21 @@
         <TopLine Value="106"/>
         <CursorPos X="75" Y="137"/>
         <UsageCount Value="200"/>
-      </Unit24>
-      <Unit25>
+      </Unit23>
+      <Unit24>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\sysutils.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="601"/>
         <CursorPos X="3" Y="578"/>
-        <UsageCount Value="7"/>
-      </Unit25>
-      <Unit26>
+        <UsageCount Value="5"/>
+      </Unit24>
+      <Unit25>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win64\windows.pp"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="15" Y="12"/>
-        <UsageCount Value="5"/>
-      </Unit26>
-      <Unit27>
+        <UsageCount Value="3"/>
+      </Unit25>
+      <Unit26>
         <Filename Value="formledklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmLEDKlock"/>
@@ -331,8 +328,8 @@
         <TopLine Value="52"/>
         <CursorPos X="38" Y="62"/>
         <UsageCount Value="200"/>
-      </Unit27>
-      <Unit28>
+      </Unit26>
+      <Unit27>
         <Filename Value="formbinaryklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmBinaryKlock"/>
@@ -342,8 +339,8 @@
         <EditorIndex Value="-1"/>
         <CursorPos Y="291"/>
         <UsageCount Value="200"/>
-      </Unit28>
-      <Unit29>
+      </Unit27>
+      <Unit28>
         <Filename Value="formsmalltextklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSmallTextKlock"/>
@@ -354,15 +351,15 @@
         <TopLine Value="156"/>
         <CursorPos X="81" Y="170"/>
         <UsageCount Value="201"/>
-      </Unit29>
-      <Unit30>
+      </Unit28>
+      <Unit29>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\objpas\sysutils\datih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="88"/>
         <CursorPos X="47" Y="122"/>
-        <UsageCount Value="8"/>
-      </Unit30>
-      <Unit31>
+        <UsageCount Value="6"/>
+      </Unit29>
+      <Unit30>
         <Filename Value="uconversion.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UConversion"/>
@@ -370,121 +367,106 @@
         <TopLine Value="151"/>
         <CursorPos X="3" Y="127"/>
         <UsageCount Value="200"/>
-      </Unit31>
-      <Unit32>
+      </Unit30>
+      <Unit31>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\objpas\sysutils\sysstrh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="161"/>
         <CursorPos X="10" Y="180"/>
-        <UsageCount Value="3"/>
-      </Unit32>
-      <Unit33>
+        <UsageCount Value="1"/>
+      </Unit31>
+      <Unit32>
         <Filename Value="ustickynotes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ustickyNotes"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="212"/>
         <CursorPos X="13" Y="200"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
-      </Unit33>
-      <Unit34>
+      </Unit32>
+      <Unit33>
         <Filename Value="ustickynote.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ustickyNote"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="160"/>
         <CursorPos X="7" Y="126"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
-      </Unit34>
-      <Unit35>
+      </Unit33>
+      <Unit34>
         <Filename Value="formstickynote.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmStickyNote"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formStickyNote"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="34"/>
         <CursorPos Y="52"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit35>
-      <Unit36>
+      </Unit34>
+      <Unit35>
         <Filename Value="C:\lazarus64\lcl\stdctrls.pp"/>
         <UnitName Value="StdCtrls"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1523"/>
         <CursorPos X="26" Y="1540"/>
-        <UsageCount Value="5"/>
-      </Unit36>
-      <Unit37>
+        <UsageCount Value="3"/>
+      </Unit35>
+      <Unit36>
         <Filename Value="umemo.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uMemo"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="64"/>
         <CursorPos X="71" Y="98"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-      </Unit37>
-      <Unit38>
+      </Unit36>
+      <Unit37>
         <Filename Value="umemos.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uMemos"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="95"/>
         <CursorPos X="3" Y="127"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-      </Unit38>
-      <Unit39>
+      </Unit37>
+      <Unit38>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\wininc\redef.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="511"/>
         <CursorPos X="24" Y="530"/>
-        <UsageCount Value="10"/>
-      </Unit39>
-      <Unit40>
+        <UsageCount Value="8"/>
+      </Unit38>
+      <Unit39>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\bcsvgviewer.pas"/>
         <UnitName Value="BCSVGViewer"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="142"/>
         <CursorPos X="40" Y="161"/>
-        <UsageCount Value="9"/>
-      </Unit40>
-      <Unit41>
+        <UsageCount Value="7"/>
+      </Unit39>
+      <Unit40>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\wininc\struct.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="4355"/>
         <CursorPos X="6" Y="4362"/>
-        <UsageCount Value="10"/>
-      </Unit41>
-      <Unit42>
+        <UsageCount Value="8"/>
+      </Unit40>
+      <Unit41>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\inc\mathh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="78"/>
         <CursorPos X="14" Y="96"/>
-        <UsageCount Value="10"/>
-      </Unit42>
-      <Unit43>
-        <Filename Value="C:\lazarus64\lcl\graphics.pp"/>
-        <UnitName Value="Graphics"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1940"/>
-        <CursorPos X="10" Y="1959"/>
-        <UsageCount Value="1"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="forminfo.lfm"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="61" Y="12"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit44>
-      <Unit45>
+        <UsageCount Value="8"/>
+      </Unit41>
+      <Unit42>
         <Filename Value="uarchiveutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uArchiveUtils"/>
@@ -492,8 +474,8 @@
         <TopLine Value="22"/>
         <CursorPos X="40" Y="39"/>
         <UsageCount Value="200"/>
-      </Unit45>
-      <Unit46>
+      </Unit42>
+      <Unit43>
         <Filename Value="formfloatingklock.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmFloatingKlock"/>
@@ -504,47 +486,47 @@
         <TopLine Value="264"/>
         <CursorPos Y="294"/>
         <UsageCount Value="200"/>
-      </Unit46>
-      <Unit47>
+      </Unit43>
+      <Unit44>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\delphimoon\moon.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos X="13" Y="26"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="2"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit47>
-      <Unit48>
+      </Unit44>
+      <Unit45>
         <Filename Value="C:\lazarus64\lcl\clipbrd.pp"/>
         <UnitName Value="Clipbrd"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="135"/>
         <CursorPos X="10" Y="155"/>
-        <UsageCount Value="5"/>
-      </Unit48>
-      <Unit49>
+        <UsageCount Value="3"/>
+      </Unit45>
+      <Unit46>
         <Filename Value="C:\lazarus64\lcl\lcltype.pp"/>
         <UnitName Value="LCLType"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2689"/>
         <CursorPos X="3" Y="2695"/>
-        <UsageCount Value="5"/>
-      </Unit49>
-      <Unit50>
+        <UsageCount Value="3"/>
+      </Unit46>
+      <Unit47>
         <Filename Value="C:\lazarus64\lcl\include\clipbrd.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="561"/>
         <CursorPos X="33" Y="564"/>
-        <UsageCount Value="5"/>
-      </Unit50>
-      <Unit51>
+        <UsageCount Value="3"/>
+      </Unit47>
+      <Unit48>
         <Filename Value="C:\lazarus64\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1799"/>
         <CursorPos X="3" Y="1818"/>
-        <UsageCount Value="6"/>
-      </Unit51>
-      <Unit52>
+        <UsageCount Value="4"/>
+      </Unit48>
+      <Unit49>
         <Filename Value="formsplashscreen.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSplashScreen"/>
@@ -554,51 +536,51 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="5"/>
         <CursorPos X="18" Y="40"/>
-        <UsageCount Value="190"/>
-      </Unit52>
-      <Unit53>
+        <UsageCount Value="209"/>
+      </Unit49>
+      <Unit50>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\mouseandkeyinput\mouseandkeyinput.pas"/>
         <UnitName Value="MouseAndKeyInput"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit53>
-      <Unit54>
+        <UsageCount Value="5"/>
+      </Unit50>
+      <Unit51>
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\mouseandkeyinput\keyinputintf.pas"/>
         <UnitName Value="KeyInputIntf"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="43"/>
         <CursorPos X="15" Y="40"/>
-        <UsageCount Value="7"/>
-      </Unit54>
-      <Unit55>
+        <UsageCount Value="5"/>
+      </Unit51>
+      <Unit52>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\objpas\sysutils\diskh.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="16" Y="16"/>
-        <UsageCount Value="7"/>
-      </Unit55>
-      <Unit56>
+        <UsageCount Value="5"/>
+      </Unit52>
+      <Unit53>
         <Filename Value="..\..\fpcsrc\rtl\objpas\sysutils\datih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="106"/>
         <CursorPos X="29" Y="112"/>
-        <UsageCount Value="9"/>
-      </Unit56>
-      <Unit57>
+        <UsageCount Value="7"/>
+      </Unit53>
+      <Unit54>
         <Filename Value="..\..\fpcsrc\rtl\win\wininc\redef.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1005"/>
         <CursorPos X="17" Y="1025"/>
-        <UsageCount Value="8"/>
-      </Unit57>
-      <Unit58>
+        <UsageCount Value="6"/>
+      </Unit54>
+      <Unit55>
         <Filename Value="C:\lazarus64\lcl\controls.pp"/>
         <UnitName Value="Controls"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1625"/>
         <CursorPos X="14" Y="1698"/>
-        <UsageCount Value="8"/>
-      </Unit58>
-      <Unit59>
+        <UsageCount Value="6"/>
+      </Unit55>
+      <Unit56>
         <Filename Value="formbiorhythm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmBiorhythm"/>
@@ -608,173 +590,173 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="9"/>
         <CursorPos X="44" Y="64"/>
-        <UsageCount Value="124"/>
-      </Unit59>
-      <Unit60>
+        <UsageCount Value="147"/>
+      </Unit56>
+      <Unit57>
         <Filename Value="uevent.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEvent"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="32"/>
-        <CursorPos X="60" Y="112"/>
-        <UsageCount Value="106"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="152"/>
+        <CursorPos X="18" Y="98"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
-      </Unit60>
-      <Unit61>
+      </Unit57>
+      <Unit58>
         <Filename Value="uevents.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEvents"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="321"/>
-        <CursorPos X="74" Y="339"/>
-        <UsageCount Value="104"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="340"/>
+        <CursorPos X="7" Y="310"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
-      </Unit61>
-      <Unit62>
+      </Unit58>
+      <Unit59>
         <Filename Value="..\..\..\newpascal\lazarus\lcl\include\messagedialogs.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="11" Y="206"/>
-        <UsageCount Value="9"/>
-      </Unit62>
-      <Unit63>
+        <UsageCount Value="7"/>
+      </Unit59>
+      <Unit60>
         <Filename Value="formevent.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmEvent"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formEvent"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="8"/>
         <CursorPos X="97" Y="11"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="49"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit63>
+      </Unit60>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="TEST"/>
     </OtherDefines>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="13" Column="3" TopLine="3"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="301" Column="26" TopLine="282"/>
       </Position1>
       <Position2>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="312" TopLine="270"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="300" Column="26" TopLine="281"/>
       </Position2>
       <Position3>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="22" Column="66" TopLine="22"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="299" Column="26" TopLine="280"/>
       </Position3>
       <Position4>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="225" Column="14" TopLine="212"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="298" Column="26" TopLine="279"/>
       </Position4>
       <Position5>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="299" Column="29" TopLine="265"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="301" Column="26" TopLine="282"/>
       </Position5>
       <Position6>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="282" Column="29" TopLine="271"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="304" Column="26" TopLine="285"/>
       </Position6>
       <Position7>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="312" Column="3" TopLine="274"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="307" Column="26" TopLine="288"/>
       </Position7>
       <Position8>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="46" Column="66" TopLine="30"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="306" Column="26" TopLine="287"/>
       </Position8>
       <Position9>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="13" Column="12"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="305" Column="26" TopLine="286"/>
       </Position9>
       <Position10>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="29"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="304" Column="26" TopLine="285"/>
       </Position10>
       <Position11>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="43" Column="22"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="307" Column="26" TopLine="288"/>
       </Position11>
       <Position12>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="52" Column="28" TopLine="12"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="305" Column="93" TopLine="288"/>
       </Position12>
       <Position13>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="58" Column="29" TopLine="20"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="306" Column="93" TopLine="289"/>
       </Position13>
       <Position14>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="48" Column="20" TopLine="22"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2314" Column="3" TopLine="1948"/>
       </Position14>
       <Position15>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="69" Column="13" TopLine="29"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1262" Column="13" TopLine="1247"/>
       </Position15>
       <Position16>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="293" Column="9" TopLine="260"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2294" Column="13" TopLine="2259"/>
       </Position16>
       <Position17>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="45" Column="9" TopLine="35"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1262" Column="6" TopLine="1241"/>
       </Position17>
       <Position18>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="56" Column="3" TopLine="37"/>
+        <Filename Value="formclipboard.pas"/>
+        <Caret Line="60" TopLine="46"/>
       </Position18>
       <Position19>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="308" Column="76" TopLine="292"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2294" Column="6" TopLine="2273"/>
       </Position19>
       <Position20>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="49" Column="27" TopLine="34"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="656" Column="90" TopLine="636"/>
       </Position20>
       <Position21>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="54" TopLine="34"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="638" Column="47" TopLine="638"/>
       </Position21>
       <Position22>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="84" Column="49" TopLine="68"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="755" TopLine="743"/>
       </Position22>
       <Position23>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="157" TopLine="117"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="638" TopLine="622"/>
       </Position23>
       <Position24>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="51" TopLine="30"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="162" TopLine="162"/>
       </Position24>
       <Position25>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="118" TopLine="97"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="638" TopLine="627"/>
       </Position25>
       <Position26>
-        <Filename Value="formevent.pas"/>
-        <Caret Line="113" TopLine="97"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="660" Column="86" TopLine="656"/>
       </Position26>
       <Position27>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="320" Column="30" TopLine="296"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="143" Column="63" TopLine="123"/>
       </Position27>
       <Position28>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="286" Column="19" TopLine="259"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="678" Column="30" TopLine="651"/>
       </Position28>
       <Position29>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="84" Column="9" TopLine="72"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="657" Column="82" TopLine="635"/>
       </Position29>
       <Position30>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="477" Column="16" TopLine="443"/>
+        <Filename Value="formOptions.pas"/>
+        <Caret Line="648" Column="62" TopLine="637"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

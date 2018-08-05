@@ -59,9 +59,7 @@ type
 implementation
 
 constructor Event.Create(sn_id: integer);
-{  Creates a new Event.
-
-}
+{  Creates a new Event.    }
 begin
   id := sn_id;
 
@@ -89,15 +87,15 @@ constructor Event.Create(fsOut: TFileStream);
 }
 var
   Len1: Cardinal = 0;
-  sNme: string  = '';
-  iID : integer = 0;
-  sDte: string  = '';
-  iTyp: integer = 0;
-  sNte: string  = '';
-  bFlt: boolean = false;
-  bSt1: boolean = false;
-  bSt2: boolean = false;
-  bSt3: boolean = false;
+  sNme: string   = '';
+  iID : integer  = 0;
+  sDte: string   = '';
+  iTyp: integer  = 0;
+  sNte: string   = '';
+  bFlt: boolean  = false;
+  bSt1: boolean  = false;
+  bSt2: boolean  = false;
+  bSt3: boolean  = false;
 begin
 
   try

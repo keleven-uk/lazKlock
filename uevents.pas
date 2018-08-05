@@ -16,32 +16,38 @@ type
   Events = class
 
   private
-    _EventsFile : string;
-    _EventsCount: integer;
-    _stage1     : integer;
-    _stage2     : integer;
-    _stage3     : integer;
-    _stage1Mess : string;
-    _stage2Mess : string;
-    _stage3Mess : string;
-    _stage1Col  : TColor;
-    _stage2Col  : TColor;
-    _stage3Col  : TColor;
+    _EventsFile      : string;
+    _EventsCount     : integer;
+    _stage1Days      : integer;
+    _stage2Days      : integer;
+    _stage3Days      : integer;
+    _stage1Mess      : string;
+    _stage2Mess      : string;
+    _stage3Mess      : string;
+    _stage1BackColour: TColor;
+    _stage2BackColour: TColor;
+    _stage3BackColour: TColor;
+    _stage1ForeColour: TColor;
+    _stage2ForeColour: TColor;
+    _stage3ForeColour: TColor;
 
     property EventsFile: string read _EventsFile write _EventsFile;
     function checkStages(age: integer): integer;
     procedure actionEvent(pos: integer; stage: integer);
   public
     property EventsCount: integer read _EventsCount write _EventsCount;
-    property stage1     : integer read _stage1      write _stage1;
-    property stage2     : integer read _stage2      write _stage2;
-    property stage3     : integer read _stage3      write _stage3;
+    property stage1Days : integer read _stage1Days  write _stage1Days;
+    property stage2Days : integer read _stage2Days  write _stage2Days;
+    property stage3Days : integer read _stage3Days  write _stage3Days;
     property stage1Mess : string  read _stage1Mess  write _stage1Mess;
     property stage2Mess : string  read _stage2Mess  write _stage2Mess;
     property stage3Mess : string  read _stage3Mess  write _stage3Mess;
-    property stage1Col  : TColor  read _stage1Col   write _stage1Col;
-    property stage2Col  : TColor  read _stage2Col   write _stage2Col;
-    property stage3Col  : TColor  read _stage3Col   write _stage3Col;
+    property stage1BackColour: TColor read _stage1BackColour write _stage1BackColour;
+    property stage2BackColour: TColor read _stage2BackColour write _stage2BackColour;
+    property stage3BackColour: TColor read _stage3BackColour write _stage3BackColour;
+    property stage1ForeColour: TColor read _stage1ForeColour write _stage1ForeColour;
+    property stage2ForeColour: TColor read _stage2ForeColour write _stage2ForeColour;
+    property stage3ForeColour: TColor read _stage3ForeColour write _stage3ForeColour;
 
     constructor Create; overload;
     destructor Destroy; override;
@@ -81,17 +87,23 @@ begin
   EventsStore.Sorted := true;
   EventsCount        := 0;
 
-  stage1 := 5;
-  stage2 := 10;
-  stage3 := 20;
 
-  stage1Mess := ' is realy soon';
-  stage2Mess := ' Will very soon be here';
-  stage3Mess := ' will soon be here';
+  //  set up defualts, are overridded by user options.
+  stage1Days := 5;                             //  Days until stage 1 is triggered.
+  stage2Days := 10;                            //  Days until stage 2 is triggered.
+  stage3Days := 30;                            //  Days until stage 3 is triggered.
 
-  stage1Col := clred;
-  stage2Col := clYellow;
-  stage3Col := clSkyBlue;
+  stage1Mess := ' is realy soon';              //  Display message for stage 1.
+  stage2Mess := ' Will very soon be here';     //  Display message for stage 2.
+  stage3Mess := ' will soon be here';          //  Display message for stage 3.
+
+  stage1BackColour := clred;                   //  Paper colour of stage 1.
+  stage2BackColour := clYellow;                //  Paper colour of stage 2.
+  stage3BackColour := clSkyBlue;               //  Paper colour of stage 3.
+
+  stage1ForeColour := clBlack;                 //  Text colour of stage 1.
+  stage2ForeColour := clBlack;                 //  Text colour of stage 2.
+  stage3ForeColour := clBlack;                 //  Text colour of stage 3.
 end;
 
 destructor Events.Destroy;
@@ -236,7 +248,7 @@ procedure Events.updateEvents;
    todo :: needs to check for event type i.e. if type of motor is passed then the days due should be negative.
 }
 var
-  f : integer;
+  f        : integer;
   eventDate: TDateTime;
   subsDate : TDateTime;
   dueTime  : TDateTime;
@@ -281,10 +293,10 @@ function Events.checkStages(age: integer): integer;
    the number of the stage.  If the event is not due, then return 0.
 }
 begin
-  if (age < stage1) then exit(1);
-  if (age < stage2) then exit(2);
-  if (age < stage3) then exit(3);
-  if (age > stage3) then exit(0);     //  event is not due.
+  if (age < stage1Days) then exit(1);
+  if (age < stage2Days) then exit(2);
+  if (age < stage3Days) then exit(3);
+  if (age > stage3Days) then exit(0);     //  event is not due.
 end;
 
 procedure Events.actionEvent(pos: integer; stage: integer);
@@ -292,7 +304,8 @@ procedure Events.actionEvent(pos: integer; stage: integer);
 }
 VAR
   mess: string;
-  col : TColor;
+  fcol: TColor;                           //  Fore colour - coulour of font.
+  bcol: TColor;                           //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                        //  ev = event Form
   lb  : TLabel;
 begin
@@ -302,21 +315,24 @@ begin
     begin
       if EventsStore.Data[pos].stage3Ack then exit;
       mess := EventsStore.Data[pos].name + ' ' + stage3Mess;
-      col  := stage3Col;
+      bcol := stage1BackColour;
+      fcol := stage1ForeColour;
       EventsStore.Data[pos].stage3Ack := true;
     end;
     2:
     begin
       if EventsStore.Data[pos].stage2Ack then exit;
       mess := EventsStore.Data[pos].name + ' ' + stage2Mess;
-      col  := stage2Col;
+      bcol := stage2BackColour;
+      fcol := stage3ForeColour;
       EventsStore.Data[pos].stage2Ack := true;
     end;
     1:
     begin
       if EventsStore.Data[pos].stage1Ack then exit;
       mess := EventsStore.Data[pos].name + ' ' + stage1Mess;
-      col  := stage1Col;
+      bcol := stage3BackColour;
+      fcol := stage3ForeColour;
       EventsStore.Data[pos].stage1Ack := true;
     end;
   end;  //  case stage of
@@ -325,11 +341,13 @@ begin
 
   ev.SetBounds(LEFT, TOP + (pos * HEIGHT), WIDTH, HEIGHT);
   ev.Name       := format('frmEvent_%d', [EventsStore.Data[pos].id]);
-  ev.Color      := col;
+  ev.Color      := bcol;
+  //ev.Font.Color := fcol;
   ev.AlphaBlend := true;
 
-  lb := ev.FindChildControl('lblEvent')as TLabel;
-  lb.Caption := mess;
+  lb            := ev.FindChildControl('lblEvent') as TLabel;
+  lb.Font.Color := fcol;
+  lb.Caption    := mess;
 
   ev.show
 end;

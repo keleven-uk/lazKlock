@@ -1,16 +1,16 @@
 object frmOptions: TfrmOptions
-  Left = 1242
-  Height = 510
-  Top = 240
+  Left = 1267
+  Height = 530
+  Top = 134
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Options'
-  ClientHeight = 510
+  ClientHeight = 530
   ClientWidth = 620
-  Constraints.MaxHeight = 510
+  Constraints.MaxHeight = 530
   Constraints.MaxWidth = 620
-  Constraints.MinHeight = 510
+  Constraints.MinHeight = 530
   Constraints.MinWidth = 620
   OnActivate = FormActivate
   OnCreate = FormCreate
@@ -19,7 +19,7 @@ object frmOptions: TfrmOptions
   object ButtonPanel1: TButtonPanel
     Left = 6
     Height = 34
-    Top = 470
+    Top = 490
     Width = 608
     OKButton.Name = 'OKButton'
     OKButton.DefaultCaption = True
@@ -38,11 +38,12 @@ object frmOptions: TfrmOptions
   end
   object AcrdnOptions: TECAccordion
     Left = 0
-    Height = 464
+    Height = 484
     Top = 0
-    Width = 616
+    Width = 620
+    Align = alClient
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 4
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -539,7 +540,7 @@ object frmOptions: TfrmOptions
     end
     object accItemLogging: TAccordionItem
       Caption = 'Logging'
-      Order = 4
+      Order = 5
       object GroupBox4: TGroupBox
         Left = 7
         Height = 304
@@ -572,6 +573,7 @@ object frmOptions: TfrmOptions
           Height = 23
           Top = 72
           Width = 50
+          OnChange = SpnEdtCullDaysChange
           ParentColor = True
           TabOrder = 2
           Value = 14
@@ -794,7 +796,7 @@ object frmOptions: TfrmOptions
     end
     object accItemArchive: TAccordionItem
       Caption = 'Archive'
-      Order = 5
+      Order = 6
       object GroupBox7: TGroupBox
         Left = 8
         Height = 224
@@ -874,6 +876,232 @@ object frmOptions: TfrmOptions
           Caption = 'Load'
           OnClick = btnLoadArchiveClick
           TabOrder = 1
+        end
+      end
+    end
+    object accItemEvents: TAccordionItem
+      Caption = 'Events'
+      Order = 4
+      object GroupBox13: TGroupBox
+        Left = 8
+        Height = 120
+        Top = 8
+        Width = 601
+        Caption = 'Stages in Days'
+        ClientHeight = 100
+        ClientWidth = 597
+        TabOrder = 0
+        object Label4: TLabel
+          Left = 16
+          Height = 21
+          Top = 3
+          Width = 51
+          Caption = 'Stage 1'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label5: TLabel
+          Left = 16
+          Height = 21
+          Top = 32
+          Width = 51
+          Caption = 'Stage 2'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 16
+          Height = 21
+          Top = 64
+          Width = 51
+          Caption = 'Stage 3'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object spnEdtStage1Days: TSpinEdit
+          Left = 88
+          Height = 23
+          Top = 3
+          Width = 50
+          OnChange = spnEdtEventsChanged
+          TabOrder = 0
+          Value = 5
+        end
+        object spnEdtStage2Days: TSpinEdit
+          Left = 88
+          Height = 23
+          Top = 32
+          Width = 50
+          OnChange = spnEdtEventsChanged
+          TabOrder = 1
+          Value = 10
+        end
+        object spnEdtStage3Days: TSpinEdit
+          Left = 88
+          Height = 23
+          Top = 64
+          Width = 50
+          OnChange = spnEdtEventsChanged
+          TabOrder = 2
+          Value = 30
+        end
+      end
+      object GroupBox14: TGroupBox
+        Left = 9
+        Height = 144
+        Top = 136
+        Width = 600
+        Caption = 'Stages in Text'
+        ClientHeight = 124
+        ClientWidth = 596
+        TabOrder = 1
+        object edtStage1Mess: TEdit
+          Left = 89
+          Height = 23
+          Top = 30
+          Width = 319
+          OnChange = edtEventsChanged
+          TabOrder = 0
+          Text = 'is realy soon'
+        end
+        object edtStage2Mess: TEdit
+          Left = 89
+          Height = 23
+          Top = 59
+          Width = 319
+          OnChange = edtEventsChanged
+          TabOrder = 1
+          Text = 'Will very soon be here'
+        end
+        object edtStage3Mess: TEdit
+          Left = 89
+          Height = 23
+          Top = 91
+          Width = 319
+          OnChange = edtEventsChanged
+          TabOrder = 2
+          Text = 'will soon be here'
+        end
+        object Label7: TLabel
+          Left = 16
+          Height = 21
+          Top = 93
+          Width = 51
+          Caption = 'Stage 3'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label8: TLabel
+          Left = 16
+          Height = 21
+          Top = 61
+          Width = 51
+          Caption = 'Stage 2'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label9: TLabel
+          Left = 16
+          Height = 21
+          Top = 32
+          Width = 51
+          Caption = 'Stage 1'
+          Font.Height = -16
+          ParentColor = False
+          ParentFont = False
+        end
+        object clrBtnStage1ForeColour: TColorButton
+          Left = 416
+          Height = 25
+          Top = 32
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clRed
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object clrBtnStage2ForeColour: TColorButton
+          Left = 416
+          Height = 25
+          Top = 59
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clYellow
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object clrBtnStage3ForeColour: TColorButton
+          Left = 416
+          Height = 25
+          Top = 91
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clSkyBlue
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object clrBtnStage1BackColour: TColorButton
+          Left = 503
+          Height = 25
+          Top = 32
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clRed
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object clrBtnStage2BackColour: TColorButton
+          Left = 501
+          Height = 25
+          Top = 59
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clYellow
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object clrBtnStage3BackColour: TColorButton
+          Left = 500
+          Height = 25
+          Top = 91
+          Width = 75
+          BorderWidth = 2
+          ButtonColorSize = 16
+          ButtonColor = clBlack
+          ColorDialog = ColorDialog1
+          Color = clSkyBlue
+          OnColorChanged = clrBtnEventsColorChanged
+        end
+        object Label10: TLabel
+          Left = 424
+          Height = 15
+          Top = 8
+          Width = 60
+          Caption = 'Text Colour'
+          ParentColor = False
+        end
+        object Label11: TLabel
+          Left = 507
+          Height = 15
+          Top = 8
+          Width = 69
+          Caption = 'Paper Colour'
+          ParentColor = False
         end
       end
     end

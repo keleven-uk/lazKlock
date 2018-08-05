@@ -23,13 +23,13 @@ type
   { TfrmOptions }
 
   TfrmOptions = class(TForm)
-
     AcrdnOptions               : TECAccordion;
     accItemGlobal              : TAccordionItem;
     accItemLogging             : TAccordionItem;
     accItemTime                : TAccordionItem;
     accItemOtherKlocks         : TAccordionItem;
     accItemStickyMemo          : TAccordionItem;
+    accItemEvents              : TAccordionItem;
     accItemArchive             : TAccordionItem;
     btrOptionsReset            : TButton;
     btnGlobalVolumeTest        : TButton;
@@ -59,18 +59,30 @@ type
     CmbBxDefaulTtab            : TComboBox;
     CmbBxDefaultTime           : TComboBox;
     clrBtnStickyNoteColour     : TColorButton;
+    clrBtnStage1BackColour     : TColorButton;
+    clrBtnStage2BackColour     : TColorButton;
+    clrBtnStage3BackColour     : TColorButton;
+    clrBtnStage1ForeColour     : TColorButton;
+    clrBtnStage2ForeColour     : TColorButton;
+    clrBtnStage3ForeColour     : TColorButton;
     ColorDialog1               : TColorDialog;
     DtEdtBirthDate             : TDateEdit;
     EdtDefaultPassWord         : TEdit;
+    edtStage1Mess              : TEdit;
+    edtStage2Mess              : TEdit;
+    edtStage3Mess              : TEdit;
     edtLatitude                : TEdit;
     edtLongitude               : TEdit;
     FlNmEdtLoadArchiveName     : TFileNameEdit;
     FlNmEdtSaveArchiveName     : TFileNameEdit;
     FontDialog1                : TFontDialog;
+    Settings                   : TGroupBox;
     GroupBox1                  : TGroupBox;
     GroupBox10                 : TGroupBox;
     GroupBox11                 : TGroupBox;
     GroupBox12                 : TGroupBox;
+    GroupBox13                 : TGroupBox;
+    GroupBox14                 : TGroupBox;
     GroupBox2                  : TGroupBox;
     GroupBox3                  : TGroupBox;
     GroupBox4                  : TGroupBox;
@@ -78,10 +90,18 @@ type
     GroupBox6                  : TGroupBox;
     GroupBox7                  : TGroupBox;
     GroupBox8                  : TGroupBox;
-    Settings                   : TGroupBox;
     GroupBox9                  : TGroupBox;
     Label1                     : TLabel;
     Label2                     : TLabel;
+    Label3                     : TLabel;
+    Label4                     : TLabel;
+    Label5                     : TLabel;
+    Label6                     : TLabel;
+    Label7                     : TLabel;
+    Label8                     : TLabel;
+    Label9                     : TLabel;
+    Label10                    : TLabel;
+    Label11                    : TLabel;
     lblBirthDate               : TLabel;
     lblCheckEvery              : TLabel;
     lblMinutes                 : TLabel;
@@ -91,8 +111,10 @@ type
     LblStickyNoteColour        : TLabel;
     lblCullFileDays            : TLabel;
     lblSettingsFileName        : TLabel;
-    Label3                     : TLabel;
     LstBxLogFiles              : TListBox;
+    spnEdtStage1Days           : TSpinEdit;
+    spnEdtStage2Days           : TSpinEdit;
+    spnEdtStage3Days           : TSpinEdit;
     SpnEdtMonitorMinites       : TSpinEdit;
     SpnEdtMemoTimeOut          : TSpinEdit;
     SpnEdtCullDays             : TSpinEdit;
@@ -124,6 +146,9 @@ type
     procedure ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
     procedure ChckLstBxArchiveClickCheck(Sender: TObject);
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
+    procedure clrBtnEventsColorChanged(Sender: TObject);
+    procedure spnEdtEventsChanged(Sender: TObject);
+    procedure edtEventsChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
     procedure CmbBxDefaultTimeChange(Sender: TObject);
     procedure EdtDefaultPassWordExit(Sender: TObject);
@@ -135,6 +160,7 @@ type
     procedure HelpButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure SpnEdtCullDaysChange(Sender: TObject);
     procedure SpnEdtMemoTimeOutChange(Sender: TObject);
     procedure SpnEdtMonitorMinitesChange(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
@@ -285,6 +311,19 @@ begin
   LblStickyNoteColour.Font.Color     := userBacOptions.stickyColor;
   clrBtnStickyNoteColour.ButtonColor := userBacOptions.stickyColor;
   lblStickyNoteFont.Font             := userBacOptions.stickyFont;
+
+  spnEdtStage1Days.Value             := userBacOptions.eventsStage1Days;
+  spnEdtStage2Days.Value             := userBacOptions.eventsStage2Days;
+  spnEdtStage3Days.Value             := userBacOptions.eventsStage3Days;
+  edtStage1Mess.Text                 := userBacOptions.eventsStage1Mess;
+  edtStage2Mess.Text                 := userBacOptions.eventsStage2Mess;
+  edtStage3Mess.Text                 := userBacOptions.eventsStage3Mess;
+  clrBtnStage1ForeColour.ButtonColor := userBacOptions.eventsStage1ForeColour;
+  clrBtnStage2ForeColour.ButtonColor := userBacOptions.eventsStage2ForeColour;
+  clrBtnStage3ForeColour.ButtonColor := userBacOptions.eventsStage3ForeColour;
+  clrBtnStage1BackColour.ButtonColor := userBacOptions.eventsStage1BackColour;
+  clrBtnStage2BackColour.ButtonColor := userBacOptions.eventsStage2BackColour;
+  clrBtnStage3BackColour.ButtonColor := userBacOptions.eventsStage3BackColour;
 
   btnSaveArchive.Enabled            := false;
   btnLoadArchive.Enabled            := false;
@@ -556,7 +595,6 @@ procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: inte
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
 end;
-
 //
 //................... Sticky Notes, Memo, Monitor Sleeping and BirthDate .......
 //
@@ -597,12 +635,121 @@ begin
    end;
 end;
 //
+//................... Events .................................................
+//
+procedure TfrmOptions.edtEventsChanged(Sender: TObject);
+{  A generic handler for the Text Edits.
+   The name is extracted and used to set the appropiate options.
+}
+VAR
+  itemName: string;
+  edt     : TEdit;
+  edtText : string;
+begin
+  //  if not called by a text edit then exit.
+  if not (Sender is TEdit) then Exit;
+
+  //  must be a TSpinEdit
+  edt      := TEdit(Sender);
+  itemName := edt.Name;
+  edtText  := edt.Text;
+
+  case itemName of
+    'edtStage1Mess': userBacOptions.eventsStage1Mess := edtText;
+    'edtStage2Mess': userBacOptions.eventsStage2Mess := edtText;
+    'edtStage3Mess': userBacOptions.eventsStage3Mess := edtText;
+  end;
+end;
+
+procedure TfrmOptions.spnEdtEventsChanged(Sender: TObject);
+{  A generic handler for the Spin Edits.
+   The name is extracted and used to set the appropiate options.
+}
+VAR
+  itemName : string;
+  spnEdt   : TSpinEdit;
+  spnEdtVal: integer;
+begin
+  //  if not called by a click on a color button then exit.
+  if not (Sender is TSpinEdit) then Exit;
+
+  //  must be a TSpinEdit
+  spnEdt    := TSpinEdit(Sender);
+  itemName  := spnEdt.Name;
+  spnEdtVal := spnEdt.Value;
+
+  case itemName of
+    'spnEdtStage1Days': userBacOptions.eventsStage1Days := spnEdtVal;
+    'spnEdtStage2Days': userBacOptions.eventsStage2Days := spnEdtVal;
+    'spnEdtStage3Days': userBacOptions.eventsStage3Days := spnEdtVal;
+  end;
+end;
+
+procedure TfrmOptions.clrBtnEventsColorChanged(Sender: TObject);
+{  A generic handler for the Events colour buttons.
+   The name is extracted and used to set the appropiate options.
+
+   The fore colours are used for the font colours.
+   The back colours are used for the form colours.
+}
+VAR
+  itemName: string;
+  clrBtn  : TColorButton;
+  btnClr  : TColor;
+begin
+  //  if not called by a click on a color button then exit.
+  if not (Sender is TColorButton) then Exit;
+
+  clrBtn   := TColorButton(Sender);
+  itemName := clrBtn.Name;
+  btnClr   := clrBtn.ButtonColor;
+
+  case itemName of
+    'clrBtnStage1ForeColour':
+    begin
+      clrBtnStage1ForeColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage1ForeColour := btnClr;
+    end;
+    'clrBtnStage2ForeColour':
+    begin
+      clrBtnStage2ForeColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage2ForeColour := btnClr;
+    end;
+    'clrBtnStage3ForeColour':
+    begin
+      clrBtnStage3ForeColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage3ForeColour := btnClr;
+    end;
+    'clrBtnStage1BackColour':
+    begin
+      clrBtnStage1BackColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage1BackColour := btnClr;
+    end;
+    'clrBtnStage2BackColour':
+    begin
+      clrBtnStage2BackColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage2BackColour := btnClr;
+    end;
+    'clrBtnStage3BackColour':
+    begin
+      clrBtnStage3BackColour.ButtonColor    := btnClr;
+      userBacOptions.eventsStage3BackColour := btnClr;
+    end;
+  end;
+end;
+//
 //...................................LOGGING ...................................
 //
 procedure TfrmOptions.ChckBxLoggingChange(Sender: TObject);
 {  Switch on/off logging.    }
 begin
   userBacOptions.logging := ChckBxLogging.Checked;
+end;
+
+procedure TfrmOptions.SpnEdtCullDaysChange(Sender: TObject);
+{  No of daye to cull logs has changed.    }
+begin
+  userBacOptions.CullLogsDays := SpnEdtCullDays.Value;
 end;
 
 procedure TfrmOptions.ChckBxCullLogsFilesChange(Sender: TObject);

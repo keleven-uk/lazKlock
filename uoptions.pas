@@ -145,7 +145,21 @@ type
 
     //Sticky Notes
     _stickyColor: TColor;               //  Sticky Note colour.
-    _stickyFont :TFont;                 //  Sticky Note Font.
+    _stickyFont : TFont;                //  Sticky Note Font.
+
+    //  Events
+    _eventsStage1Days      : integer;   //  Days until stage 1 is triggered.
+    _eventsStage2Days      : integer;   //  Days until stage 2 is triggered.
+    _eventsStage3Days      : integer;   //  Days until stage 3 is triggered.
+    _eventsStage1Mess      : String;    //  Display message for stage 1.
+    _eventsStage2Mess      : String;    //  Display message for stage 2.
+    _eventsStage3Mess      : String;    //  Display message for stage 3.
+    _eventsStage1ForeColour: TColor;    //  Text colour of stage 1.
+    _eventsStage2ForeColour: TColor;    //  Text colour of stage 2.
+    _eventsStage3ForeColour: TColor;    //  Text colour of stage 3.
+    _eventsStage1BackColour: TColor;    //  Paper colour of stage 1.
+    _eventsStage2BackColour: TColor;    //  Paper colour of stage 2.
+    _eventsStage3BackColour: TColor;    //  Paper colour of stage 3.
 
     //  Logging
     _logging     : Boolean;
@@ -267,6 +281,20 @@ type
     //Sticky Notes
     property stickyColor: TColor read _stickyColor write _stickyColor;
     property stickyFont : TFont  read _stickyFont  write _stickyFont;
+
+    //  Events
+    property eventsStage1Days      : integer read _eventsStage1Days       write _eventsStage1Days;
+    property eventsStage2Days      : integer read _eventsStage2Days       write _eventsStage2Days;
+    property eventsStage3Days      : integer read _eventsStage3Days       write _eventsStage3Days;
+    property eventsStage1Mess      : String  read _eventsStage1Mess       write _eventsStage1Mess;
+    property eventsStage2Mess      : String  read _eventsStage2Mess       write _eventsStage2Mess;
+    property eventsStage3Mess      : String  read _eventsStage3Mess       write _eventsStage3Mess;
+    property eventsStage1ForeColour: TColor  read _eventsStage1ForeColour write _eventsStage1ForeColour;
+    property eventsStage2ForeColour: TColor  read _eventsStage2ForeColour write _eventsStage2ForeColour;
+    property eventsStage3ForeColour: TColor  read _eventsStage3ForeColour write _eventsStage3ForeColour;
+    property eventsStage1BackColour: TColor  read _eventsStage1BackColour write _eventsStage1BackColour;
+    property eventsStage2BackColour: TColor  read _eventsStage2BackColour write _eventsStage2BackColour;
+    property eventsStage3BackColour: TColor  read _eventsStage3BackColour write _eventsStage3BackColour;
 
     //  Logging
     property logging     : boolean read _logging      write _logging;
@@ -493,6 +521,20 @@ begin
   //Sticky Notes
   stickyColor := o.stickyColor;
   stickyFont  := o.stickyFont;
+
+  //  Events
+  eventsStage1Days       := o.eventsStage1Days;
+  eventsStage2Days       := o.eventsStage2Days;
+  eventsStage3Days       := o.eventsStage3Days;
+  eventsStage1Mess       := o.eventsStage1Mess;
+  eventsStage2Mess       := o.eventsStage2Mess;
+  eventsStage3Mess       := o.eventsStage3Mess;
+  eventsStage1ForeColour := o.eventsStage1ForeColour;
+  eventsStage2ForeColour := o.eventsStage2ForeColour;
+  eventsStage3ForeColour := o.eventsStage3ForeColour;
+  eventsStage1BackColour := o.eventsStage1BackColour;
+  eventsStage2BackColour := o.eventsStage2BackColour;
+  eventsStage3BackColour := o.eventsStage3BackColour;
 
   //  Logging
   logging      := o.logging;
@@ -761,6 +803,36 @@ begin
       if rtn <> 'ERROR' then stickyFont := StringToFont(rtn);
     end;
 
+    //  Events
+    PassNode := Doc.DocumentElement.FindNode('Events');
+    if assigned(PassNode) then
+    begin
+      rtn := readChild(PassNode, 'eventsStage1Days');
+      if rtn <> 'ERROR' then eventsStage1Days := StrToInt(rtn);
+      rtn := readChild(PassNode, 'eventsStage2Days');
+      if rtn <> 'ERROR' then eventsStage2Days := StrToInt(rtn);
+      rtn := readChild(PassNode, 'eventsStage3Days');
+      if rtn <> 'ERROR' then eventsStage3Days := StrToInt(rtn);
+      rtn := readChild(PassNode, 'eventsStage1Mess');
+      if rtn <> 'ERROR' then eventsStage1Mess := ansistring(rtn);
+      rtn := readChild(PassNode, 'eventsStage2Mess');
+      if rtn <> 'ERROR' then eventsStage2Mess := ansistring(rtn);
+      rtn := readChild(PassNode, 'eventsStage3Mess');
+      if rtn <> 'ERROR' then eventsStage3Mess := ansistring(rtn);
+      rtn := readChild(PassNode, 'eventsStage1ForeColour');
+      if rtn <> 'ERROR' then eventsStage1ForeColour := StringToColor(rtn);
+      rtn := readChild(PassNode, 'eventsStage2ForeColour');
+      if rtn <> 'ERROR' then eventsStage2ForeColour := StringToColor(rtn);
+      rtn := readChild(PassNode, 'eventsStage3ForeColour');
+      if rtn <> 'ERROR' then eventsStage3ForeColour := StringToColor(rtn);
+      rtn := readChild(PassNode, 'eventsStage1BackColour');
+      if rtn <> 'ERROR' then eventsStage1BackColour := StringToColor(rtn);
+      rtn := readChild(PassNode, 'eventsStage2BackColour');
+      if rtn <> 'ERROR' then eventsStage2BackColour := StringToColor(rtn);
+      rtn := readChild(PassNode, 'eventsStage3BackColour');
+      if rtn <> 'ERROR' then eventsStage3BackColour := StringToColor(rtn);
+    end;
+
     //  Logging
     PassNode := Doc.DocumentElement.FindNode('Logging');
 
@@ -896,6 +968,20 @@ begin
   stickyColor := clYellow;
   stickyFont  := TFont.Create;
 
+    //  Events
+  eventsStage1Days       := 5;
+  eventsStage2Days       := 10;
+  eventsStage3Days       := 30;
+  eventsStage1Mess       := ' is realy soon';
+  eventsStage2Mess       := ' Will very soon be here';
+  eventsStage3Mess       := ' will soon be here';
+  eventsStage1ForeColour := clBlack;
+  eventsStage2ForeColour := clBlack;
+  eventsStage3ForeColour := clBlack;
+  eventsStage1BackColour := clred;
+  eventsStage2BackColour := clYellow;
+  eventsStage3BackColour := clSkyBlue;
+
   //  Logging
   logging      := True;
   cullLogs     := False;
@@ -929,30 +1015,30 @@ begin
     //  Global
     ElementNode := Doc.CreateElement('Global');
 
-    ElementNode.AppendChild(writeStrChild(doc, 'Comments', fvi.fileComments));
-    ElementNode.AppendChild(writeStrChild(doc, 'companyName', fvi.filecompanyName));
-    ElementNode.AppendChild(writeStrChild(doc, 'fileDescription', fvi.filefileDescription));
-    ElementNode.AppendChild(writeStrChild(doc, 'fileVersion', fvi.filefileVersion));
-    ElementNode.AppendChild(writeStrChild(doc, 'InternalName', fvi.fileInternalName));
-    ElementNode.AppendChild(writeStrChild(doc, 'legalCopyright', fvi.fileLegalCopyright));
+    ElementNode.AppendChild(writeStrChild(doc, 'Comments'        , fvi.fileComments));
+    ElementNode.AppendChild(writeStrChild(doc, 'companyName'     , fvi.filecompanyName));
+    ElementNode.AppendChild(writeStrChild(doc, 'fileDescription' , fvi.filefileDescription));
+    ElementNode.AppendChild(writeStrChild(doc, 'fileVersion'     , fvi.filefileVersion));
+    ElementNode.AppendChild(writeStrChild(doc, 'InternalName'    , fvi.fileInternalName));
+    ElementNode.AppendChild(writeStrChild(doc, 'legalCopyright'  , fvi.fileLegalCopyright));
     ElementNode.AppendChild(writeStrChild(doc, 'originalFileName', fvi.fileOriginalFileName));
-    ElementNode.AppendChild(writeStrChild(doc, 'productName', fvi.fileProductName));
-    ElementNode.AppendChild(writeStrChild(doc, 'productVersion', fvi.fileProductVersion));
+    ElementNode.AppendChild(writeStrChild(doc, 'productName'     , fvi.fileProductName));
+    ElementNode.AppendChild(writeStrChild(doc, 'productVersion'  , fvi.fileProductVersion));
 
-    ElementNode.AppendChild(writeStrChild(doc, 'optionsName', optionsName));
-    ElementNode.AppendChild(writeStrChild(doc, 'memoName', memoName));
-    ElementNode.AppendChild(writeStrChild(doc, 'stickyName', stickyName));
-    ElementNode.AppendChild(writeStrChild(doc, 'unitsName', unitsName));
-    ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp', runAtStartUp));
-    ElementNode.AppendChild(writeBolChild(doc, 'screenSave', screenSave));
-    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'formPosition', formTop, formLeft));
-    ElementNode.AppendChild(writeIntChild(doc, 'defaultTab', defaultTab));
-    ElementNode.AppendChild(writeStrChild(doc, 'volume', volume));
-    ElementNode.AppendChild(writeBolChild(doc, 'monitorClipboard', monitorClipboard));
-    ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave', CB_screenSave));
+    ElementNode.AppendChild(writeStrChild(doc, 'optionsName'             , optionsName));
+    ElementNode.AppendChild(writeStrChild(doc, 'memoName'                , memoName));
+    ElementNode.AppendChild(writeStrChild(doc, 'stickyName'              , stickyName));
+    ElementNode.AppendChild(writeStrChild(doc, 'unitsName'               , unitsName));
+    ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp'            , runAtStartUp));
+    ElementNode.AppendChild(writeBolChild(doc, 'screenSave'              , screenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'formPosition'   , formTop, formLeft));
+    ElementNode.AppendChild(writeIntChild(doc, 'defaultTab'              , defaultTab));
+    ElementNode.AppendChild(writeStrChild(doc, 'volume'                  , volume));
+    ElementNode.AppendChild(writeBolChild(doc, 'monitorClipboard'        , monitorClipboard));
+    ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave'           , CB_screenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'CB_formPosition', CB_formTop, CB_formLeft));
 
-    ElementNode.AppendChild(writeFloatChild(doc, 'Latitude', Latitude));
+    ElementNode.AppendChild(writeFloatChild(doc, 'Latitude' , Latitude));
     ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));
 
     ElementNode.AppendChild(writeDateChild(doc, 'BirthDay', birthdate));
@@ -962,9 +1048,9 @@ begin
      //  keep Monitor Awake
     ElementNode := Doc.CreateElement('keepMonitorAwake');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwake', keepMonitorAwake));
-    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeF15', keepMonitorAwakeF15));
-    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeJiggle', keepMonitorAwakeJiggle));
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwake'       , keepMonitorAwake));
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeF15'    , keepMonitorAwakeF15));
+    ElementNode.AppendChild(writeBolChild(doc, 'keepMonitorAwakeJiggle' , keepMonitorAwakeJiggle));
     ElementNode.AppendChild(writeIntChild(doc, 'keepMonitorAwakeMinutes', keepMonitorAwakeMinutes));
 
     RootNode.AppendChild(ElementNode);
@@ -972,22 +1058,22 @@ begin
     //  Time
     ElementNode := Doc.CreateElement('Time');
 
-    ElementNode.AppendChild(writeIntChild(doc, 'defaultTime', defaultTime));
-    ElementNode.AppendChild(writeBolChild(doc, 'netTimeSeconds', netTimeSeconds));
-    ElementNode.AppendChild(writeBolChild(doc, 'swatchCentibeats', swatchCentibeats));
-    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeBalloon', fuzzyTimeBalloon));
-    ElementNode.AppendChild(writeBolChild(doc, 'displayIdleTime', displayIdleTime));
-    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeVerbose', fuzzyTimeVerbose));
-    ElementNode.AppendChild(writeBolChild(doc, 'display24Hour', display24Hour));
-    ElementNode.AppendChild(writeBolChild(doc, 'hourPips', hourPips));
-    ElementNode.AppendChild(writeBolChild(doc, 'hourChimes', hourChimes));
-    ElementNode.AppendChild(writeBolChild(doc, 'halfChimes', halfChimes));
-    ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes', quarterChimes));
+    ElementNode.AppendChild(writeIntChild(doc, 'defaultTime'       , defaultTime));
+    ElementNode.AppendChild(writeBolChild(doc, 'netTimeSeconds'    , netTimeSeconds));
+    ElementNode.AppendChild(writeBolChild(doc, 'swatchCentibeats'  , swatchCentibeats));
+    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeBalloon'  , fuzzyTimeBalloon));
+    ElementNode.AppendChild(writeBolChild(doc, 'displayIdleTime'   , displayIdleTime));
+    ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeVerbose'  , fuzzyTimeVerbose));
+    ElementNode.AppendChild(writeBolChild(doc, 'display24Hour'     , display24Hour));
+    ElementNode.AppendChild(writeBolChild(doc, 'hourPips'          , hourPips));
+    ElementNode.AppendChild(writeBolChild(doc, 'hourChimes'        , hourChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'halfChimes'        , halfChimes));
+    ElementNode.AppendChild(writeBolChild(doc, 'quarterChimes'     , quarterChimes));
     ElementNode.AppendChild(writeBolChild(doc, 'threeQuarterChimes', threeQuarterChimes));
-    ElementNode.AppendChild(writeBolChild(doc, 'christmasFont', christmasFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'easterFont', easterFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'valentinesFont', valentinesFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'haloweenFont', haloweenFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'christmasFont'     , christmasFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'easterFont'        , easterFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'valentinesFont'    , valentinesFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'haloweenFont'      , haloweenFont));
 
     RootNode.AppendChild(ElementNode);
 
@@ -1001,50 +1087,50 @@ begin
     // Analogue Klock
     ElementNode := Doc.CreateElement('AnalogueKlock');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'analogueScreenSave', analogueScreenSave));
+    ElementNode.AppendChild(writeBolChild(doc, 'analogueScreenSave'   , analogueScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'analogueForm', analogueFormTop, analogueFormLeft));
-    ElementNode.AppendChild(writeBolChild(doc, 'analogueAlwaysOnTop', analogueAlwaysOnTop));
+    ElementNode.AppendChild(writeBolChild(doc, 'analogueAlwaysOnTop'  , analogueAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
     // LED Klock
     ElementNode := Doc.CreateElement('LEDKlock');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave', LEDScreenSave));
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDScreenSave'   , LEDScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'LEDForm', LEDFormTop, LEDFormLeft));
-    ElementNode.AppendChild(writeBolChild(doc, 'LEDlongDate', LEDlongDate));
-    ElementNode.AppendChild(writeBolChild(doc, 'LEDAlwaysOnTop', LEDAlwaysOnTop));
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDlongDate'     , LEDlongDate));
+    ElementNode.AppendChild(writeBolChild(doc, 'LEDAlwaysOnTop'  , LEDAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
     // Binary Klock
     ElementNode := Doc.CreateElement('BinaryKlock');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'BinaryScreenSave', BinaryScreenSave));
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryScreenSave'   , BinaryScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'BinaryForm', BinaryFormTop, BinaryFormLeft));
-    ElementNode.AppendChild(writeBolChild(doc, 'BinaryFormat', BinaryFormat));
-    ElementNode.AppendChild(writeBolChild(doc, 'BinaryAlwaysOnTop', BinaryAlwaysOnTop));
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryFormat'       , BinaryFormat));
+    ElementNode.AppendChild(writeBolChild(doc, 'BinaryAlwaysOnTop'  , BinaryAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
     // Small Text Klock
     ElementNode := Doc.CreateElement('SmallTextKlock');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'smallTextScreenSave', smallTextScreenSave));
+    ElementNode.AppendChild(writeBolChild(doc, 'smallTextScreenSave'   , smallTextScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'SmallTextForm', smallTextFormTop, smallTextFormLeft));
-    ElementNode.AppendChild(writeBolChild(doc, 'smallTextTransparent', smallTextTransparent));
-    ElementNode.AppendChild(writeBolChild(doc, 'smallAlwaysOnTop', smallAlwaysOnTop));
+    ElementNode.AppendChild(writeBolChild(doc, 'smallTextTransparent'  , smallTextTransparent));
+    ElementNode.AppendChild(writeBolChild(doc, 'smallAlwaysOnTop'      , smallAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
     // Floating Text Klock
     ElementNode := Doc.CreateElement('FloatingTextKlock');
 
-    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextScreenSave', _floatingTextScreenSave));
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextScreenSave'   , floatingTextScreenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'floatingTextForm', floatingTextFormTop, floatingTextFormLeft));
-    ElementNode.AppendChild(writeFontChild(doc, 'floatingTextFont', floatingTextFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextUseKlockFont', floatingTextUseKlockFont));
-    ElementNode.AppendChild(writeBolChild(doc, 'floatingAlwaysOnTop', floatingAlwaysOnTop));
+    ElementNode.AppendChild(writeFontChild(doc, 'floatingTextFont'        , floatingTextFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingTextUseKlockFont' , floatingTextUseKlockFont));
+    ElementNode.AppendChild(writeBolChild(doc, 'floatingAlwaysOnTop'      , floatingAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 
@@ -1052,8 +1138,8 @@ begin
     ElementNode := Doc.CreateElement('Memo');
 
     ElementNode.AppendChild(writeBolChild(doc, 'useDefaultpassWord', useDefaultpassWord));
-    ElementNode.AppendChild(writeStrChild(doc, 'defaultpassWord', defaultpassWord));
-    ElementNode.AppendChild(writeIntChild(doc, 'decryptTimeOut', decryptTimeOut));
+    ElementNode.AppendChild(writeStrChild(doc, 'defaultpassWord'   , defaultpassWord));
+    ElementNode.AppendChild(writeIntChild(doc, 'decryptTimeOut'    , decryptTimeOut));
 
     RootNode.AppendChild(ElementNode);
 
@@ -1064,11 +1150,30 @@ begin
     ElementNode.AppendChild(writeFontChild(doc, 'stickyFont', stickyFont));
 
     RootNode.AppendChild(ElementNode);
+
+    //  Events
+    ElementNode := Doc.CreateElement('Events');
+
+    ElementNode.AppendChild(writeIntChild(doc, 'eventsStage1Days'      , eventsStage1Days));
+    ElementNode.AppendChild(writeIntChild(doc, 'eventsStage2Days'      , eventsStage2Days));
+    ElementNode.AppendChild(writeIntChild(doc, 'eventsStage3Days'      , eventsStage3Days));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventsStage1Mess'      , eventsStage1Mess));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventsStage2Mess'      , eventsStage2Mess));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventsStage3Mess'      , eventsStage3Mess));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage1ForeColour', eventsStage1ForeColour));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage2ForeColour', eventsStage2ForeColour));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage3ForeColour', eventsStage3ForeColour));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage1BackColour', eventsStage1BackColour));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage2BackColour', eventsStage2BackColour));
+    ElementNode.AppendChild(writeColChild(doc, 'eventsStage3BackColour', eventsStage3BackColour));
+
+    RootNode.AppendChild(ElementNode);
+
     // Logging
     ElementNode := Doc.CreateElement('Logging');
 
     ElementNode.AppendChild(writeBolChild(doc, 'LogginginUse', logging));
-    ElementNode.AppendChild(writeBolChild(doc, 'cullLogs', cullLogs));
+    ElementNode.AppendChild(writeBolChild(doc, 'cullLogs'    , cullLogs));
     ElementNode.AppendChild(writeIntChild(doc, 'CullLogsDays', CullLogsDays));
 
     RootNode.AppendChild(ElementNode);

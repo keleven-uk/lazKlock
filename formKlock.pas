@@ -328,7 +328,9 @@ type
     procedure loadMemos;
     procedure callInfo(mode: string);
     procedure EnhancedBiorhythmClick;
-
+    procedure setUpFuzzyOptions;
+    procedure setUpEventsOptions;
+    procedure parseTimeZoneData;
   public
 
   end;
@@ -370,8 +372,6 @@ implementation
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
-var
-  s : TStringList;
 begin
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 
@@ -405,6 +405,22 @@ begin
     Enabled        := False;
   end;
 
+  parseTimeZoneData;
+
+  stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
+  memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
+  loadMemos;                     //  Load Memos store into listbox, if any.
+
+  ev.restoreEvents;              //  Reload Events into event store, if any.
+
+  DoubleBuffered := true;
+  stsBrInfo.DoubleBuffered := true;
+end;
+
+procedure TfrmMain.parseTimeZoneData;
+var
+  s : TStringList;
+begin
   //  Load and parse the time zone data base.
   kLog.writeLog('Load and parse the time zone data base.');
   timeZone              := TPascalTZ.Create;
@@ -418,15 +434,6 @@ begin
   CmbBxTimeZones.Items.AddStrings(s);
   CmbBxTimeZones.ItemIndex := 0;
   s.Free;
-
-  stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
-  memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
-  loadMemos;                     //  Load Memos store into listbox, if any.
-
-  ev.restoreEvents;              //  Reload Events into event store, if any.
-
-  DoubleBuffered := true;
-  stsBrInfo.DoubleBuffered := true;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -508,18 +515,6 @@ begin
 
   PageControl1.TabIndex := userOptions.defaultTab;
 
-  CmbBxTime.Items     := ft.fuzzyTypes;                 //  set up time combo box.
-  CmbBxTime.ItemIndex := userOptions.defaultTime;
-
-  CmbBxName.Items     := fs.fontTypes;                  //  set up font combo box.
-  CmbBxName.ItemIndex := 0;
-
-  CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
-  CmbBxTZFonts.ItemIndex := 0;
-
-  cmbBxEventType.Items.LoadFromFile('EventTypes.txt');
-  cmbBxEventType.ItemIndex := 0;
-
   DtReminderEvent.Date   := now;                       //  set up reminder stuff.
   SpnReminderMins.Value  := MinuteOf(time);
   SpnReminderHour.Value  := HourOf(time);
@@ -528,19 +523,12 @@ begin
   SpnEdtTimeBase.Visible := False;
   lblRadix.Visible       := False;
 
-  setMemoButtons(false);                                 //  set up memo buttons.
-  setEventButtons(false);                                //  set up event buttons.
+  setMemoButtons(false);            //  set up memo buttons.
+  setEventButtons(false);           //  set up event buttons.
 
-  //  set up defaults for fuzzyTime.
-  ft.displayFuzzy     := userOptions.defaultTime;
-  ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
-  ft.display24Hour    := userOptions.display24Hour;
-  ft.fuzzyBase        := 2;
+  setUpFuzzyOptions;                //  Set up all things fuzzy.
 
-  //  set up the aged days for event prompts [will be user options].
-  ev.stage1 := 5;
-  ev.stage2 := 10;
-  ev.stage3 := 20;
+  setUpEventsOptions;               //  Set up events user options - might have changed?
   ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
   loadEvents;                       //  Load Events store into listbox, if any.
 
@@ -555,17 +543,35 @@ begin
   else
     mainTimer.Interval := 1000;
 
-  lblfuzzy.Top       := 8;                //  defaults for fuzzy time label.
+  klog.writeLog(format('Main timer interval set to %D milliseconds', [mainTimer.Interval]));
+end;
+
+procedure TfrmMain.setUpFuzzyOptions;
+{  set up defaults for fuzzyTime and other stuff.  }
+begin
+  ft.displayFuzzy     := userOptions.defaultTime;
+  ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
+  ft.display24Hour    := userOptions.display24Hour;
+  ft.fuzzyBase        := 2;
+
+  CmbBxTime.Items     := ft.fuzzyTypes;                 //  set up time combo box.
+  CmbBxTime.ItemIndex := userOptions.defaultTime;
+
+  CmbBxName.Items     := fs.fontTypes;                  //  set up font combo box.
+  CmbBxName.ItemIndex := 0;
+
+  CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
+  CmbBxTZFonts.ItemIndex := 0;
+
+  lblfuzzy.Top       := 8;                              //  defaults for fuzzy time label.
   lblfuzzy.Left      := 4;
   lblfuzzy.Font.Size := 22;
   lblfuzzy.AutoSize  := true;
 
-  lblTZTime.Top       := 8;               //  defaults for world klock time label.
+  lblTZTime.Top       := 8;                             //  defaults for world klock time label.
   lblTZTime.Left      := 4;
   lblTZTime.Font.Size := 22;
   lblTZTime.AutoSize  := true;
-
-  klog.writeLog(format('Main timer interval set to %D milliseconds', [mainTimer.Interval]));
 end;
 
 procedure TfrmMain.DisplayMessage;
@@ -1912,6 +1918,26 @@ procedure TfrmMain.LstBxEventsClick(Sender: TObject);
 begin
   displayEvent(LstBxEvents.ItemIndex);
 end;
+
+procedure TfrmMain.setUpEventsOptions;
+{  Load Event Types and set up the aged days for event prompts.  }
+begin
+  cmbBxEventType.Items.LoadFromFile('EventTypes.txt');
+  cmbBxEventType.ItemIndex := 0;
+
+  ev.stage1Days       := userOptions.eventsStage1Days;
+  ev.stage2Days       := userOptions.eventsStage2Days;
+  ev.stage3Days       := userOptions.eventsStage3Days;
+  ev.stage1Mess       := userOptions.eventsStage1Mess;
+  ev.stage2Mess       := userOptions.eventsStage2Mess;
+  ev.stage3Mess       := userOptions.eventsStage3Mess;
+  ev.stage1BackColour := userOptions.eventsStage1BackColour;
+  ev.stage2BackColour := userOptions.eventsStage2BackColour;
+  ev.stage3BackColour := userOptions.eventsStage3BackColour;
+  ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
+  ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
+  ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
+end;
 //
 // *********************************************************** Conversion ******
 //
@@ -2437,6 +2463,7 @@ begin
 
   CloseAction := caFree;
 end;
+
 //
 // *****************************************************************************
 //
