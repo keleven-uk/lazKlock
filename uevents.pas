@@ -34,6 +34,7 @@ type
     property EventsFile: string read _EventsFile write _EventsFile;
     function checkStages(age: integer): integer;
     procedure actionEvent(pos: integer; stage: integer);
+    function determineDueDays(eventDate: string): integer;
   public
     property EventsCount: integer read _EventsCount write _EventsCount;
     property stage1Days : integer read _stage1Days  write _stage1Days;
@@ -59,11 +60,14 @@ type
     procedure saveEvents;
     procedure killEvents;
     procedure Remove(pos: integer);
+    procedure sortEventsStore;
+    procedure swapEvents(f, g: integer);
   end;
 
   //  effectively a dictionary.
   keyStore = specialize TFPGMap<integer, Event>;
 
+//  dimensions of the event prompt form.
 const
   LEFT   = 10;
   TOP    = 10;
@@ -71,21 +75,17 @@ const
   HEIGHT = 30;
 
 VAR
-  EventsStore: keyStore;
-
+  eventsStore: keyStore;
 implementation
-
-uses
-  formklock;
 
 
 constructor Events.Create; overload;
 {  set up some variables on create.    }
 begin
-  EventsFile         := GetAppConfigDir(False) + 'Event.bin';
-  EventsStore        := keyStore.Create;
-  EventsStore.Sorted := true;
-  EventsCount        := 0;
+  eventsFile         := GetAppConfigDir(False) + 'Event.bin';
+  eventsStore        := keyStore.Create;       //  initail eventStore
+  eventsStore.Sorted := true;
+  eventsCount        := 0;
 
 
   //  set up defualts, are overridded by user options.
@@ -109,7 +109,7 @@ end;
 destructor Events.Destroy;
 {  run on destroy.    }
 begin
-  EventsStore.free;
+  eventsStore.free;
 
   inherited;
 end;
@@ -122,23 +122,25 @@ procedure Events.new(key: string; date: string; etype: integer; data: string; fl
 VAR
   e: Event;                   //  Event.
 begin
-  EventsCount := EventsCount + 1;
+  eventsCount := eventsCount + 1;
 
-  e := Event.Create(EventsCount);
+  e := Event.Create(eventsCount);
 
   e.name      := key;
-  e.id        := EventsCount;
+  e.id        := eventsCount;
   e.date      := date;
   e.etype     := etype;
   e.notes     := data;
   e.float     := floating;
   e.stage1Ack := false;    //  if an event becomes due, it will generate a prompt for the user.
   e.stage2Ack := false;    //  There are three prompts that will be generated as the event gets nearer.
-  e.stage3Ack := false;    //  If an prompt is acknowledged, these are set to true, so it wont be duplicated.
+  e.stage3Ack := false;    //  If an prompt is acknowledged, these are set to true, so it won't be duplicated.
   e.dueShort  := '';
   e.dueLong   := '';
 
-  EventsStore.Add(EventsCount, e);
+  eventsStore.Add(eventsCount, e);
+
+  e.Free;
 
   saveEvents;
 end;
@@ -148,10 +150,10 @@ procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: s
    The event store is then saved to file.
 }
 begin
-  EventsStore.Data[id].date  := itmDate;
-  EventsStore.Data[id].etype := itmType;
-  EventsStore.Data[id].notes := itmData;
-  EventsStore.Data[id].float := itmFloat;
+  eventsStore.Data[id].date  := itmDate;
+  eventsStore.Data[id].etype := itmType;
+  eventsStore.Data[id].notes := itmData;
+  eventsStore.Data[id].float := itmFloat;
 
   saveEvents;
 end;
@@ -162,17 +164,17 @@ VAR
   e: Event;                   //  Events.
 begin
   e           := Event.Create(0);
-  e.name      := EventsStore.Data[id].name;
-  e.id        := EventsStore.Data[id].id;
-  e.date      := EventsStore.Data[id].date;
-  e.etype     := EventsStore.Data[id].etype;
-  e.notes     := EventsStore.Data[id].notes;
-  e.float     := EventsStore.Data[id].float;
-  e.stage1Ack := EventsStore.Data[id].stage1Ack;
-  e.stage2Ack := EventsStore.Data[id].stage2Ack;
-  e.stage3Ack := EventsStore.Data[id].stage3Ack;
-  e.dueShort  := EventsStore.Data[id].dueShort;
-  e.dueLong   := EventsStore.Data[id].dueLong;
+  e.name      := eventsStore.Data[id].name;
+  e.id        := eventsStore.Data[id].id;
+  e.date      := eventsStore.Data[id].date;
+  e.etype     := eventsStore.Data[id].etype;
+  e.notes     := eventsStore.Data[id].notes;
+  e.float     := eventsStore.Data[id].float;
+  e.stage1Ack := eventsStore.Data[id].stage1Ack;
+  e.stage2Ack := eventsStore.Data[id].stage2Ack;
+  e.stage3Ack := eventsStore.Data[id].stage3Ack;
+  e.dueShort  := eventsStore.Data[id].dueShort;
+  e.dueLong   := eventsStore.Data[id].dueLong;
 
   result := e
 end;
@@ -180,8 +182,8 @@ end;
 procedure Events.Remove(pos: integer);
 {  Remove a Event from the store at a given position.    }
 begin
-  EventsStore.Remove(pos);
-  EventsCount := EventsCount - 1;
+  eventsStore.Remove(pos);
+  eventsCount := EventsCount - 1;
   saveEvents;
 end;
 
@@ -191,15 +193,19 @@ var
   fileOut: TFileStream;
   f      : integer;
 begin
-  if EventsCount = 0 then exit;
+  if eventsCount = 0 then
+  begin
+    DeleteFile(eventsFile);    //  Events file is empty, delete if there.
+    exit;
+  end;
 
-  fileOut := TFileStream.Create(EventsFile, fmCreate or fmShareDenyWrite);
+  fileOut := TFileStream.Create(eventsFile, fmCreate or fmShareDenyWrite);
 
   try
-    for f := 0 to EventsCount - 1 do
+    for f := 0 to eventsCount - 1 do
     begin
       try
-      EventsStore.Data[f].saveToFile(fileOut);
+      eventsStore.Data[f].saveToFile(fileOut);
       except
         on E: EInOutError do
       end;
@@ -215,18 +221,18 @@ procedure Events.restoreEvents;
 var
   fileIn: TFileStream;
 begin
-  EventsCount := 0;
+  eventsCount := 0;
 
-  if not fileExists(EventsFile) then exit;       //  file not there then exit
-  if fileSize(EventsFile) = 0   then exit;       //  empty file then exit.
+  if not fileExists(eventsFile) then exit;       //  file not there then exit
+  if fileSize(eventsFile) = 0   then exit;       //  empty file then exit.
 
-  fileIn := TFileStream.Create(EventsFile, fmOpenRead or fmShareDenyWrite);
+  fileIn := TFileStream.Create(eventsFile, fmOpenRead or fmShareDenyWrite);
 
   try
     repeat
       try
-        EventsStore.Add(EventsCount, Event.Create(fileIn));
-        EventsCount := EventsCount + 1;
+        eventsStore.Add(eventsCount, Event.Create(fileIn));
+        eventsCount := eventsCount + 1;
         except
           on E: EInOutError do
           ShowMessage('ERROR : Reading Event file');
@@ -248,44 +254,117 @@ procedure Events.updateEvents;
    todo :: needs to check for event type i.e. if type of motor is passed then the days due should be negative.
 }
 var
-  f        : integer;
-  eventDate: TDateTime;
-  subsDate : TDateTime;
-  dueTime  : TDateTime;
-  dueTimef : string;
-  dueDays  : integer = 0;
-  stage    : integer;
-
+  f       : integer;
+  dueDays : integer = 0;
+  stage   : integer = 0;
 begin
-  if EventsCount = 0 then exit;
+  if eventsCount = 0 then exit;
 
-  for f := 0 to EventsCount - 1 do
+  for f := 0 to eventsCount - 1 do
   begin
-    eventDate := StrToDate(EventsStore.Data[f].date);
-    dueTime   := now - Tomorrow;                                       //  Start of tomorrow i.e. midnight tonight.
-    dueTimef  := FormatDateTime('hh:nn:ss', DueTime);                  //  time due as formatted string.
-
-    if eventDate > Today then                                          //  an upcoming event
-      dueDays := DaysBetween(Today, eventDate);
-
-    if eventDate < Today then                                          //  an event with an original year.
-      begin
-        subsDate := RecodeYear(eventDate, YearOf(Today));              //  substitutute current year.
-        if subsDate < Today then subsDate := Incyear(subsDate);        //  is event before today? then inc year
-        dueDays := DaysBetween(Today, subsDate);                       //  days due.
-      end;
-
-    stage := checkStages(dueDays);
+    dueDays := determineDueDays(eventsStore.Data[f].date);
+    stage   := checkStages(dueDays);
     if stage <> 0 then actionEvent(f, stage);
 
     if dueDays = 0 then                                                //  event must be today.
-      EventsStore.Data[f].dueShort := format('%s is today', [EventsStore.Data[f].name])
+      eventsStore.Data[f].dueShort := format('TODAY %s', [EventsStore.Data[f].name])
     else
-      EventsStore.Data[f].dueShort := format('%s in %d days', [EventsStore.Data[f].name, dueDays]);
+      eventsStore.Data[f].dueShort := format('%d days %s ', [dueDays, EventsStore.Data[f].name]);
 
   end;  //  for f := 0 to EventsCount - 1 do
 
-  saveEvents;
+  sortEventsStore;   //  Sort evenst by due date.
+  saveEvents;        //  re save sortede vents
+end;
+
+procedure Events.sortEventsStore;
+{  Sorts the event store - by a simple bubble sort.
+   if the data set gets large, may need a better sort routine.
+
+   First the entry id is updated with the current due days.
+   Secondly the store is sorted using the due days [lowest first].
+}
+var
+  f, g: integer;
+begin
+
+  for f := 0 to eventsCount - 1 do            //  update due days.
+    eventsStore.Data[f].id := determineDueDays(eventsStore.Data[f].date);
+
+  for f := 0 to eventsCount - 1 do            //  perform sort.
+  begin
+    for g := f + 1 to eventsCount - 1 do
+    begin
+      if eventsStore.Data[f].id > eventsStore.Data[g].id then
+        swapEvents(f, g);
+    end;  //  for g := f + 1 to eventsCount - 1 do
+  end;    //  for f := 0 to eventsCount - 1 do
+end;
+
+procedure Events.swapEvents(f, g: integer);
+{  Swap over two entries in the events store.    }
+VAR
+  e: Event;
+begin
+  e           := Event.Create(0);
+  e.name      := eventsStore.Data[f].name;
+  e.id        := eventsStore.Data[f].id;
+  e.date      := eventsStore.Data[f].date;
+  e.etype     := eventsStore.Data[f].etype;
+  e.notes     := eventsStore.Data[f].notes;
+  e.float     := eventsStore.Data[f].float;
+  e.stage1Ack := eventsStore.Data[f].stage1Ack;
+  e.stage2Ack := eventsStore.Data[f].stage2Ack;
+  e.stage3Ack := eventsStore.Data[f].stage3Ack;
+  e.dueShort  := eventsStore.Data[f].dueShort;
+  e.dueLong   := eventsStore.Data[f].dueLong;
+
+  eventsStore.Data[f].name      := eventsStore.Data[g].name;
+  eventsStore.Data[f].id        := eventsStore.Data[g].id;
+  eventsStore.Data[f].date      := eventsStore.Data[g].date;
+  eventsStore.Data[f].etype     := eventsStore.Data[g].etype;
+  eventsStore.Data[f].notes     := eventsStore.Data[g].notes;
+  eventsStore.Data[f].float     := eventsStore.Data[g].float;
+  eventsStore.Data[f].stage1Ack := eventsStore.Data[g].stage1Ack;
+  eventsStore.Data[f].stage2Ack := eventsStore.Data[g].stage2Ack;
+  eventsStore.Data[f].stage3Ack := eventsStore.Data[g].stage3Ack;
+  eventsStore.Data[f].dueShort  := eventsStore.Data[g].dueShort;
+  eventsStore.Data[f].dueLong   := eventsStore.Data[g].dueLong;
+
+  eventsStore.Data[g].name      := e.name;
+  eventsStore.Data[g].id        := e.id;
+  eventsStore.Data[g].date      := e.date;
+  eventsStore.Data[g].etype     := e.etype;
+  eventsStore.Data[g].notes     := e.notes;
+  eventsStore.Data[g].float     := e.float;
+  eventsStore.Data[g].stage1Ack := e.stage1Ack;
+  eventsStore.Data[g].stage2Ack := e.stage2Ack;
+  eventsStore.Data[g].stage3Ack := e.stage3Ack;
+  eventsStore.Data[g].dueShort  := e.dueShort;
+  eventsStore.Data[g].dueLong   := e.dueLong;
+
+  e.Free;
+end;
+
+function Events.determineDueDays(eventDate: string): integer;
+VAR
+  evntDate: TDateTime;
+  sbsDate : TDateTime;
+  dueDays : integer = 0;
+begin
+  evntDate := StrToDate(eventDate);
+
+  if evntDate > Today then                                        //  an upcoming event
+    dueDays := DaysBetween(Today, evntDate);
+
+  if evntDate < Today then                                        //  an event with an original year.
+    begin
+      sbsDate := RecodeYear(evntDate, YearOf(Today));             //  substitutute current year.
+      if sbsDate < Today then sbsDate := Incyear(sbsDate);        //  is event before today? then inc year
+      dueDays := DaysBetween(Today, sbsDate);                     //  days due.
+    end;
+
+  result := dueDays
 end;
 
 function Events.checkStages(age: integer): integer;
@@ -301,6 +380,10 @@ end;
 
 procedure Events.actionEvent(pos: integer; stage: integer);
 {  Inform user of impending event.
+
+   As soon as an event is displayes it is acknowleged.
+   TODO : the form needs an aclnowledge button and some way
+   of convaying that to the main form.
 }
 VAR
   mess: string;
@@ -313,36 +396,36 @@ begin
   case stage of
     3:
     begin
-      if EventsStore.Data[pos].stage3Ack then exit;
-      mess := EventsStore.Data[pos].name + ' ' + stage3Mess;
+      if eventsStore.Data[pos].stage3Ack then exit;
+      mess := eventsStore.Data[pos].name + ' ' + stage3Mess;
       bcol := stage1BackColour;
       fcol := stage1ForeColour;
-      EventsStore.Data[pos].stage3Ack := true;
+      eventsStore.Data[pos].stage3Ack := true;
     end;
     2:
     begin
-      if EventsStore.Data[pos].stage2Ack then exit;
-      mess := EventsStore.Data[pos].name + ' ' + stage2Mess;
+      if eventsStore.Data[pos].stage2Ack then exit;
+      mess := eventsStore.Data[pos].name + ' ' + stage2Mess;
       bcol := stage2BackColour;
       fcol := stage3ForeColour;
-      EventsStore.Data[pos].stage2Ack := true;
+      eventsStore.Data[pos].stage2Ack := true;
     end;
     1:
     begin
-      if EventsStore.Data[pos].stage1Ack then exit;
-      mess := EventsStore.Data[pos].name + ' ' + stage1Mess;
+      if eventsStore.Data[pos].stage1Ack then exit;
+      mess := eventsStore.Data[pos].name + ' ' + stage1Mess;
       bcol := stage3BackColour;
       fcol := stage3ForeColour;
-      EventsStore.Data[pos].stage1Ack := true;
+      eventsStore.Data[pos].stage1Ack := true;
     end;
   end;  //  case stage of
 
   ev := TfrmEvent.Create(nil);
 
   ev.SetBounds(LEFT, TOP + (pos * HEIGHT), WIDTH, HEIGHT);
-  ev.Name       := format('frmEvent_%d', [EventsStore.Data[pos].id]);
+  ev.Name       := format('frmEvent_%d', [eventsStore.Data[pos].id]);
   ev.Color      := bcol;
-  //ev.Font.Color := fcol;
+  ev.Font.Color := fcol;
   ev.AlphaBlend := true;
 
   lb            := ev.FindChildControl('lblEvent') as TLabel;
@@ -354,7 +437,7 @@ end;
 
 procedure Events.killEvents;
 {  When Klock cloese, kill all displayed events if any.
-   Tries to find a form for all events - most will fail.  Clumbsy I know.
+   Tries to find a form for all events - most will fail.  Clumsy I know.
 }
 VAR
   f : integer;
@@ -366,13 +449,12 @@ begin
   for f := 0 to EventsCount - 1 do
   begin
     try
-      s := format('frmEvent_%d', [EventsStore.Data[f].id]);
+      s  := format('frmEvent_%d', [eventsStore.Data[f].id]);
+      ev := screen.FindForm(s);
     except
       //  event form not found.
       exit;
     end;
-
-    ev := screen.FindForm(s);
 
     if assigned(ev) then ev.Close;
   end;

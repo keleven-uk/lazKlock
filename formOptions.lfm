@@ -43,7 +43,7 @@ object frmOptions: TfrmOptions
     Width = 620
     Align = alClient
     FullExpand = True
-    ItemIndex = 4
+    ItemIndex = 2
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -513,24 +513,24 @@ object frmOptions: TfrmOptions
       object GroupBox9: TGroupBox
         Left = 392
         Height = 105
-        Top = 120
+        Top = 121
         Width = 217
         Caption = 'Floating Text Klock Font'
         ClientHeight = 85
         ClientWidth = 213
         TabOrder = 5
         object lblFloatingTextKlockFont: TLabel
-          Left = 8
+          Left = 15
           Height = 15
-          Top = 17
+          Top = 32
           Width = 126
           Caption = 'Floating Text Klock Font'
           ParentColor = False
         end
         object btnlblFloatingTextKlockFont: TButton
-          Left = 146
+          Left = 160
           Height = 20
-          Top = 16
+          Top = 32
           Width = 50
           Caption = 'Font'
           OnClick = btnlblFloatingTextKlockFontClick
@@ -1052,7 +1052,7 @@ object frmOptions: TfrmOptions
           OnColorChanged = clrBtnEventsColorChanged
         end
         object clrBtnStage1BackColour: TColorButton
-          Left = 503
+          Left = 500
           Height = 25
           Top = 32
           Width = 75

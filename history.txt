@@ -1738,9 +1738,23 @@ Added in Options.pas options for Stage Days, Stage Messages, Fore and back Colou
 Amended variable names in Events.pas to be more compatible.
 Moved some of the setup stuff from formShow into their own routines.
 Added the required components in formOptions.pas.
-NB : needs to be tested.
+NB : needs to be further tested.
 
 Currently
 12503 lines of source code.
 6926 statements
 16.5% comment
+
+Build 96 [2.4.1.96]
+
+Continuing with event thingy [nearly there].
+Added to uEvents.pas, so the eventSore is now held in sorted order.
+The store is sorted by due days, so the events are now displayed with the next
+due event top of the list and then descending is chronological order.
+
+Correct bug with displaying eventNew button.
+
+Currently
+12577 lines of source code.
+6977 statements
+16.4% comment

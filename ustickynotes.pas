@@ -200,21 +200,6 @@ var
   s: string;
   m: TMemo;
 begin
-//  var
-//  i: integer;
-//  upFormClass: string;
-//begin
-//  result := nil;
-//  upformClass := UpperCase(formClass);
-//  for i := 0 to Screen.FormCount-1 do
-//  begin
-//    if UpperCase(Screen.Forms[i].ClassName) = upFormClass then
-//    begin
-//      result := Screen.Forms[i];
-//    end;
-// end;
-
-
   for f := 0 to stickyNotesCount -1 do
   begin
     if stickyNotesStore[f].visable then

@@ -300,7 +300,7 @@ begin
   if FontDialog1.Execute then
   begin
     userOptions.floatingTextFont := FontDialog1.Font;
-    lblFloatingTime.Font         := FontDialog1.Font;   //  so the new fone is used at once.
+    lblFloatingTime.Font         := FontDialog1.Font;   //  so the new font is used at once.
 
     width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
     height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;

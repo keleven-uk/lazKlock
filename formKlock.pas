@@ -1292,7 +1292,7 @@ end;
 // *********************************************************** Timer ***********
 //
 procedure TfrmMain.timerTimerTimer(Sender: TObject);
-{  is time is enables, this will be the timer tick.    }
+{  if time is enables, this will be the timer tick.    }
 var
   hh, mm, ss, ms: word;
   timerInterval: TDateTime;
@@ -1767,6 +1767,7 @@ begin
   mEventNotes.ReadOnly        := false;
   mEventNotes.Text            := '';
 
+  btnEventNew.Visible    := false;
   btnEventEdit.Visible   := false;
   btnEventDelete.Visible := false;
   btnEventPrint.Visible  := false;

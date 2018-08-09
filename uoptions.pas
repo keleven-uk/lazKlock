@@ -956,7 +956,7 @@ begin
   floatingTextFormTop      := 100;
   floatingTextFormLeft     := 100;
   floatingTextFont         := TFont.Create;
-  floatingTextUseKlockFont := true;
+  floatingTextUseKlockFont := false;
   floatingAlwaysOnTop      := true;
 
   // memos

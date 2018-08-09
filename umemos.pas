@@ -135,6 +135,12 @@ var
   fileOut: TFileStream;
   f: integer;
 begin
+  if MemosCount = 0 then
+  begin
+    DeleteFile(memosFile);    //  Memo file is empty, delete if there.
+    exit;
+  end;
+
   fileOut := TFileStream.Create(memosFile, fmCreate or fmShareDenyWrite);
 
   try
