@@ -1346,6 +1346,7 @@ object frmMain: TfrmMain
     object BitBtnHide: TBitBtn
       Left = 600
       Height = 30
+      Hint = 'Hide Klock [in System Tray]'
       Top = 8
       Width = 75
       Caption = 'Hide'
@@ -1414,11 +1415,14 @@ object frmMain: TfrmMain
         000000000000
       }
       OnClick = mnuItmClick
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
     end
     object BitBtnClose: TBitBtn
       Left = 520
       Height = 30
+      Hint = 'Close Klock'
       Top = 8
       Width = 75
       Caption = 'Close'
@@ -1481,11 +1485,14 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = mnuItmClick
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
     end
     object BitBtnHelp: TBitBtn
       Left = 440
       Height = 30
+      Hint = 'Display Help'
       Top = 8
       Width = 75
       Caption = 'Help'
@@ -1622,11 +1629,14 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = mnuItmClick
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
     end
     object SpdBtnNewStickyNote: TSpeedButton
       Left = 360
       Height = 30
+      Hint = 'Create a new Sticky Note'
       Top = 8
       Width = 30
       Glyph.Data = {
@@ -1762,6 +1772,9 @@ object frmMain: TfrmMain
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = mnuItmClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
     end
     object btnMemoNew: TButton
       Left = 16
@@ -1892,6 +1905,7 @@ object frmMain: TfrmMain
     object SpdBtnClipboard: TSpeedButton
       Left = 400
       Height = 30
+      Hint = 'Load the Clipboard Manager'
       Top = 8
       Width = 30
       Glyph.Data = {
@@ -2012,6 +2026,9 @@ object frmMain: TfrmMain
         00000000000000000000
       }
       OnClick = mnuItmClick
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
     end
   end
   object mnuMain: TMainMenu
@@ -4430,6 +4447,7 @@ object frmMain: TfrmMain
     end
     object ppMnItmExit: TMenuItem
       Caption = 'Exit'
+      OnClick = ppMnItmExitClick
     end
   end
   object ballonTimer: TTimer

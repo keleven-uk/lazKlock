@@ -54,6 +54,7 @@ type
     constructor Create(sn_id: integer); overload;
     constructor Create(fsOut: TFileStream); overload;
     procedure saveToFile(fsOut: TFileStream);
+    procedure copy(e1: event);
   end;
 
 implementation
@@ -181,6 +182,22 @@ begin
       error('Error on Events Write' + LineEnding + E.Message);
   end;
 End;
+
+procedure Event.copy(e1: event);
+{  Copies the supplies event into the current event.    }
+begin
+  name      := e1.name;
+  id        := e1.id;
+  date      := e1.date;
+  etype     := e1.etype;
+  notes     := e1.notes;
+  float     := e1.float;
+  stage1Ack := e1.stage1Ack;
+  stage2Ack := e1.stage2Ack;
+  stage3Ack := e1.stage3Ack;
+  dueShort  := e1.dueShort;
+  dueLong   := e1.dueLong;
+end;
 
 procedure Event.error(Const msg : string);
 {  Raises a custom exception.    }

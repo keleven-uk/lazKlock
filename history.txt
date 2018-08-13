@@ -1758,3 +1758,19 @@ Currently
 12577 lines of source code.
 6977 statements
 16.4% comment
+
+Build 97 [2.4.2.97]
+
+Continuing with event thingy [Should be a working thing].
+Changed event types, now not loaded from a text file but defined in
+uEvents.pas.
+Added a new procedure onto the event class, copy.  This copies a supplied
+event onto the current event - used in sort routine in the events class.
+
+Corrected bug in system tray menu - exit now works okay.
+
+Currently
+12590 lines of source code.
+6967 statements
+16.5% comment
+

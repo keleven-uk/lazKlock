@@ -297,6 +297,7 @@ type
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
+    procedure ppMnItmExitClick(Sender: TObject);
     procedure ppMnItmShowClick(Sender: TObject);
     procedure ppMnItmTimeClick(Sender: TObject);
     procedure ReminderTimerTimer(Sender: TObject);
@@ -859,7 +860,7 @@ begin
 end;
 
 procedure TfrmMain.mainIdleTimerStartTimer(Sender: TObject);
-{  On start of system idle, creat a zero tDateTime.    }
+{  On start of system idle, create a zero tDateTime.    }
 begin
   idleTime := EncodeDateTime(2018, 1, 1, 0, 0, 0, 0);
 end;
@@ -1923,7 +1924,7 @@ end;
 procedure TfrmMain.setUpEventsOptions;
 {  Load Event Types and set up the aged days for event prompts.  }
 begin
-  cmbBxEventType.Items.LoadFromFile('EventTypes.txt');
+  cmbBxEventType.Items     := ev.eventsTypes;
   cmbBxEventType.ItemIndex := 0;
 
   ev.stage1Days       := userOptions.eventsStage1Days;
@@ -2432,6 +2433,13 @@ begin
     ppMnItmTime.Checked := True;
 end;
 
+procedure TfrmMain.ppMnItmExitClick(Sender: TObject);
+begin
+  close;
+end;
+//
+// ******************************************************* tray icon ************
+//
 procedure TfrmMain.TrayIconDblClick(Sender: TObject);
 {  double clicking the tray icon, will clear all messages and kill the pop-up notifier.
 }
@@ -2447,7 +2455,9 @@ begin
   ppMnItmTime.Checked := False;
   DisplayMessage;
 end;
-
+//
+// ******************************************************* pop up notifier ******
+//
 procedure TfrmMain.PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
 {  if the pop-up is closed manually, assume closed by user after countdown
    of time - so clear these messages.
@@ -2464,8 +2474,7 @@ begin
 
   CloseAction := caFree;
 end;
-
 //
-// *****************************************************************************
+// ******************************************************** KLOCK END ***********
 //
 end.

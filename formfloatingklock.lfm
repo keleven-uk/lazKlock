@@ -1,7 +1,7 @@
 object frmFloatingKlock: TfrmFloatingKlock
-  Left = 1371
+  Left = 1336
   Height = 110
-  Top = 80
+  Top = 0
   Width = 534
   BorderStyle = bsNone
   Caption = 'frmFloatingKlock'

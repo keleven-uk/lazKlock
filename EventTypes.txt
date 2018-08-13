@@ -1,9 +1,0 @@
-Anniversary
-Appointment
-Birthday
-Motor
-Holiday
-Meeting
-One Off
-TODO
-Other

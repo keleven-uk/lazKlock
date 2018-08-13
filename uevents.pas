@@ -16,8 +16,9 @@ type
   Events = class
 
   private
-    _EventsFile      : string;
-    _EventsCount     : integer;
+    _eventsFile      : string;
+    _eventsTypes     : TStringList;
+    _eventsCount     : integer;
     _stage1Days      : integer;
     _stage2Days      : integer;
     _stage3Days      : integer;
@@ -31,27 +32,31 @@ type
     _stage2ForeColour: TColor;
     _stage3ForeColour: TColor;
 
-    property EventsFile: string read _EventsFile write _EventsFile;
+    property eventsFile: string read _eventsFile write _eventsFile;
     function checkStages(age: integer): integer;
     procedure actionEvent(pos: integer; stage: integer);
     function determineDueDays(eventDate: string): integer;
+    procedure sortEventsStore;
+    procedure swapEvents(f, g: integer);
   public
-    property EventsCount: integer read _EventsCount write _EventsCount;
-    property stage1Days : integer read _stage1Days  write _stage1Days;
-    property stage2Days : integer read _stage2Days  write _stage2Days;
-    property stage3Days : integer read _stage3Days  write _stage3Days;
-    property stage1Mess : string  read _stage1Mess  write _stage1Mess;
-    property stage2Mess : string  read _stage2Mess  write _stage2Mess;
-    property stage3Mess : string  read _stage3Mess  write _stage3Mess;
-    property stage1BackColour: TColor read _stage1BackColour write _stage1BackColour;
-    property stage2BackColour: TColor read _stage2BackColour write _stage2BackColour;
-    property stage3BackColour: TColor read _stage3BackColour write _stage3BackColour;
-    property stage1ForeColour: TColor read _stage1ForeColour write _stage1ForeColour;
-    property stage2ForeColour: TColor read _stage2ForeColour write _stage2ForeColour;
-    property stage3ForeColour: TColor read _stage3ForeColour write _stage3ForeColour;
+    property eventsTypes     : TStringList read _eventsTypes;                //  read only.
+    property eventsCount     : integer     read _eventsCount      write _eventsCount;
+    property stage1Days      : integer     read _stage1Days       write _stage1Days;
+    property stage2Days      : integer     read _stage2Days       write _stage2Days;
+    property stage3Days      : integer     read _stage3Days       write _stage3Days;
+    property stage1Mess      : string      read _stage1Mess       write _stage1Mess;
+    property stage2Mess      : string      read _stage2Mess       write _stage2Mess;
+    property stage3Mess      : string      read _stage3Mess       write _stage3Mess;
+    property stage1BackColour: TColor      read _stage1BackColour write _stage1BackColour;
+    property stage2BackColour: TColor      read _stage2BackColour write _stage2BackColour;
+    property stage3BackColour: TColor      read _stage3BackColour write _stage3BackColour;
+    property stage1ForeColour: TColor      read _stage1ForeColour write _stage1ForeColour;
+    property stage2ForeColour: TColor      read _stage2ForeColour write _stage2ForeColour;
+    property stage3ForeColour: TColor      read _stage3ForeColour write _stage3ForeColour;
 
     constructor Create; overload;
     destructor Destroy; override;
+
     procedure new(key: string; date: string; etype: integer; data: string; floating: Boolean);
     procedure amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
     function retrieve(id: integer): Event;
@@ -60,8 +65,6 @@ type
     procedure saveEvents;
     procedure killEvents;
     procedure Remove(pos: integer);
-    procedure sortEventsStore;
-    procedure swapEvents(f, g: integer);
   end;
 
   //  effectively a dictionary.
@@ -83,10 +86,13 @@ constructor Events.Create; overload;
 {  set up some variables on create.    }
 begin
   eventsFile         := GetAppConfigDir(False) + 'Event.bin';
-  eventsStore        := keyStore.Create;       //  initail eventStore
+  eventsStore        := keyStore.Create;       //  initial eventStore
   eventsStore.Sorted := true;
   eventsCount        := 0;
 
+  _eventsTypes := TStringList.Create;
+  _eventsTypes.CommaText := ('"Anniversary", "Appointment", "Birthday", "Motor", "Holiday", "Meeting",' +
+   '"One Off", "TODO", "Other Time"');
 
   //  set up defualts, are overridded by user options.
   stage1Days := 5;                             //  Days until stage 1 is triggered.
@@ -110,6 +116,7 @@ destructor Events.Destroy;
 {  run on destroy.    }
 begin
   eventsStore.free;
+  _eventsTypes.free;
 
   inherited;
 end;
@@ -269,7 +276,7 @@ begin
     if dueDays = 0 then                                                //  event must be today.
       eventsStore.Data[f].dueShort := format('TODAY %s', [EventsStore.Data[f].name])
     else
-      eventsStore.Data[f].dueShort := format('%d days %s ', [dueDays, EventsStore.Data[f].name]);
+      eventsStore.Data[f].dueShort := format('%.3d days %s ', [dueDays, EventsStore.Data[f].name]);
 
   end;  //  for f := 0 to EventsCount - 1 do
 
@@ -306,47 +313,20 @@ procedure Events.swapEvents(f, g: integer);
 VAR
   e: Event;
 begin
-  e           := Event.Create(0);
-  e.name      := eventsStore.Data[f].name;
-  e.id        := eventsStore.Data[f].id;
-  e.date      := eventsStore.Data[f].date;
-  e.etype     := eventsStore.Data[f].etype;
-  e.notes     := eventsStore.Data[f].notes;
-  e.float     := eventsStore.Data[f].float;
-  e.stage1Ack := eventsStore.Data[f].stage1Ack;
-  e.stage2Ack := eventsStore.Data[f].stage2Ack;
-  e.stage3Ack := eventsStore.Data[f].stage3Ack;
-  e.dueShort  := eventsStore.Data[f].dueShort;
-  e.dueLong   := eventsStore.Data[f].dueLong;
-
-  eventsStore.Data[f].name      := eventsStore.Data[g].name;
-  eventsStore.Data[f].id        := eventsStore.Data[g].id;
-  eventsStore.Data[f].date      := eventsStore.Data[g].date;
-  eventsStore.Data[f].etype     := eventsStore.Data[g].etype;
-  eventsStore.Data[f].notes     := eventsStore.Data[g].notes;
-  eventsStore.Data[f].float     := eventsStore.Data[g].float;
-  eventsStore.Data[f].stage1Ack := eventsStore.Data[g].stage1Ack;
-  eventsStore.Data[f].stage2Ack := eventsStore.Data[g].stage2Ack;
-  eventsStore.Data[f].stage3Ack := eventsStore.Data[g].stage3Ack;
-  eventsStore.Data[f].dueShort  := eventsStore.Data[g].dueShort;
-  eventsStore.Data[f].dueLong   := eventsStore.Data[g].dueLong;
-
-  eventsStore.Data[g].name      := e.name;
-  eventsStore.Data[g].id        := e.id;
-  eventsStore.Data[g].date      := e.date;
-  eventsStore.Data[g].etype     := e.etype;
-  eventsStore.Data[g].notes     := e.notes;
-  eventsStore.Data[g].float     := e.float;
-  eventsStore.Data[g].stage1Ack := e.stage1Ack;
-  eventsStore.Data[g].stage2Ack := e.stage2Ack;
-  eventsStore.Data[g].stage3Ack := e.stage3Ack;
-  eventsStore.Data[g].dueShort  := e.dueShort;
-  eventsStore.Data[g].dueLong   := e.dueLong;
-
+  e := Event.Create(0);
+  e.copy(eventsStore.Data[f]);
+  eventsStore.Data[f].copy(eventsStore.Data[g]);
+  eventsStore.Data[g].copy(e);
   e.Free;
 end;
 
 function Events.determineDueDays(eventDate: string): integer;
+{  Returns the number of days the event is due, event date is passed in.
+
+   If the event date is in the future [current or future year] then return days differance.
+   if the event date is in the past [previous year] then substituse current year and return days differance.
+
+}
 VAR
   evntDate: TDateTime;
   sbsDate : TDateTime;
@@ -359,8 +339,8 @@ begin
 
   if evntDate < Today then                                        //  an event with an original year.
     begin
-      sbsDate := RecodeYear(evntDate, YearOf(Today));             //  substitutute current year.
-      if sbsDate < Today then sbsDate := Incyear(sbsDate);        //  is event before today? then inc year
+      sbsDate := RecodeYear(evntDate, YearOf(Today));             //  substitute current year.
+      if sbsDate < Today then sbsDate := Incyear(sbsDate);        //  is event before today? Then inc year
       dueDays := DaysBetween(Today, sbsDate);                     //  days due.
     end;
 
@@ -381,9 +361,9 @@ end;
 procedure Events.actionEvent(pos: integer; stage: integer);
 {  Inform user of impending event.
 
-   As soon as an event is displayes it is acknowleged.
-   TODO : the form needs an aclnowledge button and some way
-   of convaying that to the main form.
+   As soon as an event is display's it is acknowledged.
+   TODO : the form needs an acknowledge button and some way
+   of conveying that to the main form.
 }
 VAR
   mess: string;
@@ -436,7 +416,7 @@ begin
 end;
 
 procedure Events.killEvents;
-{  When Klock cloese, kill all displayed events if any.
+{  When Klock closes, kill all displayed events if any.
    Tries to find a form for all events - most will fail.  Clumsy I know.
 }
 VAR

@@ -71,6 +71,7 @@ type
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
     function GetTextSize(AText: String; AFont: TFont): textSize;
+    procedure addEvents;
   public
 
   end;
@@ -242,6 +243,12 @@ begin
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
   lblFloatingTime.AdjustFontForOptimalFill;
+end;
+
+procedure TfrmFloatingKlock.addEvents;
+
+begin
+
 end;
 
 function TfrmFloatingKlock.GetTextSize(AText: String; AFont: TFont): textSize;
