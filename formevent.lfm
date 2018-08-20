@@ -1,28 +1,47 @@
 object frmEvent: TfrmEvent
   Left = 1382
-  Height = 30
+  Height = 111
   Top = 527
   Width = 320
   AlphaBlend = True
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Event'
-  ClientHeight = 30
+  ClientHeight = 111
   ClientWidth = 320
   FormStyle = fsStayOnTop
-  OnClick = FormClick
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnMouseEnter = FormMouseEnter
   OnMouseLeave = FormMouseLeave
+  OnShow = FormShow
   LCLVersion = '1.8.4.0'
   object lblEvent: TLabel
     Left = 16
     Height = 30
-    Top = 0
+    Top = 8
     Width = 276
     Caption = 'Staceys Birthday is really soon'
+    Font.Height = -21
+    ParentColor = False
+    ParentFont = False
+  end
+  object btnAcknowledge: TButton
+    Left = 120
+    Height = 25
+    Top = 72
+    Width = 91
+    Caption = 'Acknowledge'
+    OnClick = btnAcknowledgeClick
+    TabOrder = 0
+  end
+  object lblInfo: TLabel
+    Left = 16
+    Height = 30
+    Top = 36
+    Width = 222
+    Caption = 'and will be 30 years old.'
     Font.Height = -21
     ParentColor = False
     ParentFont = False

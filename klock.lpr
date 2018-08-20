@@ -39,10 +39,10 @@ begin
   Application.CreateForm(TfrmStickyNote, frmStickyNote);
   Application.CreateForm(TfrmFloatingKlock, frmFloatingKlock);
   Application.CreateForm(TfrmBiorhythm, frmBiorhythm);
+  Application.CreateForm(TfrmEvent, frmEvent);
 
   frmSplashScreen.Hide;
   frmSplashScreen.Free;
-  Application.CreateForm(TfrmEvent, frmEvent);
   Application.Run;
 end.
 

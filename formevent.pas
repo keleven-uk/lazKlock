@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Windows, LMessages;
+  StdCtrls, Windows, LMessages, ComObj, Variants;
 
 const
   LWA_COLORKEY  = 1;
@@ -32,15 +32,18 @@ type
   { TfrmEvent }
 
   TfrmEvent = class(TForm)
+    btnAcknowledge: TButton;
     lblEvent: TLabel;
+    lblInfo: TLabel;
     tmrEvent: TTimer;
 
-    procedure FormClick(Sender: TObject);
+    procedure btnAcknowledgeClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormMouseEnter(Sender: TObject);
     procedure FormMouseLeave(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure tmrEventTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -48,6 +51,7 @@ type
     WindowDragStarted : Boolean;
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
+    procedure speakEvent;
   public
 
   end;
@@ -69,7 +73,7 @@ begin
   kLog.writeLog('formEvent Close : ' + name);
 end;
 
-procedure TfrmEvent.FormClick(Sender: TObject);
+procedure TfrmEvent.btnAcknowledgeClick(Sender: TObject);
 begin
   close;
 end;
@@ -81,6 +85,36 @@ begin
   AlphaBlend       := true;
 
   Application.AddOnUserInputHandler(@MouseHook);
+end;
+
+procedure TfrmEvent.FormShow(Sender: TObject);
+{  When event is first shown, speak the message - if desired.    }
+begin
+  if userOptions.eventsSpeakMesssage then speakEvent;
+end;
+
+procedure TfrmEvent.speakEvent;
+{  Speak [using SAPI] the event message.    }
+var
+ SavedCW       : Word;
+ SpVoice       : Variant;
+ TextToBeSpoken: Variant;
+begin
+ TextToBeSpoken := lblEvent.Caption;
+
+ SpVoice := CreateOleObject('SAPI.SpVoice');
+
+ // Change FPU interrupt mask to avoid SIGFPE exceptions
+ SavedCW := Get8087CW;
+ try
+   Set8087CW(SavedCW or $4);
+   SpVoice.Volume := 50;
+   SpVoice.Speak(TextToBeSpoken, 0);
+ finally
+   // Restore FPU mask
+   Set8087CW(SavedCW);
+   SpVoice := Unassigned;
+ end;  // try
 end;
 
 procedure TfrmEvent.FormDestroy(Sender: TObject);

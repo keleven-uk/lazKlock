@@ -16,20 +16,21 @@ unit UFuzzyTime;
 interface
 
 uses
-  Classes, SysUtils, DateUtils, strutils, Dialogs, uPascalTZ, Moon;
+  Classes, SysUtils, DateUtils, strutils, Dialogs, uPascalTZ, Moon, ComObj, Variants;
 
 type
   FuzzyTime = class
 
   private
-    _displayFuzzy: integer;
-    _fuzzyBase: integer;
-    _fuzzyTypes: TStringList;
-    _fuzzyTimeVerbose: boolean;     //  Use long version of Fuzzy Time.
-    _display24Hour: boolean;        //  Display time has 24 hour if true, else 12 hour.
+    _displayFuzzy    : integer;
+    _fuzzyBase       : integer;
+    _fuzzyTypes      : TStringList;
+    _fuzzyTimeVerbose: boolean;        //  Use long version of Fuzzy Time.
+    _display24Hour   : boolean;        //  Display time has 24 hour if true, else 12 hour.
+    _speakTimeVolume : integer;        //  Volume used when speaking the time.
 
-    timeZone: TPascalTZ;            //  used for local and UTC time, will take into
-                                    //  account time zones.
+    timeZone: TPascalTZ;               //  used for local and UTC time, will take into
+                                       //  account time zones.
 
     // globally declare arrays, so can be used by more then one sub and also not re-created every call of the sub.
     const hourTxt: array [0..12] of string = ('twelve', 'one', 'two', 'three', 'four',
@@ -66,16 +67,19 @@ type
     function getMarsSolDate: string;
     function getCoordinatedMarsTime: string;
   public
-    property displayFuzzy    : integer     read _displayFuzzy     write _displayFuzzy;
-    property fuzzyBase       : integer     read _fuzzyBase        write _fuzzyBase;
-    property fuzzyTypes      : TStringList read _fuzzyTypes;                    //  read only.
-    property fuzzyTimeVerbose: boolean     read _fuzzyTimeVerbose write _fuzzyTimeVerbose;
-    property display24Hour   : boolean     read _display24Hour    write _display24Hour;
+    property displayFuzzy    : integer     read _displayFuzzy      write _displayFuzzy;
+    property fuzzyBase       : integer     read _fuzzyBase         write _fuzzyBase;
+    property fuzzyTypes      : TStringList read _fuzzyTypes;       //  read only.
+    property fuzzyTimeVerbose: boolean     read _fuzzyTimeVerbose  write _fuzzyTimeVerbose;
+    property display24Hour   : boolean     read _display24Hour     write _display24Hour;
+    property speakTimeVolume : integer     read _speakTimeVolume write _speakTimeVolume;
 
     constructor Create; overload;
     destructor Destroy; override;
     function getTime: string;
+    procedure speakTime;
   end;
+
 
 
 implementation
@@ -687,6 +691,30 @@ begin
     0: morse := '-----';
   End;
   result := morse;
+end;
+
+procedure FuzzyTime.speakTime;
+{  Speak [using SAPI] the time in current format.    }
+var
+ SavedCW       : Word;
+ SpVoice       : Variant;
+ TextToBeSpoken: Variant;
+begin
+ TextToBeSpoken := 'The time is: ' + getTime;
+
+ SpVoice := CreateOleObject('SAPI.SpVoice');
+
+ // Change FPU interrupt mask to avoid SIGFPE exceptions
+ SavedCW := Get8087CW;
+ try
+   Set8087CW(SavedCW or $4);
+   SpVoice.Volume := speakTimeVolume;
+   SpVoice.Speak(TextToBeSpoken, 0);
+ finally
+   // Restore FPU mask
+   Set8087CW(SavedCW);
+   SpVoice := Unassigned;
+ end;  // try
 end;
 
 end.

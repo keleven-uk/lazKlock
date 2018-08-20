@@ -47,8 +47,8 @@ type
     ChckGrpLEDKlock            : TCheckGroup;
     ChckGrpBinaryKlock         : TCheckGroup;
     ChckGrpSmallTextKlock      : TCheckGroup;
-    ChckGrpTimerSettings       : TCheckGroup;
     ChckGrpFloatingTextKlock   : TCheckGroup;
+    ChckGrpTimerSettings       : TCheckGroup;
     ChckLstBxArchive           : TCheckListBox;
     ChckBxDefaultPassWord      : TCheckBox;
     ChckBxCullLogsFiles        : TCheckBox;
@@ -56,33 +56,30 @@ type
     ChckBxKeepMonitorAwake     : TCheckBox;
     ChckBxUseF15               : TCheckBox;
     ChckBxJiggleMouse          : TCheckBox;
+    chckBxSpeakTime            : TCheckBox;
+    chckBxSpeakEventMessage    : TCheckBox;
+    clrBtnStage1BackColour     : TColorButton;
+    clrBtnStage1ForeColour     : TColorButton;
+    clrBtnStage2BackColour     : TColorButton;
+    clrBtnStage2ForeColour     : TColorButton;
+    clrBtnStage3BackColour     : TColorButton;
+    clrBtnStage3ForeColour     : TColorButton;
+    clrBtnStickyNoteColour     : TColorButton;
     CmbBxDefaulTtab            : TComboBox;
     CmbBxDefaultTime           : TComboBox;
-    clrBtnStickyNoteColour     : TColorButton;
-    clrBtnStage1BackColour     : TColorButton;
-    clrBtnStage2BackColour     : TColorButton;
-    clrBtnStage3BackColour     : TColorButton;
-    clrBtnStage1ForeColour     : TColorButton;
-    clrBtnStage2ForeColour     : TColorButton;
-    clrBtnStage3ForeColour     : TColorButton;
     ColorDialog1               : TColorDialog;
     DtEdtBirthDate             : TDateEdit;
     EdtDefaultPassWord         : TEdit;
+    edtLatitude                : TEdit;
+    edtLongitude               : TEdit;
     edtStage1Mess              : TEdit;
     edtStage2Mess              : TEdit;
     edtStage3Mess              : TEdit;
-    edtLatitude                : TEdit;
-    edtLongitude               : TEdit;
     FlNmEdtLoadArchiveName     : TFileNameEdit;
     FlNmEdtSaveArchiveName     : TFileNameEdit;
     FontDialog1                : TFontDialog;
     Settings                   : TGroupBox;
     GroupBox1                  : TGroupBox;
-    GroupBox10                 : TGroupBox;
-    GroupBox11                 : TGroupBox;
-    GroupBox12                 : TGroupBox;
-    GroupBox13                 : TGroupBox;
-    GroupBox14                 : TGroupBox;
     GroupBox2                  : TGroupBox;
     GroupBox3                  : TGroupBox;
     GroupBox4                  : TGroupBox;
@@ -91,27 +88,33 @@ type
     GroupBox7                  : TGroupBox;
     GroupBox8                  : TGroupBox;
     GroupBox9                  : TGroupBox;
+    GroupBox10                 : TGroupBox;
+    GroupBox11                 : TGroupBox;
+    GroupBox12                 : TGroupBox;
+    GroupBox13                 : TGroupBox;
+    GroupBox16                 : TGroupBox;
     Label1                     : TLabel;
     Label2                     : TLabel;
     Label3                     : TLabel;
     Label4                     : TLabel;
     Label5                     : TLabel;
     Label6                     : TLabel;
-    Label7                     : TLabel;
-    Label8                     : TLabel;
-    Label9                     : TLabel;
     Label10                    : TLabel;
     Label11                    : TLabel;
+    Label12                    : TLabel;
+    Label13                    : TLabel;
+    Label14                    : TLabel;
+    lblLatitude                : TLabel;
+    lblLongitude               : TLabel;
     lblBirthDate               : TLabel;
     lblCheckEvery              : TLabel;
     lblMinutes                 : TLabel;
     lblFloatingTextKlockFont   : TLabel;
-    lblLatitude                : TLabel;
-    lblLongitude               : TLabel;
     LblStickyNoteColour        : TLabel;
     lblCullFileDays            : TLabel;
     lblSettingsFileName        : TLabel;
     LstBxLogFiles              : TListBox;
+    spnEdtSpeakTimeDuration    : TSpinEdit;
     spnEdtStage1Days           : TSpinEdit;
     spnEdtStage2Days           : TSpinEdit;
     spnEdtStage3Days           : TSpinEdit;
@@ -119,6 +122,7 @@ type
     SpnEdtMemoTimeOut          : TSpinEdit;
     SpnEdtCullDays             : TSpinEdit;
     lblStickyNoteFont          : TStaticText;
+    trckBrSpeakTimeVolume      : TTrackBar;
     TrckBrGlobalVolume         : TTrackBar;
 
     procedure btnCullLogsClick(Sender: TObject);
@@ -133,6 +137,8 @@ type
     procedure ChckBxJiggleMouseChange(Sender: TObject);
     procedure ChckBxKeepMonitorAwakeChange(Sender: TObject);
     procedure ChckBxLoggingChange(Sender: TObject);
+    procedure chckBxSpeakEventMessageChange(Sender: TObject);
+    procedure chckBxSpeakTimeChange(Sender: TObject);
     procedure ChckBxUseF15Change(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
@@ -163,7 +169,9 @@ type
     procedure SpnEdtCullDaysChange(Sender: TObject);
     procedure SpnEdtMemoTimeOutChange(Sender: TObject);
     procedure SpnEdtMonitorMinitesChange(Sender: TObject);
+    procedure spnEdtSpeakTimeDurationChange(Sender: TObject);
     procedure TrckBrGlobalVolumeChange(Sender: TObject);
+    procedure trckBrSpeakTimeVolumeChange(Sender: TObject);
   private
     procedure readLogFiles;
     procedure setKeepMonitorAwake;
@@ -191,7 +199,6 @@ procedure TfrmOptions.FormCreate(Sender: TObject);
 {  Run things when the form is first created.  }
 begin
   kLog.writeLog('FormOptions Create');
-
 
   //  Before userBacOptions is assigned, so use userOptions.
   lblSettingsFileName.Caption := userOptions.optionsName;
@@ -225,8 +232,8 @@ begin
     userBacOptions := Options.Create(optnFile + '64_temp.xml');
   {$endif}
 
-  userBacOptions.Assign(userOptions);                    //  make a copy of the current user options
-  //userBacOptions.writeCurrentOptions;                    //  write the copy back to disk.
+  userBacOptions.Assign(userOptions);                       //  make a copy of the current user options
+  //userBacOptions.writeCurrentOptions;                     //  write the copy back to disk.
 
   AcrdnOptions.ItemIndex := 0;                              //  Always start on Global Options.
   CmbBxDefaulTtab.ItemIndex := userBacOptions.defaultTab;
@@ -269,6 +276,17 @@ begin
   ChckGrpTimeChimes.CheckEnabled[2] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[3] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
+
+  chckBxSpeakTime.Checked        := userBacOptions.speakTime;
+  spnEdtSpeakTimeDuration.Value  := userBacOptions.speakTimeDuration;
+  trckBrSpeakTimeVolume.Position := userBacOptions.speakTimeVolume;
+
+  klog.writeLog(format('frmOptions.FormActivate %s duration=%d position=%d', [BoolToStr(userBacOptions.speakTime),
+                                                                                        userBacOptions.speakTimeDuration,
+                                                                                        userBacOptions.speakTimeVolume]));
+
+  spnEdtSpeakTimeDuration.Enabled := chckBxSpeakTime.Checked;
+  trckBrSpeakTimeVolume.Enabled   := chckBxSpeakTime.Checked;
 
   ChckGrpAnalogueKlock.Checked[0] := userBacOptions.analogueScreenSave;
   ChckGrpAnalogueKlock.Checked[1] := userBacOptions.analogueAlwaysOnTop;
@@ -324,6 +342,7 @@ begin
   clrBtnStage1BackColour.ButtonColor := userBacOptions.eventsStage1BackColour;
   clrBtnStage2BackColour.ButtonColor := userBacOptions.eventsStage2BackColour;
   clrBtnStage3BackColour.ButtonColor := userBacOptions.eventsStage3BackColour;
+  chckBxSpeakEventMessage.Checked    := userBacOptions.eventsSpeakMesssage;
 
   btnSaveArchive.Enabled            := false;
   btnLoadArchive.Enabled            := false;
@@ -448,6 +467,7 @@ index 0 - Display using 24 hour if true, else use 12 hour
       3 - Display Time in balloon
       4 - Display system idle time
       5 - Verbose Fuzzy Time.
+      6 - Speak Time.
 }
 begin
   userBacOptions.display24Hour    := ChckGrpTimeOptions.Checked[0];
@@ -498,6 +518,27 @@ end;
 procedure TfrmOptions.CmbBxDefaultTimeChange(Sender: TObject);
 begin
   userBacOptions.defaultTime := CmbBxDefaultTime.ItemIndex;
+end;
+
+procedure TfrmOptions.chckBxSpeakTimeChange(Sender: TObject);
+{  if checked will speak time and save options.    }
+begin
+  userBacOptions.speakTime         := chckBxSpeakTime.Checked;
+  userBacOptions.speakTimeDuration := spnEdtSpeakTimeDuration.Value;
+  userBacOptions.speakTimeVolume   := trckBrSpeakTimeVolume.Position;
+
+  spnEdtSpeakTimeDuration.Enabled := chckBxSpeakTime.Checked;
+  trckBrSpeakTimeVolume.Enabled   := chckBxSpeakTime.Checked;
+end;
+
+procedure TfrmOptions.spnEdtSpeakTimeDurationChange(Sender: TObject);
+begin
+  userBacOptions.speakTimeDuration := spnEdtSpeakTimeDuration.Value;
+end;
+
+procedure TfrmOptions.trckBrSpeakTimeVolumeChange(Sender: TObject);
+begin
+  userBacOptions.speakTimeVolume := trckBrSpeakTimeVolume.Position;
 end;
 //
 //....................................ANALOGUE KLOCK ...........................
@@ -736,6 +777,11 @@ begin
       userBacOptions.eventsStage3BackColour := btnClr;
     end;
   end;
+end;
+
+procedure TfrmOptions.chckBxSpeakEventMessageChange(Sender: TObject);
+begin
+  userBacOptions.eventsSpeakMesssage := chckBxSpeakEventMessage.Checked;
 end;
 //
 //...................................LOGGING ...................................

@@ -6,19 +6,19 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Biorhythm, Sticky Notes & Clipboard Monitor.
+Fuzzy Time, World Klock, Countdown, Timer, Reminder, Events, Memo, Conversion, Biorhythms, Sticky Notes & Clipboard Monitor.
 
 Also, the time can be displayed in several ways - text, digital, analogue and binary klocks,
 
 
-Klock currently consists of over 11,000 lines of Lazarus [Free Pascal] code .  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
+Klock currently consists of over 12,500 lines of Lazarus [Free Pascal] code .  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 The program starts and finishes with a Splash Screen.  This is really needed if a number of fonts are used.  The starting of Klock lengthens with the number of fonts loaded.
 
 Fuzzy Time
 
 Allows the current time to be displayed in a number of different formats.
-
+The current time can also be spoken if desired, in the current format.  This is configurable in user options.
 
 World Klock
 
@@ -38,20 +38,21 @@ The timer can be stopped, paused and resumed.
 A split function allows for given time to be remembered.
 
 
-Events
+Reminder
 
 This enables for events to set up and notifications displayed to the user.
 
-Today's date is default, but a future date can also be selected.  A time can also be added to the reminder date.  If no date is added, the reminder will fire at midnight.  When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.
+Today's date is default, but a future date can also be selected.  A time can also be added to the reminder date.  If no time is added, the reminder will fire at midnight.  When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.
 
 Note : Setting the time to 00:00, indicates midnight of the previous day so will not enable the set button.  To set a reminder for midnight of today, disable the time and pick tomorrow's date.  00:00 indicates zero minutes into the present day.
 
 
-Reminder
+Event
 
 Implements a reminder option.
-This enables for [recurring] Reminders to set up and reminders displayed to the user.  A number of pre-defined events types are already set up.
-
+The enables an event to be added, when the event nears, a prompt will be displayed.  These prompts are set to 30, 10 and 5 days before the due date.  This can be altered in user options as can the message themselves.
+Different types of event can be added i.e. Birthday, Anniversary and motor - this will affect the displayed prompt.
+The prompt can also be spoken if desired.
 
 Memo
 
@@ -70,7 +71,7 @@ Biorhythm
 Implements a simple Biorhythm chart.
 
 
-Stick Notes
+Sticky Notes
 
 Implements a simple sticky Note thingy.  
 This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc.  Klock will keep track of the notes and re-display any active notes when Klock is first launched.
@@ -100,10 +101,9 @@ The S represents Scroll Lock.
 The letter will be upper case if the key is activated, otherwise lower case.
 
 
-The application also contains a options screen [file / Options] which allows various options [over sixty] to be set.
+The application also contains a options screen [file / Options] which allows various options [over eighty] to be set.
 NB: If the option is checked to start on windows start up, it only operates for the current user.
 
 
 Program partially tested on Windows 7 & 10 [both 32 & 64 bit].
-
 

@@ -89,6 +89,9 @@ type
     _fuzzyTimeBalloon  : boolean;
     _displayIdleTime   : boolean;
     _fuzzyTimeVerbose  : boolean;       //  Use long version of Fuzzy Time.
+    _speakTime         : boolean;
+    _speakTimeVolume   : integer;
+    _speakTimeDuration : integer;
     _display24Hour     : boolean;       //  Display time has 24 hour if true, else 12 hour.
     _hourPips          : boolean;
     _hourChimes        : boolean;
@@ -160,6 +163,7 @@ type
     _eventsStage1BackColour: TColor;    //  Paper colour of stage 1.
     _eventsStage2BackColour: TColor;    //  Paper colour of stage 2.
     _eventsStage3BackColour: TColor;    //  Paper colour of stage 3.
+    _eventsSpeakMesssage   : boolean;   //  Speak the event message.
 
     //  Logging
     _logging     : Boolean;
@@ -224,6 +228,9 @@ type
     property fuzzyTimeBalloon  : boolean read _fuzzyTimeBalloon   write _fuzzyTimeBalloon;
     property displayIdleTime   : boolean read _displayIdleTime    write _displayIdleTime;
     property fuzzyTimeVerbose  : boolean read _fuzzyTimeVerbose   write _fuzzyTimeVerbose;
+    property speakTime         : boolean read _speakTime          write _speakTime;
+    property speakTimeVolume   : integer read _speakTimeVolume    write _speakTimeVolume;
+    property speakTimeDuration : integer read _speakTimeDuration  write _speakTimeDuration;
     property display24Hour     : boolean read _display24Hour      write _display24Hour;
     property hourPips          : boolean read _hourPips           write _hourPips;
     property hourChimes        : boolean read _hourChimes         write _hourChimes;
@@ -295,6 +302,7 @@ type
     property eventsStage1BackColour: TColor  read _eventsStage1BackColour write _eventsStage1BackColour;
     property eventsStage2BackColour: TColor  read _eventsStage2BackColour write _eventsStage2BackColour;
     property eventsStage3BackColour: TColor  read _eventsStage3BackColour write _eventsStage3BackColour;
+    property eventsSpeakMesssage   : boolean read _eventsSpeakMesssage    write _eventsSpeakMesssage;
 
     //  Logging
     property logging     : boolean read _logging      write _logging;
@@ -464,6 +472,9 @@ begin
   fuzzyTimeBalloon   := o.fuzzyTimeBalloon;
   displayIdleTime    := o.displayIdleTime;
   fuzzyTimeVerbose   := o.fuzzyTimeVerbose;
+  speakTime          := o.speakTime;
+  speakTimeVolume    := o.speakTimeVolume;
+  speakTimeDuration  := o.speakTimeDuration;
   display24Hour      := o.display24Hour;
   hourPips           := o.hourPips;
   hourChimes         := o.hourChimes;
@@ -535,6 +546,7 @@ begin
   eventsStage1BackColour := o.eventsStage1BackColour;
   eventsStage2BackColour := o.eventsStage2BackColour;
   eventsStage3BackColour := o.eventsStage3BackColour;
+  eventsSpeakMesssage    := o.eventsSpeakMesssage;
 
   //  Logging
   logging      := o.logging;
@@ -663,8 +675,17 @@ begin
       if rtn <> 'ERROR' then displayIdleTime := StrToBool(rtn);
       rtn := readChild(PassNode, 'fuzzyTimeVerbose');
       if rtn <> 'ERROR' then fuzzyTimeVerbose := StrToBool(rtn);
+
+      rtn := readChild(PassNode, 'speakTime');
+      if rtn <> 'ERROR' then speakTime := StrToBool(rtn);
+      rtn := readChild(PassNode, 'speakTimeVolume');
+      if rtn <> 'ERROR' then speakTimeVolume := StrToInt(rtn);
+      rtn := readChild(PassNode, 'speakTimeDuration');
+      if rtn <> 'ERROR' then speakTimeDuration := StrToInt(rtn);
+
       rtn := readChild(PassNode, 'display24Hour');
       if rtn <> 'ERROR' then display24Hour := StrToBool(rtn);
+
       rtn := readChild(PassNode, 'hourPips');
       if rtn <> 'ERROR' then hourPips := StrToBool(rtn);
       rtn := readChild(PassNode, 'hourChimes');
@@ -675,6 +696,7 @@ begin
       if rtn <> 'ERROR' then quarterChimes := StrToBool(rtn);
       rtn := readChild(PassNode, 'threeQuarterChimes');
       if rtn <> 'ERROR' then threeQuarterChimes := StrToBool(rtn);
+
       rtn := readChild(PassNode, 'christmasFont');
       if rtn <> 'ERROR' then christmasFont := StrToBool(rtn);
       rtn := readChild(PassNode, 'easterFont');
@@ -813,12 +835,14 @@ begin
       if rtn <> 'ERROR' then eventsStage2Days := StrToInt(rtn);
       rtn := readChild(PassNode, 'eventsStage3Days');
       if rtn <> 'ERROR' then eventsStage3Days := StrToInt(rtn);
+
       rtn := readChild(PassNode, 'eventsStage1Mess');
       if rtn <> 'ERROR' then eventsStage1Mess := ansistring(rtn);
       rtn := readChild(PassNode, 'eventsStage2Mess');
       if rtn <> 'ERROR' then eventsStage2Mess := ansistring(rtn);
       rtn := readChild(PassNode, 'eventsStage3Mess');
       if rtn <> 'ERROR' then eventsStage3Mess := ansistring(rtn);
+
       rtn := readChild(PassNode, 'eventsStage1ForeColour');
       if rtn <> 'ERROR' then eventsStage1ForeColour := StringToColor(rtn);
       rtn := readChild(PassNode, 'eventsStage2ForeColour');
@@ -831,6 +855,9 @@ begin
       if rtn <> 'ERROR' then eventsStage2BackColour := StringToColor(rtn);
       rtn := readChild(PassNode, 'eventsStage3BackColour');
       if rtn <> 'ERROR' then eventsStage3BackColour := StringToColor(rtn);
+
+      rtn := readChild(PassNode, 'eventsSpeakMesssage');
+      if rtn <> 'ERROR' then eventsSpeakMesssage := StrToBool(rtn);
     end;
 
     //  Logging
@@ -910,6 +937,9 @@ begin
   fuzzyTimeBalloon   := true;
   displayIdleTime    := true;
   fuzzyTimeVerbose   := true;
+  speakTime          := false;
+  speakTimeVolume    := 50;
+  speakTimeDuration  := 10;
   display24Hour      := true;
   hourPips           := false;
   hourChimes         := false;
@@ -981,6 +1011,7 @@ begin
   eventsStage1BackColour := clred;
   eventsStage2BackColour := clYellow;
   eventsStage3BackColour := clSkyBlue;
+  eventsSpeakMesssage    := false;
 
   //  Logging
   logging      := True;
@@ -1064,6 +1095,9 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeBalloon'  , fuzzyTimeBalloon));
     ElementNode.AppendChild(writeBolChild(doc, 'displayIdleTime'   , displayIdleTime));
     ElementNode.AppendChild(writeBolChild(doc, 'fuzzyTimeVerbose'  , fuzzyTimeVerbose));
+    ElementNode.AppendChild(writeBolChild(doc, 'speakTime'         , speakTime));
+    ElementNode.AppendChild(writeIntChild(doc, 'speakTimeVolume'   , speakTimeVolume));
+    ElementNode.AppendChild(writeIntChild(doc, 'speakTimeDuration' , speakTimeDuration));
     ElementNode.AppendChild(writeBolChild(doc, 'display24Hour'     , display24Hour));
     ElementNode.AppendChild(writeBolChild(doc, 'hourPips'          , hourPips));
     ElementNode.AppendChild(writeBolChild(doc, 'hourChimes'        , hourChimes));
@@ -1166,6 +1200,7 @@ begin
     ElementNode.AppendChild(writeColChild(doc, 'eventsStage1BackColour', eventsStage1BackColour));
     ElementNode.AppendChild(writeColChild(doc, 'eventsStage2BackColour', eventsStage2BackColour));
     ElementNode.AppendChild(writeColChild(doc, 'eventsStage3BackColour', eventsStage3BackColour));
+    ElementNode.AppendChild(writeBolChild(doc, 'eventsSpeakMesssage'   , eventsSpeakMesssage));
 
     RootNode.AppendChild(ElementNode);
 

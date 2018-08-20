@@ -367,20 +367,23 @@ procedure Events.actionEvent(pos: integer; stage: integer);
 }
 VAR
   mess: string;
+  info: string;
   fcol: TColor;                           //  Fore colour - coulour of font.
   bcol: TColor;                           //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                        //  ev = event Form
   lb  : TLabel;
+  yr  : inyeger;
+
 begin
   //  if already acknowledged then exit.
   case stage of
-    3:
+    1:
     begin
-      if eventsStore.Data[pos].stage3Ack then exit;
-      mess := eventsStore.Data[pos].name + ' ' + stage3Mess;
+      if eventsStore.Data[pos].stage1Ack then exit;
+      mess := eventsStore.Data[pos].name + ' ' + stage1Mess;
       bcol := stage1BackColour;
       fcol := stage1ForeColour;
-      eventsStore.Data[pos].stage3Ack := true;
+      eventsStore.Data[pos].stage1Ack := true;
     end;
     2:
     begin
@@ -390,15 +393,18 @@ begin
       fcol := stage3ForeColour;
       eventsStore.Data[pos].stage2Ack := true;
     end;
-    1:
+    3:
     begin
-      if eventsStore.Data[pos].stage1Ack then exit;
-      mess := eventsStore.Data[pos].name + ' ' + stage1Mess;
+      if eventsStore.Data[pos].stage3Ack then exit;
+      mess := eventsStore.Data[pos].name + ' ' + stage3Mess;
       bcol := stage3BackColour;
       fcol := stage3ForeColour;
-      eventsStore.Data[pos].stage1Ack := true;
+      eventsStore.Data[pos].stage3Ack := true;
     end;
   end;  //  case stage of
+
+  if eventsStore.Data[pos].etype = 0 then
+    yr := determineYearsbetween(eventsStore.Data[pos].date);
 
   ev := TfrmEvent.Create(nil);
 
@@ -412,7 +418,25 @@ begin
   lb.Font.Color := fcol;
   lb.Caption    := mess;
 
+  lb            := ev.FindChildControl('lblInfo') as TLabel;
+  lb.Font.Color := fcol;
+  lb.Caption    := '';
   ev.show
+end;
+
+function determineYearsbetween(eventDate: string): integer;
+VAR
+  evntDate: TDateTime;
+  sbsDate : TDateTime;
+  years   : integer = 0;
+begin
+  evntDate := StrToDate(eventDate);
+
+  sbsDate := RecodeYear(evntDate, YearOf(Today));             //  substitute current year.
+  if sbsDate < Today then sbsDate := Incyear(sbsDate);        //  is event before today? Then inc year
+  years := YearsBetween(Today, sbsDate);
+
+  result := years;
 end;
 
 procedure Events.killEvents;

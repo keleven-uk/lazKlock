@@ -191,19 +191,19 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The multifunction timing thingy is split into many things;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Fuzzy Time, World Klock, Countdown, Timer, Event, Reminder, Memo, Conversion, Biorhythms, Sticky Notes &amp; Clipboard Monitor.</span></p>
+<p class="rvps2"><span class="rvts6">Fuzzy Time, World Klock, Countdown, Timer, Reminder, Events, Memo, Conversion, Biorhythms, Sticky Notes &amp; Clipboard Monitor.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Also, the time can be displayed in several ways - text, digital, analogue and binary klocks,</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Klock currently consists of over 11,000 lines of Lazarus [Free Pascal] code . &nbsp;Klock serves as a vehicle by which I learn and tinker with programming. &nbsp;Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.</span></p>
+<p class="rvps2"><span class="rvts6">Klock currently consists of over 12,500 lines of Lazarus [Free Pascal] code . &nbsp;Klock serves as a vehicle by which I learn and tinker with programming. &nbsp;Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The program starts and finishes with a Splash Screen. &nbsp;This is really needed if a number of fonts are used. &nbsp;The starting of Klock lengthens with the number of fonts loaded.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Fuzzy Time</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Allows the current time to be displayed in a number of different formats.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The current time can also be spoken if desired, in the current format. &nbsp;This is configurable in user options.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">World Klock</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -223,20 +223,21 @@
 <p class="rvps2"><span class="rvts6">A split function allows for given time to be remembered.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Events</span></p>
+<p class="rvps2"><span class="rvts6">Reminder</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">This enables for events to set up and notifications displayed to the user.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Today's date is default, but a future date can also be selected. &nbsp;A time can also be added to the reminder date. &nbsp;If no date is added, the reminder will fire at midnight. &nbsp;When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.</span></p>
+<p class="rvps2"><span class="rvts6">Today's date is default, but a future date can also be selected. &nbsp;A time can also be added to the reminder date. &nbsp;If no time is added, the reminder will fire at midnight. &nbsp;When the reminder is due either a sound can be played, a reminder displayed, a system command [system shut down or re-boot] or a external program can be run - or any combination of the four.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Note : Setting the time to 00:00, indicates midnight of the previous day so will not enable the set button. &nbsp;To set a reminder for midnight of today, disable the time and pick tomorrow's date. &nbsp;00:00 indicates zero minutes into the present day.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Reminder</span></p>
+<p class="rvps2"><span class="rvts6">Event</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Implements a reminder option.</span></p>
-<p class="rvps2"><span class="rvts6">This enables for [recurring] Reminders to set up and reminders displayed to the user. &nbsp;A number of pre-defined events types are already set up.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The enables an event to be added, when the event nears, a prompt will be displayed. &nbsp;These prompts are set to 30, 10 and 5 days before the due date. &nbsp;This can be altered in user options as can the message themselves.</span></p>
+<p class="rvps2"><span class="rvts6">Different types of event can be added i.e. Birthday, Anniversary and motor - this will affect the displayed prompt.</span></p>
+<p class="rvps2"><span class="rvts6">The prompt can also be spoken if desired.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Memo</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -255,7 +256,7 @@
 <p class="rvps2"><span class="rvts6">Implements a simple Biorhythm chart.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Stick Notes</span></p>
+<p class="rvps2"><span class="rvts6">Sticky Notes</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Implements a simple sticky Note thingy. &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6">This allows for the creation of stick Notes, small independent windows that appear on the screen which can hold memo, reminders etc. &nbsp;Klock will keep track of the notes and re-display any active notes when Klock is first launched.</span></p>
@@ -285,7 +286,7 @@
 <p class="rvps2"><span class="rvts6">The letter will be upper case if the key is activated, otherwise lower case.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The application also contains a options screen [file / Options] which allows various options [over sixty] to be set.</span></p>
+<p class="rvps2"><span class="rvts6">The application also contains a options screen [file / Options] which allows various options [over eighty] to be set.</span></p>
 <p class="rvps2"><span class="rvts6">NB: If the option is checked to start on windows start up, it only operates for the current user.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>

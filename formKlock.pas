@@ -410,8 +410,6 @@ begin
 
   stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
-  loadMemos;                     //  Load Memos store into listbox, if any.
-
   ev.restoreEvents;              //  Reload Events into event store, if any.
 
   DoubleBuffered := true;
@@ -532,6 +530,7 @@ begin
   setUpEventsOptions;               //  Set up events user options - might have changed?
   ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
   loadEvents;                       //  Load Events store into listbox, if any.
+  loadMemos;                        //  Load Memos store into listbox, if any.
 
   if userOptions.screenSave then
   begin
@@ -553,6 +552,7 @@ begin
   ft.displayFuzzy     := userOptions.defaultTime;
   ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
   ft.display24Hour    := userOptions.display24Hour;
+  ft.speakTimeVolume  := userOptions.speakTimeVolume;
   ft.fuzzyBase        := 2;
 
   CmbBxTime.Items     := ft.fuzzyTypes;                 //  set up time combo box.
@@ -708,7 +708,9 @@ begin
   end;
 
 end;
-
+//
+// *********************************************************** Main Timer ******
+//
 procedure TfrmMain.mainTimerTimer(Sender: TObject);
 {  on every tick on the clock, update the system.
       Update real time to status panel.
@@ -724,6 +726,14 @@ begin
   begin
     stickies.updateStickyNotes;     //  Update Sticky Notes file.
     ev.updateEvents;                //  Update due dates.
+  end;
+
+  //  if switched on, speak time every n minutes.
+  //  where n is set in userOptions.speakTimeDuration.
+  if everyMinute(myNow, userOptions.speakTimeDuration) then
+  begin
+    klog.writeLog(format('speak %s', [ft.getTime]));
+    ft.speakTime;
   end;
 
   if userOptions.HourPips and isMinute(myNow, 0) then
@@ -779,7 +789,7 @@ begin
   else
     prvTime := nowTime;
 
-  lblfuzzy.Caption := ft.getTime;
+  lblfuzzy.Caption   := ft.getTime;
   lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
 
   if userOptions.christmasFont       and isChristmas  then lblfuzzy.Font.Name := 'Christmas'
@@ -1939,6 +1949,10 @@ begin
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
+
+  klog.writeLog(format('setUpEventsOptions %s duration=%d position=%d', [BoolToStr(userOptions.speakTime),
+                                                                                   userOptions.speakTimeDuration,
+                                                                                   userOptions.speakTimeVolume]));
 end;
 //
 // *********************************************************** Conversion ******

@@ -1774,3 +1774,26 @@ Currently
 6967 statements
 16.5% comment
 
+
+Build 97 [2.4.2.97]
+
+Added Speech.  
+Klock can speak the time in the current chosen format configured do so.
+The time interval and volume can be set in user options.
+The speak routine is in the fuzzyTime class and called form the main timer
+routine in Klock.
+
+When an event form is displayed, it can speak it's prompt - again if
+configured to do so.
+The speak routine is in formEvent.
+
+formEvent and uevents where changed to handle the above user options.
+
+Help files where updated.
+
+Branch V2 was merged with master.
+
+Currently
+12771 lines of source code.
+7079 statements
+16.4% comment
