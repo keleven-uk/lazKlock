@@ -45,7 +45,8 @@ uses
   LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils, uEvent,
   uEvents, UConversion, uOptions, Windows, ULogging, ustickyNotes, formInfo,
   Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
-  formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm;
+  formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm,
+  uFriends, formFriendsInput, uFriend;
 
 type
   FourStrings = array [0..3] of string;
@@ -69,6 +70,7 @@ type
     btnEventEdit             : TButton;
     btnEventNew              : TButton;
     btnEventPrint            : TButton;
+    btnFriendsNew            : TButton;
     btnReminderAbort         : TButton;
     btnReminderClear         : TButton;
     btnReminderLoadCommand   : TButton;
@@ -137,7 +139,8 @@ type
     lblRadix                 : TLabel;
     lblSplitLap              : TLabel;
     lblTimer                 : TLabel;
-    LstBxEvents              : TListBox;
+    lstBxEvents              : TListBox;
+    lstBxFriends             : TListBox;
     LstBxMemoName            : TListBox;
     mEventNotes              : TMemo;
     MmMemoData               : TMemo;
@@ -154,6 +157,7 @@ type
     SpnReminderMins          : TSpinEdit;
     SpnEdtTimeBase           : TSpinEdit;
     PageControl1             : TPageControl;
+    TbShtFriends             : TTabSheet;
     TbShtEvents              : TTabSheet;
     TbShtWorldKlock          : TTabSheet;
     TbShtConversion          : TTabSheet;
@@ -211,6 +215,7 @@ type
     Panel16                  : TPanel;
     Panel17                  : TPanel;
     Panel18                  : TPanel;
+    Panel19                  : TPanel;
     Panel20                  : TPanel;
     Panel21                  : TPanel;
     Panel22                  : TPanel;
@@ -221,6 +226,7 @@ type
     Panel27                  : TPanel;
     Panel28                  : TPanel;
     Panel29                  : TPanel;
+    Panel30                  : TPanel;
     PpMnTray                 : TPopupMenu;
     PopupNotifier1           : TPopupNotifier;
     SpdBtnNewStickyNote      : TSpeedButton;
@@ -242,6 +248,7 @@ type
     procedure btnEventDeleteClick(Sender: TObject);
     procedure btnEventEditClick(Sender: TObject);
     procedure btnEventNewClick(Sender: TObject);
+    procedure btnFriendsNewClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
     procedure btnMemoDecryptClick(Sender: TObject);
@@ -287,7 +294,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure LstBxEventsClick(Sender: TObject);
+    procedure lstBxEventsClick(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
     procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
@@ -321,12 +328,15 @@ type
     procedure UpdateTime;
     procedure UpdateWorldKlock(KTime: TDateTime);
     procedure setMemoButtons(mode: Boolean);
+    procedure setFriendsButtons(mode: Boolean);
     procedure setEventButtons(mode: Boolean);
     procedure displayEvent(pos: integer);
     procedure displayMemo(pos: integer);
+    procedure displayFriends(pos: integer);
     procedure displayEncryptedMemo;
     procedure loadevents;
     procedure loadMemos;
+    procedure loadFriends;
     procedure callInfo(mode: string);
     procedure EnhancedBiorhythmClick;
     procedure setUpFuzzyOptions;
@@ -348,6 +358,7 @@ var
   stickies         : stickyNotes; //  used to store the Sticky Notes.
   memorandum       : Memos;       //  used to store memos.
   ev               : Events;      //  used to store events.
+  fr               : Friends;     //  used to store friends.
   timeZone         : TPascalTZ;   //  used for world klock time zones.
   ConversionUnits  : TStrings;    //  used to hold the conversions units - read from file.
   unitConvertVal   : double;      //  used to hold the conversion value.
@@ -384,13 +395,14 @@ begin
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
   EdtReminderSound.Text  := 'alarm-fatal.mp3';
 
-  appStartTime    := GetTickCount64;  //  tick count when application starts.
-  ft              := FuzzyTime.Create;
-  fs              := fontStore.Create;
-  ev              := Events.Create;
-  ConversionUnits := TStringList.Create;
-  stickies        := stickyNotes.Create;
-  memorandum      := Memos.Create;
+  appStartTime    := GetTickCount64;      //  tick count when application starts.
+  ft              := FuzzyTime.Create;    //  Create the fuzzyTime object
+  fs              := fontStore.Create;    //  Create the font store objects
+  ev              := Events.Create;       //  Create the event store object.
+  fr              := Friends.Create;      //  Create the friends store object.
+  ConversionUnits := TStringList.Create;  //  Create the conversions object.
+  stickies        := stickyNotes.Create;  //  Create the sticky nore store object.
+  memorandum      := Memos.Create;        //  Create the memos store object.
 
   if userOptions.cullLogs then     //  Removed old log files, if instructed.
     kLog.cullLogFile(userOptions.CullLogsDays);
@@ -490,6 +502,7 @@ begin
   fs.Free;                   //  Release the font store object.
   ft.Free;                   //  Release the fuzzy time object.
   ev.Free;                   //  Release the events store object.
+  fr.Free;                   //  release the friends store objects.
   stickies.Free;             //  Release the Sticky Note store.
   memorandum.Free;           //  Release the Memo store.
   userOptions.Free;          //  Release the user options.
@@ -523,6 +536,7 @@ begin
   lblRadix.Visible       := False;
 
   setMemoButtons(false);            //  set up memo buttons.
+  setFriendsButtons(false);         //  set up friends buttons.
   setEventButtons(false);           //  set up event buttons.
 
   setUpFuzzyOptions;                //  Set up all things fuzzy.
@@ -531,6 +545,7 @@ begin
   ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
   loadEvents;                       //  Load Events store into listbox, if any.
   loadMemos;                        //  Load Memos store into listbox, if any.
+  loadFriends;                      //  Load Friends store into listbox, if any.
 
   if userOptions.screenSave then
   begin
@@ -622,17 +637,19 @@ end;
 procedure TfrmMain.PageControl1Change(Sender: TObject);
 {   called when tabs is changed on the main tab control.
     Sets the appropriate information for each tab.
-        0 = time
-        1 = world klock
-        2 = countdown
-        3 = timer
-        4 = reminder
-        5 = Events
-        6 = memo
-        7 = conversion
+        0 = Time
+        1 = World Klock
+        2 = Countdown
+        3 = Timer
+        4 = Reminder
+        5 = Friends
+        6 = Events
+        7 = memo
+        8 = conversion
 }
 begin
   setMemoButtons(false);
+  setFriendsButtons(false);
   setEventButtons(false);
 
   case PageControl1.TabIndex of
@@ -689,15 +706,19 @@ begin
           SpnReminderMins.Value, DatetoStr(DtReminderEvent.Date)]);
       end;  //  if btnReminderSet.Enabled
     end;
-    5:                       //  events page
+    5:                       //  friends page
+    begin
+      setFriendsButtons(true);
+    end;
+    6:                       //  events page
     begin
       setEventButtons(true);
     end;
-    6:                       //  memo page.
+    7:                       //  memo page.
     begin
       setMemoButtons(true);
     end;
-    7:
+    8:
     begin                       //  Conversion Page.
       checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
       readConversionUnitsFile;
@@ -1723,6 +1744,57 @@ begin
   doPlaySound(EdtReminderSound.Text, userOptions.volume);
 end;
 //
+// *********************************************************** Friends **********
+//
+procedure TfrmMain.setFriendsButtons(mode: Boolean);
+{  Configure the Frineds buttons and Event fields.    }
+begin
+  btnFriendsNew.Visible := mode;
+end;
+
+procedure TfrmMain.btnFriendsNewClick(Sender: TObject);
+begin
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //frmAbout is created
+  frmFriendsInput.ShowModal;                        //frmAbout is displayed
+  FreeAndNil(frmFriendsInput);                      //frmAbout is released
+
+  loadFriends;
+end;
+
+procedure TfrmMain.loadFriends;
+{ Load the contents of the events file into the listbox.    }
+var
+  f: integer;
+begin
+  klog.writeLog(format('Loading %d friends', [fr.friendsCount]));
+
+  lstBxFriends.Clear;
+
+  for f := 0 to fr.friendsCount -1 do
+  begin
+    lstBxFriends.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
+    displayFriends(f);
+  end;
+end;
+
+procedure TfrmMain.displayFriends(pos: integer);
+{  Display a event at position pos.
+   If the event count is zero i.e. no events - then just exit.
+}
+VAR
+  f: friend;                    //  Friend.
+begin
+  if fr.friendsCount = 0 then exit;
+
+  f := Friend.Create(0);
+  f := fr.retrieve(pos);
+
+  lstBxFriends.Items[pos] := format('%s %s %s : %s :: %s', [f.fName, f.mName, f.sName, f.email1, f.telNo1]);
+  lstBxFriends.ItemIndex  := pos;
+
+  f.Free;
+end;
+//
 // *********************************************************** Events **********
 //
 procedure TfrmMain.setEventButtons(mode: Boolean);
@@ -1743,12 +1815,12 @@ begin
 
   btnEventEdit.Caption := 'Edit';
 
-  if (PageControl1.TabIndex = 5) and (LstBxEvents.Items.Count <> 0)then
+  if (PageControl1.TabIndex = 6) and (lstBxEvents.Items.Count <> 0)then
   begin
     btnEventEdit.Visible    := true;
     btnEventDelete.Visible  := true;
     btnEventPrint.Visible   := true;
-    LstBxEvents.Selected[0] := true;
+    lstBxEvents.Selected[0] := true;
     displayEvent(0);                   //  Display the first event, if exists.
   end
   else
@@ -1821,14 +1893,14 @@ var
 begin
   klog.writeLog(format('Loading %d events', [ev.EventsCount]));
 
-  LstBxEvents.Clear;
+  lstBxEvents.Clear;
   edtEventName.Clear;
   dtEdtEventDate.Clear;
   mEventNotes.Clear;
 
   for f := 0 to ev.EventsCount -1 do
   begin
-    LstBxEvents.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
+    lstBxEvents.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
     displayEvent(f);
   end;
 
@@ -1841,7 +1913,7 @@ begin
                   'Do You Really Want To Delete This Event',
                    mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
   begin
-    ev.Remove(LstBxEvents.ItemIndex);
+    ev.Remove(lstBxEvents.ItemIndex);
     loadevents;
     seteventButtons(true);
   end;
@@ -1870,7 +1942,7 @@ begin
     btnEventEdit.Caption  := 'Edit';
 
     sdate := DateToStr(dtEdtEventDate.date);
-    ev.amend(LstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+    ev.amend(lstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
     seteventButtons(true);
   end;
 end;
@@ -1896,7 +1968,7 @@ begin
   ChckBxEventFloating.Checked := e.float;
   mEventNotes.Text            := e.notes;
 
-  LstBxEvents.Items[pos] := e.dueShort;  //  Amend the listbox entry to include the days due.
+  lstBxEvents.Items[pos] := e.dueShort;  //  Amend the listbox entry to include the days due.
   LstBxEvents.ItemIndex  := pos;
 
   e.Free;
@@ -1925,10 +1997,10 @@ begin
    btnEventAdd.Visible := btnEventClear.Visible;
 end;
 
-procedure TfrmMain.LstBxEventsClick(Sender: TObject);
+procedure TfrmMain.lstBxEventsClick(Sender: TObject);
 {  Display the item clicked.  }
 begin
-  displayEvent(LstBxEvents.ItemIndex);
+  displayEvent(lstBxEvents.ItemIndex);
 end;
 
 procedure TfrmMain.setUpEventsOptions;
@@ -2236,7 +2308,7 @@ begin
 
   btnMemoEdit.Caption := 'Edit';
 
-  if (PageControl1.TabIndex = 6) and (memorandum.MemosCount <> 0) then
+  if (PageControl1.TabIndex = 7) and (memorandum.MemosCount <> 0) then
   begin
     btnMemoEdit.Visible       := true;
     btnMemoDelete.Visible     := true;

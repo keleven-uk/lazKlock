@@ -193,6 +193,8 @@ procedure stickyNotes.updateStickyNotes;
    If they are visible, their data is updated in the store,
    if they are not visible [they have been closed] their visible
    is set to false.
+
+   Need to check line 205
 }
 var
   sf: TCustomForm;
@@ -214,13 +216,13 @@ begin
       begin
         m := sf.FindChildControl('Memo') as TMemo;
 
-        stickyNotesStore[f].body := m.Lines.text;
+        stickyNotesStore[f].body   := m.Lines.text;
         stickyNotesStore[f].colour := m.Color;
-        stickyNotesStore[f].font := m.Font;
+        stickyNotesStore[f].font   := m.Font;
 
-        stickyNotesStore[f].left := sf.Left;
-        stickyNotesStore[f].top := sf.Top;
-        stickyNotesStore[f].width := sf.Width;
+        stickyNotesStore[f].left   := sf.Left;
+        stickyNotesStore[f].top    := sf.Top;
+        stickyNotesStore[f].width  := sf.Width;
         stickyNotesStore[f].height := sf.Height;
       end
       else

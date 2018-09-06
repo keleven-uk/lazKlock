@@ -81,7 +81,7 @@ end;
 constructor Event.Create(fsOut: TFileStream);
 {  Creates a new Event.
    A filestream has to be specified, the Event is then created
-   from date read from the filestream.
+   from data read from the filestream.
 
    If the filestream is empty a blank Event is returned.
    An exception is raised if there is an error on write.

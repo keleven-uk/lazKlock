@@ -1698,6 +1698,10 @@ Currently
 
 Build 93 [2.4.1.93]
 
+commit 681dcfdaf9b231c326f77dc35f011545d2de3b36
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Jul 16 21:51:29 2018 +0100
+
 Continuing with event thingy.
 Completed the work on due intervals.
 Also, added to the events class, a number of aged dates [stages].  If the due interval falls between these stages, a prompt is displayed to the user.
@@ -1713,6 +1717,10 @@ Currently
 
 
 Build 94 [2.4.1.94]
+
+commit 97c40bf12091ad48ce4946790509b6eb83a3dd8d
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Wed Aug 1 21:37:54 2018 +0100
 
 Continuing with event thingy.
 Added a new form, formEvent.  This is generated when an event is due to inform
@@ -1732,6 +1740,10 @@ Currently
 
 Build 95 [2.4.1.95]
 
+commit b53352d16c0ed121a29ee5e9ea44018520f9da68
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sun Aug 5 20:04:25 2018 +0100
+
 Continuing with event thingy.
 Added user options for the Events.
 Added in Options.pas options for Stage Days, Stage Messages, Fore and back Colour for each of the three stages.
@@ -1747,6 +1759,10 @@ Currently
 
 Build 96 [2.4.1.96]
 
+commit ee4228017fab33dacef34c228fbe1014e49f5686
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Thu Aug 9 22:54:30 2018 +0100
+
 Continuing with event thingy [nearly there].
 Added to uEvents.pas, so the eventSore is now held in sorted order.
 The store is sorted by due days, so the events are now displayed with the next
@@ -1760,6 +1776,10 @@ Currently
 16.4% comment
 
 Build 97 [2.4.2.97]
+
+commit 3c6d4e41e879a5a8d7d6efab309dfccd479e36cf
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Aug 13 19:38:02 2018 +0100
 
 Continuing with event thingy [Should be a working thing].
 Changed event types, now not loaded from a text file but defined in
@@ -1775,7 +1795,11 @@ Currently
 16.5% comment
 
 
-Build 97 [2.4.2.97]
+Build 98 [2.4.2.98]
+
+commit 6b4713eb6b0b5581e33faaac3e1fd8537d9acdb3
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Aug 20 20:52:00 2018 +0100
 
 Added Speech.  
 Klock can speak the time in the current chosen format configured do so.
@@ -1797,3 +1821,22 @@ Currently
 12771 lines of source code.
 7079 statements
 16.4% comment
+
+
+Build 99 [2.4.3.99]
+
+Started work on the Friends tab.
+Added a new form, formFriendsInput, which allows the friends details to be
+entered.  Also, added two new classes, a Friend class which holds the friends
+details and a Friends class with manipulates a number of friends. 
+
+This is work in progress - add input and display routines so far.
+
+Added to formKlock a new main tab to hold the friends and some routines to
+call the friends input form and display friends.
+
+Currently
+13500 lines of source code.
+7467 statements
+16.5% comment
+

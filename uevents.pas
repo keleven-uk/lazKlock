@@ -36,6 +36,7 @@ type
     function checkStages(age: integer): integer;
     procedure actionEvent(pos: integer; stage: integer);
     function determineDueDays(eventDate: string): integer;
+    function determineYearsbetween(eventDate: string): integer;
     procedure sortEventsStore;
     procedure swapEvents(f, g: integer);
   public
@@ -79,6 +80,7 @@ const
 
 VAR
   eventsStore: keyStore;
+
 implementation
 
 
@@ -372,7 +374,7 @@ VAR
   bcol: TColor;                           //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                        //  ev = event Form
   lb  : TLabel;
-  yr  : inyeger;
+  yr  : integer;
 
 begin
   //  if already acknowledged then exit.
@@ -424,7 +426,7 @@ begin
   ev.show
 end;
 
-function determineYearsbetween(eventDate: string): integer;
+function Events.determineYearsbetween(eventDate: string): integer;
 VAR
   evntDate: TDateTime;
   sbsDate : TDateTime;
