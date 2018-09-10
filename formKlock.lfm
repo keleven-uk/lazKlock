@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1207
+  Left = 1198
   Height = 259
-  Top = 96
+  Top = 613
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -1031,17 +1031,9 @@ object frmMain: TfrmMain
               Top = 8
               Width = 624
               ItemHeight = 0
-              OnClick = lstBxEventsClick
+              OnDblClick = lstBxFriendsDblClick
               TabOrder = 0
             end
-          end
-          object Button1: TButton
-            Left = 0
-            Height = 25
-            Top = 128
-            Width = 75
-            Caption = 'Button1'
-            TabOrder = 1
           end
         end
       end
@@ -2080,6 +2072,24 @@ object frmMain: TfrmMain
       Caption = 'New'
       OnClick = btnFriendsNewClick
       TabOrder = 16
+    end
+    object btnFriendsEdit: TButton
+      Left = 72
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Edit'
+      OnClick = btnFriendsEditClick
+      TabOrder = 17
+    end
+    object btnFriendsDelete: TButton
+      Left = 128
+      Height = 20
+      Top = 8
+      Width = 50
+      Caption = 'Delete'
+      OnClick = btnFriendsDeleteClick
+      TabOrder = 18
     end
   end
   object mnuMain: TMainMenu

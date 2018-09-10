@@ -31,6 +31,7 @@ var
   memoFile   : String;
   stickyFile : String;
   unitsFile  : String;
+  friendFile : String;
 
 begin
   optionsFile := userOptions.optionsName;
@@ -38,6 +39,7 @@ begin
   memoFile    := userOptions.memoName;
   stickyFile  := userOptions.stickyName;
   unitsFile   := userOptions.unitsName;
+  friendFile  := userOptions.friendName;
 
   result := TStringList.Create;
 
@@ -46,6 +48,7 @@ begin
   if FileExists(memoFile)    then result.add(memoFile);
   if FileExists(stickyFile)  then result.add(stickyFile);
   if FileExists(unitsFile)   then result.add(unitsFile);
+  if FileExists(friendFile)  then result.add(friendFile);
 end;
 
 procedure saveArchive(fname: String; archiveFiles: TStringList);

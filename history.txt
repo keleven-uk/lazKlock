@@ -1840,3 +1840,17 @@ Currently
 7467 statements
 16.5% comment
 
+
+Build 100 [2.4.3.100]
+
+Added friends Edit and Delete buttons to formKlock.
+Added buttons and routines to formFriendsInput to edit and delete friends.
+Added firends file to archive list in uArchiveUtils.
+Added missing fields [web page & dob] to saveToFile in uFriend.
+Added restorefriends to uFriends.
+Added friendsname [filename] to uOptions.
+
+Currently
+13771 lines of source code.
+7661 statements
+16.4% comment

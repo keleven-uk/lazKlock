@@ -71,6 +71,10 @@ type
 
 implementation
 
+uses
+  formklock;
+
+
 constructor Friend.Create(sn_id: integer);
 {  Creates a new Friend.    }
 begin
@@ -237,7 +241,7 @@ begin
 
   except
     on E: Exception do
-      error('Error on Events Read' + LineEnding + E.Message);
+      error('Error on Friends Read' + LineEnding + E.Message);
   end;
 end;
 
@@ -264,6 +268,7 @@ begin
     fsOut.WriteBuffer(sName[1], Len1);
 
     Len1 := Length(email1);                            //  write email1.
+    klog.writeLog(format('%s has a length of %d', [email1, len1]));
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(email1[1], Len1);
 
@@ -315,13 +320,21 @@ begin
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(country[1], Len1);
 
+    Len1 := Length(webpage);                           //  web page.
+    fsOut.WriteBuffer(Len1, SizeOf(Len1));
+    fsOut.WriteBuffer(webpage[1], Len1);
+
+    Len1 := Length(dob);                           //  dob.
+    fsOut.WriteBuffer(Len1, SizeOf(Len1));
+    fsOut.WriteBuffer(dob[1], Len1);
+
     Len1 := Length(notes);                             //  write notes.
     fsOut.WriteBuffer(Len1, SizeOf(Len1));
     fsOut.WriteBuffer(notes[1], Len1);
 
   except
     on E: Exception do
-      error('Error on Events Write' + LineEnding + E.Message);
+      error('Error on Friends Write' + LineEnding + E.Message);
   end;
 End;
 
@@ -347,6 +360,8 @@ begin
   postCode:= f.postCode;
   county  := f.county;
   country := f.dob;
+  webpage := f.webPage;
+  dob     := f.dob;
   notes   := f.notes;
 end;
 

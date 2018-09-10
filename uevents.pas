@@ -225,7 +225,7 @@ begin
 end;
 
 procedure Events.restoreEvents;
-{  Read in a binary file and convert contents to memos and populate the store.
+{  Read in a binary file and convert contents to events and populate the store.
 }
 var
   fileIn: TFileStream;

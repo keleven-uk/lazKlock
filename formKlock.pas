@@ -71,6 +71,7 @@ type
     btnEventNew              : TButton;
     btnEventPrint            : TButton;
     btnFriendsNew            : TButton;
+    btnFriendsEdit           : TButton;
     btnReminderAbort         : TButton;
     btnReminderClear         : TButton;
     btnReminderLoadCommand   : TButton;
@@ -89,6 +90,7 @@ type
     btnTimerSplit            : TButton;
     btnTimerStart            : TButton;
     btnTimerStop             : TButton;
+    btnFriendsDelete: TButton;
     chckBxCountdownCommand   : TCheckBox;
     chckBxCountdownEvent     : TCheckBox;
     chckBxCountdownReminder  : TCheckBox;
@@ -248,6 +250,8 @@ type
     procedure btnEventDeleteClick(Sender: TObject);
     procedure btnEventEditClick(Sender: TObject);
     procedure btnEventNewClick(Sender: TObject);
+    procedure btnFriendsDeleteClick(Sender: TObject);
+    procedure btnFriendsEditClick(Sender: TObject);
     procedure btnFriendsNewClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
@@ -295,6 +299,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lstBxEventsClick(Sender: TObject);
+    procedure lstBxFriendsDblClick(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
     procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
@@ -423,6 +428,7 @@ begin
   stickies.restoreStickyNotes;   //  Reload Sticky Notes, if any.
   memorandum.restoreMemos;       //  Reload Memos into memo store, if any.
   ev.restoreEvents;              //  Reload Events into event store, if any.
+  fr.restoreFriends;             //  Reload Friends into event store, if any.
 
   DoubleBuffered := true;
   stsBrInfo.DoubleBuffered := true;
@@ -751,11 +757,8 @@ begin
 
   //  if switched on, speak time every n minutes.
   //  where n is set in userOptions.speakTimeDuration.
-  if everyMinute(myNow, userOptions.speakTimeDuration) then
-  begin
-    klog.writeLog(format('speak %s', [ft.getTime]));
+  if userOptions.speakTime and everyMinute(myNow, userOptions.speakTimeDuration) then
     ft.speakTime;
-  end;
 
   if userOptions.HourPips and isMinute(myNow, 0) then
     playChime('pips')
@@ -1747,16 +1750,61 @@ end;
 // *********************************************************** Friends **********
 //
 procedure TfrmMain.setFriendsButtons(mode: Boolean);
-{  Configure the Frineds buttons and Event fields.    }
+{  Configure the Fiends buttons.
+   Edit and Delete are only visible if friends already exist.
+}
 begin
-  btnFriendsNew.Visible := mode;
+  btnFriendsNew.Visible    := mode;
+  btnFriendsEdit.Visible   := false;
+  btnFriendsDelete.Visible := false;
+
+  if (PageControl1.TabIndex = 5) and (lstBxFriends.Items.Count <> 0) then
+  begin
+    btnFriendsEdit.Visible   := mode;
+    btnFriendsDelete.Visible := mode;
+  end;
 end;
 
 procedure TfrmMain.btnFriendsNewClick(Sender: TObject);
 begin
-  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //frmAbout is created
-  frmFriendsInput.ShowModal;                        //frmAbout is displayed
-  FreeAndNil(frmFriendsInput);                      //frmAbout is released
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
+  formFriendsInput.Mode := 'NEW';                   //  show form in NEW mode.
+  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
+  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
+
+  loadFriends;
+  setFriendsButtons(true);
+end;
+
+procedure TfrmMain.btnFriendsEditClick(Sender: TObject);
+begin
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
+  formFriendsInput.Mode := 'EDIT';                  //  show form in NEW mode.
+  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
+  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
+  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
+
+  loadFriends;
+end;
+
+procedure TfrmMain.btnFriendsDeleteClick(Sender: TObject);
+begin
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
+  formFriendsInput.Mode := 'DELETE';                //  show form in NEW mode.
+  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
+  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
+  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
+
+  loadFriends;
+end;
+
+procedure TfrmMain.lstBxFriendsDblClick(Sender: TObject);
+begin
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
+  formFriendsInput.Mode := 'View';                  //  show form in NEW mode.
+  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
+  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
+  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
 
   loadFriends;
 end;
@@ -1790,7 +1838,7 @@ begin
   f := fr.retrieve(pos);
 
   lstBxFriends.Items[pos] := format('%s %s %s : %s :: %s', [f.fName, f.mName, f.sName, f.email1, f.telNo1]);
-  lstBxFriends.ItemIndex  := pos;
+  lstBxFriends.ItemIndex  := 0;
 
   f.Free;
 end;
@@ -1798,7 +1846,9 @@ end;
 // *********************************************************** Events **********
 //
 procedure TfrmMain.setEventButtons(mode: Boolean);
-{  Configure the Event buttons and Event fields.    }
+{  Configure the Event buttons and Event fields.
+   Edit, Delete and Print are only visible if events already exist.
+}
 begin
   btnEventNew.Visible   := mode;
   btnEventAdd.Visible   := false;
@@ -2299,7 +2349,9 @@ begin
 end;
 
 procedure TfrmMain.setMemoButtons(mode: Boolean);
-{  Configure the memo buttons and memo fields.    }
+{  Configure the memo buttons and memo fields.
+   Edit, Delete and Print are only visible if events already exist.
+}
 begin
   btnMemoNew.Visible     := mode;
   btnMemoAdd.Visible     := false;

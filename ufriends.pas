@@ -5,7 +5,7 @@ unit uFriends;
 interface
 
 uses
-  Classes, SysUtils, uFriend, fgl;
+  Classes, SysUtils, uFriend, fgl, Dialogs, FileUtil;
 
 type
   Friends = class
@@ -21,10 +21,11 @@ type
     constructor Create; overload;
     destructor Destroy; override;
     procedure New(f: Friend);
-    procedure amend();
+    procedure amend(pos: integer; f : Friend);
     function retrieve(id: integer): Friend;
     procedure Remove(pos: integer);
     procedure saveFriends;
+    procedure restoreFriends;
   end;
 
   //  effectively a dictionary.
@@ -42,7 +43,7 @@ uses
 constructor Friends.Create; overload;
 {  set up some variables on create.    }
 begin
-  friendsFile         := GetAppConfigDir(False) + 'Friend.bin';
+  friendsFile         := GetAppConfigDir(False) + 'Friends.bin';
   friendsStore        := keyStore.Create;       //  initial eventStore
   friendsStore.Sorted := true;
   friendsCount        := 0;
@@ -72,15 +73,16 @@ begin
 
   friendsCount := friendsCount + 1;
 
-  //saveFriends;
+  saveFriends;
 end;
 
-procedure Friends.amend();
+procedure Friends.amend(pos: integer; f : Friend);
 {  Amends a friend .
    The friend store is then saved to file.
 }
 begin
-
+  friendsStore.Data[pos].copy(f);
+  saveFriends;
 end;
 
 function Friends.retrieve(id: integer): Friend;
@@ -129,6 +131,35 @@ begin
     fileOut.Free;
   end;
 end;
+
+procedure Friends.restoreFriends;
+{  Read in a binary file and convert contents to friends and populate the store.
+}
+var
+  fileIn: TFileStream;
+begin
+  friendsCount := 0;
+
+  if not fileExists(friendsFile) then exit;       //  file not there then exit
+  if fileSize(friendsFile) = 0   then exit;       //  empty file then exit.
+
+  fileIn := TFileStream.Create(friendsFile, fmOpenRead or fmShareDenyWrite);
+
+  try
+    repeat
+      try
+        friendsStore.Add(friendsCount, Friend.Create(fileIn));
+        friendsCount := friendsCount + 1;
+        except
+          on E: EInOutError do
+          ShowMessage('ERROR : Reading Friends file');
+      end;  //  try
+      until FileIn.Position >= fileIn.Size;
+   finally
+    fileIn.Free;
+  end;        //  try
+end;
+
 
 end.
 

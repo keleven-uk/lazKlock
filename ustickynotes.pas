@@ -246,7 +246,8 @@ begin
     for f := 0 to stickyNotesCount -1 do
     begin
       try
-      stickyNotesStore.Data[f].saveToFile(fileOut);
+        if stickyNotesStore[f].visable then
+          stickyNotesStore.Data[f].saveToFile(fileOut);
       except
         on E: EInOutError do
         ShowMessage('ERROR : Writing Sticky Note file');

@@ -1,13 +1,14 @@
 object frmFriendsInput: TfrmFriendsInput
-  Left = 1433
-  Height = 584
-  Top = 394
+  Left = 1377
+  Height = 616
+  Top = 22
   Width = 398
   Caption = 'frmFriendsInput'
-  ClientHeight = 584
+  ClientHeight = 616
   ClientWidth = 398
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   LCLVersion = '1.8.4.0'
   object Panel1: TPanel
     Left = 8
@@ -294,24 +295,49 @@ object frmFriendsInput: TfrmFriendsInput
       TabOrder = 18
     end
   end
-  object btnPnlFriendsInput: TButtonPanel
-    Left = 6
-    Height = 34
+  object GroupBox1: TGroupBox
+    Left = 8
+    Height = 57
     Top = 544
-    Width = 386
-    OKButton.Name = 'OKButton'
-    OKButton.DefaultCaption = True
-    OKButton.OnClick = OKButtonClick
-    HelpButton.Name = 'HelpButton'
-    HelpButton.DefaultCaption = True
-    HelpButton.OnClick = HelpButtonClick
-    CloseButton.Name = 'CloseButton'
-    CloseButton.DefaultCaption = True
-    CloseButton.Enabled = False
-    CancelButton.Name = 'CancelButton'
-    CancelButton.DefaultCaption = True
-    CancelButton.OnClick = CancelButtonClick
+    Width = 377
+    ClientHeight = 37
+    ClientWidth = 373
     TabOrder = 1
-    ShowButtons = [pbOK, pbCancel, pbHelp]
+    object btnCancel: TButton
+      Left = 263
+      Height = 25
+      Top = 0
+      Width = 75
+      Caption = 'Cancel'
+      OnClick = btnCancelClick
+      TabOrder = 0
+    end
+    object btnOK: TButton
+      Left = 14
+      Height = 25
+      Top = 0
+      Width = 75
+      Caption = 'OK'
+      OnClick = btnOKClick
+      TabOrder = 1
+    end
+    object btnClose: TButton
+      Left = 97
+      Height = 25
+      Top = 0
+      Width = 75
+      Caption = 'Close'
+      OnClick = btnCloseClick
+      TabOrder = 2
+    end
+    object btnDelete: TButton
+      Left = 180
+      Height = 25
+      Top = 0
+      Width = 75
+      Caption = 'Delete'
+      OnClick = btnDeleteClick
+      TabOrder = 3
+    end
   end
 end
