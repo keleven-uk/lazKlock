@@ -1,5 +1,6 @@
 unit formSplashScreen;
 
+{  Displays a splash screen when Klock starts.    }
 {$mode objfpc}{$H+}
 
 interface

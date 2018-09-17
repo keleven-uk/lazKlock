@@ -1,8 +1,10 @@
 unit uEvents;
+
 {  A class to manipulate Events.
    The Event is specified in another class and only used here.
    This is adapted from the StickyNotes class and used in a similar way.
 }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -75,8 +77,8 @@ type
 const
   LEFT   = 10;
   TOP    = 10;
-  WIDTH  = 320;
-  HEIGHT = 30;
+  WIDTH  = 340;
+  HEIGHT = 120;
 
 VAR
   eventsStore: keyStore;
@@ -369,7 +371,6 @@ procedure Events.actionEvent(pos: integer; stage: integer);
 }
 VAR
   mess: string;
-  info: string;
   fcol: TColor;                           //  Fore colour - coulour of font.
   bcol: TColor;                           //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                        //  ev = event Form
@@ -422,7 +423,12 @@ begin
 
   lb            := ev.FindChildControl('lblInfo') as TLabel;
   lb.Font.Color := fcol;
-  lb.Caption    := '';
+
+  if eventsStore.Data[pos].etype = 0 then
+    lb.Caption    := format('and will be %d years old.', [yr])
+  else
+    lb.Caption    := '';
+
   ev.show
 end;
 

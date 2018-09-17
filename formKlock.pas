@@ -30,7 +30,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
      Most from the Online Package manager.
 }
 
-{ TODO : Check out Balloon Time. }
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routines in both memo and events }
 
@@ -46,7 +45,7 @@ uses
   uEvents, UConversion, uOptions, Windows, ULogging, ustickyNotes, formInfo,
   Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
   formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm,
-  uFriends, formFriendsInput, uFriend;
+  uFriends, formFriendsInput, uFriend, formTimePositions;
 
 type
   FourStrings = array [0..3] of string;
@@ -90,7 +89,7 @@ type
     btnTimerSplit            : TButton;
     btnTimerStart            : TButton;
     btnTimerStop             : TButton;
-    btnFriendsDelete: TButton;
+    btnFriendsDelete         : TButton;
     chckBxCountdownCommand   : TCheckBox;
     chckBxCountdownEvent     : TCheckBox;
     chckBxCountdownReminder  : TCheckBox;
@@ -182,6 +181,7 @@ type
     mnuItmSmallTextKlock     : TMenuItem;
     mnuItmBinaryKlock        : TMenuItem;
     mnuItmLEDKlock           : TMenuItem;
+    mnuItmTimePositions      : TMenuItem;
     mnuItmLentDates          : TMenuItem;
     mnuItmEasterDates        : TMenuItem;
     mnuItmDaylightSaving     : TMenuItem;
@@ -250,9 +250,7 @@ type
     procedure btnEventDeleteClick(Sender: TObject);
     procedure btnEventEditClick(Sender: TObject);
     procedure btnEventNewClick(Sender: TObject);
-    procedure btnFriendsDeleteClick(Sender: TObject);
-    procedure btnFriendsEditClick(Sender: TObject);
-    procedure btnFriendsNewClick(Sender: TObject);
+    procedure btnFriendsClick(Sender: TObject);
     procedure btnMemoAddClick(Sender: TObject);
     procedure btnMemoClearClick(Sender: TObject);
     procedure btnMemoDecryptClick(Sender: TObject);
@@ -299,13 +297,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lstBxEventsClick(Sender: TObject);
-    procedure lstBxFriendsDblClick(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
     procedure mainIdleTimerStartTimer(Sender: TObject);
     procedure mainIdleTimerTimer(Sender: TObject);
     procedure MmMemoDataChange(Sender: TObject);
     procedure mnuItmClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
+    procedure mnuItmTimePositionsClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
@@ -549,9 +547,6 @@ begin
 
   setUpEventsOptions;               //  Set up events user options - might have changed?
   ev.updateEvents;                  //  Update due dates, needs to be done after set aged days. .
-  loadEvents;                       //  Load Events store into listbox, if any.
-  loadMemos;                        //  Load Memos store into listbox, if any.
-  loadFriends;                      //  Load Friends store into listbox, if any.
 
   if userOptions.screenSave then
   begin
@@ -660,19 +655,19 @@ begin
 
   case PageControl1.TabIndex of
     0:
-    begin                     //  fuzzy page.
+    begin                               //  fuzzy page.
       stsBrInfo.Panels.Items[4].Text := '';
     end;
-    //1:                      //  world klock.
+    //1:                                //  world klock.
     2:
-    begin                     //  countdown page
+    begin                               //  countdown page
       if CountdownTimer.Enabled = False then
         stsBrInfo.Panels.Items[4].Text := ''
       else
         stsBrInfo.Panels.Items[4].Text := format(' Counting down from %2.d minute[s]', [SpnEdtCountdown.Value]);
     end;
     3:
-    begin                     //  timer page.
+    begin                               //  timer page.
       stsBrInfo.Panels.Items[4].Text := '';
 
       if timerTimer.Enabled = False then
@@ -697,7 +692,7 @@ begin
       end;      //  if timerTimer.Enabled = false
     end;
     4:
-    begin                    //  Reminder page.
+    begin                               //  Reminder page.
       stsBrInfo.Panels.Items[4].Text := '';
       if ReminderTimer.Enabled = False then
       begin   // only set display to current
@@ -712,21 +707,24 @@ begin
           SpnReminderMins.Value, DatetoStr(DtReminderEvent.Date)]);
       end;  //  if btnReminderSet.Enabled
     end;
-    5:                       //  friends page
+    5:                                  //  friends page
     begin
+      loadFriends;                      //  Load Friends store into listbox, if any.
       setFriendsButtons(true);
     end;
-    6:                       //  events page
+    6:                                  //  events page
     begin
+      loadEvents;                       //  Load Events store into listbox, if any.
       setEventButtons(true);
     end;
-    7:                       //  memo page.
+    7:                                  //  memo page.
     begin
+      loadMemos;                        //  Load Memos store into listbox, if any.
       setMemoButtons(true);
     end;
     8:
-    begin                       //  Conversion Page.
-      checkConversionUnitsFile; //  Create conversion Units file is it does not exist.
+    begin                               //  Conversion Page.
+      checkConversionUnitsFile;         //  Create conversion Units file is it does not exist.
       readConversionUnitsFile;
       parseConversionUnitsFile('LoadCategory');
       parseConversionUnitsFile('LoadUnits');
@@ -1765,48 +1763,38 @@ begin
   end;
 end;
 
-procedure TfrmMain.btnFriendsNewClick(Sender: TObject);
+procedure TfrmMain.btnFriendsClick(Sender: TObject);
+{  A generic click routine called for friends actions.
+
+   The sender should either be a TButton ot TListBox.
+}
+VAR
+  itemName   : string;
 begin
-  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
-  formFriendsInput.Mode := 'NEW';                   //  show form in NEW mode.
-  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
-  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
+  itemName := '';
+
+  //  set the appropiate name.
+  if (Sender is TButton) then
+    itemName := TButton(Sender).Name
+  else if (Sender is TListBox) then
+    itemName := TListBox(Sender).Name;
+
+  if itemName = '' then exit;                                //  not called by a TButton or TListBox.
+
+  frmFriendsInput := TfrmFriendsInput.Create(Nil);           //  frmFriendsInput is created
+  case itemName of
+    'lstBxFriends'    : formFriendsInput.Mode := 'VIEW';     //  show form in NEW mode.
+    'btnFriendsNew'   : formFriendsInput.Mode := 'NEW';      //  show form in NEW mode.
+    'btnFriendsEdit'  : formFriendsInput.Mode := 'EDIT';     //  show form in NEW mode.
+    'btnFriendsDelete': formFriendsInput.Mode := 'DELETE';   //  show form in NEW mode.
+  end;
+
+  formFriendsInput.pos  := lstBxFriends.ItemIndex;           //  position of the friend in the store.
+  frmFriendsInput.ShowModal;                                 //  frmFriendsInput is displayed
+  FreeAndNil(frmFriendsInput);                               //  frmFriendsInput is released
 
   loadFriends;
   setFriendsButtons(true);
-end;
-
-procedure TfrmMain.btnFriendsEditClick(Sender: TObject);
-begin
-  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
-  formFriendsInput.Mode := 'EDIT';                  //  show form in NEW mode.
-  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
-  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
-  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
-
-  loadFriends;
-end;
-
-procedure TfrmMain.btnFriendsDeleteClick(Sender: TObject);
-begin
-  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
-  formFriendsInput.Mode := 'DELETE';                //  show form in NEW mode.
-  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
-  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
-  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
-
-  loadFriends;
-end;
-
-procedure TfrmMain.lstBxFriendsDblClick(Sender: TObject);
-begin
-  frmFriendsInput := TfrmFriendsInput.Create(Nil);  //  frmFriendsInput is created
-  formFriendsInput.Mode := 'View';                  //  show form in NEW mode.
-  formFriendsInput.pos  := lstBxFriends.ItemIndex;  //  position of the friend in the store.
-  frmFriendsInput.ShowModal;                        //  frmFriendsInput is displayed
-  FreeAndNil(frmFriendsInput);                      //  frmFriendsInput is released
-
-  loadFriends;
 end;
 
 procedure TfrmMain.loadFriends;
@@ -2427,6 +2415,12 @@ begin
     frmMain.Left := frmLeft;
   end;
 end;
+
+procedure TfrmMain.mnuItmTimePositionsClick(Sender: TObject);
+begin
+
+end;
+
 //
 // ********************************************************* Menu Items *********
 //
@@ -2483,6 +2477,12 @@ begin
     'mnuItmLEDKlock'         : frmLEDKlock.Show;                //  Calls the LED Klock.
     'mnuItmBinaryKlock'      : frmBinaryKlock.Show;             //  Calls the Binary Klock.
     'mnuItmSmallTextKlock'   : frmSmallTextKlock.Show;          //  Calls the Small Text Klock.
+    'mnuItmTimePositions'    :                                  //  Calls the time Positions form.
+    begin
+      frmTimePositions := TfrmTimePositions.Create(Nil);
+      frmTimePositions.ShowModal;
+      FreeAndNil(frmTimePositions);
+    end;
     // ********************************************************* Info Menu *********
     'mnuItmFloatingTextKlock': frmFloatingKlock.Show;           //  Calls the Floating Text Klock.
     'mnuItmDaylightSaving'   : callInfo('Daylight Saving');     //  Calls the Daylight Saving Info screen.

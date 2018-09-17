@@ -1,5 +1,7 @@
 unit formAbout;
 
+{  Displays about information about Klock and system it's running on.    }
+
 {$mode objfpc}{$H+}
 
 interface

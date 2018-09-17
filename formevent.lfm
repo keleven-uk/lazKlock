@@ -1,14 +1,14 @@
 object frmEvent: TfrmEvent
-  Left = 1382
-  Height = 111
-  Top = 527
-  Width = 320
+  Left = 1407
+  Height = 120
+  Top = 249
+  Width = 340
   AlphaBlend = True
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Event'
-  ClientHeight = 111
-  ClientWidth = 320
+  ClientHeight = 120
+  ClientWidth = 340
   FormStyle = fsStayOnTop
   OnClose = FormClose
   OnCreate = FormCreate
@@ -30,7 +30,7 @@ object frmEvent: TfrmEvent
   object btnAcknowledge: TButton
     Left = 120
     Height = 25
-    Top = 72
+    Top = 80
     Width = 91
     Caption = 'Acknowledge'
     OnClick = btnAcknowledgeClick

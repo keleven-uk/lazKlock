@@ -14,6 +14,7 @@ unit ustickyNotes;
    restoreStickyNotes - Should be called by the host program when first run.
                         It restore all visible Sticky Notes to the screen.
 }
+
 {$mode objfpc}{$H+}
 
 interface

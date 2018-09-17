@@ -1,5 +1,7 @@
 unit formFriendsInput;
 
+{ Allows a friend to be input into Klock.    }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -16,7 +18,7 @@ type
     btnCancel         : TButton;
     btnOK             : TButton;
     btnClose          : TButton;
-    btnDelete: TButton;
+    btnDelete         : TButton;
     chckBxAddtoEvents : TCheckBox;
     dtEdtDOB          : TDateEdit;
     edtHomePage       : TEdit;
@@ -57,14 +59,14 @@ type
     Panel1            : TPanel;
 
     procedure btnCancelClick(Sender: TObject);
-    procedure btnCloseClick(Sender: TObject);
+    procedure btnCloseClick (Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
-    procedure btnOKClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
+    procedure btnOKClick    (Sender: TObject);
+    procedure FormClose     (Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate    (Sender: TObject);
+    procedure FormShow      (Sender: TObject);
   private
-    function isBlank(txt: string):string;
+    function isBlank     (txt: string):string;
     procedure setReadOnly(readOnly: boolean);
     procedure displayFriend;
   public
@@ -92,39 +94,44 @@ begin
 end;
 
 procedure TfrmFriendsInput.FormShow(Sender: TObject);
+{  On form show, customise the form as desired.    }
 begin
   kLog.writeLog('formFriendsInput Show in mode ' + mode);
 
   case mode of
-    'NEW':
+    'NEW':                                     //  New Friend.
       begin
         btnOK.Visible     := true;
         btnCancel.Visible := true;
         btnClose.Visible  := false;
+        btnDelete.Visible := false;
         setReadOnly(False);
       end;
-    'View':
+    'VIEW':
       begin
         btnOK.Visible     := false;
         btnCancel.Visible := false;
         btnClose.Visible  := true;
+        btnDelete.Visible := false;
         ReallyCanClose    := true;             //  don't really care, view mode, allow just to close.
         setReadOnly(true);
         displayFriend;
       end;
-    'EDIT':
+    'EDIT':                                    //  Edit a friend.
       begin
         btnOK.Visible     := true;
         btnCancel.Visible := true;
         btnClose.Visible  := false;
+        btnDelete.Visible := false;
         setReadOnly(false);
         displayFriend;
       end;
-    'DELETE':
+    'DELETE':                                  // Delete a friend.
       begin
         btnOK.Visible     := false;
         btnCancel.Visible := true;
         btnClose.Visible  := false;
+        btnDelete.Visible := true;
         setReadOnly(true);
         displayFriend;
       end;
@@ -133,7 +140,6 @@ end;
 
 procedure TfrmFriendsInput.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-
   if not ReallyCanClose then
     CloseAction := caNone
   else
@@ -143,6 +149,10 @@ end;
 // ********************************************************* Buttons ******************
 //
 procedure TfrmFriendsInput.btnOKClick(Sender: TObject);
+{  If ok is clicked, add the friends to the store.
+
+   This routine is called by both edit and new.
+}
 VAR
   f: friend;
 begin
@@ -179,8 +189,6 @@ begin
   f.webPage  := isBlank(edtHomePage.Text);
   f.dob      := isBlank(DateTimeToStr(dtEdtDOB.Date));
   f.notes    := isBlank(moNotes.Text);
-
-  kLog.writeLog(format('[TfrmFriendsInput.OKButtonClick] %s %s %s', [f.sName, f.mName, f.fName]));
 
   if mode = 'NEW' then
     fr.New(f)
@@ -279,7 +287,7 @@ begin
 end;
 
 procedure TfrmFriendsInput.displayFriend;
-{    displays a friens, it sets all the relevent fields on the form
+{    displays a friends, it sets all the relevent fields on the form
      to the relevent fields of a friends object.
 }
 VAR

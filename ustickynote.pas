@@ -1,4 +1,5 @@
 unit ustickyNote;
+
 {   A Sticky Note class
     Holds the data for a single sticky note.
 
@@ -7,6 +8,7 @@ unit ustickyNote;
     The read / write routines where inspired by
     http://www.angelfire.com/hi5/delphizeus/customfiles.html
 }
+
 {$mode objfpc}{$H+}
 
 interface

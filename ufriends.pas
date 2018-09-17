@@ -1,5 +1,7 @@
 unit uFriends;
 
+{  A friends class, this contains all the routines to manipulate the friend class.    }
+
 {$mode objfpc}{$H+}
 
 interface

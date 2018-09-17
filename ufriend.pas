@@ -1,10 +1,12 @@
 unit uFriend;
+
 {   A Friend class
     Holds the data for a Friend Entry.
     This is adapted from the StickyNote class and used in a similar way..
 
     This class is manipulated by the Friends class.
 }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -112,7 +114,7 @@ constructor Friend.Create(fsOut: TFileStream);
 }
 var
   Len1: Cardinal = 0;
-  iID : integer = 0;
+  iID : integer  = 0;
 
   sfName: string   = '';
   smName: string   = '';
@@ -359,7 +361,7 @@ begin
   city    := f.city;
   postCode:= f.postCode;
   county  := f.county;
-  country := f.dob;
+  country := f.country;
   webpage := f.webPage;
   dob     := f.dob;
   notes   := f.notes;

@@ -1845,12 +1845,33 @@ Build 100 [2.4.3.100]
 
 Added friends Edit and Delete buttons to formKlock.
 Added buttons and routines to formFriendsInput to edit and delete friends.
-Added firends file to archive list in uArchiveUtils.
+Added friends file to archive list in uArchiveUtils.
 Added missing fields [web page & dob] to saveToFile in uFriend.
-Added restorefriends to uFriends.
-Added friendsname [filename] to uOptions.
+Added restoreFriends to uFriends.
+Added friendsName [filename] to uOptions.
 
 Currently
 13771 lines of source code.
 7661 statements
 16.4% comment
+
+
+Build 101 [2.4.3.101]
+
+Merged Friends edit, delete & new buttons into a generic friends button handler -
+they shared a lot of similar code.
+Corrected a bug in user options with friendsName.
+
+Added a new form, formTimePositions.  This allows the screen co-ordinates of
+the extra klock to be manually amended.  There is a bug [Windows feature?] where
+they can appear of screen i.e. where monitors are added or resolution is
+changed.
+
+Will merge into master, Friends, Memo, Events & Sticky Notes should be
+complete - but need testing further.
+
+Currently
+13907 lines of source code.
+7730 statements
+16.4% comment
+

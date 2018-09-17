@@ -1,4 +1,5 @@
 unit uEvent;
+
 {   A Event class
     Holds the data for a Event Entry.
     This is adapted from the StickyNote class and used in a similar way..

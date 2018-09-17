@@ -1,5 +1,7 @@
 unit formLicense;
 
+{  Displays Klock's License.    }
+
 {$mode objfpc}{$H+}
 
 interface

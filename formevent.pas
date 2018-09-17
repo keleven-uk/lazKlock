@@ -1,5 +1,7 @@
 unit formEvent;
 
+{  when called, displays an events message.    }
+
 {$mode objfpc}{$H+}
 
 interface
@@ -33,9 +35,9 @@ type
 
   TfrmEvent = class(TForm)
     btnAcknowledge: TButton;
-    lblEvent: TLabel;
-    lblInfo: TLabel;
-    tmrEvent: TTimer;
+    lblEvent      : TLabel;
+    lblInfo       : TLabel;
+    tmrEvent      : TTimer;
 
     procedure btnAcknowledgeClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -71,6 +73,7 @@ uses
 procedure TfrmEvent.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   kLog.writeLog('formEvent Close : ' + name);
+  tmrEvent.Enabled := false;
 end;
 
 procedure TfrmEvent.btnAcknowledgeClick(Sender: TObject);

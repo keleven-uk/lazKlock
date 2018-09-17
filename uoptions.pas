@@ -59,7 +59,7 @@ type
     _memoName   : string;               //  full path to the memo file.
     _stickyName : string;               //  full path to the Sticky Notes file.
     _unitsName  : string;               //  full path to the Units file.
-    _friendName: string;                //  full path to the friends file.
+    _friendName : string;               //  full path to the friends file.
 
     //  Sart of user options.
     _runAtStartUp    : boolean;         //  run Klock at windows start up - Current user only.
@@ -624,10 +624,10 @@ begin
       rtn := readChild(PassNode, 'stickyName');
       if rtn <> 'ERROR' then stickyName := ansistring(rtn);
       rtn := readChild(PassNode, 'unitsName');
-      if rtn <> 'ERROR' then friendName := ansistring(rtn);
-      rtn := readChild(PassNode, 'friendName');
-
       if rtn <> 'ERROR' then unitsName := ansistring(rtn);
+      rtn := readChild(PassNode, 'friendName');
+      if rtn <> 'ERROR' then friendName := ansistring(rtn);
+
       rtn := readChild(PassNode, 'runAtStartUp');
       if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
       rtn := readChild(PassNode, 'screenSave');
@@ -916,7 +916,7 @@ begin
   memoName         := GetAppConfigDir(False) + 'Memo.bin';
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';
-  friendName       := GetAppConfigDir(False) + 'Friend.txt';
+  friendName       := GetAppConfigDir(False) + 'Friends.bin';
 
   runAtStartUp     := false;
   screenSave       := True;

@@ -1031,7 +1031,7 @@ object frmMain: TfrmMain
               Top = 8
               Width = 624
               ItemHeight = 0
-              OnDblClick = lstBxFriendsDblClick
+              OnDblClick = btnFriendsClick
               TabOrder = 0
             end
           end
@@ -2070,7 +2070,7 @@ object frmMain: TfrmMain
       Top = 8
       Width = 50
       Caption = 'New'
-      OnClick = btnFriendsNewClick
+      OnClick = btnFriendsClick
       TabOrder = 16
     end
     object btnFriendsEdit: TButton
@@ -2079,7 +2079,7 @@ object frmMain: TfrmMain
       Top = 8
       Width = 50
       Caption = 'Edit'
-      OnClick = btnFriendsEditClick
+      OnClick = btnFriendsClick
       TabOrder = 17
     end
     object btnFriendsDelete: TButton
@@ -2088,7 +2088,7 @@ object frmMain: TfrmMain
       Top = 8
       Width = 50
       Caption = 'Delete'
-      OnClick = btnFriendsDeleteClick
+      OnClick = btnFriendsClick
       TabOrder = 18
     end
   end
@@ -2126,6 +2126,10 @@ object frmMain: TfrmMain
       end
       object mnuItmFloatingTextKlock: TMenuItem
         Caption = 'Floating Text Klock'
+        OnClick = mnuItmClick
+      end
+      object mnuItmTimePositions: TMenuItem
+        Caption = 'Time Positions'
         OnClick = mnuItmClick
       end
     end
