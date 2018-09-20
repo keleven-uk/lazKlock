@@ -1114,7 +1114,8 @@ Date:   Fri Jan 12 16:02:37 2018 +0000
 
 Changed all the icon [again] - now from https://icons8.com/
 
-Removed the button bar from the main Klock screen and added individual buttons, with their own icons.
+Removed the button bar from the main Klock screen and added individual buttons, 
+with their own icons.
 
 Added a sub menu option to save the Sticky Notes to each Sticky Note.
 
@@ -1825,6 +1826,10 @@ Currently
 
 Build 99 [2.4.3.99]
 
+commit c838728e1e3a9bd59d5b375b667f7f5af8aca837
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Thu Sep 6 21:50:38 2018 +0100
+
 Started work on the Friends tab.
 Added a new form, formFriendsInput, which allows the friends details to be
 entered.  Also, added two new classes, a Friend class which holds the friends
@@ -1843,6 +1848,10 @@ Currently
 
 Build 100 [2.4.3.100]
 
+commit e6f0840188d749c0d3b045160ec3643d27dcf8a7
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Sep 10 22:29:09 2018 +0100
+
 Added friends Edit and Delete buttons to formKlock.
 Added buttons and routines to formFriendsInput to edit and delete friends.
 Added friends file to archive list in uArchiveUtils.
@@ -1858,20 +1867,29 @@ Currently
 
 Build 101 [2.4.3.101]
 
-Merged Friends edit, delete & new buttons into a generic friends button handler -
-they shared a lot of similar code.
+commit 856bec8ee39186b5042bcddf0b87cbe17971a94f
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Sep 17 21:28:58 2018 +0100
+
+Merged Friends edit, delete & new buttons into a generic friends button 
+handler - they shared a lot of similar code.
 Corrected a bug in user options with friendsName.
 
-Added a new form, formTimePositions.  This allows the screen co-ordinates of
-the extra klock to be manually amended.  There is a bug [Windows feature?] where
-they can appear of screen i.e. where monitors are added or resolution is
+Added a new form, formTimePositions.  This allows the screen co-ordinates 
+of the extra klocks to be manually amended.  There is a bug [Windows feature?] 
+where they can appear of screen i.e. where monitors are added or resolution is
 changed.
 
-Will merge into master, Friends, Memo, Events & Sticky Notes should be
+Will merge into master, Friends, Memo, Events & Sticky Notes should be 
 complete - but need testing further.
 
 Currently
 13907 lines of source code.
 7730 statements
 16.4% comment
+
+
+Build 101 [2.5.0.102]
+
+Updated Help.
 

@@ -6,19 +6,21 @@ A multifunction timing thingy, where some [but not necessary all] of the things 
 
 The multifunction timing thingy is split into many things;
 
-Fuzzy Time, World Klock, Countdown, Timer, Reminder, Events, Memo, Conversion, Biorhythms, Sticky Notes & Clipboard Monitor.
+Fuzzy Time, World Klock, Countdown, Timer, Reminder, Friends, Events, Memo, Conversion, Biorhythms, Sticky Notes & Clipboard Monitor.
 
 Also, the time can be displayed in several ways - text, digital, analogue and binary klocks,
 
 
-Klock currently consists of over 12,500 lines of Lazarus [Free Pascal] code .  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
+Klock currently consists of over 14,000 lines of Lazarus [Free Pascal] code .  Klock serves as a vehicle by which I learn and tinker with programming.  Previous versions of Klock have existed in VB.net, Python and Free Basic - and may again.
 
 The program starts and finishes with a Splash Screen.  This is really needed if a number of fonts are used.  The starting of Klock lengthens with the number of fonts loaded.
+
 
 Fuzzy Time
 
 Allows the current time to be displayed in a number of different formats.
 The current time can also be spoken if desired, in the current format.  This is configurable in user options.
+
 
 World Klock
 
@@ -47,12 +49,20 @@ Today's date is default, but a future date can also be selected.  A time can als
 Note : Setting the time to 00:00, indicates midnight of the previous day so will not enable the set button.  To set a reminder for midnight of today, disable the time and pick tomorrow's date.  00:00 indicates zero minutes into the present day.
 
 
+Friends
+
+This implements a simple friends [contacts] thingy.
+The enables friends to be entered, edited and deleted.
+Information of the friends can be included i.e. address, email and telephone contact details.
+
+
 Event
 
 Implements a reminder option.
 The enables an event to be added, when the event nears, a prompt will be displayed.  These prompts are set to 30, 10 and 5 days before the due date.  This can be altered in user options as can the message themselves.
 Different types of event can be added i.e. Birthday, Anniversary and motor - this will affect the displayed prompt.
 The prompt can also be spoken if desired.
+
 
 Memo
 
@@ -68,7 +78,10 @@ This allows the conversion between various units of weight, distance and area et
 
 Biorhythm
 
-Implements a simple Biorhythm chart.
+Implements a simple or enhanced Biorhythm chart.
+The simple chart is for one person.
+The enhanced chart allows the comparison of two people.
+The dates of birth are held in user options and can be amended in the carts form.
 
 
 Sticky Notes
@@ -101,7 +114,13 @@ The S represents Scroll Lock.
 The letter will be upper case if the key is activated, otherwise lower case.
 
 
+The application contains a Time Positions Screen.  This allows the screen co-ordinates of
+the extra klocks to be manually amended.  There is a bug [Windows feature?] where
+they can appear of screen i.e. where monitors are added or resolution is
+changed.
+
 The application also contains a options screen [file / Options] which allows various options [over eighty] to be set.
+
 NB: If the option is checked to start on windows start up, it only operates for the current user.
 
 

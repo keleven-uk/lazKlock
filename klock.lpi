@@ -22,11 +22,10 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="2"/>
-      <MinorVersionNr Value="4"/>
-      <RevisionNr Value="3"/>
-      <BuildNr Value="101"/>
+      <MinorVersionNr Value="5"/>
+      <BuildNr Value="102"/>
       <Language Value="0809"/>
-      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="101"/>
+      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2018" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="102"/>
     </VersionInfo>
     <BuildModes Count="1" Active="Default">
       <Item1 Name="Default" Default="True"/>
@@ -95,8 +94,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="714"/>
-        <CursorPos X="42" Y="720"/>
+        <TopLine Value="434"/>
+        <CursorPos X="29" Y="441"/>
         <UsageCount Value="202"/>
         <Bookmarks Count="3">
           <Item0 Y="1836"/>
@@ -166,7 +165,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="UFuzzyTime"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="12" Y="187"/>
+        <TopLine Value="81"/>
+        <CursorPos X="16" Y="102"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit9>
@@ -659,7 +659,7 @@
     <OtherDefines Count="1">
       <Define0 Value="TEST"/>
     </OtherDefines>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="formKlock.pas"/>
         <Caret Line="1799" Column="51" TopLine="1765"/>
@@ -696,6 +696,22 @@
         <Filename Value="formKlock.pas"/>
         <Caret Line="550" Column="3" TopLine="533"/>
       </Position9>
+      <Position10>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="424" Column="20" TopLine="403"/>
+      </Position10>
+      <Position11>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="347" Column="15" TopLine="328"/>
+      </Position11>
+      <Position12>
+        <Filename Value="ufuzzytime.pas"/>
+        <Caret Line="187" Column="12"/>
+      </Position12>
+      <Position13>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="44" Column="30" TopLine="32"/>
+      </Position13>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
