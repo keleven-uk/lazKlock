@@ -38,8 +38,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure LstVwClipBoardClick(Sender: TObject);
     procedure LstVwClipBoardCustomDrawSubItem(Sender: TCustomListView;
-      Item: TListItem; SubItem: Integer; State: TCustomDrawState;
-      var DefaultDraw: Boolean);
+      Item: TListItem; SubItem: Integer; State: TCustomDrawState; var DefaultDraw: Boolean);
     procedure Timer1Timer(Sender: TObject);
   private
     FListener: TClipboardListener;

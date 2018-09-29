@@ -152,7 +152,8 @@ var
 begin
   stickyNotesCount := 0;
 
-  if not fileExists(stickyNotesFile) then exit;
+  if not fileExists(stickyNotesFile) then exit;       //  file not there then exit
+  if fileSize(stickyNotesFile) = 0   then exit;       //  empty file then exit.
 
   fileIn := TFileStream.Create(stickyNotesFile, fmOpenRead or fmShareDenyWrite);
 

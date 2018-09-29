@@ -303,7 +303,6 @@ type
     procedure MmMemoDataChange(Sender: TObject);
     procedure mnuItmClick(Sender: TObject);
     procedure mnuItmOptionsClick(Sender: TObject);
-    procedure mnuItmTimePositionsClick(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure mainTimerTimer(Sender: TObject);
     procedure PopupNotifier1Close(Sender: TObject; var CloseAction: TCloseAction);
@@ -568,6 +567,8 @@ begin
   ft.displayFuzzy     := userOptions.defaultTime;
   ft.fuzzyTimeVerbose := userOptions.fuzzyTimeVerbose;
   ft.display24Hour    := userOptions.display24Hour;
+  ft.netTimeSeconds   := userOptions.netTimeSeconds;
+  ft.swatchCentibeats := userOptions.swatchCentibeats;
   ft.speakTimeVolume  := userOptions.speakTimeVolume;
   ft.fuzzyBase        := 2;
 
@@ -704,7 +705,7 @@ begin
       else
       begin
         stsBrInfo.Panels.Items[4].Text := format('Reminder set for %.2d:%.2d - %s', [SpnReminderHour.Value,
-          SpnReminderMins.Value, DatetoStr(DtReminderEvent.Date)]);
+                                                        SpnReminderMins.Value, DatetoStr(DtReminderEvent.Date)]);
       end;  //  if btnReminderSet.Enabled
     end;
     5:                                  //  friends page
@@ -719,6 +720,7 @@ begin
     end;
     7:                                  //  memo page.
     begin
+      klog.writeLog('MEMO');
       loadMemos;                        //  Load Memos store into listbox, if any.
       setMemoButtons(true);
     end;
@@ -1858,8 +1860,6 @@ begin
     btnEventEdit.Visible    := true;
     btnEventDelete.Visible  := true;
     btnEventPrint.Visible   := true;
-    lstBxEvents.Selected[0] := true;
-    displayEvent(0);                   //  Display the first event, if exists.
   end
   else
   begin                                //  No events, don't need the buttons yet.
@@ -2176,7 +2176,6 @@ begin
 
   if btnMemoEdit.Caption = 'Edit' then          //  Edit memo.
   begin
-    klog.writeLog(format('Editing memo at pos %d', [LstBxMemoName.ItemIndex]));
     MmMemoData.ReadOnly       := false;
     btnMemoEdit.Caption       := 'Save';
     btnMemoClear.Visible      := true;
@@ -2186,7 +2185,6 @@ begin
   end
   else                                          //  save memo
   begin
-    klog.writeLog(format('Saving memo at pos %d', [LstBxMemoName.ItemIndex]));
     MmMemoData.ReadOnly  := true;
     btnMemoEdit.Caption  := 'Edit';
     btnMemoClear.Visible := false;
@@ -2219,13 +2217,6 @@ begin
   btnMemoDelete.Visible := false;
   btnMemoPrint.Visible  := false;
   btnMemoEdit.Visible   := false;
-
-  //  Use a InputQuery instead of passWordbox because we can detect
-  //  if the user selects cancel.
-  //
-  //passWord := PasswordBox('Memo Password',
-  //                        'Input a password to decrypt memo,' + LineEnding +
-  //                        ' or return to use default.');
 
   if InputQuery('Memo Password',
                 'Input a password to decrypt memo, or return to use default.',
@@ -2353,8 +2344,6 @@ begin
     btnMemoEdit.Visible       := true;
     btnMemoDelete.Visible     := true;
     btnMemoPrint.Visible      := true;
-    LstBxMemoName.Selected[0] := true;
-    displayMemo(0);                    //  Display the first memo, if exists.
   end
   else
   begin                                //  No memos, don't need the buttons yet.
@@ -2365,13 +2354,10 @@ begin
     edtMemoKey.Caption        := '';
   end;
 
-  MmMemoData.ReadOnly := true;
-
   RdBttnMemoEncrypt.Enabled := false;
-
-
-  edtMemoKey.ReadOnly := true;
-  edtMemoKey.Enabled  := false;
+  MmMemoData.ReadOnly       := true;
+  edtMemoKey.ReadOnly       := true;
+  edtMemoKey.Enabled        := false;
 
   btnMemoPrint.Enabled := false;       //  enable when print fuction is completed.
 end;
@@ -2415,12 +2401,6 @@ begin
     frmMain.Left := frmLeft;
   end;
 end;
-
-procedure TfrmMain.mnuItmTimePositionsClick(Sender: TObject);
-begin
-
-end;
-
 //
 // ********************************************************* Menu Items *********
 //

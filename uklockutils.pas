@@ -675,20 +675,19 @@ procedure pressF15;
    This is used to keep the monitor awake i.e. not going into sleep mode.
 
    <CTRL F15> should be reconised by most systems, but is rarely used in applications.
+                                                   and does not appear on most keyboards.
 }
 begin
-  klog.writeLog('Pressing <CTRL F15>');
   KeyInput.Apply([ssCtrl]);
   KeyInput.Press(VK_F15);                // This will simulate press of <CTRL F15> key.
   KeyInput.Unapply([ssCtrl]);
 end;
 
 procedure jiggleMouse;
-{  This jiggles the mouse, it moves the mouse one poixel and then bacl again.
+{  This jiggles the mouse, it moves the mouse one poixel and then back again.
     This is used to keep the monitor awake where <CTRL F15> can't be used.
 }
 begin
-  klog.writeLog('Jiggling Mouse');
   MouseInput.MoveBy([], 1, 1, 0);
   MouseInput.MoveBy([], -1, -1, 0);
 end;

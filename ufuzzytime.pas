@@ -26,6 +26,8 @@ type
     _fuzzyBase       : integer;
     _fuzzyTypes      : TStringList;
     _fuzzyTimeVerbose: boolean;        //  Use long version of Fuzzy Time.
+    _netTimeSeconds  : boolean;        //  Net Time to use Seconds.
+    _swatchCentibeats: boolean;        //  Swatch time to use Centibeats
     _display24Hour   : boolean;        //  Display time has 24 hour if true, else 12 hour.
     _speakTimeVolume : integer;        //  Volume used when speaking the time.
 
@@ -71,6 +73,8 @@ type
     property fuzzyBase       : integer     read _fuzzyBase         write _fuzzyBase;
     property fuzzyTypes      : TStringList read _fuzzyTypes;       //  read only.
     property fuzzyTimeVerbose: boolean     read _fuzzyTimeVerbose  write _fuzzyTimeVerbose;
+    property netTimeSeconds  : boolean     read _netTimeSeconds    write _netTimeSeconds;
+    property swatchCentibeats: boolean     read _swatchCentibeats  write _swatchCentibeats;
     property display24Hour   : boolean     read _display24Hour     write _display24Hour;
     property speakTimeVolume : integer     read _speakTimeVolume write _speakTimeVolume;
 
@@ -83,9 +87,6 @@ type
 
 
 implementation
-
-uses
-  formklock;
 
 constructor FuzzyTime.Create; overload;
 {  run on create.    }
@@ -244,7 +245,7 @@ var
   sec: int64;
 begin
 
-  if userOptions.netTimeSeconds then
+  if netTimeSeconds then
   begin
     deg := (MilliSecondOfTheDay(Time) div 240000);
     min := (MilliSecondOfTheDay(Time) - (deg * 240000)) div 4000;
@@ -298,7 +299,7 @@ begin
 
   noOfBeats := (noOfSeconds * 0.01157);    // 1000 beats per day
 
-  if userOptions.swatchCentibeats then
+  if swatchCentibeats then
     Result := format('@ %3.2f BMT', [noOfBeats])
   else
     Result := format('@ %3.f BMT', [noOfBeats]);
@@ -509,7 +510,7 @@ var
 begin
   DecodeTime(Time, hrs, min, sec, msc);
 
-  if not userOptions.display24Hour and (hrs > 12) then        //  use 12 hour klock.
+  if not display24Hour and (hrs > 12) then        //  use 12 hour klock.
     hrs -= 12;
 
   shrs := Dec2Numb(hrs, 5, 2);
@@ -536,7 +537,7 @@ var
 begin
   DecodeTime(Time, hrs, min, sec, msc);
 
-  if not userOptions.display24Hour and (hrs > 12) then        //  use 12 hour klock.
+  if not display24Hour and (hrs > 12) then        //  use 12 hour klock.
     hrs -= 12;
 
   if hrs < 9 then

@@ -13,7 +13,7 @@ interface
 //  Graphics has to come after Windows - so TBitmap.Create works.
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Windows, Graphics, Dialogs,
-  LMessages, Menus, StdCtrls, ExtCtrls;
+  LMessages, Menus, StdCtrls, ExtCtrls, formClipBoard;
 
 const
   LWA_COLORKEY  = 1;
@@ -46,6 +46,7 @@ type
   TfrmFloatingKlock = class(TForm)
     FontDialog1      : TFontDialog;
     lblFloatingTime  : TLabel;
+    MnItmShowClipBoard: TMenuItem;
     MnItmAlwaysOnTop : TMenuItem;
     MnItmFont        : TMenuItem;
     MnItmAbout       : TMenuItem;
@@ -58,11 +59,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MnItmAlwaysOnTopClick(Sender: TObject);
-    procedure MnItmFontClick(Sender: TObject);
-    procedure MnItmAboutClick(Sender: TObject);
-    procedure MnItmExitClick(Sender: TObject);
-    procedure MnItmNewStickNoteClick(Sender: TObject);
+    procedure menuClick(Sender: TObject);
     procedure TmrFloatingTextTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -152,7 +149,6 @@ begin
   frmMain.TrayIcon.Visible := True;
   frmMain.Visible          := False;
   frmMain.TrayIcon.Show;
-
 
   TmrFloatingText.Enabled := true;         //  Start timer.
 
@@ -270,58 +266,63 @@ end;
 //
 // ******************************************************* Pop Up Menu *********
 //
-procedure TfrmFloatingKlock.MnItmAlwaysOnTopClick(Sender: TObject);
-{  Toggle Always On Top for the form.    }
+procedure TfrmFloatingKlock.menuClick(Sender: TObject);
+{  A generic click routine called for menu actions.
+
+   The sender should be a TMenuItem.
+}
+VAR
+  itemName   : string;
 begin
-  if MnItmAlwaysOnTop.Checked then
-    FormStyle := fsSystemStayOnTop
-  else
-    FormStyle := fsNormal;
+  itemName := '';
 
-  userOptions.floatingAlwaysOnTop := MnItmAlwaysOnTop.Checked;
-  userOptions.writeCurrentOptions;
-end;
+  //  set the appropiate name.
+  if (Sender is TMenuItem) then
+    itemName := TMenuItem(Sender).Name;
 
-procedure TfrmFloatingKlock.MnItmAboutClick(Sender: TObject);
-{  Load the about form.    }
-begin
-  frmAbout.Show;
-end;
+  if itemName = '' then exit;                                //  not called by a TMenuItem.
 
-procedure TfrmFloatingKlock.MnItmExitClick(Sender: TObject);
-{  Close the Floating Text Klock.    }
-begin
-  frmMain.TrayIcon.Visible := False;
-  frmMain.TrayIcon.Hide;
+  case itemName of
+    'MnItmAlwaysOnTop'  :
+    begin
+      if MnItmAlwaysOnTop.Checked then
+        FormStyle := fsSystemStayOnTop
+      else
+        FormStyle := fsNormal;
 
-  frmMain.Visible := True;
+      userOptions.floatingAlwaysOnTop := MnItmAlwaysOnTop.Checked;
+      userOptions.writeCurrentOptions;
+    end;
+    'MnItmFont'         :
+    begin
+      if FontDialog1.Execute then
+      begin
+        userOptions.floatingTextFont := FontDialog1.Font;
+        lblFloatingTime.Font         := FontDialog1.Font;   //  so the new font is used at once.
 
-  TmrFloatingText.Enabled := false;
+        width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
+        height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
-  close;
-end;
+        lblFloatingTime.AdjustFontForOptimalFill;
 
-procedure TfrmFloatingKlock.MnItmFontClick(Sender: TObject);
-{  Load the font dialog and save to user options if successful.    }
-begin
-  if FontDialog1.Execute then
-  begin
-    userOptions.floatingTextFont := FontDialog1.Font;
-    lblFloatingTime.Font         := FontDialog1.Font;   //  so the new font is used at once.
+        userOptions.writeCurrentOptions;
+      end;
+    end;
+    'MnItmNewStickNote' : stickies.new(userOptions.stickyColor, userOptions.stickyFont);
+    'MnItmShowClipBoard': frmClipBoard.Visible := true;
+    'MnItmAbout'        : frmAbout.Show;
+    'MnItmExit'         :
+    begin
+    frmMain.TrayIcon.Visible := False;
+    frmMain.TrayIcon.Hide;
 
-    width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
-    height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
+    frmMain.Visible := True;
 
-    lblFloatingTime.AdjustFontForOptimalFill;
+    TmrFloatingText.Enabled := false;
 
-    userOptions.writeCurrentOptions;
+    close;
+    end;
   end;
-end;
-
-procedure TfrmFloatingKlock.MnItmNewStickNoteClick(Sender: TObject);
-{  Create a new sticky note.    }
-begin
-  stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
 
 end.

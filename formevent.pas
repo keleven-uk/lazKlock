@@ -103,7 +103,7 @@ var
  SpVoice       : Variant;
  TextToBeSpoken: Variant;
 begin
- TextToBeSpoken := lblEvent.Caption;
+ TextToBeSpoken := lblEvent.Caption + lblInfo.Caption;
 
  SpVoice := CreateOleObject('SAPI.SpVoice');
 
@@ -111,7 +111,7 @@ begin
  SavedCW := Get8087CW;
  try
    Set8087CW(SavedCW or $4);
-   SpVoice.Volume := 50;
+   SpVoice.Volume := formklock.userOptions.speakTimeVolume;  //  Use speak time volume for speak events volume.
    SpVoice.Speak(TextToBeSpoken, 0);
  finally
    // Restore FPU mask

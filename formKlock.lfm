@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1198
+  Left = 1184
   Height = 259
-  Top = 613
+  Top = 691
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -188,8 +188,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtFriends
-      TabIndex = 5
+      ActivePage = TbShtTimer
+      TabIndex = 3
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -668,7 +668,7 @@ object frmMain: TfrmMain
             end
           end
           object Panel10: TPanel
-            Left = 167
+            Left = 168
             Height = 43
             Top = 7
             Width = 484

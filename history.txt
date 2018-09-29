@@ -1889,7 +1889,24 @@ Currently
 16.4% comment
 
 
-Build 101 [2.5.0.102]
+Build 102 [2.5.0.102]
 
 Updated Help.
+
+
+Build 103 [2.5.0.103]
+
+formKlock - tidied up code.  Removed duplcate displayMemo, displayFrend and
+displayEvent.
+
+formFloatingKlock - Added show clipboard to pop up menu.  Combined all pop up
+menu click routing into one generic click handler.
+
+uFuzzyTime - Added options for netTimeSeconds & swatchCentibeats.
+
+uStickNotes - corrected bug with trying to load zero size file.
+
+13888 lines of source code.
+7745 statements
+16.4% comment
 

@@ -43,7 +43,7 @@ object frmOptions: TfrmOptions
     Width = 620
     Align = alClient
     FullExpand = True
-    ItemIndex = 6
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
