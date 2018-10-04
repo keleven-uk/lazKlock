@@ -78,6 +78,7 @@ type
     FlNmEdtLoadArchiveName     : TFileNameEdit;
     FlNmEdtSaveArchiveName     : TFileNameEdit;
     FontDialog1                : TFontDialog;
+    rdGrpRelative              : TRadioGroup;
     Settings                   : TGroupBox;
     GroupBox1                  : TGroupBox;
     GroupBox2                  : TGroupBox;
@@ -153,6 +154,7 @@ type
     procedure ChckLstBxArchiveClickCheck(Sender: TObject);
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure clrBtnEventsColorChanged(Sender: TObject);
+    procedure rdGrpRelativeClick(Sender: TObject);
     procedure spnEdtEventsChanged(Sender: TObject);
     procedure edtEventsChanged(Sender: TObject);
     procedure CmbBxDefaulTtabChange(Sender: TObject);
@@ -349,8 +351,15 @@ begin
   FlNmEdtSaveArchiveName.InitialDir := GetAppConfigDir(False);
   FlNmEdtSaveArchiveName.FileName   := format('%sKlock_%s.zip', [GetAppConfigDir(False),
                                                               FormatDateTime('DDMMMYYYY', now)]);
-  FlNmEdtLoadArchiveName.FileName := '';
-  ChckLstBxArchive.Items          := getArchiveFiles;
+  FlNmEdtLoadArchiveName.FileName   := '';
+  FlNmEdtLoadArchiveName.InitialDir := GetAppConfigDir(False);
+
+  if userBacOptions.relativeFileName then
+    rdGrpRelative.ItemIndex := 0                              //  use relative path names.
+  else
+    rdGrpRelative.ItemIndex := 1;                             //  use absolute path names.
+
+  ChckLstBxArchive.Items          := getArchiveFiles(userBacOptions.relativeFileName);
 
   //  when the date is accepted on a TDateEdit, it runs a form activate for some reason.
   //  So we set the values here.
@@ -883,7 +892,7 @@ begin
       if ChckLstBxArchive.Checked[f] then
         files.Add(ChckLstBxArchive.Items.Strings[f]);
 
-    saveArchive(FlNmEdtSaveArchiveName.FileName, files);
+    saveArchive(FlNmEdtSaveArchiveName.FileName, files, userBacOptions.relativeFileName);
   finally
     files.free;
   end;
@@ -924,6 +933,17 @@ begin
     btnLoadArchive.Enabled := true
   else
     btnLoadArchive.Enabled := false;
+end;
+
+procedure TfrmOptions.rdGrpRelativeClick(Sender: TObject);
+begin
+  case rdGrpRelative.ItemIndex of
+    0: userBacOptions.relativeFileName := true;
+    1: userBacOptions.relativeFileName := false;
+  end;
+
+  ChckLstBxArchive.Items.Clear;                                                //  Clear list box.
+  ChckLstBxArchive.Items := getArchiveFiles(userBacOptions.relativeFileName);  //  Reload list view
 end;
 
 end.

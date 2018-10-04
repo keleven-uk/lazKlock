@@ -35,11 +35,13 @@ type
 
   TfrmEvent = class(TForm)
     btnAcknowledge: TButton;
+    btnMute       : TButton;
     lblEvent      : TLabel;
     lblInfo       : TLabel;
     tmrEvent      : TTimer;
 
     procedure btnAcknowledgeClick(Sender: TObject);
+    procedure btnMuteClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -47,7 +49,11 @@ type
     procedure FormMouseLeave(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure tmrEventTimer(Sender: TObject);
+
   private
+    _pos  : integer;
+    _stage: integer;
+
     WindowDragMousePos: TPoint;
     WindowDragTopLeft : TPoint;
     WindowDragStarted : Boolean;
@@ -55,7 +61,8 @@ type
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
     procedure speakEvent;
   public
-
+    property pos  : integer read _pos   write _pos;
+    property stage: integer read _stage write _stage;
   end;
 
 var
@@ -77,8 +84,17 @@ begin
 end;
 
 procedure TfrmEvent.btnAcknowledgeClick(Sender: TObject);
+{  Acknowledge has been clicked, event will not be displayed again.
+
+   This is acieved by calling ev.acknowledgeEvent from the main event store.}
 begin
-  close;
+  ev.acknowledgeEvent(pos, stage);
+end;
+
+procedure TfrmEvent.btnMuteClick(Sender: TObject);
+{  Mute had been clicked, event will displayed when next called.    }
+begin
+ close;
 end;
 
 procedure TfrmEvent.FormCreate(Sender: TObject);

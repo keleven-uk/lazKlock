@@ -1,14 +1,14 @@
 object frmEvent: TfrmEvent
-  Left = 1407
+  Left = 1488
   Height = 120
-  Top = 249
-  Width = 340
+  Top = 88
+  Width = 379
   AlphaBlend = True
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Event'
   ClientHeight = 120
-  ClientWidth = 340
+  ClientWidth = 379
   FormStyle = fsStayOnTop
   OnClose = FormClose
   OnCreate = FormCreate
@@ -28,7 +28,7 @@ object frmEvent: TfrmEvent
     ParentFont = False
   end
   object btnAcknowledge: TButton
-    Left = 120
+    Left = 201
     Height = 25
     Top = 80
     Width = 91
@@ -45,6 +45,15 @@ object frmEvent: TfrmEvent
     Font.Height = -21
     ParentColor = False
     ParentFont = False
+  end
+  object btnMute: TButton
+    Left = 72
+    Height = 25
+    Top = 80
+    Width = 75
+    Caption = 'Mute'
+    OnClick = btnMuteClick
+    TabOrder = 1
   end
   object tmrEvent: TTimer
     OnTimer = tmrEventTimer

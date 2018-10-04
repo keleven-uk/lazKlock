@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1303
+  Left = 1278
   Height = 530
-  Top = -27
+  Top = 269
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -43,7 +43,7 @@ object frmOptions: TfrmOptions
     Width = 620
     Align = alClient
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 6
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -415,7 +415,6 @@ object frmOptions: TfrmOptions
           'Long Date Format'
           'Always On Top'
         )
-        OnItemClick = ChckGrpLEDKlockItemClick
         TabOrder = 1
         Data = {
           03000000020202
@@ -908,17 +907,17 @@ object frmOptions: TfrmOptions
       end
       object GroupBox8: TGroupBox
         Left = 8
-        Height = 73
+        Height = 48
         Top = 240
         Width = 600
         Caption = 'Load Archive'
-        ClientHeight = 53
+        ClientHeight = 28
         ClientWidth = 596
         TabOrder = 1
         object FlNmEdtLoadArchiveName: TFileNameEdit
           Left = 8
           Height = 23
-          Top = 16
+          Top = 0
           Width = 488
           FileName = 'FlNmEdtLoadArchiveName'
           OnAcceptFileName = FlNmEdtLoadArchiveNameAcceptFileName
@@ -934,14 +933,39 @@ object frmOptions: TfrmOptions
           Text = 'FlNmEdtLoadArchiveName'
         end
         object btnLoadArchive: TButton
-          Left = 510
+          Left = 509
           Height = 23
-          Top = 16
+          Top = 0
           Width = 75
           Caption = 'Load'
           OnClick = btnLoadArchiveClick
           TabOrder = 1
         end
+      end
+      object rdGrpRelative: TRadioGroup
+        Left = 9
+        Height = 41
+        Top = 296
+        Width = 600
+        AutoFill = True
+        Caption = 'Relative / Absolute Filenames'
+        ChildSizing.LeftRightSpacing = 6
+        ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+        ChildSizing.EnlargeVertical = crsHomogenousChildResize
+        ChildSizing.ShrinkHorizontal = crsScaleChilds
+        ChildSizing.ShrinkVertical = crsScaleChilds
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 21
+        ClientWidth = 596
+        Columns = 2
+        ItemIndex = 0
+        Items.Strings = (
+          'Relative'
+          'Absolute'
+        )
+        OnClick = rdGrpRelativeClick
+        TabOrder = 2
       end
     end
     object accItemEvents: TAccordionItem
@@ -1164,13 +1188,13 @@ object frmOptions: TfrmOptions
       'ColorS=F0FBFF'
       'ColorT=A4A0A0'
     )
-    left = 152
-    top = 464
+    left = 344
+    top = 496
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0
     MaxFontSize = 0
-    left = 216
-    top = 464
+    left = 400
+    top = 496
   end
 end

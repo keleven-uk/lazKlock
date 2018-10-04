@@ -1893,6 +1893,8 @@ Build 102 [2.5.0.102]
 
 Updated Help.
 
+Merged with master
+
 
 Build 103 [2.5.0.103]
 
@@ -1906,7 +1908,29 @@ uFuzzyTime - Added options for netTimeSeconds & swatchCentibeats.
 
 uStickNotes - corrected bug with trying to load zero size file.
 
+Merged with master
+
 13888 lines of source code.
 7745 statements
 16.4% comment
+
+
+Build 104 [2.5.0.104]
+
+formOptions - added option to save achieve with either relative or absolute
+pathnames.  The option is save in user options.
+uArchiveOUtils - amended the saveArchive and LoadArchive routines to cater for
+either relative or absolute pathnames.
+
+formEvent - added a second button to event - can now either be mute or
+acknowledge.  It mute is clicked the event is cleared and will be displayed next
+cycle, it acknowledge is clicked then the event is cleared and the
+acknowledge flag on the event is set.  When the acknowledge flag is set, the
+event will not be displayed until the next aged band is reached.
+
+uEvents - Corrected bug with displaying age in years.
+
+14021 lines of source code.
+7834 statements
+16.5% comment
 

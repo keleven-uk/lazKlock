@@ -67,6 +67,7 @@ type
     procedure updateEvents;
     procedure saveEvents;
     procedure killEvents;
+    procedure acknowledgeEvent(pos: integer; stage: integer);
     procedure Remove(pos: integer);
   end;
 
@@ -77,7 +78,7 @@ type
 const
   LEFT   = 10;
   TOP    = 10;
-  WIDTH  = 340;
+  WIDTH  = 370;
   HEIGHT = 120;
 
 VAR
@@ -386,7 +387,6 @@ begin
       mess := eventsStore.Data[pos].name + ' ' + stage1Mess;
       bcol := stage1BackColour;
       fcol := stage1ForeColour;
-      eventsStore.Data[pos].stage1Ack := true;
     end;
     2:
     begin
@@ -394,7 +394,6 @@ begin
       mess := eventsStore.Data[pos].name + ' ' + stage2Mess;
       bcol := stage2BackColour;
       fcol := stage3ForeColour;
-      eventsStore.Data[pos].stage2Ack := true;
     end;
     3:
     begin
@@ -402,12 +401,8 @@ begin
       mess := eventsStore.Data[pos].name + ' ' + stage3Mess;
       bcol := stage3BackColour;
       fcol := stage3ForeColour;
-      eventsStore.Data[pos].stage3Ack := true;
     end;
   end;  //  case stage of
-
-  if eventsStore.Data[pos].etype = 0 then
-    yr := determineYearsbetween(eventsStore.Data[pos].date);
 
   ev := TfrmEvent.Create(nil);
 
@@ -417,17 +412,24 @@ begin
   ev.Font.Color := fcol;
   ev.AlphaBlend := true;
 
+  ev.pos   := pos;                       //  pass to the form,
+  ev.stage := stage;                     //  so the foram ia aware which event to acknowledge.
+
   lb            := ev.FindChildControl('lblEvent') as TLabel;
   lb.Font.Color := fcol;
   lb.Caption    := mess;
 
+  if eventsStore.Data[pos].etype = 2 then          //  if a birthday, determine age.
+  begin
+    yr := determineYearsbetween(eventsStore.Data[pos].date);
+    mess    := format('and will be %d years old.', [yr])
+  end
+  else
+    mess    := '';
+
   lb            := ev.FindChildControl('lblInfo') as TLabel;
   lb.Font.Color := fcol;
-
-  if eventsStore.Data[pos].etype = 0 then
-    lb.Caption    := format('and will be %d years old.', [yr])
-  else
-    lb.Caption    := '';
+  lb.Caption    := mess;
 
   ev.show
 end;
@@ -435,14 +437,10 @@ end;
 function Events.determineYearsbetween(eventDate: string): integer;
 VAR
   evntDate: TDateTime;
-  sbsDate : TDateTime;
   years   : integer = 0;
 begin
   evntDate := StrToDate(eventDate);
-
-  sbsDate := RecodeYear(evntDate, YearOf(Today));             //  substitute current year.
-  if sbsDate < Today then sbsDate := Incyear(sbsDate);        //  is event before today? Then inc year
-  years := YearsBetween(Today, sbsDate);
+  years    := YearsBetween(Today, evntDate);
 
   result := years;
 end;
@@ -469,6 +467,19 @@ begin
     end;
 
     if assigned(ev) then ev.Close;
+  end;
+end;
+
+procedure Events.acknowledgeEvent(pos: integer; stage: integer);
+{  The event has been acknowleged, so set the appropiate flag to true.
+
+   This is called from from event form.
+}
+begin
+  case stage of
+    1: eventsStore.Data[pos].stage1Ack := true;
+    2: eventsStore.Data[pos].stage2Ack := true;
+    3: eventsStore.Data[pos].stage3Ack := true;
   end;
 end;
 

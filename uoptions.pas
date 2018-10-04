@@ -54,12 +54,13 @@ type
     _productName     : string;
     _productVersion  : string;
 
-    _optionsName: string;               //  full path to the options file.
-    _eventName  : string;               //  full path to the event file.
-    _memoName   : string;               //  full path to the memo file.
-    _stickyName : string;               //  full path to the Sticky Notes file.
-    _unitsName  : string;               //  full path to the Units file.
-    _friendName : string;               //  full path to the friends file.
+    _optionsName     : string;          //  full path to the options file.
+    _eventName       : string;          //  full path to the event file.
+    _memoName        : string;          //  full path to the memo file.
+    _stickyName      : string;          //  full path to the Sticky Notes file.
+    _unitsName       : string;          //  full path to the Units file.
+    _friendName      : string;          //  full path to the friends file.
+    _relativeFileName: boolean;         //  Relative or absolute file names [for archiving].
 
     //  Sart of user options.
     _runAtStartUp    : boolean;         //  run Klock at windows start up - Current user only.
@@ -202,6 +203,7 @@ type
     property stickyName      : string  read _stickyName       write _stickyName;
     property unitsName       : string  read _unitsName        write _unitsName;
     property friendName      : string  read _friendName       write _friendName;
+    property relativeFileName: boolean read _relativeFileName write _relativeFileName;
 
     property runAtStartUp    : boolean read _runAtStartUp     write _runAtStartUp;
     property screenSave      : boolean read _screenSave       write _screenSave;
@@ -448,6 +450,7 @@ begin
   stickyName       := o.stickyName;
   unitsName        := o.unitsName;
   friendName       := o.friendName;
+  relativeFileName := o.relativeFileName;
 
   runAtStartUp     := o.runAtStartUp;
   screenSave       := o.screenSave;
@@ -627,6 +630,8 @@ begin
       if rtn <> 'ERROR' then unitsName := ansistring(rtn);
       rtn := readChild(PassNode, 'friendName');
       if rtn <> 'ERROR' then friendName := ansistring(rtn);
+      rtn := readChild(PassNode, 'relativeFileName');
+      if rtn <> 'ERROR' then relativeFileName := StrToBool(rtn);
 
       rtn := readChild(PassNode, 'runAtStartUp');
       if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
@@ -917,6 +922,7 @@ begin
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';
   friendName       := GetAppConfigDir(False) + 'Friends.bin';
+  relativeFileName := true;
 
   runAtStartUp     := false;
   screenSave       := True;
@@ -1071,6 +1077,7 @@ begin
     ElementNode.AppendChild(writeStrChild(doc, 'stickyName'              , stickyName));
     ElementNode.AppendChild(writeStrChild(doc, 'unitsName'               , unitsName));
     ElementNode.AppendChild(writeStrChild(doc, 'friendName'              , friendName));
+    ElementNode.AppendChild(writeBolChild(doc, 'relativeFileName'        , relativeFileName));
 
     ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp'            , runAtStartUp));
     ElementNode.AppendChild(writeBolChild(doc, 'screenSave'              , screenSave));

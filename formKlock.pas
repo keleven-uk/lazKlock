@@ -344,6 +344,7 @@ type
     procedure setUpFuzzyOptions;
     procedure setUpEventsOptions;
     procedure parseTimeZoneData;
+
   public
 
   end;
