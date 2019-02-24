@@ -9,12 +9,13 @@ object frmAnalogueKlock: TfrmAnalogueKlock
   ClientHeight = 248
   ClientWidth = 248
   Color = clBlack
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = popUpMenuAnalogueKlock
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.0.4'
   object DTThemedClock1: TDTThemedClock
     Left = 0
     Height = 240

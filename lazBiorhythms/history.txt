@@ -1,0 +1,95 @@
+Build 1
+
+Initial import into git.
+Basic layout of form complete.
+Basic programming code complete.
+
+The program accepts a birthday and draws the Biorhythms.
+
+Needs adding to and making more robust.
+
+
+Build 2
+Changed the checkGroups for individual check boxes, mainly so that the text of each could match the colour of the line series.
+
+Added Primary and Secondary Biorhythms
+
+Currently
+262 lines of source code.
+240 statements
+14.1% 
+
+
+Build 3
+
+Added pre-built forms for Help, Licence, About and Options.
+Added pre-built units for utils and options.
+Added menus to main form to call the above.
+
+Currently
+1348 lines of source code.
+649 statements
+18.5% 
+
+
+Build 4
+
+Added user options for a second user.
+Added a second TDateEdit to enter birthrate of second user.
+
+Currently
+1752 lines of source code.
+956 statements
+16.3% 
+
+
+Build 5
+
+Added the drawing stuff for the second user.
+
+Moved plotChart into a separate procedure, this either draws each user's
+curves or clear series if neither user is selected.
+
+Added a new procedure setToday, to draw a vertical bar to indicate today, on the chart.
+It looks at each user series to try and determine the range.
+The secondary combined (if used) has the greatest range.
+If both user's combines are displayed, use the min and max of the two.
+If neither combined is used, use defaults..
+
+Currently
+1897 lines of source code.
+1061 statements
+16.1% 
+
+
+Build 6
+
+Added a plot for total of all seven rhythms [overall].
+
+Set up colour stuff for second user.
+
+Only enable stuff for a user, if that user is selected.
+
+Corrected range for the today marker [see procedure setToday].
+
+Currently
+1983 lines of source code.
+1139 statements
+15.6% 
+
+
+Build 7
+
+Completed the code and testing of the colour option for both people.
+
+Combined all the colour button colour change procedures into one generic
+procedure in formOptions.
+
+Corrected a bug with writing default options in uOptions.
+
+Corrected a bug with compile time in formAbout.
+
+Currently
+1982 lines of source code.
+1180 statements
+16.5% 

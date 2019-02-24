@@ -143,7 +143,11 @@ begin
   if not ReallyCanClose then
     CloseAction := caNone
   else
-    kLog.writeLog('formFriendsInput Close');
+    begin
+      kLog.writeLog('formFriendsInput Close');
+      CloseAction := caFree;
+    end;
+
 end;
 //
 // ********************************************************* Buttons ******************

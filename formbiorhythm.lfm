@@ -8,8 +8,9 @@ object frmBiorhythm: TfrmBiorhythm
   ClientWidth = 800
   Constraints.MinHeight = 400
   Constraints.MinWidth = 800
+  OnClose = FormClose
   OnCreate = FormCreate
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.0.4'
   object Chart1: TChart
     Left = -8
     Height = 360

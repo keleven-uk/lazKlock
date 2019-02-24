@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1184
+  Left = 1188
   Height = 259
-  Top = 691
+  Top = 141
   Width = 705
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -149,9 +149,10 @@ object frmMain: TfrmMain
   Menu = mnuMain
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.4'
   object stsBrInfo: TStatusBar
     Left = 0
     Height = 23

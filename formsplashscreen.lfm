@@ -1,7 +1,7 @@
 object frmSplashScreen: TfrmSplashScreen
-  Left = 699
+  Left = 1366
   Height = 336
-  Top = 377
+  Top = 256
   Width = 458
   BorderStyle = bsNone
   Caption = 'frmSplashScreen'
@@ -147,7 +147,7 @@ object frmSplashScreen: TfrmSplashScreen
   }
   OnClose = FormClose
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '2.0.0.4'
   object MemoSplashScreenData: TMemo
     Left = 8
     Height = 152
@@ -170,7 +170,7 @@ object frmSplashScreen: TfrmSplashScreen
     Left = 8
     Height = 50
     Top = 8
-    Width = 442
+    Width = 440
     Center = True
     Picture.Data = {
       1754506F727461626C654E6574776F726B477261706869635E1F000089504E47

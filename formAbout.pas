@@ -34,6 +34,7 @@ type
 
     procedure btnAboutExitClick(Sender: TObject);
     procedure btnAboutMSinfoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure TmrUpTimeTimer(Sender: TObject);
   private
@@ -71,6 +72,11 @@ begin
     ShowMessage('ERROR : running MSinfo');
 end;
 
+procedure TfrmAbout.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
+
 procedure TfrmAbout.FormCreate(Sender: TObject);
 var
   dskSize  : string;
@@ -82,10 +88,11 @@ var
 begin
   kLog.writeLog('FormAbout Create');
 
-  tmrUpTime.Enabled     := True;
-  lblAppUpTime.Caption  := getUpTime('Application');
-  lblSysUpTime.Caption  := getUpTime('System');
-  lblProgrammer.Caption := userOptions.legalCopyright;
+  tmrUpTime.Enabled      := True;
+  lblAppUpTime.Caption   := getUpTime('Application');
+  lblSysUpTime.Caption   := getUpTime('System');
+  lblProgrammer.Caption  := userOptions.legalCopyright;
+  lblProgramName.Caption := userOptions.productName;
 
   //  {$I %DATE%} returns the compile date, but in American [ignores local date format]
   //  So, we string slice it to give good old English date format.
@@ -96,9 +103,9 @@ begin
 
   lstBxInfo.Items.add(userOptions.fileDescription);
   lstBxInfo.Items.add('');
-  lstBxInfo.Items.add(format('lazKlock Build   :: %s', [userOptions.productVersion]));
-  lstBxInfo.Items.add(format('lazKlock Version :: %s', [userOptions.fileVersion]));
-  lstBxInfo.Items.add(format('lazBiorhythms Built   :: %s', [cmpUkDate + ' @ ' + {$I %TIME%}]));
+  lstBxInfo.Items.add(format('%s Build   :: %s', [userOptions.productName, userOptions.productVersion]));
+  lstBxInfo.Items.add(format('%s Version :: %s', [userOptions.productName, userOptions.fileVersion]));
+  lstBxInfo.Items.add(format('%s Built   :: %s', [userOptions.productName, cmpUkDate + ' @ ' + {$I %TIME%}]));
 
   {$ifdef WIN32}
     lstBxInfo.Items.add(format('Built with 32 bit Lazarus Version :: %s', [lcl_version]));

@@ -81,6 +81,7 @@ procedure TfrmEvent.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   kLog.writeLog('formEvent Close : ' + name);
   tmrEvent.Enabled := false;
+  CloseAction      := caFree;
 end;
 
 procedure TfrmEvent.btnAcknowledgeClick(Sender: TObject);
@@ -89,6 +90,7 @@ procedure TfrmEvent.btnAcknowledgeClick(Sender: TObject);
    This is acieved by calling ev.acknowledgeEvent from the main event store.}
 begin
   ev.acknowledgeEvent(pos, stage);
+  close;
 end;
 
 procedure TfrmEvent.btnMuteClick(Sender: TObject);

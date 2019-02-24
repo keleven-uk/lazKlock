@@ -25,7 +25,9 @@ type
     SpnEdtYear: TSpinEdit;
 
     procedure btnCloseClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure GroupBox1Click(Sender: TObject);
     procedure lstBxInfoDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure SpnEdtYearChange(Sender: TObject);
   private
@@ -96,6 +98,16 @@ begin
   end;
 
   updateInfo;
+end;
+
+procedure TfrmInfo.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
+end;
+
+procedure TfrmInfo.GroupBox1Click(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmInfo.btnCloseClick(Sender: TObject);

@@ -35,5 +35,5 @@ lib/
 # VI backup files.
 *.*~
 
-# lazBiorhythms directory - seperate project on github.
-lazBiorhythms/
+# memory leak trace file
+heap.trc

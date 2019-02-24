@@ -798,7 +798,7 @@ Started to sprinkle debug entries all over.
 
 I started to get the Access Violation again, especially in the 32 bit application.
 This seemed to be either the logging not being thread safe and a problem in loading
-the fonts.  I changed the method that loads the faults and stopped using TEvent and
+the fonts.  I changed the method that loads the fonts and stopped using TEvent and
 wrote a simple logging class of my own that just appends to a text file.
 [The logging class resides in uLogging.pas]
 
@@ -1930,7 +1930,28 @@ event will not be displayed until the next aged band is reached.
 
 uEvents - Corrected bug with displaying age in years.
 
+Updated Help.
+
 14021 lines of source code.
 7834 statements
 16.5% comment
+
+
+Build 105 [2.5.0.105]
+
+Corrected memory leaks in uOptions.pas - not freeing fvi object.
+
+Added CloaseAction := caFree to all forms.
+Added WeddingGifts.txt - klock should be able to suggest suitable wedding
+anniversary gifts.
+Added Borg font.
+
+Corrected spelling.
+
+** Compiled with Lazarus V2.0.0.4 **
+** merged development branch into master **
+
+14188 lines of source code.
+7892 statements
+16.4% comment
 

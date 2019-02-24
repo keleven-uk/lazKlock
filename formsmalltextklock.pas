@@ -152,6 +152,7 @@ procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseA
 {  Stop timer on close, so not running when form not in use.    }
 begin
   tmrSmallTextKlock.Enabled := false;
+  CloseAction               := caFree;
 end;
 
 procedure TfrmSmallTextKlock.FormDestroy(Sender: TObject);

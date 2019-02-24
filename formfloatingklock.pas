@@ -134,6 +134,7 @@ begin
     userOptions.floatingTextFormTop  := Top;
     userOptions.writeCurrentOptions;
   end;
+  CloseAction := caFree;
 end;
 
 procedure TfrmFloatingKlock.FormDestroy(Sender: TObject);

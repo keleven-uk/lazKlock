@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "103"
+#define MyAppVersion "105"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -57,10 +57,11 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 ; installs either klock_x64 or klock_x86 - but names them lazKlock.exe
 [Files]
-Source: "lazKlock_32.exe"               ; DestDir: "{app}"               ; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
-Source: "lazKlock_64.exe"               ; DestDir: "{app}"               ; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
+Source: "lazklock_Release 32-bit.exe"   ; DestDir: "{app}"               ; Flags: ignoreversion; Check: not Is64BitInstallMode; DestName: {#MyAppExeName}
+Source: "lazklock_Release 64-bit.exe"   ; DestDir: "{app}"               ; Flags: ignoreversion; Check: Is64BitInstallMode    ; DestName: {#MyAppExeName}
 Source: "help.txt"                      ; DestDir: "{app}"               ; Flags: ignoreversion
 Source: "history.txt"                   ; DestDir: "{app}"               ; Flags: ignoreversion
+Source: "WeddingGifts.txt"              ; DestDir: "{app}"               ; Flags: ignoreversion
 Source: "GNU GENERAL PUBLIC LICENSE.txt"; DestDir: "{app}"               ; Flags: ignoreversion
 Source: "sounds\*"                      ; DestDir: "{app}\sounds"        ; Flags: ignoreversion
 Source: "fonts\*"                       ; DestDir: "{app}\fonts"         ; Flags: ignoreversion

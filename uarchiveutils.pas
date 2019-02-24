@@ -68,10 +68,10 @@ end;
 procedure saveArchive(fname: String; archiveFiles: TStringList; relative: boolean);
 {  Create a zip file [fname] and add all the files in archiveFiles.
 
-   if relative is chosen the passed in the filenames will be relatibe pathnames.
+   if relative is chosen the passed in the filenames will be relative pathnames.
    if absolute is chosen the passed in the filenames will be absolute pathnames.
 
-   The fileComment of the archive is set to either relative or absolute dependinf upon choice.
+   The fileComment of the archive is set to either relative or absolute depending upon choice.
    The is user on loading the archive to determine the mode.
 }
 var

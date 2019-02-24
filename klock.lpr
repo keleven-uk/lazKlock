@@ -18,12 +18,11 @@ begin
   Application.Scaled:=True;
   Application.Title:='lazKlock';
 
-  //{$IFDEF TEST}
-  //if FileExists('heap.trc') then
-  //  DeleteFile('heap.trc');
-  //GlobalSkipIfNoLeaks := true;
-  //SetHeapTraceOutput('heap.trc');
-  //{$endif}
+  {$IFDEF TEST}
+  if FileExists('heap.trc') then
+    DeleteFile('heap.trc');
+  SetHeapTraceOutput('heap.trc');
+  {$endif}
 
   Application.Initialize;
   frmSplashScreen := TfrmSplashScreen.Create(nil);
@@ -43,6 +42,7 @@ begin
 
   frmSplashScreen.Hide;
   frmSplashScreen.Free;
+
   Application.Run;
 end.
 

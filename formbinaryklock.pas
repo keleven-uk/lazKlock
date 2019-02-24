@@ -6,7 +6,7 @@ unit formBinaryKlock;
 
    The L.E.D's are actually implemented by using rectangular shapes,
    these can be either ON_COLOUR or OFF_COLOUR.
-   The shape was used instead of a L.E.D. component because they
+   The shape was used instead of a L.E.D. Component because they
    can be positioned closer together and they use LED system resources.
 }
 
@@ -129,6 +129,7 @@ procedure TfrmBinaryKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAct
 {  Stop timer on close, so not running when form not in use.    }
 begin
   tmrBinaryKlock.Enabled := false;
+  CloseAction            := caFree;
 end;
 
 procedure TfrmBinaryKlock.FormDestroy(Sender: TObject);
@@ -193,7 +194,7 @@ begin
 end;
 
 procedure TfrmBinaryKlock.MouseHook(Sender: TObject; Msg: Cardinal);
-{  Implements a dragable window.  Because the control fills the complete window
+{  Implements a draggable window.  Because the control fills the complete window
    We cant just catch the forms mouse events - so we use a global hook and
    filter out just the mouse movements.
 }

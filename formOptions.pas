@@ -154,6 +154,7 @@ type
     procedure ChckLstBxArchiveClickCheck(Sender: TObject);
     procedure clrBtnStickyNoteColourColorChanged(Sender: TObject);
     procedure clrBtnEventsColorChanged(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure rdGrpRelativeClick(Sender: TObject);
     procedure spnEdtEventsChanged(Sender: TObject);
     procedure edtEventsChanged(Sender: TObject);
@@ -181,7 +182,6 @@ type
 
   end;
 
-
 var
   frmOptions    : TfrmOptions;
   userBacOptions: Options;          //  holds all the user options.
@@ -205,6 +205,11 @@ begin
   //  Before userBacOptions is assigned, so use userOptions.
   lblSettingsFileName.Caption := userOptions.optionsName;
   DtEdtBirthDate.Date         := userOptions.birthdate;
+end;
+
+procedure TfrmOptions.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmOptions.FormActivate(Sender: TObject);
@@ -364,7 +369,7 @@ begin
   //  when the date is accepted on a TDateEdit, it runs a form activate for some reason.
   //  So we set the values here.
   userBacOptions.birthdate := DtEdtBirthDate.Date;
-  lblBirthDate.Caption     := format('Current BirthDate set to - %s', [DateTimeToStr(DtEdtBirthDate.Date)]);
+  lblBirthDate.Caption     := format('Current Birth Date set to - %s', [DateTimeToStr(DtEdtBirthDate.Date)]);
 end;
 
 procedure TfrmOptions.btrOptionsResetClick(Sender: TObject);
@@ -450,7 +455,7 @@ begin
 end;
 
 procedure TfrmOptions.SpnEdtMonitorMinitesChange(Sender: TObject);
-{  Set the time intewrval for the keep monitor awake routine.    }
+{  Set the time interval for the keep monitor awake routine.    }
 begin
   userBacOptions.keepMonitorAwakeMinutes := SpnEdtMonitorMinites.Value;
 end;
@@ -640,7 +645,7 @@ end;
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Timer options according to the state of the radio group.
 
-   index 0 - Timer To Show Milliseconds
+   Index 0 - Timer To Show Milliseconds
 }
 begin
   userBacOptions.timerMilliSeconds := ChckGrpTimerSettings.Checked[0];
@@ -689,7 +694,7 @@ end;
 //
 procedure TfrmOptions.edtEventsChanged(Sender: TObject);
 {  A generic handler for the Text Edits.
-   The name is extracted and used to set the appropiate options.
+   The name is extracted and used to set the appropriate options.
 }
 VAR
   itemName: string;
@@ -737,7 +742,7 @@ end;
 
 procedure TfrmOptions.clrBtnEventsColorChanged(Sender: TObject);
 {  A generic handler for the Events colour buttons.
-   The name is extracted and used to set the appropiate options.
+   The name is extracted and used to set the appropriate options.
 
    The fore colours are used for the font colours.
    The back colours are used for the form colours.

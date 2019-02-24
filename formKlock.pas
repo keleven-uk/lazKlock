@@ -295,6 +295,7 @@ type
     procedure edtMemoKeyChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lstBxEventsClick(Sender: TObject);
     procedure LstBxMemoNameClick(Sender: TObject);
@@ -384,6 +385,7 @@ implementation
 //
 // *********************************************************** Global **********
 //
+
 procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
@@ -430,6 +432,7 @@ begin
 
   DoubleBuffered := true;
   stsBrInfo.DoubleBuffered := true;
+
 end;
 
 procedure TfrmMain.parseTimeZoneData;
@@ -469,6 +472,8 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 {  called on form close, save screen position if needed.
 }
 begin
+  kLog.writeLog('FormKlock Closing');
+
   frmSplashScreen := TfrmSplashScreen.Create(nil);
   frmSplashScreen.Show;
   frmSplashScreen.Update;
@@ -477,9 +482,7 @@ begin
 
   if frmClipBoard.Visible then frmClipBoard.Visible := false;
 
-  logSplashFooter;                         // to populate splash screen top memo
-
-  kLog.writeLog('FormKlock Closing');
+  logSplashFooter;            // to populate splash screen top memo
 
   if userOptions.screenSave then
   begin
@@ -496,28 +499,34 @@ begin
     userOptions.writeCurrentOptions;
   end;
 
-  ev.killEvents;
   klog.writeLog('Killing Events');
+  ev.killEvents;
 
-  stickies.updateStickyNotes;
   kLog.writeLog('Updated Sticky Note File');
+  stickies.updateStickyNotes;
 
-  fs.removeFonts;            //  Remove all fonts from system.
-  fs.Free;                   //  Release the font store object.
-  ft.Free;                   //  Release the fuzzy time object.
-  ev.Free;                   //  Release the events store object.
-  fr.Free;                   //  release the friends store objects.
-  stickies.Free;             //  Release the Sticky Note store.
-  memorandum.Free;           //  Release the Memo store.
-  userOptions.Free;          //  Release the user options.
-  timeZone.Free;             //  Release the Time Lone object.
-  ConversionUnits.Free;      //  release the Conversion string list.
+  fs.removeFonts;                     //  Remove all fonts from system.
+  fs.Free;                            //  Release the font store object.
+  ft.Free;                            //  Release the fuzzy time object.
+  ev.Free;                            //  Release the events store object.
+  fr.Free;                            //  release the friends store objects.
+  stickies.Free;                      //  Release the Sticky Note store.
+  memorandum.Free;                    //  Release the Memo store.
+  userOptions.Free;                   //  Release the user options.
+  timeZone.Free;                      //  Release the Time Lone object.
+  ConversionUnits.Free;               //  release the Conversion string list.
 
   logFooter;
-  kLog.Free;                 //  Release the logger object.
 
   frmSplashScreen.Hide;
   frmSplashScreen.Free;
+
+  CloseAction := caFree;
+end;
+
+procedure TfrmMain.FormDestroy(Sender: TObject);
+begin
+  kLog.Free;                          //  Release the logger object.
 end;
 
 procedure TfrmMain.SetDefaults;
@@ -890,7 +899,7 @@ begin
 
   {  if system is idle, then keep monitor awake if required.    }
   if userOptions.keepMonitorAwake and
-     everyMinute(idleTime, userOptions.keepMonitorAwakeMinutes) then
+    everyMinute(idleTime, userOptions.keepMonitorAwakeMinutes) then
     keepMonitorAwake;
 end;
 

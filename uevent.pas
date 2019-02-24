@@ -177,7 +177,7 @@ begin
     fsOut.WriteBuffer(stage2Ack, sizeof(stage2Ack));   //  write stage 1 acknowledged.
     fsOut.WriteBuffer(stage3Ack, sizeof(stage3Ack));   //  write stage 1 acknowledged.
 
-    //  don't need to write due interval - thay are calculated
+    //  don't need to write due interval - they are calculated
   except
     on E: Exception do
       error('Error on Events Write' + LineEnding + E.Message);

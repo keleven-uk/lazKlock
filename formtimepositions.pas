@@ -1,7 +1,7 @@
 unit formTimePositions;
 
-{  Allows the user to cxhange the screen position of the extra Klocks.
-   These can sometime disappear - usually if run on a different monitor configuration.
+{  Allows the user to change the screen position of the extra Klocks.
+   These can sometimes disappear - usually if run on a different monitor configuration.
 }
 {$mode objfpc}{$H+}
 
@@ -40,6 +40,7 @@ type
 
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
   private
 
@@ -60,7 +61,7 @@ uses
 { TfrmTimePositions }
 
 procedure TfrmTimePositions.FormCreate(Sender: TObject);
-{  On form create, copy user options for time positons into spin edits.    }
+{  On form create, copy user options for time positions into spin edits.    }
 begin
   klog.writeLog('frmTimePositions Create');
 
@@ -77,7 +78,7 @@ begin
 end;
 
 procedure TfrmTimePositions.btnOKClick(Sender: TObject);
-{  Ok has been clicked, update user options with new positions.
+{  OK has been clicked, update user options with new positions.
    Does not check is been changed, just saves.
 }
 begin
@@ -94,6 +95,11 @@ begin
 
   userOptions.writeCurrentOptions;
   close;
+end;
+
+procedure TfrmTimePositions.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TfrmTimePositions.btnCancelClick(Sender: TObject);

@@ -1,7 +1,7 @@
 object frmInfo: TfrmInfo
-  Left = 944
+  Left = 1367
   Height = 306
-  Top = 21
+  Top = 95
   Width = 400
   BorderStyle = bsSingle
   Caption = 'Info'
@@ -11,9 +11,10 @@ object frmInfo: TfrmInfo
   Constraints.MaxWidth = 400
   Constraints.MinHeight = 306
   Constraints.MinWidth = 400
+  OnClose = FormClose
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.7'
+  LCLVersion = '2.0.0.4'
   object GroupBox1: TGroupBox
     Left = 8
     Height = 216
@@ -23,6 +24,7 @@ object frmInfo: TfrmInfo
     ClientHeight = 196
     ClientWidth = 380
     TabOrder = 0
+    OnClick = GroupBox1Click
     object SpnEdtYear: TSpinEdit
       Left = 163
       Height = 23
@@ -39,7 +41,7 @@ object frmInfo: TfrmInfo
       Left = 80
       Height = 15
       Top = 168
-      Width = 57
+      Width = 56
       Caption = 'Select Year'
       ParentColor = False
     end

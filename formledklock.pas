@@ -67,6 +67,8 @@ procedure TfrmLEDKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction)
 {  Stop timer on close, so not running when form not in use.    }
 begin
   TmrLEDKlock.Enabled := false;
+
+  CloseAction := caFree;
 end;
 
 procedure TfrmLEDKlock.FormDestroy(Sender: TObject);

@@ -38,7 +38,7 @@ uses
 function getDaylightSaving(Year: integer): TStringList;
 {  Returns daylight saving stuff.
 
-   The daylisght saving stuff is based on this -
+   The daylight saving stuff is based on this -
    http://www.delphiforfun.org/Programs/delphi_techniques/TimeZoneInfo.htm
 }
 var
@@ -154,7 +154,7 @@ end;
 
 function getLentDates(year: integer): TStringList;
 {  Returns the Lent dates for a given year.
-   lent start on Ash Wednesday, which is 46 days before Easter Sunday.
+   Lent start on Ash Wednesday, which is 46 days before Easter Sunday.
 }
 var
   lent: TdateTime;
@@ -218,7 +218,7 @@ begin
 
     result.add('');
 
-    {  The battery flag can be made of several flags anded togeter.  }
+    {  The battery flag can be made of several flags anded together.  }
     if isBitSet(powerStatus.BatteryFlag, 0) then
       result.add('High - the battery capacity is at more than 66 percent');
     if isBitSet(powerStatus.BatteryFlag, 1) then
@@ -350,9 +350,9 @@ end;
 function getMonitorStuff: TStringList;
 {  Added Monitor Stuff to the Info menu.
    This shows information about all the display monitors connects to the system.
-   This us gathered from Lazarus Tscreen and the WMI sysem [probably only windows then].
+   This us gathered from Lazarus Tscreen and the WMI system [probably only windows then].
 
-   It is a combination of several routinnes sourced from the internet.
+   It is a combination of several routines sourced from the internet.
    As always, thanks guys.
 }
 const
@@ -393,7 +393,7 @@ begin
     result.add(Format('Serial Number             %s', [getName(FWbemObject.SerialNumberID, 16)]));
     result.add(Format('User Friendly Name        %s', [getName(FWbemObject.UserFriendlyName, FWbemObject.UserFriendlyNameLength)]));
 
-    result.add(format('Dispaly resolution        %d x %d', [Screen.Monitors[count].Width, Screen.Monitors[count].Height]));
+    result.add(format('Display resolution        %d x %d', [Screen.Monitors[count].Width, Screen.Monitors[count].Height]));
 
     result.add(Format('Week Of Manufacture       %d', [Integer(FWbemObject.WeekOfManufacture)]));
     result.add(Format('Year Of Manufacture       %d', [Integer(FWbemObject.YearOfManufacture)]));
@@ -407,7 +407,7 @@ end;
 function getName(thing: OLEVariant; count: integer): string;
 {  The thing is an OLEVariant that contains a string, but held as a number
    of characters held in ASCII format.  This routines converts each number back
-   to its ASCII charactes and return the joined string.
+   to its ASCII characters and return the joined string.
 }
 var
   f: integer;

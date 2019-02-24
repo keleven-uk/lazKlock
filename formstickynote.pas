@@ -72,6 +72,7 @@ end;
 procedure TfrmStickyNote.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   kLog.writeLog('formStickyNote Close : ' + name);
+  CloseAction := caFree;
 end;
 
 procedure TfrmStickyNote.FormShow(Sender: TObject);

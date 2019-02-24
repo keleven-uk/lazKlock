@@ -26,6 +26,7 @@ type
     DateTimeIntervalChartSource1: TDateTimeIntervalChartSource;
     Label1                      : TLabel;
 
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
   private
     procedure plotChart(daysAlive: integer);
@@ -58,6 +59,11 @@ begin
   Label1.Caption := format('You have been alive %d days', [daysAlive]);
 
   plotChart(daysAlive);
+end;
+
+procedure TfrmBiorhythm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 

@@ -595,73 +595,77 @@ begin
     originalFileName := fvi.fileOriginalFileName;
     productName      := fvi.fileProductName;
     productVersion   := fvi.fileProductVersion;
+  finally
+    fvi.Free;
+  end;
 
-    try
-      // Read in xml file from disk
-      ReadXMLFile(Doc, optionsName);
-    except
-      on E: Exception do
-      begin
-        ShowMessage('ERROR: reading XML file.' + LineEnding + E.Message + LineEnding +
-          'Halting Program Execution');
-        Halt;
-      end;  //  on E:
-    end;    //  try
-
-    //  Global
-    PassNode := Doc.DocumentElement.FindNode('Global');
-
-    if assigned(PassNode) then
+  try
+    // Read in xml file from disk
+    ReadXMLFile(Doc, optionsName);
+  except
+    on E: Exception do
     begin
-      rtn := readChildAttribute(PassNode, 'formPosition', 'Top');
-      if rtn <> 'ERROR' then formTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'formPosition', 'Left');
-      if rtn <> 'ERROR' then formLeft := StrToInt(rtn);
+      ShowMessage('ERROR: reading XML file.' + LineEnding + E.Message + LineEnding +
+        'Halting Program Execution');
+      Halt;
+    end;  //  on E:
+  end;    //  try
 
-      rtn := readChild(PassNode, 'optionsName');
-      if rtn <> 'ERROR' then optionsName := ansistring(rtn);
-      rtn := readChild(PassNode, 'eventName');
-      if rtn <> 'ERROR' then eventName := ansistring(rtn);
-      rtn := readChild(PassNode, 'memoName');
-      if rtn <> 'ERROR' then memoName := ansistring(rtn);
-      rtn := readChild(PassNode, 'stickyName');
-      if rtn <> 'ERROR' then stickyName := ansistring(rtn);
-      rtn := readChild(PassNode, 'unitsName');
-      if rtn <> 'ERROR' then unitsName := ansistring(rtn);
-      rtn := readChild(PassNode, 'friendName');
-      if rtn <> 'ERROR' then friendName := ansistring(rtn);
-      rtn := readChild(PassNode, 'relativeFileName');
-      if rtn <> 'ERROR' then relativeFileName := StrToBool(rtn);
+  //  Global
+  PassNode := Doc.DocumentElement.FindNode('Global');
 
-      rtn := readChild(PassNode, 'runAtStartUp');
-      if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
-      rtn := readChild(PassNode, 'screenSave');
-      if rtn <> 'ERROR' then screenSave := StrToBool(rtn);
-      rtn := readChild(PassNode, 'defaultTab');
-      if rtn <> 'ERROR' then defaultTab := StrToInt(rtn);
-      rtn := readChild(PassNode, 'volume');
-      if rtn <> 'ERROR' then volume := ansistring(rtn);
-      rtn := readChild(PassNode, 'monitorClipboard');
-      if rtn <> 'ERROR' then monitorClipboard := StrToBool(rtn);
-      rtn := readChild(PassNode, 'CB_screenSave');
-      if rtn <> 'ERROR' then CB_screenSave := StrToBool(rtn);
-      rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Top');
-      if rtn <> 'ERROR' then CB_formTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Left');
-      if rtn <> 'ERROR' then CB_formLeft := StrToInt(rtn);
+  if assigned(PassNode) then
+  begin
+    rtn := readChildAttribute(PassNode, 'formPosition', 'Top');
+    if rtn <> 'ERROR' then formTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'formPosition', 'Left');
+    if rtn <> 'ERROR' then formLeft := StrToInt(rtn);
 
-      rtn := readChild(PassNode, 'Latitude');
-      if rtn <> 'ERROR' then Latitude := StrToFloat(rtn);
-      rtn := readChild(PassNode, 'Longitude');
-      if rtn <> 'ERROR' then Longitude := StrToFloat(rtn);
+    rtn := readChild(PassNode, 'optionsName');
+    if rtn <> 'ERROR' then optionsName := ansistring(rtn);
+    rtn := readChild(PassNode, 'eventName');
+    if rtn <> 'ERROR' then eventName := ansistring(rtn);
+    rtn := readChild(PassNode, 'memoName');
+    if rtn <> 'ERROR' then memoName := ansistring(rtn);
+    rtn := readChild(PassNode, 'stickyName');
+    if rtn <> 'ERROR' then stickyName := ansistring(rtn);
+    rtn := readChild(PassNode, 'unitsName');
+    if rtn <> 'ERROR' then unitsName := ansistring(rtn);
+    rtn := readChild(PassNode, 'friendName');
+    if rtn <> 'ERROR' then friendName := ansistring(rtn);
+    rtn := readChild(PassNode, 'relativeFileName');
+    if rtn <> 'ERROR' then relativeFileName := StrToBool(rtn);
 
-      rtn := readChild(PassNode, 'BirthDay');
-      if rtn <> 'ERROR' then birthdate := StrToDate(rtn);
-    end;
+    rtn := readChild(PassNode, 'runAtStartUp');
+    if rtn <> 'ERROR' then runAtStartUp := StrToBool(rtn);
+    rtn := readChild(PassNode, 'screenSave');
+    if rtn <> 'ERROR' then screenSave := StrToBool(rtn);
+    rtn := readChild(PassNode, 'defaultTab');
+    if rtn <> 'ERROR' then defaultTab := StrToInt(rtn);
+    rtn := readChild(PassNode, 'volume');
+    if rtn <> 'ERROR' then volume := ansistring(rtn);
+    rtn := readChild(PassNode, 'monitorClipboard');
+    if rtn <> 'ERROR' then monitorClipboard := StrToBool(rtn);
+    rtn := readChild(PassNode, 'CB_screenSave');
+    if rtn <> 'ERROR' then CB_screenSave := StrToBool(rtn);
+    rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Top');
+    if rtn <> 'ERROR' then CB_formTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Left');
+    if rtn <> 'ERROR' then CB_formLeft := StrToInt(rtn);
 
-    //  keep Monitor Awake
-    PassNode := Doc.DocumentElement.FindNode('keepMonitorAwake');
+    rtn := readChild(PassNode, 'Latitude');
+    if rtn <> 'ERROR' then Latitude := StrToFloat(rtn);
+    rtn := readChild(PassNode, 'Longitude');
+    if rtn <> 'ERROR' then Longitude := StrToFloat(rtn);
+    rtn := readChild(PassNode, 'BirthDay');
+    if rtn <> 'ERROR' then birthdate := StrToDate(rtn);
+  end;
 
+  //  keep Monitor Awake
+  PassNode := Doc.DocumentElement.FindNode('keepMonitorAwake');
+
+  if assigned(PassNode) then
+  begin
     rtn := readChild(PassNode, 'keepMonitorAwake');
     if rtn <> 'ERROR' then keepMonitorAwake := StrToBool(rtn);
     rtn := readChild(PassNode, '_keepMonitorAwakeF15');
@@ -670,238 +674,237 @@ begin
     if rtn <> 'ERROR' then _keepMonitorAwakeJiggle := StrToBool(rtn);
     rtn := readChild(PassNode, 'keepMonitorAwakeMinutes');
     if rtn <> 'ERROR' then keepMonitorAwakeMinutes := StrToInt(rtn);
-
-    //  Time
-    PassNode := Doc.DocumentElement.FindNode('Time');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'defaultTime');
-      if rtn <> 'ERROR' then defaultTime := StrToInt(rtn);
-      rtn := readChild(PassNode, 'netTimeSeconds');
-      if rtn <> 'ERROR' then netTimeSeconds := StrToBool(rtn);
-      rtn := readChild(PassNode, 'swatchCentibeats');
-      if rtn <> 'ERROR' then swatchCentibeats := StrToBool(rtn);
-      rtn := readChild(PassNode, 'fuzzyTimeBalloon');
-      if rtn <> 'ERROR' then fuzzyTimeBalloon := StrToBool(rtn);
-      rtn := readChild(PassNode, 'displayIdleTime');
-      if rtn <> 'ERROR' then displayIdleTime := StrToBool(rtn);
-      rtn := readChild(PassNode, 'fuzzyTimeVerbose');
-      if rtn <> 'ERROR' then fuzzyTimeVerbose := StrToBool(rtn);
-
-      rtn := readChild(PassNode, 'speakTime');
-      if rtn <> 'ERROR' then speakTime := StrToBool(rtn);
-      rtn := readChild(PassNode, 'speakTimeVolume');
-      if rtn <> 'ERROR' then speakTimeVolume := StrToInt(rtn);
-      rtn := readChild(PassNode, 'speakTimeDuration');
-      if rtn <> 'ERROR' then speakTimeDuration := StrToInt(rtn);
-
-      rtn := readChild(PassNode, 'display24Hour');
-      if rtn <> 'ERROR' then display24Hour := StrToBool(rtn);
-
-      rtn := readChild(PassNode, 'hourPips');
-      if rtn <> 'ERROR' then hourPips := StrToBool(rtn);
-      rtn := readChild(PassNode, 'hourChimes');
-      if rtn <> 'ERROR' then hourChimes := StrToBool(rtn);
-      rtn := readChild(PassNode, 'halfChimes');
-      if rtn <> 'ERROR' then halfChimes := StrToBool(rtn);
-      rtn := readChild(PassNode, 'quarterChimes');
-      if rtn <> 'ERROR' then quarterChimes := StrToBool(rtn);
-      rtn := readChild(PassNode, 'threeQuarterChimes');
-      if rtn <> 'ERROR' then threeQuarterChimes := StrToBool(rtn);
-
-      rtn := readChild(PassNode, 'christmasFont');
-      if rtn <> 'ERROR' then christmasFont := StrToBool(rtn);
-      rtn := readChild(PassNode, 'easterFont');
-      if rtn <> 'ERROR' then easterFont := StrToBool(rtn);
-      rtn := readChild(PassNode, 'valentinesFont');
-      if rtn <> 'ERROR' then valentinesFont := StrToBool(rtn);
-      rtn := readChild(PassNode, 'haloweenFont');
-      if rtn <> 'ERROR' then haloweenFont := StrToBool(rtn);
-    end;
-
-    //  Timer
-    PassNode := Doc.DocumentElement.FindNode('Timer');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'timerMilliSeconds');
-      if rtn <> 'ERROR' then timerMilliSeconds := StrToBool(rtn);
-    end;
-
-    //  Analogue Klock
-    PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChildAttribute(PassNode, 'analogueForm', 'Top');
-      if rtn <> 'ERROR' then analogueFormTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'analogueForm', 'Left');
-      if rtn <> 'ERROR' then analogueFormLeft := StrToInt(rtn);
-      rtn := readChild(PassNode, 'analogueScreenSave');
-      if rtn <> 'ERROR' then analogueScreenSave := StrToBool(rtn);
-      rtn := readChild(PassNode, 'analogueAlwaysOnTop');
-      if rtn <> 'ERROR' then analogueAlwaysOnTop := StrToBool(rtn);
-    end;
-
-    //  LED Klock
-    PassNode := Doc.DocumentElement.FindNode('LEDKlock');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChildAttribute(PassNode, 'LEDForm', 'Top');
-      if rtn <> 'ERROR' then LEDFormTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'LEDForm', 'Left');
-      if rtn <> 'ERROR' then LEDFormLeft := StrToInt(rtn);
-      rtn := readChild(PassNode, 'LEDScreenSave');
-      if rtn <> 'ERROR' then LEDScreenSave := StrToBool(rtn);
-      rtn := readChild(PassNode, 'LEDlongDate');
-      if rtn <> 'ERROR' then LEDlongDate := StrToBool(rtn);
-      rtn := readChild(PassNode, 'LEDAlwaysOnTop');
-      if rtn <> 'ERROR' then LEDAlwaysOnTop := StrToBool(rtn);
-    end;
-
-    //  Binary Klock
-    PassNode := Doc.DocumentElement.FindNode('BinaryKlock');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChildAttribute(PassNode, 'BinaryForm', 'Top');
-      if rtn <> 'ERROR' then BinaryFormTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'BinaryForm', 'Left');
-      if rtn <> 'ERROR' then BinaryFormLeft := StrToInt(rtn);
-      rtn := readChild(PassNode, 'BinaryScreenSave');
-      if rtn <> 'ERROR' then BinaryScreenSave := StrToBool(rtn);
-      rtn := readChild(PassNode, 'BinaryFormat');
-      if rtn <> 'ERROR' then BinaryFormat := StrToBool(rtn);
-      rtn := readChild(PassNode, 'BinaryAlwaysOnTop');
-      if rtn <> 'ERROR' then BinaryAlwaysOnTop := StrToBool(rtn);
-    end;
-
-    // Small Text Klock
-    PassNode := Doc.DocumentElement.FindNode('SmallTextKlock');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Top');
-      if rtn <> 'ERROR' then smallTextFormTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Left');
-      if rtn <> 'ERROR' then smallTextFormLeft := StrToInt(rtn);
-      rtn := readChild(PassNode, 'smallTextScreenSave');
-      if rtn <> 'ERROR' then smallTextScreenSave := StrToBool(rtn);
-      rtn := readChild(PassNode, 'smallTextTransparent');
-      if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
-      rtn := readChild(PassNode, 'smallAlwaysOnTop');
-      if rtn <> 'ERROR' then smallAlwaysOnTop := StrToBool(rtn);
-    end;
-
-    // Floating Text Klock
-    PassNode := Doc.DocumentElement.FindNode('FloatingTextKlock');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'floatingTextScreenSave');
-      if rtn <> 'ERROR' then floatingTextScreenSave := StrToBool(rtn);
-      rtn := readChildAttribute(PassNode, 'floatingTextForm', 'Top');
-      if rtn <> 'ERROR' then floatingTextFormTop := StrToInt(rtn);
-      rtn := readChildAttribute(PassNode, 'floatingTextFormLeft', 'Left');
-      if rtn <> 'ERROR' then floatingTextFormLeft := StrToInt(rtn);
-      rtn := readChild(PassNode, 'floatingTextFont');
-      if rtn <> 'ERROR' then floatingTextFont := StringToFont(rtn);
-      rtn := readChild(PassNode, 'floatingTextUseKlockFont');
-      if rtn <> 'ERROR' then floatingTextUseKlockFont := StrToBool(rtn);
-      rtn := readChild(PassNode, 'floatingAlwaysOnTop');
-      if rtn <> 'ERROR' then floatingAlwaysOnTop := StrToBool(rtn);
-    end;
-
-    // memos
-    PassNode := Doc.DocumentElement.FindNode('Memo');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'useDefaultpassWord');
-      if rtn <> 'ERROR' then useDefaultpassWord := StrToBool(rtn);
-      rtn := readChild(PassNode, 'defaultpassWord');
-      if rtn <> 'ERROR' then defaultpassWord := ansistring(rtn);
-      rtn := readChild(PassNode, 'decryptTimeOut');
-      if rtn <> 'ERROR' then decryptTimeOut := StrToInt(rtn);
-    end;
-
-    //Sticky Notes
-    PassNode := Doc.DocumentElement.FindNode('StickyNote');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'stickyColor');
-      if rtn <> 'ERROR' then stickyColor := StringToColor(rtn);
-      rtn := readChild(PassNode, 'stickyFont');
-      if rtn <> 'ERROR' then stickyFont := StringToFont(rtn);
-    end;
-
-    //  Events
-    PassNode := Doc.DocumentElement.FindNode('Events');
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'eventsStage1Days');
-      if rtn <> 'ERROR' then eventsStage1Days := StrToInt(rtn);
-      rtn := readChild(PassNode, 'eventsStage2Days');
-      if rtn <> 'ERROR' then eventsStage2Days := StrToInt(rtn);
-      rtn := readChild(PassNode, 'eventsStage3Days');
-      if rtn <> 'ERROR' then eventsStage3Days := StrToInt(rtn);
-
-      rtn := readChild(PassNode, 'eventsStage1Mess');
-      if rtn <> 'ERROR' then eventsStage1Mess := ansistring(rtn);
-      rtn := readChild(PassNode, 'eventsStage2Mess');
-      if rtn <> 'ERROR' then eventsStage2Mess := ansistring(rtn);
-      rtn := readChild(PassNode, 'eventsStage3Mess');
-      if rtn <> 'ERROR' then eventsStage3Mess := ansistring(rtn);
-
-      rtn := readChild(PassNode, 'eventsStage1ForeColour');
-      if rtn <> 'ERROR' then eventsStage1ForeColour := StringToColor(rtn);
-      rtn := readChild(PassNode, 'eventsStage2ForeColour');
-      if rtn <> 'ERROR' then eventsStage2ForeColour := StringToColor(rtn);
-      rtn := readChild(PassNode, 'eventsStage3ForeColour');
-      if rtn <> 'ERROR' then eventsStage3ForeColour := StringToColor(rtn);
-      rtn := readChild(PassNode, 'eventsStage1BackColour');
-      if rtn <> 'ERROR' then eventsStage1BackColour := StringToColor(rtn);
-      rtn := readChild(PassNode, 'eventsStage2BackColour');
-      if rtn <> 'ERROR' then eventsStage2BackColour := StringToColor(rtn);
-      rtn := readChild(PassNode, 'eventsStage3BackColour');
-      if rtn <> 'ERROR' then eventsStage3BackColour := StringToColor(rtn);
-
-      rtn := readChild(PassNode, 'eventsSpeakMesssage');
-      if rtn <> 'ERROR' then eventsSpeakMesssage := StrToBool(rtn);
-    end;
-
-    //  Logging
-    PassNode := Doc.DocumentElement.FindNode('Logging');
-
-    if assigned(PassNode) then
-    begin
-      rtn := readChild(PassNode, 'LogginginUse');
-      if rtn <> 'ERROR' then logging := StrToBool(rtn);
-      rtn := readChild(PassNode, 'cullLogs');
-      if rtn <> 'ERROR' then cullLogs := StrToBool(rtn);
-      rtn := readChild(PassNode, 'CullLogsDays');
-      if rtn <> 'ERROR' then CullLogsDays := StrToInt(rtn);
-    end;
-
-  finally
-    // finally, free the document
-    Doc.Free;
   end;
+
+  //  Time
+  PassNode := Doc.DocumentElement.FindNode('Time');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'defaultTime');
+    if rtn <> 'ERROR' then defaultTime := StrToInt(rtn);
+    rtn := readChild(PassNode, 'netTimeSeconds');
+    if rtn <> 'ERROR' then netTimeSeconds := StrToBool(rtn);
+    rtn := readChild(PassNode, 'swatchCentibeats');
+    if rtn <> 'ERROR' then swatchCentibeats := StrToBool(rtn);
+    rtn := readChild(PassNode, 'fuzzyTimeBalloon');
+    if rtn <> 'ERROR' then fuzzyTimeBalloon := StrToBool(rtn);
+    rtn := readChild(PassNode, 'displayIdleTime');
+    if rtn <> 'ERROR' then displayIdleTime := StrToBool(rtn);
+    rtn := readChild(PassNode, 'fuzzyTimeVerbose');
+    if rtn <> 'ERROR' then fuzzyTimeVerbose := StrToBool(rtn);
+
+    rtn := readChild(PassNode, 'speakTime');
+    if rtn <> 'ERROR' then speakTime := StrToBool(rtn);
+    rtn := readChild(PassNode, 'speakTimeVolume');
+    if rtn <> 'ERROR' then speakTimeVolume := StrToInt(rtn);
+    rtn := readChild(PassNode, 'speakTimeDuration');
+    if rtn <> 'ERROR' then speakTimeDuration := StrToInt(rtn);
+
+    rtn := readChild(PassNode, 'display24Hour');
+    if rtn <> 'ERROR' then display24Hour := StrToBool(rtn);
+
+    rtn := readChild(PassNode, 'hourPips');
+    if rtn <> 'ERROR' then hourPips := StrToBool(rtn);
+    rtn := readChild(PassNode, 'hourChimes');
+    if rtn <> 'ERROR' then hourChimes := StrToBool(rtn);
+    rtn := readChild(PassNode, 'halfChimes');
+    if rtn <> 'ERROR' then halfChimes := StrToBool(rtn);
+    rtn := readChild(PassNode, 'quarterChimes');
+    if rtn <> 'ERROR' then quarterChimes := StrToBool(rtn);
+    rtn := readChild(PassNode, 'threeQuarterChimes');
+    if rtn <> 'ERROR' then threeQuarterChimes := StrToBool(rtn);
+
+    rtn := readChild(PassNode, 'christmasFont');
+    if rtn <> 'ERROR' then christmasFont := StrToBool(rtn);
+    rtn := readChild(PassNode, 'easterFont');
+    if rtn <> 'ERROR' then easterFont := StrToBool(rtn);
+    rtn := readChild(PassNode, 'valentinesFont');
+    if rtn <> 'ERROR' then valentinesFont := StrToBool(rtn);
+    rtn := readChild(PassNode, 'haloweenFont');
+    if rtn <> 'ERROR' then haloweenFont := StrToBool(rtn);
+  end;
+
+  //  Timer
+  PassNode := Doc.DocumentElement.FindNode('Timer');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'timerMilliSeconds');
+    if rtn <> 'ERROR' then timerMilliSeconds := StrToBool(rtn);
+  end;
+
+  //  Analogue Klock
+  PassNode := Doc.DocumentElement.FindNode('AnalogueKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChildAttribute(PassNode, 'analogueForm', 'Top');
+    if rtn <> 'ERROR' then analogueFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'analogueForm', 'Left');
+    if rtn <> 'ERROR' then analogueFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'analogueScreenSave');
+    if rtn <> 'ERROR' then analogueScreenSave := StrToBool(rtn);
+    rtn := readChild(PassNode, 'analogueAlwaysOnTop');
+    if rtn <> 'ERROR' then analogueAlwaysOnTop := StrToBool(rtn);
+  end;
+
+  //  LED Klock
+  PassNode := Doc.DocumentElement.FindNode('LEDKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChildAttribute(PassNode, 'LEDForm', 'Top');
+    if rtn <> 'ERROR' then LEDFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'LEDForm', 'Left');
+    if rtn <> 'ERROR' then LEDFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'LEDScreenSave');
+    if rtn <> 'ERROR' then LEDScreenSave := StrToBool(rtn);
+    rtn := readChild(PassNode, 'LEDlongDate');
+    if rtn <> 'ERROR' then LEDlongDate := StrToBool(rtn);
+    rtn := readChild(PassNode, 'LEDAlwaysOnTop');
+    if rtn <> 'ERROR' then LEDAlwaysOnTop := StrToBool(rtn);
+  end;
+
+  //  Binary Klock
+  PassNode := Doc.DocumentElement.FindNode('BinaryKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChildAttribute(PassNode, 'BinaryForm', 'Top');
+    if rtn <> 'ERROR' then BinaryFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'BinaryForm', 'Left');
+    if rtn <> 'ERROR' then BinaryFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'BinaryScreenSave');
+    if rtn <> 'ERROR' then BinaryScreenSave := StrToBool(rtn);
+    rtn := readChild(PassNode, 'BinaryFormat');
+    if rtn <> 'ERROR' then BinaryFormat := StrToBool(rtn);
+    rtn := readChild(PassNode, 'BinaryAlwaysOnTop');
+    if rtn <> 'ERROR' then BinaryAlwaysOnTop := StrToBool(rtn);
+  end;
+
+  // Small Text Klock
+  PassNode := Doc.DocumentElement.FindNode('SmallTextKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Top');
+    if rtn <> 'ERROR' then smallTextFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'SmallTextForm', 'Left');
+    if rtn <> 'ERROR' then smallTextFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'smallTextScreenSave');
+    if rtn <> 'ERROR' then smallTextScreenSave := StrToBool(rtn);
+    rtn := readChild(PassNode, 'smallTextTransparent');
+    if rtn <> 'ERROR' then smallTextTransparent := StrToBool(rtn);
+    rtn := readChild(PassNode, 'smallAlwaysOnTop');
+    if rtn <> 'ERROR' then smallAlwaysOnTop := StrToBool(rtn);
+  end;
+
+  // Floating Text Klock
+  PassNode := Doc.DocumentElement.FindNode('FloatingTextKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'floatingTextScreenSave');
+    if rtn <> 'ERROR' then floatingTextScreenSave := StrToBool(rtn);
+    rtn := readChildAttribute(PassNode, 'floatingTextForm', 'Top');
+    if rtn <> 'ERROR' then floatingTextFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'floatingTextFormLeft', 'Left');
+    if rtn <> 'ERROR' then floatingTextFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'floatingTextFont');
+    if rtn <> 'ERROR' then floatingTextFont := StringToFont(rtn);
+    rtn := readChild(PassNode, 'floatingTextUseKlockFont');
+    if rtn <> 'ERROR' then floatingTextUseKlockFont := StrToBool(rtn);
+    rtn := readChild(PassNode, 'floatingAlwaysOnTop');
+    if rtn <> 'ERROR' then floatingAlwaysOnTop := StrToBool(rtn);
+  end;
+
+  // memos
+  PassNode := Doc.DocumentElement.FindNode('Memo');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'useDefaultpassWord');
+    if rtn <> 'ERROR' then useDefaultpassWord := StrToBool(rtn);
+    rtn := readChild(PassNode, 'defaultpassWord');
+    if rtn <> 'ERROR' then defaultpassWord := ansistring(rtn);
+    rtn := readChild(PassNode, 'decryptTimeOut');
+    if rtn <> 'ERROR' then decryptTimeOut := StrToInt(rtn);
+  end;
+
+  //Sticky Notes
+  PassNode := Doc.DocumentElement.FindNode('StickyNote');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'stickyColor');
+    if rtn <> 'ERROR' then stickyColor := StringToColor(rtn);
+    rtn := readChild(PassNode, 'stickyFont');
+    if rtn <> 'ERROR' then stickyFont := StringToFont(rtn);
+  end;
+
+  //  Events
+  PassNode := Doc.DocumentElement.FindNode('Events');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'eventsStage1Days');
+    if rtn <> 'ERROR' then eventsStage1Days := StrToInt(rtn);
+    rtn := readChild(PassNode, 'eventsStage2Days');
+    if rtn <> 'ERROR' then eventsStage2Days := StrToInt(rtn);
+    rtn := readChild(PassNode, 'eventsStage3Days');
+    if rtn <> 'ERROR' then eventsStage3Days := StrToInt(rtn);
+
+    rtn := readChild(PassNode, 'eventsStage1Mess');
+    if rtn <> 'ERROR' then eventsStage1Mess := ansistring(rtn);
+    rtn := readChild(PassNode, 'eventsStage2Mess');
+    if rtn <> 'ERROR' then eventsStage2Mess := ansistring(rtn);
+    rtn := readChild(PassNode, 'eventsStage3Mess');
+    if rtn <> 'ERROR' then eventsStage3Mess := ansistring(rtn);
+
+    rtn := readChild(PassNode, 'eventsStage1ForeColour');
+    if rtn <> 'ERROR' then eventsStage1ForeColour := StringToColor(rtn);
+    rtn := readChild(PassNode, 'eventsStage2ForeColour');
+    if rtn <> 'ERROR' then eventsStage2ForeColour := StringToColor(rtn);
+    rtn := readChild(PassNode, 'eventsStage3ForeColour');
+    if rtn <> 'ERROR' then eventsStage3ForeColour := StringToColor(rtn);
+    rtn := readChild(PassNode, 'eventsStage1BackColour');
+    if rtn <> 'ERROR' then eventsStage1BackColour := StringToColor(rtn);
+    rtn := readChild(PassNode, 'eventsStage2BackColour');
+    if rtn <> 'ERROR' then eventsStage2BackColour := StringToColor(rtn);
+    rtn := readChild(PassNode, 'eventsStage3BackColour');
+    if rtn <> 'ERROR' then eventsStage3BackColour := StringToColor(rtn);
+
+    rtn := readChild(PassNode, 'eventsSpeakMesssage');
+    if rtn <> 'ERROR' then eventsSpeakMesssage := StrToBool(rtn);
+  end;
+
+  //  Logging
+  PassNode := Doc.DocumentElement.FindNode('Logging');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'LogginginUse');
+    if rtn <> 'ERROR' then logging := StrToBool(rtn);
+    rtn := readChild(PassNode, 'cullLogs');
+    if rtn <> 'ERROR' then cullLogs := StrToBool(rtn);
+    rtn := readChild(PassNode, 'CullLogsDays');
+    if rtn <> 'ERROR' then CullLogsDays := StrToInt(rtn);
+  end;
+
+  Doc.Free;
 end;
 
 procedure Options.writeDefaultOptions;
 {  Sets us some sensible defaults.
-   Used if the useroptions file does not exist.
+   Used if the userOptions file does not exist.
    The filename is specified when the user options class is created.
    The file info is re-read, in case is has changed
 }
 var
   fvi: myFileVersionInfo;
 begin
-  //  retrieve file info i.e build numner etc.
+  //  retrieve file info i.e build number etc.
   fvi := myFileVersionInfo.Create;
   fvi.GetFileInfo;
 
@@ -915,6 +918,8 @@ begin
   originalFileName := fvi.fileOriginalFileName;
   productName      := fvi.fileProductName;
   productVersion   := fvi.fileProductVersion;
+
+  fvi.Free;
 
   //  optionsName set up in create
   eventName        := GetAppConfigDir(False) + 'Event.bin';
@@ -1245,6 +1250,7 @@ begin
     end;    //  try
 
   finally
+    fvi.Free;
     Doc.Free;
   end;
 end;

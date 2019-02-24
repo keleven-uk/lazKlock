@@ -16,7 +16,7 @@ object frmEvent: TfrmEvent
   OnMouseEnter = FormMouseEnter
   OnMouseLeave = FormMouseLeave
   OnShow = FormShow
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.4'
   object lblEvent: TLabel
     Left = 16
     Height = 30

@@ -13,7 +13,7 @@ object frmFloatingKlock: TfrmFloatingKlock
   OnDestroy = FormDestroy
   OnShow = FormShow
   PopupMenu = PopupMenu1
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.4'
   object lblFloatingTime: TLabel
     Left = 0
     Height = 110

@@ -137,8 +137,8 @@ procedure fontStore.addFonts;
 Var
  fontFile: String;
 begin
+  klog.writeLog('fontStore.addFonts');
   try
-
     for fontFile in fontFiles do
     begin
       If FileExists(fontFile) Then

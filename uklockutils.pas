@@ -459,6 +459,7 @@ procedure logMessage(message: string);
 }
 begin
   klog.writeLog(message);
+  Application.Processmessages;
   if (frmSplashScreen <> nil) then
     frmSplashScreen.MemoSplashScreenInfo.Lines.Add(message);
 end;
@@ -481,7 +482,7 @@ begin
   frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
   frmSplashScreen.MemoSplashScreenData.Lines.Add('System has been running for ' + getUpTime('System'));
   frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock has been running for  ' + getUpTime('Application'));
-  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock Closing Down [normaly]');
+  frmSplashScreen.MemoSplashScreenData.Lines.Add('Klock Closing Down [normally]');
   frmSplashScreen.MemoSplashScreenData.Lines.Add('..............................................................');
 end;
 
@@ -674,7 +675,7 @@ procedure pressF15;
 {  This simulates the pressing of the <CTRL F15> key.
    This is used to keep the monitor awake i.e. not going into sleep mode.
 
-   <CTRL F15> should be reconised by most systems, but is rarely used in applications.
+   <CTRL F15> should be recognised by most systems, but is rarely used in applications
                                                    and does not appear on most keyboards.
 }
 begin
@@ -684,7 +685,7 @@ begin
 end;
 
 procedure jiggleMouse;
-{  This jiggles the mouse, it moves the mouse one poixel and then back again.
+{  This jiggles the mouse, it moves the mouse one pixel and then back again.
     This is used to keep the monitor awake where <CTRL F15> can't be used.
 }
 begin
@@ -693,6 +694,9 @@ begin
 end;
 
 procedure keepMonitorAwake;
+{  If selected, will keep the monitor awake by either simulating pressing F15
+   or jiggling the mouse.
+}
 begin
   if userOptions.keepMonitorAwakeF15 then
     pressF15

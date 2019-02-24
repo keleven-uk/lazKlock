@@ -13,9 +13,10 @@ object frmTimePositions: TfrmTimePositions
   Constraints.MaxWidth = 320
   Constraints.MinHeight = 320
   Constraints.MinWidth = 320
+  OnClose = FormClose
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.4'
   object Panel1: TPanel
     Left = 16
     Height = 224

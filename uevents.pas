@@ -12,7 +12,7 @@ interface
 uses
   Classes, SysUtils, uEvent, fgl, Forms, Dialogs, Graphics, StdCtrls,
   ExtCtrls, LCLType, LCLIntf, Controls, Menus, FileUtil, dateUtils,
-  formEvent;
+  formEvent, uweddingAnniversary;
 
 type
   Events = class
@@ -83,6 +83,7 @@ const
 
 VAR
   eventsStore: keyStore;
+  wg         : WeddingGifts;
 
 implementation
 
@@ -94,6 +95,8 @@ begin
   eventsStore        := keyStore.Create;       //  initial eventStore
   eventsStore.Sorted := true;
   eventsCount        := 0;
+
+  wg := WeddingGifts.Create;
 
   _eventsTypes := TStringList.Create;
   _eventsTypes.CommaText := ('"Anniversary", "Appointment", "Birthday", "Motor", "Holiday", "Meeting",' +
@@ -122,6 +125,8 @@ destructor Events.Destroy;
 begin
   eventsStore.free;
   _eventsTypes.free;
+
+  wg.free;
 
   inherited;
 end;
@@ -291,7 +296,7 @@ end;
 
 procedure Events.sortEventsStore;
 {  Sorts the event store - by a simple bubble sort.
-   if the data set gets large, may need a better sort routine.
+   If the data set gets large, may need a better sort routine.
 
    First the entry id is updated with the current due days.
    Secondly the store is sorted using the due days [lowest first].
@@ -328,8 +333,8 @@ end;
 function Events.determineDueDays(eventDate: string): integer;
 {  Returns the number of days the event is due, event date is passed in.
 
-   If the event date is in the future [current or future year] then return days differance.
-   if the event date is in the past [previous year] then substituse current year and return days differance.
+   If the event date is in the future [current or future year] then return days difference.
+   If the event date is in the past [previous year] then substitute current year and return days difference.
 
 }
 VAR
@@ -372,7 +377,7 @@ procedure Events.actionEvent(pos: integer; stage: integer);
 }
 VAR
   mess: string;
-  fcol: TColor;                           //  Fore colour - coulour of font.
+  fcol: TColor;                           //  Fore colour - colour of font.
   bcol: TColor;                           //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                        //  ev = event Form
   lb  : TLabel;
@@ -413,7 +418,7 @@ begin
   ev.AlphaBlend := true;
 
   ev.pos   := pos;                       //  pass to the form,
-  ev.stage := stage;                     //  so the foram ia aware which event to acknowledge.
+  ev.stage := stage;                     //  so the form is aware which event to acknowledge.
 
   lb            := ev.FindChildControl('lblEvent') as TLabel;
   lb.Font.Color := fcol;
@@ -471,7 +476,7 @@ begin
 end;
 
 procedure Events.acknowledgeEvent(pos: integer; stage: integer);
-{  The event has been acknowleged, so set the appropiate flag to true.
+{  The event has been acknowledged, so set the appropriate flag to true.
 
    This is called from from event form.
 }
