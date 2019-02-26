@@ -1891,12 +1891,20 @@ Currently
 
 Build 102 [2.5.0.102]
 
+commit b464fc1aaa4f9bafdeab654339037f0acc1af375
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Thu Sep 20 21:36:15 2018 +0100
+
 Updated Help.
 
 Merged with master
 
 
 Build 103 [2.5.0.103]
+
+commit aa3b88f018619dbb98dcbc78aafe12d01c6add77
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sat Sep 29 19:35:31 2018 +0100
 
 formKlock - tidied up code.  Removed duplcate displayMemo, displayFrend and
 displayEvent.
@@ -1916,6 +1924,10 @@ Merged with master
 
 
 Build 104 [2.5.0.104]
+
+commit 5f68cdf21de32d198f38ee0f73dbc15b12cbd93d
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Thu Oct 4 23:45:40 2018 +0100
 
 formOptions - added option to save achieve with either relative or absolute
 pathnames.  The option is save in user options.
@@ -1939,6 +1951,10 @@ Updated Help.
 
 Build 105 [2.5.0.105]
 
+commit 62be927095c90163d44cdc016fcd6cb1f4734ae4
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sun Feb 24 21:15:07 2019 +0000
+
 Corrected memory leaks in uOptions.pas - not freeing fvi object.
 
 Added CloaseAction := caFree to all forms.
@@ -1953,5 +1969,20 @@ Corrected spelling.
 
 14188 lines of source code.
 7892 statements
+16.4% comment
+
+
+Build 106 [2.5.1.106]
+
+Some time ago, I changed formAbout so that it was created on demand and shown
+model.  This change in the main Klock file was not mirrored into
+formFloatingForm.  This caused a application crash if the about form was
+launched from the floating text Klock.  Change not done.
+
+Also removed the procedure addEvents form floatingText, this is going to be
+included in the new scrolling text Klock.
+
+14187 lines of source code.
+7891 statements
 16.4% comment
 

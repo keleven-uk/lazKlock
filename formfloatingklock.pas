@@ -44,16 +44,16 @@ type
   end;
 
   TfrmFloatingKlock = class(TForm)
-    FontDialog1      : TFontDialog;
-    lblFloatingTime  : TLabel;
+    FontDialog1       : TFontDialog;
+    lblFloatingTime   : TLabel;
     MnItmShowClipBoard: TMenuItem;
-    MnItmAlwaysOnTop : TMenuItem;
-    MnItmFont        : TMenuItem;
-    MnItmAbout       : TMenuItem;
-    MnItmNewStickNote: TMenuItem;
-    MnItmExit        : TMenuItem;
-    PopupMenu1       : TPopupMenu;
-    TmrFloatingText  : TTimer;
+    MnItmAlwaysOnTop  : TMenuItem;
+    MnItmFont         : TMenuItem;
+    MnItmAbout        : TMenuItem;
+    MnItmNewStickNote : TMenuItem;
+    MnItmExit         : TMenuItem;
+    PopupMenu1        : TPopupMenu;
+    TmrFloatingText   : TTimer;
 
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -68,7 +68,6 @@ type
 
     procedure MouseHook(Sender: TObject; Msg: Cardinal);
     function GetTextSize(AText: String; AFont: TFont): textSize;
-    procedure addEvents;
   public
 
   end;
@@ -114,7 +113,7 @@ begin
 
   Application.AddOnUserInputHandler(@MouseHook);
 
-  {the color were going to make transparent the red that the form background is set to}
+  {the color were going to make transparent the black that the form background is set to}
   transparency := clBlack;
 
   {call the function to do it}
@@ -170,7 +169,7 @@ begin
 
   lblFloatingTime.Top      := 4;
   lblFloatingTime.Left     := 4;
-  lblFloatingTime.AutoSize := true;
+  //lblFloatingTime.AutoSize := true;
 end;
 
 procedure TfrmFloatingKlock.MouseHook(Sender: TObject; Msg: Cardinal);
@@ -239,13 +238,7 @@ begin
   width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
-  lblFloatingTime.AdjustFontForOptimalFill;
-end;
-
-procedure TfrmFloatingKlock.addEvents;
-
-begin
-
+  //lblFloatingTime.AdjustFontForOptimalFill;
 end;
 
 function TfrmFloatingKlock.GetTextSize(AText: String; AFont: TFont): textSize;
@@ -311,7 +304,12 @@ begin
     end;
     'MnItmNewStickNote' : stickies.new(userOptions.stickyColor, userOptions.stickyFont);
     'MnItmShowClipBoard': frmClipBoard.Visible := true;
-    'MnItmAbout'        : frmAbout.Show;
+    'MnItmAbout'        :
+    begin
+      frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+      frmAbout.ShowModal;                 //frmAbout is displayed
+      FreeAndNil(frmAbout);               //frmAbout is released
+    end;
     'MnItmExit'         :
     begin
     frmMain.TrayIcon.Visible := False;

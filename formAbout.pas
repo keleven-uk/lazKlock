@@ -74,6 +74,7 @@ end;
 
 procedure TfrmAbout.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
+    kLog.writeLog('FormAbout Close');
   CloseAction := caFree;
 end;
 
