@@ -169,7 +169,7 @@ begin
 
   lblFloatingTime.Top      := 4;
   lblFloatingTime.Left     := 4;
-  //lblFloatingTime.AutoSize := true;
+  lblFloatingTime.AutoSize := true;
 end;
 
 procedure TfrmFloatingKlock.MouseHook(Sender: TObject; Msg: Cardinal);
@@ -238,7 +238,7 @@ begin
   width  := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).width;
   height := GetTextSize(lblFloatingTime.Caption, lblFloatingTime.Font).height;
 
-  //lblFloatingTime.AdjustFontForOptimalFill;
+  lblFloatingTime.AdjustFontForOptimalFill;
 end;
 
 function TfrmFloatingKlock.GetTextSize(AText: String; AFont: TFont): textSize;

@@ -16,7 +16,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  ExtCtrls, LCLIntf, LCLType, Menus, LMessages, StdCtrls, strutils;
+  ExtCtrls, LCLIntf, LCLType, Menus, LMessages, StdCtrls, strutils, formClipBoard;
 
 { TODO : Should these be user selectable. }
 const
@@ -30,6 +30,7 @@ type
 
   TfrmBinaryKlock = class(TForm)
     lblStatusBar        : TLabel;
+    MnItmShowClipBoard: TMenuItem;
     MnItmAlwaysOnTop    : TMenuItem;
     MnItmNewStickNote   : TMenuItem;
     MnItmBCD            : TMenuItem;
@@ -74,6 +75,7 @@ type
     procedure MnItmBinaryClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
     procedure MnItmNewStickNoteClick(Sender: TObject);
+    procedure MnItmShowClipBoardClick(Sender: TObject);
     procedure tmrBinaryKlockTimer(Sender: TObject);
   private
     WindowDragMousePos: TPoint;
@@ -298,9 +300,17 @@ begin
 end;
 
 procedure TfrmBinaryKlock.MnItmNewStickNoteClick(Sender: TObject);
+{  Create a new sticky note.    }
 begin
   stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
+
+procedure TfrmBinaryKlock.MnItmShowClipBoardClick(Sender: TObject);
+{  Show the clipboard, if not visable.    }
+begin
+  frmClipBoard.Visible := true;
+end;
+
 
 //
 // ****************************************************** Binary Stuff *********

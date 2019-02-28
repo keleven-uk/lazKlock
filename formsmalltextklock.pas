@@ -9,7 +9,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-  ExtCtrls, StdCtrls, LCLType, LCLIntf, LMessages;
+  ExtCtrls, StdCtrls, LCLType, LCLIntf, LMessages, formClipBoard;
 
 const
   LWA_COLORKEY  = 1;
@@ -37,6 +37,7 @@ type
 
   TfrmSmallTextKlock = class(TForm)
     lblSmallTextKlock      : TLabel;
+    MnItmShowClipBoard: TMenuItem;
     MnItmAlwaysOnTop       : TMenuItem;
     MnuItmNewStickyNote    : TMenuItem;
     MnuItmTransparent      : TMenuItem;
@@ -52,6 +53,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmCloseClick(Sender: TObject);
+    procedure MnItmShowClipBoardClick(Sender: TObject);
     procedure MnuItmAboutClick(Sender: TObject);
     procedure MnuItmNewStickyNoteClick(Sender: TObject);
     procedure MnuItmTransparentClick(Sender: TObject);
@@ -294,9 +296,17 @@ begin
 end;
 
 procedure TfrmSmallTextKlock.MnuItmNewStickyNoteClick(Sender: TObject);
+{  Create a new sticky note.    }
 begin
   stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
+
+procedure TfrmSmallTextKlock.MnItmShowClipBoardClick(Sender: TObject);
+{  Show the clipboard, if not visable.    }
+begin
+  frmClipBoard.Visible := true;
+end;
+
 
 procedure TfrmSmallTextKlock.MnuItmTransparentClick(Sender: TObject);
 {  Set the form transparency according to the menu option.    }

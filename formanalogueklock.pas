@@ -8,8 +8,8 @@ unit formAnalogueKlock;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, dtthemedclock, Forms, Controls,
-  Graphics, Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, Windows, LMessages;
+  Classes, SysUtils, FileUtil, dtthemedclock, Forms, Controls, Graphics,
+  Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, Windows, LMessages, formClipBoard;
 
 const
   LWA_COLORKEY  = 1;
@@ -35,6 +35,7 @@ type
 
   TfrmAnalogueKlock = class(TForm)
     DTThemedClock1        : TDTThemedClock;
+    MnItmShowClipBoard    : TMenuItem;
     MnItmAlwaysOnTop      : TMenuItem;
     MnItmNewStickyNote    : TMenuItem;
     MnItmAbout            : TMenuItem;
@@ -49,6 +50,7 @@ type
     procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
     procedure MnItmNewStickyNoteClick(Sender: TObject);
+    procedure MnItmShowClipBoardClick(Sender: TObject);
 
   private
     WindowDragMousePos: TPoint;
@@ -213,7 +215,15 @@ begin
 end;
 
 procedure TfrmAnalogueKlock.MnItmNewStickyNoteClick(Sender: TObject);
+{  Create a new sticky note.    }
 begin
   stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
+
+procedure TfrmAnalogueKlock.MnItmShowClipBoardClick(Sender: TObject);
+{  Show the clipboard, if not visable.    }
+begin
+  frmClipBoard.Visible := true;
+end;
+
 end.

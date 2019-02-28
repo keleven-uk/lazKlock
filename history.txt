@@ -1974,15 +1974,29 @@ Corrected spelling.
 
 Build 106 [2.5.1.106]
 
+commit 9d47c5c05cfabdd06f137e81586d9439ee7616f9
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Feb 26 22:52:30 2019 +0000
+
 Some time ago, I changed formAbout so that it was created on demand and shown
 model.  This change in the main Klock file was not mirrored into
 formFloatingForm.  This caused a application crash if the about form was
 launched from the floating text Klock.  Change not done.
 
-Also removed the procedure addEvents form floatingText, this is going to be
+Also removed the procedure addEvents from floatingText, this is going to be
 included in the new scrolling text Klock.
 
 14187 lines of source code.
 7891 statements
+16.4% comment
+
+
+Build 107 [2.5.1.107]
+
+Added Show Clipboard to right click menu of Analogue Klock, LED Klock, Binary
+Klock and Small Text Klock - made the same as Floating text Klock.
+
+14226 lines of source code.
+7905 statements
 16.4% comment
 

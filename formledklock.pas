@@ -9,7 +9,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, VpLEDLabel, LMessages;
+  Menus, VpLEDLabel, LMessages, formClipBoard;
 
 type
 
@@ -17,6 +17,7 @@ type
 
   TfrmLEDKlock = class(TForm)
     LEDKlock: TVpLEDLabel;
+    MnItmShowClipBoard: TMenuItem;
     MnItmAlwaysOnTop: TMenuItem;
     MnItmStickyNote: TMenuItem;
     MnItmExit: TMenuItem;
@@ -30,6 +31,7 @@ type
     procedure MnItmAboutClick(Sender: TObject);
     procedure MnItmAlwaysOnTopClick(Sender: TObject);
     procedure MnItmExitClick(Sender: TObject);
+    procedure MnItmShowClipBoardClick(Sender: TObject);
     procedure MnItmStickyNoteClick(Sender: TObject);
     procedure TmrLEDKlockTimer(Sender: TObject);
   private
@@ -173,9 +175,17 @@ begin
 end;
 
 procedure TfrmLEDKlock.MnItmStickyNoteClick(Sender: TObject);
+{  Create a new sticky note.    }
 begin
   stickies.new(userOptions.stickyColor, userOptions.stickyFont);
 end;
+
+procedure TfrmLEDKlock.MnItmShowClipBoardClick(Sender: TObject);
+{  Show the clipboard, if not visable.    }
+begin
+  frmClipBoard.Visible := true;
+end;
+
 
 procedure TfrmLEDKlock.MnItmExitClick(Sender: TObject);
 begin
@@ -194,7 +204,6 @@ begin
 
   close;
 end;
-
 
 end.
 
