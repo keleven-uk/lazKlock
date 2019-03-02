@@ -402,12 +402,14 @@ begin
 
   appStartTime    := GetTickCount64;      //  tick count when application starts.
   ft              := FuzzyTime.Create;    //  Create the fuzzyTime object
-  fs              := fontStore.Create;    //  Create the font store objects
   ev              := Events.Create;       //  Create the event store object.
   fr              := Friends.Create;      //  Create the friends store object.
   ConversionUnits := TStringList.Create;  //  Create the conversions object.
   stickies        := stickyNotes.Create;  //  Create the sticky nore store object.
   memorandum      := Memos.Create;        //  Create the memos store object.
+
+  if userOptions.useCustomFonts then
+    fs := fontStore.Create;  //  Create the font store objects, if needed.
 
   if userOptions.cullLogs then     //  Removed old log files, if instructed.
     kLog.cullLogFile(userOptions.CullLogsDays);
@@ -440,13 +442,13 @@ var
   s : TStringList;
 begin
   //  Load and parse the time zone data base.
-  kLog.writeLog('Load and parse the time zone data base.');
+  logMessage('Load and parse the time zone data base.');  //  Write to log file and splash screen.
   timeZone              := TPascalTZ.Create;
   timeZone.DatabasePath := 'tzdata';
   timeZone.ParseDatabaseFromDirectory('tzdata');
 
   //  Load the time zones into the combo box.
-  kLog.writeLog('Load the time zones into the combo box');
+  logMessage('Load the time zones into the combo box');  //  Write to log file and splash screen.
   s := TStringList.Create;
   timeZone.GetTimeZoneNames(s, false);
   CmbBxTimeZones.Items.AddStrings(s);
@@ -505,8 +507,12 @@ begin
   kLog.writeLog('Updated Sticky Note File');
   stickies.updateStickyNotes;
 
-  fs.removeFonts;                     //  Remove all fonts from system.
-  fs.Free;                            //  Release the font store object.
+  if userOptions.useCustomFonts then
+  begin
+    fs.removeFonts;                   //  Remove all fonts from system.
+    fs.Free;                          //  Release the font store object.
+  end;
+
   ft.Free;                            //  Release the fuzzy time object.
   ev.Free;                            //  Release the events store object.
   fr.Free;                            //  release the friends store objects.
@@ -563,6 +569,8 @@ begin
     frmMain.Left := userOptions.formLeft;
   end;
 
+  CmbBxName.Enabled := userOptions.useCustomFonts; //  Only enable font combo box if needed.
+
   if userOptions.netTimeSeconds and (CmbBxTime.Items[CmbBxTime.ItemIndex] = 'NET Time') then
     mainTimer.Interval := 1
   else
@@ -585,11 +593,14 @@ begin
   CmbBxTime.Items     := ft.fuzzyTypes;                 //  set up time combo box.
   CmbBxTime.ItemIndex := userOptions.defaultTime;
 
-  CmbBxName.Items     := fs.fontTypes;                  //  set up font combo box.
-  CmbBxName.ItemIndex := 0;
+  if userOptions.useCustomFonts then
+  begin
+    CmbBxName.Items     := fs.fontTypes;                //  set up font combo box.
+    CmbBxName.ItemIndex := 0;
 
-  CmbBxTZFonts.Items     := fs.fontTypes;               //  set up font combo box.
-  CmbBxTZFonts.ItemIndex := 0;
+    CmbBxTZFonts.Items     := fs.fontTypes;             //  set up font combo box.
+    CmbBxTZFonts.ItemIndex := 0;
+  end;
 
   lblfuzzy.Top       := 8;                              //  defaults for fuzzy time label.
   lblfuzzy.Left      := 4;
@@ -608,8 +619,8 @@ procedure TfrmMain.DisplayMessage;
    the pop-up notifier is cancelled.
 }
 var
-  f: integer;
-  title: string;       //  do we need to set title?
+  f      : integer;
+  title  : string;       //  do we need to set title?
   message: string;
 begin
   title   := '';
@@ -824,12 +835,15 @@ begin
     prvTime := nowTime;
 
   lblfuzzy.Caption   := ft.getTime;
-  lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
 
-  if userOptions.christmasFont       and isChristmas  then lblfuzzy.Font.Name := 'Christmas'
-  else if userOptions.easterFont     and isEaster     then lblfuzzy.Font.Name := 'RMBunny'
-  else if userOptions.valentinesFont and isValentines then lblfuzzy.Font.Name := 'Sweet Hearts BV'
-  else if userOptions.haloweenFont   and isHalloween  then lblfuzzy.Font.Name := 'Groovy Ghosties';
+  if userOptions.useCustomFonts then
+  begin
+    lblfuzzy.Font.Name := fs.getFont(CmbBxName.ItemIndex);
+    if userOptions.christmasFont       and isChristmas  then lblfuzzy.Font.Name := 'Christmas'
+    else if userOptions.easterFont     and isEaster     then lblfuzzy.Font.Name := 'RMBunny'
+    else if userOptions.valentinesFont and isValentines then lblfuzzy.Font.Name := 'Sweet Hearts BV'
+    else if userOptions.haloweenFont   and isHalloween  then lblfuzzy.Font.Name := 'Groovy Ghosties';
+  end;
 
   lblfuzzy.AdjustFontForOptimalFill;
 end;
@@ -843,7 +857,8 @@ begin
   s := CmbBxTimeZones.Items[CmbBxTimeZones.ItemIndex];
   DateTime            := timeZone.GMTToLocalTime(KTime, s);
   lblTZTime.Caption   := DateTimeToStr(DateTime);
-  lblTZTime.Font.Name := fs.getFont(CmbBxTZFonts.ItemIndex);
+  if userOptions.useCustomFonts then
+    lblTZTime.Font.Name := fs.getFont(CmbBxTZFonts.ItemIndex);
 
   lblTZTime.AdjustFontForOptimalFill;
 end;

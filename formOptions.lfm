@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1278
+  Left = 1161
   Height = 530
-  Top = 269
+  Top = 38
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -44,7 +44,7 @@ object frmOptions: TfrmOptions
     Width = 620
     Align = alClient
     FullExpand = True
-    ItemIndex = 6
+    ItemIndex = 0
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]
@@ -54,17 +54,17 @@ object frmOptions: TfrmOptions
       Order = 0
       object GroupBox1: TGroupBox
         Left = 353
-        Height = 105
+        Height = 48
         Top = 8
         Width = 256
         Caption = 'Default Tab'
-        ClientHeight = 85
+        ClientHeight = 28
         ClientWidth = 252
         TabOrder = 0
         object CmbBxDefaulTtab: TComboBox
           Left = 80
           Height = 23
-          Top = 8
+          Top = 0
           Width = 100
           ItemHeight = 15
           ItemIndex = 0
@@ -185,8 +185,8 @@ object frmOptions: TfrmOptions
       end
       object ChckGrpHolidayFonts: TCheckGroup
         Left = 352
-        Height = 128
-        Top = 120
+        Height = 127
+        Top = 121
         Width = 257
         AutoFill = True
         Caption = 'Holiday Fonts'
@@ -198,7 +198,7 @@ object frmOptions: TfrmOptions
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 108
+        ClientHeight = 107
         ClientWidth = 253
         Items.Strings = (
           '12 Days of Christams [before and after].'
@@ -211,6 +211,25 @@ object frmOptions: TfrmOptions
         Data = {
           0400000002020202
         }
+      end
+      object GroupBox14: TGroupBox
+        Left = 353
+        Height = 49
+        Top = 64
+        Width = 257
+        Caption = 'Custom Fonts'
+        ClientHeight = 29
+        ClientWidth = 253
+        TabOrder = 5
+        object ChckBxUseCostomFonts: TCheckBox
+          Left = 40
+          Height = 19
+          Top = 0
+          Width = 116
+          Caption = 'Use Custom Fonts'
+          OnChange = ChckBxUseCostomFontsChange
+          TabOrder = 0
+        end
       end
     end
     object accItemTime: TAccordionItem

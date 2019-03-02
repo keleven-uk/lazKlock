@@ -58,6 +58,7 @@ type
     ChckBxJiggleMouse          : TCheckBox;
     chckBxSpeakTime            : TCheckBox;
     chckBxSpeakEventMessage    : TCheckBox;
+    ChckBxUseCostomFonts       : TCheckBox;
     clrBtnStage1BackColour     : TColorButton;
     clrBtnStage1ForeColour     : TColorButton;
     clrBtnStage2BackColour     : TColorButton;
@@ -78,6 +79,7 @@ type
     FlNmEdtLoadArchiveName     : TFileNameEdit;
     FlNmEdtSaveArchiveName     : TFileNameEdit;
     FontDialog1                : TFontDialog;
+    GroupBox14                 : TGroupBox;
     rdGrpRelative              : TRadioGroup;
     Settings                   : TGroupBox;
     GroupBox1                  : TGroupBox;
@@ -140,6 +142,7 @@ type
     procedure ChckBxLoggingChange(Sender: TObject);
     procedure chckBxSpeakEventMessageChange(Sender: TObject);
     procedure chckBxSpeakTimeChange(Sender: TObject);
+    procedure ChckBxUseCostomFontsChange(Sender: TObject);
     procedure ChckBxUseF15Change(Sender: TObject);
     procedure ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
@@ -268,6 +271,9 @@ begin
   ChckGrpTimeOptions.Checked[4] := userBacOptions.displayIdleTime;
   ChckGrpTimeOptions.Checked[5] := userBacOptions.fuzzyTimeVerbose;
 
+  ChckBxUseCostomFonts.Checked := userBacOptions.useCustomFonts;
+
+  ChckGrpHolidayFonts.Enabled := ChckBxUseCostomFonts.Checked;
   ChckGrpHolidayFonts.Checked[0] := userBacOptions.christmasFont;
   ChckGrpHolidayFonts.Checked[1] := userBacOptions.easterFont;
   ChckGrpHolidayFonts.Checked[2] := userBacOptions.valentinesFont;
@@ -512,6 +518,13 @@ begin
   ChckGrpTimeChimes.CheckEnabled[2] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[3] := not ChckGrpTimeChimes.Checked[0];
   ChckGrpTimeChimes.CheckEnabled[4] := not ChckGrpTimeChimes.Checked[0];
+end;
+
+procedure TfrmOptions.ChckBxUseCostomFontsChange(Sender: TObject);
+{  Does system use custom fonts.    }
+begin
+  userBacOptions.useCustomFonts := ChckBxUseCostomFonts.Checked;
+  ChckGrpHolidayFonts.Enabled   := ChckBxUseCostomFonts.Checked;
 end;
 
 procedure TfrmOptions.ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);

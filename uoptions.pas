@@ -79,6 +79,8 @@ type
     _keepMonitorAwakeJiggle : boolean;  //  by jiggling the mouse.
     _keepMonitorAwakeMinutes: Integer;  //  every n minutes.
 
+    _useCustomFonts : boolean;          //  Load and use custom fonts
+
     _Latitude : double;
     _Longitude: double;
 
@@ -220,6 +222,8 @@ type
     property keepMonitorAwakeF15    : boolean read _keepMonitorAwakeF15     write _keepMonitorAwakeF15;
     property keepMonitorAwakeJiggle : boolean read _keepMonitorAwakeJiggle  write _keepMonitorAwakeJiggle;
     property keepMonitorAwakeMinutes: integer read _keepMonitorAwakeMinutes write _keepMonitorAwakeMinutes;
+
+    property useCustomFonts: boolean read _useCustomFonts write _useCustomFonts;
 
     property Latitude : double read _Latitude  write _Latitude;
     property Longitude: double read _Longitude write _Longitude;
@@ -468,6 +472,8 @@ begin
   keepMonitorAwakeJiggle  := o.keepMonitorAwakeJiggle;
   keepMonitorAwakeMinutes := o.keepMonitorAwakeMinutes;
 
+  useCustomFonts := o.useCustomFonts;
+
   Latitude  := o.Latitude;
   Longitude := o.Longitude;
 
@@ -652,6 +658,9 @@ begin
     if rtn <> 'ERROR' then CB_formTop := StrToInt(rtn);
     rtn := readChildAttribute(PassNode, 'CB_formPosition', 'Left');
     if rtn <> 'ERROR' then CB_formLeft := StrToInt(rtn);
+
+    rtn := readChild(PassNode, 'useCustomFonts');
+    if rtn <> 'ERROR' then useCustomFonts := StrToBool(rtn);
 
     rtn := readChild(PassNode, 'Latitude');
     if rtn <> 'ERROR' then Latitude := StrToFloat(rtn);
@@ -940,6 +949,8 @@ begin
   CB_formTop       := 0;              //  the clipboard manager top left.
   CB_formLeft      := 0;
 
+  useCustomFonts := false;
+
   Latitude  := 51.5033640;
   Longitude := -0.1276250;
 
@@ -1092,6 +1103,8 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'monitorClipboard'        , monitorClipboard));
     ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave'           , CB_screenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'CB_formPosition', CB_formTop, CB_formLeft));
+
+    ElementNode.AppendChild(writeBolChild(doc, 'useCustomFonts'           , useCustomFonts));
 
     ElementNode.AppendChild(writeFloatChild(doc, 'Latitude' , Latitude));
     ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));
