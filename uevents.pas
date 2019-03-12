@@ -12,7 +12,7 @@ interface
 uses
   Classes, SysUtils, uEvent, fgl, Forms, Dialogs, Graphics, StdCtrls,
   ExtCtrls, LCLType, LCLIntf, Controls, Menus, FileUtil, dateUtils,
-  formEvent, uweddingAnniversary;
+  formEvent, uweddingAnniversary, LazFileUtils;
 
 type
   Events = class
@@ -41,6 +41,8 @@ type
     function determineYearsbetween(eventDate: string): integer;
     procedure sortEventsStore;
     procedure swapEvents(f, g: integer);
+    procedure addToScolling(f: integer);
+    procedure clearScolling;
   public
     property eventsTypes     : TStringList read _eventsTypes;                //  read only.
     property eventsCount     : integer     read _eventsCount      write _eventsCount;
@@ -87,6 +89,9 @@ VAR
 
 implementation
 
+uses
+  formklock;
+
 
 constructor Events.Create; overload;
 {  set up some variables on create.    }
@@ -132,7 +137,7 @@ begin
 end;
 
 procedure Events.new(key: string; date: string; etype: integer; data: string; floating: Boolean);
-{  Creates a new Events.  This is called from the host program.
+{  Creates a new Event.  This is called from the host program.
    A new Events is created and added to the store.
    The Events store is then saved to file.
 }
@@ -148,7 +153,7 @@ begin
   e.date      := date;
   e.etype     := etype;
   e.notes     := data;
-  e.float     := floating;
+  e.float     := floating; //  If true, add to scrolling text.
   e.stage1Ack := false;    //  if an event becomes due, it will generate a prompt for the user.
   e.stage2Ack := false;    //  There are three prompts that will be generated as the event gets nearer.
   e.stage3Ack := false;    //  If an prompt is acknowledged, these are set to true, so it won't be duplicated.
@@ -156,6 +161,8 @@ begin
   e.dueLong   := '';
 
   eventsStore.Add(eventsCount, e);
+
+  if floating then addToScolling(eventsCount);  //  If needed, add to text file of scrolling text.
 
   e.Free;
 
@@ -271,11 +278,13 @@ procedure Events.updateEvents;
    todo :: needs to check for event type i.e. if type of motor is passed then the days due should be negative.
 }
 var
-  f       : integer;
-  dueDays : integer = 0;
-  stage   : integer = 0;
+  f      : integer;
+  dueDays: integer = 0;
+  stage  : integer = 0;
 begin
   if eventsCount = 0 then exit;
+
+  clearScolling;     //  so we start with a clear text file each time.
 
   for f := 0 to eventsCount - 1 do
   begin
@@ -288,10 +297,47 @@ begin
     else
       eventsStore.Data[f].dueShort := format('%.3d days %s ', [dueDays, EventsStore.Data[f].name]);
 
+    if eventsStore.Data[f].float then           //  if needed, add to scrolling.
+      addToScolling(f);
+
   end;  //  for f := 0 to EventsCount - 1 do
 
-  sortEventsStore;   //  Sort evenst by due date.
+  sortEventsStore;   //  Sort events by due date.
   saveEvents;        //  re save sortede vents
+end;
+
+procedure Events.clearScolling;
+{  Clears the text file that contains the events to add to the scrolling text.  }
+VAR
+  eventsTXT: string;
+begin
+  eventsTXT := userOptions.eventsName;
+  if FileExists(eventsTXT) then DeleteFile(eventsTXT);
+end;
+
+procedure Events.addToScolling(f: integer);
+{  Will add a specified event to the list of events to be added to the
+   scrolling text.
+}
+VAR
+  eventText: string;
+  eventsTXT: string;
+  txtFile  : TextFile;
+begin
+  eventsTXT := userOptions.eventsName;
+  AssignFile(txtFile, eventsTXT);
+
+  try
+    if FileExists(eventsTXT) then
+      append(txtFile)
+    else
+      rewrite(txtFile);
+
+    eventText := format('%s, %s', [eventsStore.Data[f].Name, eventsStore.Data[f].date]);
+    writeLn(txtFile, eventText);
+  finally
+    CloseFile(txtFile);
+  end;
 end;
 
 procedure Events.sortEventsStore;

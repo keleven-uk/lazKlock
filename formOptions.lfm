@@ -1,7 +1,7 @@
 object frmOptions: TfrmOptions
-  Left = 1161
+  Left = 1266
   Height = 530
-  Top = 38
+  Top = 50
   Width = 620
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -44,7 +44,7 @@ object frmOptions: TfrmOptions
     Width = 620
     Align = alClient
     FullExpand = True
-    ItemIndex = 0
+    ItemIndex = 2
     SelectedFontOptions.FontColor = clBackground
     SelectedFontOptions.FontSize = 0
     SelectedFontOptions.FontStyles = [fsBold]

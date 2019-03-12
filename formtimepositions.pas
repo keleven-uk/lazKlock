@@ -16,27 +16,30 @@ type
   { TfrmTimePositions }
 
   TfrmTimePositions = class(TForm)
-    btnOK                      : TButton;
-    btnCancel                  : TButton;
-    lblLeft: TLabel;
-    lblTop: TLabel;
-    lblAnalogueKlock           : TLabel;
-    lblLEDKlock                : TLabel;
-    lblBinaryKlock             : TLabel;
-    lblSmallTextKlock          : TLabel;
-    lblFloatingTextKlock       : TLabel;
-    Panel1                     : TPanel;
-    Panel2                     : TPanel;
-    spnEdtAnalogueKlockLeft    : TSpinEdit;
-    spnEdtFloatingTextKlockTop : TSpinEdit;
-    spnEdtAnalogueKlockTop     : TSpinEdit;
-    spnEdtLEDKlockLeft         : TSpinEdit;
-    spnEdtLEDKlockTop          : TSpinEdit;
-    spnEdtBinaryKlockLeft      : TSpinEdit;
-    spnEdtBinaryKlockTop       : TSpinEdit;
-    spnEdtSmallTextKlockLeft   : TSpinEdit;
-    spnEdtSmallTextKlockTop    : TSpinEdit;
-    spnEdtFloatingTextKlockLeft: TSpinEdit;
+    btnOK                       : TButton;
+    btnCancel                   : TButton;
+    lblScrollingTextKlock       : TLabel;
+    lblLeft                     : TLabel;
+    lblTop                      : TLabel;
+    lblAnalogueKlock            : TLabel;
+    lblLEDKlock                 : TLabel;
+    lblBinaryKlock              : TLabel;
+    lblSmallTextKlock           : TLabel;
+    lblFloatingTextKlock        : TLabel;
+    Panel1                      : TPanel;
+    Panel2                      : TPanel;
+    spnEdtScrollingTextKlockLeft: TSpinEdit;
+    spnEdtScrollingTextKlockTop : TSpinEdit;
+    spnEdtAnalogueKlockLeft     : TSpinEdit;
+    spnEdtFloatingTextKlockTop  : TSpinEdit;
+    spnEdtAnalogueKlockTop      : TSpinEdit;
+    spnEdtLEDKlockLeft          : TSpinEdit;
+    spnEdtLEDKlockTop           : TSpinEdit;
+    spnEdtBinaryKlockLeft       : TSpinEdit;
+    spnEdtBinaryKlockTop        : TSpinEdit;
+    spnEdtSmallTextKlockLeft    : TSpinEdit;
+    spnEdtSmallTextKlockTop     : TSpinEdit;
+    spnEdtFloatingTextKlockLeft : TSpinEdit;
 
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
@@ -65,16 +68,18 @@ procedure TfrmTimePositions.FormCreate(Sender: TObject);
 begin
   klog.writeLog('frmTimePositions Create');
 
-  spnEdtAnalogueKlockLeft.Value     := userOptions.analogueFormLeft;
-  spnEdtAnalogueKlockTop.Value      := userOptions.analogueFormTop;
-  spnEdtLEDKlockLeft.Value          := userOptions.LEDFormLeft;
-  spnEdtLEDKlockTop.Value           := userOptions.LEDFormTop;
-  spnEdtBinaryKlockLeft.Value       := userOptions.BinaryFormLeft;
-  spnEdtBinaryKlockTop.Value        := userOptions.BinaryFormTop;
-  spnEdtSmallTextKlockLeft.Value    := userOptions.smallTextFormLeft;
-  spnEdtSmallTextKlockTop.Value     := userOptions.smallTextFormTop;
-  spnEdtFloatingTextKlockLeft.Value := userOptions.floatingTextFormLeft;
-  spnEdtFloatingTextKlockTop.Value  := userOptions.floatingTextFormTop;
+  spnEdtAnalogueKlockLeft.Value      := userOptions.analogueFormLeft;
+  spnEdtAnalogueKlockTop.Value       := userOptions.analogueFormTop;
+  spnEdtLEDKlockLeft.Value           := userOptions.LEDFormLeft;
+  spnEdtLEDKlockTop.Value            := userOptions.LEDFormTop;
+  spnEdtBinaryKlockLeft.Value        := userOptions.BinaryFormLeft;
+  spnEdtBinaryKlockTop.Value         := userOptions.BinaryFormTop;
+  spnEdtSmallTextKlockLeft.Value     := userOptions.smallTextFormLeft;
+  spnEdtSmallTextKlockTop.Value      := userOptions.smallTextFormTop;
+  spnEdtFloatingTextKlockLeft.Value  := userOptions.floatingTextFormLeft;
+  spnEdtFloatingTextKlockTop.Value   := userOptions.floatingTextFormTop;
+  spnEdtScrollingTextKlockLeft.Value := userOptions.scrollingTextFormLeft;
+  spnEdtScrollingTextKlockTop.Value  := userOptions.scrollingTextFormTop;
 end;
 
 procedure TfrmTimePositions.btnOKClick(Sender: TObject);
@@ -82,16 +87,18 @@ procedure TfrmTimePositions.btnOKClick(Sender: TObject);
    Does not check is been changed, just saves.
 }
 begin
-  userOptions.analogueFormLeft     := spnEdtAnalogueKlockLeft.Value;
-  userOptions.analogueFormTop      := spnEdtAnalogueKlockTop.Value;
-  userOptions.LEDFormLeft          := spnEdtLEDKlockLeft.Value;
-  userOptions.LEDFormTop           := spnEdtLEDKlockTop.Value;
-  userOptions.BinaryFormLeft       := spnEdtBinaryKlockLeft.Value;
-  userOptions.BinaryFormTop        := spnEdtBinaryKlockTop.Value;
-  userOptions.smallTextFormLeft    := spnEdtSmallTextKlockLeft.Value;
-  userOptions.smallTextFormTop     := spnEdtSmallTextKlockTop.Value;
-  userOptions.floatingTextFormLeft := spnEdtFloatingTextKlockLeft.Value;
-  userOptions.floatingTextFormTop  := spnEdtFloatingTextKlockTop.Value;
+  userOptions.analogueFormLeft      := spnEdtAnalogueKlockLeft.Value;
+  userOptions.analogueFormTop       := spnEdtAnalogueKlockTop.Value;
+  userOptions.LEDFormLeft           := spnEdtLEDKlockLeft.Value;
+  userOptions.LEDFormTop            := spnEdtLEDKlockTop.Value;
+  userOptions.BinaryFormLeft        := spnEdtBinaryKlockLeft.Value;
+  userOptions.BinaryFormTop         := spnEdtBinaryKlockTop.Value;
+  userOptions.smallTextFormLeft     := spnEdtSmallTextKlockLeft.Value;
+  userOptions.smallTextFormTop      := spnEdtSmallTextKlockTop.Value;
+  userOptions.floatingTextFormLeft  := spnEdtFloatingTextKlockLeft.Value;
+  userOptions.floatingTextFormTop   := spnEdtFloatingTextKlockTop.Value;
+  userOptions.scrollingTextFormLeft := spnEdtScrollingTextKlockLeft.Value;
+  userOptions.scrollingTextFormTop  := spnEdtScrollingTextKlockTop.Value;
 
   userOptions.writeCurrentOptions;
   close;

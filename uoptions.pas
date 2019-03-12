@@ -60,6 +60,7 @@ type
     _stickyName      : string;          //  full path to the Sticky Notes file.
     _unitsName       : string;          //  full path to the Units file.
     _friendName      : string;          //  full path to the friends file.
+    _eventsName      : string;          //  full path the the events file.
     _relativeFileName: boolean;         //  Relative or absolute file names [for archiving].
 
     //  Sart of user options.
@@ -111,27 +112,27 @@ type
     _timerMilliSeconds: boolean;
 
     //  Analogue Klock
-    _analogueScreenSave : boolean;      //  do we save from position or not.
+    _analogueScreenSave : boolean;      //  do we save form position or not.
     _analogueFormTop    : integer;      //  the forms top left.
     _analogueFormLeft   : integer;
     _analogueAlwaysOnTop: Boolean;      //  to be always on top.
 
     // LED Klock
-    _LEDScreenSave : boolean;           //  do we save from position or not.
+    _LEDScreenSave : boolean;           //  do we save form position or not.
     _LEDFormTop    : integer;           //  the forms top left.
     _LEDFormLeft   : integer;
     _LEDlongDate   : boolean;
     _LEDAlwaysOnTop: Boolean;           //  to be always on top.
 
     // Binary Klock
-    _BinaryScreenSave : boolean;        //  do we save from position or not.
+    _BinaryScreenSave : boolean;        //  do we save form position or not.
     _BinaryFormTop    : integer;        //  the forms top left.
     _BinaryFormLeft   : integer;
     _BinaryFormat     : boolean;        //  Binary or BCD format - true for binary.
     _BinaryAlwaysOnTop: Boolean;        //  to be always on top.
 
     // Small Text Klock
-    _smallTextScreenSave : boolean;     //  do we save from position or not.
+    _smallTextScreenSave : boolean;     //  do we save form position or not.
     _smallTextFormTop    : integer;     //  the forms top left.
     _smallTextFormLeft   : integer;
     _smallTextTransparent: boolean;     //  is Small Text Klock transparent?
@@ -143,12 +144,18 @@ type
     _decryptTimeOut    : integer;       //  Memo decrypt Time Out.
 
     // Floating Text Klock
-    _floatingTextScreenSave  : boolean; //  do we save from position or not.
+    _floatingTextScreenSave  : boolean; //  do we save form position or not.
     _floatingTextFormTop     : integer; //  the forms top left.
     _floatingTextFormLeft    : integer;
     _floatingTextFont        : Tfont;
     _floatingTextUseKlockFont: boolean;
     _floatingAlwaysOnTop     : Boolean; //  to be always on top.
+
+    // Scrolling Text Klock
+    _scrollingTextScreenSave: boolean; //  do we save form position or not.
+    _scrollingTextFormTop   : integer; //  the forms top left.
+    _scrollingTextFormLeft  : integer;
+    _scrollingAlwaysOnTop   : Boolean; //  to be always on top.
 
     //Sticky Notes
     _stickyColor: TColor;               //  Sticky Note colour.
@@ -205,6 +212,7 @@ type
     property stickyName      : string  read _stickyName       write _stickyName;
     property unitsName       : string  read _unitsName        write _unitsName;
     property friendName      : string  read _friendName       write _friendName;
+    property eventsName      : string  read _eventsName       write _eventsName;
     property relativeFileName: boolean read _relativeFileName write _relativeFileName;
 
     property runAtStartUp    : boolean read _runAtStartUp     write _runAtStartUp;
@@ -288,6 +296,12 @@ type
     property floatingTextFont        : TFont   read _floatingTextFont         write _floatingTextFont;
     property floatingTextUseKlockFont: boolean read _floatingTextUseKlockFont write _floatingTextUseKlockFont;
     property floatingAlwaysOnTop     : boolean read _floatingAlwaysOnTop      write _floatingAlwaysOnTop;
+
+    // Scrolling Text Klock
+    property scrollingTextScreenSave: boolean read _scrollingTextScreenSave write _scrollingTextScreenSave;
+    property scrollingTextFormTop   : integer read _scrollingTextFormTop    write _scrollingTextFormTop;
+    property scrollingTextFormLeft  : integer read _scrollingTextFormLeft   write _scrollingTextFormLeft;
+    property scrollingAlwaysOnTop   : boolean read _scrollingAlwaysOnTop    write _scrollingAlwaysOnTop;
 
     // Memos
     property useDefaultpassWord: boolean read _useDefaultpassWord write _useDefaultpassWord;
@@ -454,6 +468,7 @@ begin
   stickyName       := o.stickyName;
   unitsName        := o.unitsName;
   friendName       := o.friendName;
+  eventsName       := o.eventsName;
   relativeFileName := o.relativeFileName;
 
   runAtStartUp     := o.runAtStartUp;
@@ -537,6 +552,12 @@ begin
   floatingTextFont         := o.floatingTextFont;
   floatingTextUseKlockFont := o.floatingTextUseKlockFont;
   floatingAlwaysOnTop      := o.floatingAlwaysOnTop;
+
+  // Scrolling Text Klock
+  scrollingTextScreenSave := o.scrollingTextScreenSave;
+  scrollingTextFormTop    := o.scrollingTextFormTop;
+  scrollingTextFormLeft   := o.scrollingTextFormLeft;
+  scrollingAlwaysOnTop    := o.scrollingAlwaysOnTop;
 
   // memos
   useDefaultpassWord := o.useDefaultpassWord;
@@ -639,6 +660,8 @@ begin
     if rtn <> 'ERROR' then unitsName := ansistring(rtn);
     rtn := readChild(PassNode, 'friendName');
     if rtn <> 'ERROR' then friendName := ansistring(rtn);
+    rtn := readChild(PassNode, 'eventsName');
+    if rtn <> 'ERROR' then eventsName := ansistring(rtn);
     rtn := readChild(PassNode, 'relativeFileName');
     if rtn <> 'ERROR' then relativeFileName := StrToBool(rtn);
 
@@ -828,6 +851,21 @@ begin
     if rtn <> 'ERROR' then floatingAlwaysOnTop := StrToBool(rtn);
   end;
 
+  // Scrolling Text Klock
+  PassNode := Doc.DocumentElement.FindNode('ScrollingTextKlock');
+
+  if assigned(PassNode) then
+  begin
+    rtn := readChild(PassNode, 'scrollingTextScreenSave');
+    if rtn <> 'ERROR' then scrollingTextScreenSave := StrToBool(rtn);
+    rtn := readChildAttribute(PassNode, 'scrollingTextForm', 'Top');
+    if rtn <> 'ERROR' then scrollingTextFormTop := StrToInt(rtn);
+    rtn := readChildAttribute(PassNode, 'scrollingTextFormLeft', 'Left');
+    if rtn <> 'ERROR' then scrollingTextFormLeft := StrToInt(rtn);
+    rtn := readChild(PassNode, 'scrollingAlwaysOnTop');
+    if rtn <> 'ERROR' then scrollingAlwaysOnTop := StrToBool(rtn);
+  end;
+
   // memos
   PassNode := Doc.DocumentElement.FindNode('Memo');
 
@@ -936,6 +974,7 @@ begin
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';
   friendName       := GetAppConfigDir(False) + 'Friends.bin';
+  eventsName       := GetAppConfigDir(False) + 'events.txt';
   relativeFileName := true;
 
   runAtStartUp     := false;
@@ -1021,6 +1060,12 @@ begin
   floatingTextUseKlockFont := false;
   floatingAlwaysOnTop      := true;
 
+  // Scrolling Text Klock
+  scrollingTextScreenSave := true;
+  scrollingTextFormTop    := 100;
+  scrollingTextFormLeft   := 100;
+  scrollingAlwaysOnTop    := true;
+
   // memos
   useDefaultpassWord := true;
   defaultpassWord    := 'klock';
@@ -1093,6 +1138,7 @@ begin
     ElementNode.AppendChild(writeStrChild(doc, 'stickyName'              , stickyName));
     ElementNode.AppendChild(writeStrChild(doc, 'unitsName'               , unitsName));
     ElementNode.AppendChild(writeStrChild(doc, 'friendName'              , friendName));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventsName'              , eventsName));
     ElementNode.AppendChild(writeBolChild(doc, 'relativeFileName'        , relativeFileName));
 
     ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp'            , runAtStartUp));
@@ -1202,6 +1248,15 @@ begin
     ElementNode.AppendChild(writeFontChild(doc, 'floatingTextFont'        , floatingTextFont));
     ElementNode.AppendChild(writeBolChild(doc, 'floatingTextUseKlockFont' , floatingTextUseKlockFont));
     ElementNode.AppendChild(writeBolChild(doc, 'floatingAlwaysOnTop'      , floatingAlwaysOnTop));
+
+    RootNode.AppendChild(ElementNode);
+
+    // Scrolling Text Klock
+    ElementNode := Doc.CreateElement('ScrollingTextKlock');
+
+    ElementNode.AppendChild(writeBolChild(doc, 'scrollingTextScreenSave'   , scrollingTextScreenSave));
+    ElementNode.AppendChild(writeIntChildAttribute(Doc, 'scrollingTextForm', scrollingTextFormTop, scrollingTextFormLeft));
+    ElementNode.AppendChild(writeBolChild(doc, 'scrollingAlwaysOnTop'      , scrollingAlwaysOnTop));
 
     RootNode.AppendChild(ElementNode);
 

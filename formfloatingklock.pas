@@ -125,6 +125,7 @@ end;
 procedure TfrmFloatingKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
 {  Stop timer on close, so not running when form not in use.    }
 begin
+  kLog.writeLog('formFloatingKlock Close');
   TmrFloatingText.Enabled := false;
 
   if userOptions.floatingTextScreenSave then
@@ -138,6 +139,7 @@ end;
 
 procedure TfrmFloatingKlock.FormDestroy(Sender: TObject);
 begin
+  kLog.writeLog('formFloatingKlock Destroy');
   // To prevent possible system resource leaks
   Application.RemoveOnUserInputHandler(@MouseHook);
 end;

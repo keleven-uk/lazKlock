@@ -2007,7 +2007,6 @@ Build 108 [2.5.1.108]
 
 Added the user option to load custom fonts or not.  This makes loading a lot
 quicker, useful for development.
-Updated Help.
 
 Updated Help.
 
@@ -2015,3 +2014,20 @@ Updated Help.
 7929 statements
 16.4% comment
 
+
+Build 109 [2.6.0.109]
+
+Add a new text klock - Scrolling Text Klock.
+This will scroll the current date and time across a L.E.D. display.
+Optionally, events can be added and will be displayed with their day countdown.
+  The events are contained in a text file, created in Evenst.UpdateEvents.
+Added formscrollingklock.pas
+Added to time menu on main klock to call scrolling klock.
+Added scrolling text klock to time positions.
+Added to options for scrolling klock.
+
+Updated Help.
+
+14705 lines of source code.
+8182 statements
+16.4% comment

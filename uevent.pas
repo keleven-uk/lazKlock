@@ -32,8 +32,8 @@ type
     //  There are three prompts that will be generated as the event gets nearer.
     //  If an prompt is acknowledged, these are set to true, so it wont be duplicated.
     _stage1Ack: boolean;     //  stage 1 has been acknowledged.
-    _stage2Ack: boolean;     //  stage 1 has been acknowledged.
-    _stage3Ack: boolean;     //  stage 1 has been acknowledged.
+    _stage2Ack: boolean;     //  stage 2 has been acknowledged.
+    _stage3Ack: boolean;     //  stage 3 has been acknowledged.
 
   procedure error(Const msg : string);
   public

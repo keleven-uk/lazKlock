@@ -32,6 +32,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routines in both memo and events }
+{ TODO : Timer should be enabled in formshow and not formcreate. }
+{ TODO : Scrolling and floating text klocks need all option on options screen. }
+{ TODO : uEvents.pas should use userOptions for file location, possibly passed into create. }
 
 {$mode objfpc}{$H+}
 
@@ -45,7 +48,7 @@ uses
   uEvents, UConversion, uOptions, Windows, ULogging, ustickyNotes, formInfo,
   Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
   formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm,
-  uFriends, formFriendsInput, uFriend, formTimePositions;
+  uFriends, formFriendsInput, uFriend, formTimePositions, formScrollingKlock;
 
 type
   FourStrings = array [0..3] of string;
@@ -143,6 +146,7 @@ type
     lstBxEvents              : TListBox;
     lstBxFriends             : TListBox;
     LstBxMemoName            : TListBox;
+    mnuItmScrollingTextKlock: TMenuItem;
     mEventNotes              : TMemo;
     MmMemoData               : TMemo;
     PascalTZ1                : TPascalTZ;
@@ -394,6 +398,8 @@ begin
 
   kLog := Logger.Create;
   logHeader;
+
+  logMessage('Klock Create');      //  Write to log file and splash screen.
 
   mainTimer.Enabled := False;  //  disable main timer until all options and fuzzy time are set up.
 
@@ -2478,18 +2484,19 @@ begin
       FreeAndNil(frmLicense);
     end;
     // ********************************************************* Time Menu *********
-    'mnuItmAnalogueKlock'    : frmAnalogueKlock.Show;           //  Calls the Analogue Klock.
-    'mnuItmLEDKlock'         : frmLEDKlock.Show;                //  Calls the LED Klock.
-    'mnuItmBinaryKlock'      : frmBinaryKlock.Show;             //  Calls the Binary Klock.
-    'mnuItmSmallTextKlock'   : frmSmallTextKlock.Show;          //  Calls the Small Text Klock.
-    'mnuItmTimePositions'    :                                  //  Calls the time Positions form.
+    'mnuItmAnalogueKlock'     : frmAnalogueKlock.Show;           //  Calls the Analogue Klock.
+    'mnuItmLEDKlock'          : frmLEDKlock.Show;                //  Calls the LED Klock.
+    'mnuItmBinaryKlock'       : frmBinaryKlock.Show;             //  Calls the Binary Klock.
+    'mnuItmSmallTextKlock'    : frmSmallTextKlock.Show;          //  Calls the Small Text Klock.
+    'mnuItmFloatingTextKlock' : frmFloatingKlock.Show;           //  Calls the Floating Text Klock.
+    'mnuItmScrollingTextKlock': frmScrollingKlock.Show;          //  calls the Scrolling Text Klock.
+    'mnuItmTimePositions'     :                                  //  Calls the time Positions form.
     begin
       frmTimePositions := TfrmTimePositions.Create(Nil);
       frmTimePositions.ShowModal;
       FreeAndNil(frmTimePositions);
     end;
     // ********************************************************* Info Menu *********
-    'mnuItmFloatingTextKlock': frmFloatingKlock.Show;           //  Calls the Floating Text Klock.
     'mnuItmDaylightSaving'   : callInfo('Daylight Saving');     //  Calls the Daylight Saving Info screen.
     'mnuItmEasterDates'      : callInfo('Easter Dates');        //  Calls the Easter Dates Info screen.
     'mnuItmLentDates'        : callInfo('Lent Dates');          //  Calls the Lent Dates Info screen.

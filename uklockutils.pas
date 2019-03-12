@@ -10,7 +10,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Dialogs, Process, formAnalogueKlock,
   MMSystem, dateutils, registry, typinfo, LCLVersion, strutils, Windows, Graphics,
   formLEDKlock, formBinaryKlock, formSmallTextKlock, DCPrijndael, DCPsha256, Moon,
-  MouseAndKeyInput, LCLType, formFloatingKlock;
+  MouseAndKeyInput, LCLType, formFloatingKlock, formScrollingKlock;
 
 type
   //  Used for hour chimes file name.  Zero not used, inserted as a dummy to keep count correct.
@@ -624,6 +624,7 @@ begin
   if frmBinaryKlock.Visible    then frmBinaryKlock.Visible    := False;
   if frmSmallTextKlock.Visible then frmSmallTextKlock.Visible := False;
   if frmFloatingKlock.Visible  then frmFloatingKlock.Visible  := false;
+  if frmScrollingKlock.Visible then frmScrollingKlock.Visible := false;
 end;
 //
 //...................................... encrypt and decrypt ...................
