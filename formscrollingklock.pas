@@ -83,7 +83,6 @@ begin
   kLog.writeLog('formScollingKlock Create');
 
   Application.AddOnUserInputHandler(@MouseHook);
-
 end;
 
 procedure TfrmScrollingKlock.FormDestroy(Sender: TObject);

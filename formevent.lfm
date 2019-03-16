@@ -1,7 +1,7 @@
 object frmEvent: TfrmEvent
-  Left = 1488
+  Left = 1423
   Height = 120
-  Top = 88
+  Top = 551
   Width = 379
   AlphaBlend = True
   BorderIcons = []

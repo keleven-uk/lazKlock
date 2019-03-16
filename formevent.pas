@@ -101,16 +101,16 @@ end;
 
 procedure TfrmEvent.FormCreate(Sender: TObject);
 begin
-  kLog.writeLog('formEvent : ' + name);
-  tmrEvent.Enabled := true;
-  AlphaBlend       := true;
-
   Application.AddOnUserInputHandler(@MouseHook);
 end;
 
 procedure TfrmEvent.FormShow(Sender: TObject);
 {  When event is first shown, speak the message - if desired.    }
 begin
+  kLog.writeLog('formEvent : ' + name);
+  tmrEvent.Enabled := true;
+  AlphaBlend       := true;
+
   if userOptions.eventsSpeakMesssage then speakEvent;
 end;
 

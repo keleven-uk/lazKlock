@@ -2031,3 +2031,18 @@ Updated Help.
 14705 lines of source code.
 8182 statements
 16.4% comment
+
+
+Build 110 [2.6.0.110]
+
+The extra Klock where auto created and displayed with the showmodel command,
+changed this so that the klocks are only created when wanted and disposed off
+when the form is closed.  This saves about 500Kb from the memory footprint of
+the running application, but saves over two seconds on initial loading.
+
+Also applied above to simple biorhythm form.
+
+14731 line of source code.
+8185 statements
+16.4% comment
+

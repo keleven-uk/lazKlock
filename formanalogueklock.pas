@@ -94,18 +94,10 @@ end;
 
 procedure TfrmAnalogueKlock.FormCreate(Sender: TObject);
 {  On form create set up transparency stuff.  }
-var
-  transparency: longint;
 begin
   kLog.writeLog('FormAnalogue Klock Create');
 
   Application.AddOnUserInputHandler(@MouseHook);
-
-  {the color were going to make transparent the black that the form background is set to}
-  transparency := clBlack;
-
-  {call the function to do it}
-  SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
 end;
 
 procedure TfrmAnalogueKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -115,12 +107,20 @@ end;
 
 procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
 {  When starting the analogue klock, start the tray icon and hide the main klock.  }
+var
+  transparency: longint;
 begin
   kLog.writeLog('FormAnalogue Klock Show');
+
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
-
   frmMain.Visible := False;
+
+  {the color were going to make transparent the black that the form background is set to}
+  transparency := clBlack;
+
+  {call the function to do it}
+  SetTranslucent(frmAnalogueKlock.Handle, transparency, 0);
 
   if userOptions.analogueScreenSave then
   begin

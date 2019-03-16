@@ -27,7 +27,7 @@ type
     Label1                      : TLabel;
 
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure plotChart(daysAlive: integer);
   public
@@ -47,7 +47,7 @@ uses
 
 { TForm1 }
 
-procedure TfrmBiorhythm.FormCreate(Sender: TObject);
+procedure TfrmBiorhythm.FormShow(Sender: TObject);
 var
   birthdate : TdateTime;
   daysAlive : integer;

@@ -32,7 +32,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routines in both memo and events }
-{ TODO : Timer should be enabled in formshow and not formcreate. }
 { TODO : Scrolling and floating text klocks need all option on options screen. }
 { TODO : uEvents.pas should use userOptions for file location, possibly passed into create. }
 
@@ -2483,13 +2482,43 @@ begin
       frmLicense.ShowModal;
       FreeAndNil(frmLicense);
     end;
-    // ********************************************************* Time Menu *********
-    'mnuItmAnalogueKlock'     : frmAnalogueKlock.Show;           //  Calls the Analogue Klock.
-    'mnuItmLEDKlock'          : frmLEDKlock.Show;                //  Calls the LED Klock.
-    'mnuItmBinaryKlock'       : frmBinaryKlock.Show;             //  Calls the Binary Klock.
-    'mnuItmSmallTextKlock'    : frmSmallTextKlock.Show;          //  Calls the Small Text Klock.
-    'mnuItmFloatingTextKlock' : frmFloatingKlock.Show;           //  Calls the Floating Text Klock.
-    'mnuItmScrollingTextKlock': frmScrollingKlock.Show;          //  calls the Scrolling Text Klock.
+    // ********************************************************* Time Menu *********  frmFloatingKlock: TfrmFloatingKlock;
+    'mnuItmAnalogueKlock'     :                                  //  Calls the Analogue Klock.
+    begin
+      frmAnalogueKlock := TfrmAnalogueKlock.Create(Nil);
+      frmAnalogueKlock.ShowModal;
+      FreeAndNil(frmAnalogueKlock);
+    end;
+    'mnuItmLEDKlock'          :                                  //  Calls the LED Klock.
+    begin
+      frmLEDKlock := TfrmLEDKlock.Create(Nil);
+      frmLEDKlock.ShowModal;
+      FreeAndNil(frmLEDKlock);
+    end;
+    'mnuItmBinaryKlock'       :                                  //  Calls the Binary Klock.
+    begin
+      frmBinaryKlock := TfrmBinaryKlock.Create(Nil);
+      frmBinaryKlock.ShowModal;
+      FreeAndNil(frmBinaryKlock);
+    end;
+    'mnuItmSmallTextKlock'    :                                  //  Calls the Small Text Klock.
+     begin
+      frmSmallTextKlock := TfrmSmallTextKlock.Create(Nil);
+      frmSmallTextKlock.ShowModal;
+      FreeAndNil(frmSmallTextKlock);
+    end;
+    'mnuItmFloatingTextKlock' :                                  //  Calls the Floating Text Klock.
+     begin
+      frmFloatingKlock := TfrmFloatingKlock.Create(Nil);
+      frmFloatingKlock.ShowModal;
+      FreeAndNil(frmFloatingKlock);
+    end;
+    'mnuItmScrollingTextKlock':                                  //  calls the Scrolling Text Klock.
+    begin
+      frmScrollingKlock := TfrmScrollingKlock.Create(Nil);
+      frmScrollingKlock.ShowModal;
+      FreeAndNil(frmScrollingKlock);
+    end;
     'mnuItmTimePositions'     :                                  //  Calls the time Positions form.
     begin
       frmTimePositions := TfrmTimePositions.Create(Nil);
@@ -2513,7 +2542,12 @@ begin
     // ************************************************** Biorhythm Menu ***********
     //  Display a simple Biorhythm chart, using the Birth date set up in user options.
     //  NB  This form is not shown model.
-    'MnuItmSimpleBiorhythm'  : frmBiorhythm.Show;
+    'MnuItmSimpleBiorhythm'  :
+    begin
+      frmBiorhythm := TfrmBiorhythm.Create(Nil);
+      frmBiorhythm.ShowModal;
+      FreeAndNil(frmBiorhythm);
+    end;
     'MnuItmEnhancedBiorhythm': EnhancedBiorhythmClick;
   end;
 end;

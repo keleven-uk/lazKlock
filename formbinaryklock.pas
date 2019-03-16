@@ -121,10 +121,6 @@ procedure TfrmBinaryKlock.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormBinaryKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
-
-  tmrBinaryKlock.Enabled := false;
-
-  setShapes;
 end;
 
 procedure TfrmBinaryKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
@@ -147,6 +143,8 @@ begin
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
   frmMain.Visible := False;
+
+  setShapes;
 
   tmrBinaryKlock.Enabled := true;         //  Start timer.
 

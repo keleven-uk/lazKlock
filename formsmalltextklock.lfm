@@ -29,10 +29,9 @@ object frmSmallTextKlock: TfrmSmallTextKlock
     TabOrder = 0
     object lblSmallTextKlock: TLabel
       Left = 8
-      Height = 16
+      Height = 1
       Top = 8
-      Width = 103
-      Caption = 'lblSmallTextKlock'
+      Width = 1
       Font.CharSet = ANSI_CHARSET
       Font.Height = -13
       Font.Name = 'Arial'

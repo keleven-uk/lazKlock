@@ -60,9 +60,6 @@ procedure TfrmLEDKlock.FormCreate(Sender: TObject);
 begin
   kLog.writeLog('FormLEDKlock Create');
   Application.AddOnUserInputHandler(@MouseHook);
-
-  frmLEDKlock.DoubleBuffered := true;
-  TmrLEDKlock.Enabled := false;
 end;
 
 procedure TfrmLEDKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -87,7 +84,9 @@ begin
   frmMain.TrayIcon.Show;
   frmMain.Visible := False;
 
-  TmrLEDKlock.Enabled := True;         //  Start timer.
+
+  frmLEDKlock.DoubleBuffered := true;
+  TmrLEDKlock.Enabled        := True;         //  Start timer.
 
   if userOptions.LEDScreenSave then
   begin

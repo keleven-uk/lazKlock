@@ -104,22 +104,10 @@ begin
 end;
 
 procedure TfrmFloatingKlock.FormCreate(Sender: TObject);
-var
-  transparency: longint;
 begin
   kLog.writeLog('formFloatingKlock Create');
 
-  TmrFloatingText.Enabled := false;
-
   Application.AddOnUserInputHandler(@MouseHook);
-
-  {the color were going to make transparent the black that the form background is set to}
-  transparency := clBlack;
-
-  {call the function to do it}
-  SetTranslucent(frmFloatingKlock.Handle, transparency, 0);
-
-  frmFloatingKlock.Color := clBlack;
 end;
 
 procedure TfrmFloatingKlock.FormClose(Sender: TObject;  var CloseAction: TCloseAction);
@@ -145,8 +133,18 @@ begin
 end;
 
 procedure TfrmFloatingKlock.FormShow(Sender: TObject);
+var
+  transparency: longint;
 begin
   kLog.writeLog('formFloatingKlock Show');
+
+  {the color were going to make transparent the black that the form background is set to}
+  transparency := clBlack;
+
+  {call the function to do it}
+  SetTranslucent(frmFloatingKlock.Handle, transparency, 0);
+
+  frmFloatingKlock.Color := transparency;
 
   frmMain.TrayIcon.Visible := True;
   frmMain.Visible          := False;

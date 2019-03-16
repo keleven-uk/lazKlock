@@ -140,14 +140,6 @@ begin
   kLog.writeLog('formSmallTextKlock Klock Create');
 
   Application.AddOnUserInputHandler(@MouseHook);
-
-  tmrSmallTextKlock.Enabled := false;
-
-  createlabels;
-
-  lblSmallTextKlock.font.Name  := 'hack';
-  lblSmallTextKlock.Font.Color := ON_COLOUR;
-  lblSmallTextKlock.Font.size  := 12;
 end;
 
 procedure TfrmSmallTextKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -168,6 +160,8 @@ var
   transparency: longint;
 begin
   kLog.writeLog('formSmallTextKlock Klock Show');
+
+  createlabels;
 
   frmMain.TrayIcon.Visible := True;
   frmMain.TrayIcon.Show;
@@ -332,6 +326,10 @@ procedure TfrmSmallTextKlock.createlabels;
 var
   f, g: integer;
 begin
+  lblSmallTextKlock.font.Name  := 'hack';
+  lblSmallTextKlock.Font.Color := ON_COLOUR;
+  lblSmallTextKlock.Font.size  := 12;
+
   for g := 0 to 7 do
   begin
     for f := 0 to 19 do
