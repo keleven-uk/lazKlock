@@ -2040,9 +2040,30 @@ changed this so that the klocks are only created when wanted and disposed off
 when the form is closed.  This saves about 500Kb from the memory footprint of
 the running application, but saves over two seconds on initial loading.
 
-Also applied above to simple biorhythm form.
+Also applied above to the simple biorhythm form.
 
 14731 line of source code.
 8185 statements
 16.4% comment
+
+
+Build 111 [2.6.0.111]
+
+Their was problem with the options screen, it crashed klock if it was open
+twice.  This was cased by the command CloseAction := caFree; in the form close
+routine.  It seems using the showmodel command on a auto generated form does
+not like this command.  Amended the options screen to be created when needed
+and not auto-generated - all now okay.
+The new options screen loads slightly slower, but klocks memory footprint in
+reduced by over 1mB now.
+
+Their was a problem with the user option - use custom fonts.  If this was
+toggled when klock was running, the font object had to be either created or
+destroyed at run time.  Added code to achieve this.
+
+Corrected a bug on the creation of the events file.
+
+14745 line of source code.
+8193 statements
+16.5% comment
 

@@ -460,7 +460,7 @@ procedure logMessage(message: string);
 begin
   klog.writeLog(message);
   Application.Processmessages;
-  if (frmSplashScreen <> nil) then
+  if Assigned(frmSplashScreen) then
     frmSplashScreen.MemoSplashScreenInfo.Lines.Add(message);
 end;
 

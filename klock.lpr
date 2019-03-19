@@ -8,8 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, runtimetypeinfocontrols, lazcontrols, tachartlazaruspkg, formklock,
-  formOptions, uFuzzyTime, SysUtils, UformClipBoardUtils, formClipBoard,
-  formStickyNote, formSplashScreen, formEvent;
+  uFuzzyTime, SysUtils, UformClipBoardUtils, formClipBoard, formStickyNote,
+  formSplashScreen, formEvent;
 
 {$R *.res}
 
@@ -28,13 +28,12 @@ begin
   frmSplashScreen.Show;
   frmSplashScreen.Update;
   Application.CreateForm(TfrmMain, frmMain);
-  Application.CreateForm(TfrmOptions, frmOptions);
   Application.CreateForm(TfrmClipBoard, frmClipBoard);
   Application.CreateForm(TfrmStickyNote, frmStickyNote);
   Application.CreateForm(TfrmEvent, frmEvent);
 
   frmSplashScreen.Hide;
-  frmSplashScreen.Free;
+  frmSplashScreen := nil;           //  Need to set to nil, so "if Assigned(frmSplashScreen) then" works
   Application.Run;
 end.
 

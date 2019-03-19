@@ -212,6 +212,7 @@ end;
 
 procedure TfrmOptions.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
+  kLog.writeLog('FormOptions Close');
   CloseAction := caFree;
 end;
 
@@ -293,10 +294,6 @@ begin
   chckBxSpeakTime.Checked        := userBacOptions.speakTime;
   spnEdtSpeakTimeDuration.Value  := userBacOptions.speakTimeDuration;
   trckBrSpeakTimeVolume.Position := userBacOptions.speakTimeVolume;
-
-  klog.writeLog(format('frmOptions.FormActivate %s duration=%d position=%d', [BoolToStr(userBacOptions.speakTime),
-                                                                                        userBacOptions.speakTimeDuration,
-                                                                                        userBacOptions.speakTimeVolume]));
 
   spnEdtSpeakTimeDuration.Enabled := chckBxSpeakTime.Checked;
   trckBrSpeakTimeVolume.Enabled   := chckBxSpeakTime.Checked;

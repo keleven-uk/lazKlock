@@ -179,7 +179,7 @@ begin
   eventsStore.Data[id].notes := itmData;
   eventsStore.Data[id].float := itmFloat;
 
-  saveEvents;
+  updateEvents;
 end;
 
 function Events.retrieve(id: integer): Event;
@@ -303,7 +303,7 @@ begin
   end;  //  for f := 0 to EventsCount - 1 do
 
   sortEventsStore;   //  Sort events by due date.
-  saveEvents;        //  re save sortede vents
+  saveEvents;        //  re save sorted events.
 end;
 
 procedure Events.clearScolling;

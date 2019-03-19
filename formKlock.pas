@@ -439,7 +439,6 @@ begin
 
   DoubleBuffered := true;
   stsBrInfo.DoubleBuffered := true;
-
 end;
 
 procedure TfrmMain.parseTimeZoneData;
@@ -512,7 +511,7 @@ begin
   kLog.writeLog('Updated Sticky Note File');
   stickies.updateStickyNotes;
 
-  if userOptions.useCustomFonts then
+  if userOptions.useCustomFonts and Assigned(fs) then
   begin
     fs.removeFonts;                   //  Remove all fonts from system.
     fs.Free;                          //  Release the font store object.
@@ -602,9 +601,6 @@ begin
   begin
     CmbBxName.Items     := fs.fontTypes;                //  set up font combo box.
     CmbBxName.ItemIndex := 0;
-
-    CmbBxTZFonts.Items     := fs.fontTypes;             //  set up font combo box.
-    CmbBxTZFonts.ItemIndex := 0;
   end;
 
   lblfuzzy.Top       := 8;                              //  defaults for fuzzy time label.
@@ -2405,9 +2401,10 @@ end;
 procedure TfrmMain.mnuItmOptionsClick(Sender: TObject);
 {  if clicked, call the option screen, reapply options after.    }
 var
-  frmTop : integer;
-  frmLeft: integer;
-  res    : integer;         //  return value from option screen.
+  frmTop  : integer;
+  frmLeft : integer;
+  res     : integer;         //  return value from option screen.
+  useFonts: boolean;
 begin
   if userOptions.screenSave then
   begin
@@ -2420,10 +2417,31 @@ begin
     frmLeft := frmMain.Left;
   end;
 
-  res := frmOptions.ShowModal;
+  useFonts := userOptions.useCustomFonts;
+  klog.writeLog('Before showmodel');
 
+  frmOptions := TfrmOptions.Create(Nil);       //frmOptions is created
+  res        := frmOptions.ShowModal;          //frmOptions is displayed
+  FreeAndNil(frmOptions);                      //frmOptions is released
+
+  klog.writeLog('After showmodel');
   if res = 1 then             //  1 = OK button press, 2 = cancel button pressed.
+  begin
+    if useFonts <> userOptions.useCustomFonts then           //  the use fonts options has changed,
+    begin                                                    //  we my have to create or free the font object.
+      if (not useFonts) and userOptions.useCustomFonts then  //  Use fonts has been turned on, so we create.
+        fs := fontStore.Create;                              //  Create the font store objects, if needed.
+
+      if useFonts and (not userOptions.useCustomFonts) then  //  use fonts has been turned off, so we free.
+      begin
+        fs.removeFonts;                                      //  Remove all fonts from system.
+        fs.Free;                                             //  Release the font store object.
+      end;  //  if useFonts and (not userOptions.useCustomFonts) then
+    end;    //  if useFonts <> userOptions.useCustomFonts then
+
     SetDefaults;
+
+  end;  //  if res = 1 then
 
   if not userOptions.screenSave then
   begin  //  not done in SetDefaults
