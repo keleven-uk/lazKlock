@@ -2067,3 +2067,15 @@ Corrected a bug on the creation of the events file.
 8193 statements
 16.5% comment
 
+
+Build 112 [2.6.0.112]
+
+Amended the clear button on the events tab, so can either be used to not only
+clear all the fields but save a list of the events in CSV format.  The function
+of the button is determined by the mode of the display.  The events class not
+supports a new method - saveEvenstCSV.
+
+14818 line of source code.
+8225 statements
+16.5% comment
+

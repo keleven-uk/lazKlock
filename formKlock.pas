@@ -145,11 +145,12 @@ type
     lstBxEvents              : TListBox;
     lstBxFriends             : TListBox;
     LstBxMemoName            : TListBox;
-    mnuItmScrollingTextKlock: TMenuItem;
+    mnuItmScrollingTextKlock : TMenuItem;
     mEventNotes              : TMemo;
     MmMemoData               : TMemo;
     PascalTZ1                : TPascalTZ;
     RdBttnMemoEncrypt        : TRadioButton;
+    SaveDialog1              : TSaveDialog;
     ScrollBox2               : TScrollBox;
     SpdBtn120                : TSpeedButton;
     SpdBtn90                 : TSpeedButton;
@@ -1864,11 +1865,14 @@ end;
 procedure TfrmMain.setEventButtons(mode: Boolean);
 {  Configure the Event buttons and Event fields.
    Edit, Delete and Print are only visible if events already exist.
+
+   We overload the clear button.
+   If events exist, the clear button will display CSV - save a csh version of the events.
+   if adding a new event - button will display clear and clear all fields.
 }
 begin
   btnEventNew.Visible   := mode;
   btnEventAdd.Visible   := false;
-  btnEventClear.Visible := false;
 
   edtEventName.Enabled        := false;
   edtEventName.ReadOnly       := true;
@@ -1883,15 +1887,18 @@ begin
 
   if (PageControl1.TabIndex = 6) and (lstBxEvents.Items.Count <> 0)then
   begin
-    btnEventEdit.Visible    := true;
-    btnEventDelete.Visible  := true;
-    btnEventPrint.Visible   := true;
+    btnEventEdit.Visible   := true;
+    btnEventDelete.Visible := true;
+    btnEventPrint.Visible  := true;
+    btnEventClear.Caption  := 'CSV';
+    btnEventClear.Visible  := true;
   end
   else
   begin                                //  No events, don't need the buttons yet.
-    btnEventEdit.Visible       := false;
-    btnEventDelete.Visible     := false;
-    btnEventPrint.Visible      := false;
+    btnEventEdit.Visible   := false;
+    btnEventDelete.Visible := false;
+    btnEventPrint.Visible  := false;
+    btnEventClear.Visible  := false;
   end;
 
   btnEventPrint.Enabled := false;       //  enable when print function is completed.
@@ -1905,6 +1912,7 @@ begin
   edtEventName.Text     := '';
   edtEventName.SetFocus;
 
+  btnEventClear.Caption       := 'Clear';
   btnEventClear.Visible       := true;
   dtEdtEventDate.Enabled      := true;
   dtEdtEventDate.Date         := today;
@@ -1921,11 +1929,32 @@ begin
 end;
 
 procedure TfrmMain.btnEventClearClick(Sender: TObject);
-{  Clear all fields and return to new mode.    }
+{  Clear all fields and return to new mode.
+
+   We overload the clear button.
+   If events exist, the clear button will display CSV - save a csh version of the events.
+   if adding a new event - button will display clear and clear all fields.
+}
 begin
-  edtEventName.Text        := '';
-  dtEdtEventDate.date      := today;
-  cmbBxEventType.ItemIndex := 0;
+  if btnEventClear.Caption = 'Clear' then  //  button is in clear mode.
+  begin
+    edtEventName.Text        := '';
+    dtEdtEventDate.date      := today;
+    cmbBxEventType.ItemIndex := 0;
+  end
+  else                                     //  button is in CSV mode, save events in CSV file
+  begin
+    SaveDialog1.DefaultExt := '*.csv';
+    Savedialog1.Filter     := 'Comma seperated variables *.csv|*.csv';
+    Savedialog1.Options    := [ofOverwritePrompt];
+
+    if SaveDialog1.Execute then
+    begin
+      stsBrInfo.Panels.Items[4].Text := 'Saving CSV File';
+      ev.saveEventsCSV(SaveDialog1.FileName);
+      stsBrInfo.Panels.Items[4].Text := '';
+    end;
+  end;
 
   setEventButtons(true);
 end;
@@ -1999,6 +2028,7 @@ begin
     dtEdtEventDate.Enabled      := true;
     cmbBxEventType.Enabled      := true;
     btnEventEdit.Caption        := 'Save';
+    btnEventClear.Caption       := 'Clear';
     btnEventClear.Visible       := true;
   end
   else                                          //  save Event.
@@ -2417,25 +2447,29 @@ begin
     frmLeft := frmMain.Left;
   end;
 
-  useFonts := userOptions.useCustomFonts;
-  klog.writeLog('Before showmodel');
+  useFonts := userOptions.useCustomFonts;      //  Store, so we know if has been changed.
 
-  frmOptions := TfrmOptions.Create(Nil);       //frmOptions is created
-  res        := frmOptions.ShowModal;          //frmOptions is displayed
-  FreeAndNil(frmOptions);                      //frmOptions is released
+  frmOptions := TfrmOptions.Create(Nil);       //  frmOptions is created
+  res        := frmOptions.ShowModal;          //  frmOptions is displayed
+  FreeAndNil(frmOptions);                      //  frmOptions is released
 
-  klog.writeLog('After showmodel');
-  if res = 1 then             //  1 = OK button press, 2 = cancel button pressed.
+  if res = 1 then                              //  1 = OK button press, 2 = cancel button pressed.
   begin
     if useFonts <> userOptions.useCustomFonts then           //  the use fonts options has changed,
     begin                                                    //  we my have to create or free the font object.
       if (not useFonts) and userOptions.useCustomFonts then  //  Use fonts has been turned on, so we create.
-        fs := fontStore.Create;                              //  Create the font store objects, if needed.
+      begin                                                  //  Create the font store objects, if needed.
+        stsBrInfo.Panels.Items[4].Text := 'Creating Fonts';
+        fs := fontStore.Create;
+        stsBrInfo.Panels.Items[4].Text := '';
+      end;
 
       if useFonts and (not userOptions.useCustomFonts) then  //  use fonts has been turned off, so we free.
       begin
+        stsBrInfo.Panels.Items[4].Text := 'Removing Fonts';
         fs.removeFonts;                                      //  Remove all fonts from system.
         fs.Free;                                             //  Release the font store object.
+        stsBrInfo.Panels.Items[4].Text := '';
       end;  //  if useFonts and (not userOptions.useCustomFonts) then
     end;    //  if useFonts <> userOptions.useCustomFonts then
 

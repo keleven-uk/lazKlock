@@ -172,7 +172,7 @@ object frmMain: TfrmMain
         Width = 125
       end    
       item
-        Width = 100
+        Width = 400
       end>
     SimplePanel = False
   end
@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtEvents
-      TabIndex = 6
+      ActivePage = TbShtMemo
+      TabIndex = 7
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -4560,6 +4560,11 @@ object frmMain: TfrmMain
   object PascalTZ1: TPascalTZ
     DetectInvalidLocalTimes = True
     left = 520
+    top = 208
+  end
+  object SaveDialog1: TSaveDialog
+    Options = []
+    left = 560
     top = 208
   end
 end

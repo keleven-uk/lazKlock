@@ -68,6 +68,7 @@ type
     procedure restoreEvents;
     procedure updateEvents;
     procedure saveEvents;
+    procedure saveEventsCSV(fileName: string);
     procedure killEvents;
     procedure acknowledgeEvent(pos: integer; stage: integer);
     procedure Remove(pos: integer);
@@ -236,6 +237,44 @@ begin
     end;
   finally
     fileOut.Free;
+  end;
+end;
+
+procedure Events.saveEventsCSV(fileName: string);
+{  Write out the contents of the Event Store to a CSV file.    }
+VAR
+  txtFile   : TextFile;
+  csvText   : string;
+  addToFloat: string;
+  f         : integer;
+begin
+  AssignFile(txtFile, fileName);
+
+  try
+    rewrite(txtFile);           //  Always start afresh.
+
+    csvText := 'Name, Date, Id, Type, Notes, Add to Float';    //  Add header
+    writeLn(txtFile, csvText);
+
+    for f := 0 to eventsCount - 1 do
+    begin
+      if eventsStore.Data[f].float then
+        addToFloat := 'True'
+      else
+        addToFloat := 'False';
+
+      csvText := format('%s, %d, %s, %d, %s, %s', [eventsStore.Data[f].name,
+                                                   eventsStore.Data[f].id,
+                                                   eventsStore.Data[f].date,
+                                                   eventsStore.Data[f].etype,
+                                                   eventsStore.Data[f].notes,
+                                                   addToFloat]);
+
+      writeLn(txtFile, csvText);
+    end;
+
+  finally
+    CloseFile(txtFile);
   end;
 end;
 
