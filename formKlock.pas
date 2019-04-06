@@ -40,14 +40,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin, PopupNotifier, EditBtn,
-  uMemos, uMemo, formAbout, formOptions, formLicense, UFuzzyTime, dateutils,
-  LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256, UKlockUtils, uEvent,
-  uEvents, UConversion, uOptions, Windows, ULogging, ustickyNotes, formInfo,
-  Graph, formClipBoard, formLEDKlock, formBinaryKlock, formAnalogueKlock,
-  formSmallTextKlock, formFloatingKlock, formSplashScreen, formBiorhythm,
-  uFriends, formFriendsInput, uFriend, formTimePositions, formScrollingKlock;
+  Classes, SysUtils, FileUtil, DateTimePicker, Forms, Controls, Graphics,
+  Dialogs, ExtCtrls, uFonts, ComCtrls, Menus, Buttons, StdCtrls, Spin,
+  PopupNotifier, EditBtn, uMemos, uMemo, formAbout, formOptions, formLicense,
+  UFuzzyTime, dateutils, LCLIntf, LCLType, uPascalTZ, DCPrijndael, DCPsha256,
+  UKlockUtils, uEvent, uEvents, UConversion, uOptions, Windows, ULogging,
+  ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
+  formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen,
+  formBiorhythm, uFriends, formFriendsInput, uFriend, formTimePositions,
+  formScrollingKlock;
 
 type
   FourStrings = array [0..3] of string;
@@ -112,9 +113,9 @@ type
     CmbBxTime                : TComboBox;
     CmbBxName                : TComboBox;
     CmbBxTimeZones           : TComboBox;
+    dtEdtEventDate           : TDateTimePicker;
     DCP_rijndael1            : TDCP_rijndael;
     DCP_sha256_1             : TDCP_sha256;
-    dtEdtEventDate           : TDateEdit;
     DtReminderEvent          : TDateEdit;
     edtConverionResult       : TEdit;
     edtConverionValue        : TEdit;
@@ -743,7 +744,6 @@ begin
     end;
     7:                                  //  memo page.
     begin
-      klog.writeLog('MEMO');
       loadMemos;                        //  Load Memos store into listbox, if any.
       setMemoButtons(true);
     end;
@@ -1939,7 +1939,8 @@ begin
   if btnEventClear.Caption = 'Clear' then  //  button is in clear mode.
   begin
     edtEventName.Text        := '';
-    dtEdtEventDate.date      := today;
+    dtEdtEventDate.date      := date;
+    dtEdtEventDate.Time      := time;
     cmbBxEventType.ItemIndex := 0;
   end
   else                                     //  button is in CSV mode, save events in CSV file
@@ -1966,12 +1967,16 @@ procedure TfrmMain.btnEventAddClick(Sender: TObject);
    The eventCount is one more then the actual count.
 }
 VAR
-  sdate: string;
+  sDate: string;
+  sTime: string;
 begin
-  sdate := DateToStr(dtEdtEventDate.date);
+
+  sDate := DateToStr(dtEdtEventDate.Date);
+  sTime := TimeToStr(dtEdtEventDate.Time);
 
   if mEventNotes.Text = '' then mEventNotes.Text := ' ';
-  ev.new(edtEventName.Text, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+
+  ev.new(edtEventName.Text, sDate, sTime, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
 
   ev.updateEvents;
   loadEvents;
@@ -1984,11 +1989,12 @@ procedure TfrmMain.loadEvents;
 var
   f: integer;
 begin
-  klog.writeLog(format('Loading %d events', [ev.EventsCount]));
+  klog.writeLog(format('Loading %d events', [ev.eventsCount]));
 
   lstBxEvents.Clear;
   edtEventName.Clear;
-  dtEdtEventDate.Clear;
+  dtEdtEventDate.Date := Date;
+  dtEdtEventDate.Time := Time;
   mEventNotes.Clear;
 
   for f := 0 to ev.EventsCount -1 do
@@ -2014,7 +2020,8 @@ end;
 
 procedure TfrmMain.btnEventEditClick(Sender: TObject);
 VAR
-  sdate: string;
+  sDate: string;
+  sTime: string;
 begin
   btnEventNew.Visible    := false;
   btnEventDelete.Visible := false;
@@ -2035,8 +2042,12 @@ begin
   begin
     btnEventEdit.Caption  := 'Edit';
 
-    sdate := DateToStr(dtEdtEventDate.date);
-    ev.amend(lstBxEvents.ItemIndex, sdate, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+    sDate := DateToStr(dtEdtEventDate.date);
+    sTime := TimeToStr(dtEdtEventDate.Time);
+
+    if mEventNotes.Text = '' then mEventNotes.Text := ' ';
+    ev.amend(lstBxEvents.ItemIndex, sDate, sTime, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
+    loadevents;
     seteventButtons(true);
   end;
 end;
@@ -2048,6 +2059,7 @@ procedure TfrmMain.displayEvent(pos: integer);
 VAR
   e: Event;                   //  Event.
   d: TDate;
+  t: TDateTime;
 begin
   if ev.EventsCount = 0 then exit;
 
@@ -2055,9 +2067,11 @@ begin
   e := ev.retrieve(pos);
 
   d := StrToDate(e.date);
+  t := StrToTime(e.time);
 
   edtEventName.Text           := e.name;
   dtEdtEventDate.Date         := d;
+  dtEdtEventDate.Time         := t;
   cmbBxEventType.ItemIndex    := e.etype;
   ChckBxEventFloating.Checked := e.float;
   mEventNotes.Text            := e.notes;
@@ -2115,10 +2129,6 @@ begin
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
   ev.stage1ForeColour := userOptions.eventsStage1ForeColour;
-
-  klog.writeLog(format('setUpEventsOptions %s duration=%d position=%d', [BoolToStr(userOptions.speakTime),
-                                                                                   userOptions.speakTimeDuration,
-                                                                                   userOptions.speakTimeVolume]));
 end;
 //
 // *********************************************************** Conversion ******

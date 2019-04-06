@@ -617,14 +617,17 @@ begin
 end;
 
 procedure KillOtherKlocks;
-{  Kill any other klocks that are visible.    }
+{  Kill any other klocks that are visible.
+   Amended, because the klocks are now shown showModel, we have to call the call method.
+   We used to just set visable to false when the forms where auto-created..
+}
 begin
-  if frmAnalogueKlock.Visible  then frmAnalogueKlock.Visible  := False;
-  if frmLEDKlock.Visible       then frmLEDKlock.Visible       := False;
-  if frmBinaryKlock.Visible    then frmBinaryKlock.Visible    := False;
-  if frmSmallTextKlock.Visible then frmSmallTextKlock.Visible := False;
-  if frmFloatingKlock.Visible  then frmFloatingKlock.Visible  := false;
-  if frmScrollingKlock.Visible then frmScrollingKlock.Visible := false;
+  if assigned(frmAnalogueKlock)  then frmAnalogueKlock.Close;
+  if assigned(frmLEDKlock)       then frmLEDKlock.Close;
+  if assigned(frmBinaryKlock)    then frmBinaryKlock.Close;
+  if assigned(frmSmallTextKlock) then frmSmallTextKlock.Close;
+  if assigned(frmFloatingKlock)  then frmFloatingKlock.Close;
+  if assigned(frmScrollingKlock) then frmScrollingKlock.Close;
 end;
 //
 //...................................... encrypt and decrypt ...................

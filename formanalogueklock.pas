@@ -102,7 +102,8 @@ end;
 
 procedure TfrmAnalogueKlock.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-CloseAction := caFree;
+  kLog.writeLog('FormAnalogue Klock Close');
+  CloseAction := caFree;
 end;
 
 procedure TfrmAnalogueKlock.FormShow(Sender: TObject);
@@ -137,7 +138,9 @@ end;
 
 procedure TfrmAnalogueKlock.FormDestroy(Sender: TObject);
 begin
-    // To prevent possible system resource leaks
+  kLog.writeLog('FormAnalogue Klock Destroy');
+
+  // To prevent possible system resource leaks
   Application.RemoveOnUserInputHandler(@MouseHook);
 end;
 

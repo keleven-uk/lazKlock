@@ -1983,7 +1983,7 @@ Date:   Tue Feb 26 22:52:30 2019 +0000
 Some time ago, I changed formAbout so that it was created on demand and shown
 model.  This change in the main Klock file was not mirrored into
 formFloatingForm.  This caused a application crash if the about form was
-launched from the floating text Klock.  Change not done.
+launched from the floating text Klock.  Change now done.
 
 Also removed the procedure addEvents from floatingText, this is going to be
 included in the new scrolling text Klock.
@@ -2072,10 +2072,28 @@ Build 112 [2.6.0.112]
 
 Amended the clear button on the events tab, so can either be used to not only
 clear all the fields but save a list of the events in CSV format.  The function
-of the button is determined by the mode of the display.  The events class not
+of the button is determined by the mode of the display.  The events class now
 supports a new method - saveEvenstCSV.
 
 14818 line of source code.
 8225 statements
+16.5% comment
+
+
+Build 113 [2.6.0.113]
+
+Added time to uevent.pas and uevents.pas.
+Amended both, so that the new time fields if included in save, new and amend
+routines.
+
+Also amended the save and load routines in uevent.pas, so that the boolean
+fields are saved and read as strings.  They are then converted to booleans
+to be used within Klock.  It seems that booleans can't be read and written
+natively.
+
+Corrected a bug in uKlockUtils.KillOtherKlocks, on how it checked on if any other Klocks was running.  Used to use if visible, now uses if assigned.
+
+14913 line of source code.
+8299 statements
 16.5% comment
 

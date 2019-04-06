@@ -19,6 +19,7 @@ type
 
   private
     _eventsFile      : string;
+    _ScrollEventsFile: string;
     _eventsTypes     : TStringList;
     _eventsCount     : integer;
     _stage1Days      : integer;
@@ -34,7 +35,9 @@ type
     _stage2ForeColour: TColor;
     _stage3ForeColour: TColor;
 
-    property eventsFile: string read _eventsFile write _eventsFile;
+    property eventsFile:       string read _eventsFile       write _eventsFile;
+    property ScrollEventsFile: string read _ScrollEventsFile write _ScrollEventsFile;
+
     function checkStages(age: integer): integer;
     procedure actionEvent(pos: integer; stage: integer);
     function determineDueDays(eventDate: string): integer;
@@ -62,8 +65,8 @@ type
     constructor Create; overload;
     destructor Destroy; override;
 
-    procedure new(key: string; date: string; etype: integer; data: string; floating: Boolean);
-    procedure amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
+    procedure new(key: string; date: string; time: string; etype: integer; data: string; floating: Boolean);
+    procedure amend(id:integer; itmDate: string; itmTime: string; itmType: integer; itmData: string; itmFloat: Boolean);
     function retrieve(id: integer): Event;
     procedure restoreEvents;
     procedure updateEvents;
@@ -98,6 +101,7 @@ constructor Events.Create; overload;
 {  set up some variables on create.    }
 begin
   eventsFile         := GetAppConfigDir(False) + 'Event.bin';
+  ScrollEventsFile   := GetAppConfigDir(False) + 'Events.txt';
   eventsStore        := keyStore.Create;       //  initial eventStore
   eventsStore.Sorted := true;
   eventsCount        := 0;
@@ -137,7 +141,7 @@ begin
   inherited;
 end;
 
-procedure Events.new(key: string; date: string; etype: integer; data: string; floating: Boolean);
+procedure Events.new(key: string; date: string; time: string; etype: integer; data: string; floating: Boolean);
 {  Creates a new Event.  This is called from the host program.
    A new Events is created and added to the store.
    The Events store is then saved to file.
@@ -149,9 +153,12 @@ begin
 
   e := Event.Create(eventsCount);
 
+  if data = '' then data := ' ';   // Don't allow a blank notes.
+
   e.name      := key;
   e.id        := eventsCount;
   e.date      := date;
+  e.time      := time;
   e.etype     := etype;
   e.notes     := data;
   e.float     := floating; //  If true, add to scrolling text.
@@ -163,19 +170,21 @@ begin
 
   eventsStore.Add(eventsCount, e);
 
-  if floating then addToScolling(eventsCount);  //  If needed, add to text file of scrolling text.
-
-  e.Free;
-
+  if floating then addToScolling(eventsCount - 1);  //  If needed, add to text file of scrolling text.
+                                                    //  Need to subtract 1, event store is zzero based.
   saveEvents;
 end;
 
-procedure Events.amend(id:integer; itmDate: string; itmType: integer; itmData: string; itmFloat: Boolean);
+procedure Events.amend(id:integer; itmDate: string; itmTime: string; itmType: integer;
+                                                                         itmData: string; itmFloat: Boolean);
 {  Amends an event - the date and body text can be amended.
    The event store is then saved to file.
 }
 begin
+  if itmData = '' then itmData := ' ';   // Don't allow a blank notes.
+
   eventsStore.Data[id].date  := itmDate;
+  eventsStore.Data[id].time  := itmTime;
   eventsStore.Data[id].etype := itmType;
   eventsStore.Data[id].notes := itmData;
   eventsStore.Data[id].float := itmFloat;
@@ -192,6 +201,7 @@ begin
   e.name      := eventsStore.Data[id].name;
   e.id        := eventsStore.Data[id].id;
   e.date      := eventsStore.Data[id].date;
+  e.time      := eventsStore.Data[id].time;
   e.etype     := eventsStore.Data[id].etype;
   e.notes     := eventsStore.Data[id].notes;
   e.float     := eventsStore.Data[id].float;
@@ -230,7 +240,7 @@ begin
     for f := 0 to eventsCount - 1 do
     begin
       try
-      eventsStore.Data[f].saveToFile(fileOut);
+        eventsStore.Data[f].saveToFile(fileOut);
       except
         on E: EInOutError do
       end;
@@ -253,7 +263,7 @@ begin
   try
     rewrite(txtFile);           //  Always start afresh.
 
-    csvText := 'Name, Date, Id, Type, Notes, Add to Float';    //  Add header
+    csvText := 'Name, Date, time, Id, Type, Notes, Add to Float';    //  Add header
     writeLn(txtFile, csvText);
 
     for f := 0 to eventsCount - 1 do
@@ -263,12 +273,13 @@ begin
       else
         addToFloat := 'False';
 
-      csvText := format('%s, %d, %s, %d, %s, %s', [eventsStore.Data[f].name,
-                                                   eventsStore.Data[f].id,
-                                                   eventsStore.Data[f].date,
-                                                   eventsStore.Data[f].etype,
-                                                   eventsStore.Data[f].notes,
-                                                   addToFloat]);
+      csvText := format('%s, %d, %s, %s, %d, %s, %s', [eventsStore.Data[f].name,
+                                                       eventsStore.Data[f].id,
+                                                       eventsStore.Data[f].date,
+                                                       eventsStore.Data[f].time,
+                                                       eventsStore.Data[f].etype,
+                                                       eventsStore.Data[f].notes,
+                                                       addToFloat]);
 
       writeLn(txtFile, csvText);
     end;
@@ -347,11 +358,8 @@ end;
 
 procedure Events.clearScolling;
 {  Clears the text file that contains the events to add to the scrolling text.  }
-VAR
-  eventsTXT: string;
 begin
-  eventsTXT := userOptions.eventsName;
-  if FileExists(eventsTXT) then DeleteFile(eventsTXT);
+  if FileExists(ScrollEventsFile) then DeleteFile(ScrollEventsFile);
 end;
 
 procedure Events.addToScolling(f: integer);
@@ -360,14 +368,12 @@ procedure Events.addToScolling(f: integer);
 }
 VAR
   eventText: string;
-  eventsTXT: string;
   txtFile  : TextFile;
 begin
-  eventsTXT := userOptions.eventsName;
-  AssignFile(txtFile, eventsTXT);
+  AssignFile(txtFile, ScrollEventsFile);
 
   try
-    if FileExists(eventsTXT) then
+    if FileExists(ScrollEventsFile) then
       append(txtFile)
     else
       rewrite(txtFile);
@@ -525,6 +531,7 @@ begin
 end;
 
 function Events.determineYearsbetween(eventDate: string): integer;
+{  Returns the number of years between a given date and today.    }
 VAR
   evntDate: TDateTime;
   years   : integer = 0;
@@ -552,8 +559,8 @@ begin
       s  := format('frmEvent_%d', [eventsStore.Data[f].id]);
       ev := screen.FindForm(s);
     except
-      //  event form not found.
-      exit;
+                     //  event form not found.
+      continue;      //  continue to next event form, if any.
     end;
 
     if assigned(ev) then ev.Close;
