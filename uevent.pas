@@ -62,9 +62,6 @@ type
 
 implementation
 
-uses
-  formklock;
-
 constructor Event.Create(sn_id: integer);
 {  Creates a new Event.    }
 begin
@@ -96,7 +93,7 @@ constructor Event.Create(fsOut: TFileStream);
    The boolean fields are converted to and written as strings.
 }
 var
-  Len1: Cardinal = 0;
+  len1: Cardinal = 0;
   sNme: string   = '';
   iID : integer  = 0;
   sDte: string   = '';
@@ -112,55 +109,41 @@ begin
   try
     //  need the dummy variables, had the error Can't take the
     //  address of constant expressions..
-    klog.writeLog('Read name');
-    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read name.
-    SetLength(sNme, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read name.
+    SetLength(sNme, len1);
     fsOut.ReadBuffer(sNme[1], len1);
 
-    klog.writeLog('Read id');
     fsOut.ReadBuffer(iID, sizeof(iID));     //  read id.
 
-    klog.writeLog('Read date');
-    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read date.
-    SetLength(sDte, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read date.
+    SetLength(sDte, len1);
     fsOut.ReadBuffer(sDte[1], len1);
 
-    klog.writeLog('Read time');
-    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read time.
-    SetLength(sTme, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read time.
+    SetLength(sTme, len1);
     fsOut.ReadBuffer(sTme[1], len1);
 
-    klog.writeLog('Read type');
     fsOut.ReadBuffer(iTyp, sizeof(iTyp));   //  read type.
 
-    klog.writeLog('Read notes');
-    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read notes
-    SetLength(sNte, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read notes
+    SetLength(sNte, len1);
     fsOut.ReadBuffer(sNte[1], len1);
 
-    klog.writeLog('Read floating');
-    fsout.ReadBuffer(Len1, Sizeof(Len1));   //  read floating
-    SetLength(sFlt, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read floating
+    SetLength(sFlt, len1);
     fsOut.ReadBuffer(sFlt[1], len1);
-    klog.writeLog('Read floating' + sFlt);
 
-    klog.writeLog('Read stage 1 acknowledged');
-    fsout.ReadBuffer(Len1, Sizeof(sSt1));   //  read stage 1 acknowledged.
+    fsout.ReadBuffer(Len1, Sizeof(len1));   //  read stage 1 acknowledged.
     SetLength(sSt1, Len1);
     fsOut.ReadBuffer(sSt1[1], len1);
-    klog.writeLog('Read stage 1 acknowledged' + sSt1);
 
-    klog.writeLog('Read stage 2 acknowledged');
-    fsout.ReadBuffer(Len1, Sizeof(sSt2));   //  read stage 2 acknowledged.
-    SetLength(sSt2, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read stage 2 acknowledged.
+    SetLength(sSt2, len1);
     fsOut.ReadBuffer(sSt2[1], len1);
-    klog.writeLog('Read stage 2 acknowledged' + sSt2);
 
-    klog.writeLog('Read stage 3 acknowledged');
-    fsout.ReadBuffer(Len1, Sizeof(sSt3));   //  read stage 3 acknowledged.
-    SetLength(sSt3, Len1);
+    fsout.ReadBuffer(len1, Sizeof(len1));   //  read stage 3 acknowledged.
+    SetLength(sSt3, len1);
     fsOut.ReadBuffer(sSt3[1], len1);
-    klog.writeLog('Read stage 3 acknowledged' + sSt1);
 
     //  don't need to read due interval - they are calculated
 
@@ -192,61 +175,52 @@ procedure Event.saveToFile(fsOut: TFileStream);
    The boolean fields are converted to and written as strings.
 }
 var
-  Len1 : Cardinal;
+  len1 : Cardinal;
   sFlt : string = '';
   sAck1: string = '';
   sAck2: string = '';
   sAck3: string = '';
 begin
   try
-    klog.writeLog('Write name');
-    Len1 := Length(name);                             //  write name.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(name[1], Len1);
+    len1 := Length(name);                             //  write name.
+    fsOut.WriteBuffer(len1, SizeOf(len1));
+    fsOut.WriteBuffer(name[1], len1);
 
-    klog.writeLog('Write id');
     fsOut.WriteBuffer(id, sizeof(id));                 //  write id.
 
-    klog.writeLog('Write date');
-    Len1 := Length(date);                              //  write date.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(date[1], Len1);
+    len1 := Length(date);                              //  write date.
+    fsOut.WriteBuffer(Len1, SizeOf(len1));
+    fsOut.WriteBuffer(date[1], len1);
 
-    klog.writeLog('Write time');
-    Len1 := Length(time);                              //  write time.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(time[1], Len1);
+    len1 := Length(time);                              //  write time.
+    fsOut.WriteBuffer(Len1, SizeOf(len1));
+    fsOut.WriteBuffer(time[1], len1);
 
-    klog.writeLog('Write type');
     fsOut.WriteBuffer(etype, sizeof(etype));           //  write type.
 
-    Len1 := Length(notes);                             //  write notes
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(notes[1], Len1);
+    len1 := Length(notes);                             //  write notes
+    fsOut.WriteBuffer(len1, SizeOf(len1));
+    fsOut.WriteBuffer(notes[1], len1);
 
     sFlt := BoolToStr(float);
-    klog.writeLog('Write float' + sFlt);
-    Len1 := Length(sFlt);                              //  write floating
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(sFlt[1], Len1);
+    len1 := Length(sFlt);                              //  write floating
+    fsOut.WriteBuffer(len1, SizeOf(len1));
+    fsOut.WriteBuffer(sFlt[1], len1);
 
     sAck1 := BoolToStr(stage1Ack);
-    klog.writeLog('Write stage 1 acknowledged' + sAck1);
-    Len1 := Length(sAck1);                              //  write stage 1 acknowledged.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(sAck1[1], Len1);
+    len1 := Length(sAck1);                              //  write stage 1 acknowledged.
+    fsOut.WriteBuffer(Len1, SizeOf(len1));
+    fsOut.WriteBuffer(sAck1[1], len1);
 
-    sAck2 := BoolToStr(stage1Ack);
-    klog.writeLog('Write stage 2 acknowledged' + sAck2);
-    Len1 := Length(sAck2);                              //  write stage 1 acknowledged.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(sAck2[1], Len1);
+    sAck2 := BoolToStr(stage2Ack);
+    len1 := Length(sAck2);                              //  write stage 2 acknowledged.
+    fsOut.WriteBuffer(Len1, SizeOf(len1));
+    fsOut.WriteBuffer(sAck2[1], len1);
 
-    sAck3 := BoolToStr(stage1Ack);
-    klog.writeLog('Write stage 3 acknowledged' + sAck3);
-    Len1 := Length(sAck3);                              //  write stage 1 acknowledged.
-    fsOut.WriteBuffer(Len1, SizeOf(Len1));
-    fsOut.WriteBuffer(sAck3[1], Len1);
+    sAck3 := BoolToStr(stage3Ack);
+    len1 := Length(sAck3);                              //  write stage 3 acknowledged.
+    fsOut.WriteBuffer(len1, SizeOf(len1));
+    fsOut.WriteBuffer(sAck3[1], len1);
 
     //  don't need to write due interval - they are calculated
   except

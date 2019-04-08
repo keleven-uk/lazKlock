@@ -395,9 +395,9 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 begin
+  kLog := Logger.Create;
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 
-  kLog := Logger.Create;
   logHeader;
 
   logMessage('Klock Create');      //  Write to log file and splash screen.
@@ -1916,7 +1916,10 @@ begin
   btnEventClear.Visible       := true;
   dtEdtEventDate.Enabled      := true;
   dtEdtEventDate.Date         := today;
+  dtEdtEventDate.Time         := EnCodeTime (0, 0, 0, 0);      //  Set to midnight.
+  ChckBxEventFloating.Checked := false;
   cmbBxEventType.Enabled      := true;
+  cmbBxEventType.ItemIndex    := 0;
   ChckBxEventFloating.Enabled := true;
   mEventNotes.Enabled         := true;
   mEventNotes.ReadOnly        := false;
@@ -1969,10 +1972,15 @@ procedure TfrmMain.btnEventAddClick(Sender: TObject);
 VAR
   sDate: string;
   sTime: string;
+  Var HH,MM,SS,MS: Word;
 begin
 
   sDate := DateToStr(dtEdtEventDate.Date);
-  sTime := TimeToStr(dtEdtEventDate.Time);
+
+  DecodeTime(dtEdtEventDate.Time, HH, MM, SS,MS);   //  We don't need seconds or milli seconds.
+  ss    := 0;                                       //  So, we set them to zero.
+  ms    := 0;
+  sTime := TimeToStr(EnCodeTime (HH, MM, SS, MS));
 
   if mEventNotes.Text = '' then mEventNotes.Text := ' ';
 

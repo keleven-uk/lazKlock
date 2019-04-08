@@ -841,7 +841,7 @@ begin
     if rtn <> 'ERROR' then floatingTextScreenSave := StrToBool(rtn);
     rtn := readChildAttribute(PassNode, 'floatingTextForm', 'Top');
     if rtn <> 'ERROR' then floatingTextFormTop := StrToInt(rtn);
-    rtn := readChildAttribute(PassNode, 'floatingTextFormLeft', 'Left');
+    rtn := readChildAttribute(PassNode, 'floatingTextForm', 'Left');
     if rtn <> 'ERROR' then floatingTextFormLeft := StrToInt(rtn);
     rtn := readChild(PassNode, 'floatingTextFont');
     if rtn <> 'ERROR' then floatingTextFont := StringToFont(rtn);
@@ -860,7 +860,7 @@ begin
     if rtn <> 'ERROR' then scrollingTextScreenSave := StrToBool(rtn);
     rtn := readChildAttribute(PassNode, 'scrollingTextForm', 'Top');
     if rtn <> 'ERROR' then scrollingTextFormTop := StrToInt(rtn);
-    rtn := readChildAttribute(PassNode, 'scrollingTextFormLeft', 'Left');
+    rtn := readChildAttribute(PassNode, 'scrollingTextForm', 'Left');
     if rtn <> 'ERROR' then scrollingTextFormLeft := StrToInt(rtn);
     rtn := readChild(PassNode, 'scrollingAlwaysOnTop');
     if rtn <> 'ERROR' then scrollingAlwaysOnTop := StrToBool(rtn);

@@ -93,9 +93,6 @@ VAR
 
 implementation
 
-uses
-  formklock;
-
 
 constructor Events.Create; overload;
 {  set up some variables on create.    }
@@ -378,7 +375,7 @@ begin
     else
       rewrite(txtFile);
 
-    eventText := format('%s, %s', [eventsStore.Data[f].Name, eventsStore.Data[f].date]);
+    eventText := format('%s, %s, %s', [eventsStore.Data[f].Name, eventsStore.Data[f].date, eventsStore.Data[f].time]);
     writeLn(txtFile, eventText);
   finally
     CloseFile(txtFile);
@@ -570,7 +567,7 @@ end;
 procedure Events.acknowledgeEvent(pos: integer; stage: integer);
 {  The event has been acknowledged, so set the appropriate flag to true.
 
-   This is called from from event form.
+   This is called from from the event form.
 }
 begin
   case stage of

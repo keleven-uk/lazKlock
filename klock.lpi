@@ -23,12 +23,12 @@
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="6"/>
-      <BuildNr Value="113"/>
+      <BuildNr Value="114"/>
       <Language Value="0809"/>
       <Attributes pvaDebug="True"/>
-      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2019" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="Build 113"/>
+      <StringTable Comments="conatct :: lazKlock&lt;at>keleven.co.uk" CompanyName="www.keleven.co.uk" FileDescription="A timing thingy - the clock with a K" InternalName="lazklock" LegalCopyright="(c) kevin Scott 2012 - 2019" OriginalFilename="klock.exe" ProductName="lazklock" ProductVersion="Build 114"/>
     </VersionInfo>
-    <BuildModes Count="7" Active="Debug 64-bit">
+    <BuildModes Count="7" Active="Release 32-bit">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
@@ -405,10 +405,9 @@
       <Unit0>
         <Filename Value="klock.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="46" Y="12"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="formKlock.pas"/>
@@ -417,20 +416,16 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formklock"/>
-        <TopLine Value="2058"/>
-        <CursorPos X="63" Y="2076"/>
+        <TopLine Value="13"/>
+        <CursorPos X="94" Y="36"/>
         <UsageCount Value="202"/>
-        <Bookmarks Count="2">
-          <Item0 X="2" Y="2133" ID="1"/>
-          <Item1 X="34" Y="2588" ID="2"/>
-        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="info.txt"/>
         <CursorPos X="16" Y="2"/>
-        <UsageCount Value="146"/>
+        <UsageCount Value="145"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit2>
       <Unit3>
@@ -451,7 +446,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="64" Y="20"/>
-        <UsageCount Value="171"/>
+        <UsageCount Value="170"/>
       </Unit4>
       <Unit5>
         <Filename Value="formOptions.pas"/>
@@ -469,20 +464,20 @@
         <UnitName Value="ComCtrls"/>
         <TopLine Value="790"/>
         <CursorPos X="3" Y="559"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit6>
       <Unit7>
         <Filename Value="ucountdown.pas"/>
         <UnitName Value="Ucountdown"/>
         <CursorPos Y="12"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\lcl\lclclasses.pp"/>
         <UnitName Value="LCLClasses"/>
         <TopLine Value="74"/>
         <CursorPos Y="94"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit8>
       <Unit9>
         <Filename Value="ufuzzytime.pas"/>
@@ -497,7 +492,7 @@
         <Filename Value="uoptionsrecord.pas"/>
         <UnitName Value="UOptionsRecord"/>
         <CursorPos Y="25"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit10>
       <Unit11>
         <Filename Value="formlicense.pas"/>
@@ -515,11 +510,10 @@
         <Filename Value="uklockutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UKlockUtils"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="608"/>
         <CursorPos X="75" Y="622"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="formreminderinput.pas"/>
@@ -529,24 +523,23 @@
         <UnitName Value="formReminderInput"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="4"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit13>
       <Unit14>
         <Filename Value="uoptions.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uOptions"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="955"/>
-        <CursorPos X="36" Y="1159"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1240"/>
+        <CursorPos Y="1258"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
       </Unit14>
       <Unit15>
         <Filename Value="uoptionsutils.pas"/>
         <UnitName Value="uOptionsUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="6" Y="17"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="37"/>
       </Unit15>
       <Unit16>
         <Filename Value="formanalogueklock.pas"/>
@@ -555,12 +548,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formAnalogueKlock"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="45"/>
-        <CursorPos Y="72"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="189"/>
+        <CursorPos X="65" Y="219"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit16>
       <Unit17>
         <Filename Value="ufonts.pas"/>
@@ -576,15 +567,15 @@
         <UnitName Value="uLoggerUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="9" Y="85"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit18>
       <Unit19>
         <Filename Value="ulogging.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ULogging"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="48"/>
-        <CursorPos X="87" Y="79"/>
+        <TopLine Value="60"/>
+        <CursorPos Y="78"/>
         <UsageCount Value="205"/>
       </Unit19>
       <Unit20>
@@ -634,13 +625,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="601"/>
         <CursorPos X="3" Y="578"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit24>
       <Unit25>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win64\windows.pp"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="15" Y="12"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit25>
       <Unit26>
         <Filename Value="formledklock.pas"/>
@@ -649,10 +640,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formLEDKlock"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="67"/>
-        <CursorPos X="30" Y="89"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="153"/>
+        <CursorPos X="62" Y="175"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit26>
       <Unit27>
         <Filename Value="formbinaryklock.pas"/>
@@ -661,10 +654,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formBinaryKlock"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="124"/>
-        <CursorPos X="3" Y="148"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="253"/>
+        <CursorPos X="62" Y="271"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit27>
       <Unit28>
         <Filename Value="formsmalltextklock.pas"/>
@@ -673,16 +668,20 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formSmallTextKlock"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="329"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="244"/>
+        <CursorPos X="62" Y="291"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit28>
       <Unit29>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\objpas\sysutils\datih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="88"/>
         <CursorPos X="47" Y="122"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit29>
       <Unit30>
         <Filename Value="uconversion.pas"/>
@@ -697,7 +696,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="161"/>
         <CursorPos X="10" Y="180"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit31>
       <Unit32>
         <Filename Value="ustickynotes.pas"/>
@@ -735,7 +734,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="941"/>
         <CursorPos X="45" Y="963"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit35>
       <Unit36>
         <Filename Value="umemo.pas"/>
@@ -761,7 +760,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="142"/>
         <CursorPos X="40" Y="161"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit38>
       <Unit39>
@@ -789,7 +788,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos X="13" Y="26"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit41>
       <Unit42>
@@ -798,7 +797,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="135"/>
         <CursorPos X="10" Y="155"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit42>
       <Unit43>
         <Filename Value="C:\lazarus64\lcl\lcltype.pp"/>
@@ -806,14 +805,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2689"/>
         <CursorPos X="3" Y="2695"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus64\lcl\include\clipbrd.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="561"/>
         <CursorPos X="33" Y="564"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus64\lcl\forms.pp"/>
@@ -821,7 +820,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1799"/>
         <CursorPos X="3" Y="1818"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit45>
       <Unit46>
         <Filename Value="formsplashscreen.pas"/>
@@ -839,7 +838,7 @@
         <Filename Value="C:\Users\keleven\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\mouseandkeyinput\mouseandkeyinput.pas"/>
         <UnitName Value="MouseAndKeyInput"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit47>
       <Unit48>
@@ -848,28 +847,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="43"/>
         <CursorPos X="15" Y="40"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit48>
       <Unit49>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\objpas\sysutils\diskh.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="16" Y="16"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit49>
       <Unit50>
         <Filename Value="..\..\fpcsrc\rtl\objpas\sysutils\datih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="106"/>
         <CursorPos X="29" Y="112"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit50>
       <Unit51>
         <Filename Value="..\..\fpcsrc\rtl\win\wininc\redef.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1005"/>
         <CursorPos X="17" Y="1025"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit51>
       <Unit52>
         <Filename Value="C:\lazarus64\lcl\controls.pp"/>
@@ -877,7 +876,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1625"/>
         <CursorPos X="14" Y="1698"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit52>
       <Unit53>
         <Filename Value="formbiorhythm.pas"/>
@@ -895,9 +894,9 @@
         <Filename Value="uevent.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEvent"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="186"/>
-        <CursorPos X="81" Y="180"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="42"/>
+        <CursorPos Y="64"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit54>
@@ -905,10 +904,9 @@
         <Filename Value="uevents.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEvents"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="502"/>
-        <CursorPos X="67" Y="534"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="545"/>
+        <CursorPos Y="573"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit55>
@@ -917,7 +915,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="11" Y="206"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit56>
       <Unit57>
         <Filename Value="formevent.pas"/>
@@ -926,8 +924,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formEvent"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="39"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="113"/>
         <CursorPos Y="73"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -938,7 +936,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="238"/>
         <CursorPos X="10" Y="259"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit58>
       <Unit59>
         <Filename Value="ufriend.pas"/>
@@ -947,7 +945,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="228"/>
         <CursorPos Y="246"/>
-        <UsageCount Value="158"/>
+        <UsageCount Value="164"/>
       </Unit59>
       <Unit60>
         <Filename Value="ufriends.pas"/>
@@ -956,7 +954,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="121"/>
         <CursorPos Y="4"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="161"/>
       </Unit60>
       <Unit61>
         <Filename Value="formfriendsinput.pas"/>
@@ -968,7 +966,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="120"/>
         <CursorPos X="29" Y="148"/>
-        <UsageCount Value="153"/>
+        <UsageCount Value="159"/>
       </Unit61>
       <Unit62>
         <Filename Value="formtimepositions.pas"/>
@@ -979,14 +977,14 @@
         <UnitName Value="formTimePositions"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="37" Y="90"/>
-        <UsageCount Value="120"/>
+        <UsageCount Value="126"/>
       </Unit62>
       <Unit63>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\packages\winunits-base\src\comobj.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="546"/>
         <CursorPos X="17" Y="567"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit63>
       <Unit64>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\packages\winunits-base\src\activex.pp"/>
@@ -994,7 +992,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="4460"/>
         <CursorPos X="12" Y="4480"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit64>
       <Unit65>
         <Filename Value="C:\lazarus64\components\lazutils\lazfileutils.pas"/>
@@ -1002,28 +1000,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="10" Y="70"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit65>
       <Unit66>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\wininc\defines.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2389"/>
         <CursorPos X="13" Y="2407"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit66>
       <Unit67>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\wininc\messages.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1008"/>
         <CursorPos X="6" Y="1029"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit67>
       <Unit68>
         <Filename Value="C:\lazarus64\fpc\3.0.4\source\rtl\win\wininc\base.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="629"/>
         <CursorPos X="6" Y="650"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit68>
       <Unit69>
         <Filename Value="uweddinganniversary.pas"/>
@@ -1031,36 +1029,35 @@
         <UnitName Value="uweddingAnniversary"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="19"/>
-        <UsageCount Value="85"/>
+        <UsageCount Value="91"/>
       </Unit69>
       <Unit70>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\win\wininc\ascdef.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="161"/>
         <CursorPos X="10" Y="183"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit70>
       <Unit71>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\win\wininc\defines.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2292"/>
         <CursorPos X="6" Y="2311"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit71>
       <Unit72>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\win\wininc\messages.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="995"/>
         <CursorPos X="6" Y="1014"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit72>
       <Unit73>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="33" Y="25"/>
-        <UsageCount Value="23"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="22"/>
       </Unit73>
       <Unit74>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
@@ -1068,7 +1065,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1986"/>
         <CursorPos X="104" Y="2027"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit74>
       <Unit75>
         <Filename Value="formscrollingklock.pas"/>
@@ -1077,150 +1074,140 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="formScrollingKlock"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="167"/>
-        <CursorPos X="82" Y="170"/>
-        <UsageCount Value="74"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="278"/>
+        <CursorPos Y="302"/>
+        <UsageCount Value="80"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit75>
       <Unit76>
         <Filename Value="C:\lazarus\lcl\include\application.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1378"/>
         <CursorPos Y="1397"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit76>
       <Unit77>
         <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="7425"/>
         <CursorPos Y="7443"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit77>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="TEST"/>
     </OtherDefines>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="365" Column="16" TopLine="347"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="227" Column="77" TopLine="207"/>
       </Position1>
       <Position2>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="39" Column="30" TopLine="27"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="218" Column="28" TopLine="202"/>
       </Position2>
       <Position3>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="369" Column="65" TopLine="348"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="737" Column="18" TopLine="726"/>
       </Position3>
       <Position4>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="368" Column="35" TopLine="350"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="748" Column="16" TopLine="727"/>
       </Position4>
       <Position5>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="149" Column="78" TopLine="105"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="742" Column="17" TopLine="726"/>
       </Position5>
       <Position6>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="233" Column="54" TopLine="213"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="345" Column="25" TopLine="327"/>
       </Position6>
       <Position7>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="1978" TopLine="1960"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="142" Column="41" TopLine="127"/>
       </Position7>
       <Position8>
         <Filename Value="uevent.pas"/>
-        <Caret Line="116" Column="72" TopLine="103"/>
+        <Caret Line="104" Column="14" TopLine="91"/>
       </Position8>
       <Position9>
         <Filename Value="uevent.pas"/>
-        <Caret Line="146" Column="32" TopLine="119"/>
+        <Caret Line="162" Column="14" TopLine="147"/>
       </Position9>
       <Position10>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="138" Column="72" TopLine="114"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1981" TopLine="1962"/>
       </Position10>
       <Position11>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="180" Column="30" TopLine="163"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="176" Column="62" TopLine="141"/>
       </Position11>
       <Position12>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="152" Column="16" TopLine="134"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="50" Column="5" TopLine="30"/>
       </Position12>
       <Position13>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="180" Column="23" TopLine="161"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2069" Column="90" TopLine="2059"/>
       </Position13>
       <Position14>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="227" Column="77" TopLine="207"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="2066" Column="78" TopLine="2058"/>
       </Position14>
       <Position15>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="218" Column="28" TopLine="202"/>
+        <Filename Value="uevents.pas"/>
+        <Caret Line="144" Column="109" TopLine="140"/>
       </Position15>
       <Position16>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="737" Column="18" TopLine="726"/>
+        <Filename Value="uevents.pas"/>
+        <Caret Line="165" Column="18" TopLine="148"/>
       </Position16>
       <Position17>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="748" Column="16" TopLine="727"/>
+        <Caret Line="2076" Column="63" TopLine="2058"/>
       </Position17>
       <Position18>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="742" Column="17" TopLine="726"/>
+        <Filename Value="formscrollingklock.pas"/>
+        <Caret Line="228" Column="33" TopLine="206"/>
       </Position18>
       <Position19>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="345" Column="25" TopLine="327"/>
+        <Filename Value="uevent.pas"/>
+        <Caret Line="249" TopLine="222"/>
       </Position19>
       <Position20>
         <Filename Value="uevent.pas"/>
-        <Caret Line="142" Column="41" TopLine="127"/>
+        <Caret Line="250" Column="92" TopLine="223"/>
       </Position20>
       <Position21>
         <Filename Value="uevent.pas"/>
-        <Caret Line="104" Column="14" TopLine="91"/>
+        <Caret Line="232" Column="96" TopLine="213"/>
       </Position21>
       <Position22>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="162" Column="14" TopLine="147"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1975" Column="49" TopLine="1963"/>
       </Position22>
       <Position23>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="1981" TopLine="1962"/>
+        <Caret Line="1978" Column="60" TopLine="1957"/>
       </Position23>
       <Position24>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="176" Column="62" TopLine="141"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="1919" Column="83" TopLine="1899"/>
       </Position24>
       <Position25>
-        <Filename Value="uevent.pas"/>
-        <Caret Line="50" Column="5" TopLine="30"/>
+        <Filename Value="formKlock.pas"/>
+        <Caret Line="38" TopLine="13"/>
       </Position25>
       <Position26>
         <Filename Value="formKlock.pas"/>
-        <Caret Line="2069" Column="90" TopLine="2059"/>
+        <Caret Line="399" Column="25" TopLine="392"/>
       </Position26>
       <Position27>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="2066" Column="78" TopLine="2058"/>
+        <Filename Value="uevents.pas"/>
+        <Caret Line="97" TopLine="75"/>
       </Position27>
-      <Position28>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="144" Column="109" TopLine="140"/>
-      </Position28>
-      <Position29>
-        <Filename Value="uevents.pas"/>
-        <Caret Line="165" Column="18" TopLine="148"/>
-      </Position29>
-      <Position30>
-        <Filename Value="formKlock.pas"/>
-        <Caret Line="2076" Column="63" TopLine="2058"/>
-      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

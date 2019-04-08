@@ -1,13 +1,13 @@
 object frmScrollingKlock: TfrmScrollingKlock
-  Left = 1273
+  Left = 1132
   Height = 33
   Top = 919
-  Width = 633
+  Width = 844
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'frmScrollingKlock'
   ClientHeight = 33
-  ClientWidth = 633
+  ClientWidth = 844
   FormStyle = fsStayOnTop
   OnClose = FormClose
   OnCreate = FormCreate
@@ -19,11 +19,11 @@ object frmScrollingKlock: TfrmScrollingKlock
     Left = 0
     Height = 30
     Top = 0
-    Width = 633
+    Width = 844
     Align = alTop
     Caption = 'ledKlock'
-    Columns = 50
-    OffColor = clBlack
+    Columns = 36
+    OffColor = 930866
     OnColor = clLime
     PopupMenu = PopupMenu1
   end

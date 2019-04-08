@@ -87,6 +87,8 @@ end;
 
 procedure TfrmScrollingKlock.FormDestroy(Sender: TObject);
 begin
+  kLog.writeLog('formScollingKlock Destroy');
+
   // To prevent possible system resource leaks
   Application.RemoveOnUserInputHandler(@MouseHook);
 end;
@@ -154,7 +156,7 @@ end;
 
 procedure TfrmScrollingKlock.loadEvents;
 {  Loads the events from a text file, if present.
-   The events file should be called events.tx.
+   The events file should be called events.txt.
    The location of the events.txt is in userOptions.eventsName.
      something like - C:\Users\keleven\AppData\Local\lazKlock
 }
@@ -206,8 +208,6 @@ var
   eDate   : TDateTime;
   timediff: TDateTime;
 begin
-  setDisplay;
-
   if mnItmScroll.Checked then
     sTime   := FormatDateTime('hh:nn:ss', now)
   else
@@ -222,8 +222,8 @@ begin
       split := line.Split(',');
 
       try
-        eDate    := StrToDate(split[1]) + StrToTime('23:59');  //  To make it midnight, so day count works
-        timeDiff := eDate - Now;                               //  Need to add time to event.
+        eDate    := StrToDate(split[1]) + StrToTime(split[2]);
+        timeDiff := eDate - Now;
         flag     := true;
       except  //  no date on time set.
         flag := false;
@@ -294,11 +294,11 @@ begin
     userOptions.scrollingAlwaysOnTop := MnItmAlwaysOnTop.Checked;
     userOptions.writeCurrentOptions;
   end;
-  'MnItmReloadEvents' : loadEvents;  //  re-loads evenst file.
+  'mnItmScroll'       : setDisplay;    //  Reset display.
   'MnItmNewStickNote' : stickies.new(userOptions.stickyColor, userOptions.stickyFont);
   'MnItmShowClipBoard': frmClipBoard.Visible := true;
   'MnItmAbout':
-    begin
+  begin
     frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
     frmAbout.ShowModal;                 //frmAbout is displayed
     FreeAndNil(frmAbout);               //frmAbout is released

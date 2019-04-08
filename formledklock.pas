@@ -170,7 +170,9 @@ end;
 
 procedure TfrmLEDKlock.MnItmAboutClick(Sender: TObject);
 begin
-  frmAbout.Show;
+  frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+  frmAbout.ShowModal;                 //frmAbout is displayed
+  FreeAndNil(frmAbout);               //frmAbout is released
 end;
 
 procedure TfrmLEDKlock.MnItmStickyNoteClick(Sender: TObject);

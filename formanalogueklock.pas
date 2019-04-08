@@ -214,7 +214,9 @@ end;
 procedure TfrmAnalogueKlock.MnItmAboutClick(Sender: TObject);
 {  Load the about page.  }
 begin
-  frmAbout.Show;
+  frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+  frmAbout.ShowModal;                 //frmAbout is displayed
+  FreeAndNil(frmAbout);               //frmAbout is released
 end;
 
 procedure TfrmAnalogueKlock.MnItmNewStickyNoteClick(Sender: TObject);

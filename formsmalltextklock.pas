@@ -286,7 +286,9 @@ end;
 
 procedure TfrmSmallTextKlock.MnuItmAboutClick(Sender: TObject);
 begin
-  frmAbout.Show;
+  frmAbout := TfrmAbout.Create(Nil);  //frmAbout is created
+  frmAbout.ShowModal;                 //frmAbout is displayed
+  FreeAndNil(frmAbout);               //frmAbout is released
 end;
 
 procedure TfrmSmallTextKlock.MnuItmNewStickyNoteClick(Sender: TObject);

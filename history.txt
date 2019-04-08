@@ -2091,9 +2091,32 @@ fields are saved and read as strings.  They are then converted to booleans
 to be used within Klock.  It seems that booleans can't be read and written
 natively.
 
-Corrected a bug in uKlockUtils.KillOtherKlocks, on how it checked on if any other Klocks was running.  Used to use if visible, now uses if assigned.
+Corrected a bug in uKlockUtils.KillOtherKlocks, on how it checked on if any
+extra Klocks was running.  Used to use if visible, now uses if assigned.
 
 14913 line of source code.
 8299 statements
 16.5% comment
+
+
+Build 114 [2.6.0.114]
+
+There was a problem calling the about form from the extra klocks.  Because the
+about form is not auto-created any more, .show does not work.  Amended each
+klock to first create the form, show the form and then free the form.
+
+In formScrollingKlock.pas moved the setDisplay from the timer routine to the menu click routine.  Also and the event time to the different routines and make sure the seconds where zero.
+
+Added time to the CSV create in uEvents.pas
+
+Corrected a problem in the read/write of booleans in uEvent.pas.
+
+Corrected a problems with reading the screen position in user options for both
+floatings Text Klock and scrolling Text Klcok.
+
+Removal of several debug statements.
+
+14900 line of source code.
+8288 statements
+16.6% comment
 
