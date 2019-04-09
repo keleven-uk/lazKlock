@@ -3,6 +3,8 @@ unit UConversion;
 {   Based on article in http://www.dreamincode.net/forums/topic/121316-an-updatable-unit-conversion-calculator/
 
    A Helper module that contains functions linked to the convert tab.
+
+   File to hold conversion constants is held in user options and passed in.
 }
 
 {$mode objfpc}{$H+}
@@ -12,10 +14,10 @@ interface
 uses
   Classes, SysUtils, FileUtil, Dialogs, LazFileUtils, UKlockUtils;
 
-procedure checkConversionUnitsFile;
-procedure readConversionUnitsFile;
+procedure checkConversionUnitsFile(convFile: string);
+procedure readConversionUnitsFile(convFile: string);
 procedure parseConversionUnitsFile(mode: string);
-procedure EditConversionUnitsFile;
+procedure EditConversionUnitsFile(convFile: string);
 procedure cleartextFiles;
 
 implementation
@@ -23,22 +25,16 @@ implementation
 uses
   formklock;
 
-procedure checkConversionUnitsFile;
+procedure checkConversionUnitsFile(convFile: string);
 {  Creates the default units.txt.
    This file is used to hold conversion data.
-
-   GetAppConfigDir(False) -> c:\Users\<user>\AppData\Local\<app Name>\
-   GetAppConfigDir(True)  -> c:\ProgramData\<app Name>\
 }
 VAR
-  filename: string;
   unitFile: TextFile;
 begin
-  filename := GetAppConfigDir(False) + 'Units.txt';
+  if fileExists(convFile) then exit;
 
-  if fileExists(filename) then exit;
-
-  AssignFile(unitFile, filename);
+  AssignFile(unitFile, convFile);
 
   try
     klog.writeLog('Creating Conversion Units File.');
@@ -88,7 +84,7 @@ begin
   end;
 end;
 
-procedure readConversionUnitsFile;
+procedure readConversionUnitsFile(convFile: string);
 {  Loads the data file units.txt, which contains the data for the conversions
    The file is loaded into a global string list, this improves performance later on.
    So this is only carried out when the conversion tab is chosen.
@@ -101,13 +97,9 @@ procedure readConversionUnitsFile;
    Distance, Mile To KM, 1.609344
    Distance, KN To Mile, 0.621371192
 }
-VAR
-  filename: string;
 begin
-  filename := GetAppConfigDir(False) + 'Units.txt';
-
-  if fileExists(filename) then
-     ConversionUnits.LoadFromFile(GetAppConfigDir(False) + 'Units.txt')
+  if fileExists(convFile) then
+     ConversionUnits.LoadFromFile(convFile)
   else
     klog.writeLog('ERROR : Reading Units File');
 end;
@@ -166,16 +158,11 @@ begin
 
 end;
 
-procedure EditConversionUnitsFile;
-{  Loads the conversion file into notepad, so it can be edited or added to.
-}
-VAR
-  filename: string;
+procedure EditConversionUnitsFile(convFile: string);
+{  Loads the conversion file into notepad, so it can be edited or added to.   }
 begin
-  filename := GetAppConfigDir(False) + 'Units.txt';
-
-  if fileExists(filename) then
-    doCommandEvent('notepad.exe', GetAppConfigDir(False) + 'Units.txt')
+  if fileExists(convFile) then
+    doCommandEvent('notepad.exe', convFile)
   else
     klog.writeLog('ERROR : Missing Units File');
 end;

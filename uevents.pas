@@ -62,7 +62,7 @@ type
     property stage2ForeColour: TColor      read _stage2ForeColour write _stage2ForeColour;
     property stage3ForeColour: TColor      read _stage3ForeColour write _stage3ForeColour;
 
-    constructor Create; overload;
+    constructor Create(ef: string; sef: string); overload;
     destructor Destroy; override;
 
     procedure new(key: string; date: string; time: string; etype: integer; data: string; floating: Boolean);
@@ -94,11 +94,15 @@ VAR
 implementation
 
 
-constructor Events.Create; overload;
-{  set up some variables on create.    }
+constructor Events.Create(ef: string; sef: string); overload;
+{  set up some variables on create.
+
+   File to hole events is held in user options and passed in.
+   ef = events file, sef = scrolling events file.
+}
 begin
-  eventsFile         := GetAppConfigDir(False) + 'Event.bin';
-  ScrollEventsFile   := GetAppConfigDir(False) + 'Events.txt';
+  eventsFile         := ef;
+  ScrollEventsFile   := sef;
   eventsStore        := keyStore.Create;       //  initial eventStore
   eventsStore.Sorted := true;
   eventsCount        := 0;

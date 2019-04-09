@@ -56,11 +56,11 @@ type
 
     _optionsName     : string;          //  full path to the options file.
     _eventName       : string;          //  full path to the event file.
+    _eventsName      : string;          //  full path the the events file, for scrolling text klock.
     _memoName        : string;          //  full path to the memo file.
     _stickyName      : string;          //  full path to the Sticky Notes file.
     _unitsName       : string;          //  full path to the Units file.
     _friendName      : string;          //  full path to the friends file.
-    _eventsName      : string;          //  full path the the events file.
     _relativeFileName: boolean;         //  Relative or absolute file names [for archiving].
 
     //  Sart of user options.
@@ -208,11 +208,11 @@ type
     //  Global - other stuff
     property optionsName     : string  read _optionsName      write _optionsName;
     property eventName       : string  read _eventName        write _eventName;
+    property eventsName      : string  read _eventsName       write _eventsName;  //  for scrolling text klock.
     property memoName        : string  read _memoName         write _memoName;
     property stickyName      : string  read _stickyName       write _stickyName;
     property unitsName       : string  read _unitsName        write _unitsName;
     property friendName      : string  read _friendName       write _friendName;
-    property eventsName      : string  read _eventsName       write _eventsName;
     property relativeFileName: boolean read _relativeFileName write _relativeFileName;
 
     property runAtStartUp    : boolean read _runAtStartUp     write _runAtStartUp;
@@ -464,11 +464,11 @@ begin
   //  Global - other stuff
   optionsName      := o.optionsName;
   eventName        := o.eventName;
+  eventsName       := o.eventsName;    //  for scrolling text klock.
   memoName         := o.memoName;
   stickyName       := o.stickyName;
   unitsName        := o.unitsName;
   friendName       := o.friendName;
-  eventsName       := o.eventsName;
   relativeFileName := o.relativeFileName;
 
   runAtStartUp     := o.runAtStartUp;
@@ -652,6 +652,8 @@ begin
     if rtn <> 'ERROR' then optionsName := ansistring(rtn);
     rtn := readChild(PassNode, 'eventName');
     if rtn <> 'ERROR' then eventName := ansistring(rtn);
+    rtn := readChild(PassNode, 'eventsName');            //  for scrolling text klock.
+    if rtn <> 'ERROR' then eventsName := ansistring(rtn);
     rtn := readChild(PassNode, 'memoName');
     if rtn <> 'ERROR' then memoName := ansistring(rtn);
     rtn := readChild(PassNode, 'stickyName');
@@ -660,8 +662,6 @@ begin
     if rtn <> 'ERROR' then unitsName := ansistring(rtn);
     rtn := readChild(PassNode, 'friendName');
     if rtn <> 'ERROR' then friendName := ansistring(rtn);
-    rtn := readChild(PassNode, 'eventsName');
-    if rtn <> 'ERROR' then eventsName := ansistring(rtn);
     rtn := readChild(PassNode, 'relativeFileName');
     if rtn <> 'ERROR' then relativeFileName := StrToBool(rtn);
 
@@ -970,11 +970,11 @@ begin
 
   //  optionsName set up in create
   eventName        := GetAppConfigDir(False) + 'Event.bin';
+  eventsName       := GetAppConfigDir(False) + 'events.txt';     //  for scrolling text klock.
   memoName         := GetAppConfigDir(False) + 'Memo.bin';
   stickyName       := GetAppConfigDir(False) + 'StickyNotes.bin';
   unitsName        := GetAppConfigDir(False) + 'Units.txt';
   friendName       := GetAppConfigDir(False) + 'Friends.bin';
-  eventsName       := GetAppConfigDir(False) + 'events.txt';
   relativeFileName := true;
 
   runAtStartUp     := false;
@@ -1133,13 +1133,14 @@ begin
     ElementNode.AppendChild(writeStrChild(doc, 'productName'     , fvi.fileProductName));
     ElementNode.AppendChild(writeStrChild(doc, 'productVersion'  , fvi.fileProductVersion));
 
-    ElementNode.AppendChild(writeStrChild(doc, 'optionsName'             , optionsName));
-    ElementNode.AppendChild(writeStrChild(doc, 'memoName'                , memoName));
-    ElementNode.AppendChild(writeStrChild(doc, 'stickyName'              , stickyName));
-    ElementNode.AppendChild(writeStrChild(doc, 'unitsName'               , unitsName));
-    ElementNode.AppendChild(writeStrChild(doc, 'friendName'              , friendName));
-    ElementNode.AppendChild(writeStrChild(doc, 'eventsName'              , eventsName));
-    ElementNode.AppendChild(writeBolChild(doc, 'relativeFileName'        , relativeFileName));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventName'       , eventName));
+    ElementNode.AppendChild(writeStrChild(doc, 'eventsName'      , eventsName));  //  for scrolling text klock.
+    ElementNode.AppendChild(writeStrChild(doc, 'optionsName'     , optionsName));
+    ElementNode.AppendChild(writeStrChild(doc, 'memoName'        , memoName));
+    ElementNode.AppendChild(writeStrChild(doc, 'stickyName'      , stickyName));
+    ElementNode.AppendChild(writeStrChild(doc, 'unitsName'       , unitsName));
+    ElementNode.AppendChild(writeStrChild(doc, 'friendName'      , friendName));
+    ElementNode.AppendChild(writeBolChild(doc, 'relativeFileName', relativeFileName));
 
     ElementNode.AppendChild(writeBolChild(doc, 'runAtStartUp'            , runAtStartUp));
     ElementNode.AppendChild(writeBolChild(doc, 'screenSave'              , screenSave));
@@ -1150,7 +1151,7 @@ begin
     ElementNode.AppendChild(writeBolChild(doc, 'CB_screenSave'           , CB_screenSave));
     ElementNode.AppendChild(writeIntChildAttribute(Doc, 'CB_formPosition', CB_formTop, CB_formLeft));
 
-    ElementNode.AppendChild(writeBolChild(doc, 'useCustomFonts'           , useCustomFonts));
+    ElementNode.AppendChild(writeBolChild(doc, 'useCustomFonts'          , useCustomFonts));
 
     ElementNode.AppendChild(writeFloatChild(doc, 'Latitude' , Latitude));
     ElementNode.AppendChild(writeFloatChild(doc, 'Longitude', Longitude));

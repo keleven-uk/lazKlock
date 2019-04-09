@@ -2120,3 +2120,20 @@ Removal of several debug statements.
 8288 statements
 16.6% comment
 
+
+Build 115 [2.6.0.115]
+
+The path of the files used by events, friends, memos, sticky notes and the
+conversion units file are all stored in user options.  But each unit declared
+these file locally.  Amended each unit so they excepted the path name passed
+into their create procedures.  These path names cannot be at the moment
+altered - maybe they should!
+
+
+14900 line of source code.
+8288 statements
+16.6% comment
+
+8283 statements
+16.7% comment
+

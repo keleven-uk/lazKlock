@@ -20,7 +20,7 @@ type
   public
     property friendsCount: integer read _friendsCount write _friendsCount;
 
-    constructor Create; overload;
+    constructor Create(ff: string); overload;
     destructor Destroy; override;
     procedure New(f: Friend);
     procedure amend(pos: integer; f : Friend);
@@ -42,10 +42,13 @@ uses
   formklock;
 
 
-constructor Friends.Create; overload;
-{  set up some variables on create.    }
+constructor Friends.Create(ff: string); overload;
+{  set up some variables on create.
+
+   File to hold friends is held in user options and passed in.
+}
 begin
-  friendsFile         := GetAppConfigDir(False) + 'Friends.bin';
+  friendsFile         := ff;
   friendsStore        := keyStore.Create;       //  initial eventStore
   friendsStore.Sorted := true;
   friendsCount        := 0;

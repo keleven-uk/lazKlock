@@ -39,7 +39,7 @@ type
   public
     property stickyNotesCount: integer read _stickyNotesCount write _stickyNotesCount;
 
-    constructor Create; overload;
+    constructor Create(sf : string); overload;
     destructor Destroy; override;
     procedure new(colour: TColor; font: TFont);
     procedure restoreStickyNotes;
@@ -61,8 +61,11 @@ VAR
 
 implementation
 
-constructor stickyNotes.Create; overload;
-{  set up some variables on create.    }
+constructor stickyNotes.Create(sf : string); overload;
+{  set up some variables on create.
+
+   File to hold sticky notes is held in user options and passed in.
+}
 begin
   stickyNotesFile := GetAppConfigDir(False) + 'StickyNotes.bin';
   stickyNotesStore := sticky.Create;

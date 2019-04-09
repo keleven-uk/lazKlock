@@ -33,7 +33,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routines in both memo and events }
 { TODO : Scrolling and floating text klocks need all option on options screen. }
-{ TODO : uEvents.pas should use userOptions for file location, possibly passed into create. }
 
 {$mode objfpc}{$H+}
 
@@ -395,25 +394,25 @@ procedure TfrmMain.FormCreate(Sender: TObject);
 {  Called at start - sets up fuzzy time and default sound files.
 }
 begin
-  kLog := Logger.Create;
   userOptions := Options.Create;   //  create options file as c:\Users\<user>\AppData\Local\Stub\Options.xml
 
+  kLog := Logger.Create;
   logHeader;
 
   logMessage('Klock Create');      //  Write to log file and splash screen.
 
-  mainTimer.Enabled := False;  //  disable main timer until all options and fuzzy time are set up.
+  mainTimer.Enabled := False;      //  disable main timer until all options and fuzzy time are set up.
 
   EdtCountdownSound.Text := 'alarm-fatal.mp3';
   EdtReminderSound.Text  := 'alarm-fatal.mp3';
 
-  appStartTime    := GetTickCount64;      //  tick count when application starts.
-  ft              := FuzzyTime.Create;    //  Create the fuzzyTime object
-  ev              := Events.Create;       //  Create the event store object.
-  fr              := Friends.Create;      //  Create the friends store object.
-  ConversionUnits := TStringList.Create;  //  Create the conversions object.
-  stickies        := stickyNotes.Create;  //  Create the sticky nore store object.
-  memorandum      := Memos.Create;        //  Create the memos store object.
+  appStartTime    := GetTickCount64;                                                //  tick count when application starts.
+  ft              := FuzzyTime.Create;                                              //  Create the fuzzyTime object
+  ev              := Events.Create(userOptions.eventName, userOptions.eventsName);  //  Create the event store object.
+  fr              := Friends.Create(userOptions.friendName);                        //  Create the friends store object.
+  memorandum      := Memos.Create(userOptions.memoName);                            //  Create the memos store object.
+  stickies        := stickyNotes.Create(userOptions.stickyName);                    //  Create the sticky nore store object.
+  ConversionUnits := TStringList.Create;                                            //  Create the conversions object.
 
   if userOptions.useCustomFonts then
     fs := fontStore.Create;  //  Create the font store objects, if needed.
@@ -748,9 +747,9 @@ begin
       setMemoButtons(true);
     end;
     8:
-    begin                               //  Conversion Page.
-      checkConversionUnitsFile;         //  Create conversion Units file is it does not exist.
-      readConversionUnitsFile;
+    begin                                                    //  Conversion Page.
+      checkConversionUnitsFile(userOptions.unitsName);  //  Create conversion Units file is it does not exist.
+      readConversionUnitsFile(userOptions.unitsName);
       parseConversionUnitsFile('LoadCategory');
       parseConversionUnitsFile('LoadUnits');
       cleartextFiles;
@@ -2178,10 +2177,10 @@ procedure TfrmMain.btnConversionAddUnitsClick(Sender: TObject);
    loads file into notepad.
 }
 begin
-  EditConversionUnitsFile;
+  EditConversionUnitsFile(userOptions.unitsName);
 
   //  reload everything - in case anything has been added.
-  readConversionUnitsFile;
+  readConversionUnitsFile(userOptions.unitsName);
   parseConversionUnitsFile('LoadCategory');
   parseConversionUnitsFile('LoadUnits');
   cleartextFiles;

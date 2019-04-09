@@ -39,7 +39,7 @@ type
   public
     property MemosCount: integer read _MemosCount write _MemosCount;
 
-    constructor Create; overload;
+    constructor Create(mf: string); overload;
     destructor Destroy; override;
     procedure new(key: string; data: string; hide: boolean);
     procedure amend(id:integer; data: string; hide: boolean);
@@ -59,10 +59,13 @@ VAR
 
 implementation
 
-constructor Memos.Create; overload;
-{  set up some variables on create.    }
+constructor Memos.Create(mf: string); overload;
+{  set up some variables on create.
+
+   File to hold memos is held in user options and passed in.
+}
 begin
-  MemosFile         := GetAppConfigDir(False) + 'Memo.bin';
+  MemosFile         := mf;
   MemosStore        := keyStore.Create;
   MemosStore.Sorted := true;
   MemosCount        := 0;
