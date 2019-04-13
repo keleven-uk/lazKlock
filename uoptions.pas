@@ -603,28 +603,10 @@ procedure Options.readOptions;
    NOTE : This cures the missing child problem, BUT NOT the missing node.
 }
 var
-  fvi     : myFileVersionInfo;
   PassNode: TDOMNode;
   Doc     : TXMLDocument;
   rtn     : string;
 begin
-  try
-    //  retrieve file info i.e build numner etc.
-    fvi := myFileVersionInfo.Create;
-    fvi.GetFileInfo;
-
-    Comments         := fvi.fileComments;
-    companyName      := fvi.fileCompanyName;
-    fileDescription  := fvi.fileFileDescription;
-    fileVersion      := fvi.fileFileVersion;
-    InternalName     := fvi.fileInternalName;
-    legalCopyright   := fvi.fileLegalCopyright;
-    originalFileName := fvi.fileOriginalFileName;
-    productName      := fvi.fileProductName;
-    productVersion   := fvi.fileProductVersion;
-  finally
-    fvi.Free;
-  end;
 
   try
     // Read in xml file from disk
@@ -1075,7 +1057,7 @@ begin
   stickyColor := clYellow;
   stickyFont  := TFont.Create;
 
-    //  Events
+  //  Events
   eventsStage1Days       := 5;
   eventsStage2Days       := 10;
   eventsStage3Days       := 30;

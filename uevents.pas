@@ -38,7 +38,7 @@ type
     property eventsFile:       string read _eventsFile       write _eventsFile;
     property ScrollEventsFile: string read _ScrollEventsFile write _ScrollEventsFile;
 
-    function checkStages(age: integer): integer;
+    function checkStages(age: integer; e: event): integer;
     procedure actionEvent(pos: integer; stage: integer);
     function determineDueDays(eventDate: string): integer;
     function determineYearsbetween(eventDate: string): integer;
@@ -92,7 +92,6 @@ VAR
   wg         : WeddingGifts;
 
 implementation
-
 
 constructor Events.Create(ef: string; sef: string); overload;
 {  set up some variables on create.
@@ -216,9 +215,13 @@ begin
 end;
 
 procedure Events.Remove(pos: integer);
-{  Remove a Event from the store at a given position.    }
+{  Remove a Event from the store at a given position.
+
+   pos comes from the combo box and is zero based,
+   the event store starts at one.
+}
 begin
-  eventsStore.Remove(pos);
+  eventsStore.Remove(pos + 1);
   eventsCount := EventsCount - 1;
   saveEvents;
 end;
@@ -257,6 +260,9 @@ VAR
   txtFile   : TextFile;
   csvText   : string;
   addToFloat: string;
+  ack1      : string;
+  ack2      : string;
+  ack3      : string;
   f         : integer;
 begin
   AssignFile(txtFile, fileName);
@@ -274,13 +280,28 @@ begin
       else
         addToFloat := 'False';
 
-      csvText := format('%s, %d, %s, %s, %d, %s, %s', [eventsStore.Data[f].name,
-                                                       eventsStore.Data[f].id,
-                                                       eventsStore.Data[f].date,
-                                                       eventsStore.Data[f].time,
-                                                       eventsStore.Data[f].etype,
-                                                       eventsStore.Data[f].notes,
-                                                       addToFloat]);
+      if eventsStore.Data[f].stage1Ack then
+        ack1 := 'True'
+      else
+        ack1 := 'False';
+
+      if eventsStore.Data[f].stage2Ack then
+        ack2 := 'True'
+      else
+        ack2 := 'False';
+
+      if eventsStore.Data[f].stage3Ack then
+        ack3 := 'True'
+      else
+        ack3 := 'False';
+
+      csvText := format('%s, %d, %s, %s, %d, %s, %s, %s, %s, %s', [eventsStore.Data[f].name,
+                                                                   eventsStore.Data[f].id,
+                                                                   eventsStore.Data[f].date,
+                                                                   eventsStore.Data[f].time,
+                                                                   eventsStore.Data[f].etype,
+                                                                   eventsStore.Data[f].notes,
+                                                                   addToFloat, ack1, ack2, ack3]);
 
       writeLn(txtFile, csvText);
     end;
@@ -340,7 +361,7 @@ begin
   for f := 0 to eventsCount - 1 do
   begin
     dueDays := determineDueDays(eventsStore.Data[f].date);
-    stage   := checkStages(dueDays);
+    stage   := checkStages(dueDays, eventsStore.Data[f]);
     if stage <> 0 then actionEvent(f, stage);
 
     if dueDays = 0 then                                                //  event must be today.
@@ -355,6 +376,19 @@ begin
 
   sortEventsStore;   //  Sort events by due date.
   saveEvents;        //  re save sorted events.
+end;
+
+function Events.checkStages(age: integer; e: event): integer;
+{  Checks if the days due falls between the age bands, if it does the return
+   the number of the stage.  If the event is not due, then return 0.
+}
+var
+  rtnValue: integer = 0;
+begin
+  if not(e.stage1Ack) and (age < stage1Days) then rtnValue := 1;
+  if not(e.stage2Ack) and (age < stage2Days) then rtnValue := 2;
+  if not(e.stage3Ack) and (age < stage3Days) then rtnValue := 3;
+  result := rtnValue;
 end;
 
 procedure Events.clearScolling;
@@ -404,8 +438,7 @@ begin
   begin
     for g := f + 1 to eventsCount - 1 do
     begin
-      if eventsStore.Data[f].id > eventsStore.Data[g].id then
-        swapEvents(f, g);
+      if eventsStore.Data[f].id > eventsStore.Data[g].id then swapEvents(f, g);
     end;  //  for g := f + 1 to eventsCount - 1 do
   end;    //  for f := 0 to eventsCount - 1 do
 end;
@@ -449,52 +482,35 @@ begin
   result := dueDays
 end;
 
-function Events.checkStages(age: integer): integer;
-{  Checks if the days due falls between the age bands, if it does the return
-   the number of the stage.  If the event is not due, then return 0.
-}
-begin
-  if (age < stage1Days) then exit(1);
-  if (age < stage2Days) then exit(2);
-  if (age < stage3Days) then exit(3);
-  if (age > stage3Days) then exit(0);     //  event is not due.
-end;
-
 procedure Events.actionEvent(pos: integer; stage: integer);
-{  Inform user of impending event.
-
-   As soon as an event is display's it is acknowledged.
-   TODO : the form needs an acknowledge button and some way
-   of conveying that to the main form.
-}
+{  Inform user of impending event.    }
 VAR
-  mess: string;
-  fcol: TColor;                           //  Fore colour - colour of font.
-  bcol: TColor;                           //  back colour - colour of the paper [form].
-  ev  : TfrmEvent;                        //  ev = event Form
+  mess: string = '';
+  fcol: TColor = clBlack;                           //  Fore colour - colour of font.
+  bcol: TColor = clBlue;                            //  back colour - colour of the paper [form].
+  ev  : TfrmEvent;                                  //  ev = event Form
   lb  : TLabel;
   yr  : integer;
 
 begin
-  //  if already acknowledged then exit.
   case stage of
     1:
     begin
-      if eventsStore.Data[pos].stage1Ack then exit;
+      if eventsStore.Data[pos].stage1Ack then exit;  //  if already acknowledged then exit.
       mess := eventsStore.Data[pos].name + ' ' + stage1Mess;
       bcol := stage1BackColour;
       fcol := stage1ForeColour;
     end;
     2:
     begin
-      if eventsStore.Data[pos].stage2Ack then exit;
+      if eventsStore.Data[pos].stage2Ack then exit;  //  if already acknowledged then exit.
       mess := eventsStore.Data[pos].name + ' ' + stage2Mess;
       bcol := stage2BackColour;
       fcol := stage3ForeColour;
     end;
     3:
     begin
-      if eventsStore.Data[pos].stage3Ack then exit;
+      if eventsStore.Data[pos].stage3Ack then exit;  //  if already acknowledged then exit.
       mess := eventsStore.Data[pos].name + ' ' + stage3Mess;
       bcol := stage3BackColour;
       fcol := stage3ForeColour;
@@ -579,6 +595,8 @@ begin
     2: eventsStore.Data[pos].stage2Ack := true;
     3: eventsStore.Data[pos].stage3Ack := true;
   end;
+
+  saveEvents; //  event might of been acknowledged, don't check - just save.
 end;
 
 end.

@@ -67,7 +67,7 @@ constructor stickyNotes.Create(sf : string); overload;
    File to hold sticky notes is held in user options and passed in.
 }
 begin
-  stickyNotesFile := GetAppConfigDir(False) + 'StickyNotes.bin';
+  stickyNotesFile := sf;
   stickyNotesStore := sticky.Create;
   stickyNotesStore.Sorted := true;
   stickyNotesCount := 0;

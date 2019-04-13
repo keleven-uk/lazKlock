@@ -9,6 +9,7 @@ object frmFriendsInput: TfrmFriendsInput
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  Position = poScreenCenter
   LCLVersion = '2.0.0.4'
   object Panel1: TPanel
     Left = 8

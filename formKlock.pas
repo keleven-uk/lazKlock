@@ -32,7 +32,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 { TODO : Look at up time in formAbout. }
 { TODO : Combine onChange routines in both memo and events }
-{ TODO : Scrolling and floating text klocks need all option on options screen. }
 
 {$mode objfpc}{$H+}
 
@@ -47,7 +46,7 @@ uses
   ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
   formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen,
   formBiorhythm, uFriends, formFriendsInput, uFriend, formTimePositions,
-  formScrollingKlock;
+  formScrollingKlock, strUtils;
 
 type
   FourStrings = array [0..3] of string;
@@ -142,8 +141,8 @@ type
     lblRadix                 : TLabel;
     lblSplitLap              : TLabel;
     lblTimer                 : TLabel;
+    lstVwFriends: TListView;
     lstBxEvents              : TListBox;
-    lstBxFriends             : TListBox;
     LstBxMemoName            : TListBox;
     mnuItmScrollingTextKlock : TMenuItem;
     mEventNotes              : TMemo;
@@ -747,7 +746,7 @@ begin
       setMemoButtons(true);
     end;
     8:
-    begin                                                    //  Conversion Page.
+    begin                                               //  Conversion Page.
       checkConversionUnitsFile(userOptions.unitsName);  //  Create conversion Units file is it does not exist.
       readConversionUnitsFile(userOptions.unitsName);
       parseConversionUnitsFile('LoadCategory');
@@ -1784,7 +1783,7 @@ begin
   btnFriendsEdit.Visible   := false;
   btnFriendsDelete.Visible := false;
 
-  if (PageControl1.TabIndex = 5) and (lstBxFriends.Items.Count <> 0) then
+  if (PageControl1.TabIndex = 5) and (lstVwFriends.Items.Count <> 0) then
   begin
     btnFriendsEdit.Visible   := mode;
     btnFriendsDelete.Visible := mode;
@@ -1804,20 +1803,20 @@ begin
   //  set the appropiate name.
   if (Sender is TButton) then
     itemName := TButton(Sender).Name
-  else if (Sender is TListBox) then
-    itemName := TListBox(Sender).Name;
+  else if (Sender is TListView) then
+    itemName := TListView(Sender).Name;
 
   if itemName = '' then exit;                                //  not called by a TButton or TListBox.
 
   frmFriendsInput := TfrmFriendsInput.Create(Nil);           //  frmFriendsInput is created
   case itemName of
-    'lstBxFriends'    : formFriendsInput.Mode := 'VIEW';     //  show form in NEW mode.
+    'lstVwFriends'    : formFriendsInput.Mode := 'VIEW';     //  show form in NEW mode.
     'btnFriendsNew'   : formFriendsInput.Mode := 'NEW';      //  show form in NEW mode.
     'btnFriendsEdit'  : formFriendsInput.Mode := 'EDIT';     //  show form in NEW mode.
     'btnFriendsDelete': formFriendsInput.Mode := 'DELETE';   //  show form in NEW mode.
   end;
 
-  formFriendsInput.pos  := lstBxFriends.ItemIndex;           //  position of the friend in the store.
+  formFriendsInput.pos  := lstVwFriends.ItemIndex;           //  position of the friend in the store.
   frmFriendsInput.ShowModal;                                 //  frmFriendsInput is displayed
   FreeAndNil(frmFriendsInput);                               //  frmFriendsInput is released
 
@@ -1832,11 +1831,11 @@ var
 begin
   klog.writeLog(format('Loading %d friends', [fr.friendsCount]));
 
-  lstBxFriends.Clear;
+  lstVwFriends.Clear;
 
   for f := 0 to fr.friendsCount -1 do
   begin
-    lstBxFriends.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
+    //lstVwFriends.Items.Add('');    //  insert a blank into the listbox, so can be amended later.
     displayFriends(f);
   end;
 end;
@@ -1846,6 +1845,7 @@ procedure TfrmMain.displayFriends(pos: integer);
    If the event count is zero i.e. no events - then just exit.
 }
 VAR
+  newItem: TListItem;
   f: friend;                    //  Friend.
 begin
   if fr.friendsCount = 0 then exit;
@@ -1853,8 +1853,16 @@ begin
   f := Friend.Create(0);
   f := fr.retrieve(pos);
 
-  lstBxFriends.Items[pos] := format('%s %s %s : %s :: %s', [f.fName, f.mName, f.sName, f.email1, f.telNo1]);
-  lstBxFriends.ItemIndex  := 0;
+  newItem         := lstVwFriends.Items.Add;
+  newItem.Caption := f.fName;
+  newItem.SubItems.add(f.sName);
+  newItem.SubItems.add(f.email1);
+  newItem.SubItems.add(f.telNo1);
+  newItem.SubItems.add(f.address1);
+  newItem.SubItems.add(f.address2);
+  newItem.SubItems.add(f.city);
+
+  lstVwFriends.ItemIndex  := 0;
 
   f.Free;
 end;

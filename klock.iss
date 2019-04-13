@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "lazKlock"
-#define MyAppVersion "115"
+#define MyAppVersion "116"
 #define MyAppPublisher "keleven"
 #define MyAppURL "www.keleven.co.uk"
 #define MyAppExeName "lazklock.exe"
@@ -44,7 +44,7 @@ ArchitecturesInstallIn64BitMode=x64
 ; all architectures (including Itanium,since it's capable of running 32-bit code too)
 
 [Messages]
-SetupLdrStartupMessage=This will install [%1 V2.6.0.115] on your computer.
+SetupLdrStartupMessage=This will install [%1 V2.6.0.116] on your computer.
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

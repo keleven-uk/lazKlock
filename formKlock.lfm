@@ -189,8 +189,8 @@ object frmMain: TfrmMain
       Height = 130
       Top = 8
       Width = 666
-      ActivePage = TbShtEvents
-      TabIndex = 6
+      ActivePage = TbShtFriends
+      TabIndex = 5
       TabOrder = 0
       OnChange = PageControl1Change
       object TbShtFuzzy: TTabSheet
@@ -1026,14 +1026,41 @@ object frmMain: TfrmMain
             ClientHeight = 88
             ClientWidth = 640
             TabOrder = 0
-            object lstBxFriends: TListBox
+            object lstVwFriends: TListView
               Left = 8
-              Height = 72
+              Height = 70
               Top = 8
               Width = 624
-              ItemHeight = 0
-              OnDblClick = btnFriendsClick
+              Columns = <              
+                item
+                  Width = 70
+                end              
+                item
+                  Width = 70
+                end              
+                item
+                  Width = 150
+                end              
+                item
+                  Width = 100
+                end              
+                item
+                  Width = 100
+                end              
+                item
+                  Width = 100
+                end              
+                item
+                  Width = 100
+                end>
+              ColumnClick = False
+              ReadOnly = True
+              RowSelect = True
+              ShowColumnHeaders = False
+              SortColumn = 3
               TabOrder = 0
+              ViewStyle = vsReport
+              OnDblClick = btnFriendsClick
             end
           end
         end

@@ -101,6 +101,7 @@ end;
 
 procedure TfrmEvent.FormCreate(Sender: TObject);
 begin
+  kLog.writeLog('formCreate : ' + name);
   Application.AddOnUserInputHandler(@MouseHook);
 end;
 
@@ -140,7 +141,8 @@ end;
 
 procedure TfrmEvent.FormDestroy(Sender: TObject);
 begin
-    // To prevent possible system resource leaks
+  // To prevent possible system resource leaks
+  kLog.writeLog('formDestroy : ' + name);
   Application.RemoveOnUserInputHandler(@MouseHook);
 end;
 

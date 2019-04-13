@@ -1995,6 +1995,10 @@ included in the new scrolling text Klock.
 
 Build 107 [2.5.1.107]
 
+commit 2b1c009cc459a8c3875c6a2e0b1d4b6982b1310f
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Thu Feb 28 21:30:40 2019 +0000
+
 Added Show Clipboard to right click menu of Analogue Klock, LED Klock, Binary
 Klock and Small Text Klock - made the same as Floating text Klock.
 
@@ -2004,6 +2008,10 @@ Klock and Small Text Klock - made the same as Floating text Klock.
 
 
 Build 108 [2.5.1.108]
+
+commit 5e6adbbcb5519688650135c5d61b8a60b0577afa
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sat Mar 2 21:31:21 2019 +0000
 
 Added the user option to load custom fonts or not.  This makes loading a lot
 quicker, useful for development.
@@ -2016,6 +2024,10 @@ Updated Help.
 
 
 Build 109 [2.6.0.109]
+
+commit 816ecd6f79539083c82ea8a819134ac7c4694505
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Mar 12 22:40:57 2019 +0000
 
 Add a new text klock - Scrolling Text Klock.
 This will scroll the current date and time across a L.E.D. display.
@@ -2035,6 +2047,10 @@ Updated Help.
 
 Build 110 [2.6.0.110]
 
+commit 761971d6fc40d1cce4d094d68b1acbad6e27c92c
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sat Mar 16 21:40:21 2019 +0000
+
 The extra Klock where auto created and displayed with the showmodel command,
 changed this so that the klocks are only created when wanted and disposed off
 when the form is closed.  This saves about 500Kb from the memory footprint of
@@ -2048,6 +2064,10 @@ Also applied above to the simple biorhythm form.
 
 
 Build 111 [2.6.0.111]
+
+commit ecce5f23bd576a5797e0d4641bb9e9c2b429381a
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Mar 19 21:36:17 2019 +0000
 
 Their was problem with the options screen, it crashed klock if it was open
 twice.  This was cased by the command CloseAction := caFree; in the form close
@@ -2070,6 +2090,10 @@ Corrected a bug on the creation of the events file.
 
 Build 112 [2.6.0.112]
 
+commit 7273f54680a792ee5acea553198b8e7148b8a391
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sun Mar 24 21:00:47 2019 +0000
+
 Amended the clear button on the events tab, so can either be used to not only
 clear all the fields but save a list of the events in CSV format.  The function
 of the button is determined by the mode of the display.  The events class now
@@ -2081,6 +2105,10 @@ supports a new method - saveEvenstCSV.
 
 
 Build 113 [2.6.0.113]
+
+commit 64e432fd088410e3819e29283a6490219eba0dbb
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Sat Apr 6 20:45:42 2019 +0100
 
 Added time to uevent.pas and uevents.pas.
 Amended both, so that the new time fields if included in save, new and amend
@@ -2100,6 +2128,10 @@ extra Klocks was running.  Used to use if visible, now uses if assigned.
 
 
 Build 114 [2.6.0.114]
+
+commit 7e3840bf06b464f48fbe5bde30457d12340937f5
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Mon Apr 8 20:17:16 2019 +0100
 
 There was a problem calling the about form from the extra klocks.  Because the
 about form is not auto-created any more, .show does not work.  Amended each
@@ -2123,6 +2155,10 @@ Removal of several debug statements.
 
 Build 115 [2.6.0.115]
 
+commit b9edea2b5a98ff9dfbb0d99e2ca010dc40f87c2c
+Author: keleven-uk <github@keleven.co.uk>
+Date:   Tue Apr 9 20:32:00 2019 +0100
+
 The path of the files used by events, friends, memos, sticky notes and the
 conversion units file are all stored in user options.  But each unit declared
 these file locally.  Amended each unit so they excepted the path name passed
@@ -2132,8 +2168,19 @@ altered - maybe they should!
 
 14900 line of source code.
 8288 statements
-16.6% comment
+16.7% comment
 
-8283 statements
+
+Build 116 [2.6.0.116]
+
+Changed the listBox to a listView on the friends tab - this makes listing the
+friends in a more pretty format a lot easier [using columns].
+
+Added scrollingTextScreenSave and scrollingAlwaysOnTop to UserOptions.
+
+Corrected bug in the acknowledge system within events.
+
+14924 line of source code.
+8300 statements
 16.7% comment
 

@@ -49,6 +49,7 @@ type
     ChckGrpSmallTextKlock      : TCheckGroup;
     ChckGrpFloatingTextKlock   : TCheckGroup;
     ChckGrpTimerSettings       : TCheckGroup;
+    ChckGrpScrollingTextKlock  : TCheckGroup;
     ChckLstBxArchive           : TCheckListBox;
     ChckBxDefaultPassWord      : TCheckBox;
     ChckBxCullLogsFiles        : TCheckBox;
@@ -150,6 +151,8 @@ type
     procedure ChckGrpGlobalOptionsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpHolidayFontsItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
+    procedure ChckGrpScrollingTextKlockItemClick(Sender: TObject; Index: integer
+      );
     procedure ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeChimesItemClick(Sender: TObject; Index: integer);
     procedure ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
@@ -320,6 +323,9 @@ begin
   lblFloatingTextKlockFont.Enabled    := not(ChckGrpFloatingTextKlock.Checked[1]);
   btnlblFloatingTextKlockFont.Enabled := not(ChckGrpFloatingTextKlock.Checked[1]);
 
+  ChckGrpScrollingTextKlock.Checked[0] := userBacOptions.scrollingTextScreenSave;
+  ChckGrpScrollingTextKlock.Checked[1] := userBacOptions.scrollingAlwaysOnTop;
+
   ChckGrpTimerSettings.Checked[0] := userBacOptions.timerMilliSeconds;
 
   ChckBxLogging.Checked       := userBacOptions.logging;
@@ -386,7 +392,7 @@ begin
 end;
 //............................ Options Routines ................................
 //
-//...................................GLOBAL ....................................
+//................................... GLOBAL ....................................
 //
 procedure TfrmOptions.CmbBxDefaulTtabChange(Sender: TObject);
 {  The default tab has changed, relect is user options.  }
@@ -473,7 +479,7 @@ begin
   lblMinutes.Enabled           := ChckBxKeepMonitorAwake.Checked;
 end;
 //
-//.....................................TIME ....................................
+//..................................... TIME ....................................
 //
 procedure TfrmOptions.ChckGrpTimeOptionsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Time options according to the state of the radio group.
@@ -565,7 +571,7 @@ begin
   userBacOptions.speakTimeVolume := trckBrSpeakTimeVolume.Position;
 end;
 //
-//....................................ANALOGUE KLOCK ...........................
+//.................................... ANALOGUE KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpAnalogueKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the Analogue Klock.
@@ -578,7 +584,7 @@ begin
   userBacOptions.analogueAlwaysOnTop := ChckGrpAnalogueKlock.Checked[1];
 end;
 //
-//.........................................LED KLOCK ...........................
+//......................................... LED KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpLEDKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the LED Klock.
@@ -593,7 +599,7 @@ begin
    userBacOptions.LEDAlwaysOnTop := ChckGrpLEDKlock.Checked[2];
 end;
 //
-//......................................Binary KLOCK ...........................
+//...................................... Binary KLOCK ...........................
 //
 procedure TfrmOptions.ChckGrpBinaryKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the Binary Klock.
@@ -608,7 +614,7 @@ begin
   userBacOptions.BinaryAlwaysOnTop := ChckGrpBinaryKlock.Checked[2];
 end;
 //
-//......................................Small Text KLOCK .......................
+//...................................... Small Text KLOCK .......................
 //
 procedure TfrmOptions.ChckGrpSmallTextKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the Small Text Klock.
@@ -623,7 +629,7 @@ begin
   userBacOptions.smallAlwaysOnTop     := ChckGrpSmallTextKlock.Checked[2];
 end;
 //
-//...................................Floating Text KLOCK .......................
+//................................... Floating Text KLOCK .......................
 //
 procedure TfrmOptions.ChckGrpFloatingTextKlockItemClick(Sender: TObject; Index: integer);
 {  Sets the options for the Floating Text Klock.
@@ -650,7 +656,15 @@ begin
   end;
 end;
 //
-//....................................OTHER STUFF ..............................
+//................................... Scrolling Text KLOCK .......................
+//
+procedure TfrmOptions.ChckGrpScrollingTextKlockItemClick(Sender: TObject; Index: integer);
+begin
+  userBacOptions.scrollingTextScreenSave := ChckGrpScrollingTextKlock.Checked[0];
+  userBacOptions.scrollingAlwaysOnTop    := ChckGrpScrollingTextKlock.Checked[1];
+end;
+//
+//.................................... OTHER STUFF ..............................
 //
 procedure TfrmOptions.ChckGrpTimerSettingsItemClick(Sender: TObject; Index: integer);
 {  Sets the use Timer options according to the state of the radio group.
@@ -808,7 +822,7 @@ begin
   userBacOptions.eventsSpeakMesssage := chckBxSpeakEventMessage.Checked;
 end;
 //
-//...................................LOGGING ...................................
+//................................... LOGGING ...................................
 //
 procedure TfrmOptions.ChckBxLoggingChange(Sender: TObject);
 {  Switch on/off logging.    }
