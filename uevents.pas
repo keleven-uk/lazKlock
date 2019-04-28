@@ -42,6 +42,7 @@ type
     procedure actionEvent(pos: integer; stage: integer);
     function determineDueDays(eventDate: string): integer;
     function determineYearsbetween(eventDate: string): integer;
+    function determineMessage(e: event): string;
     procedure sortEventsStore;
     procedure swapEvents(f, g: integer);
     procedure addToScolling(f: integer);
@@ -93,6 +94,10 @@ VAR
 
 implementation
 
+uses
+  formklock;
+
+
 constructor Events.Create(ef: string; sef: string); overload;
 {  set up some variables on create.
 
@@ -103,13 +108,18 @@ begin
   eventsFile         := ef;
   ScrollEventsFile   := sef;
   eventsStore        := keyStore.Create;       //  initial eventStore
-  eventsStore.Sorted := true;
+  //eventsStore.Sorted := true;
   eventsCount        := 0;
 
   wg := WeddingGifts.Create;
 
+  klog.writeLog(format('Wedding Gift for year 0  :: %s', [wg.whichGift(0)]));
+  klog.writeLog(format('Wedding Gift for year 1  :: %s', [wg.whichGift(1)]));
+  klog.writeLog(format('Wedding Gift for year 10 :: %s', [wg.whichGift(10)]));
+  klog.writeLog(format('Wedding Gift for year 56 :: %s', [wg.whichGift(56)]));
+
   _eventsTypes := TStringList.Create;
-  _eventsTypes.CommaText := ('"Anniversary", "Appointment", "Birthday", "Motor", "Holiday", "Meeting",' +
+  eventsTypes.CommaText := ('"Wedding Anniversary", "Appointment", "Birthday", "Motor", "Holiday", "Meeting",' +
    '"One Off", "TODO", "Other Time"');
 
   //  set up defualts, are overridded by user options.
@@ -149,8 +159,6 @@ procedure Events.new(key: string; date: string; time: string; etype: integer; da
 VAR
   e: Event;                   //  Event.
 begin
-  eventsCount := eventsCount + 1;
-
   e := Event.Create(eventsCount);
 
   if data = '' then data := ' ';   // Don't allow a blank notes.
@@ -170,9 +178,11 @@ begin
 
   eventsStore.Add(eventsCount, e);
 
-  if floating then addToScolling(eventsCount - 1);  //  If needed, add to text file of scrolling text.
-                                                    //  Need to subtract 1, event store is zzero based.
+  if floating then addToScolling(eventsCount);  //  If needed, add to text file of scrolling text.
+
   saveEvents;
+
+  eventsCount := eventsCount + 1;
 end;
 
 procedure Events.amend(id:integer; itmDate: string; itmTime: string; itmType: integer;
@@ -220,9 +230,11 @@ procedure Events.Remove(pos: integer);
    pos comes from the combo box and is zero based,
    the event store starts at one.
 }
+var
+  e: integer;
 begin
-  eventsStore.Remove(pos + 1);
-  eventsCount := EventsCount - 1;
+  e := eventsStore.Remove(pos);
+  eventsCount := eventsCount - 1;
   saveEvents;
 end;
 
@@ -241,7 +253,7 @@ begin
   fileOut := TFileStream.Create(eventsFile, fmCreate or fmShareDenyWrite);
 
   try
-    for f := 0 to eventsCount - 1 do
+    for f := 0 to eventsCount do
     begin
       try
         eventsStore.Data[f].saveToFile(fileOut);
@@ -273,7 +285,7 @@ begin
     csvText := 'Name, Date, time, Id, Type, Notes, Add to Float';    //  Add header
     writeLn(txtFile, csvText);
 
-    for f := 0 to eventsCount - 1 do
+    for f := 0 to eventsCount do
     begin
       if eventsStore.Data[f].float then
         addToFloat := 'True'
@@ -358,7 +370,7 @@ begin
 
   clearScolling;     //  so we start with a clear text file each time.
 
-  for f := 0 to eventsCount - 1 do
+  for f := 0 to eventsCount do
   begin
     dueDays := determineDueDays(eventsStore.Data[f].date);
     stage   := checkStages(dueDays, eventsStore.Data[f]);
@@ -372,7 +384,7 @@ begin
     if eventsStore.Data[f].float then           //  if needed, add to scrolling.
       addToScolling(f);
 
-  end;  //  for f := 0 to EventsCount - 1 do
+  end;  //  for f := 0 to EventsCount do
 
   sortEventsStore;   //  Sort events by due date.
   saveEvents;        //  re save sorted events.
@@ -431,10 +443,10 @@ var
   f, g: integer;
 begin
 
-  for f := 0 to eventsCount - 1 do            //  update due days.
+  for f := 0 to eventsCount do            //  update due days.
     eventsStore.Data[f].id := determineDueDays(eventsStore.Data[f].date);
 
-  for f := 0 to eventsCount - 1 do            //  perform sort.
+  for f := 0 to eventsCount do            //  perform sort.
   begin
     for g := f + 1 to eventsCount - 1 do
     begin
@@ -490,7 +502,6 @@ VAR
   bcol: TColor = clBlue;                            //  back colour - colour of the paper [form].
   ev  : TfrmEvent;                                  //  ev = event Form
   lb  : TLabel;
-  yr  : integer;
 
 begin
   case stage of
@@ -532,19 +543,35 @@ begin
   lb.Font.Color := fcol;
   lb.Caption    := mess;
 
-  if eventsStore.Data[pos].etype = 2 then          //  if a birthday, determine age.
-  begin
-    yr := determineYearsbetween(eventsStore.Data[pos].date);
-    mess    := format('and will be %d years old.', [yr])
-  end
-  else
-    mess    := '';
+  mess := determineMessage(eventsStore.Data[pos]);   //  flip mess for standard message to custom message.
 
   lb            := ev.FindChildControl('lblInfo') as TLabel;
   lb.Font.Color := fcol;
   lb.Caption    := mess;
 
   ev.show
+end;
+
+function Events.determineMessage(e: event): string;
+{  Customise message if appropiate.    }
+VAR
+  yr  : integer;
+  gift: string = '';
+  mess: string = '';
+begin
+  if e.etype = 2 then              //  if a birthday, determine age.
+  begin
+    yr   := determineYearsbetween(e.date);
+    mess := format('and will be %d years old.', [yr])
+  end
+  else if e.etype = 0 then          //  if a wedding anniversary, determine age.
+  begin
+    yr   := determineYearsbetween(e.date);
+    gift := wg.whichGift(yr);
+    mess := format('been married for %d years buy %s.', [yr, gift])
+  end;
+
+  result := mess;
 end;
 
 function Events.determineYearsbetween(eventDate: string): integer;
@@ -570,7 +597,7 @@ VAR
 begin
   if EventsCount = 0 then exit;
 
-  for f := 0 to EventsCount - 1 do
+  for f := 0 to EventsCount do
   begin
     try
       s  := format('frmEvent_%d', [eventsStore.Data[f].id]);

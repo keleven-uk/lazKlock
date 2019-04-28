@@ -2180,7 +2180,25 @@ Added scrollingTextScreenSave and scrollingAlwaysOnTop to UserOptions.
 
 Corrected bug in the acknowledge system within events.
 
+** merged development branch [V2] into master **
+
 14924 line of source code.
 8300 statements
+16.7% comment
+
+
+Build 116 [2.6.0.117]
+
+Finished the code in uEvents.pas & uWeddingAnniversary.pas, so that an events
+on anniversary will return the appropriate wedding gift with user notification.
+
+Found a major but in the events delete routines.  It seems that the first
+delete works and subsequent ones fail.  I think this is down to the low level
+dictionary map used - not sure though.
+
+** merged development branch [V2] into master **
+
+15006 line of source code.
+8325 statements
 16.7% comment
 

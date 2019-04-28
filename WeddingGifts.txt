@@ -1,57 +1,61 @@
-﻿Cotton
-Paper
-Leather
-Fruit and Flowers
-Wood
-Sugar
-Woollen
-Salt
-Tin
-Steel
-Silk
-Lace
-ivory
-Crystal
-Silver Hollowware
-Furniture
-Porcelain
-Bronze
-China
-Brass
-Copper
-Silver Plate
-Musical Instruments
-Silver
-Original Pictures
-Sculpture
-Orchids
-New Furniture
-Pearl
-Timepieces
-Conveyances
-Amethyst
-Opal
-Coral
-Bone China
-Alabaster
-Beryl
-lace
-Ruby
-land
-Improved Real Estate
-Travel
-Groceries
-Sapphire
-Original Poetry Tribute
-Books
-Optical Goods
-Luxuries
-Gold
-Emerald
-Diamond
-Blue Sapphire
-Platinum
-Gold
-Oak
-Wine
-Stone
+﻿#,#
+1,Paper
+2,Cotton
+3,Leather
+4,Fruit/Flowers
+5,Wood
+6,Sugar
+7,Copper/Wool
+8,Bronze/Pottery
+9,Pottery/Willow
+10,Tin
+11,Steel
+12,Silk
+13,Lace
+14,ivory
+15,Crystal
+16,Silver Hollowware
+17,Furniture
+18,Porcelain
+19,Bronze
+20,China
+21,Brass
+22,Copper
+23,Silver Plate
+24,Musical Instruments
+25,Silver
+26,Original Pictures
+27,Sculpture
+28,Orchids
+29,New Furniture
+30,Pearl
+31,Timepieces
+32,Conveyances
+33,Amethyst
+34,Opal
+35,Coral
+36,Bone China
+36,Alabaster
+38,Beryl
+39,lace
+40,Ruby
+41,land
+42,Improved Real Estate
+43,Travel
+44,Groceries
+45,Sapphire
+46,Original Poetry Tribute
+47,Books
+48,Optical Goods
+49,Luxuries
+50,Gold
+55,Emerald
+60,Diamond
+65,Blue Sapphire
+70,Platinum
+75,2nd Diamond
+80,Oak
+85,Wine
+90,Stone
+95,Diamond/Ruby
+100,10-caret Diamond

@@ -46,7 +46,7 @@ uses
   ustickyNotes, formInfo, Graph, formClipBoard, formLEDKlock, formBinaryKlock,
   formAnalogueKlock, formSmallTextKlock, formFloatingKlock, formSplashScreen,
   formBiorhythm, uFriends, formFriendsInput, uFriend, formTimePositions,
-  formScrollingKlock, strUtils;
+  formScrollingKlock;
 
 type
   FourStrings = array [0..3] of string;
@@ -1993,7 +1993,7 @@ begin
 
   ev.new(edtEventName.Text, sDate, sTime, cmbBxEventType.ItemIndex, mEventNotes.Text, ChckBxEventFloating.Checked);
 
-  ev.updateEvents;
+  //ev.updateEvents;
   loadEvents;
 
   seteventButtons(true);
@@ -2027,6 +2027,7 @@ begin
                   'Do You Really Want To Delete This Event',
                    mtCustom, [mrYes,'yes', mrNo, 'No', 'IsDefault'],'')  = mrYes then
   begin
+    klog.writeLog('TfrmMain.btnEventDeleteClick - deleting :: ' + intToStr(lstBxEvents.ItemIndex));
     ev.Remove(lstBxEvents.ItemIndex);
     loadevents;
     seteventButtons(true);
