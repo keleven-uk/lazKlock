@@ -7,9 +7,10 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, runtimetypeinfocontrols, lazcontrols, tachartlazaruspkg, datetimectrls,
-  formklock, uFuzzyTime, SysUtils, UformClipBoardUtils, formClipBoard,
-  formStickyNote, formSplashScreen, formEvent;
+  Forms, lazmouseandkeyinput, runtimetypeinfocontrols, lazcontrols,
+  tachartlazaruspkg, datetimectrls, formklock, uFuzzyTime, SysUtils,
+  UformClipBoardUtils, formClipBoard, formStickyNote, formSplashScreen,
+  formEvent;
 
 {$R *.res}
 

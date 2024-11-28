@@ -540,7 +540,7 @@ begin
   AProcess            := TProcess.Create(nil);
   AProcess.Options    := [poWaitOnExit, poUsePipes];
   AProcess.Executable := 'CMD ';
-  AProcess.Parameters.Add('/C ver >' + tmpFileName);
+  AProcess.Parameters.Add('/C ver > ver.txt');
   AProcess.Execute;
 
   winVer := TStringList.Create;

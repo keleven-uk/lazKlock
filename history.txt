@@ -1114,7 +1114,7 @@ Date:   Fri Jan 12 16:02:37 2018 +0000
 
 Changed all the icon [again] - now from https://icons8.com/
 
-Removed the button bar from the main Klock screen and added individual buttons, 
+Removed the button bar from the main Klock screen and added individual buttons,
 with their own icons.
 
 Added a sub menu option to save the Sticky Notes to each Sticky Note.
@@ -1170,7 +1170,7 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Fri Jan 26 16:50:33 2018 +0000
 
 Still implementing memo tab.
-    
+
 The new, delete, save and load functions seem now to work.
 Edit and print to go
 
@@ -1253,7 +1253,7 @@ The configuration files will only appear if they exist on the system.
 The location of the zip file can be selected, but a default is presented.
 A new file, uArchiveUtils, holds the helper Archive routines [called from formOptions].
 
-Added the location of the configuration files to the options files, easier to use elsewhere 
+Added the location of the configuration files to the options files, easier to use elsewhere
 in the program and are now only specified in one place.
 
 Currently
@@ -1269,9 +1269,9 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Fri Feb 9 22:06:33 2018 +0000
 
 Divided fuzzyTime between calculated time and font substitution.
-    
+
 Added a second combo :box populated with the available fonts.
-    
+
 So, each time format can be displayed in each available font.
 
 Added loads of fonts. :-)
@@ -1300,13 +1300,13 @@ Author: Kevin Scott <github@keleven.co.uk>
 Date:   Wed Feb 14 22:00:56 2018 +0000
 
 
-Added an extra klock - Floating Text Klock.  The textual display of the time seems to 
+Added an extra klock - Floating Text Klock.  The textual display of the time seems to
 float on the screen - all other item i.e. form is transparent.
 Added formFloatingKlock to hold this.
 
 Added the following user options for Floating Text Klock.
   Screen Save, Form Top, Form Left, Font and use Klock Font.
-  
+
 Added calling menu items if formKlock.
 Added speed buttons to the countdown tab - so the countdown can be quickly
 started with either 30, 60, 90 or 120 minutes.
@@ -1345,7 +1345,7 @@ Currently
 5791 statements
 15.8% comment
 
- 
+
 Build 76 [2.2.4.76]
 
 commit 42cd5887a7e4959e98812979c22b2d8bb59a1042
@@ -1434,13 +1434,13 @@ Added an option verbose to FuzzyTime so it could add "nearly" and "just gone" to
 General code tidy up and correcting spelling errors.
 
 Merged master and V2.
- 
+
 Currently
 11075 lines of source code.
 6036 statements
 15.9% comment
 
- 
+
 Build 81 [2.3.0.81]
 
 commit 12155d8788a9eb6b1720acd283ced68e41c3efe0
@@ -1462,9 +1462,9 @@ Currently
 6132 statements
 16.0% comment
 
- 
+
 Build 82 [2.3.0.82]
- 
+
 commit e94ed76b2832fd8f8d54ad81512c2bc9851c58bc
 Author: Kevin Scott <github@keleven.co.uk>
 Date:   Sun Mar 18 20:53:35 2018 +0000
@@ -1472,7 +1472,7 @@ Date:   Sun Mar 18 20:53:35 2018 +0000
 Added Monitor Stuff to the Info menu.
 This shows information about all the display monitors connects to the system.
 This is gathered from Lazarus Tscreen and the WMI system [probably only windows then].
- 
+
 Currently
 11312 lines of source code.
 6181 statements
@@ -1497,7 +1497,7 @@ The about, and Licence, Info forms are now created when needed and not at the st
 Trying to do the same with the time forms - but the ones with transparency seem a problem.
 Simplified the calling of the info forms.
 
-More changes to Power stuff when running on a lap top.  It now shows more meaningful times for 
+More changes to Power stuff when running on a lap top.  It now shows more meaningful times for
 battery use, but not quite the same as is shown in the windows system tray.
 
 More code made to look pretty.
@@ -1505,7 +1505,7 @@ More code made to look pretty.
 Currently
 11534 lines of source code.
 6253 statements
-16.0% 
+16.0%
 
 
 Build 84 [2.3.1.84]
@@ -1802,7 +1802,7 @@ commit 6b4713eb6b0b5581e33faaac3e1fd8537d9acdb3
 Author: keleven-uk <github@keleven.co.uk>
 Date:   Mon Aug 20 20:52:00 2018 +0100
 
-Added Speech.  
+Added Speech.
 Klock can speak the time in the current chosen format configured do so.
 The time interval and volume can be set in user options.
 The speak routine is in the fuzzyTime class and called form the main timer
@@ -1833,7 +1833,7 @@ Date:   Thu Sep 6 21:50:38 2018 +0100
 Started work on the Friends tab.
 Added a new form, formFriendsInput, which allows the friends details to be
 entered.  Also, added two new classes, a Friend class which holds the friends
-details and a Friends class with manipulates a number of friends. 
+details and a Friends class with manipulates a number of friends.
 
 This is work in progress - add input and display routines so far.
 
@@ -1871,16 +1871,16 @@ commit 856bec8ee39186b5042bcddf0b87cbe17971a94f
 Author: keleven-uk <github@keleven.co.uk>
 Date:   Mon Sep 17 21:28:58 2018 +0100
 
-Merged Friends edit, delete & new buttons into a generic friends button 
+Merged Friends edit, delete & new buttons into a generic friends button
 handler - they shared a lot of similar code.
 Corrected a bug in user options with friendsName.
 
-Added a new form, formTimePositions.  This allows the screen co-ordinates 
-of the extra klocks to be manually amended.  There is a bug [Windows feature?] 
+Added a new form, formTimePositions.  This allows the screen co-ordinates
+of the extra klocks to be manually amended.  There is a bug [Windows feature?]
 where they can appear of screen i.e. where monitors are added or resolution is
 changed.
 
-Will merge into master, Friends, Memo, Events & Sticky Notes should be 
+Will merge into master, Friends, Memo, Events & Sticky Notes should be
 complete - but need testing further.
 
 Updated Help.
@@ -2187,12 +2187,12 @@ Corrected bug in the acknowledge system within events.
 16.7% comment
 
 
-Build 116 [2.6.0.117]
+Build 117 [2.6.0.117]
 
 Finished the code in uEvents.pas & uWeddingAnniversary.pas, so that an events
 on anniversary will return the appropriate wedding gift with user notification.
 
-Found a major but in the events delete routines.  It seems that the first
+Found a major bug in the events delete routines.  It seems that the first
 delete works and subsequent ones fail.  I think this is down to the low level
 dictionary map used - not sure though.
 
@@ -2202,3 +2202,61 @@ dictionary map used - not sure though.
 8325 statements
 16.7% comment
 
+
+Build 118 [2.6.0.118]
+
+Compiled with Lazarus 2.2.0RC2
+
+Needed to change double quotes to single quotes in function getWindowsVersion [unit UKlockUtils].
+
+
+Build 118 [2.6.0.119]
+
+Compiled with Lazarus 4.0.0RC2
+
+Saved version into a text file named ver.txt.
+
+-----------------------------------------------------------------------------------
+File                                            blank        comment           code
+-----------------------------------------------------------------------------------
+lazKlock\formKlock.pas                            336            308           2098
+lazKlock\klock.lpi                                  0              0           1341
+lazKlock\uoptions.pas                             235            172           1070
+lazKlock\formsmalltextklock.pas                   105             45            954
+lazKlock\formOptions.pas                          123            180            678
+lazKlock\ufuzzytime.pas                           109             65            547
+lazKlock\uklockutils.pas                          104            109            498
+lazKlock\uevents.pas                              105             63            462
+lazKlock\formbinaryklock.pas                       78             47            373
+lazKlock\uinfoutils.pas                            63             43            323
+lazKlock\ufriend.pas                               72             18            288
+lazKlock\uformclipboardutils.pas                   57             40            282
+lazKlock\formfriendsinput.pas                      39             21            267
+lazKlock\formclipboard.pas                         59             47            254
+lazKlock\formscrollingklock.pas                    59             33            227
+lazKlock\formfloatingklock.pas                     70             43            215
+lazKlock\ustickynote.pas                           55             31            207
+lazKlock\uevent.pas                                53             26            179
+lazKlock\ustickynotes.pas                          49             41            178
+lazKlock\formanalogueklock.pas                     50             34            150
+lazKlock\formledklock.pas                          42             20            148
+lazKlock\formevent.pas                             42             22            141
+lazKlock\uarchiveutils.pas                         35             16            132
+lazKlock\ufonts.pas                                44             25            132
+lazKlock\uconversion.pas                           28             26            125
+lazKlock\umemos.pas                                42             30            123
+lazKlock\forminfo.pas                              33              7            120
+lazKlock\ufriends.pas                              36             18            116
+lazKlock\ulogging.pas                              33             22            114
+lazKlock\formAbout.pas                             29             12            107
+lazKlock\formstickynote.pas                        28              8             92
+lazKlock\formtimepositions.pas                     22             10             87
+lazKlock\umemo.pas                                 31             21             83
+lazKlock\uweddinganniversary.pas                   29             25             73
+lazKlock\formbiorhythm.pas                         29              5             69
+lazKlock\formlicense.pas                           20              5             56
+lazKlock\formsplashscreen.pas                      20              3             33
+lazKlock\klock.lpr                                  8              0             32
+-----------------------------------------------------------------------------------
+SUM:                                             2372           1641          12374
+-----------------------------------------------------------------------------------
